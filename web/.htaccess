@@ -1,0 +1,7 @@
+
+RewriteEngine on
+Options -indexes
+RewriteCond %{HTTP_HOST} ^\*\.aceengineer\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.\*\.aceengineer\.com$
+RewriteRule ^/?$ "http\:\/\/google\.com" [R=301,L]
+

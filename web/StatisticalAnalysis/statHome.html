@@ -1,0 +1,303 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="res/css/ace.css" rel="stylesheet" type="text/css"/>
+        <link href="res/css/core.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="res/css/themes/default/default.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="res/css/themes/light/light.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="res/css/themes/dark/dark.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="res/css/themes/bar/bar.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="res/css/nivo-slider.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="res/css/style1.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="res/js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="res/js/core.js"></script>
+        <link rel="shortcut icon" href="res/images/logoIcon.ico"/>
+        <style type="text/css">
+            .distribution_Types td
+            {
+                color: black;
+                text-decoration: none;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function(){
+                $('.hasSubMenu').hover(
+                function(){
+                    $(this).find('ul').show(1000).stop(true,true);
+                },function(){
+                    $(this).find('ul').hide(100).stop(true,true);
+                });
+                /*slider*/
+                $(window).load(function() {
+                    $('#slider').nivoSlider();
+                });
+                /*End of slider call*/
+                var div = $('.feedback')[0];
+               
+                $(window).scroll(function(){
+                    var v = ($(window).height()-$(div).height())/2;
+                    v += $(window).scrollTop();
+                    $(div).css({
+                        //                left:'-'+($(div).width()-20)+'px',
+                        top:v-100
+                    });
+                });
+            });
+        </script>
+        <title>AceEngineer</title>
+    </head>
+    <body onload="menu();">
+        <div align="center">
+            <div class="feedback">
+                <a id="feedback_button" class="a"><img src="res/images/feedback.png"/></a>
+                <div class="form">
+                    <h2>Feedback Please</h2>
+                    <p><label>Name: </label><input type="text" /></p>
+                    <p><label>Email: </label><input type="text" /></p>
+                    <p><label>Subject: </label><input type="text" /></p>
+                    <p><label>Message: </label><textarea></textarea></p>
+                    <p><input type="button" value="Send" class="btn"/></p>
+                </div>
+            </div>
+            <!--            Menu Content Goes Here-->
+            <table width="990" class="content" border="0">
+                <tr>
+                    <td>
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td width="200" valign="top" >
+                                    <div align="left">
+                                        <a href="Home.html"><img src="res/images/logo.png" ></a>
+                                    </div>
+                                </td>
+                                <td width="790">
+                                    <div align="right">
+                                        <a href="http://aceengineer.com/statisticalAnalysis/">
+                                            <img src="res/images/Phase_II/stat.jpg"  align="center" style="" class="AppLogo"/>
+                                        </a>
+                                    </div>
+                                    <!--                                    <table id="header" align="right">
+                                                                            <tr>
+                                                                                <td colspan="2"><a href="#">Register</a>&nbsp;|&nbsp;
+                                                                                    <a href="#">Site Map</a></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td colspan="4"><input type="text" value="Search"/></td>
+                                                                                <td><img src="res/images/search_icon.png"></td>
+                                                                            </tr>
+                                                                        </table>-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="bottom" class="menu1" colspan="2">
+                                    <ul class="dropMenu">
+                                        <li ><a class="active" href="http://aceengineer.com/AceEngineer/Home.html">Home</a></li>
+                                        <li ><a href="http://aceengineer.com/AceEngineer/Services.html">Services</a></li>
+                                        <li class="hasSubMenu"><a href="http://aceengineer.com/AceEngineer/applications.html">Applications</a>
+                                            <ul class="subMenu ">
+                                                <li><a href="http://aceengineer.com/AceTools/vmStressCheck.jsp">Oil & Gas</a></li>
+                                                <li><a href="http://aceengineer.com/StatisticalAnalysis/">Statistical Analysis</a></li>
+                                                <li><a href="http://aceengineer.com/StockAnalysis/">Stock Management</a></li>
+                                                <li><a href="http://aceengineer.com/StructuralAnalysis/">Structural Analysis</a></li>
+                                                <li><a href="http://aceengineer.com/DataManipulation/">Data Manipulation</a></li>
+                                                <li class="bottom_border"><a href="#">Fluid Mechanics</a></li>
+
+                                            </ul>
+                                        </li>
+                                        <li class="hasSubMenu" ><a href="http://aceengineer.com/AceEngineer/aboutUs.html" >About Us</a>
+                                        <li><a href="http://aceengineer.com/AceEngineer/Careers.html">Careers</a></li>
+                                        <li><a href="http://aceengineer.com/AceEngineer/contactus.html">Contact Us</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="main">
+                            <!--                            <tr>
+                                                            <td valign="top" class="">
+                                                                <div align="center">
+                                                                    <a href="http://aceengineer.com/statisticalAnalysis/">
+                                                                        <img src="res/images/Phase_II/stat.jpg"  align="center" style="border: 1px solid  #4A98E2 "/>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>-->
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <blockquote>
+                                                    <div align="left">
+                                                        <label class="headingMedium" style="color:#2964B6;"><b>Statistics:</b></label>
+                                                    </div>
+                                                    <p class="para">
+                                                        Statistics an arrangement of values of a variable showing their observed or theoretical frequency of occurrence.<br>
+                                                    </p>
+                                                    <div align="left">
+                                                        <label class="headingSmall" style="color:#2964B6;" > <b>Probability Density Function (PDF):</b></label>
+                                                    </div>
+                                                    <p class="para">
+                                                        It describes the relative likelihood for this random variable to take on a given value. The probability for the random variable to fall within a particular region is given by the integral of this variable’s density over the region. <br>
+                                                    </p>
+                                                    <div align="left">
+                                                        <label class="headingSmall" style="color:#2964B6;" ><b>Cumulative Distribution Function (CDF):</b></label>
+                                                    </div>
+                                                    <p class="para">
+                                                        It describes the probability that a real-valued random variable X with a given probability distribution will be found at a value less than or equal to x. Intuitively, it is the "area so far" function of the probability distribution.<br> 
+                                                    </p>
+                                                    <div align="left">
+                                                        <label class="headingSmall" style="color:#2964B6;" ><b>Available Distributions are:</b></label>
+                                                    </div>
+                                                    <table class="distribution_Types" align="center">
+                                                        <tr>
+                                                            <td >
+                                                                <b>Continuous Distributions </b>
+                                                            </td>
+                                                            <td>
+                                                                <b>&nbsp;&nbsp;&nbsp; Status </b>
+                                                            </td>
+                                                            <td>
+                                                                <b>&nbsp;&nbsp;&nbsp; Discrete Distributions </b>
+                                                            </td>
+                                                            <td>
+                                                                <b>&nbsp;&nbsp;&nbsp; Status </b>
+                                                            </td>
+                                                        </tr>
+                                                        <tr><td>&bull;<a href="Distributions.jsp?mode='1'"  > Normal Distribution</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/correct.png" /></td><td>&nbsp;&nbsp;&nbsp;&bull;  <a href="#">Binomial Distribution</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/Phase_II/Soon.jpg" /></td></tr>
+                                                        <tr><td>&bull;<a href="Distributions.jsp?mode='2'">Cauchy Distribution</a> </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/correct.png" /></td><td>&nbsp;&nbsp;&nbsp;&bull;      <a href="#">Poisson Distribution</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/Phase_II/Soon.jpg" /></td></tr>
+                                                        <tr><td>&bull;<a href="Distributions.jsp?mode='3'">Gamma Distribution</a> </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/correct.png" /></td><td>&nbsp;&nbsp;&nbsp;&bull;     <a href="#">Geomatric Distribution</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/Phase_II/Soon.jpg" /></td></tr>
+                                                        <tr><td>&bull;<a href="Distributions.jsp?mode='4'">Rayleigh Distribution</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/correct.png" /></td><td>&nbsp;&nbsp;&nbsp;&bull;       <a href="#">Negative Distribution </a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/Phase_II/Soon.jpg" /></td></tr>
+                                                        <tr><td>&bull;<a href="Distributions.jsp?mode='5'">Wei-Bull Distribution</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/correct.png" /></td><td></td><td></td></tr>
+                                                        <tr><td>&bull;<a href="#">Beta Distribution</a> </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/Phase_II/Soon.jpg" /></td><td></td><td></td></tr>
+                                                        <tr><td>&bull;<a href="#">Lognormal Distribution</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/Phase_II/Soon.jpg" /></td><td></td><td></td></tr>
+                                                        <tr><td>&bull;<a href="#">Exponential Distribution</a> </td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/Phase_II/Soon.jpg" /></td><td></td><td></td></tr>
+                                                        <tr><td>&bull;<a href="#">Double Exponential  Distribution</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/Phase_II/Soon.jpg" /></td><td></td><td></td></tr>
+                                                        <tr><td>&bull;<a href="#">Uniform Distribution</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/Phase_II/Soon.jpg" /></td><td></td><td></td></tr>
+                                                        <tr><td>&bull;<a href="#">Tukey - Lambda Distribution</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/Phase_II/Soon.jpg" /></td><td></td><td></td></tr>
+                                                        <tr><td>&bull;<a href="#">Power Normal Distribution</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/Phase_II/Soon.jpg" /></td><td></td><td></td></tr>
+                                                        <tr><td>&bull;<a href="#">Power Lognormal Distribution</a></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/images/Phase_II/Soon.jpg" /></td><td></td><td></td></tr>
+                                                    </table><br>
+                                                    <div align="left">
+                                                        <label class="headingSmall" style="color:#2964B6;" ><b>Application Features</b></label>
+                                                    </div>
+                                                    <p class="para">
+                                                        &bull; User friendly interaction<br>
+                                                        &bull; Calculate the PDF and CDF for Selected Distribution<br>
+                                                        &bull; Provide PDF report for Given data inputs and It's corresponding Output (include charts)<br>
+                                                        &bull; Provide CSV file for Given data inputs and corresponding distribution parameters and output results<br>
+                                                    </p>
+                                                </blockquote>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <!--            Starting code of SiteMap-->
+           <div id="Footer" style="border: 1px solid #ffffff">
+            <table id="siteMap" width="990" align="center">
+                <tr>
+                    <td valign="top">
+                        <ul type="none">
+                            <li><a href="http://aceengineer.com/AceEngineer/Home.html"><strong>Home</strong></a></li>
+                        </ul>
+                    </td>
+                    <td valign="top">
+                        <ul type="none">
+                            <li>
+                                <a href="http://aceengineer.com/AceEngineer/aboutUs.html"><strong>About Us</strong></a><br> 
+                                <a href="http://aceengineer.com/AceEngineer/Home.html">Mission and Values</a><br>
+                                <a href="http://aceengineer.com/AceEngineer/Home.html">History</a>
+                            </li>
+                        </ul>
+                    </td>
+                    <td valign="top">
+                        <ul type="none">
+                            <li> 
+                                <a href="http://aceengineer.com/AceEngineer/Services.html"><strong>Services</strong></a><br>
+                                <a href="http://aceengineer.com/AceEngineer/Services.html">Financial Engineering</a><br>
+                                <a href="http://aceengineer.com/AceEngineer/Services.html">Mechanical Engineering</a><br>
+                                <a href="http://aceengineer.com/AceEngineer/Services.html">Civil and Structural Engineering</a><br>
+                                <a href="http://aceengineer.com/AceEngineer/Services.html">Project Management Tools</a><br>
+                                <a href="http://aceengineer.com/AceEngineer/Services.html">Web Designing and Web Hosting</a><br>
+                                <a href="http://aceengineer.com/AceEngineer/Services.html">Mobile Apps development</a><br>
+                                <a href="http://aceengineer.com/AceEngineer/Services.html">Business improvement plans</a>
+                            </li>
+                        </ul>
+                    </td>
+                    <td valign="top">
+                        <ul type="none">
+                            <li>
+                                <a href="http://aceengineer.com/AceEngineer/applications.html"><strong>Applications</strong></a><br>
+                                <a href="http://aceengineer.com/AceTools/vmStressCheck.jsp">Oil & Gas</a><br>
+                                <a href="http://aceengineer.com/StatisticalAnalysis/">Statistical Analysis</a><br>
+                                <a href="http://aceengineer.com/StockAnalysis/">Stock Management</a><br>
+                                <a href="#">Heat Transfer</a><br>
+                                <a href="http://aceengineer.com/StructuralAnalysis/">Structural Analysis</a><br>
+                                <a href="http://aceengineer.com/DataManipulation/">Data Manipulation</a><br>
+                                <a href="#">Fluid Mechanics</a><br>
+                            </li>
+                        </ul>
+                    </td>
+                    <td valign="top">
+                        <ul type="none">
+                            <li>
+                                <a href="http://aceengineer.com/AceEngineer/Careers.html"><strong>Careers</strong></a><br>
+                                <a href="http://aceengineer.com/AceEngineer/Careers.html">Current Openings</a>
+                            </li>
+                        </ul>
+                    </td>
+                    <td valign="top">
+                        <ul type="none">
+                            <li><a href="http://aceengineer.com/AceEngineer/contactus.html"><strong>Contact Us</strong></a></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td colspan="6" align="right" valign="baseline" style="border-bottom: 1px solid white;">
+                        <label  style="color:white; vertical-align: top; font-size:16px; ">Follow us on :</label>
+                        <a target="blank" href="http://www.facebook.com/AceEngineer?ref=hl"><img src="res/images/Facebook-Buttons-1-10-.png"/></a>
+                        <a target="blank" href="https://twitter.com/AceEngineer1"><img src="res/images/twitter.png"/></a>
+                        <a target="blank" href="https://plus.google.com/u/0/b/107017400816259920540/107017400816259920540/posts"><img src="res/images/Googleplus.png"/></a>
+                        <a target="blank" href="http://www.linkedin.com/company/aceengineer"><img src="res/images/linkin_icon.png"/></a>
+                    </td>
+                </tr>
+
+                <tr align="center">
+                    <td colspan="6">
+                        <a href="http://aceengineer.com/AceTools/vmStressCheck.jsp">Oil & Gas &nbsp;&Vert;&nbsp;</a>
+                        <a href="http://aceengineer.com/StatisticalAnalysis/">Statistical Analysis &nbsp;&Vert;&nbsp;</a>
+                        <a href="http://aceengineer.com/StockAnalysis/HistoricalPrices.html">Stock Management&nbsp;&Vert;&nbsp;</a>
+                        <a href="#">Heat Transfer&nbsp;&Vert;&nbsp;</a>
+                        <a href="http://aceengineer.com/StructuralAnalysis/">Structural Analysis&nbsp;&Vert;&nbsp;</a>
+                        <a href="http://aceengineer.com/DataManipulation/">Data Manipulation&nbsp;&Vert;&nbsp;</a>
+                        <a href="#">Fluid Mechanics</a><br>
+                        <a href="Terms-conditions.html">Terms & Conditions&nbsp;&Vert;&nbsp;</a>
+                        <a href="Terms-conditions.html">Privacy policy</a>
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td colspan="6" style="color:#ffffff;">
+                        AceEngineer &copy; 2011, powered by PEPL
+                    </td>
+                </tr>
+            </table>
+        </div>
+            <!--                        End of the Code for SiteMAP-->
+        </div>
+    </body>
+</html>
+

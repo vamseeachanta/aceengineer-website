@@ -1,0 +1,136 @@
+/* 
+    Document   : temp
+    Created on : Mar 23, 2012, 4:21:21 PM
+    Author     : PEPL-SM
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+#container ul.menu2
+{
+    background-color: #96999c;
+    height: 37px;
+    width: 1010px;
+    margin-bottom: 0px;
+}
+#container ul.menu2 li
+{
+    float:left;
+    margin-right: 5px;
+    vertical-align: middle;
+    font-weight:  400;
+    display: block;
+    padding: 10px 10px;
+    background: #135171;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    margin-bottom: -1px;
+    border: 1px solid #185F92;
+    border-width: 1px 1px 1px 1px;
+    position: relative;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+#container ul.menu2 li:hover
+{
+    background: #76392;
+    color: white;
+}
+#container ul.menu2 li.active
+{
+    background: #F9FBFB;
+    top: 1px;
+    border-bottom: 0px;
+    color: black;
+}
+#container .tabBorder
+{
+    width: 1050px;
+    height: 100px;
+    border: 1px solid #2A76A4;
+}
+#container1 ul.menu3
+{
+    /*     background-color: #96999c;*/
+    height: 37px;
+    width: 1010px;
+    margin-bottom: 0px;
+}
+
+#container1 ul.menu3 li
+{
+    float:left;
+    margin-right: 5px;
+    vertical-align: middle;
+    font-weight:  400;
+    display: block;
+    padding: 10px 10px;
+    background: #135171;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    margin-bottom: -1px;
+    border: 1px solid #185F92;
+    border-width: 1px 1px 1px 1px;
+    position: relative;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+#container1 ul.menu3 li:hover
+{
+    background: #76392;
+    color: white;
+}
+#container1 ul.menu3 li.active
+{
+    background: #F9FBFB;
+    top: 1px;
+    border-bottom: 0px;
+    color: black;
+}
+#container1 .tabBorder1
+{
+    width: 1000px;
+    height: 50px;
+    border: 1px solid #2A76A4;
+}
+#container1 ul.menu3
+{
+    width: 1000px;
+}
+.Heading
+{
+    color: black;
+    margin: 0px;
+    text-shadow: 0 0 4px #30A4E4;
+}
+.myPera
+{
+    background:  none repeat scroll 0 0 #E4EDF8;
+    margin: 10px;
+    color: black;
+    padding: 10px;
+}
+.slideDownCSS
+{
+    float:left;
+/*    padding:8px;*/
+/*    margin:16px;*/
+    border:1px solid #135171;
+    background-color:#000000;
+    color:white;
+    display: none;
+    
+}

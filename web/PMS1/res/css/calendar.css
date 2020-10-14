@@ -1,0 +1,66 @@
+/* 
+    Document   : calendar
+    Created on : Jan 28, 2012, 12:12:32 PM
+    Author     : Vamsee Achanta
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+/** These are Calendar Properties**/
+.calendar
+{
+    display: none;
+    font-size: 9px;
+    position: absolute;
+    padding: 2px;
+    border: 4px ridge #abdff8;
+    color: black;
+    /*background: url('res/cal/divBg.jpg') repeat-x #00080D;*/
+    background: #dde0e1;
+
+    margin: 0px;
+    z-index: 5100;
+    left: 300px;
+    top: 0px;   
+}
+
+.calendar *
+{
+    font-size: 12px;
+}
+
+.calendar table
+{
+    border: 2px outset white;
+    padding: 2px;
+}
+
+.calendar table td
+{
+    padding: 1px;
+    border: 1px ridge white;
+    font: serif;
+    width: 15px;
+
+    background: white;
+    color: black;
+    text-align: center;
+    cursor: pointer;
+}
+
+.calendar .control{
+    height: 25px;
+    background: url('../images/button.jpg') repeat-x;
+}
+
+.calendarField
+{
+    color: blue;
+    -webkit-border-radius: 4px;
+    border: 2px solid gray;                
+}

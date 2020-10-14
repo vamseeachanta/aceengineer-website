@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+
+<struts-config>
+    <form-beans>
+        <form-bean name="delete_DataForm" type="com.acetools.riserDatabase.delete_DataForm"/>
+        <form-bean name="updateForm" type="com.acetools.riserDatabase.updateForm"/>
+        <form-bean name="insertForm" type="com.acetools.riserDatabase.insertForm"/>
+        <form-bean name="DeleteForm" type="com.acetools.riserDatabase.DeleteForm"/>
+        <form-bean name="editform" type="com.acetools.riserDatabase.editform"/>
+        <form-bean name="DisplayForm" type="com.acetools.riserDatabase.DisplayForm"/>
+        <form-bean name="DataForm" type="com.acetools.riserDatabase.DataForm"/>
+        <form-bean name="vtypeform" type="com.acetools.riserDatabase.vtypeform"/>
+        <form-bean name="vesselform" type="com.acetools.riserDatabase.vesselform"/>
+        <form-bean name="riserform" type="com.acetools.riserDatabase.riserform"/>
+        <form-bean name="returnperiodform2" type="com.acetools.riserDatabase.returnperiodform2"/>
+        <form-bean name="returnperiodform1" type="com.acetools.riserDatabase.returnperiodform1"/>
+        <form-bean name="returnperiodform" type="com.acetools.riserDatabase.returnperiodform"/>
+        <form-bean name="raoform" type="com.acetools.riserDatabase.raoform"/>
+        <form-bean name="radioform" type="com.acetools.riserDatabase.radioform"/>
+        <form-bean name="metaoceanform" type="com.acetools.riserDatabase.metaoceanform"/>
+        <form-bean name="heaveform" type="com.acetools.riserDatabase.heaveform"/>
+        <form-bean name="fnameform2" type="com.acetools.riserDatabase.fnameform2"/>
+        <form-bean name="fnameform" type="com.acetools.riserDatabase.fnameform"/>
+        <form-bean name="developmentform" type="com.acetools.riserDatabase.developmentform"/>
+        <form-bean name="compareform" type="com.acetools.riserDatabase.compareform"/>
+        <form-bean name="choiceform" type="com.acetools.riserDatabase.choiceform"/>
+        <form-bean name="LoginForm" type="com.acetools.riserDatabase.LoginForm"/>
+        <form-bean name="ChartForm2_4" type="com.acetools.riserDatabase.ChartForm2_4"/>
+        <form-bean name="sensitivityCheckForm" type="com.acetools.flexComProperties.SensitivityCheckForm"/>
+        <form-bean name="lSJCheckForm" type="com.acetools.flexComProperties.LSJCheckForm"/>
+        <form-bean name="vmStressCheckForm" type="com.acetools.vmStressUtilization.vmStressCheckForm"/>
+        <form-bean name="FileComparisonForm" type="com.acetools.shear7FileComparison.FileComparisonForm"/>
+    
+    </form-beans>
+    
+    <global-exceptions>
+    
+    </global-exceptions>
+
+    <global-forwards>
+        <forward name="welcome"  path="/Welcome.do"/>
+    </global-forwards>
+<!--                shear7  -->
+    <action-mappings>
+        <action input="/Shear7FileComparison.jsp" name="FileComparisonForm" path="/FileCompare" scope="session" type="com.acetools.shear7FileComparison.FileComparisonAction">
+            <forward name="success" path="/CurrentComparison.jsp"/>
+            <forward name="demo" path="/CurrentComparisonDemo.jsp"/>
+        </action>
+<!--                vm stress  -->
+        <action input="/vmStressCheck.jsp" name="vmStressCheckForm" path="/vmStress" scope="session" type="com.acetools.vmStressUtilization.vmStressCheckAction">
+            <forward name="success" path="/VmChart.jsp"/>
+            <forward name="current" path="/vmStressCheck.jsp"/>
+            <forward name="demo" path="/demoChart.jsp"/>
+            <forward name="Result" path="/noChart.jsp"/>
+        </action>
+<!--                FEA  -->
+
+        <action input="/Sensitivity.jsp" name="sensitivityCheckForm" path="/SensitivityCheck" scope="session" type="com.acetools.flexComProperties.SensitivityCheckAction">
+            <forward name="sensitivity" path="/Sensitivity.jsp"/>
+        </action>
+        <action input="/LSJCheck.jsp" name="lSJCheckForm" path="/LSJCheck" scope="session" type="com.acetools.flexComProperties.LSJCheckAction">
+            <forward name="current" path="/LSJCheck.jsp"/>
+            <forward name="flexcom_results" path="/LSJCheckResults.jsp"/>
+            <forward name="sensitivity" path="/SensitivityCheck.do?acentAction=init_entry"/>
+            <forward name="display_results_fwd" path="/QA.jsp"/>
+        </action>
+<!--                RiserDatabase  -->
+        <action  name="heaveform" path="/comparevessel" scope="request" type="com.acetools.riserDatabase.comparevessel">
+            <forward name="success1" path="/heaveoutput.jsp"/>
+            <forward name="success2" path="/yawoutput.jsp"/>
+            <forward name="failure" path="/choice.jsp"/>
+            <forward name="failure1" path="/vesselfailure.jsp"/>
+        </action>
+
+        <action  name="developmentform" path="/development" scope="request" type="com.acetools.riserDatabase.developmentaction">
+            <forward name="success" path="/devoutput.jsp"/>
+            <forward name="failure" path="/development.jsp"/>
+            <forward name="failure1" path="/developmentfailure.jsp"/>
+        </action>
+
+        <action  name="fnameform" path="/fname" scope="request" type="com.acetools.riserDatabase.fnameaction">
+            <forward name="success" path="/riseroutput.do"/>
+            <forward name="failure" path="/fname.jsp"/>
+        </action>
+
+        <action  name="fnameform2" path="/fname2" scope="request" type="com.acetools.riserDatabase.fnameaction2">
+            <forward name="success" path="/strakes1.jsp"/>
+            <forward name="failure" path="/fname2.jsp"/>
+        </action>
+        <action  name="vtypeform" path="/heave" scope="request" type="com.acetools.riserDatabase.heaveaction">
+            <forward name="success1" path="/heaves1.jsp"/>
+            <forward name="success2" path="/heaves2.jsp"/>
+            <forward name="success3" path="/heaves3.jsp"/>
+            <forward name="success4" path="/heaves4.jsp"/>
+            <forward name="success5" path="/heaveoutput.jsp"/>
+            <forward name="success6" path="/yawoutput.jsp"/>
+            <forward name="failure" path="/choice.jsp"/>
+            <forward name="failure1" path="/vesselfailure.jsp"/>
+        </action>
+
+        <action  name="metaoceanform" path="/metaocean" scope="request" type="com.acetools.riserDatabase.metaoceanaction">
+            <forward name="success1" path="/returnperiod.jsp"/>
+            <forward name="success2" path="/returnperiod1.jsp"/>
+            <forward name="success3" path="/returnperiod2.jsp"/>
+            <forward name="failure" path="/metaocean.jsp"/>
+        </action>
+
+        <action name="radioform" path="/radiobutton" scope="request" type="com.acetools.riserDatabase.radioaction">
+            <forward name="success1" path="/metaocean.jsp"/>
+            <forward name="success2" path="/vessel.jsp"/>
+            <forward name="success3" path="/riseroutputfailure.jsp"/>
+            <forward name="failure" path="/radio.jsp"/>  
+        </action>
+
+        <action  name="raoform" path="/rao" scope="request" type="com.acetools.riserDatabase.raoaction">
+            <forward name="success" path="/choice.jsp"/>
+            <forward name="failure" path="/rao.jsp"/>
+        </action>
+
+        <action  name="returnperiodform" path="/returnperiod" scope="request" type="com.acetools.riserDatabase.returnperiodaction">
+            <forward name="success" path="/returnperiodoutput.jsp"/>
+            <forward name="failure" path="/returnperiod.jsp"/>
+            <forward name="failure1" path="/returnperiodfailure.jsp"/>
+        </action>
+
+        <action  name="returnperiodform1" path="/returnperiod1" scope="request" type="com.acetools.riserDatabase.returnperiodaction1">
+            <forward name="success" path="/returnperiodoutput1.jsp"/>
+            <forward name="failure" path="/returnperiod1.jsp"/>
+            <forward name="failure1" path="/returnperiodfailure2.jsp"/>
+        </action>
+
+        <action  name="returnperiodform2" path="/returnperiod2" scope="request" type="com.acetools.riserDatabase.returnperiodaction2">
+            <forward name="success1" path="/development.jsp"/>
+            <forward name="success2" path="/compare.jsp"/>
+            <forward name="failure" path="/returnperiod2.jsp"/>
+        </action>
+
+        <action  name="riserform" path="/riser" scope="request" type="com.acetools.riserDatabase.riseraction">
+            <forward name="success" path="/riseroutput.do"/>
+            <forward name="success1" path="/fname.jsp"/>
+            <forward name="success2" path="/fname2.jsp"/>
+            <forward name="success3" path="/riseroutput.do"/>
+            <forward name="failure" path="/riser.jsp"/>
+        </action>
+
+        <action name="riserform" path="/riseroutput" scope="request"  type="com.acetools.riserDatabase.riseroutputaction">
+            <forward name="success1" path="/riserout1.jsp"/>
+            <forward name="success2" path="/riserout2.jsp"/>
+            <forward name="success3" path="/riserout3.jsp"/>
+            <forward name="success4" path="/riserout4.jsp"/>
+            <forward name="success5" path="/riserout5.jsp"/>
+            <forward name="success6" path="/riserout6.jsp"/>
+            <forward name="failure" path="/riser.jsp"/>
+            <forward name="failure1" path="/riseroutputfailure.jsp"/>
+        </action>
+
+        <action  name="vesselform" path="/vessel" scope="request" type="com.acetools.riserDatabase.vesselaction">
+            <forward name="success" path="/rao.jsp"/>
+            <forward name="success2" path="/choice.jsp"/>
+            <forward name="failure" path="/vessel.jsp"/>
+        </action>
+
+        <action name="vtypeform" path="/vtype" scope="request" type="com.acetools.riserDatabase.vtypeaction">
+            <forward name="success" path="/fname2.jsp"/>
+            <forward name="failure" path="/vtype.jsp"/>
+        </action>
+
+        <action  name="compareform" path="/compare" scope="request" type="com.acetools.riserDatabase.compareaction">
+            <forward name="success" path="/compareoutput.jsp"/>
+            <forward name="failure" path="/compare.jsp"/>
+            <forward name="failure1" path="/comparefailure.jsp"/>
+        </action>
+
+        <action  name="choiceform" path="/choice" scope="request" type="com.acetools.riserDatabase.choiceaction">
+            <forward name="success1" path="/heave.do"/>
+            <forward name="success2" path="/comparevessel.do"/>
+            <forward name="failure" path="/choice.jsp"/>
+        </action>
+
+        <action  name="LoginForm" path="/login" scope="session" type="com.acetools.riserDatabase.LoginAction">
+            <forward name="success" path="/radio.jsp"/>
+            <forward name="failure" path="/Failure.jsp"/>
+        </action>
+        <action name="editform" path="/editdata" scope="request" type="com.acetools.riserDatabase.EditDataAction">
+            <forward name="success" path="/returnperiod.do"/>
+            <forward name="failure" path="/eidtfailure.jsp"/>
+            </action>
+        <action name="DisplayForm" path="/display" scope="request" type="com.acetools.riserDatabase.Display">
+            <forward name="success" path="/display.jsp"/>
+            <forward name="failure" path="/displayfail.jsp"/>
+            </action>
+        <action name="DataForm" path="/data" scope="request" type="com.acetools.riserDatabase.DataAction">
+            <forward name="success1" path="/returnperiod.do"/>
+            <forward name="failure" path="/failure_1.jsp"/>
+            <forward name="failure1" path="/constraintfail.jsp"/>
+            </action>
+        <action name="DeleteForm" path="/delete" scope="request" type="com.acetools.riserDatabase.DeleteAction">
+            <forward name="success" path="/returnperiod.do"/>
+            <forward name="failure" path="/deletefailure.jsp"/>
+            </action>
+        <action name="insertForm" path="/insert" scope="request" type="com.acetools.riserDatabase.insertAction">
+            <forward name="success" path="/popup.jsp"/>
+            </action>
+        <action name="updateForm" path="/update" scope="request" type="com.acetools.riserDatabase.updateAction">
+            <forward name="success" path="/popup_update.jsp"/>
+            </action>
+        <action name="delete_DataForm" path="/deletedata" scope="request" type="com.acetools.riserDatabase.delete_DataAction">
+            <forward name="success" path="/popup_delete.jsp"/>
+            </action>
+
+        
+        <action path="/Welcome" forward="/welcomeStruts.jsp"/>
+    </action-mappings>
+    
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+    <message-resources parameter="com/myapp/struts/ApplicationResource"/>
+    
+    <!-- ========================= Tiles plugin ===============================-->
+    <!--
+    This plugin initialize Tiles definition factory. This later can takes some
+    parameters explained here after. The plugin first read parameters from
+    web.xml, thenoverload them with parameters defined here. All parameters
+    are optional.
+    The plugin should be declared in each struts-config file.
+    - definitions-config: (optional)
+    Specify configuration file names. There can be several comma
+    separated file names (default: ?? )
+    - moduleAware: (optional - struts1.1)
+    Specify if the Tiles definition factory is module aware. If true
+    (default), there will be one factory for each Struts module.
+    If false, there will be one common factory for all module. In this
+    later case, it is still needed to declare one plugin per module.
+    The factory will be initialized with parameters found in the first
+    initialized plugin (generally the one associated with the default
+    module).
+    true : One factory per module. (default)
+    false : one single shared factory for all modules
+    - definitions-parser-validate: (optional)
+    Specify if xml parser should validate the Tiles configuration file.
+    true : validate. DTD should be specified in file header (default)
+    false : no validation
+
+    Paths found in Tiles definitions are relative to the main context.
+    -->
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+    
+    <!-- ========================= Validator plugin ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+            property="pathnames"
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+  
+</struts-config>

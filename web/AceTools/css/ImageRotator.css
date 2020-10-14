@@ -1,0 +1,35 @@
+/* 
+    Document   : ImageRotator
+    Created on : 23 May, 2011, 1:59:06 PM
+    Author     : PEPL
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+
+ div.rotator {
+	position:relative;
+	height:345px;
+	margin-left: -40px;
+	display: none;
+}
+/* rotator css */
+	div.rotator ul li {
+	float:left;
+	position:absolute;
+	list-style: none;
+}
+/* rotator image style */
+	div.rotator ul li img {
+	border:1px solid #ccc;
+	padding: 4px;
+	background: #FFF;
+}
+    div.rotator ul li.show {
+	z-index:500
+}

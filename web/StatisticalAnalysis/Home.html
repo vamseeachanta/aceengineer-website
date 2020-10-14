@@ -1,0 +1,322 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="res/css/ace.css" rel="stylesheet" type="text/css"/>
+        <link href="res/css/core.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="res/css/themes/default/default.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="res/css/themes/light/light.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="res/css/themes/dark/dark.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="res/css/themes/bar/bar.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="res/css/nivo-slider.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="res/css/style1.css" type="text/css" media="screen" />
+        <link type="image/x-icon" href="AcenT logo.ico" rel="icon">
+        <title>AceEngineer</title>
+        <script type="text/javascript" src="res/js/jquery-1.7.1.min.js"></script>
+<!--        <script type="text/javascript" src="res/js/jquery.nivo.slider.js"></script>-->
+        <script type="text/javascript" src="res/js/core.js"></script>
+
+        <script type="text/javascript">
+            $(function(){
+                $('.hasSubMenu').hover(
+                function(){
+                    $(this).find('ul').show(1000).stop(true,true);
+                },function(){
+                    $(this).find('ul').hide(100).stop(true,true);
+                });
+                /*slider*/
+                $(window).load(function() {
+                    $('#slider').nivoSlider();
+                });
+                /*End of slider call*/
+                var div = $('.feedback')[0];
+               
+                $(window).scroll(function(){
+                    var v = ($(window).height()-$(div).height())/2;
+                    v += $(window).scrollTop();
+                    $(div).css({
+                        //                left:'-'+($(div).width()-20)+'px',
+                        top:v-100
+                    });
+                });
+            });
+        </script>
+
+
+    </head>
+    <body>
+        <div align="center" >
+            <div class="feedback">
+                <a id="feedback_button" class="a"><img src="res/images/feedback.png"/></a>
+                <form class="form">
+                    <h2>Feedback Please</h2>
+                    <p><label>Name: </label><input type="text" /></p>
+                    <p><label>Email: </label><input type="text" /></p>
+                    <p><label>Subject: </label><input type="text" /></p>
+                    <p><label>Message: </label><textarea></textarea></p>
+                    <p><input type="button" value="Send" class="btn"/></p>
+                </form>
+            </div>
+            <!--Menu content here -->
+            <table width="990" class="content" border="0">
+                <tr>
+                    <td>
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td width="200" valign="top" >
+                                    <div align="left">
+                                        <a href="Home.html"><img src="logo.png" ></a>
+                                    </div>
+                                </td>
+                                <td width="790">
+                                    <table id="header" align="right">
+                                        <tr>
+
+                                            <td colspan="2"><a href="#">Register</a>&nbsp;|&nbsp;
+                                                <a href="#">Site Map</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"><input type="text" value="Search"/></td>
+                                            <td><img src="res/images/search_icon.png"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign="bottom" class="menu1" colspan="2">
+                                    <ul class="dropMenu">
+                                        <li ><a class="active" href="Home.html">Home</a></li>
+                                        <li ><a href="Services.html">Services</a></li>
+                                        <li class="hasSubMenu"><a href="applications.html">Applications</a>
+                                            <ul class="subMenu ">
+                                                <li><a href="#">Oil & Gas</a></li>
+                                                <li><a href="#">Statistical Analysis</a></li>
+                                                <li><a href="#">Stock Management</a></li>
+                                                <li><a href="#">Structural Analysis</a></li>
+                                                <li><a href="#">Data Manipulation</a></li>
+                                                <li class="bottom_border"><a href="#">Fluid Mechanics</a></li>
+
+                                            </ul>
+                                        </li>
+                                        <li class="hasSubMenu" ><a href="aboutUs.html" >About Us</a>
+                                        <li><a href="Careers.html">Careers</a></li>
+                                        <li><a href="contactus.html">Contact Us</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="wrapper">
+
+                            <div class="theme-default">
+                                <div id="slider" class="nivoSlider">
+                                    <img src="res/slideShow/hero_01.jpg"  alt="" />
+                                    <img src="res/slideShow/products_lay_4.jpg"  />
+                                    <img src="res/slideShow/banner-metocean-historical.jpg"  alt=""  />
+                                    <img src="res/slideShow/banner41.jpg"  alt="" />
+                                </div>
+                                <div id="htmlcaption" class="nivo-html-caption">
+                                    <!--                                    <strong>This</strong> is an example of a <em>HTML</em> caption with <a href="#">a link</a>. -->
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="main" align="center">
+                            <tr>
+
+                                <td width="770" valign="top" align="left" >
+                                    <blockquote>
+                                        <div>
+                                            <label class="headingBig" > Welcome to AceEngineer</label>
+                                        </div>
+                                        <p class="para">
+                                            AceEngineer is a financial and engineering services provider company, offering wide range of solutions meeting the organizational objectives of our clients. The company is based in India. AceEngineer offers services in the fields of financial engineering, financial modeling, electrical engineering, mechanical engineering, civil engineering and environmental engineering.
+                                        </p>
+
+                                        <p class="para">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;AceEngineer employs client based solution approach that helps in understanding the exact requirements of our clients and deliver quality solutions. Knowledge of latest technologies and timely monitoring of our services helps offer top class solutions with ground breaking approaches. AceEngineer offers innovative solutions and helps organizations meet project requirements. AceEngineer's employees have been key to our success. Highly experienced and skilled workforce, with excellent organizational and leadership qualities helps AceEngineer deliver timely and economical solutions.
+                                        </p>
+
+                                        <label class="headingBig" > Our Vision</label>
+                                        <p class="para">
+                                            Engineering the world by understanding client expectations and delivering customized innovative solutions.
+                                        </p>
+                                    </blockquote>
+
+                                </td>
+                                <td width="220" style=" vertical-align: top;" align="left">
+
+                                    <table class="login" >
+                                        <th>
+                                            <img src="res/images/login1.png"/>
+                                            <hr/>
+                                        </th>
+
+                                        <tr>
+                                            <td>User Name<br> 
+                                                <input type="text" > </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" align="right">
+                                                <a href="#">Forgot your Password?</a></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Password <br>
+                                                <input type="text" > </td>
+                                        </tr>
+                                        <tr class="bottom">
+                                            <td colspan="2" ><br>
+                                                <input type="submit" class="submitBtn" value="Sign In"> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input type="checkbox" /> Stay Signed in
+                                                <br>
+                                                <br>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br>
+
+                                    <table class="tableborder" width="100%">
+                                        <tr >
+                                            <td >
+                                                <img src="res/images/qC.png"  width="220"/>    
+                                                <hr/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Name <br>
+                                                <input type="text" > </td>
+                                        </tr>
+                                        <tr>
+                                            <td>E-mail <br>
+                                                <input type="text" > </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Message <br>
+                                                <textarea rows="4" cols="25" ></textarea> </td>
+                                        </tr>
+                                        <tr>
+                                            <td  align="right">
+                                                <input type="submit" class="submitBtn" value="Send">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>    
+                </tr>
+
+            </table>
+
+            <!--End of Menu content here -->
+            <!-- End of Flash content here -->
+
+            <!--Main content here -->
+            <!-- End of Footer content here -->
+            <!-- Feed back -->
+
+            <!-- End of Feed back -->
+            <div id="Footer" style="border: 1px solid #ffffff">
+                <table id="siteMap" width="990" align="center">
+                    <tr>
+                        <td valign="top">
+                            <ul type="none">
+                                <li><a href="Home.html"><strong>Home</strong></a></li>
+                            </ul>
+                        </td>
+                        <td valign="top">
+                            <ul type="none">
+                                <li>
+                                    <a href="#"><strong>About Us</strong></a><br> 
+                                    <a href="AboutUs.html">Mission and Values</a><br>
+                                    <a href="AboutUs.html">History</a>
+                                </li>
+                            </ul>
+                        </td>
+                        <td valign="top">
+                            <ul type="none">
+                                <li> 
+                                    <a href="#"><strong>Services</strong></a><br>
+                                    <a href="Services.html">Financial Engineering</a><br>
+                                    <a href="Services.html">Mechanical Engineering</a><br>
+                                    <a href="Services.html">Civil and Structural Engineering</a><br>
+                                    <a href="Services.html">Project Management Tools</a><br>
+                                    <a href="Services.html">Web Designing and Web Hosting</a><br>
+                                </li>
+                            </ul>
+                        </td>
+                        <td valign="top">
+                            <ul type="none">
+                                <li>
+                                    <a href="#"><strong>Applications</strong></a><br>
+                                    <a href="OGHome.html">Oil & Gas</a><br>
+                                    <a href="statHome.html">Statistical Analysis</a><br>
+                                    <a href="http://aceengineer.com/StockAnalysis/HistoricalPrices.html">Stock Management</a><br>
+                                    <a href="#">Heat Transfer</a><br>
+                                    <a href="http://aceengineer.com/StructuralAnalysis/">Structural Analysis</a><br>
+                                    <a href="#">Data Manipulation</a><br>
+                                    <a href="#">Fluid Mechanics</a><br>
+                                </li>
+                            </ul>
+                        </td>
+                        <td valign="top">
+                            <ul type="none">
+                                <li>
+                                    <a href="#"><strong>Careers</strong></a><br>
+                                    <a href="careers.html">Current Openings</a>
+                                </li>
+                            </ul>
+                        </td>
+                        <td valign="top">
+                            <ul type="none">
+                                <li><a href="ContactUs.html"><strong>Contact Us</strong></a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td colspan="6" align="right" valign="baseline" style="border-bottom: 1px solid white;">
+                            <label  style="color:white; vertical-align: top; font-size:16px; ">Follow us on :</label>
+                            <a href="#"><img src="res/images/Facebook-Buttons-1-10-.png"/></a>
+                            <a href="#"><img src="res/images/twitter.png"/></a>
+                            <a href="#"><img src="res/images/Googleplus.png"/></a>
+                            <a href="#"><img src="res/images/linkin_icon.png"/></a>
+                        </td>
+                    </tr>
+
+                    <tr align="center">
+                        <td colspan="6">
+                            <a href="OGHome.html">Oil & Gas &nbsp;&Vert;&nbsp;</a>
+                            <a href="statHome.html">Statistical Analysis &nbsp;&Vert;&nbsp;</a>
+                            <a href="http://aceengineer.com/StockAnalysis/HistoricalPrices.html">Stock Management&nbsp;&Vert;&nbsp;</a>
+                            <a href="#">Heat Transfer&nbsp;&Vert;&nbsp;</a>
+                            <a href="http://aceengineer.com/StructuralAnalysis/">Structural Analysis&nbsp;&Vert;&nbsp;</a>
+                            <a href="#">Data Manipulation&nbsp;&Vert;&nbsp;</a>
+                            <a href="#">Fluid Mechanics</a>
+                        </td>
+                    </tr>
+                    <tr align="center">
+                        <td colspan="6" style="color:#ffffff;">
+                            AceEngineer &copy; 2011, powered by PEPL
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
+
+

@@ -1,0 +1,97 @@
+ <!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript" src="res/js/GoogleChart.js"></script>
+        <script type="text/javascript" src="res/js/GoogleCharting.js"></script>
+        <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart"]});
+            google.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'X');
+                data.addColumn('number', 'Y1');
+                //data.addColumn('number', 'Y2');
+                
+                data.addRows([
+                    ['1',2],    
+                    ['2',3],    
+                    ['3',4],    
+                    ['4',4.5],    
+                    ['5',5],    
+                    ['6',7],    
+                    ['7',6],    
+                    ['8',7],    
+                    ['9',8]    
+                ]);
+                
+                
+
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                chart.draw(data, {width: 1000, height: 500, title: 'Company Performance',
+                    hAxis: {title: 'Year', titleTextStyle: {color: '#FF0000'},gridlines:{count:10}},
+                    vAxis: {title: 'Expenses', titleTextStyle: {color: '#000000'},gridlines:{count:10}},
+                    pointSize:5
+                    
+                });
+                
+            }
+            
+
+            google.load("visualization", "1", {packages:["corechart"]});
+            google.setOnLoadCallback(drawChartLine);
+            function drawChartLine() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('number', 'Year');
+                data.addColumn('number', 'Sales');
+                data.addColumn('number', 'Expenses');
+                data.addRows(4);
+                data.setValue(0, 0, 2004);
+                data.setValue(0, 1, 1000);
+                data.setValue(0, 2, 400);
+                data.setValue(1, 0, 2005);
+                data.setValue(1, 1, 1170);
+                data.setValue(1, 2, 460);
+                data.setValue(2, 0, 2006);
+                data.setValue(2, 1, 860);
+                data.setValue(2, 2, 580);
+                data.setValue(3, 0, 2007);
+                data.setValue(3, 1, 1030);
+                data.setValue(3, 2, 540);
+
+                var chart = new google.visualization.LineChart(document.getElementById('chart_divLine'));
+                chart.draw(data, 
+                {
+                    width: 1000, 
+                    height: 500,
+                    title: 'Company Performance',
+                    hAxis:{
+                        viewWindow:{
+                            max:100
+                        }
+                    },
+                    animation:{
+                        easing:inAndOut,
+                        duration:500
+                    }
+                }
+            );
+            }
+        </script>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>
+                    <div id="chart_div"></div>
+                </td>
+            </tr>
+        </table>
+        
+        <!--        <div id="chart_divLine"></div>-->
+    </body>
+</html>

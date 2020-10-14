@@ -1,0 +1,96 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE HTML>
+<html>
+     <head>
+    <title>Creative canvas</title>
+        <link rel="icon" href="img/FP.ico" type="image/x-icon"/>
+        <link rel="stylesheet" href="css/creativecanvas.css" type="text/css" media="screen"/>
+        <script src="js/kinetic-v4.0.0.js"></script>
+        <script src="js/jquery-1.4.3.min.js"></script>
+        <script src="js/creativecanvas.js"></script>
+    </head>
+    <body>
+        <table class="layout" align="center">
+            <tr>
+                <td>
+                    <table class="header" width="100%">
+                        <tr>
+                            <td >
+                                <img src="img/HeaderFrendsPlus copy.jpg" alt="logo"/>
+                                <img align="right" src="img/FP.png" alt="Logo"/>
+
+                            </td>
+                        </tr>
+                    </table>
+                    <hr/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table class="body">
+                        <tr>
+                            <td>
+                                <h1>The Creative Canvas</h1>
+                                <div id="content">
+                                    <input type="button" alt="save project" value="Save Project" class="button" id="savePrj"/>
+<!--                                    <input type="button" alt="open project" value="Open Project" class="button" id="openPrj"/>-->
+                                    <input type="button" alt="save As" value="Save As" class="button" id="savePrjAs"/>
+                                    <input type="button" alt="New project" value="New Project" class="button" id="clrPrj"/>
+                                    <input type="button" alt="Sync" value="Sync Data" class="button" id="syncPrj"/>
+                                    <input type="button" alt="load offline" value="Load Offline Projects" class="button" id="lolPrj"/>
+                                    <input type="button" alt="Server Projects" value="Server Projects" class="button" id="serverPrj"/>
+                                </div>
+                                <div >
+                                    <input type="file" id="upload" placeholder="upload" multiple=""/>
+                                </div>
+                                <div style="display: none;">
+                                    <input type="file" id="ChooseProject" placeholder="upload" multiple=""/>
+                                </div>
+                                <div id="detailInputs">
+                                    <div id="prjD" style="display: none;">
+                                        <!--                                        <label for="prjId">Project ID:</label>
+                                                                                <input type="text" id="prjId" class="txtBox" placeholder="Enter Project Id"/>-->
+                                        <label for="prjName">Project Name:</label>
+                                        <input type="text" id="prjName" class="txtBox" placeholder="Enter Project Name"/>
+                                        <input type="button" id="prjCnfrm" placeholder="Done" value="Done" class="button"/>
+                                    </div>
+                                </div>
+                                <br>
+                                <table width="100%">
+                                    <tr>
+                                        <td>
+                                            <div id="container" onmousedown="return false;">
+                                            </div>
+                                            <br>
+                                            <div>
+                                                <h4>Description</h4>
+                                                <textarea id="comment" cols="85" rows="2" placeholder="Enter your comments here"></textarea>
+                                            </div>
+                                        </td>
+                                        <td valign="top" align="left">
+                                            <h4 id="events">Actions</h4>
+                                            <div id="showData" ></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="footer" align="right">
+                        <a href="CreativeCanvas/Project.cc" id="downLoadFile"  style="display: none;">download</a>
+                        &COPY; FrendsPlus, 2012.
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <img src="" id="tempImage"/>
+    </body>
+</html>

@@ -1,0 +1,508 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="res/js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="res/js/aceEng.js"></script>
+        <script type="text/javascript" src="res/js/slideshow.js"></script>
+        <style type="text/css">
+            body{
+
+                color:#006699;
+                font-size: 12px;
+            }
+
+            .dropDownMenu
+            {
+                padding: 0px;
+                margin: 0px;
+                list-style-type: none;
+                width: 640px;
+                height: 20px;
+                /*                background-color:#EEEEEE;*/
+                /*                background: -webkit-gradient(linear, left top, left bottom, from(#EEEEEE), to(#000));
+                                background: -moz-linear-gradient(top,  #EEEEEE,  #000);
+                                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEEEEE', endColorstr='#000000');*/
+
+            }
+            .dropDownMenu li
+            {
+                width: 100px;
+                /*                height: 20px;*/
+                float: right;
+
+
+                border: 2px solid #B7D05E;
+                -moz-border-radius:10px;
+
+
+            }
+
+            .dropDownMenu li:hover{
+                -moz-box-shadow:2px 2px 2px black;
+                border: 2px solid #B7D05E;
+                background: orange;
+
+
+            }
+
+            .dropDownMenu li a
+            {
+                text-decoration: none;
+                vertical-align: middle;
+                padding: 2px;
+                font-size: 18px;
+                display: block;
+                width: 100px;
+                /*                height: 20px;*/
+                text-align:  center;
+                color:black;
+                padding: 10px 0px;
+
+            }
+            .dropDownMenu li a:hover
+            {
+                color: whitesmoke;
+                text-shadow: 2px 2px 2px green;           
+
+                font-weight: bold;
+            }
+
+            .dropDownMenu li ul
+            {
+                position:relative;
+                list-style-type: none;
+                display: none;
+                width: 250px;
+                padding: 0px;
+                margin: 0px;
+            }
+            .dropDownMenu li ul a
+            {
+                padding-top: 10px;
+                /*                background: -webkit-gradient(linear, left top, left bottom, from(#EEEEEE), to(#000));
+                                background: -moz-linear-gradient(top,  #EEEEEE,  #000);
+                                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEEEEE', endColorstr='#000000');*/
+            }
+
+            /*---------------------Table styles-----------------------------------*/
+            .tableborder{
+                background: #DDDDDD;
+                color:#272900;
+                border: 1px solid black;
+                -moz-border-radius:10px;
+                width: 220px;
+
+            }
+
+            .tableborder th{
+                padding-bottom: 5px;
+                background: #B7D05E;
+                color: white;
+                font-size: larger;
+                -moz-border-radius:10px;
+                border-bottom:  2px solid black;
+                -moz-shadow:2px solid black;
+
+            }
+
+            .submitBtn{
+                background: orange;
+                color:white;
+                -moz-border-radius:10px;
+            }
+            /*----------------End of the table elemnents style-------------------------------------------*/
+            .appBlocksTable
+            {
+                margin: 0px;
+                padding: 0px;
+            }
+            .appBlocksTable td
+            {
+                vertical-align: top;
+                padding: 5px;
+                width: 620px;
+                height: auto;
+                border: 2px solid gray;
+            }
+            .appBlocksTable a
+            {
+                text-decoration: none;
+            }
+
+
+            .appBlocksTable td a.appHeading
+            {
+                padding: 10px 5px;
+                font-size: 18px;
+                color: white;
+                font-weight: bold;
+                background-color: gray;
+                display: block;
+
+            }
+
+            .appBlocksTable td a.appHeading:hover
+            {
+                color: black;
+                background-color: lightgrey;
+
+            }
+            .appBlocksTable td div.appContent
+            {
+                display: none;
+                padding: 10px 5px;
+                border: 1px solid black;
+            }
+            .appBlocksTable td a.appLink
+            {
+                text-align: right;
+            }
+            /** --End of the section--     */
+
+            /** ---side Picker -----*/
+
+
+            .sideBarRow{
+                position: fixed;
+                display: table-row;
+                left: 0px;
+                top: 300px;
+            }
+
+            .sideBarLeftCell{
+                border: 1px solid #7D942D;
+                position: relative;
+                display: table-cell;
+                left: 0px;
+                top: 400px;
+                background:#999999;
+                -webkit-box-shadow: 2px 2px 2px black;
+                -moz-box-shadow:  2px 2px 2px black;
+                -box-shadow :2px 2px 2px black; 
+            }
+
+            .sideBarLeftCell a{
+                font-size: medium;
+            }
+            .sideBarRightCell{
+                position: relative;
+                display: table-cell;
+                left: 0px;
+                top: 400px;
+                height: 50px;
+                width: 50px;
+                vertical-align: top;
+
+            }
+            /* --------------End of side picker--------------- */
+
+            /** Start of slide show CSS*/
+
+            body{
+                font-family:arial;
+            }
+
+            .clear {
+                clear:both
+            }
+
+            #gallery {
+                position:relative;
+                height:300px;
+                width: 1000px;
+            }
+            #gallery a {
+                float:left;
+                position:absolute;
+            }
+
+            #gallery a img {
+                border:none;
+            }
+
+            #gallery a.show {
+                z-index:500
+            }
+
+            #gallery .caption {
+                z-index:600; 
+                background-color:gainsboro; 
+                color:black; 
+                height:60px; 
+                width:100%; 
+                position:absolute;
+                bottom:0;
+            }
+
+            #gallery .caption .content {
+                margin:5px;
+                color: black;
+                font-weight: 500;
+            }
+
+            #gallery .caption .content h4 {
+                margin:0;
+                padding:0;
+                color:black;
+            }
+            /** end of slide show CSS*/
+
+        </style>
+
+        <link type="image/x-icon" href="AcenT logo.ico" rel="icon">
+        <title>AceEngineer..</title>
+
+
+    </head>
+    <body>
+        <div>
+            <!--            <table width="1000" align="center">
+                            <tr>
+                                <td width="360" valign="top" ><div align="left"><a href="Home.html"><img src="AceEngineer.png" height="100" width="220"></a></div> </td>
+                            </tr>
+                        </table>-->
+            <!--Menu content here -->
+            <table  width="1000" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="360" valign="top" ><div align="left"><a href="Home.html"><img src="AceEngineer_1.png" height="100" width="220"></a></div> </td>
+
+                    <td valign="bottom">
+                        <ul class="dropDownMenu">
+                            <li><a href="#">Careers</a></li>
+                            <li ><a href="#">About Us</a></li>
+
+                            <li class="hasSubMenu" ><a href="#" >Services</a>
+                                <!--                                <ul class="subMenu">
+                                                                    <li><a href="ContactUs.html">Contact Us</a></li>
+                                                                </ul>-->
+                            </li>
+                            <li><a href="careers.html">Home</a></li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <!--End of Menu content here -->
+            <!--Flash content here -->
+            <div align="center">
+                <div id="gallery" align="left" >
+
+                    <a href="#" class="show">
+                        <img src="res/slideShow/Oil_Gas_Exploration.png" alt="Oil and gas" width="1000" height="300" title="" alt="" rel="<h4>Oil and Gas</h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "/>
+                    </a>
+                    <a href="#" >
+                        <img src="res/slideShow/Stock Analysis.png" alt="Stock Anakysis" width="1000" height="300" title="" alt="" rel="<h4>Stock Analysis</h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "/>
+                    </a>
+                    <a href="#" >
+                        <img src="res/slideShow/Statistical.png" alt="Flowing Rock" width="1000" height="300" title="" alt="" rel="<h4>Statistical Analysis</h4>Stock  "/>
+                    </a>
+                    <a href="#" >
+                        <img src="res/slideShow/HeatTransfer.png" alt="Flowing Rock" width="1000" height="300" title="" alt="" rel="<h4>Heat transfer</h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "/>
+                    </a>
+                    <a href="#" >
+                        <img src="res/slideShow/data Manipulations.png" alt="Flowing Rock" width="1000" height="300" title="" alt="" rel="<h4>Data Manipulations</h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "/>
+                    </a>
+                    <div class="caption">
+                        <div class="content">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <!-- End of Flash content here -->
+
+            <!--Main content here -->
+
+            <table class="main" align="center">
+                <tr>
+
+                    <td width="780" valign="top" style="border-right: 2px solid #B7D05E; padding-right: 15px;">
+                        <div>
+                            <pre style="font-size: 18pt;" > Welcome to AceEngineer</pre>
+                        </div>
+
+
+                        <p style="font-size: 11pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AceEngineer is a financial and engineering services provider company, offering wide range of solutions meeting the organizational objectives of our clients. The company is based in India. AceEngineer offers services in the fields of financial engineering, financial modeling, electrical engineering, mechanical engineering, civil engineering and environmental engineering.</p><br>
+                        <p><b>Below are some demonstration applications:</b></p>
+
+
+                        <table class="appBlocksTable">
+                            <tr>
+                                <td>
+                                    <a href="http://aceengineer.com/AceTools/vmStressCheck.jsp" class="appHeading">Oil & Gas.</a>
+                                    <div class="appContent">
+                                        This Application About the oil & Gas<br/>
+
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="appHeading">Statistical</a>
+                                    <div class="appContent">
+                                        This Application About the Statistical<br/>
+
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="appHeading">Heat Transfer</a>
+                                    <div class="appContent">
+                                        This Application About the Heat Transfer<br/>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="StockAnalysis/StockHome.html" class="appHeading">Stock Management.</a>
+                                    <div class="appContent">
+                                        This Application About the Stock Management<br/>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="#" class="appHeading">Data Manipulation</a>
+                                    <div class="appContent">
+                                        This Application About the Data Manipulation<br/>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="220" style="padding-left: 10px;" >
+
+                        <table class="tableborder">
+                            <th colspan="2">User Login</th>
+
+                            <tr>
+                                <td>User Id</td>
+                                <td><input type="text" > </td>
+                            </tr>
+                            <tr>
+                                <td>Password</td>
+                                <td><input type="text" > </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="submit" class="submitBtn" value="Sign In">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="#">Sign Up</a>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <br>
+                        <table class="tableborder">
+                            <th colspan="2"> Updates</th>
+                            <tr>
+                                <td>
+                            <marquee behavior="scroll" direction="up" scrollamount="2" >
+                                &diams;The recent updates are to be maintained in this sections. <br>
+
+                                &diams;The recent updates are to be maintained in this sections. <br>
+
+                            </marquee>
+                    </td>
+                </tr>
+            </table>
+            <!--                        <div id="main" align="center"  style="overflow: hidden; width: 220px; height: 600px; border: 1px solid green;">
+                                        <div id="imagesDiv">
+                                            <img alt="image" width="220px" height="170px" src="res/images/calc.png" ><br>
+                                            <img alt="image" width="220px" height="170px" src="res/images/og1.png"><br>
+                                            <img alt="image" width="220px" height="170px" src="res/images/og2.png"><br>
+                                            <img alt="image" width="220px" height="170px" src="res/images/stat1.png"><br>
+                                            <img alt="image" width="220px" height="170px" src="res/images/stat2.png"><br>
+                                            <img alt="image" width="220px" height="170px" src="res/images/stock1.png"><br>
+                                            <img alt="image" width="220px" height="170px" src="res/images/stock2.png"><br>
+                                        </div>
+                                        <div id="emptyDiv"></div>
+            
+                                    </div>-->
+
+            <!--                                    <div class="rightbar">
+                                                    <div id="feature4">
+                                                        <div align="center">
+                                                            <br />
+                                                        </div>
+                                                    </div>
+                                                    <div id="feature2"> <img src="quickcontact.gif" alt="Contact" />
+                                                        <p class="ppad">
+                                                            <strong>Local:</strong> +91 9848509293<br />
+                                                            <strong>Email:</strong> <a href="mailto:prashanth.kakarapalli@acematrix.com">sales@acematrix.com</a><br />
+                                                        </p>
+                                                    </div>
+
+                                                </div>-->
+        </td>
+    </tr>
+</table>  
+
+
+
+
+<!--End of main content here -->
+
+<!--Footer content here -->
+<div style="background-color:  #B7D05E; height: 150px;" >
+    <table align="center" width="1000">
+        <tr>
+            <td>
+                <a href="#">Home</a><br>
+                <a href="#">About us</a><br>
+                <a href="#">services</a><br>
+                <a href="#">contact</a>
+            </td>
+        </tr>
+
+    </table>
+</div>
+<!-- End of Footer content here -->
+<div  align="right" style="height: 30px; background: lightgray;">
+    &copy; AceEngineer 2011 powered by Prarohana Enterprises Pvt Ltd.
+</div>
+</div>
+
+<div id="showsec" class="sideBarRow">
+    <div id="leftCell" class="sideBarLeftCell">
+        <div style="height: 50px; width: 100px; background: white; border: 1px solid #7D942D;">
+            <a href="#">Oil & Gas</a> 
+        </div>
+        <div style="height: 50px; width: 100px; background: white; border: 1px solid #7D942D;">
+            <a href="#">Statistical</a> 
+        </div>
+        <div style="height: 50px; width: 100px; background: white; border: 1px solid #7D942D;">
+            <a href="#">Heat Transfer</a> 
+        </div>
+        <div style="height: 50px; width: 100px; background: white; border: 1px solid #7D942D;">
+            <a href="#">Stock Management</a> 
+        </div>
+        <div style="height: 50px; width: 100px; background: white; border: 1px solid #7D942D;">
+            <a href="#">Data Manipulation</a> 
+        </div>
+        <div style="height: 50px; width: 100px; background: white; border: 1px solid #7D942D;">
+            <a href="#">Fluid Mechanics </a> 
+        </div>
+
+    </div>
+    <div id="rightCell" class="sideBarRightCell">
+        <span>
+            <img src="res/images/bar2.png" id="imageRound">
+        </span>
+    </div>
+</div>
+</body>
+</html>
+
+

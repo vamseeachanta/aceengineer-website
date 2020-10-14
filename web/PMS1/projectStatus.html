@@ -1,0 +1,246 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <script type="text/javascript">
+            var projAutoFill;
+            $(function()
+            {                
+                projAutoFill = new AutoFill(null, "projectHandler.do?mode=2", {
+                    css:'autoFillDivCss'
+                });
+            
+                projAutoFill.onDataLoad = function(data)
+                {
+                    var cnt = "<table style='max-width:300px;background:#53c1fd' cellspacing='0px' cellpadding='5px'>";
+                    for(var i=0;i<data.length;i++)
+                    {
+                        cnt += "<tr><td>"+data[i].PID+"</td><td>"+data[i].title+"</td></tr>";
+                    }
+                    cnt += "<table>";
+                    projAutoFill.show(cnt);
+                }
+                
+                projAutoFill.onDataSelect = function(field,row)
+                {
+                    if(row != null)
+                    {
+                        $(field).val($(row).find('td:eq(1)').html());
+                        $(field).attr('projId',$(row).find('td:eq(0)').html()).trigger("change", null);
+                    }                        
+                }
+                
+                projAutoFill.filterData = function(row){
+                    return $(row).find('td:eq(0)').html();
+                }
+                
+                registerTabbedPane();
+                registerProjectStatus(); 
+            });
+            
+
+            /**
+             * This MEthod Register the Tabbed Panes
+             */
+            function registerTabbedPane()
+            {                
+                // Initializing Tabs
+                $('.TabsPanel').each(function()
+                {
+                    var tabs = $(this).find('.tabs').find('span');                    
+                    var blocks = $(this).find('.tabContent');
+                    // Hiding All The Tabs by Default
+                    $(blocks).hide();
+                    $(blocks).eq(0).show();
+                    $(tabs).eq(0).addClass('active');
+                    
+                    $(tabs).each(function(ind){
+                        $(this).click(function()
+                        {
+                            $(tabs).removeClass('active');
+                            $(this).addClass('active');
+                            $(blocks).hide(200);
+                            $(blocks).eq(ind).show(200);
+                        });
+                    });                    
+                });
+            }
+            
+            
+            /**
+             * This Method Used to Register the Project Status Element Events
+             */
+            function registerProjectStatus()
+            {
+                //var calendar = new Calendar($('.date'), 1, 1, {});
+                $(".date").datepicker({changeYear:true,showButtonPanel:true,yearRange:'1800:2200',dateFormat:'yy-mm-dd'});
+                
+                var pid = null;
+                var sd = new Date();
+                var ed = new Date();
+                
+                sd.moveToFirstDayOfMonth();
+                alert('hi');
+                //ed.moveToLastDayOfMonth();
+                
+                //alert(sd);
+                
+                $('#PSstartDate').val(sd.toString("yyyy-MM-dd"));
+                $('#PSendDate').val(ed.toString("yyyy-MM-dd"));                                
+                
+                $('#PSprojId').change(function(){
+                    pid = $(this).attr('projId').length<1?$(this).val():$(this).attr('projId');
+                    draw();
+                });
+                
+                projAutoFill.registerFields($('#PSprojId')[0]);
+                
+                $('#PSstartDate').change(function(){
+                    sd = Date.parse($(this).val());
+                    draw();
+                });
+                $('#PSendDate').change(function(){
+                    ed = Date.parse($(this).val());
+                    draw();
+                });
+                
+                $('#PSreport').click(function(){
+                    try
+                    {
+                        Charting.saveImages([
+                            {
+                                imageDiv:document.getElementById('PSBarChart'),
+                                imageName:'image1.png'
+                            },
+                            {
+                                imageDiv:document.getElementById('PSPieChart'),
+                                imageName:'image2.png'
+                            },
+                            {
+                                imageDiv:document.getElementById('PSLineChart'),
+                                imageName:'image3.png'
+                            },
+                            {
+                                imageDiv:document.getElementById('PSBudgetChart'),
+                                imageName:'image4.png'
+                            }
+                        ],function(data){
+                            // now preparing to make                            
+                            $.get("pdfHandler.do",{'mode':'0'},function(data){                                
+                                alert("<a href='"+data+"'>Download Report</a>");
+                                $("<a href=\""+data+"\">Download Report</a>").insertAfter('#PSreport');
+                            });
+                        });
+                    }catch(e){alert(e);}
+                });
+                
+                
+                function draw()
+                {
+                    var d1,d2,d3,d4,d5;
+                    d1 = document.getElementById('PSBarChart');
+                    d2 = document.getElementById('PSPieChart');
+                    d3 = document.getElementById('PSLineChart');
+                    d4 = document.getElementById('PSBudgetChart');
+                    d5 = document.getElementById('PSBurnChart');
+                    
+                    $(d1).html("No data found with in the Selected Range");
+                    $(d2).html("No data found with in the Selected Range");
+                    $(d3).html("No data found with in the Selected Range");
+                    $(d4).html("No data found with in the Selected Range");
+                    $(d5).html("No data found with in the Selected Range");
+                    
+                    if(pid == null || pid.length<1)
+                        return;
+                    
+                    if(ed < sd)
+                    {
+                        $(d1).html("<h4 class='errorInfo'>Unable to Draw the Char please choose Proper Dates</h4>");
+                        $(d2).html("<h4 class='errorInfo'>Unable to Draw the Char please choose Proper Dates</h4>");
+                        $(d3).html("<h4 class='errorInfo'>Unable to Draw the Char please choose Proper Dates</h4>");
+                        $(d4).html("<h4 class='errorInfo'>Unable to Draw the Char please choose Proper Dates</h4>");
+                        $(d5).html("<h4 class='errorInfo'>Unable to Draw the Char please choose Proper Dates</h4>");
+                        return;
+                    }
+                    //alert('done');
+                    //alert(sd+"  :  "+ed);
+                    timeSheet.reports.generateProjectStatusByPhase(d1, {
+                        projs : [pid],
+                        sDate : sd,
+                        eDate : ed
+                    },'BAR');
+                    
+                    timeSheet.reports.generateProjectStatusByPhase(d2, {
+                        projs : [pid],
+                        sDate : sd,
+                        eDate : ed
+                    },'PIE');
+                    
+                    timeSheet.reports.generateProjectStatus(d3, {
+                        projs : [pid],
+                        sDate : sd,
+                        eDate : ed
+                    });
+                    
+                    timeSheet.reports.generateProjectBudgetChart(d4, {
+                        projs : [pid],
+                        sDate : sd,
+                        eDate : ed
+                    });                    
+                    timeSheet.reports.generateBurnRateChart(d5,pid);
+                }
+            }            
+        </script>
+
+
+    </head>
+    <body>
+        <div id="projStatusDiv">
+            <h4 class="chartHead top_border">Project Status</h4>
+            <div class="chartBody bottom_border">
+                <fieldset class="myFieldset">
+                    <legend>Project Status</legend>
+
+                    <table class="formFields">
+                        <tr>
+                            <td class="label">Enter Project Name</td>
+                            <td class="label"><input type="text" id="PSprojId" /></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Status From</td>
+                            <td class="label"><input type="text" id="PSstartDate"  class="date" value="2011-1-1" /></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Status To</td>
+                            <td class="label"><input type="text" id="PSendDate"  class="date" value="2012-1-31" /></td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <div class="TabsPanel top_border">
+                    <div class="tabs">
+                        <span>Bar Chart</span>                
+                        <span>PIE Chart</span>
+                        <span>Line Chart</span>
+                        <span>Budget Chart</span>
+                        <span>Burn Rate</span>
+                    </div>
+                    <div class="tabsContainer">
+                        <div id="PSBarChart" class="tabContent"></div>
+                        <div id="PSPieChart" class="tabContent"></div>
+                        <div id="PSLineChart" class="tabContent"></div>
+                        <div id="PSBudgetChart" class="tabContent"></div>
+                        <div id="PSBurnChart" class="tabContent"></div>
+                    </div>
+                </div>
+
+                <!--                <label class="labelButton" id="PSreport">Download PDF Report</label>-->
+            </div>            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+/* 
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+[
+    {
+        'name' : 'Normal Distribution',
+        'theory' : 'Normal Distribution Theory',
+        
+        'shortTheory' : 'A normal distribution is a statitical distribution with parameters '
+            +'mean and variance on the domain (-Inf, +Inf).<br/>'
+            +'While statisticians and mathematicians uniformly use the term "normal distribution" '
+            +'for this distribution, physicists sometimes call it a Gaussian distribution and, '
+            +'because of its curved flaring shape, social scientists refer to it as the "bell curve."',
+        
+        'parms': ['mean','variance'],
+        'imageLinks' : 
+            [{
+                'name' : 'Normal Distribution PDF',
+                'title' : 'Normal Distribution PDF',
+                'link' : 'res/images/dist/normal(pdf).gif'
+            },
+            {
+                'name' : 'Normal Distribution CDF',
+                'title' : 'Normal Distribution CDF',
+                'link' : 'some Link'
+            }],
+        'referrences' : ['http://mathworld.wolfram.com/NormalDistribution.html','dsdsd']
+    },
+    
+    
+    {
+        'name' : 'Gamma Distribution',
+        'theory': 'Gamma Distribution Theory Should placed Here',
+        
+        'shortTheory' : 'A gamma distribution is a general type of statistical distribution '+
+            'on the domain [0, +Inf)<br/>'+
+            'that is related to the beta distribution and arises naturally in processes for '+
+            'which the waiting times between Poisson distributed events are relevant. Gamma '+
+            'distributions have two free parameters,',
+        
+        'parms': ['a','b'],
+        'imageLinks' : 
+            [{
+                'name' : 'Gamma Distribution PDF',
+                'title' : 'Gamma Distribution PDF',
+                'link' : 'res/images/dist/gamma(pdf).gif'
+            },
+            {
+                'name' : 'Gamma Distribution CDF',
+                'title' : 'Gamma Distribution CDF',
+                'link' : 'some Link'
+            }],
+        'referrences' : ['http://mathworld.wolfram.com/CauchyDistribution.html','dsgfsdfg']
+    },
+    
+    
+    {
+        'name' : 'Cauchy Distribution',
+        'theory': 'Normal Distribution Theory Should placed Here',
+        
+        'shortTheory' : 'The Cauchy distribution, also called the Lorentzian distribution '+
+            'or Lorentz distribution, is a continuous distribution describing resonance '+
+            'behavior. It also describes the distribution of horizontal distances at '+
+            'which a line segment tilted at a random angle cuts the x-axis.',
+        
+        'parms': ['K','Theta'],
+        'imageLinks' : 
+            [
+			{
+                'name' : 'Cauchy Distribution PDF',
+                'title' : 'Cauchy Distribution PDF',
+                'link' : 'res/images/dist/cauchy(pdf).gif'
+            },
+            {
+                'name' : 'Cauchy Distribution CDF',
+                'title' : 'Cauchy Distribution CDF',
+                'link' : 'some Link'
+            }
+			],
+        'referrences' : ['http://mathworld.wolfram.com/CauchyDistribution.html','dfgsdfgsdf']
+    }
+]

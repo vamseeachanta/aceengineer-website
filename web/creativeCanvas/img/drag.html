@@ -1,0 +1,330 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <style type="text/css">
+            body {
+                background-color: #222;
+                margin: 0px;
+                padding: 0px;
+                font-family: fantasy;
+            }
+            .layout{
+                width: 990px;
+                border-left:  5px solid #EFEFEF;
+                border-right: 5px solid #EFEFEF;
+                /*                -moz-border-radius: 5px;
+                                -webkit-border-radius:  5px;
+                                -o-border-radius:  5px;
+                                border-radius: 5px;*/
+                box-shadow: 0px 0px 5px #fff;
+            }
+            canvas {
+                border: 1px solid #9C9898;
+            }
+            #content button{
+
+                color: #EFEFEF;
+                -moz-border-radius: 5px;
+                -webkit-border-radius:  5px;
+                -o-border-radius:  5px;
+                border-radius: 5px;
+                /* Safari 4-5, Chrome 1-9 */
+                background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1a82f7), to(#2F2727));
+                /* Safari 5.1, Chrome 10+ */
+                background: -webkit-linear-gradient(top, #2F2727, #1a82f7);
+                /* Firefox 3.6+ */
+                background: -moz-linear-gradient(top, #2F2727, #1a82f7);
+                /* IE 10 */
+                background: -ms-linear-gradient(top, #2F2727, #1a82f7);
+                /* Opera 11.10+ */
+                background: -o-linear-gradient(top, #2F2727, #1a82f7);
+            }
+            .header{
+                color: whitesmoke;
+            }
+            h1{
+                text-shadow: 0px 0px 5px #fff;
+                color: whitesmoke;
+            }
+            #container{
+                background-color:#fff ; 
+                height: 500px; 
+                width: 600px;
+                border: 5px solid #5e5e5e;
+                box-shadow: 0px 0px 5px #fff;
+                -moz-border-radius: 10px;
+                -webkit-border-radius:  10px;
+                -o-border-radius:  10px;
+                border-radius: 10px;
+            }
+
+            .footer{
+                color: whitesmoke;
+                font-weight: bold;
+            }
+        </style>
+        <script src="js/kinetic-v4.0.0.js"></script>
+        <script src="js/jquery-1.4.3.min.js"></script>
+        <script>
+            var img = document.createElement("img");
+            //var img = new Image();
+            var imgList = [];
+            var imgSrc = [];
+            var imgsG = [];
+            var imageGroup = [];
+            var globalCount = 0;
+            var stage;
+            var layer;
+
+           
+            function initStage(images) {
+                var ImGrp = new Kinetic.Group({
+                    x: 0,
+                    y: 0,
+                    draggable: true
+                });
+                imageGroup[globalCount] = ImGrp;
+                /*
+                 * go ahead and add the groups
+                 * to the layer and the layer to the
+                 * stage so that the groups have knowledge
+                 * of its layer and stage
+                 */
+                layer.add(imageGroup[globalCount]);
+                imageGroup[globalCount].add(images[globalCount]);
+                addAnchor(imageGroup[globalCount], 0, 0, "topLeft");
+                addAnchor(imageGroup[globalCount], 200, 0, "topRight");
+                addAnchor(imageGroup[globalCount], 200, 200, "bottomRight");
+                addAnchor(imageGroup[globalCount], 0, 200, "bottomLeft");
+               
+                stage.add(layer);
+                stage.draw();
+                //for(var i in images)
+                imageGroup[globalCount].on("dragstart", function() {
+                    this.moveToTop();
+                });
+                
+                globalCount++;
+                
+                //                stage.draw();
+            }
+           
+            img.addEventListener("load", function () {
+                try
+                {
+                    // var imageSource = imgSrc[globalCount];
+                    imgsG[globalCount] = new Kinetic.Image({
+                        x: 0,
+                        y: 0,
+                        image: img,
+                        width: 200,
+                        height: 200,
+                        name: "image"
+                    });
+                    initStage(imgsG);
+                    globalCount++;
+                   
+                }catch(e)
+                {
+                    alert("exception raised image load "+e);
+                }
+            }, false);
+
+            window.onload = function() {
+                var div = document.getElementById('container');
+                var upload = document.getElementById('upload');
+                var canv;
+                layer = new Kinetic.Layer();
+                stage = new Kinetic.Stage({
+                    container: "container",
+                    width: 600,
+                    height: 500
+                });
+                
+                //layer = new Kinetic.Layer();
+                upload.addEventListener('change', function(evt){
+                    var files = $(this)[0].files;                    
+                    if(files.length>0){
+                        var file = files[0];
+                        if (typeof FileReader !== "undefined" && file.type.indexOf("image") != -1) {
+                            var reader = new FileReader();
+                            
+                            reader.onload = function(evt){
+                                img.src = evt.target.result;
+                                //imgList[globalCount] = evt.target.result;
+                            }
+                            reader.readAsDataURL(file);
+                        }
+                    }
+                }, false);
+                //--------------------------------------------------------//                  
+                div.addEventListener('dragover', function(evt){
+                    evt.preventDefault();
+                }, false);
+                div.addEventListener('drop', function(evt){
+                    var files = evt.dataTransfer.files;
+                    //                    var img = document.createElement("img");
+                    //imgList[globalCount] = document.createElement("img");
+                    if(files.length>0){
+                        var file = files[0];
+                        if (typeof FileReader !== "undefined" && file.type.indexOf("image") != -1) {
+                            var reader = new FileReader();
+                            
+                            reader.onload = function(evt){
+                                img.src = evt.target.result;
+                                //imgList[globalCount] = evt.target.result;
+                            }
+                            reader.readAsDataURL(file);
+                        }
+                    }
+                    evt.preventDefault();
+                }, false);
+                ////----------------------
+                var saveImage = document.createElement("button");
+                saveImage.innerHTML = "Save Canvas";
+                saveImage.addEventListener("click", function (evt) {
+                    try{
+                        canv = document.getElementById('canvas');
+                        if(canv != null)
+                            window.open(document.getElementById('canvas').toDataURL("image/png"));
+                        else
+                            alert('Please do some operations');
+                    }catch(e ){
+                        alert(e);
+                    }            
+                    evt.preventDefault();
+                }, false);
+                document.getElementById('content').appendChild(saveImage);
+            };
+            
+            function update(group, activeAnchor) {
+                var topLeft = group.get(".topLeft")[0];
+                var topRight = group.get(".topRight")[0];
+                var bottomRight = group.get(".bottomRight")[0];
+                var bottomLeft = group.get(".bottomLeft")[0];
+                var image = group.get(".image")[0];
+
+                // update anchor positions
+                switch (activeAnchor.getName()) {
+                    case "topLeft":
+                        topRight.attrs.y = activeAnchor.attrs.y;
+                        bottomLeft.attrs.x = activeAnchor.attrs.x;
+                        break;
+                    case "topRight":
+                        topLeft.attrs.y = activeAnchor.attrs.y;
+                        bottomRight.attrs.x = activeAnchor.attrs.x;
+                        break;
+                    case "bottomRight":
+                        bottomLeft.attrs.y = activeAnchor.attrs.y;
+                        topRight.attrs.x = activeAnchor.attrs.x;
+                        break;
+                    case "bottomLeft":
+                        bottomRight.attrs.y = activeAnchor.attrs.y;
+                        topLeft.attrs.x = activeAnchor.attrs.x;
+                        break;
+                }
+
+                image.setPosition(topLeft.attrs.x, topLeft.attrs.y);
+
+                var width = topRight.attrs.x - topLeft.attrs.x;
+                var height = bottomLeft.attrs.y - topLeft.attrs.y;
+                if(width && height) {
+                    image.setSize(width, height);
+                }
+            }
+            function addAnchor(group, x, y, name) {
+                var stage = group.getStage();
+                var layer = group.getLayer();
+
+                var anchor = new Kinetic.Circle({
+                    x: x,
+                    y: y,
+                    stroke: "#666",
+                    fill: "#ddd",
+                    strokeWidth: 0,
+                    radius: 2,
+                    name: name,
+                    draggable: true
+                });
+
+                anchor.on("dragmove", function() {
+                    update(group, this);
+                    layer.draw();
+                });
+                anchor.on("mousedown touchstart", function() {
+                    group.setDraggable(false);
+                    this.moveToTop();
+                });
+                anchor.on("dragend", function() {
+                    group.setDraggable(true);
+                    layer.draw();
+                });
+                // add hover styling
+                anchor.on("mouseover", function() {
+                    var layer = this.getLayer();
+                    document.body.style.cursor = "pointer";
+                    this.setStrokeWidth(4);
+                    
+                    layer.draw();
+                });
+                anchor.on("mouseout", function() {
+                    var layer = this.getLayer();
+                    document.body.style.cursor = "default";
+                    this.setStrokeWidth(2);
+                    layer.draw();
+                });
+
+                group.add(anchor);
+            }
+        </script>
+    </head>
+    <body onmousedown="return false;">
+        <table class="layout" align="center">
+            <tr>
+                <td>
+                    <table class="header" width="100%">
+                        <tr>
+                            <td >
+                                <img src="img/FP.png" alt="Logo"/>
+                                <img align="right" src="img/HeaderFrendsPlus copy.jpg" alt="logo"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table class="body">
+                        <tr>
+                            <td>
+                                <h1>Creative canvas</h1>
+                                <div id="container"  >
+                                </div>
+                                <div id="content">
+                                    <input type="file" id="upload" placeholder="upload" multiple=""/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr/>
+                </td>
+            </tr>
+            <tr>
+                <td
+                    <div class="footer" align="right">
+
+                        &COPY; FrendsPlus, 2012.
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+
+    </body>
+</html>

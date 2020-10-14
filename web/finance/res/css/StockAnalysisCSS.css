@@ -1,0 +1,482 @@
+/* 
+    Document   : StockAnalysisCSS
+    Created on : Nov 14, 2011, 12:01:02 PM
+    Author     : Vamsee Achanta
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+*{
+    /*    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;*/
+    font-size: 13px;
+}
+
+/*.myBody{
+    background: url('../images/bg.jpg') 0 0 fixed #3274B1;
+    color: black;
+                    font-family: Georgia, serif;                
+}
+.bodyLayout{
+    width: 1030px;
+    padding: 10px;
+
+    background-color: white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 10px black;
+}*/
+.header {
+    /*border-bottom: 1px solid #EEEEEE;*/
+    /*    margin-bottom: 10px;
+        padding-bottom: 15px;*/
+}
+
+.containerLayout{
+    width: 955px;
+}
+
+/**
+* This CSS for Navigation menu
+*/
+.navigMenu
+{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    width: 1000px;
+    height: 40px;
+    background:  url('../images/button_bg.jpg') repeat-x;
+}
+
+.navigMenu li
+{
+    float:left;
+    width: 120px;
+    height: 40px;
+    display: block;                    
+}
+
+.navigMenu a
+{
+    display: block;
+    text-decoration: none;
+    color: white;    
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 10px;
+    font-size: 18px;
+}
+
+.menuHover
+{
+    background:  url('../images/button_hover.jpg') repeat-x;
+    -webkit-box-shadow: 0px -4px 4px black;    
+}
+/**
+* Navigation Menu Ends Here
+*/
+
+.button{
+    padding: 20px 5px;    
+    background: url('res/images/button_click.jpg') repeat-x;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;    
+}
+
+button.buttonHover
+{
+    text-shadow: 1px 1px 1px white;
+    color: black;
+    background: url('res/images/button_hover.jpg') repeat-x;
+}
+
+/** 
+*This  CSS for Mask Division
+*/
+.maskDiv
+{    
+    background: -webkit-gradient(linear, left top, left bottom, from(#cee1f8), to(#549af1));
+    background: -moz-linear-gradient(top,  #cee1f8,  #549af1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cee1f8', endColorstr='#549af1');
+}
+
+
+/**
+* THis CSS for Button
+*/
+.button{    
+    -webkit-border-radius: 10px;
+    -webkit-box-shadow: 2px 2px 2px black;
+    background: url('../images/titleBg2.jpg') repeat-x;
+    border-radius: 10px;
+
+    color: #2f7195;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    height: 40px;    
+}
+
+button.buttonhover
+{
+
+    color: white;
+    background: url('../images/titleBg.jpg') repeat-x;    
+}
+
+
+
+/* This CSS for Tabs */
+#container
+{
+    width: 1000px;
+    margin: 1em auto;
+}
+
+#container ul
+{
+    list-style: none;
+    list-style-position: outside;
+}
+
+ul.menu 
+{
+    margin-top: auto;
+}
+
+#container ul.menu li
+{
+    float: right;
+    margin-right: 5px;
+    margin-bottom: -1px;
+}
+#container ul.menu li
+{
+    font-weight:  900;
+    display: block;
+    padding: 5px 10px;
+    /*    background: url('../images/titleBg2.jpg') repeat-x;*/
+    background: #3985aa;
+    margin-bottom: -1px;
+    border: 1px solid gray;
+    border-width: 1px 1px 1px 1px;
+    position: relative;
+    color: #f5f5f5;
+    cursor: pointer;    
+}
+
+#container ul.menu li.active
+{
+    background: #cad0d3;
+    top: 1px;
+    border-bottom: 0;    
+    color: #3985aa;
+    font-weight: bold;
+    /*    background: url('../images/titleBg.jpg') repeat-x;*/
+    background: #f5f5f5;
+}
+/*  End of Container menu*/
+/*  container content */
+/*.content
+{
+    margin: 0pt auto;
+    background: url('../images/bg.jpg') 0 0;
+    background: #F5F5F5;
+    border: 1px solid #0b055c;
+    text-align: left;
+    padding: 10px;
+    padding-bottom: 20px;
+    font-size: 14px;    
+}
+
+.content.fund
+{
+    display: block;
+}
+
+.content.Ret
+{
+    display: none;
+}*/
+/*End of the content */
+
+.clear
+{
+    clear: both;
+    height: 0;
+    visibility: hidden;
+    display: block;
+}
+
+/* Tabs Css Ends Here */
+
+
+
+/**
+* Rounded Corners CSS Starts Here
+*/
+.border10{
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;    
+}
+
+.top_border{
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-topleft: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.bottom_border
+{
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.left_border
+{
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.right_border
+{
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/**
+* Rounded Corners CSS Ends Here
+*/
+
+.input{
+    /** Overflow hack for IE */    
+    padding: 4px 2px;
+    border: 1px ridge #53c1fd;    
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+/**
+* CSS for Strippy Table
+*/
+.strippyTable{    
+
+}
+
+.strippyTable thead{
+    background: #0f87ff;
+    -webkit-border-radius: 10px;
+}
+
+.strippyTable thead th{
+    padding: 2px 4px;
+    color: white;
+}
+
+.strippyTable tbody td{
+    padding: 2px 4px;
+}
+
+.strippyTable .even{
+
+}
+
+.strippyTable .odd{                
+    background: #dbedff;
+}
+
+.myPera{
+    padding: 10px;
+    margin: 10px;
+    color: black;
+    background: #e4edf8;    
+}
+
+.myList{
+    list-style: url('../images/arrow.png') outside;    
+}
+.myList li{
+}
+
+.myTable{
+    border: 2px ridge #23bdfc;    
+}
+
+.myTable caption{    
+    padding: 10px;
+    font-size: 1.4em;
+}
+
+.myTable thead th,.myTable thead td{
+    padding: 2px;
+    color: white;
+    background: url('../images/button2.jpg');
+}
+.myTable tbody td, .myTable tbody th{
+    border: 1px solid #23bdfc;
+}
+
+.myTable td.value ,.myTable th.value{
+    text-align: right;
+}
+
+.myTable tfoot th{
+    border: 1px solid #e5e4e4;
+    background: url('../images/button_bg.jpg');
+    padding : 4px;
+}
+
+
+.myTableForex{
+    border: 2px ridge #23bdfc;    
+}
+
+.myTableForex caption{    
+    padding: 10px;
+    font-size: 1.4em;
+}
+
+.myTableForex thead th,.myTable thead td{
+    padding: 2px;
+/*    color: white;*/
+    color: black;
+    background: url('../images/button2.jpg');
+}
+.myTableForex tbody td, .myTable tbody th{
+    border: 1px solid #23bdfc;
+}
+
+.myTableForex td.value ,.myTable th.value{
+    text-align: right;
+}
+
+.myTableForex tfoot th{
+    border: 1px solid #e5e4e4;
+    background: url('../images/button_bg.jpg');
+    padding : 4px;
+}
+
+
+
+
+
+.myButton{
+    display: inline-block;
+    background: url('../images/button2.jpg');
+    padding: 5px 15px;
+    color: white;
+    cursor: pointer;
+    border: 1px ridge #30b1f8;    
+
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+
+    transition: all 1s;
+    -moz-transition: all 1s; /* Firefox 4 */
+    -webkit-transition: all 1s; /* Safari and Chrome */
+    -o-transition: all 1s; /* Opera */
+}
+.myButton:hover{
+    color: black;    
+    background: url('../images/button_bg.jpg');
+}
+
+.heading{
+    margin: 0px;
+    color: black;
+    text-shadow: 0px 0px 4px #30a4e4;
+}
+
+
+/**
+* Inpout Elements CSS Starts Here
+*/
+.formFields{
+
+}
+.formFields .label
+{
+    white-space: nowrap;
+    width: 150px;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.formFields input, textarea
+{
+    /** Overflow hack for IE */
+    overflow:visible;    
+    width: 200px;
+    padding: 4px 2px;
+    border: 1px solid #53c1fd;
+    outline: none;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.formFields select
+{
+    /** Overflow hack for IE */
+    overflow:visible;
+    width: 206px;
+    margin: 0px auto;
+    padding: 4px 2px;
+    border: 1px solid #53c1fd;    
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+.formFields .button, .button{
+    background: url('../images/button.jpg') repeat-x #1E82B5;
+    cursor: pointer;
+    border: 2px ridge #35a9fd;
+    color: #e8ecee;
+    padding: 5px;
+    font-weight: bold;
+}
+
+
+.public_tabs
+{
+    height: 400px;
+    display: none;
+}
+
+
+
+
+
+
+/**
+* Inpout Elements CSS Ends Here
+*/

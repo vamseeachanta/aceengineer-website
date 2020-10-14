@@ -1,0 +1,237 @@
+.property{
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+
+}
+.property{
+    padding: 5px;
+    background:#eef4f8;
+    text-align: left;
+    margin-top: 2px;
+    cursor: pointer;
+/*    ul.topnav li ul.subnav;*/
+    /*    padding-left: 20px;*/
+    color: #3333ff;
+}
+.divClass{
+    background-color: #ffffff;
+}
+.result{
+    background-color: #E6E6E6;
+    /*    color: #6666ff;*/
+}
+.lablecnt{
+    color: #4C9ECD;
+}
+.resultcnt{
+    color: #000000;
+}
+.resultone{
+    background-color: #F4F4F4;
+}
+
+.container {
+    /*	width: 700px;*/
+    margin: 0 auto;
+    position: relative;
+    background-color: #990000;
+
+}
+.subhovercolcor{
+    background-color: #990000;
+
+}
+ul.topnav {
+    list-style: none;
+    /*    padding: 0 0px;*/
+    margin: 0;
+    float: left;
+    /*    width: 700px;*/
+    /*    background: #000000;*/
+    font-size: 1.2em;
+
+
+}
+ul.topnav li {
+    float: left;
+    margin:2px 4px;
+    padding:0
+        position:relative; /*--Declare X and Y axis base--*/
+    /*    background: transparent url(images/dev.jpg) no-repeat right top;*/
+}
+ul.topnav li a{
+    padding: 8px;
+    color: #000000;
+    display: block;
+    text-decoration: none;
+    float: left;
+    /*    line-height: 30px;*/
+}
+ul.topnav li a:hover{
+
+}
+ul.topnav li span { /*--Drop down trigger styles--*/
+    width: 11px;
+    height: 25px;
+    float: right;
+    /*    background:  url(images/down.gif) no-repeat left 11px;*/
+    cursor: pointer;
+
+}
+ul.topnav li span.subhover {
+    /*    background-position: center bottom;*/
+    cursor: pointer;
+}
+/*--Hover effect for trigger--*/
+ul.topnav li ul.subnav {
+    list-style: none;
+    position: absolute; 
+    left: 100; top: 100px;
+    background: #DDDDDD;
+    margin: 0; padding: 0;
+    display: none;
+    float: left;
+    width: 170px;
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border: 1px solid #111;
+}
+ul.topnav li ul.subnav li{
+    margin: 0; padding: 0;
+    border-top: 1px solid #252525; /*--Create bevel effect--*/
+    border-bottom: 1px solid #444; /*--Create bevel effect--*/
+    clear: both;
+    width: 170px;
+}
+.topnav li a{
+    font-size: 13px;
+    font-family: helvetica;
+}
+.topnav li a:hover{
+    color: #4bcfe4;
+}
+
+
+#menu-wraper{
+
+    width: 992px;
+    margin: auto;
+}
+.user_q img{
+    /*    margin-top: 6px; */
+}
+.designhome{
+    background-color: #1C72A5;
+    color: #ffffff;
+    margin: 0px 0;
+    padding: 10px;
+    /*    -webkit-border-radius:10px;
+        -moz-border-radius:10px;
+        -border-radius:10px;*/
+}
+.materialclass{
+    color: #1C72A5;
+    margin: 0px 0;
+    padding: 5px;
+}
+.calculate{
+    color: #90B2BE;
+    background-color: #ffffff;
+    padding: 5px;
+}
+.imgclass{
+    height: 30px;
+    width: 2px;
+
+}
+.structuralList{
+    overflow:auto; 
+/*    height: 300px;*/
+    list-style: none;
+    color: #000000;
+    padding: 0px;
+    /*    background: url(images/temp.png) no-repeat top;*/
+}
+
+ul.structuralList li
+{
+    background: url("../images/arrow_sh.png") no-repeat scroll 5px 8px #F5F5F5;
+    padding: 5px;
+    text-align: left;
+    margin-top: 2px;
+    cursor: pointer;
+    padding-left: 20px;
+
+}
+ul.structuralList li:hover{
+    background:#555555 url(../images/arrow-right2.png) no-repeat 5px 8px;
+    color:#ffd116;
+
+}
+.sensitivity{
+    background-color: #ffffff;
+}
+#calculation{
+    background-color: #EEEEEE;
+/*    background: -webkit-gradient(linear, left top, left bottom, from(#EEEEEE), to(#000000));
+    background: -moz-linear-gradient(top,  #EEEEEE,  #000000);*/
+/*    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEEEEE', endColorstr='#000000');*/
+    padding:0px 20px;
+}
+
+.border{
+    border: 1px solid lightyellow;
+    background-color: #eff1f1;
+    -moz-border-radius : 10px;
+    -webkit-border-radius : 10px;
+    -border-radius : 10px;
+}
+.window{
+    border: 1px solid lightyellow;
+    background-color: #eff1f1;
+    -moz-border-radius : 10px;
+    -webkit-border-radius : 10px;
+    -border-radius : 10px;
+}
+label.error{
+    color: white;
+    font-size: 11px;
+    padding: 1px;
+    background: red;
+}
+#loadingImgTd{
+    -moz-border-radius : 10px;
+    -webkit-border-radius : 10px;
+    -border-radius : 10px;
+}
+
+
+
+
+/* This CSS is Used for OUTPUT the Results....
+*/
+.outputResults1
+{
+   background: #426094;
+   color: white;
+   
+}
+.outputResults2
+{
+    background: #FFFFFF;
+    border: 1px solid gray;
+}
+
+/*.active{
+    background: #FFFFFF;
+    text-shadow: 1px 1px 1px black;
+}*/
+.activeMenu
+{
+    background-color: red;
+   
+    
+}

@@ -1,0 +1,371 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Time Sheet Module</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="res/js/ModalDialog.js"></script>
+        <script type="text/javascript" src="res/js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="res/js/jquery.easing.1.3.js"></script>
+        <script type="text/javascript" src="res/js/date.js"></script>
+        <script type="text/javascript" src="res/js/Core.js"></script>
+        <script type="text/javascript" src="res/js/jquery.json-2.3.min.js"></script>
+        <script type="text/javascript" src="res/js/PMS.js"></script>
+        <script type="text/javascript" src="res/js/PMSReports.js"></script>
+        <script type="text/javascript" src="res/js/TimeSheet.js"></script>
+
+        <style type="text/css">
+
+            body{                
+                font-family: Georgia, serif;
+            }
+
+            .button
+            {
+                padding: 5px 10px;
+                background: #2facbf;
+            }
+
+            .button .hover
+            {
+            }
+
+            td
+            {
+                vertical-align: top;
+            }
+
+            .timeSheetDiv
+            {
+                background: white;
+            }
+
+            .timeSheet{
+
+            }
+
+            .timeSheet td
+            {
+                width: 100px;
+                height: 80px;
+                /*                background: url('res/images/tdBg.jpg') repeat-x #051B2A;*/
+                background: #0e5d71;                
+                vertical-align: middle;
+                text-align: center;
+                color: white;
+                font-size: 20px;
+                /*                -webkit-border-radius: 4px;*/
+                cursor: pointer;                
+            }
+
+            /** */
+            .timeSheet td.removal
+            {
+                position: absolute;
+                background: url('res/images/icons/close_button.png') no-repeat right top;
+                color: red;
+                z-index: 2000;
+            }
+
+            td.hover
+            {                
+                background: #9fe2f2;
+                color: black;
+                -webkit-box-shadow: 0px 0px 10px #2bc2e6;
+            }
+            .timeSheet th
+            {
+                width: 100px;
+                height: 80px;
+                color: black;
+                /*                background: url('res/images/thBg.jpg') repeat-x #041E4F;*/
+                background: #2bc2e6;
+                border: 2px groove #0e5d71;
+                -webkit-border-radius: 5px;
+                cursor: pointer;                
+            }
+
+            .timeSheet .toDay
+            {
+                background: #91e3f8;
+                color: black;
+            }
+
+            .timeSheetDiv .unSaved
+            {
+                padding: 5px;
+                background: #c72424;
+                color: white;
+            }
+
+            .timeSheetDiv .saved
+            {
+                background: #12a212;
+                color: black;
+            }
+
+            .timeSheet .controls
+            {
+                background: url('res/images/thBg.jpg') repeat-x #041E4F;
+            }
+        </style>
+
+        <script type="text/javascript">
+            var timeSheet;
+            var empList;
+            var projectList;
+            var empId = null;
+            var projectId = null;
+            
+            $(function()
+            {
+                empList = $('#employeeList');
+                projectList = $('#projectList');
+                loadTabbedPane();
+                
+                timeSheet = new TimeSheet($('.timeSheetDiv'),{sheetTableCSS:'timeSheet',
+                    empId:'ACE_EMP_0009',
+                    projectId:'PEPL0013',
+                    sheetWidth:600,
+                    dataRetriveURL:'timeSheetHandler.do',
+                    dataStoreURL:'timeSheetHandler.do'
+                });
+                
+                
+                $('select[name="empList"]').change(function()
+                {
+                    timeSheet.generateTimeSheet("",{empId:$(this).val()});
+                });                
+                //timeSheet.generateTimeSheet("",{empId:'EMP_0001'});
+                
+                handleAJAX();
+                loadProjects();
+            });
+            
+            
+            function fillEmployees(data)
+            {
+                var previousItem;
+                var currItem;
+                
+                var content = "<li>Employees</li>";
+                $(data).each(function()
+                {
+                    content += ("<li title='"+this.id+"'>"+this.name+"</li>");
+                });                
+                $(empList).html(content);
+                
+                $(empList).find('li').click(function()
+                {
+                    previousItem = currItem;
+                    currItem = this;
+                    
+                    $(previousItem).removeClass("selected");
+                    $(currItem).addClass("selected");
+                    
+                    empId = $(this).attr('title');
+                    //alert(empId);
+                    timeSheet.generateTimeSheet("", {empId:empId,projectId:projectId});
+                    //alert(empId);
+                });                
+            }
+            
+            function fillProjects(data)
+            {
+                var content = "<li>Projects</li>";
+                var previousItem;
+                var currItem;
+                
+                $(data).each(function()
+                {
+                    content += ("<li title='"+this.id+"'>"+this.name+"</li>");
+                });                
+                $(projectList).html(content);
+                
+                $(projectList).find('li').click(function()
+                {                    
+                    previousItem = currItem;
+                    currItem = this;
+                    
+                    $(previousItem).removeClass("selected");
+                    $(currItem).addClass("selected");
+                    
+                    projectId = $(this).attr('title');
+                    //alert(empId);
+                    timeSheet.generateTimeSheet("", {empId:empId,projectId:projectId});
+                    //alert(empId);
+                });
+                
+                $(projectList).find('li').hover(function(){
+                    $(this).stop().animate({"margin-left":'5px'},1000,null);
+                },function(){
+                    $(this).stop().animate({"margin-left":'0px'},200,null);
+                });
+            }
+            
+            
+            function handleAJAX()
+            {
+                var xml = new XMLHttpRequest();                
+                xml.open("get","employeeHandler.do",true);
+                xml.onreadystatechange = function()
+                {
+                    if(xml.readyState==4 && xml.status==200)
+                    {                        
+                        //alert(xml.responseText);
+                        fillEmployees(eval("(" +xml.responseText +")"));
+                    }
+                }                
+                xml.send(null);
+            }
+            
+            function loadProjects()
+            {                
+                var xml = new XMLHttpRequest();                
+                xml.open("get","projectHandler.do",true);
+                xml.onreadystatechange = function()
+                {
+                    if(xml.readyState==4 && xml.status==200)
+                    {                        
+                        //alert(xml.responseText);
+                        fillProjects(eval("(" +xml.responseText +")"));
+                    }
+                }                
+                xml.send(null);
+            }
+            
+            function loadTabbedPane()
+            {
+                var tabHeads = $('.tabbedPane').find('.tabHead');                
+                var tabs = $('.tabbedPane').find('.tabContent');                
+                $(tabHeads).each(function(ind){
+                    $(this).click(function(){
+                        $(tabs).css('display','none');
+                        $(tabs).eq(ind).css('display','block');                        
+                    });
+                });
+            }            
+        </script>
+
+        <style type="text/css">
+            #timeSheetControls
+            {
+                text-align: right;
+            }
+            #timeSheetControls span
+            {
+                padding: 4px 20px;
+                background: url('res/images/thBg.jpg') repeat-x #041E4F;
+                background-position: center;
+                color: white;
+                display: inline-block;
+                cursor: pointer;
+                margin-left: -5px;
+                border: 1px solid lightblue;
+                border-bottom: 0px solid #01350a;
+            }
+
+            #timeSheetControls span:hover
+            {
+                background: #959595;
+                color: white;
+            }
+
+            .list
+            {
+                padding: 0px;
+                margin: 0px;
+                list-style: none;
+            }
+
+            .list li
+            {                
+                padding: 10px 20px;
+                background: #2bc2e6;
+                margin: 1px;
+                cursor: pointer;
+                color: black;
+            }
+
+            .list li:hover
+            {
+                color: white;
+                background: #0e6a80;                
+                text-shadow: 2px 2px 2px black;
+            }
+            .list li.selected
+            {
+                background: #8ba2bd;
+                color: white;
+            }
+
+            .tabbedPane
+            {
+                display: block;
+            }
+
+            .tabHeads .tabHead
+            {
+                padding: 5px 10px;
+                border: 2px solid blue;
+                background: #142e97;
+                color: white;
+                cursor:pointer;
+            }
+
+            .tabbedPane .tabContent
+            {
+                width: 800px;
+            }
+        </style>
+
+    </head>
+    <body>
+        <table class="bodyLayout" align="center">
+            <tr>
+                <td style="position: relative;display: table-row">
+                <td>
+                    <ul id="employeeList" class="list">
+                    </ul>
+                </td>
+
+                <td>
+                    <div class="tabbedPane">
+                        <div class='tabHeads'>
+                            <span class="tabHead">Time Sheet</span>
+                            <span class="tabHead">Reports</span>
+                        </div>
+
+                        <div class="timeSheetDiv tabContent">
+                            <div id="timeSheetControls">
+                                <label class="button">Save Sheet</label>                                
+                                <span class="button control">Today</span>
+                                <span class="button control">Weekly</span>
+                                <span class="button control">15-Day</span>
+                                <span class="button control">Monthly</span>
+                                <span class="button control"><</span>
+                                <span class="button control">></span>
+                            </div>
+                            <div id="timeSheetBody" style="overflow: auto"></div>
+                        </div>
+
+                        <div class="tabContent">
+
+                            <div id="empReport"></div>
+                            <div id="projectReport"></div>
+
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <ul id="projectList" class="list">
+                    </ul>
+                </td>
+            </tr>
+        </table>        
+    </body>
+</html>

@@ -1,0 +1,24 @@
+/* 
+    Document   : ElementManipulator
+    Created on : Feb 22, 2012, 9:49:04 AM
+    Author     : Vamsee Achanta
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+
+.closeBtn{
+    padding: 2px;
+    font-size: 10px;
+    background: white;
+    color:red;
+}
+.closeBtn:hover{
+    color: white;
+    background:red;
+}

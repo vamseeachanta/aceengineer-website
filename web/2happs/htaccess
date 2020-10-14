@@ -1,0 +1,7 @@
+
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^2happs\.aceengineer\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.2happs\.aceengineer\.com$
+RewriteRule ^/?$ "http\:\/\/aceengineer\.com\/AceTools" [R=301,L]
+

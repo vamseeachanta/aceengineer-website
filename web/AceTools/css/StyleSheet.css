@@ -1,0 +1,497 @@
+/*
+    Document   : sample
+    Created on : 3 May, 2011, 10:56:14 AM
+    Author     : PEPL
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+/*
+root {
+    display: block;
+}*/
+
+body {
+/*    background:repeat scroll 0 0 #E6F5FE;*/
+    margin: 0;
+    padding: 0;
+}
+body, td, th, input, select, textarea {
+    color: #555555;
+/*    font-family: Arial,Helvetica,sans-serif;*/
+    font-size: 12px;
+    line-height: 18px;
+
+}
+a:link {
+    color: #1C72A5;
+    text-decoration: none;
+}
+a:visited {
+    color: #1C72A5;
+    text-decoration: none;
+}
+a:hover {
+    color: #1C72A5;
+    text-decoration: underline;
+}
+a img {
+    border: medium none;
+}
+img.thumb {
+    border: 1px solid #EEEEEE;
+    padding: 5px;
+}
+h1 {
+    color: #333333;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: left;
+}
+h2 {
+    color: #333333;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px 0;
+    text-align: left;
+}
+h2.black {
+    color: #333333;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px 0;
+    text-align: left;
+}
+h3 {
+    background-color: #EEEEEE;
+    border-bottom: 1px solid #DDDDDD;
+    color: #333333;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px;
+    text-align: left;
+}
+.small {
+    color: #555555;
+    font-size: 12px;
+    margin: 0;
+    padding: 0 0 10px;
+    text-align: left;
+}
+.border {
+    border-top: 1px solid #EEEEEE;
+    margin-top: 15px;
+    padding-top: 15px;
+}
+i {
+    color: #555555;
+}
+b {
+}
+p {
+    margin: 0;
+    padding: 0 0 10px;
+    text-align: justify;
+}
+.ppad {
+    padding: 10px;
+}
+ul {
+    text-align: justify;
+}
+.button {
+    color: #555555;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 2px 6px;
+}
+.highlight {
+    background-color: #F5F3DE;
+    border: 1px solid #DDDAB5;
+    color: #333333;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    padding: 20px;
+}
+.clientshighlight {
+    background-color: #F5F3DE;
+    border: 1px solid #DDDAB5;
+    color: #555555;
+    padding: 10px;
+}
+.space {
+    margin: 0 0 0 10px;
+}
+.noborder {
+    border: medium none;
+}
+.entire {
+    background-color: #FFFFFF;
+    border: 10px solid #DDDDDD;
+    margin: auto;
+    padding: 25px;
+}
+.header {
+    border-bottom: 1px solid #EEEEEE;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+}
+.nav {
+    margin-top: 3px;
+}
+.breadcrumb {
+    border-bottom: 1px solid #EEEEEE;
+    color: #999999;
+    padding: 15px 0;
+}
+.breadcrumb a {
+    color: #1C72A5;
+    font-weight: normal;
+}
+.main {
+    padding: 25px 0;
+}
+.feature {
+    padding: 0 0 20px;
+}
+.prefooter {
+    border-top: 1px solid #EEEEEE;
+    margin-top: 10px;
+    padding-top: 25px;
+}
+#footer
+{
+	clear: both;
+	color: #272900;
+	text-align: right;
+	font-size: 90%;
+	background: #9FA41D;
+	padding: 10px;
+}
+
+
+
+.footer {
+    background-color: #EEEEEE;
+    border-top: 5px solid #7D942D;
+    line-height: 18px;
+    margin-top: 25px;
+    padding: 25px 15px;
+}
+.rightbar {
+    border-left: 1px solid #EEEEEE;
+    margin-left: 25px;
+    padding-left: 25px;
+    text-align: left;
+    width: 190px;
+}
+.dcdiv {
+    background: none repeat scroll 0 0 #EEEEEE;
+    margin: 10px 0;
+    padding: 15px;
+}
+.home-box {
+    background-image: url("images/feat-bg.jpg");
+    border: 4px solid #EEEEEE;
+    margin-bottom: 10px;
+    padding: 15px 10px 15px 20px;
+    text-align: left;
+}
+.home-box li {
+    background-image: url("images/tick.gif");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    color: #B7D05E;
+    font-size: 12px;
+    line-height: 17px;
+    padding: 1px 0 0 20px;
+}
+.home-box ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0 0 0 5px;
+    text-align: left;
+}
+.home-bg {
+    background-color: #EEEEEE;
+}
+.plans {
+    background-color: #FCFCFC;
+    border: 1px solid #EEEEEE;
+    margin-bottom: 15px;
+    padding: 1px;
+    text-align: left;
+}
+.plans li {
+    background-image: url("images/bullet.gif");
+    background-position: 0 4px;
+    background-repeat: no-repeat;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 0 0 0 20px;
+}
+.plans ul ul {
+    background-image: url("images/shield.gif");
+    background-position: 0 3px;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+}
+.plans ul ul li {
+    background-image: none;
+    color: #F37725;
+    padding: 0 0 0 20px;
+}
+.plans ul ul li a {
+    color: #F37725;
+}
+.plans ul {
+    list-style: none outside none;
+    margin: 10px 0;
+    padding: 0 0 0 5px;
+    text-align: left;
+}
+.planshead {
+    background-color: #B7D05E;
+    padding: 12px;
+}
+.plansfoot {
+    background-color: #EEEEEE;
+    padding: 10px 12px;
+}
+.plansfoot a {
+    color: #1C72A5;
+    font-weight: bold;
+}
+#feature1 {
+    border: 4px solid #EEEEEE;
+    margin-bottom: 10px;
+    padding: 1px;
+}
+#feature2 {
+    border: 4px solid #EEEEEE;
+    margin-bottom: 10px;
+    padding: 1px;
+}
+#feature3 {
+    border: 4px solid #EEEEEE;
+    margin-bottom: 10px;
+    padding: 1px;
+}
+#feature4 {
+    margin-bottom: 0;
+}
+#feature4 img {
+    margin-bottom: 5px;
+}
+.cplist li {
+    padding: 0 0 10px;
+    text-align: justify;
+}
+#sub li {
+    background-image: url("images/page.gif");
+    background-position: 0 9px;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid #EEEEEE;
+    padding: 5px 0 5px 20px;
+}
+#sub li a {
+    text-decoration: none;
+}
+#sub ul {
+    list-style: none outside none;
+    margin: 2px 0 20px;
+    overflow: hidden;
+    padding: 0;
+    text-align: left;
+    width: 180px;
+}
+#sub li a:hover {
+    color: #CC6600;
+    text-decoration: underline;
+}
+.nav-a {
+    font-size: 15px;
+    font-weight: bold;
+    list-style: none outside none;
+    margin: 0;
+    text-align: center;
+    text-transform: capitalize;
+}
+.nav-a li {
+    background-color: #474747;
+    text-align: center;
+}
+.nav-a a {
+    color: #DDDDDD;
+    display: block;
+    padding: 10px 0;
+}
+.nav-a a:link {
+    background-color: #474747;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+.nav-a a:visited {
+    background-color: #474747;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+.nav-a a:hover {
+    background-color: #3B3B3B;
+    color: #FFFFFF;
+}
+.nav-b {
+    font-size: 16px;
+    font-weight: bold;
+    list-style: none outside none;
+    margin: 0;
+    text-align: center;
+    text-transform: capitalize;
+}
+.nav-b li {
+    background-color: #303030;
+    text-align: center;
+}
+.nav-b a {
+    color: #EEEEEE;
+    display: block;
+    padding: 10px 0;
+}
+.nav-b a:link {
+    background-color: #303030;
+    color: #EEEEEE;
+    text-decoration: none;
+}
+.nav-b a:visited {
+    background-color: #303030;
+    color: #EEEEEE;
+    text-decoration: none;
+}
+.nav-b a:hover {
+    background-color: #303030;
+    color: #EEEEEE;
+}
+#cptable table {
+    width: 100%;
+}
+#cptable th {
+    background: none repeat scroll 0 0 #EEEEEE;
+    color: #333333;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 6px;
+    text-align: left;
+    text-transform: uppercase;
+}
+#cptable td.order {
+    padding: 10px 6px;
+    text-align: left;
+}
+#cptable td.order a:link {
+    color: #1C72A5;
+    text-decoration: none;
+}
+#cptable td.nobg {
+    padding: 0;
+    text-align: left;
+}
+#cptable td {
+    padding: 3px 6px;
+    text-align: left;
+}
+#cptable tr.odd {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+#cptable tr.even {
+    background: none repeat scroll 0 0 #F7F7F7;
+}
+#cptable td.tick {
+    background: url("images/tick.png") no-repeat scroll center center transparent;
+}
+.tableShade
+{
+
+    width: 750px;
+    padding: 10px;
+    background-color:#656952 ;
+    font-family: sans-serif;
+    color: white;
+
+
+}
+
+.stickynote{
+                position:absolute;
+                visibility:hidden;
+                width: 150px;
+                border: 2px solid whitesmoke;
+                background-color: skyblue;
+                padding: 2px;
+                box-shadow: 3px 3px 8px #818181;
+                -webkit-box-shadow: 3px 3px 8px #818181;
+                -moz-box-shadow: 3px 3px 8px #818181;
+            }
+/**
+* Inpout Elements CSS Starts Here
+*/
+.formFields{
+
+}
+.formFields .label
+{
+    white-space: nowrap;
+    width: 150px;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.formFields input, textarea
+{
+    /** Overflow hack for IE */
+    overflow:visible;    
+    width: 200px;
+    padding: 4px 2px;
+    border: 1px solid #53c1fd;
+    outline: none;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.formFields select
+{
+    /** Overflow hack for IE */
+    overflow:visible;
+    width: 206px;
+    margin: 0px auto;
+    padding: 4px 2px;
+    border: 1px solid #53c1fd;    
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+.formFields .button{
+    background: url('../images/button.jpg') repeat-x #1E82B5;
+    cursor: pointer;
+    border: 2px ridge #35a9fd;
+    color: #e8ecee;
+    padding: 5px;
+    font-weight: bold;
+}
+/**
+* Inpout Elements CSS Ends Here
+*/

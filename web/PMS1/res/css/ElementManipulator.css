@@ -1,0 +1,93 @@
+/* 
+    Document   : ElementManipulator
+    Created on : Feb 22, 2012, 9:49:04 AM
+    Author     : Vamsee Achanta
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+
+.ELEcloseBtn{
+    position: absolute;
+    display: none;
+    cursor: pointer;
+    margin-top: -5px;
+    margin-right: -5px;
+    padding: 2px;
+    font-size: 12px;
+    font-family: monospace;
+    font-weight: bold;    
+    color:red;
+
+    z-index: 1000;
+}
+.ELEcloseBtn:hover{
+    color: white;
+    background:red;
+}
+
+
+/**
+* THis CSS for Foldable Element
+*/
+.foldableDiv{
+
+}
+
+.foldableDiv .foldableHead{
+    margin: 0px;
+    padding: 10px;
+    background: #951717;
+    color:white;
+    cursor: pointer;
+}
+
+.foldableDiv .foldableHead.hover{
+    background: #d42222;
+}
+
+.foldableDiv .foldableBody{
+    padding: 10px;
+    background: #f9dddd;
+}
+
+/**
+* Foldable Element CSS Ends Here
+*/
+
+
+/**
+* THis CSS for SideBar Panel CSS
+*/
+.sideBar
+{
+    position: absolute;
+    padding: 5px 10px;
+    max-height: 400px;
+    background: #ffffff;
+    overflow: auto;    
+    border: 2px groove #13a3ff;
+    z-index: 1000;
+
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+
+    -webkit-box-shadow: 2px 2px 5px black;
+}
+/**
+* THis CSS for SideBar Panel CSS
+*/
+
+/**
+* This CSS for input Text Mask
+*/
+.inputTextMask{
+    background: #f8f7f7;
+    color:gray;
+}

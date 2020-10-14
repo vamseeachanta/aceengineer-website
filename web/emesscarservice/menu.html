@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+
+        <style>
+            ul.egmenu {  
+                background: #333; 
+                height: 30px;
+                width: 100%; 
+            }
+
+            ul.egmenu > li { 
+                float: left; 
+                position: relative;  
+            }
+
+            ul.egmenu ul {
+                background: #444; 
+                display: none; 
+                position: absolute;
+                left: 0; 
+                top: 100%;
+            }
+
+            ul.egmenu a { 
+                cursor: pointer; 
+                display: block; 
+                color: white; 
+                line-height: 30px; 
+                padding: 0 10px; 
+            }
+
+            ul.egmenu li { list-style: none; }
+            ul.egmenu li:hover { background: #555;  }
+            ul.egmenu li:hover ul { display: block;  }
+
+            @media all and (max-width: 480px) {
+                ul.egmenu {  height: auto; }
+                ul.egmenu > li {  float: none; width: 100%; }
+                ul.egmenu a { line-height: 40px; }
+                ul.egmenu ul { position: relative; }
+                ul.egmenu li.tap { background: #555;  }
+                ul.egmenu li.tap ul { display: block;  }
+            }
+
+            @media all and (min-width: 481px) {
+                ul.egmenu li:hover { background: #555;  }
+                ul.egmenu li:hover ul { display: block;  }
+            }
+        </style>
+
+        <script type="text/javascript" src="script/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript">
+
+            $(function() {
+//                alert(window.innerWidth);
+            });
+
+            $('.has-sub').click(function(e) {
+                e.preventDefault();
+                $(this).parent().toggleClass('tap');
+
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <ul class="egmenu">
+                <li><a href="#">Home</a></li>
+                <li>
+                    <a href="#" class="has-sub">Products</a>
+                    <ul>
+                        <li><a href="#">Computers</a></li>
+                        <li><a href="#">Phones</a></li>
+                        <li><a href="#">Tablets</a></li>
+                        <li><a href="#">Beepers</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+
+        </div>
+    </body>
+</html>

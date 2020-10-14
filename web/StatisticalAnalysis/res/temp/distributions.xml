@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : distributions.xml
+    Created on : 20 October, 2011, 3:42 PM
+    Author     : PEPL-SK
+    Description:
+        Purpose of the document follows.
+-->
+
+<distributioins>
+    <distribution name="Normal">
+        <parameters>
+            <parameter>
+                <name>Mean</name>
+                <value>0</value>
+            </parameter>
+            <parameter>
+                <name>Variance</name>
+                <value>1</value>
+            </parameter>
+        </parameters>
+        
+        <theory short-theory="sfdkjasdf ajsdklf jasdklf jaskldfj aksldjfkl">                
+                In probability theory, the normal (or Gaussian) distribution is a continuous probability distribution that is often used as a first approximation to describe real-valued random variables that tend to cluster around a single mean value. The graph of the associated probability density function is "bell"-shaped, and is known as the Gaussian function or bell curve.
+        </theory>
+        <image-links>
+            <image title="Normal Distribution PDF">
+                <link>res/images/dist/normal(pdf).png</link>
+            </image>
+            <image title="Normal Distribution CDF">
+                <link>res/images/dist/Normal(CDF).png</link>
+            </image>
+        </image-links>
+    </distribution>
+
+    <distribution name="Gamma">
+        <parameters>
+            <parameter>
+                <name>K</name>
+                <value>0</value>
+            </parameter>
+            <parameter>
+                <name>Theta</name>
+                <value>1</value>
+            </parameter>
+        </parameters>
+        <theory>
+                Gamma Distribution Theory
+        </theory>
+    </distribution>
+
+    <distribution name="Cauchy">
+        <parameters>
+            <parameter>
+                <name>Mean</name>
+                <value>0</value>
+            </parameter>
+            <parameter>
+                <name>Variance</name>
+                <value>1</value>
+            </parameter>
+        </parameters>
+        <theory>
+            Cauchy Distribution Theory
+        </theory>
+    </distribution>
+</distributioins>

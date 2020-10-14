@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Piecemaker>
+    <Contents>
+        <Image Source="contents/02.jpg" Title=""  headerText="Sunset" 
+      bodyText="The hour of night is near, as the skies get blood-filled">
+            <Text>&lt;h1&gt;Ace Engineer &lt;/h1&gt;&lt;p&gt;AceEngineer is an experienced and skilful team providing solutions in financial and engineering sectors. The team is highly experienced, qualified and motivated to find solutions for real world problems. AceEngineer through research & development and latest technologies shall provide cutting edge engineering solutions for various industries.</Text>
+        </Image>
+        <Image Source="contents/03.jpg" Title="">
+            <Text>&lt;h1&gt;Our Applications&lt;/h1&gt;&lt;p&gt;
+            Oil & Gas
+            Statistical Analysis
+            Stock Management
+            Structural Analysis
+            Data Manipulation
+            Fluid Mechanics
+            </Text>
+        </Image>		
+        <Image Source="contents/04.jpg" Title="">
+            <Text>&lt;h1&gt;Our work strategy&lt;/h1&gt;&lt;p&gt;AceEngineer employs client based solution approach that helps in understanding the exact requirements of our clients and deliver quality solutions. Knowledge of latest technologies and timely monitoring of our services helps offer top class solutions with ground breaking approaches. AceEngineer offers innovative solutions and helps organizations meet project requirements. AceEngineer's employees have been key to our success. Highly experienced and skilled workforce, with excellent organizational and leadership qualities helps AceEngineer deliver timely and economical solutions. &lt;/p&gt;</Text>
+        </Image>
+        <Image Source="contents/01.jpg" Title="">
+            <Text>&lt;h1&gt;Our Vision&lt;/h1&gt;&lt;p&gt;To combine aggressive strategic marketing with quality products and services at competitive prices to provide the best value to our customers with get done attitude. &lt;/p&gt;</Text>
+        </Image>
+    </Contents>
+    <Settings ImageWidth="960" ImageHeight="360" LoaderColor="0x333333" InnerSideColor="0x222222" SideShadowAlpha="0.8" DropShadowAlpha="0.7" DropShadowDistance="25" DropShadowScale="0.95" DropShadowBlurX="40" DropShadowBlurY="4" MenuDistanceX="20" MenuDistanceY="50" MenuColor1="0x999999" MenuColor2="0x333333" MenuColor3="0xFFFFFF" ControlSize="100" ControlDistance="20" ControlColor1="0x222222" ControlColor2="0xFFFFFF" ControlAlpha="0.8" ControlAlphaOver="0.95" ControlsX="450" ControlsY="280&#xD;&#xA;" ControlsAlign="center" TooltipHeight="30" TooltipColor="0x222222" TooltipTextY="5" TooltipTextStyle="P-Italic" TooltipTextColor="0xFFFFFF" TooltipMarginLeft="5" TooltipMarginRight="7" TooltipTextSharpness="50" TooltipTextThickness="-100" InfoWidth="400" InfoBackground="0xFFFFFF" InfoBackgroundAlpha="0.95" InfoMargin="15" InfoSharpness="0" InfoThickness="0" Autoplay="4" FieldOfView="45">
+    </Settings>
+    <Transitions>
+        <Transition Pieces="7" Time="1.4" Transition="easeInOutBack" Delay="0.12" DepthOffset="250" CubeDistance="30"></Transition>
+        <Transition Pieces="11" Time="1.2" Transition="easeInOutSine" Delay="0.08" DepthOffset="500" CubeDistance="15"></Transition>
+        <Transition Pieces="5" Time="1.5" Transition="easeInOutElastic" Delay="0.15" DepthOffset="350" CubeDistance="40"></Transition>
+        <Transition Pieces="9" Time="1.3" Transition="easeInOutQuart" Delay="0.1" DepthOffset="450" CubeDistance="20"></Transition>
+    </Transitions>
+</Piecemaker>

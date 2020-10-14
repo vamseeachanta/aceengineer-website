@@ -1,0 +1,662 @@
+ /* 
+    Document   : PMSStyle
+    Created on : Jan 18, 2012, 1:48:46 PM
+    Author     : Vamsee Achanta
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+body 
+{
+    color: #333;    
+    background: url('../images/bg.jpg') repeat-x fixed;    
+    background: #eceef1;
+
+    font-size: 13px;
+    width: 1000px;
+    margin: 0 auto;    
+
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+}
+
+
+.bodyLayout
+{
+    padding: 10px 5px;
+    /*    font-family: 'Bookman Old Style', serif;*/
+    background: white;
+    /*    background: #bbe0f8;*/
+    -webkit-box-shadow: 0px 0px 10px black;
+    -moz-box-shadow: 0px 0px 10px black;
+    box-shadow: 0px 0px 10px black;
+
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    /*    background: #eaeaea;*/    
+    width: 1000px;
+    table-layout:auto;
+}
+
+.hiddenField{
+    display: none;
+}
+
+hr{
+    -webkit-box-shadow: 0px 0px 1px red;
+}
+
+
+.empInfoDiv
+{
+    background: #4a8bf5;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+    -webkit-border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 4px black;
+    text-align: center;
+}
+
+.empInfoDiv .label
+{
+    width: 120px;
+    display: inline-block;
+    padding: 2px;
+    text-align: left;
+}
+.empInfoDiv .data
+{
+    width: 200px;
+    display: inline-block;
+    padding: 2px;
+    text-align: left;
+}
+
+.myList
+{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    max-height: 340px;
+    overflow: auto;
+}
+
+.myList li
+{
+    text-align: left;
+    padding: 5px 10px;
+    background: #f6f6f6;
+    color: black;
+    cursor: pointer;
+    overflow: hidden;
+    border-bottom: 1px solid lightgray;
+}
+
+.myList li.hover{
+    background: #e4effd;
+    color: #0046a6;
+}
+
+.myList li.selected
+{
+    background: #4a8cf6;
+    color: white;
+}
+
+.border10{
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;    
+}
+
+.top_border{
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-topleft: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.bottom_border
+{
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.left_border
+{
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.right_border
+{
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+/**
+* This CSS for Foldable Divs
+*/
+.foldableDiv{
+
+}
+
+.foldableDiv .foldHeader{
+    margin: 0px;
+    background: #3f3f3f;
+    background: url('../images/headBg.jpg') repeat-x;
+    color: white;
+    text-shadow: 0px 0px 2px #4a8bf5;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 5px;
+    cursor: pointer;
+    margin-bottom: 1px;
+}
+
+.foldableDiv .foldableContent
+{
+    margin-top: -1px;
+    background: #3480ca;
+    background: #e0e0e0;
+    text-align: left;
+    padding: 5px;
+}
+
+/**
+* Foldable Divs CSS Ends Here
+*/
+
+/**
+* Accoradation CSS Block Starts
+*/
+.accordationContainer
+{
+    width: 200px;    
+    overflow: auto;
+}
+
+.accordationContainer .accordationDiv
+{
+    margin: 0px;
+    padding: 0px;    
+}
+
+.accordationContainer .accordationHead{
+    margin: 0px;
+    background: #3f3f3f;
+    background: url('../images/headBg.jpg') repeat-x;
+    color: white;
+    text-shadow: 0px 0px 2px #4a8bf5;
+    font-weight: bold;
+    text-align: center;
+
+    line-height: 40px;
+    cursor: pointer;
+    margin-bottom: 1px;
+}
+
+.accordationContainer .accordationHead.hover
+{
+    background: url('../images/headBgHover.jpg') repeat-x;
+}
+
+
+.accordationContainer .accordationContent{
+    margin-top: -1px;
+    /*    height: 400px;*/    
+    background: #e0e0e0;
+}
+/**
+* Accoradation CSS Block Ends HEre
+*/
+
+/**
+* Chart CSS Starts Here
+*/
+.chartHead{
+    margin: auto;
+    background: #53c1fd;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+.chartBody
+{
+    background: #c7eafe;
+    padding: 10px;
+}
+/**
+*Chart CSS Ends Here
+*/
+
+
+/** Auto Fill CSS Starts Here */
+.autoFillDivCss
+{
+    padding: 10px;
+    background: #0080ad;
+    max-height: 300px;
+    overflow: scroll;
+    z-index: 9999;
+    color: white;
+
+    -webkit-border-radius: 10px;
+}
+
+.autoFillDivCss table td
+{
+    padding: 5px;
+}
+.autoFillDivCss table tr{
+    cursor: pointer;
+}
+.autoFillDivCss table tr.hover
+{
+    background: #afeaff;
+}            
+/** Auto Fill CSS Ends Here */
+
+
+/**
+* Tabs CSS Starts Here
+*/
+.TabsPanel{
+    position: relative;                
+}
+
+.TabsPanel div.tabs{
+    background: #4a8bf5;
+    padding: 1px 1px 0px 1px;    
+    overflow: hidden;
+}
+
+.TabsPanel div.tabs span{
+    position: relative;
+    display: inline-block;
+    padding: 5px 10px;
+    background: #f6f6f6;
+    border: 2px solid #00a0f9;
+    color: black;
+    cursor: pointer;
+}
+
+.TabsPanel div.tabs span.active
+{
+    top: 2px;
+    border-bottom: 0px;
+    color: black;
+    background: white;
+}
+
+.TabsPanel .tabsContainer
+{
+    padding: 10px;
+    background: white;
+    border: 2px solid #4a8bf5;
+    border-top: 0px;
+}
+
+.TabsPanel div.tabContent
+{
+    position: relative;                
+}
+/**
+* Tabs CSS Ends Here
+*/
+
+/**
+* Inpout Elements CSS Starts Here
+*/
+.formFields{
+
+}
+.formFields .label
+{
+    white-space: nowrap;
+    width: 150px;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.formFields input, textarea
+{
+    /** Overflow hack for IE */
+    overflow:visible;    
+    width: 200px;
+    padding: 4px 2px;
+    border: 1px solid #53c1fd;
+    outline: none;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.formFields select
+{
+    /** Overflow hack for IE */
+    overflow:visible;
+    width: 206px;
+    margin: 0px auto;
+    padding: 4px 2px;
+    border: 1px solid #53c1fd;    
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+.formFields .button, .button{
+    background: url('../images/button.jpg') repeat-x #1E82B5;
+    cursor: pointer;
+    border: 2px ridge #35a9fd;
+    color: #e8ecee;
+    padding: 5px;
+    font-weight: bold;
+}
+/**
+* Inpout Elements CSS Ends Here
+*/
+
+
+/**
+* the Following CSS for My Field set
+*/
+.myFieldset{
+
+    outline: 0px;    
+    border: 2px groove lightblue;
+
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.myFieldset legend{
+    padding: 5px 10px;
+    background: #188ece;
+    color: white;    
+    border: 1px groove lightblue;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+    text-shadow: 1px 1px 1px black;
+    -webkit-box-shadow: 0px 0px 2px black;
+    -moz-box-shadow: 0px 0px 2px black;
+    box-shadow: 0px 0px 2px black;
+}
+
+
+/**
+* This CSS for Menu Bar
+*/
+.menu{
+    margin: 0px;
+    padding: 0px;
+    display: block;
+    background: url('../images/menuBg.jpg') repeat-x;
+    list-style: none;
+    list-style-type: none;
+    height: 60px;
+
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.menu li{
+    float: left;
+}
+
+.menu li.outer{
+    width: 20px;
+}
+
+.menu li a{
+    color: white;    
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 60px;
+    display: block;
+    text-decoration: none;
+    padding: 0px 30px;
+}
+
+.menu li a.hover{    
+    color: white;
+    text-shadow: 0px 0px 3px white;    
+    background: url('../images/menuBgHover.jpg');
+}
+
+.menu li a.selected{    
+    color: black;
+    text-shadow: 0px 0px 1px blue;
+    background: url('../images/menuBgHover.jpg');
+}
+/**
+* Menu Bar CSS Ends Here
+*/
+
+.labelButton{
+    display: inline-block;
+    font-size: 12px;
+    color: white;
+    background: #599efd;
+    background: url('../images/button2.jpg') repeat-x #1E82B5;
+    padding: 5px;
+    cursor: pointer;
+    margin: 2px;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.labelButton:hover{
+    color: black;
+}
+
+
+.closeBtn{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 12px;
+    width:16px;
+    height:16px;
+    display: none;
+    background: #896767;
+    background: url('../images/closeButton.png');    
+    color: white;
+    cursor: pointer;    
+}
+
+.closeBtn:hover{    
+}
+
+.successInfo{
+    display: block;
+    height: 170px;
+    vertical-align: middle;
+    padding-left: 200px;
+    background: url('../images/icons/success.png') no-repeat left top;
+    color: green;        
+}
+
+.errorInfo{
+    display: block;
+    height: 180px;
+    background: url('../images/icons/warning.png') no-repeat left top;
+    padding-left: 200px;
+    color: red;
+    vertical-align: middle;
+}
+
+
+/**
+* this Css for Search box
+*/
+.searchBox{
+    background: #5ba6ca;
+    padding: 5px;
+}
+.searchBox input{
+    padding: 2px;
+    overflow: visible;
+    -webkit-border-radius: 5px;
+    outline: none;
+}
+
+/**
+* The following CSS for Data Table
+*/
+.dataTable{
+    border: 1px solid #b0b6bc;
+}
+.dataTable th{
+    background: #26b9ff;
+    color: white;
+    padding: 8px;
+    border: 1px solid #b0b6bc;
+}
+.dataTable td{
+    padding: 5px;
+    border: 1px solid #b0b6bc;
+}
+
+.dataTable td.even{
+    background: #cedffd;
+}
+
+.dataTable td.label{
+    text-align: right;
+    color: #8894ad;
+}
+
+.dataTable td.value{
+    text-align: left;
+    color: #3776fb;
+}
+
+/**
+* Strippy Table CSS
+*/ 
+
+.stripyTable
+{
+    overflow: auto;
+    background: white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.stripyTable .even{
+    background: #d8e6ff;
+    color: black;
+}
+.stripyTable .odd{
+    color: black;
+}
+
+.link{
+    color: #108bff;
+}
+
+.link:hover{
+    color: #003262;
+}
+
+
+/**
+* Tooltip CSS
+*/
+.toolTipCSS
+{
+    background : #a8d2f5;
+    -webkit-border-radius: 10px;
+    -webkit-box-shadow: 5px 5px 10px black;
+
+    overflow: hidden;
+}
+
+.toolTipCSS .content
+{                
+    padding: 10px 20px;
+    text-align: center;
+    background: #3f5b8d;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    color: white;                
+}
+
+.floatDiv{    
+    display: inline-block;
+    float: left;                
+}
+
+.mainHeading{
+    text-align: center;
+    background: #379df0;
+    margin: 0px;
+    padding: 10px;
+}
+
+
+.infoDiv{
+}
+
+.infoDiv .header{
+    padding: 2px;
+    margin: 0px;
+    text-align: center;
+    background: #5e666c;
+    background: url('../images/headBg.jpg') repeat-x;
+    color: white;
+    font-size: 80%;
+}
+
+.infoDiv .content{
+    background: #ebedee;
+    padding: 2px;
+}
+
+/* Notification CSS */
+.notification{
+    position: fixed;
+    top: -2px;
+    padding: 10px;
+    background: #2896fc;
+    color: white;
+
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+
+    -webkit-box-shadow: 2px 2px 2px black;
+    -moz-box-shadow: 2px 2px 2px black;
+    box-shadow: 2px 2px 2px black;
+}

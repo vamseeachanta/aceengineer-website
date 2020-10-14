@@ -1,0 +1,7 @@
+
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^google5e357da9fb173bdd\.aceengineer\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.google5e357da9fb173bdd\.aceengineer\.com$
+RewriteRule ^/?$ "http\:\/\/google\.com\/" [R=301,L]
+

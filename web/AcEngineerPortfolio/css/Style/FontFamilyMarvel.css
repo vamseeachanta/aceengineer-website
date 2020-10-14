@@ -1,0 +1,19 @@
+/* latin */
+/*@font-face {
+  font-family: 'Marvel';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Marvel'), local('Marvel-Regular'), url(http://fonts.gstatic.com/s/marvel/v6/789UQI4gZlFVSw9fHCriRQ.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}*/
+
+
+@import "Style/789UQI4gZlFVSw9fHCriRQ.woff2";
+@import "Style/L2PPfTze83vDMefumW3xvw.woff";
+@font-face {
+  font-family: 'Marvel';
+  font-style: normal;
+  font-weight: 400;
+  /*src: local('Marvel'), local('Marvel-Regular'), url(http://fonts.gstatic.com/s/marvel/v6/789UQI4gZlFVSw9fHCriRQ.woff2) format('woff2'), url(http://fonts.gstatic.com/s/marvel/v6/L2PPfTze83vDMefumW3xvw.woff) format('woff');*/
+  src: local('Marvel'), local('Marvel-Regular'), url(http://fonts.gstatic.com/s/marvel/v6/789UQI4gZlFVSw9fHCriRQ.woff2) format('woff2'), url(http://fonts.gstatic.com/s/marvel/v6/L2PPfTze83vDMefumW3xvw.woff) format('woff');
+}

@@ -1,0 +1,280 @@
+/* 
+    Document   : timesheet
+    Created on : Jan 10, 2012, 11:57:57 AM
+    Author     : Vamsee Achanta
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.timeSheetDiv
+{
+    font-family: serif;
+    font-size: 11px;
+    background: #d4d4d4;
+    position: relative;
+    overflow: auto;    
+    border: 1px solid #cccccc;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+
+    -webkit-box-shadow: 0px 0px 5px black;
+}
+
+.timeSheet{
+
+}
+
+.timeSheetDiv .sheetHeading
+{
+    margin: 0px;
+    padding: 5px;
+    text-align: center;
+    font-size: 16px;
+    background: #757575;
+    background: url('../images/button2.jpg') repeat-x;
+    color: #3d3f40;
+    color: #ffffff;
+}
+
+.timeSheet td
+{
+    /*    width: 100px;
+        height: 80px;*/
+
+    /*    background: #f5f5f5;*/    
+    border: 1px solid #c9daea;
+    background: #e9ebeb;
+    background: white;    
+    border-collapse: collapse;
+    vertical-align: middle;
+    text-align: center;
+    color: black;
+    /*                -webkit-border-radius: 4px;*/
+    cursor: pointer;                
+}
+
+/** */
+.timeSheet td.removal
+{
+    position: absolute;
+    background: url('res/images/icons/close_button.png') no-repeat right top;
+    color: red;
+    z-index: 2000;
+}
+
+td.hover
+{                
+    background: #4a8bf5;
+    color: white;
+}
+
+
+.timeSheet .projectTitle
+{
+    background: #efefef;    
+    color: black;
+}
+
+.timeSheet tfoot
+{
+    margin-top: 10px;
+    border: 10px solid red;
+}
+
+.timeSheet.msgLabel{
+    font-size: 20px;
+}
+
+.timeSheet tfoot th, .timeSheet tfoot td, .timeSheet td.headCell, .timeSheet th.headCell
+{
+    margin-top: 10px;
+    background: #288bf4;
+    background: #4a8bf5;
+    background: #444543;
+    background: #305d77;
+    background: #26b9ff;
+    color: white;
+}
+
+.timeSheet td.total{
+    font-weight: bold;
+    color: black;
+}
+
+.timeSheet td.mainTotal{
+    font-weight: bold;
+    font-size: 1.4em;
+    background: #014f7d;
+    color: white;
+}
+
+.timeSheet th.hover{
+    background: #abd2e7;
+    color: black;
+}
+
+.timeSheet th
+{
+    /*    width: 100px;
+        height: 80px;*/
+    /*    padding: 15px 3px;*/
+    padding: 5px;
+    color: white;
+    /*    font-size: 11px;*/
+    background: #444543;
+    background: #305d77;
+    background: #26b9ff;
+    /*    background: #4a8bf5;*/
+    /*    background: url('../images/headBg.jpg') repeat-x #CFEAF8;*/
+    border: 1px solid #c9daea;
+    cursor: pointer;                
+
+}
+
+.timeSheet .toDay, .TSlegend .toDay
+{
+    background: #e0f1ba;
+    color: black;
+}
+
+.timeSheet .satuarday, .TSlegend .satuarday
+{
+    background: #aad1ee;
+    background: #efefef;
+}
+
+.timeSheet .sunday, .TSlegend .sunday
+{
+    background: #638faf;
+    background: #999999;
+}
+
+.timeSheetDiv .unSaved
+{
+    padding: 5px;
+    background: #c72424;
+    color: white;
+}
+
+.timeSheetDiv .saved
+{
+    background: #12a212;
+    color: black;
+}
+
+.timeSheet .controls
+{
+    /*    background: url('res/images/thBg.jpg') repeat-x #041E4F;*/
+
+}
+
+
+#timeSheetControls
+{
+    text-align: right;
+}
+#timeSheetControls .control
+{
+    padding: 8px 20px;
+    background: url('../images/headBg.jpg') repeat-x #041E4F bottom;
+    background-position: center;
+    color: black;
+    display: inline-block;
+    cursor: pointer;    
+}
+
+#timeSheetControls span.active
+{
+    color: white;
+    font-weight: bold;
+}
+
+#timeSheetControls span:hover
+{
+    /*    background: url('../images/headBgHover.jpg') repeat-x #041E4F bottom;*/
+    color: white;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    text-shadow: 0px 0px 4px black;
+}
+
+.closeBtn
+{
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    color: red;
+    right:0px;
+    top:0px;    
+    font-size: 10px;
+    line-height: 12px;
+    /*    -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        border: 1px solid #840000;*/
+}
+
+.closeBtnHover{
+    background: #db0000;
+    color: white;
+    -webkit-box-shadow: 0px 0px 4px black;    
+    -moz-box-shadow: 0px 0px 4px black;
+}
+
+
+/**
+* This Info Div for Displaying the Day Information
+*/
+.TSinfoDiv
+{
+    left:0px;
+    top:0px;    
+    position: absolute;
+    font-size: 14px;
+    padding: 10px;
+    background : #4dcae7;
+    color: white;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+
+    -webkit-box-shadow: 2px 2px 6px black;
+    -moz-box-shadow: 2px 2px 6px black;
+    box-shadow: 2px 2px 6px black;
+}
+
+
+/**
+* This is for Day Info Object RTable CSS
+*/
+.TSinfoTab
+{}
+
+.TSinfoTab th{
+    text-decoration: underline;
+}
+
+.TSinfoTab td{
+    text-align: center;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+
+/** 
+*Timesheet Legend CSS
+*/
+.TSlegend{
+    text-align: right;
+    background: white;
+}
+
+.TSlegend span{
+    padding: 10px;
+    display: inline-block;
+}

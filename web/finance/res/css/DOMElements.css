@@ -1,0 +1,151 @@
+/* 
+    Document   : DOMElements
+    Created on : Mar 2, 2012, 9:42:45 AM
+    Author     : Vamsee Achanta
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+/**
+* Tabs CSS Starts Here
+*/
+.TabsPanel{
+    position: relative;                
+}
+
+.TabsPanel div.tabs{
+/*    background: #96999c;*/
+    background: #80B3DF;
+    padding: 5px 5px 0px 5px;    
+    /*overflow: hidden;*/
+}
+
+.TabsPanel div.tabs span{
+    position: relative;
+    display: inline-block;
+    padding: 8px 14px;
+    background: #f6f6f6;
+    background: url('../images/button2.jpg') repeat-x left;
+/*    border: 0px solid #96999c;*/
+    border: 0px solid #80B3DF;
+    color: white;
+    cursor: pointer;
+
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-topleft: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+
+    transition: all 1s;
+    -moz-transition: all 1s; /* Firefox 4 */
+    -webkit-transition: all 1s; /* Safari and Chrome */
+    -o-transition: all 1s; /* Opera */
+}
+
+.TabsPanel div.tabs span:hover{
+    background: url('../images/button_bg.jpg') repeat-x left;
+    color: black;
+}
+
+.TabsPanel div.tabs span.active
+{
+    top: 2px;
+    border-bottom: 0px;
+    color: black;
+    background: white;    
+}
+
+.TabsPanel .tabsContainer
+{
+    padding: 10px;
+/*    padding-top: -5px;*/
+    background: white;
+/*    border: 2px solid #96999c;*/
+    border: 2px solid #80B3DF;
+    border-top: 0px;
+}
+
+.TabsPanel div.tabContent
+{
+/*    position: relative;              */
+}
+/**
+* Tabs CSS Ends Here
+*/
+/*
+    Document   : DOMElements
+    Created on : Mar 2, 2012, 9:42:45 AM
+    Author     : Vamsee Achanta
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/**
+* Tabs CSS Starts Here
+*/
+.TabsPanel{
+    position: relative;
+}
+
+.TabsPanel div.tabs1{
+/*    background: #96999c;*/
+    background: #80B3DF;
+    padding: 5px 5px 0px 5px;
+    overflow: hidden;
+}
+
+.TabsPanel div.tabs1 span{
+    position: relative;
+    display: inline-block;
+    padding: 8px 14px;
+    background: #f6f6f6;
+    background: url('../images/button2.jpg') repeat-x left;
+/*    border: 0px solid #96999c;*/
+    border: 0px solid #80B3DF;
+    color: white;
+    cursor: pointer;
+
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-topleft: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.TabsPanel div.tabs1 span:hover{
+    background: url('../images/button_bg.jpg') repeat-x left;
+    color: black;
+}
+
+.TabsPanel div.tabs1 span.active
+{
+    top: 2px;
+    border-bottom: 0px;
+    color: black;
+    background: white;
+}
+
+.TabsPanel .tabsContainer
+{
+    padding: 10px;
+    background: white;
+/*    border: 2px solid #96999c;*/
+    border: 2px solid #80B3DF;
+    border-top: 0px;
+}
+
+.TabsPanel div.tabContent
+{
+    position: relative;
+}
+/**
+* Tabs CSS Ends Here
+*/

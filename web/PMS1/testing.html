@@ -1,0 +1,55 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">        
+
+        <link rel="stylesheet" type="text/css" href="res/css/calendar.css"/>
+
+        <script type="text/javascript" src="res/js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="res/js/AceCharting.js"></script>
+        <script type="text/javascript" src="res/js/date.js"></script>
+
+        <script type="text/javascript" src="res/js/Core.js"></script>
+
+
+        <script type="text/javascript">
+          
+            
+            $(function()
+            {
+                var a = [1,2,3,4,5];
+                a.splice(3, 1);
+                alert(a);
+            });
+        </script>
+
+        <style type="text/css">
+            #chartDiv{
+                position: absolute;
+                display: none;
+                padding: 10px;
+                left: 200px;
+                width: 800px;
+            }
+            .myDiv{
+                padding: 10px;
+                background: #88b6c3;
+                margin: 5px;
+                display: inline-block;
+                float: left;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div class="myDiv">One</div>
+            <div class="myDiv">Two</div>
+            <div class="myDiv">Three</div>            
+        </div>
+    </body>
+</html>

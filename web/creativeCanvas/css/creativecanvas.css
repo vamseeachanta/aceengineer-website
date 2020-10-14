@@ -1,0 +1,129 @@
+/* 
+    Document   : creativecanvas
+    Created on : Dec 15, 2012, 9:46:36 AM
+    Author     : PEPL NEW
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body {
+    background-color: snow;
+    margin: 0px;
+    padding: 0px;
+    font-family: cursive;
+}
+.layout{
+    width: 990px;
+    border-left:  5px solid #EFEFEF;
+    border-right: 5px solid #EFEFEF;
+    /*                -moz-border-radius: 5px;
+                    -webkit-border-radius:  5px;
+                    -o-border-radius:  5px;
+                    border-radius: 5px;*/
+    box-shadow: 0px 0px 3px #fff;
+    background-color:#214B6B;
+}
+canvas {
+    border: 1px solid #9C9898;
+}
+.button{
+
+    color: #EFEFEF;
+    -moz-border-radius: 5px;
+    -webkit-border-radius:  5px;
+    -o-border-radius:  5px;
+    border-radius: 5px;
+    /* Safari 4-5, Chrome 1-9 */
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1a82f7), to(#2F2727));
+    /* Safari 5.1, Chrome 10+ */
+    background: -webkit-linear-gradient(top, #2F2727, #1a82f7);
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, #2F2727, #1a82f7);
+    /* IE 10 */
+    background: -ms-linear-gradient(top, #2F2727, #1a82f7);
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(top, #2F2727, #1a82f7);
+}
+.header{
+    color: whitesmoke;
+}
+h1,h4{
+    text-shadow: 0px 0px 2px #fff;
+    color: whitesmoke;
+    margin-top: -5px;
+}
+
+
+#container{
+    background-color:#fff ; 
+    height: 500px; 
+    width: 700px;
+    border: 5px solid #5e5e5e;
+    box-shadow: 0px 0px 5px #fff;
+    -moz-border-radius: 10px;
+    -webkit-border-radius:  10px;
+    -o-border-radius:  10px;
+    border-radius: 10px;
+}
+
+.footer{
+    color: whitesmoke;
+    font-weight: bold;
+}
+
+#showData{
+    background-color: #EFEFEF;
+    height: 600px;
+    width: 250px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius:  10px;
+    -o-border-radius:  10px;
+    border-radius: 10px;
+    vertical-align: middle;
+    overflow: scroll;
+}
+
+.txtBox{
+    box-shadow: 0px 0px 3px #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius:  5px;
+    -o-border-radius:  5px;
+    border-radius: 5px;
+    font-family: cursive;
+}
+label{
+    color: whitesmoke;
+}
+.pList{
+    color: #2F2727;
+    /*background-color: #fff;*/
+}
+.pList:hover{
+    font-weight: bolder;
+    cursor: pointer;
+}
+.pListImage{
+    color: #2F2727;
+    /*background-color: #fff;*/
+}
+/*.pListImage:hover{
+    font-weight: bolder;
+    cursor: pointer;
+}*/
+
+.dList{
+    color: #2F2727;
+    /*// background-color: red;*/
+
+}
+.dList:hover{
+    font-weight: bolder;
+    cursor: pointer;
+}
+.pListActive{
+    font-weight: bold;
+}
+.pListDeactive{
+    font-weight: normal;
+}
+

@@ -1,0 +1,626 @@
+/*
+    Document   : sample
+    Created on : 3 May, 2011, 10:56:14 AM
+    Author     : PEPL
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+/*
+root {
+    display: block;
+}*/
+
+
+* {
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    font-size: 13px;
+   
+}
+/**Drop down menu css
+*/
+.dropMenu
+{
+    padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+    width: 1000px;
+    height: 50px;
+    background-color:#EEEEEE;
+    background: -webkit-gradient(linear, left top, left bottom, from(#EEEEEE), to(#000));
+    background: -moz-linear-gradient(top,  #EEEEEE,  #000);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEEEEE', endColorstr='#000000');
+/*    font-family: Arial,Helvetica,sans-serif;*/
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    -border-radius:10px;
+
+}
+.dropMenu li
+{
+    width: 250px;
+    height: 40px;
+    float: left;
+}
+.dropMenu li a
+{
+    text-decoration: none;
+    vertical-align: middle;
+    padding-top: 20px;
+    font-size: 20px;
+    display: block;
+    width: 250px;
+    height: 30px;
+    text-align:  center;
+    color:white;
+
+}
+.dropMenu li a:hover
+{
+    color: lightgray;
+    text-shadow: 2px 2px 2px black;
+}
+
+.dropMenu li ul
+{
+    position:relative;
+    list-style-type: none;
+    display: none;
+    width: 250px;
+    padding: 0px;
+    margin: 0px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    -border-radius:10px;
+}
+.dropMenu li ul a
+{
+    padding-top: 10px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#EEEEEE), to(#000000));
+    background: -moz-linear-gradient(top,  #EEEEEE,  #000000);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEEEEE', endColorstr='#000000');
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    -border-radius:10px;
+}
+
+/*end of the drop down menu css*/
+
+body {
+    background: url('../images/bg.jpg') fixed repeat-x;
+/*    background:repeat scroll 0 0 red;*/
+    margin: 0;
+    padding: 0;
+}
+body,  input, select, textarea {
+    color: #555555;
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    font-size: 12px;
+    line-height: 18px;
+}
+a:link {
+    color: #1C72A5;
+    text-decoration: none;
+}
+a:visited {
+    color: #1C72A5;
+    text-decoration: none;
+}
+a:hover {
+    color: #1C72A5;
+    text-decoration: underline;
+}
+a img {
+    border: medium none;
+}
+img.thumb {
+    border: 1px solid #EEEEEE;
+    padding: 5px;
+}
+h1 {
+    color: #333333;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: left;
+}
+h2 {
+    color: #333333;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px 0;
+    text-align: left;
+}
+h2.black {
+    color: #333333;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px 0;
+    text-align: left;
+}
+h3 {
+    background-color: #EEEEEE;
+    border-bottom: 1px solid #DDDDDD;
+    color: #333333;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px;
+    text-align: left;
+}
+
+h3 a:hover
+{
+    background-color: #7D942D;
+    display: block;
+    text-decoration: none;
+    color: aqua;
+    -moz-box-shadow:0px 5px 5px black;
+
+}
+.small {
+    color: #555555;
+    font-size: 12px;
+    margin: 0;
+    padding: 0 0 10px;
+    text-align: left;
+}
+.border {
+    border-top: 1px solid #EEEEEE;
+    margin-top: 15px;
+    padding-top: 15px;
+}
+i {
+    color: #555555;
+}
+.contact{
+    font-size: 16pt;
+
+}
+b {
+}
+p {
+    margin: 0;
+    padding: 0  0 10px 0;
+    font-size: 13px;
+    text-align: justify;
+    word-spacing: 0.1em;
+}
+ul {
+    text-align: justify;
+}
+.description td{
+    font-size: 12pt;
+    text-align: justify;
+}
+.button {
+    color: #555555;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 2px 6px;
+}
+.highlight {
+    background-color: #F5F3DE;
+    border: 1px solid #DDDAB5;
+    color: #333333;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    padding: 20px;
+}
+
+.space {
+    margin: 0 0 0 10px;
+}
+.noborder {
+    border: medium none;
+}
+.entire {
+    background: -webkit-gradient(linear, left top, left bottom, from(white), to(#f5f9f9));
+    background: -moz-linear-gradient(top,  white,  #f5f9f9);
+    background: -o-linear-gradient(rgb(255,255,255),rgb(245,249,249));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='white', endColorstr='#f5f9f9');
+    /*    background-color: #dae5e6;*/
+    border: 10px   solid #DDDDDD;
+    margin: 15px 0;
+    padding: 25px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    -border-radius:10px;
+
+}
+.header {
+    border-bottom: 1px solid #EEEEEE;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+}
+.nav {
+    margin-top: 3px;
+}
+.breadcrumb {
+    border-bottom: 1px solid #EEEEEE;
+    color: #999999;
+    padding: 15px 0;
+}
+.breadcrumb a {
+    color: #1C72A5;
+    font-weight: normal;
+}
+.main {
+    padding: 25px 0;
+}
+
+.main td
+{
+    padding-left: 10px;
+}
+.feature {
+    padding: 0 0 20px;
+}
+.prefooter {
+    border-top: 1px solid #EEEEEE;
+    margin-top: 10px;
+    padding-top: 25px;
+}
+#footer
+{
+    clear: both;
+    color: #272900;
+    text-align: right;
+    font-size: 90%;
+    background: #81a0a3;
+    padding: 10px;
+}
+
+
+
+.footer {
+    background-color: #eff4f5;
+    border-top: 5px solid #7D942D;
+    line-height: 5px;
+    margin-top: 10px;
+    padding: 5px 15px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    -border-radius:10px;
+}
+.rightbar {
+    border-left: 1px solid #EEEEEE;
+    margin-left: 25px;
+    padding-left: 25px;
+    text-align: left;
+    width: 190px;
+}
+.dcdiv {
+    background: none repeat scroll 0 0 #EEEEEE;
+    margin: 10px 0;
+    padding: 15px;
+}
+/*.home-box {
+    background-image: url("images/feat-bg.jpg");
+    border: 4px solid #EEEEEE;
+    margin-bottom: 10px;
+    padding: 15px 10px 15px 20px;
+    text-align: left;
+}
+.home-box li {
+    background-image: url("images/tick.gif");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    color: #B7D05E;
+    font-size: 12px;
+    line-height: 17px;
+    padding: 1px 0 0 20px;
+}
+.home-box ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0 0 0 5px;
+    text-align: left;
+}
+.home-bg {
+    background-color: #EEEEEE;
+}*/
+/*.plans {
+    background-color: #FCFCFC;
+    border: 1px solid #EEEEEE;
+    margin-bottom: 15px;
+    padding: 1px;
+    text-align: left;
+}
+.plans li {
+    background-image: url("images/bullet.gif");
+    background-position: 0 4px;
+    background-repeat: no-repeat;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 0 0 0 20px;
+}
+.plans ul ul {
+    background-image: url("images/shield.gif");
+    background-position: 0 3px;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+}
+.plans ul ul li {
+    background-image: none;
+    color: #F37725;
+    padding: 0 0 0 20px;
+}
+.plans ul ul li a {
+    color: #F37725;
+}
+.plans ul {
+    list-style: none outside none;
+    margin: 10px 0;
+    padding: 0 0 0 5px;
+    text-align: left;
+}
+.planshead {
+    background-color: #B7D05E;
+    padding: 12px;
+}
+.plansfoot {
+    background-color: #EEEEEE;
+    padding: 10px 12px;
+}
+.plansfoot a {
+    color: #1C72A5;
+    font-weight: bold;
+}*/
+#feature1 {
+    border: 4px solid #EEEEEE;
+    margin-bottom: 10px;
+    padding: 1px;
+}
+#feature2 {
+    border: 4px solid #EEEEEE;
+    margin-bottom: 10px;
+    padding: 1px;
+}
+#feature3 {
+    border: 4px solid #EEEEEE;
+    margin-bottom: 10px;
+    padding: 1px;
+}
+#feature4 {
+    margin-bottom: 0;
+}
+#feature4 img {
+    margin-bottom: 5px;
+}
+.cplist li {
+    padding: 0 0 10px;
+    text-align: justify;
+}
+#sub li {
+    background-image: url("images/page.gif");
+    background-position: 0 9px;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid #EEEEEE;
+    padding: 5px 0 5px 20px;
+}
+#sub li a {
+    text-decoration: none;
+}
+#sub ul {
+    list-style: none outside none;
+    margin: 2px 0 20px;
+    overflow: hidden;
+    padding: 0;
+    text-align: left;
+    width: 180px;
+}
+#sub li a:hover {
+    color: #CC6600;
+    text-decoration: underline;
+}
+
+/**
+This is for the applications blocks
+*/
+.appBlocksTable
+{
+    margin: 0px;
+    padding: 0px;
+}
+.appBlocksTable td
+{
+    vertical-align: top;
+    padding: 5px;
+    width: 620px;
+    height: auto;
+    border: 2px solid gray;
+}
+.appBlocksTable a
+{
+    text-decoration: none;
+}
+
+
+.appBlocksTable td a.appHeading
+{
+    padding: 10px 5px;
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+    background-color: gray;
+    display: block;
+
+}
+
+.appBlocksTable td a.appHeading:hover
+{
+    color:black;
+    background-color: lightgray;
+
+}
+.appBlocksTable td div.appContent
+{
+    display: none;
+    padding: 10px 5px;
+    border: 1px solid black;
+}
+.appBlocksTable td a.appLink
+{
+    text-align: right;
+}
+
+
+/** --End of the section--     */
+
+.otherAreas a:hover
+{
+    font-weight: bold;
+    font-size: large;
+}
+
+/****************** Sub Home page sytle *******************/
+.labelClass{
+    padding: 10px;
+    font-size:large;
+    position: relative;
+    cursor: pointer;
+}
+.roudedImg{
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    -border-radius:10px;
+}
+.appLink{
+    /*                width: 200px;
+                    height: 100px;
+                    border: 2px solid lightgrey;*/
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    -border-radius:10px;
+}
+
+.appLink table td{
+    border: 1px solid gray;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    -border-radius:10px;
+    background: white;
+}
+
+.appLink table td:hover{
+    -webkit-box-shadow:0px 0px 10px black;
+    -moz-box-shadow:0px 5px 10px black;
+    background: #DDDDDD;
+}
+
+.otherAreaLinks{
+    vertical-align: top;
+    padding: 10px;
+    margin: 5px 10px;
+    border: 1px solid gray;
+    background: white;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    -border-radius:10px;
+    -webkit-box-shadow:0px 0px 5px black;
+    -moz-box-shadow:0px 0px 5px black;
+}
+.otherAreaLinks a{
+    font-size: large;
+    line-height: 25px;
+    border-bottom:  1px solid lightgray;
+}
+
+.otherAreaLinks a:hover{
+    color: #FC740E;
+/*    font-weight: bold;*/
+    /*                -webkit-box-shadow:0px 0px 2px black;
+                    -moz-box-shadow:0px 0px 2px black;*/
+}
+
+hr{
+    -webkit-box-shadow:0px 0px 2px black;
+    -moz-box-shadow:0px 0px 2px black;
+}
+
+/******************End of sub Home page Style *************/
+
+
+/**     slide show CSS **/
+/*
+body{
+    font-family:arial;
+}
+
+.clear {
+    clear:both
+}
+
+#gallery {
+    position:relative;
+    height:300px
+}
+#gallery a {
+    float:left;
+    position:absolute;
+}
+
+#gallery a img {
+    border:none;
+}
+
+#gallery a.show {
+    z-index:500
+}
+
+#gallery .caption {
+    z-index:600; 
+    background-color:#000; 
+    color:#ffffff; 
+    height:60px; 
+    width:100%; 
+    position:absolute;
+    bottom:0;
+}
+
+#gallery .caption .content {
+    margin:5px
+}
+
+#gallery .caption .content h3 {
+    margin:0;
+    padding:0;
+    color:#1DCCEF;
+}*/
+/**  End of slide show CSS       */
+.homeButtoninApp{
+
+}
+
+.homeButtoninApp td{
+
+}
+
+.homeButtoninApp td a{
+
+    padding: 10px;
+    background-color: lightgray;
+    text-decoration: none;
+    font-weight: bold;
+    -web-kit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+.homeButtoninApp td a:hover{
+    background-color: lightblue;
+    font-weight: bolder ;
+
+}
+
+
+
+/*****End of Home tab style in apps ****/

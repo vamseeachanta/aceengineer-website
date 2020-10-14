@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+
+<struts-config>
+    <form-beans>
+        <form-bean name="ManageTimeForm" type="com.pms.ManageTimeForm"/>
+        <form-bean name="NavigatorForm" type="com.pms.ts.NavigatorForm"/>
+        <form-bean name="ProjectForm" type="com.pms.ProjectForm"/>
+        <form-bean name="NewStrutsActionForm" type="com.pms.NewStrutsActionForm"/>
+        <form-bean name="OverallProjectList" type="com.pms.OverallProjectList"/>
+        <form-bean name="GetSelectedUserFormBean" type="com.pms.GetSelectedUserFormBean"/>
+        <form-bean name="BusinessApprovalFormBean" type="com.pms.BusinessApprovalFormBean"/>
+        <form-bean name="CreateProjectFormBean" type="com.pms.CreateProjectFormBean"/>
+        <form-bean name="RegistrationFormBean" type="com.pms.RegistrationFormBean"/>
+        <form-bean name="LoginActionFormBean" type="com.pms.LoginActionFormBean"/>
+        
+    </form-beans>
+    
+    <global-exceptions>
+        
+    </global-exceptions>
+
+    <global-forwards>
+        <forward name="welcome"  path="/Welcome.do"/>
+    </global-forwards>
+
+    <action-mappings>
+        <action input="/ProjectManageEmployees.jsp" name="CreateProjectFormBean" path="/NewProject" scope="request" type="com.pms.CreateProjectAction" validate="false">
+            <forward name="edit" path="/EditProjectProfile.jsp"/>
+            <forward name="success" path="/projectSuccess.jsp"/>
+            <forward name="home" path="/Home.jsp"/>
+            <forward name="failure" path="/ProjectManageEmployees.jsp"/>
+        </action>
+        
+        <action input="/empRegistration.jsp" name="RegistrationFormBean" path="/Registration" scope="request" type="com.pms.RegistrationAction" validate="false">
+            <forward name="selfPage" path="/empRegistration.jsp"/>
+            <forward name="homePage" path="/Home.jsp"/>
+            <forward name="viewPage" path="/empView.jsp"/>
+        </action>
+        <action input="/Login.jsp" name="LoginActionFormBean" path="/HomePage" scope="session" type="com.pms.LoginAction">
+            <forward name="success" path="/Home.jsp"/>
+            <forward name="failure" path="/Login.jsp"/>
+            <forward name="GOTOEMPLOYEE" path="/Employee.jsp"/>
+        </action>
+        <action path="/timeSheetHandler" type="com.pms.ts.TimeSheetHandler"/>
+        <action input="/Home.jsp" name="GetSelectedUserFormBean" path="/GetName" scope="request" type="com.pms.GetUserAction" validate="false">
+<!--            <forward name="success" path="/Home.jsp"/>-->
+        </action>
+        
+        <action input="/TimeSheet.jsp" name="BusinessApprovalFormBean" path="/TimeSheetHandler" scope="request" type="com.pms.TimeSheetHandler" validate="false"/>
+        <action input="/BussinessApprovalForm.jsp" name="BusinessApprovalFormBean" path="/BusinessApproval" scope="request" type="com.pms.BusinessApprovalAction" validate="false">
+            <forward name="success" path="/Home.jsp"/>
+            <forward name="edit" path="/BussinessApprovalForm.jsp"/>
+            <forward name="selfPage" path="/BussinessApprovalForm.jsp"/>
+        </action>
+        <action input="/ProjectManageEmployees.jsp" name="ProjectForm" path="/projectAction" scope="request" type="com.pms.ProjectAction" validate="false">
+            <forward name="edit" path="/ProjectManageEmployees.jsp"/>
+            <forward name="success" path="/Home.jsp"/>
+        </action>
+        <action input="/" name="ManageTimeForm" path="/manageTimeAction" scope="request" type="com.pms.ManageTimeAction" validate="false">
+            <forward name="self" path="/manageTimeSheet.jsp"/>
+            <forward name="parent" path="/test.jsp"/>
+        </action>
+        <action path="/salaryHandler" type="com.pms.SalarySheetHandler"/>
+        <action input="/" name="ManageTimeForm" path="/reports" scope="session" type="com.pms.ReportMaker"/>
+        <action path="/manageTimeHandler" type="com.pms.ManageTimeHandler"/>
+        <action path="/pdfHandler" type="com.pms.ts.PDFHandler"/>
+        
+        <action type="com.pms.BusinessApprovalHandler" path="/businessApprovalHandler"/>
+        <action path="/employeeHandler" type="com.pms.EmployeeHandler"/>
+        <action path="/projectHandler" type="com.pms.ProjectHandler"/>
+        <action path="/UpdateEmployeePage" type="com.pms.UpdateEmployeePage"/>
+        <action path="/AddNewProject" type="com.pms.AddNewProject"/>
+        <action input="/OverallProjectList.jsp" name="OverallProjectListFormBean" path="/OverallProjectListAction" scope="request" type="com.pms.OverallProjectListAction" validate="false"/>
+        
+        <action path="/imageWriter" type="com.util.ImageWriter"/>
+        
+        <action path="/Welcome" forward="/welcomeStruts.jsp"/>
+    </action-mappings>
+    
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+    <message-resources parameter="com/myapp/struts/ApplicationResource"/>    
+    
+    <!-- ========================= Tiles plugin ===============================-->
+    <!--
+    This plugin initialize Tiles definition factory. This later can takes some
+    parameters explained here after. The plugin first read parameters from
+    web.xml, thenoverload them with parameters defined here. All parameters
+    are optional.
+    The plugin should be declared in each struts-config file.
+    - definitions-config: (optional)
+    Specify configuration file names. There can be several comma
+    separated file names (default: ?? )
+    - moduleAware: (optional - struts1.1)
+    Specify if the Tiles definition factory is module aware. If true
+    (default), there will be one factory for each Struts module.
+    If false, there will be one common factory for all module. In this
+    later case, it is still needed to declare one plugin per module.
+    The factory will be initialized with parameters found in the first
+    initialized plugin (generally the one associated with the default
+    module).
+    true : One factory per module. (default)
+    false : one single shared factory for all modules
+    - definitions-parser-validate: (optional)
+    Specify if xml parser should validate the Tiles configuration file.
+    true : validate. DTD should be specified in file header (default)
+    false : no validation
+
+    Paths found in Tiles definitions are relative to the main context.
+    -->
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />      
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+    
+    <!-- ========================= Validator plugin ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+            property="pathnames"
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+  
+</struts-config>

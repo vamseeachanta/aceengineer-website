@@ -1,0 +1,41 @@
+/* 
+    Document   : salarySheet
+    Created on : Jan 12, 2012, 1:11:20 PM
+    Author     : Vamsee Achanta
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.salarySheet{
+    /*    font-family: "Times New Roman", Courier, Garamond, serif;*/
+    background: whitesmoke;
+    padding: 10px;
+    border-bottom-right-radius:10px;
+    border-bottom-left-radius:10px;
+    -o-border-bottom-right-radius:10px;
+    -o-border-bottom-left-radius:10px;
+    -webkit-border-bottom-right-radius:10px;
+    -webkit-border-bottom-left-radius:10px;
+}
+
+.salarySheet th
+{
+    background: #0080ad;
+    color: white;
+    padding: 4px 10px;
+}
+
+.salarySheet td{
+    padding: 4px;
+}
+
+.salarySheet td.total
+{
+    background: green;
+    color: white;
+}

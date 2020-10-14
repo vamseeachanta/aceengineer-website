@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+
+<struts-config>
+    <form-beans>
+        
+        <!-- Statistical Analysis Form Beans  --> 
+        <form-bean name="DataFittingForm" type="com.ace.statAnalysis.DataFittingForm"/>
+        <form-bean name="FittingForm" type="com.ace.statAnalysis.FittingForm"/>
+        <!-- Close of Statistical Analysis Form Bean  --> 
+    </form-beans>
+    
+    <global-exceptions>
+    
+    </global-exceptions>
+
+    <global-forwards>
+        <forward name="welcome"  path="/Welcome.do"/>
+    </global-forwards>
+
+    <action-mappings>
+        <action path="/stockSymbolSuggester" type="com.ace.stockAnalysis.StockSymbolSuggester"/>
+        <action path="/historicalPrices" type="com.ace.stockAnalysis.HistoricalDataRetriver"/>
+        <action path="/Welcome" forward="/welcomeStruts.jsp"/>
+        
+        <!-- Statistical Analysis Action Class Paths  --> 
+        <action input=""  path="/dataFittingAction" scope="request" type="com.app.DataFittingAction">
+            <forward name="fail" path="/errorPage.jsp"/>
+        </action>
+        <action input="/" name="" path="/login" scope="request" type="com.app.common.LoginAction">
+            <forward name="success" path="/applications.jsp"/> 
+            <forward name="failure" path="/Home.html"/>    
+            <forward name="logout" path="/Home.html"/>    
+        </action>
+        <action path="/MailSend" scope="request" type="com.app.common.MailSend"/>
+        <action path="/second" scope="request" type="com.ace.statAnalysis.secondDataFitting"/>
+        <action name="" path="/imageWriter" scope="request" type="com.ace.statAnalysis.ImageWriter"/>
+        <action name="" path="/first" scope="request" type="com.ace.statAnalysis.DataFittingFirst"/>
+        <action path="/jsonData" type="com.ace.statAnalysis.JSONDataAction"/>
+        <action path="/distDataAction" type="com.ace.statAnalysis.DistDataAction"/>
+         <!-- Close of Statistical Analysis Action Class Paths  --> 
+    </action-mappings>
+    
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+    <message-resources parameter="com/myapp/struts/ApplicationResource"/>    
+    
+    <!-- ========================= Tiles plugin ===============================-->
+    <!--
+    This plugin initialize Tiles definition factory. This later can takes some
+    parameters explained here after. The plugin first read parameters from
+    web.xml, thenoverload them with parameters defined here. All parameters
+    are optional.
+    The plugin should be declared in each struts-config file.
+    - definitions-config: (optional)
+    Specify configuration file names. There can be several comma
+    separated file names (default: ?? )
+    - moduleAware: (optional - struts1.1)
+    Specify if the Tiles definition factory is module aware. If true
+    (default), there will be one factory for each Struts module.
+    If false, there will be one common factory for all module. In this
+    later case, it is still needed to declare one plugin per module.
+    The factory will be initialized with parameters found in the first
+    initialized plugin (generally the one associated with the default
+    module).
+    true : One factory per module. (default)
+    false : one single shared factory for all modules
+    - definitions-parser-validate: (optional)
+    Specify if xml parser should validate the Tiles configuration file.
+    true : validate. DTD should be specified in file header (default)
+    false : no validation
+
+    Paths found in Tiles definitions are relative to the main context.
+    -->
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />      
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+    
+    <!-- ========================= Validator plugin ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+            property="pathnames"
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+  
+</struts-config>

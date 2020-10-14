@@ -1,0 +1,691 @@
+<!--
+	To change this template, choose Tools | Templates
+	and open the template in the editor.
+	-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/redmond/jquery-ui.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.7.1/src/css/ui.jqgrid.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.7.1/src/css/jquery.searchFilter.css" />
+        <script type="text/javascript" src='https://www.google.com/jsapi'></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.js"></script>
+        <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.7.1/src/i18n/grid.locale-en.js"></script>
+        <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.7.1/src/grid.base.js"></script>
+        <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.7.1/src/grid.common.js"></script>
+        <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.7.1/src/grid.formedit.js"></script>
+        <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.7.1/src/grid.inlinedit.js"></script>
+        <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.7.1/src/grid.custom.js"></script>
+        <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.7.1/src/jquery.fmatter.js"></script>
+        <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.7.1/src/jquery.searchFilter.js"></script>
+        <script type="text/javascript" src="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-3.7.1/src/grid.jqueryui.js"></script>
+        <script type="text/javascript" src="res/js/DM.js"></script>
+        <link type="text/css" href="res/css/StyleSheet.css" rel="StyleSheet"/>
+        <link type="text/css" href="res/css/temp.css" rel="StyleSheet"/>
+        <link type="text/css" href="res/css/jqgrid.css" rel="StyleSheet"/>
+        <!--        <script type="text/javascript" src="res/js/jquery-1.6.2.min.js"></script>-->
+        <script type="text/javascript" src="res/js/jqFancyTransitions.1.8.min.js"></script>
+        <script type="text/javascript" src="res/js/virtualData.js"></script>
+        <script type="text/javascript" >
+            google.load("visualization", "1", {packages:["corechart"]});
+            var appTab = [];
+            var secTab = [];
+            var sensFlag = false;
+            var subSensFlag = false;
+            //            var dataContent = [];
+            var Defaulttemp;
+            var defaultValue =[];
+            var profit_Loss = [];
+            var milk_Prodc = [];
+            var investExpenses = [];
+            var totalLs = [];
+            var profit_LossData = [];
+            var defaultprofit_LossData = [];
+            var milk_ProdData = [];
+            var investData = [];
+            var totalLSData = [];
+            var noOfMales;
+            var noOfFemales;
+            var noOfYears;
+            var region;
+            var startyear;
+            var LSSens;
+            var wagesSens;
+            var feedSens;
+            var milkpriceSens;
+            var ratioMaleFemale;
+            var firstjq;
+            var firstmodel;
+            var secondjq;
+            var secondmodel;
+            var thirdjq;
+            var thirdmodel;
+            var fourthjq;
+            var fourthmodel;
+            var fifthjq;
+            var fifthmodel;
+            var sixthjq;
+            var sixthmodel;
+            var sevenjq;
+            var sevenmodel;
+            var eightjq;
+            var eightmodel;
+            $(function()
+            {
+                $("#fancyTransformation").jqfancytransitions({width:1050,height:180});
+                appTab = $(".appMenu");
+                $(appTab).each(function(ind){
+                    $(this).click(function(){
+                        changeMenu(ind);
+                    });
+                });
+                secTab = $(".secondMenu");
+                $(secTab).each(function(ind){
+                    $(this).click(function(){
+                        changeSecMenu(ind);
+                    });
+                });
+                tableGrid();
+                $("#Male").click(function(){
+                    Input.restrictToNumeric(this,"");
+                });
+                $("#Male").blur(function(){
+                    dataValidate(this,$(this).val());
+                });
+                $("#Female").click(function()
+                {
+                    Input.restrictToNumeric(this,"");
+                });
+                $("#Female").blur(function(){
+                    dataValidate(this,$(this).val());
+                });
+                $("#livestockSensInputValue").click(function()
+                {
+                    Input.restrictToNumeric(this,"");
+                });
+                $("#livestockSensInputValue").blur(function(){
+                    dataValidate(this,$(this).val());
+                });
+                $("#wageSensInputValue").click(function()
+                {
+                    Input.restrictToNumeric(this,"");
+                });
+                $("#wageSensInputValue").blur(function(){
+                    dataValidate(this,$(this).val());
+                });
+                $("#feedSensInputValue").click(function(){
+                    Input.restrictToNumeric(this,"");
+                });
+                $("#feedSensInputValue").blur(function(){
+                    dataValidate(this,$(this).val());
+                });
+                $("#milkSensInputValue").click(function(){
+                    Input.restrictToNumeric(this,"",".");
+                });
+                $("#milkSensInputValue").blur(function(){
+                    dataValidate(this,$(this).val());
+                });
+                $("#Male_FemaleValue").click(function(){
+                    Input.restrictToNumeric(this,"");
+                });
+                $("#Male_FemaleValue").blur(function(){
+                    dataValidate(this,$(this).val());
+                });
+                $('input[name="LivestockSens"]').click(function(){
+                    if(this.checked)
+                    {
+                        $("#livestockSensInput").show();
+                        //                        $("#livestockSensInputValue").focus();
+                    }
+                    else
+                    {
+                        $("#livestockSensInput").hide();
+                        $("#livestockSensInputValue").val("");
+                    }
+                });
+                $('input[name="wageSens"]').click(function(){
+                    if(this.checked)
+                    {
+                        $("#wageSensInput").show();
+                        //                        $("#wageSensInputValue").focus();
+                    }
+                    else
+                    {
+                        $("#wageSensInput").hide();
+                        $("#wageSensInputValue").val("");
+                    }
+                });
+                $('input[name="FeedSens"]').click(function(){
+                    if(this.checked)
+                    {
+                        $("#feedSensInput").show();
+                        //                        $("#feedSensInputValue").focus();
+                    }
+                    else
+                    {
+                        $("#feedSensInput").hide();
+                        $("#feedSensInputValue").val("");
+                    }
+                });
+                $('input[name="milkSens"]').click(function(){
+                    if(this.checked)
+                    {
+                        $("#milkSensInput").show();
+                        //                        $("#milkSensInputValue").focus();
+                    }
+                    else
+                    {
+                        $("#milkSensInput").hide();
+                        $("#milkSensInputValue").val("");
+                    }
+                });
+                $('input[name="ratioSens"]').click(function(){
+                    if(this.checked)
+                    {
+                        $("#Male_FemaleRatio").show();
+                        //                        $("#milkSensInputValue").focus();
+                    }
+                    else
+                    {
+                        $("#Male_FemaleRatio").hide();
+                        $("#Male_FemaleValue").val("");
+                    }
+                });
+                $("#sensitivity").click(function()
+                {
+                    if(subSensFlag == true)
+                    {
+                        sensFlag = true;
+                        $("#sensContent").show();
+                    }
+                    else
+                    {
+                        alert("Before Apply Sensitivity Please Provide Male and Female Live Stock Values");
+                        return;
+                    }
+                    $("#applySens").show();
+                    $("#myButton").hide();
+                    $(this).hide();
+                });
+            });
+            function applySensCheck()
+            {
+                if($("#livestockSensInputValue").val() != "" || ($("#wageSensInputValue").val() != "") || ($("#feedSensInputValue").val() != "") || ($("#milkSensInputValue").val() != "") || ($("#Male_FemaleValue").val() != "") )
+                {
+                    $('#myButton').show();
+                    $('#sensitivity').show();
+                    $('#defaultValues').show();
+                    if($('input[name="LivestockSens"]').is(':checked'))
+                    {
+                        if($("#livestockSensInputValue").val() == 0)
+                        {
+                            alert("Please Provide Valid inputs for Sensitivity");
+                            return;
+                        }
+                    }
+                    if($('input[name="FeedSens"]').is(':checked'))
+                    {
+                        if($("#feedSensInputValue").val() == 0)
+                        {
+                            alert("Please Provide Valid inputs for Sensitivity");
+                            return;
+                        }
+                    }
+                    if($('input[name="wageSens"]').is(':checked'))
+                    {
+                        if($("#wageSensInputValue").val() == 0)
+                        {
+                            alert("Please Provide Valid inputs for Sensitivity");
+                            return;
+                        }
+                    }
+                    if($('input[name="milkSens"]').is(':checked'))
+                    {
+                        if($("#milkSensInputValue").val() == 0)
+                        {
+                            alert("Please Provide Valid inputs for Sensitivity");
+                            return;
+                        }
+                    }
+                    if($('input[name="ratioSens"]').is(':checked'))
+                    {
+                        if($("#Male_FemaleValue").val() == 0)
+                        {
+                            alert("Please Provide Valid inputs for Sensitivity");
+                            return;
+                        }
+                    }
+                    $('#applySens').hide();
+                    ajaxCall(1);
+                }
+                else
+                {
+                    alert("Please provide Values for Sensitivity");
+                    return;
+                }
+            }
+            function cancelSens()
+            {
+                $("#livestockSensInputValue").val("");
+                $("#feedSensInputValue").val("");
+                $("#milkSensInputValue").val("");
+                $("#wageSensInputValue").val("");
+                $('input[name="wageSens"]').attr("checked",false);
+                $('input[name="FeedSens"]').attr("checked",false);
+                $('input[name="milkSens"]').attr("checked",false);
+                $('input[name="LivestockSens"]').attr("checked",false);
+                $("#wageSensInput").hide();
+                $("#feedSensInput").hide();
+                $("#milkSensInput").hide();
+                $("#livestockSensInput").hide();
+            }
+        </script>
+    </head>
+    <body>
+        <div align="center">
+            <table class="entire" width="1000" align="center">
+                <tr>
+                    <td>
+                        <table width="100%" cellpadding="0" cellspacing="0" class="header">
+                            <tr>
+                                <td width="360" valign="top" >
+                                    <div align="left">
+                                        <a href="Home.html">
+                                            <img src="res/images/logo.png" alt="Aceengineer Logo" title="click to go AceEngineer home">
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <img src="res/images/dairy farm.jpg" alt="" align="right"/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="fancyTransformation">
+                            <img src="res/images/Untitled-1.jpg" alt=""/>
+                            <img src="res/images/two.jpg" alt=""/>
+                            <img src="res/images/Three.jpg" alt=""/>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="1000%">
+                        <div id="container">
+                            <ul class="menu2">
+                                <li id="intro"><div class="appMenu">Introduction</div></li>
+                                <li id="analysis"><div class="appMenu">Analysis Approach</div></li>
+                                <li id="production" class="active"><div class="appMenu">Dairy Farm Production Analysis</div></li>
+                                <li id="contact" ><div class="appMenu">Contact Us</div></li>
+                            </ul>
+                            <table class="tabBorder">
+                                <tr>
+                                    <td>
+                                        <div id="Introduction" style="display: none;">
+                                            <h2 class="Heading">Introduction :</h2>
+                                            <p class="myPera">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dairy farmers are in the business of producing food. They aim to ensure that the safety and quality of their raw milk will satisfy the highest expectations of the food industry and consumers.
+                                                On-farm practices should also ensure that milk is produced by healthy animals under acceptable conditions for the animals and in balance with the local environment.</p>
+                                            <p class="myPera">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AceEngineer is a financial and engineering services provider company, offering wide range of solutions meeting the organizational objectives of our clients.
+                                                The company is based in India. AceEngineer offers services in the fields of financial engineering, financial modelling, electrical engineering, mechanical engineering, civil engineering, Business Planning and environmental engineering.
+                                            </p>
+                                            <h4 class="Heading">What AceEngineer do? </h4>
+                                            <p class="myPera">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Virtual Dairy Farm is one of the web application to be developed by AceEngineer. This application helps to analyze the Dairy Farm Business corresponding to current market trend and feasibility of Dairy Farm business in local Andhra market..<br/>
+                                                The Scope of Application is<br/>
+                                                &bull; Help to assess the feasibility of the Dairy Farm business; (Economical feasibility, Financial feasibility, Market Analysis and etc)<br/>
+                                                &bull; Outline requirements, market conditions and recommendations to pursue a successful business.
+
+                                            </p>
+                                            <h4 class="Heading">AceEngineer Recommendations </h4>
+                                            <div class="myPera">
+                                                &bull;Define the running of a dairy farm with the following factors:<br>
+                                                &bull;Reliable working employees with no automation of feed or milking.<br/>
+                                                &bull;Limited Investment from trusted investors is initial considered to maintain independence of operations.<br/>
+                                                &bull;Grouped investment will be considered at a later states.<br/>
+                                                &bull;Distribution of profits in proportional and ethical manner.<br/>
+                                                &bull;All working employees will be compensated with salary for any day to day work done.<br/>
+                                                &bull;Extend this business analysis from 10 year to 20 years of business running period to understand long-term trends.<br/>
+                                                &bull;Implement automation at a livestock numbers of 30-40 and keep the work force number fixed.<br/>
+                                                &bull;If dairy farm is started in remote area where continuous trusted monitoring is not possible, we should have an automated/ online monitoring system installed;<br/>
+                                                &bull;We should record the every movement in dairy farm and track it. This monitoring will be conducted by one trust worth person regularly (3-5 times/week);<br/>
+                                                &bull;Importantly farm should be expandable for particular time slice. (ex: we start with 10 LS, after two years the farm should contain > 10LS);<br/>
+                                                &bull;Conduct milk processing industry analysis once smooth running of dairy farm is achieved.<br/>
+                                            </div>
+                                        </div>
+                                        <div id="producionAnalysis">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <!--	                                         Enter No of Males LiveStock: &nbsp;&nbsp;&nbsp;<input type="text" id="Male"/>-->
+                                                        Enter No of Females LiveStock: <input type="text" id="Female"/> &nbsp;&nbsp;
+                                                    </td>
+                                                    <td>
+	                                                 Choose Number of years: <select id="Years">
+                                                            <option>1</option>
+                                                            <option>2</option>
+                                                            <option>3</option>
+                                                            <option>4</option>
+                                                            <option>5</option>
+                                                            <option>6</option>
+                                                            <option>7</option>
+                                                            <option>8</option>
+                                                            <option>9</option>
+                                                            <option  selected="true">10</option>
+                                                            <option>11</option>
+                                                            <option>12</option>
+                                                            <option>13</option>
+                                                            <option>14</option>
+                                                            <option>15</option>
+                                                            <option>16</option>
+                                                            <option>17</option>
+                                                            <option>18</option>
+                                                            <option>19</option>
+                                                            <option>20</option>
+                                                        </select>&nbsp;&nbsp;
+                                                    </td>
+                                                    <td>
+	                                             Choose Region :
+                                                        <select id="region">
+                                                            <option selected="true">Select Region</option>
+                                                            <option>West Godavari</option>
+                                                            <option >East Godavari</option>
+                                                            <option>Guntur</option>
+                                                            <option>Vizag</option>
+                                                        </select>&nbsp;&nbsp;
+                                                    </td>
+                                                    <td>
+	                                            Investment Year :
+                                                        <select id="investYear">
+                                                            <option>2000</option>
+                                                            <option>2001</option>
+                                                            <option>2002</option>
+                                                            <option>2003</option>
+                                                            <option>2004</option>
+                                                            <option>2005</option>
+                                                            <option>2006</option>
+                                                            <option>2007</option>
+                                                            <option>2008</option>
+                                                            <option>2009</option>
+                                                            <option>2010</option>
+                                                            <option>2011</option>
+                                                            <option selected="true">2012</option>
+                                                            <option>2013</option>
+                                                            <option>2014</option>
+                                                            <option>2015</option>
+                                                            <option>2016</option>
+                                                            <option>2017</option>
+                                                            <option>2018</option>
+                                                            <option>2019</option>
+                                                            <option>2020</option>
+                                                            <option>2021</option>
+                                                            <option>2022</option>
+                                                            <option>2023</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table>
+                                                <tr>
+                                                    <td width="300px">
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         <button type="button" id="myButton" style="cursor: pointer;" onclick="ajaxCall()" class="Mybutton">Submit</button>
+                                                    </td>
+                                                    <td width="250px">
+                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="defaultValues" style="display: none;cursor: pointer;"  onclick="default_SensValues()" onmouseover="$('#defButtonContent').show();" onmouseout="$('#defButtonContent').hide()" class="Mybutton">Default Values</button>
+                                                    </td>
+                                                    <td>
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id="sensitivity" style="display: none;cursor: pointer;"  onclick="" class="Mybutton">Change Value</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table>
+                                                <tr>
+                                                    <td width="300px" valign="top">
+                                                        <div id="defaultContent">
+
+                                                        </div>
+                                                    </td>
+                                                    <td width="250px" valign="top">
+                                                        <div id="defButtonContent" class="slideDownCSS">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="sensContent" style="display: none;">
+                                                            <input type="checkbox" name="LivestockSens"/>Live Stock value <span id="livestockSensInput" style="display: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change Value:<input type="text" id="livestockSensInputValue"/></span><br/>
+                                                            <input type="checkbox" name="FeedSens"/>Feed Rate   <span id="feedSensInput" style="display: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change Value:<input type="text" id="feedSensInputValue"/></span><br/>
+                                                            <input type="checkbox" name="milkSens"/>Milk Price  <span id="milkSensInput" style="display: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change Value:<input type="text" id="milkSensInputValue"/></span><br/>
+                                                            <input type="checkbox" name="wageSens"/>Worker Wages <span id="wageSensInput" style="display: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change Value:<input type="text" id="wageSensInputValue"/></span><br/>
+                                                            <input type="checkbox" name="ratioSens"/>Male & Female Ratio <span id="Male_FemaleRatio" style="display: none;">Change Ratio:<input type="text" id="Male_FemaleValue"/>/10 Females</span><br/>
+                                                        </div>
+                                                        <br/>
+                                                        <div id="applySens" style="display: none;">
+                                                            <button type="button"  onclick="applySensCheck()" class="Mybutton"> Apply Changes </button>&nbsp;&nbsp;<button type="button" onclick="cancelSens();$('#myButton').show();$('#sensitivity').show();$('#applySens').hide();$('#sensContent').hide();" class="Mybutton"> Cancel </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div id="container1" style="display: none;">
+                                                <ul class="menu3">
+                                                    <li id="profitLoss" class="active"><div class="secondMenu">Profit/Loss</div></li>
+                                                    <li id="milkProd"><div class="secondMenu">Milk Production</div></li>
+                                                    <li id="invest"><div class="secondMenu">Investment-Expenses</div></li>
+                                                    <li id="LSLife"><div class="secondMenu">Total Live Stocks & Life Cycle</div></li>
+                                                    <li id="sens"><div class="secondMenu">Comparison</div></li>
+                                                </ul>
+                                                <table class="tabBorder1">
+                                                    <tr>
+                                                        <td>
+                                                            <div id="profitLossContent">
+                                                                <table id="profitLossTable">
+                                                                    <tr>
+                                                                        <td>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <div id="profitLossDiv"></div>
+                                                                <div id="profitLossChart" style="width: 1010px; height: 500px;"></div>
+                                                            </div>
+                                                            <div id="milkProdContent" style="display: none;">
+                                                                <table id="milkProdTable">
+                                                                    <tr>
+                                                                        <td>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <div id="milkProdDiv"></div>
+                                                                <div id="milkProdChart" style="width: 1010px; height: 500px;"></div>
+                                                            </div>
+                                                            <div id="investContent" style="display: none;">
+                                                                <table id="investTable1">
+                                                                    <tr>
+                                                                        <td>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <div id="investDiv1"></div><br/>
+                                                                <table id="investTable2">
+                                                                    <tr>
+                                                                        <td>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <div id="investDiv2"></div><br/>
+                                                                <table id="investTable3">
+                                                                    <tr>
+                                                                        <td>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <div id="investDiv3"></div>
+                                                                <div id="investChart"></div>
+                                                            </div>
+                                                            <div id="LSLifeContent" style="display: none;" >
+                                                                <table id="LSLifeTable" style="width: 100%">
+                                                                    <tr>
+                                                                        <td>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <div id="LSLifeDiv"></div>
+                                                                <div id="LSLifeChart" style="width: 1010px; height: 500px;"></div>
+                                                            </div>
+                                                            <div id="comparisonChart" style="display: none;">
+                                                                <table id="defaultValueTable">
+                                                                    <tr>
+                                                                        <td>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <div id="defaultValueDiv">
+                                                                </div>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div id="comparisonChartDiv" style="width: 700px; height: 500px;">
+                                                                            </div>
+                                                                        </td>
+                                                                        <td valign="top">
+                                                                            <table id="viewTable">
+                                                                                <tr>
+                                                                                    <td>
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                            <div id="viewData"></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div id="AnalysisApproach" style="display: none;">
+                                            <h2 class="Heading">Analysis Approach</h2>
+                                            <p class="myPera">
+                                                Here we explain the Analysis of Dairy Farm developed by AceEngineer.<br>
+                                                The Major things in Analysis Approach are<br>
+                                                &bull; Location of Farm and Investment Year<br>
+                                                &bull; Farm Size( Start with No of Females & Males)<br>
+                                                &bull; Milk Production System
+                                            </p>
+
+                                            <h4 class="Heading">&bull; Overview of Dairy Farm Plan:</h4><br>
+                                            <img src="res/images/DairyFarm.jpg" alt="" align="middle" width="1040px" height="150px"/><br>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <h4 class="Heading">&bull;Total Live Stock System </h4><br>
+                                                        <img src="res/images/TotalLS.jpg" alt="" width="510px"/>
+                                                    </td>
+                                                    <td valign="top">
+                                                        &nbsp;<br>
+                                                        &bull; The Diagram explains about Total Live Stock System<br>
+                                                        &bull; Our Basic Assumption is Every 2 years is average Calving period.<br>
+                                                        &bull; Successfully birth ratio is 1%<br>
+                                                        &bull; Male and Female Ratio is 0.5%<br>
+                                                        &bull; After 3 years newly born females become a Gestating Live stock<br>
+                                                        &bull; Keep required males and sell unwanted male live stocks<br>
+                                                        &bull; Repeat this procedure for every year<br><br><br><br><br>
+                                                        <h4 class="Heading">&bull;Total Milk Production System </h4><br>
+                                                        <img src="res/images/MilkProd.jpg" alt="" width="510px"/><br>
+                                                        &bull; The Diagram explains about Total Milk Production System.<br>
+                                                        &bull; Our Basic Assumption is Each Live Stock Produce 6 liters of milk per day <br>
+                                                        &bull; and Each newly born live stock consumed 1.5 liters of milk per day<br>
+                                                        &bull; At finally we get 4.5 liters of milk from each live stock<br>
+                                                        &bull; Those milk is available for Sold
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <div class="myPera">
+                                                &bull;Fixed Investment includes Live Stock Cost, Land Rate and Equipments<br>
+                                                &bull; Variable Cost includes Feed Rate, Workers Wages, Power Connection, Pump Connection, cell bill, Insurance bill, Maintenance cost<br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp; Manager Salary, Vet Doctor Fees, Medicine Fees and others.<br>
+                                                &bull; Every year we  include 10% maintenance Cost Expenses<br>
+                                                &bull; Expenses = Fixed Cost + Variable Cost
+                                            </div>
+                                        </div>
+                                        <div id="ContactUs" style="display: none;">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <h1>Contact Us</h1>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <p style="font-size: 11pt"> For further information regarding the company, its services, or to provide feed back regarding the website content,<br> Please contact us at the following address:</p><br>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <table align="center">
+                                                            <tr>
+                                                                <td>
+                                                                    <h2>Ace Engineer</h2><br>
+                                                                    <p style="font-size: 11pt">
+                                                                        401 Namitha's Fort, Panchavati Colony,<br>
+                                                                        Manikonda, Hyderabad - 500089<br>
+                                                                        Tel( India ): +91 9848509293<br>
+                                                                        US Support : 614-804-8516<br><br>
+                                                                        E-mail:<font color="#006600"><u><a href="mailto:prashanth.kakarapalli@aceengineer.com"> prashanth.kakarapalli@acematrix.com</a></u></font><br>
+                                                                    </p>
+                                                                </td>
+                                                                <td>
+                                                                    <img src="res/images/Acematrix_crop2.jpg" width="500" height="100">
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%" cellpadding="0" cellspacing="0" class="footer">
+                            <tr>
+                                <td width="500">
+                                    <div align="right">
+	                                   AceEngineer &copy; 2011, powered by PEPL
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
+
+

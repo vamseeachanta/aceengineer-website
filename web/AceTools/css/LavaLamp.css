@@ -1,0 +1,103 @@
+/* Generic style for the lava lamp */
+/*
+.lavaLamp {
+    position: relative;
+    height: 30px;
+    background: url("images/lamp.gif");
+    padding: 15px; 
+    overflow: hidden;
+}
+    .lavaLamp li {
+        float: left;
+        list-style: none;
+    }
+        .lavaLamp li.back {
+            background: url("images/lava.gif") no-repeat right -30px;
+            width: 9px; height: 30px;
+            z-index: 8;
+            position: absolute;
+        }
+            .lavaLamp li.back .left {
+				display: block;
+                background: url("images/lava.gif") no-repeat top left;
+                height: 30px;
+                margin-right: 9px;
+            }
+        .lavaLamp li a {
+            position: relative; overflow: hidden;
+            text-decoration: none;
+            text-transform: uppercase;
+            font: bold 14px arial;
+            color: #fff; outline: none;
+            text-align: center;
+            height: 30px; top: 7px;
+            z-index: 10; letter-spacing: 0;
+            float: left; display: block;
+            margin: auto 10px;
+        }
+*/
+#lavalamp .lavaLamp {
+    position: relative;
+    height: 30px;
+    background: url("images/lamp.gif");
+    padding: 15px; 
+    overflow: hidden;
+}
+    #lavalamp .lavaLamp li {
+        float: left;
+        list-style: none;
+    }
+        #lavalamp .lavaLamp li.back {
+            background: url("images/lava.gif") no-repeat right -30px;
+            width: 9px; height: 30px;
+            z-index: 8;
+            position: absolute;
+        }
+            #lavalamp .lavaLamp li.back .left {
+				display: block;
+                background: url("images/lava.gif") no-repeat top left;
+                height: 30px;
+                margin-right: 9px;
+            }
+        #lavalamp .lavaLamp li a {
+            position: relative; overflow: hidden;
+            text-decoration: none;
+            text-transform: uppercase;
+            font: bold 14px arial;
+            color: #fff; outline: none;
+            text-align: center;
+            height: 30px; top: 7px;
+            z-index: 10; letter-spacing: 0;
+            float: left; display: block;
+            margin: auto 10px;
+        }
+		
+		
+		
+
+#floatingline .lavaLamp {
+    position: relative;
+    padding: 10px; 
+    overflow: hidden;
+	background:#eeeeee;
+}
+    #floatingline .lavaLamp li {
+        float: left;
+        list-style: none;
+    }
+        #floatingline .lavaLamp li.back {
+            background: #990000;
+            height: 2px;
+            z-index: 8;
+            position: absolute;
+			margin:20px 0 0 0;
+        }
+        #floatingline .lavaLamp li a {
+            position: relative; overflow: hidden;
+            text-decoration: none;
+            color: #333333; outline: none;
+            text-align: center;
+            z-index: 10; letter-spacing: 0;
+            float: left; display: block;
+            margin: auto 10px;
+        }

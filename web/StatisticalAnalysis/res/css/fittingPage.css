@@ -1,0 +1,454 @@
+/* 
+    Document   : fittingPage
+    Created on : Nov 9, 2011, 11:43:00 AM
+    Author     : PEPL-SM
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+
+
+* {
+    font-family:sans-serif;
+    font-size: 13px;
+
+}
+
+
+
+body{
+
+    font-size: 13px;
+/*    background: -webkit-gradient(linear, left top, left bottom, from(#EAEAEA), to(#FFFFFF));
+    background: -moz-linear-gradient(top,  whitesmoke,  white);
+    background: -o-linear-gradient(top,rgb(245,245,245),rgb(251,251,251));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EAEAEA', endColorstr='#FFFFFF');*/
+    font-family:sans-serif;
+}
+
+
+.MyIframe 
+{
+    background: white;
+    width: 950px;
+    border-color: #1858B8;
+    display: none;
+    height: 400px;
+}
+.noFrame{
+    width: 950px;
+    height:1500px;
+    display: none;
+    border-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: #333399;
+    /*    font-family: Georgia, serif;*/
+}
+
+a:hover{
+    text-decoration: underline;
+    color: #2878C0;
+}
+.Mybutton
+{
+    font-size:13px;
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    font-weight:bold;
+    color:#FFFFFF;
+    /*    width:100px;
+    */    height:26px;
+    background-color:#2878C0;
+    border-top-style:groove;
+    border-top-color:#FFFFFF;
+    border-top-width:1px;
+    border-bottom-style:groove;
+    border-bottom-color:#2878C0;
+    border-bottom-width:1px;
+    border-left-style:none;
+    border-left-color:#1858B8;
+    border-left-width:6px;
+    border-right-style:none;
+    border-right-color:#508CC0;
+    border-right-width:6px;
+
+}
+.Mybutton:hover
+{
+    -webkit-box-shadow: 1px 1px 1px 1px black;
+    -moz-box-shadow: 1px 1px 1px 1px black;
+}
+
+.mybody{
+    background: #FFFFFF;
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+}
+.body-layout
+{
+    width: 900px;
+    height: auto;
+    background: white;
+    -webkit-box-shadow: 1px 1px 4px 4px black;
+    -moz-box-shadow: 1px 1px 4px 4px black;
+    border: Red solid groove;
+    -webkit-border-radius:12px;
+    -moz-border-radius:12px;
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    font-size: 13px;
+}
+
+.body
+{
+    /*    border: 1px solid gray;*/
+
+    width: 990px;
+    padding: 5px;
+    overflow: auto;
+}
+.tdbody1{
+    background:#EDF6FD;
+    border: 1px solid gray;
+    padding: 5px;
+    overflow: auto;
+}
+.tdbody2{
+    background:#FFFFFF;
+    border: 1px solid gray;
+    padding: 5px;
+    overflow: auto;
+}
+
+.inputDiv
+{
+    overflow: auto;
+    width: 600px;
+    height: 300px;
+}
+.foot
+{
+    background: -webkit-gradient(linear, left top, left bottom, from(#113D70), to( #1C72A5));
+    background: -moz-linear-gradient(top, #113D70,  #1C72A5);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EEEEEE', endColorstr='#000000');
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    color: white;
+    text-align: right;
+}
+
+.subMenu{
+    z-index: 100;
+    padding-top: 0px;
+}
+.myBody
+{
+
+
+}
+.BodyBackground
+{
+    /*    background-color: #eee;*/
+    /*    background: url("../images/dist/background.jpg")repeat  fixed;*/
+    /*    background: #FFFFFF;
+        height: auto;*/
+}
+.tabNavigator{
+    height: auto;
+    border: 1px ;
+    display: none;
+    width: 950px;
+    /*    background: url("../images/dist/titleBG.jpg") repeat-x;*/
+}
+
+.navHead
+{
+    width: 950px;
+    /*    width: 100%;*/
+    display: block;
+    list-style: none;
+    vertical-align:bottom;
+    font-size: 18px;
+    /*    height: 30px;*/
+    color: white;
+    cursor: pointer;
+    background: #2878C0;
+
+}
+
+.tabHover
+{
+    color: white;
+    /*    font-weight: bold;*/
+    background: #165689;
+
+}
+
+.tabNavigator .tabContent{
+
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    width: 900px;
+    height: auto;
+}
+.toolStyle
+{
+    display: none;
+    background: #333399;
+    color: white;
+    width: 150px;
+    height: auto;
+    border: #62CEF5   solid 2px;
+    text-decoration: underline;
+
+    position: absolute;
+    /*    visibility: hidden;*/
+}
+.extendSpan{
+    color: blue;
+    cursor: pointer;
+}
+.innerTable
+{
+    border: 1px solid #2A76A4;
+}
+.distSelectCSS
+{
+    display: none;
+    width: 950px;
+}
+.Distributions{
+    font-size: 13px;
+    width: 900px;
+}
+.propertiesCSS{
+
+    width: 950px;
+    /*    height: 400px;*/
+
+}
+.firstCopy
+{
+    color: green;
+    font-weight: bold;
+}
+.noCopy
+{
+    color: black;
+    font-size: 13px;
+}
+
+#container ul.menu2 li
+{
+    float:left;
+    margin-right: 5px;
+    vertical-align: middle;
+    font-weight:  400;
+    display: block;
+    padding: 10px 10px;
+    background: #4A98E2;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    margin-bottom: -1px;
+    border: 1px solid #185F92;
+    border-width: 1px 1px 1px 1px;
+    position: relative;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}/*
+*/#container ul.menu2 li:hover
+{
+    background: #76392;
+    -webkit-box-shadow: 1px 1px 1px 1px black;
+    -moz-box-shadow: 1px 1px 1px 1px black;
+    color: white;
+}/*
+*/#container ul.menu2 li.active
+{
+    background: #F9FBFB;
+    top: 1px;
+    border-bottom: 0px;
+    color: black;
+}/*
+*/#container .tabBorder
+{
+    width: 950px;
+    height: 400px;
+    border: 1px solid #2A76A4;
+}/*
+*/#container ul.menu2
+{
+    width: 850px;
+}
+
+/*#AppMenu ul.menu
+{
+    background-color: lightgrey;
+    background-color: #96999c;
+    height: 41px;
+    margin-bottom: 0px;
+}
+#AppMenu ul.menu li
+{
+    height: 41px;
+    float:left;
+    margin-right: 5px;
+    vertical-align: middle;
+    font-weight:  400;
+    display: block;
+    padding: 10px 10px;
+    background: #185F92;
+        background: url('../images/button2.jpg') repeat-x;
+    margin-bottom: -1px;
+    border: 1px solid #2A76A4;
+    border-width: 1px 1px 1px 1px;
+    position: relative;
+    cursor: pointer;
+    color: #F9FBFB;
+
+}
+#AppMenu ul.menu li:hover
+{
+    background: #F9FBFB;
+    color: black;
+}
+
+#AppMenu ul.menu li.active
+{
+    background: #F9FBFB;
+    top: 1px;
+    border-bottom: 0px;
+    color: black;
+}
+#AppMenu .tabBorder
+{
+    width: 950px;
+    height: 400px;
+    border: 1px solid #2A76A4;
+}*/
+.copyDivCSS
+{
+    display: none;
+    width:250px;
+    height: 300px;
+    overflow: auto;
+}
+.outPut{
+    border: 10px   solid #DDDDDD;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    -border-radius:10px;
+}
+.outputFooter
+{
+    background-color: #eff4f5;
+    border-top: 5px solid #7D942D;
+    line-height: 5px;
+    margin-top: 10px;
+    padding: 5px 15px;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    -border-radius:10px;
+}
+
+
+
+
+/*#AppMenu ul 
+{
+    background-color:white;
+    height: 35px;
+    text-align: justify;
+    margin-bottom: 0px;
+}
+#AppMenu ul li
+{
+    float:left;
+    margin-right: 5px;
+    vertical-align: middle;
+    font-weight:  400;
+    display: block;
+    padding: 10px 10px;
+    background: #135171;
+    margin-bottom: -1px;
+    border: 1px solid #185F92;
+    border-width: 1px 1px 1px 1px;
+    position: relative;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+#AppMenu ul.menu li:hover
+{
+    background: #76392;
+    color: white;
+}
+#AppMenu ul.menu li.active
+{
+    background: #F9FBFB;
+    top: 1px;
+    border-bottom: 0px;
+    color: black;
+}
+*/
+#AppMenu ul.menu
+{
+    /*    background-color: lightgrey;*/
+    /*    background-color: whitesmoke;*/
+    height: 36px;
+    width: 940px;
+    margin-bottom: 0px;
+}
+#AppMenu ul.menu li
+{
+
+    float:left;
+    margin-right: 5px;
+    vertical-align: middle;
+    font-weight:  400;
+    display: block;
+    padding: 10px 10px;
+    /*    background: #135171;*/
+    background: url('../images/button2.jpg') repeat-x;
+
+    border-radius: 5px 5px 0 0;
+    -o-border-radius: 5px 5px 0 0;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    margin-bottom: -1px;
+    border: 1px solid #185F92;
+    border-width: 1px 1px 1px 1px;
+    position: relative;
+    cursor: pointer;
+    color: white;
+
+}
+#AppMenu ul.menu li:hover
+{
+    /*    background: #F9FBFB;*/
+    /*    -webkit-box-shadow: 1px 1px 1px 1px black;
+        -moz-box-shadow: 1px 1px 1px 1px black;*/
+    /*    font-weight: bold;*/
+    background: #76392; 
+    color: white;
+}
+#AppMenu ul.menu li.active
+{
+    background: #F9FBFB;
+    top: 1px;
+    border-bottom: 0px;
+    color: black;
+    font-weight: bold;
+}
+#AppMenu .tabBorder
+{
+    width: 950px;
+    height: 400px;
+    border: 1px solid #2A76A4;
+}

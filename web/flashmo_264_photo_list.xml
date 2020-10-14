@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<photos>
+
+	<config
+		folder="contents/"
+		show_tooltip="true"
+		show_autoplay_button="true"
+		autoplay="true"
+		autoplay_duration="3"
+
+		photo_width="960"
+		photo_height="360"
+
+		thumbnail_group_width="650"
+		thumbnail_height="60"
+		thumbnail_spacing="60"
+		thumbnail_border_size="2"
+		thumbnail_border_color="#FFFFFF"
+		thumbnail_highlight_color="#CC3333"
+
+		previous_button="true"
+		next_button="true"
+		
+		description="true"
+                description_align="bottom"
+		description_bg_color="#000000"
+		description_bg_alpha="0.6"
+		css_file="flashmo_210_style.css"
+		tween_duration="0.7" 
+		tween_delay="0.13">
+	</config>
+	
+	<photo>
+		<transition sequence="last" direction="right" slice="7" effect="easeInOutExpo"></transition>
+		<thumbnail>s_01.jpg</thumbnail>
+		<filename>01.jpg</filename>
+		<tooltip>Our Mission</tooltip>
+		<description><![CDATA[<p class="subtitle">Our Mission</p><p>To combine aggressive strategic marketing with quality products and services at competitive prices to provide the best value to our customers with get done attitude.</p>]]></description>
+	</photo>
+	
+	<photo>
+		<transition sequence="first" direction="down" slice="9" effect="easeInOutQuad"></transition>
+		<thumbnail>s_02.jpg</thumbnail>
+		<filename>02.jpg</filename>
+		<tooltip>Our Vision</tooltip>
+		<description><![CDATA[<p class="subtitle">Our Vision</p><p>Engineering the world by understanding client expectations and delivering customized innovative solutions.</p>]]></description>
+	</photo>
+	
+	<photo>
+		<transition sequence="inner" direction="up" slice="11" effect="easeInOutSine"></transition>
+		<thumbnail>s_03.jpg</thumbnail>
+		<filename>03.jpg</filename>
+		<tooltip>Our Work Strategy</tooltip>
+		<description><![CDATA[<p class="subtitle">Our Work Strategy</p><p>We employs client based solution approach that helps in understanding the exact requirements of our clients and deliver quality solutions. Knowledge of latest technologies and timely monitoring of our services helps offer top class solutions with ground breaking approaches.</p>]]></description>
+	</photo>
+	
+	<photo>
+		<transition sequence="outer" direction="right" slice="7" effect="easeInOutExpo"></transition>
+		<thumbnail>s_04.jpg</thumbnail>
+		<filename>04.jpg</filename>
+		<tooltip>Our Skills</tooltip>
+		<description><![CDATA[<p class="subtitle">Our Skills</p><p>Our firm is one of the most prominent names in the industry for providing some of the most suitable services to our clients related to the Software Solutions. Our services include <span class="bold"> jQuery,Flash,HTML,Web Design</span> and many more.</p>]]></description>
+	</photo>
+	
+	<photo>
+		<transition sequence="last" direction="left" slice="11" effect="easeInOutQuart"></transition>
+		<thumbnail>s_05.jpg</thumbnail>
+		<filename>05.jpg</filename>
+		<tooltip>About us</tooltip>
+		<description><![CDATA[<p class="subtitle">About our company</p><p>AceEngineer is the engineering services unit of Prarohana Enterprises Private Ltd. A venture started by alumni of IIT Madras. We have a young and dynamic team to perform high quality work in a cost effective manner. You will experience your requirements being met on time, within budget and with utmost satisfaction.</p>]]></description>
+	</photo>
+
+<!--	<photo>
+		<transition direction="down" slice="1" effect="easeOutBounce"></transition>
+		<thumbnail>s_flashmo_900x560_06.jpg</thumbnail>
+		<filename>flashmo_900x560_06.jpg</filename>
+		<tooltip>Image Title 06</tooltip>
+		<description><![CDATA[<p class="subtitle">Image Title 06 goes here</p><p>Praesent consectetur imperdiet mauris. <a href="http://www.flashmo.com" target="_parent">Suspendisse at pede vel</a> lorem pulvinar laoreet. Pellentesque elementum enim a augue in nisi. <span class="highlight">Nunc commodo, magna pharetra semper vehicula, dui ligula feugiat elit, et euismod nunc orci ut libero.</span></p>]]></description>
+	</photo>
+	
+	<photo>
+		<transition sequence="inner" direction="right" slice="7" effect="easeInOutExpo"></transition>
+		<thumbnail>s_flashmo_900x560_07.jpg</thumbnail>
+		<filename>flashmo_900x560_07.jpg</filename>
+		<tooltip>Image Title 07</tooltip>
+		<description><![CDATA[<p class="subtitle">Image Title 07 goes here</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span class="highlight">Quisque at ante sit amet</span> erat laoreet <u>fermentum</u>. Quisque nec nisl. <a href="http://www.flashmo.com/donate" target="_parent">Integer vel sapien quis</a> risus egestas suscipit. Aliquam at sagittis sapien. Duis volutpat pharetra tristique.</p>]]></description>
+	</photo>
+	
+	<photo>
+		<transition direction="up" slice="1" effect="easeInOutQuart"></transition>
+		<thumbnail>s_flashmo_900x560_08.jpg</thumbnail>
+		<filename>flashmo_900x560_08.jpg</filename>
+		<tooltip>Image Title 08</tooltip>
+		<description><![CDATA[<p class="subtitle">Image Title 08 goes here</p><p><span class="highlight">Quisque at ante sit amet</span> erat laoreet <u>fermentum</u>. Quisque nec nisl. <a href="http://www.flashmo.com/page/1" target="_blank">Nam scelerisque cursus dolor</a>. Integer vel sapien quis risus egestas suscipit. Nam lorem tortor, viverra gravida, egestas id, pellentesque in, mi. Praesent consectetur imperdiet mauris. <span class="highlight">Suspendisse at nisi nec diam pretium tincidunt.</span></p>]]></description>
+	</photo>
+	
+	<photo>
+		<transition sequence="first" direction="right" slice="10" effect="easeInOutQuad"></transition>
+		<thumbnail>s_flashmo_900x560_09.jpg</thumbnail>
+		<filename>flashmo_900x560_09.jpg</filename>
+		<tooltip>Image Title 09</tooltip>
+		<description><![CDATA[<p class="subtitle">Image Title 09 goes here</p><p><a href="http://www.flashmo.com/donate" target="_parent">Lorem ipsum dolor sit amet</a>, consectetur adipiscing elit. <span class="highlight">Quisque at ante sit amet</span> erat laoreet <u>fermentum</u>. Quisque nec nisl. Nam scelerisque cursus dolor. Duis nulla diam, posuere ac, varius id, ullamcorper sit amet, libero.</p><p><span class="note">This text is dynamically loaded from the external XML file. This textfield supports HTML and CSS.</span></p>]]></description>
+	</photo>
+	
+	<photo>
+		<transition direction="left" slice="1" effect="easeInOutSine"></transition>
+		<thumbnail>s_flashmo_900x560_10.jpg</thumbnail>
+		<filename>flashmo_900x560_10.jpg</filename>
+		<tooltip>Image Title 10</tooltip>
+		<description><![CDATA[<p class="subtitle">Image Title 10 goes here</p><p><a href="http://www.flashmo.com/page/1" target="_blank">Fusce quis diam sit</a> amet tortor luctus pellentesque. Donec accumsan urna non elit tristique mattis. <b>Vivamus fermentum</b> orci viverra nisl. In nec magna id ipsum aliquam dictum. Quisque nec nisl.</p>]]></description>
+	</photo>
+	
+	<photo>
+		<transition sequence="outer" direction="down" slice="9" effect="easeOutBack"></transition>
+		<thumbnail>s_flashmo_900x560_11.jpg</thumbnail>
+		<filename>flashmo_900x560_11.jpg</filename>
+		<tooltip>Image Title 11</tooltip>
+		<description><![CDATA[<p class="subtitle">Image Title 11 goes here</p><p>In velit urna, <u>convallis id</u>, pharetra in, iaculis sit amet, mi. Praesent consectetur imperdiet mauris. Suspendisse at pede vel lorem pulvinar laoreet. Etiam et neque. Donec dapibus viverra est.</p><p><span class="note">This text is dynamically loaded from the external XML file. This textfield supports HTML and CSS.</span></p>]]></description>
+	</photo>
+	
+	<photo>
+		<transition sequence="inner" direction="up" slice="13" effect="easeInOutExpo"></transition>
+		<thumbnail>s_flashmo_900x560_12.jpg</thumbnail>
+		<filename>flashmo_900x560_12.jpg</filename>
+		<tooltip>Image Title 12</tooltip>
+		<description><![CDATA[<p class="subtitle">Image Title 12 goes here</p><p>Mauris vestibulum felis eget tortor. <a href="http://www.flashmo.com/page/1" target="_blank">Praesent mattis</a> varius quam. Vestibulum ullamcorper ipsum nec augue. Vestibulum auctor odio eget ante. Nunc commodo, magna pharetra semper vehicula, dui ligula feugiat elit, et euismod nunc orci ut libero.</p>]]></description>
+	</photo>
+	
+	<photo>
+		<transition sequence="first" direction="left" slice="8" effect="easeInOutCirc"></transition>
+		<thumbnail>s_flashmo_900x560_13.jpg</thumbnail>
+		<filename>flashmo_900x560_13.jpg</filename>
+		<tooltip>Image Title 13</tooltip>
+		<description><![CDATA[<p class="subtitle">Image Title 13 goes here</p><p>Sed enim dui, <a href="http://www.flashmo.com" target="_parent">interdum vitae cursus vitae</a>, laoreet non magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In nec tellus sed purus ornare faucibus. Duis risus erat, vulputate id placerat quis, ullamcorper vitae libero.</p>]]></description>
+	</photo>
+
+	<photo>
+		<transition direction="down" slice="17" effect="easeInOutBack"></transition>
+		<thumbnail>s_flashmo_900x560_14.jpg</thumbnail>
+		<filename>flashmo_900x560_14.jpg</filename>
+		<tooltip>Image Title 14</tooltip>
+		<description><![CDATA[<p class="subtitle">Image Title 14 goes here</p><p>Praesent bibendum nulla sit amet turpis vehicula fringilla. <a href="http://www.flashmo.com" target="_parent">Duis rhoncus mollis magna</a>, vel pellentesque magna facilisis et. Donec consequat malesuada sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>]]></description>
+	</photo>-->
+	
+</photos>

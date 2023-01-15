@@ -1,0 +1,45 @@
+@startuml website_structure
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Tomato
+
+title Website Structure
+
+@startwbs
+<style>
+wbsDiagram {
+  .greenyellow {
+      BackgroundColor GreenYellow
+  }
+}
+</style>
+* Home <<greenyellow>>
+' Deliver library (i.e. code) as service. 
+' Clean code principles with generic and customized unit and behavior tests
+** About
+' Passion; The Why
+** kw1: Engineering
+*** kw1a: Design
+*** kw1b: Simulations
+*** kw1c: Physics based animations
+
+** kw2: Energy Industry
+*** kw2a: Design
+*** kw2b: Installation
+*** kw2c: Drilling
+*** kw2d: Production
+*** kw2e: Intervention
+
+** FAQ
+*** Projects Types
+*** How it works
+
+** Contact
+
+@endwbs
+
+footer
+%date("yyyy.MM.dd' at 'HH:mm")
+%filename()
+end footer

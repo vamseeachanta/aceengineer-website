@@ -23,13 +23,15 @@ wbsDiagram {
 *** kw1a: Design
 *** kw1b: Simulations
 *** kw1c: Physics based animations
+*** kw1d: Verification with measured data
 
-** kw2: Energy Industry
+** kw2: Energy
 *** kw2a: Design
-*** kw2b: Installation
-*** kw2c: Drilling
-*** kw2d: Production
-*** kw2e: Intervention
+*** kw2b: Engineering
+*** kw2c: Installation
+*** kw2d: Drilling
+*** kw2e: Production
+*** kw2f: Intervention
 
 ** FAQ
 *** Projects Types

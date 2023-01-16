@@ -1,0 +1,35 @@
+index:
+  title: Analytical & Computational Engineering
+  description: Analytical and Computational Engineering for physics based simulations utilizing algorithms
+  keywords: physics-based simulations, analytical algorithms, computational engineering, engineering by data, advanced computational engineering
+  h1: Analytical & Computational Engineering
+
+about:
+  title: About Us
+  description: Passion to deliver turn-key solution as service
+  keywords: turn-key solutions, solution library as service, code & ui as service, clean code, unit tests, custom behavior tests, machine learning, artificial intelligence
+  h1: About Us
+
+engineering:
+  title: Engineering
+  description: Engineering turn-key solutions as service
+  keywords: design, physics-based simulations, physics-based animations, engineering verification with measured data
+  h1: Engineering
+
+energy:
+  title: Energy Solutions
+  description: Turn-key solution as service for the energy industry
+  keywords: design, physics-based simulations and physics-based animations
+  h1: Energy Solutions
+
+faq:
+  title: FAQ
+  description: Method of Collaboration
+  keywords: open source, collaboration, synergy, crowd synergy, crowd engineering, everyday engineering, symbiotic engineering, everyday symbiosis, compute engine, saas
+  h1: Frequently Asked Questions
+
+contact:
+  title: Contact
+  description: Contact Form
+  keywords: contact form, contact information
+  h1: Contact Us

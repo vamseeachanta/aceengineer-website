@@ -1,18 +1,20 @@
 import os
 import datetime
 import hashlib
+
 from flask import Flask, session, url_for, redirect, render_template, request, abort, flash
+from werkzeug.utils import secure_filename
+from common.ymlInput import ymlInput
 from database import list_users, verify, delete_user_from_db, add_user
 from database import read_note_from_db, write_note_into_db, delete_note_from_db, match_user_id_with_note_id
 from database import image_upload_record, list_images_for_user, match_user_id_with_image_uid, delete_image_from_db
-from werkzeug.utils import secure_filename
 
 
+seo_input_file = 'static//yaml//seo_data.yaml'
+seo_input = ymlInput(seo_input_file, None)
 
 app = Flask(__name__)
 app.config.from_object('config')
-
-
 
 @app.errorhandler(401)
 def FUN_401(error):
@@ -36,11 +38,14 @@ def FUN_413(error):
 
 
 
-
-
 @app.route("/")
 def FUN_root():
-    return render_template("index.html")
+    seo_page = seo_input['index']
+    page_title = seo_page['title']
+    page_description = seo_page['description']
+    page_keywords = seo_page['keywords']
+    page_h1 = seo_page['h1']
+    return render_template("index.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
 
 @app.route("/public/")
 def FUN_public():

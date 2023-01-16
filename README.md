@@ -11,3 +11,11 @@ Keywords: 3D animations, Physics based animations, subsea components for visuali
 
 Good practices:
 - Utilize individual pages yaml files (home.yaml, capabilities.yaml, contact.yaml) to drive SEO in an easy and convenient manner.
+
+Start with end in mind:
+- Website - Develop content
+- Complete git repos with description prior to employment offer
+    - pyfemodel & orcaflexPost (combine?)
+    - bseedata
+    - fielddev
+    - pypipecapacity

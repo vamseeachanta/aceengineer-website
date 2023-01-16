@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block page_title %}{{ page_title }}{% endblock %}
+{% block page_description %}{{ page_description }}{% endblock %}
+{% block page_keywords %}{{ page_keywords }}{% endblock %}
+{% block page_h1 %}{{ page_h1 }}{% endblock %}
+{% block body %}
+{{ super() }}
+
+    <p>Analytical & Computational Engineering (<b>A&CE</b>) solutions span across industries. 
+        The services are offerred are Design, Analytical Simulations, 
+        Physics based animations and Data verified engineering systems.
+    These services are provided end-to-end with single data source of truth to ensure continuity in processes.
+        With reuse and reiteration of projects, the data will be consolidated and remote data sources will be integrated. 
+    </p>
+
+    <h2>Design</h2>
+    <ul>
+        <li>Engineering design</li>
+        <li>Computer aided design</li>
+        <li>Engineering or industry code designs</li>
+    </ul>
+
+    <h2>Engineering Simulations</h2>
+    <ul>
+        <li>Physics based animations</li>
+        <li>Finite element analysis</li>
+        <li>Computational fluid dynamics</li>
+        <li>Process engineering</li>
+    </ul>
+
+    <h2>Physics based animations</h2>
+    <p>Physics based animations take into account as-built working conditions and help users visualize 
+    key steps prior to taking them. Any measured data can be fed into the animations to ensure accurate simulations</p>
+    <ul>
+        <li>Manufacturing and Fabrication activities</li>
+        <li>Transportation</li>
+        <li>Installation</li>
+    </ul>
+
+    <h2>System verification with measured data</h2>
+
+    <p>Measured data from as-built conditions and operations used for reassessment of design and simulations.</p>
+    
+
+{% endblock %}

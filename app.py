@@ -39,13 +39,64 @@ def FUN_413(error):
 
 
 @app.route("/")
-def FUN_root():
+def root():
     seo_page = seo_input['index']
+
     page_title = seo_page['title']
     page_description = seo_page['description']
     page_keywords = seo_page['keywords']
     page_h1 = seo_page['h1']
     return render_template("index.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
+
+@app.route("/about/")
+def about():
+    seo_page = seo_input['about']
+
+    page_title = seo_page['title']
+    page_description = seo_page['description']
+    page_keywords = seo_page['keywords']
+    page_h1 = seo_page['h1']
+    return render_template("about.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
+
+@app.route("/engineering/")
+def engineering():
+    seo_page = seo_input['engineering']
+
+    page_title = seo_page['title']
+    page_description = seo_page['description']
+    page_keywords = seo_page['keywords']
+    page_h1 = seo_page['h1']
+    return render_template("engineering.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
+
+@app.route("/energy/")
+def energy():
+    seo_page = seo_input['energy']
+
+    page_title = seo_page['title']
+    page_description = seo_page['description']
+    page_keywords = seo_page['keywords']
+    page_h1 = seo_page['h1']
+    return render_template("energy.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
+
+@app.route("/faq/")
+def faq():
+    seo_page = seo_input['faq']
+
+    page_title = seo_page['title']
+    page_description = seo_page['description']
+    page_keywords = seo_page['keywords']
+    page_h1 = seo_page['h1']
+    return render_template("faq.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
+
+@app.route("/contact/")
+def contact():
+    seo_page = seo_input['contact']
+
+    page_title = seo_page['title']
+    page_description = seo_page['description']
+    page_keywords = seo_page['keywords']
+    page_h1 = seo_page['h1']
+    return render_template("contact.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
 
 @app.route("/public/")
 def FUN_public():

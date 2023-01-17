@@ -1,35 +1,35 @@
 index:
-  title: Analytical & Computational Engineering
-  description: Analytical and Computational Engineering for physics based simulations utilizing algorithms
-  keywords: physics-based simulations, analytical algorithms, computational engineering, engineering by data, advanced computational engineering
-  h1: Analytical & Computational Engineering
+  page_title: Analytical & Computational Engineering
+  page_description: Analytical and Computational Engineering for physics based simulations utilizing algorithms
+  page_keywords: physics-based simulations, analytical algorithms, computational engineering, engineering by data, advanced computational engineering
+  page_h1: Analytical & Computational Engineering
 
 about:
-  title: About Us
-  description: Passion to deliver algorithms as service
-  keywords: advanced engineering systems, turn-key solutions, solution library as service, code & ui as service, clean code, unit tests, custom behavior tests, machine learning, artificial intelligence
-  h1: About Us
+  page_title: About Us
+  page_description: Passion to deliver algorithms as service
+  page_keywords: advanced engineering systems, turn-key solutions, solution library as service, code & ui as service, clean code, unit tests, custom behavior tests, machine learning, artificial intelligence
+  page_h1: About Us
 
 engineering:
-  title: Engineering
-  description: Engineering turn-key solutions as service
-  keywords: design, subsea visualizations, subsea animations, installation animations, physics-based simulations, physics-based animations, engineering verification with measured data
-  h1: Engineering
+  page_title: Engineering
+  page_description: Engineering turn-key solutions as service
+  page_keywords: design, subsea visualizations, subsea animations, installation animations, physics-based simulations, physics-based animations, engineering verification with measured data
+  page_h1: Engineering
 
 energy:
-  title: Energy Solutions
-  description: Turn-key solution as service for the energy industry
-  keywords: design, physics-based simulations and physics-based animations
-  h1: Energy Solutions
+  page_title: Energy Solutions
+  page_description: Turn-key solution as service for the energy industry
+  page_keywords: design, physics-based simulations and physics-based animations
+  page_h1: Energy Solutions
 
 faq:
-  title: FAQ
-  description: Method of Collaboration
-  keywords: open source, collaboration, synergy, crowd synergy, crowd engineering, everyday engineering, symbiotic engineering, everyday symbiosis, compute engine, saas
-  h1: Frequently Asked Questions
+  page_title: FAQ
+  page_description: Method of Collaboration
+  page_keywords: open source, collaboration, synergy, crowd synergy, crowd engineering, everyday engineering, symbiotic engineering, everyday symbiosis, compute engine, saas
+  page_h1: Frequently Asked Questions
 
 contact:
-  title: Contact
-  description: Contact Form
-  keywords: contact form, contact information
-  h1: Contact
+  page_title: Contact
+  page_description: Contact Form
+  page_keywords: contact form, contact information
+  page_h1: Contact

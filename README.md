@@ -1,21 +1,18 @@
-Reference or starting github repo:
-https://github.com/XD-DENG/flask-example
+# Introduction
 
-Keywords: 3D animations, Physics based animations, subsea components for visualization, offshore engineering installation support, etc.
+https://www.aceengineer.com/
+http://www.aceengineer.com/
 
-
-Good practices:
-- Utilize individual pages yaml files (home.yaml, capabilities.yaml, contact.yaml) to drive SEO in an easy and convenient manner.
-
-Start with end in mind:
-- Website
-    - A website with barebones navigation and content (done)
-    - Add contact form (done)
-    - Add call-to-action in every page (?)
-    - Nice to have: use **template_data. Add a standard function to get template_data.(?)
-- Complete git repos with description prior(?)
+# TODO
+- SSL certificate issues on Heroku(?)
+- Complete following git repos(?)
     - pydigitalmodel & orcaflexPost (combine? yes!)
     - bseedata
     - fielddev
     - pypipecapacity
+- Website
+    - Nice to have: use **template_data. Add a standard function to get template_data.(?)
 - Add existing repos to Energy (done)
+
+Reference or starting github repo:
+https://github.com/XD-DENG/flask-example

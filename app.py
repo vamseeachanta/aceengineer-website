@@ -24,13 +24,6 @@ SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 csrf.init_app(app)
 
-app.config['MAIL_SERVER']='smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'support@aceengineer.com'
-app.config['MAIL_PASSWORD'] = 'rose109Gud'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-
 mail.init_app(app)
 
 @app.errorhandler(401)
@@ -57,64 +50,40 @@ def FUN_413(error):
 
 @app.route("/")
 def root():
-    seo_page = seo_input['index']
+    seo_page = seo_input['index'].copy()
 
-    page_title = seo_page['title']
-    page_description = seo_page['description']
-    page_keywords = seo_page['keywords']
-    page_h1 = seo_page['h1']
-    return render_template("index.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
+    return render_template("index.html", **seo_page)
 
 @app.route("/about/")
 def about():
-    seo_page = seo_input['about']
+    seo_page = seo_input['about'].copy()
 
-    page_title = seo_page['title']
-    page_description = seo_page['description']
-    page_keywords = seo_page['keywords']
-    page_h1 = seo_page['h1']
-    return render_template("about.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
+    return render_template("about.html", **seo_page)
 
 @app.route("/engineering/")
 def engineering():
-    seo_page = seo_input['engineering']
+    seo_page = seo_input['engineering'].copy()
 
-    page_title = seo_page['title']
-    page_description = seo_page['description']
-    page_keywords = seo_page['keywords']
-    page_h1 = seo_page['h1']
-    return render_template("engineering.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
+    return render_template("engineering.html", **seo_page)
 
 @app.route("/energy/")
 def energy():
-    seo_page = seo_input['energy']
+    seo_page = seo_input['energy'].copy()
 
-    page_title = seo_page['title']
-    page_description = seo_page['description']
-    page_keywords = seo_page['keywords']
-    page_h1 = seo_page['h1']
-    return render_template("energy.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
+    return render_template("energy.html", **seo_page)
 
 @app.route("/faq/")
 def faq():
-    seo_page = seo_input['faq']
+    seo_page = seo_input['faq'].copy()
 
-    page_title = seo_page['title']
-    page_description = seo_page['description']
-    page_keywords = seo_page['keywords']
-    page_h1 = seo_page['h1']
-    return render_template("faq.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
+    return render_template("faq.html", **seo_page)
 
 
 
 @app.route('/contact', methods=['POST', 'GET'])
 def contact():
-    seo_page = seo_input['contact']
+    seo_page = seo_input['contact'].copy()
 
-    page_title = seo_page['title']
-    page_description = seo_page['description']
-    page_keywords = seo_page['keywords']
-    page_h1 = seo_page['h1']
 
     form = ContactForm()
     if form.validate_on_submit():
@@ -127,7 +96,7 @@ def contact():
         send_message(request.form)
         return redirect('/success') 
 
-    return render_template("contact.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1, form=form)
+    return render_template("contact.html", **seo_page, form=form)
 
 @app.route('/success')
 def success():

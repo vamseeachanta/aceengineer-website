@@ -2,6 +2,7 @@ Flask
 flask-httpauth
 flask_restful
 flask_mail
+flask_wtf
 Werkzeug
 markupsafe
 email_validator

@@ -1,5 +1,6 @@
 import os
 import datetime
+import logging
 import hashlib
 
 from flask import Flask, session, url_for, redirect, render_template, request, abort, flash
@@ -300,4 +301,4 @@ def FUN_add_user():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True)

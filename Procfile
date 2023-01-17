@@ -1,1 +1,1 @@
-web: gunicorn aceengineer.wsgi --log-file -
+web: gunicorn --workers=3

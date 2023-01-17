@@ -21,7 +21,8 @@
 
             <a href="/">
                 <svg width=auto height="50" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="50" width="50%" height="100%" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(255,255,255)" />
+                  <rect x="50" width="50%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
+                  <title>Analytical & Computational Engineering</title>
                   <text x="70" y="12" font-weight="bold" fill="black">A&CE</text>
                   Analytical & Computational Engineering
                   <style>
@@ -46,10 +47,11 @@
             <li><a href="{{ url_for('energy') }}">Energy</a></li>
             <li><a href="{{ url_for('faq') }}">FAQ</a></li>
             <li><a href="{{ url_for('contact') }}">Contact</a></li>
-            {% if session.get("current_user", None) != None %}
+
+      {% if session.get("current_user", None) != None %}
 	       <li><a href="{{ url_for('FUN_private') }}">Private</a></li>
 	    {% endif%}
-            {% if session.get("current_user", None) == "ADMIN" %}
+      {% if session.get("current_user", None) == "ADMIN" %}
 	      <li><a href="{{ url_for('FUN_admin') }}">Admin Dashboard</a></li>
 	    {% endif %}
         </ul>

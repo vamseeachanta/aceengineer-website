@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block page_title %}{{ page_title }}{% endblock %}
+{% block page_description %}{{ page_description }}{% endblock %}
+{% block page_keywords %}{{ page_keywords }}{% endblock %}
+{% block page_h1 %}{{ page_h1 }}{% endblock %}
+{% block body %}
+{{ super() }}
+
+    <p>
+    The various areas of solutions are below.
+    </p>
+
+    <h2>Design</h2>
+    <ul>
+        <li>Engineering design</li>
+    </ul>
+
+    <h2>Engineering</h2>
+    <ul>
+        <li>Physics based animations</li>
+    </ul>
+
+    <h2>Drilling</h2>
+    <p>Day to day drilling related algorithms in near-real time.</p>
+
+    <h2>Operations and Production</h2>
+    <p>Day to day operations and production related algorithms in near-real time.</p>
+
+    <h2>Intervention</h2>
+    <p>Intervention or work-over activities.</p>
+
+    <h2>Decommission</h2>
+    <p>End of life or decommission engineering.</p>
+
+    <br>
+    <p> Let <b>A&CE</b> help your project by using the <a href="{{ url_for('contact') }}">contact form</a>. We will respond promptly, usually within 24 hours.</p>
+{% endblock %}

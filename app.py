@@ -98,6 +98,8 @@ def contact():
     page_h1 = seo_page['h1']
     return render_template("contact.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
 
+
+
 @app.route("/public/")
 def FUN_public():
     return render_template("public_page.html")

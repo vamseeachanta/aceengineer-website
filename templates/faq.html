@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block page_title %}{{ page_title }}{% endblock %}
+{% block page_description %}{{ page_description }}{% endblock %}
+{% block page_keywords %}{{ page_keywords }}{% endblock %}
+{% block page_h1 %}{{ page_h1 }}{% endblock %}
+{% block body %}
+{{ super() }}
+
+    <br>
+    <p><b>What are the various project types performed?</b></p>
+    <p>The various projects types performed to date are:
+        <ul>
+            <li>Engineering analysis.</li>
+            <li>Engineering software simulations.</li>
+            <li>Physics based animations.</li>
+            <li>Data analysis, machine learning and artificial intelligence.</li>
+        </ul>
+    </p>
+
+    <p><b>What are the typical client engagements?</b></p>
+    <p>The typical client engagements are:
+        <ul>
+            <li>Existing open source libaries are available for general use: Free</li>
+            <li>New project and no existing library: Time and material basis</li>
+            <li>If customization is required in existing open source libaries: Time and material basis</li>
+            <li>New and cutting edge libraries can be developed with low cost contingent on resource availability.</li>
+        </ul>
+     
+    </p>
+
+    <p><b>Algorithm libraries delivered are private property or open source?</b></p>
+    <p>Data is completely abstracted from algorithm and the algorithm is released with assumed data.
+    If the algorithm has client IP, it will be delivered to the client via a private repository.
+    Where practical and not constrained by Itellectual Property (IP), algorithms are released as open source libraries for general use. 
+    </p>
+
+    <p><b>What are the algorithm best practices?</b></p>
+    <p>The algorithms are prepared for the outside world. The best practices followed by all algorithm developers are:
+        <ul>
+            <li><a href="https://en.wikipedia.org/wiki/Object-oriented_programming">Object oriented programming (OOPs)</a> principles.</li>
+            <li><a href="https://www.pentalog.com/blog/it-development-technology/solid-principles-object-oriented-programming/">SOLID programming principles.</a> A demo of SOLID programming using<a href="https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design " target="_blank">a calculator.</a></li>
+            <li><a href="https://en.wikipedia.org/wiki/Test-driven_development">Test driven development (TDD) principles.</a></li>
+            <li>Unit tests and behavior tests.</li>
+            <li>End-to-end behavior tests to practically cover the one-off yet important edge cases.</li>
+            <li>In summary, utilize OOD principles by Robert C. Martin (also known as <a href="http://en.wikipedia.org/wiki/Robert_Cecil_Martin">Uncle Bob</a>).</li>
+        </ul>
+</p>
+
+<br>
+<p> Let <b>A&CE</b> help your project by using the <a href="{{ url_for('contact') }}">contact form</a>. We will respond promptly, usually within 24 hours.</p>
+
+{% endblock %}

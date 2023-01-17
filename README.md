@@ -13,8 +13,8 @@ Start with end in mind:
     - Add contact form (done)
     - Add call-to-action in every page (?)
     - Nice to have: use **template_data. Add a standard function to get template_data.(?)
-- Complete git repos with description prior to employment offer
-    - pydigitalmodel? & orcaflexPost (combine? yes!)
+- Complete git repos with description prior(?)
+    - pydigitalmodel & orcaflexPost (combine? yes!)
     - bseedata
     - fielddev
     - pypipecapacity

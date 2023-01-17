@@ -10,13 +10,12 @@ Good practices:
 Start with end in mind:
 - Website
     - A website with barebones navigation and content (done)
-    - Add contact form 
-        - send email to support@aceengineer.com
-        - Thank you template
-    - Add call-to-action in every page
+    - Add contact form (done)
+    - Add call-to-action in every page (?)
+    - Nice to have: use **template_data. Add a standard function to get template_data.(?)
 - Complete git repos with description prior to employment offer
-    - pyfemodel & orcaflexPost (combine? yes!)
+    - pydigitalmodel? & orcaflexPost (combine? yes!)
     - bseedata
     - fielddev
     - pypipecapacity
-
+- Add existing repos to Energy (done)

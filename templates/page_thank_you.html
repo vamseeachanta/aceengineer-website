@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+{% block page_title %}Thank you{% endblock %}
+{% block body %}
+    {{ super() }}
+    Thank you for contacting us. We will respond promptly, usually within 24 hours. Back to <a href="{{ url_for('root') }}">Home</a>
+{% endblock %}

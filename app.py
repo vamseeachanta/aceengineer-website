@@ -9,12 +9,28 @@ from database import list_users, verify, delete_user_from_db, add_user
 from database import read_note_from_db, write_note_into_db, delete_note_from_db, match_user_id_with_note_id
 from database import image_upload_record, list_images_for_user, match_user_id_with_image_uid, delete_image_from_db
 
+from flask_mail import Mail, Message
+
+from common.form_contact import ContactForm, csrf
 
 seo_input_file = 'static//yaml//seo_data.yaml'
 seo_input = ymlInput(seo_input_file, None)
 
+mail = Mail()
 app = Flask(__name__)
 app.config.from_object('config')
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
+csrf.init_app(app)
+
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'support@aceengineer.com'
+app.config['MAIL_PASSWORD'] = 'rose109Gud'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail.init_app(app)
 
 @app.errorhandler(401)
 def FUN_401(error):
@@ -88,7 +104,9 @@ def faq():
     page_h1 = seo_page['h1']
     return render_template("faq.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
 
-@app.route("/contact/")
+
+
+@app.route('/contact', methods=['POST', 'GET'])
 def contact():
     seo_page = seo_input['contact']
 
@@ -96,9 +114,36 @@ def contact():
     page_description = seo_page['description']
     page_keywords = seo_page['keywords']
     page_h1 = seo_page['h1']
-    return render_template("contact.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1)
 
+    form = ContactForm()
+    if form.validate_on_submit():
+        print('-------------------------')
+        print(request.form['name'])
+        print(request.form['email'])
+        print(request.form['subject'])
+        print(request.form['message'])
+        print('-------------------------')
+        send_message(request.form)
+        return redirect('/success') 
 
+    return render_template("contact.html", page_title=page_title, page_description=page_description, page_keywords= page_keywords, page_h1=page_h1, form=form)
+
+@app.route('/success')
+def success():
+    return render_template("page_thank_you.html") , {"Refresh": "2; url=/"}
+
+def send_message(message):
+    name = message.get('name')
+    sender = message.get('email')
+    subject = message.get('subject')
+    message_body = message.get('message')
+    body = f"Name: {name} \nSender: {sender} \n\nSubject: {subject} \n\n{message_body}"
+    print(body)
+    msg = Message(message.get('subject'), sender = sender,
+            recipients = ['vamsee.achanta@aceengineer.com'],
+            body= body
+    )
+    mail.send(msg)
 
 @app.route("/public/")
 def FUN_public():
@@ -133,10 +178,6 @@ def FUN_admin():
         return render_template("admin.html", users = user_table)
     else:
         return abort(401)
-
-
-
-
 
 
 @app.route("/write_note", methods = ["POST"])

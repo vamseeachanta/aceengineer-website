@@ -12,6 +12,7 @@ dependencies:
       - flask_httpauth
       - flask_mail
       - flask_restful
+      - flask_sslify
       - Werkzeug
       - markupsafe
       - email_validator

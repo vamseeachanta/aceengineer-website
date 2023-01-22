@@ -9,7 +9,7 @@ from common.ymlInput import ymlInput
 from database import list_users, verify, delete_user_from_db, add_user
 from database import read_note_from_db, write_note_into_db, delete_note_from_db, match_user_id_with_note_id
 from database import image_upload_record, list_images_for_user, match_user_id_with_image_uid, delete_image_from_db
-
+from flask_sslify import SSLify
 from flask_mail import Mail, Message
 
 from common.form_contact import ContactForm, csrf
@@ -19,6 +19,10 @@ seo_input = ymlInput(seo_input_file, None)
 
 mail = Mail()
 app = Flask(__name__)
+
+if 'DYNO' in os.environ: # only trigger SSLify if the app is running on Heroku
+    sslify = SSLify(app)
+
 app.config.from_object('config')
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY

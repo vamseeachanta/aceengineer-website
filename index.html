@@ -1,105 +1,19 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Welcome to Emess Car Service</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-    <div class="total">
-        <div class="total_in">
-            <header>
-               <ul>
-<li><a href="index.html" class="active">HOME</a></li>
-<li><a href="http://www.emesscarservice.com">ONLINE BOOKING</a>
-<ul><li><a href="http://www.emesscarservice.com">Account</a></li>
-<li><a href="http://www.emesscarservice.com">Credit Card</a></li>
-<li><a href="http://www.emesscarservice.com">Cash</a></li>
-</ul></li>
-<li><a href="account.html">ACCOUNTS</a>
-<!--<ul><li><a href="NewAccounts.php">New Account</a></li>
-<li><a href="ExistingAccount.php">Existing Account</a></li>
+{% extends "layout.html" %}
+{% block page_title %}{{ page_title }}{% endblock %}
+{% block page_description %}{{ page_description }}{% endblock %}
+{% block page_keywords %}{{ page_keywords }}{% endblock %}
+{% block page_h1 %}{{ page_h1 }}{% endblock %}
+{% block body %}
+{{ super() }}
 
-</ul>--></li>
+       <p>Analytical & Computational Engineering (<b>A&CE</b>) is a design and engineering services firm providing analytical solutions.</p>
+       <p>The innovative solutions utilize clean data and clean code programming practices to deliver algorithm solutions. </p>
+       <p>    <b>A&CE</b> is driven by the passion to deliver algorithm libraries as solutions.
+              Algorithms as libraries enable machine learning and artificial intelligence on engineering systems.
+              These algorithms will define the future of advanced engineering systems.
+       </p>
 
-<li><a href="aboutus.html">ABOUT US</a></li>
-<li><a href="contactus.php">CONTACT US</a></li>
-<li><a href="driveforus.html">DRIVE FOR US</a></li>
-</ul>
-            </header>
-           <section class="section_height1">
-            <div class="v_gap1"></div>
-             <div class="v_gap2"></div>
-            <div>
-                <div class="inline left topdiv1 title1">
-                Emess Car Service
-                <div class="v_gap3"></div>
-                 <div class="title2">
-                 Online Booking System
-                 </div>
-                </div>
-                <div class="inline right">
-                 <img src="images/logo1.png" />
-                </div>
-            </div>
-            <div class="v_gap1"></div>
-             <div class="v_gap2"></div>
-           <div id="idx"  class="left">
-        <img src="Images/example1.png" style="">
-        <img src="Images/example2.png" style="margin-left:183px;">
-        <img src="Images/example3.png" style="margin-left:183px;">
+       <br>
+       <p> For more information on <b>A&CE</b> capabilities, view <a href="{{ url_for('engineering') }}">engineering</a>.</p>
 
-    </div>
-            </section>
-
-        </div>
-        
-    </div>
-    <footer class="footer_height1">
-            <div class="footin">
-                <div class="car_img inline left">
-                    <div  class="title3">
-                        EMESS
-                    </div>
-                    <div class="foot ">
-                        <ul>
-                            <li><a href="index.html">HOME</a></li>
-                             <li><a href="#">ONLINE BOOKING</a></li>
-                              <li><a href="account.html">ACCOUNTS</a></li>
-                              <li><a href="aboutus.html">ABOUT US</a></li>
-                              <li><a href="contactus.html">CONTACT US</a></li>
-                              <li><a href="driveforus.html">DRIVE FOR US</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="car_img3 inline ">
-                </div>
-                  <div class="car_img1 inline ">
-                    <div  class="title3">
-                       Down load our App NOW!
-                    </div>
-                   <div>
-                   <div class="v_gap1"></div>
-                    <div class="inline left">
-                       <img src="Images/google.png"  /> 
-                    </div>
-                    <div class="inline right">
-                       <img src="Images/apple.png"  /> 
-                    </div>
-                    </div>
-                </div>
-                <div class="car_img inline right">
-                    <div  class="title3">
-                      News Letter
-                    </div>
-                    <div class="news">
-SUBMIT YOUR EMAIL ADDRESS<br />
-TO RECEIVE OUR NEWS LETTER</div>
-                    <div><input type="text" placeholder="EMAIL" style="color:White; font-size:13px; font-family:folioBT Book; font-size:12PX; width:280PX;  height:28PX; background:#111111; border:SOLID 1PX #000; font-weight:bold; margin-top:7px;padding-left: 5px;"></div>
-                     <div class="title4">submit</div>
-                </div>
-                
-            </div>
-            <div class="center">COPYRIGHT EMESS ALL RIGHTS RESERVED DESIGNED BY CHAVA ADLER</div>
-        </footer>
-</body>
-</html>
+{% endblock %}

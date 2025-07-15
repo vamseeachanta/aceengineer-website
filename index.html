@@ -1,19 +1,54 @@
-{% extends "layout.html" %}
-{% block page_title %}{{ page_title }}{% endblock %}
-{% block page_description %}{{ page_description }}{% endblock %}
-{% block page_keywords %}{{ page_keywords }}{% endblock %}
-{% block page_h1 %}{{ page_h1 }}{% endblock %}
-{% block body %}
-{{ super() }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" id="meta-description" content="">
+    <meta name="keywords" id="meta-keywords" content="">
+    
+    <title id="page-title">A&CE</title>
 
-       <p>Analytical & Computational Engineering (<b>A&CE</b>) is a design and engineering services firm providing analytical solutions.</p>
-       <p>The innovative solutions utilize clean data and clean code programming practices to deliver algorithm solutions. </p>
-       <p>    <b>A&CE</b> is driven by the passion to deliver algorithm libraries as solutions.
-              Algorithms as libraries enable machine learning and artificial intelligence on engineering systems.
-              These algorithms will define the future of advanced engineering systems.
-       </p>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-       <br>
-       <p> For more information on <b>A&CE</b> capabilities, view <a href="{{ url_for('engineering') }}">engineering</a>.</p>
+    <!-- Navigation (Imported from layout.html) -->
+    <div id="navbar-placeholder"></div>
 
-{% endblock %}
+    <div class="container">
+        <h1 id="page-h1"></h1>
+        
+        <p>Analytical & Computational Engineering (<b>A&CE</b>) is a design and engineering services firm providing analytical solutions.</p>
+        <p>The innovative solutions utilize clean data and clean code programming practices to deliver algorithm solutions.</p>
+        <p><b>A&CE</b> is driven by the passion to deliver algorithm libraries as solutions.
+            Algorithms as libraries enable machine learning and artificial intelligence on engineering systems.
+            These algorithms will define the future of advanced engineering systems.</p>
+
+        <br>
+        <p>For more information on <b>A&CE</b> capabilities, view <a href="engineering.html">engineering</a>.</p>
+    </div>
+
+    <div class="container">
+        <hr>
+        <p>Developed by <b>A&CE</b></p>
+    </div>
+
+    <script>
+        // Load the navbar dynamically from layout.html
+        fetch("layout.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("navbar-placeholder").innerHTML = data;
+            });
+
+        // Set page metadata and content
+        document.getElementById("page-title").textContent = "aceengineer";
+        document.getElementById("meta-description").setAttribute("content", "Analytical & Computational Engineering - Engineering solutions firm");
+        document.getElementById("meta-keywords").setAttribute("content", "engineering, computational, analytical solutions");
+        document.getElementById("page-h1").textContent = "Analytical & Computational Engineering";
+    </script>
+
+</body>
+</html>

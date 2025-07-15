@@ -1,114 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
 
-<html>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.united.css') }}">
-<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <meta name="description" content="A&CE Engineering">
+    <meta name="keywords" content="engineering, AI, solutions">
 
-<meta name="description" content="{% block page_description %}{% endblock %}">
-<meta name="keywords" content="{% block page_keywords %}{% endblock %}">
+    <title id="page-title">A&CE</title>
 
-<title>{% block page_title %}{% endblock %}</title>
+    <script>
+        if (window.location.pathname.includes("layout.html")) {
+            window.location.href = "index.html";
+        }
 
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+        document.addEventListener("DOMContentLoaded", function () {
+            let currentUser = localStorage.getItem("current_user");
 
-            <a href="/">
-                <svg width=auto height="50" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="50" width="50%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
-                  <title>Analytical & Computational Engineering</title>
-                  <text x="70" y="12" font-weight="bold" fill="black">A&CE</text>
-                  Analytical & Computational Engineering
-                  <style>
-                      <![CDATA[
-                      text {
-                          dominant-baseline: hanging;
-                          font: 40px sans-serif;
-                      }
-                      ]]>
-                  </style>
+            if (currentUser) {
+                document.getElementById("logged-in-user").innerText = currentUser;
+                document.getElementById("login-form").style.display = "none";
+                document.getElementById("logout-section").style.display = "block";
+                document.getElementById("user-display").style.display = "block";
 
-              </svg>
-            </a>
+                if (currentUser.toUpperCase() === "ADMIN") {
+                    document.getElementById("admin-link").style.display = "block";
+                }
+            }
 
-        </div>
+            document.getElementById("logout-link").addEventListener("click", function () {
+                localStorage.removeItem("current_user");
+                window.location.reload();
+            });
 
-        <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-            <li><a href="{{ url_for('root') }}">Home</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-            <li><a href="{{ url_for('engineering') }}">Engineering</a></li>
-            <li><a href="{{ url_for('energy') }}">Energy</a></li>
-            <li><a href="{{ url_for('faq') }}">FAQ</a></li>
-            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            document.getElementById("login-form-element").addEventListener("submit", function (event) {
+                event.preventDefault();
+                let username = document.getElementById("username").value.trim();
+                let password = document.getElementById("password").value.trim();
 
-      {% if session.get("current_user", None) != None %}
-	       <li><a href="{{ url_for('FUN_private') }}">Private</a></li>
-	    {% endif%}
-      {% if session.get("current_user", None) == "ADMIN" %}
-	      <li><a href="{{ url_for('FUN_admin') }}">Admin Dashboard</a></li>
-	    {% endif %}
-        </ul>
+                if (username && password) {
+                    localStorage.setItem("current_user", username);
+                    window.location.reload();
+                } else {
+                    alert("Please enter both username and password.");
+                }
+            });
+        });
 
-        <ul class="nav navbar-nav navbar-right">
-        {% if session.get("current_user", None) == None %}
-                <form action="/login" method="post" class="navbar-form navbar-right">
-                    <div class="form-group">
-                      <input type="text" name="id" placeholder="User Name" class="form-control">
+        function showFlashMessage(category, message) {
+            let flashContainer = document.getElementById("flash-messages");
+            let alertDiv = document.createElement("div");
+            alertDiv.className = `alert alert-${category}`;
+            alertDiv.innerText = message;
+            flashContainer.appendChild(alertDiv);
+        }
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="index.html">
+                    <svg width="auto" height="50" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" width="50%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
+                        <title>Analytical & Computational Engineering</title>
+                        <text x="70" y="12" font-weight="bold" fill="black">A&CE</text>
+                        Analytical & Computational Engineering
+                        <style>
+                            <![CDATA[
+                            text {
+                                dominant-baseline: hanging;
+                                font: 40px sans-serif;
+                            }
+                            ]]>
+                        </style>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="engineering.html">Engineering</a></li>
+                    <li><a href="energy.html">Energy</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li id="admin-link" style="display: none;"><a href="admin.html">Admin Dashboard</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="user-display" style="display: none;">
+                        <a href="#"><b id="logged-in-user"></b></a>
+                    </li>
+                    <li id="logout-section" style="display: none;">
+                        <a href="#" id="logout-link"><b><u>Logout</u></b></a>
+                    </li>
+                </ul>
+
+                <!-- Login Form -->
+                <form id="login-form-element" class="navbar-form navbar-right">
+                    <div id="login-form">
+                        <div class="form-group">
+                            <input type="text" id="username" placeholder="User Name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" placeholder="Password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success">Log In</button>
                     </div>
-                    <div class="form-group">
-                      <input type="password" name="pw" placeholder="Password" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-success">Log In</button>
                 </form>
-        {% else %}
-        <li>
-              <a><b>{{ session.get("current_user") }}</b></a></li>
-              <li><a href="{{ url_for('FUN_logout') }}"><b><u>Logout</u></b></a>
-          </li>
-        {% endif %}
-        </ul>
+            </div>
         </div>
-
-    </div>
     </nav>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+    <div id="flash-messages"></div>
 
+    <div class="container">
+        <h1 id="page-h1"></h1>
+        <p id="page-body"></p>
+    </div>
 
-<div class="container">
-  
-  <h1>{% block page_h1 %}{% endblock %}</h1>
-  
-  <p>{% block body %}{% endblock %}</p>
-
-</div>
-
-
-<div class='container'>
-<hr>
-<p>Developed by <b>A&CE</b></p>
-<a href="http://flask.pocoo.org/"><img
-   src="{{ url_for('static', filename='img/flask-powered.png') }}"
-   border="0"
-   align="right"
-   alt="Flask powered"
-   title="Flask powered"></a>
-</div>
-
-
+</body>
 </html>

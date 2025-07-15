@@ -1,66 +1,109 @@
-{% extends "layout.html" %}
-{% block page_title %}{{ page_title }}{% endblock %}
-{% block page_description %}{{ page_description }}{% endblock %}
-{% block page_keywords %}{{ page_keywords }}{% endblock %}
-{% block page_h1 %}{{ page_h1 }}{% endblock %}
-{% block body %}
-{{ super() }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" id="meta-description" content="">
+    <meta name="keywords" id="meta-keywords" content="">
 
-<p>We'd love to hear from you.</p>
-<p><b>Email:</b> support@aceengineer.com</p>
+    <title id="page-title">Contact Us - A&CE</title>
 
-<p><b>US Address:</b>
-  <br>
-  11511 Piping Rock Dr., Houston, TX 77077 
-  <a href="https://www.google.com/maps/place/11511+Piping+Rock+Dr,+Houston,+TX+77077/@29.7407084,-95.5815012,17z/data=!3m1!4b1!4m5!3m4!1s0x8640dcc09c62b9f3:0x162814cb39f71807!8m2!3d29.7407038!4d-95.5793072">(view map)</a></p>
-</p>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-<p>
- <h2>What You Get When Asking Your Question</h2>
- <ul>
-  <li>Less than 24-hour response to your question.</li>
-  <li>Engineering thoroughness and expertise.</li>
-  <li>Plan of action summarized in an email follow up.</li>
-</ul>
- </p>
+    <!-- Navigation (Imported from layout.html) -->
+    <div id="navbar-placeholder"></div>
 
- <form action="{{ url_for('contact') }}" method="POST">
-  {{ form.csrf_token }}
+    <div class="container">
+        <h1 id="page-h1"></h1>
+        
+        <p>We'd love to hear from you.</p>
+        <p><b>Email:</b> <a href="mailto:support@aceengineer.com">support@aceengineer.com</a></p>
 
-  <div class="form-group">
-    {{ form.name.label }}
-    {{ form.name(class='form-control') }}
-    {% for error in form.name.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </div>
+        <p><b>US Address:</b>
+            <br>
+            11511 Piping Rock Dr., Houston, TX 77077 
+            <a href="https://www.google.com/maps/place/11511+Piping+Rock+Dr,+Houston,+TX+77077/@29.7407084,-95.5815012,17z" target="_blank">(view map)</a>
+        </p>
 
-  <div class="form-group">
-    {{ form.email.label }}
-    {{ form.email(class='form-control') }}
-    {% for error in form.email.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </div>
+        <h2>What You Get When Asking Your Question</h2>
+        <ul>
+            <li>Less than 24-hour response to your question.</li>
+            <li>Engineering thoroughness and expertise.</li>
+            <li>Plan of action summarized in an email follow-up.</li>
+        </ul>
 
-  <div class="form-group">
-    {{ form.subject.label }}
-    {{ form.subject(class='form-control') }}
-    {% for error in form.subject.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </div>
+        <!-- Contact Form -->
+        <h2>Send Us a Message</h2>
+        <form id="contact-form">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" class="form-control" required>
+            </div>
 
-  <div class="form-group">
-    {{ form.message.label }}
-    {{ form.message(class='form-control') }}
-    {% for error in form.message.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
 
-  {{ form.submit(class='btn btn-success') }}
-  
-</form>
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" class="form-control" required>
+            </div>
 
-{% endblock %}
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" class="form-control" rows="4" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Send Message</button>
+        </form>
+
+        <div id="form-response" style="margin-top: 10px;"></div>
+    </div>
+
+    <div class="container">
+        <hr>
+        <p>Developed by <b>A&CE</b></p>
+    </div>
+
+    <script>
+        // Load the navbar dynamically from layout.html
+        fetch("layout.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("navbar-placeholder").innerHTML = data;
+            });
+
+        // Set page metadata and content dynamically
+        document.getElementById("page-title").textContent = "Contact Us - A&CE";
+        document.getElementById("meta-description").setAttribute("content", "Contact A&CE for engineering solutions and services.");
+        document.getElementById("meta-keywords").setAttribute("content", "contact, engineering, AI, solutions");
+        document.getElementById("page-h1").textContent = "Contact Us";
+
+        // Handle form submission
+        document.getElementById("contact-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let subject = document.getElementById("subject").value;
+            let message = document.getElementById("message").value;
+
+            if (name && email && subject && message) {
+                document.getElementById("form-response").innerHTML = 
+                    "<div class='alert alert-success'>Your message has been sent successfully!</div>";
+                
+                // Here you can integrate with an email service or Google Forms submission
+            } else {
+                document.getElementById("form-response").innerHTML = 
+                    "<div class='alert alert-danger'>Please fill in all fields.</div>";
+            }
+        });
+    </script>
+
+</body>
+</html>

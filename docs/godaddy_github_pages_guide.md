@@ -1,6 +1,6 @@
 # How to Point GoDaddy Domain to GitHub Pages
 
-This guide shows how to point your GoDaddy domain to your GitHub Pages site: `https://samdansk2.github.io/aceengineer_website/`
+This guide shows how to point your GoDaddy domain to your GitHub Pages site: `https://vamseeachanta.github.io/aceengineer-website/`
 
 ## Method 1: Using CNAME (Recommended)
 
@@ -18,7 +18,7 @@ This guide shows how to point your GoDaddy domain to your GitHub Pages site: `ht
 ```
 Type: CNAME
 Name: www
-Value: samdansk2.github.io
+Value: vamseeachanta.github.io
 TTL: 1 Hour
 
 Type: A

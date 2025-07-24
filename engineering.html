@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" id="meta-description" content="">
+    <meta name="keywords" id="meta-keywords" content="">
+
+    <title id="page-title">Engineering Services - A&CE</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <!-- Navigation (Imported from layout.html) -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+        <h1 id="page-h1"></h1>
+        
+        <p>Analytical & Computational Engineering (<b>A&CE</b>) solutions span across industries. 
+            The services offered include **Design, Analytical Simulations, 
+            Physics-based animations,** and **Data-verified engineering systems**.
+            These services are provided end-to-end with a single data source of truth to ensure continuity in processes.
+            With reuse and reiteration of projects, the data will be consolidated and remote data sources will be integrated. 
+        </p>
+
+        <h2>Design</h2>
+        <ul>
+            <li>Engineering design</li>
+            <li>Computer-aided design</li>
+            <li>Engineering or industry code designs</li>
+        </ul>
+
+        <h2>Engineering Simulations</h2>
+        <ul>
+            <li>Physics-based animations</li>
+            <li>Finite element analysis</li>
+            <li>Computational fluid dynamics</li>
+            <li>Process engineering</li>
+        </ul>
+
+        <h2>Physics-Based Animations</h2>
+        <p>Physics-based animations take into account as-built working conditions and help users visualize 
+        key steps before execution. Any measured data can be fed into the animations to ensure accurate simulations.</p>
+        <ul>
+            <li>Manufacturing and Fabrication activities</li>
+            <li>Transportation</li>
+            <li>Installation</li>
+        </ul>
+
+        <h2>System Verification with Measured Data</h2>
+        <p>Measured data from as-built conditions and operations is used for reassessment of design and simulations.</p>
+        <br>    
+        <p> See <a href="energy.html">Energy</a> for previous project experience.</p>
+        <p> For further information on <b>A&CE</b> capabilities and experience, get in touch using 
+            <a href="contact.html">our contact form</a>. We will respond within 24 hours.</p>
+    </div>
+
+    <div class="container">
+        <hr>
+        <p>Developed by <b>A&CE</b></p>
+    </div>
+
+    <script>
+        // Load the navbar dynamically from layout.html
+        fetch("layout.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("navbar-placeholder").innerHTML = data;
+            });
+
+        // Set page metadata and content dynamically
+        document.getElementById("page-title").textContent = "Engineering Services - A&CE";
+        document.getElementById("meta-description").setAttribute("content", "Learn about A&CE's engineering services, including design, simulations, and physics-based animations.");
+        document.getElementById("meta-keywords").setAttribute("content", "engineering, AI, physics simulations, computational fluid dynamics, design");
+        document.getElementById("page-h1").textContent = "Engineering Services";
+    </script>
+
+</body>
+</html>

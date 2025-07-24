@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" id="meta-description" content="">
+    <meta name="keywords" id="meta-keywords" content="">
+
+    <title id="page-title">About A&CE</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <!-- Navigation (Imported from layout.html) -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+        <h1 id="page-h1"></h1>
+        
+        <p>Analytical & Computational Engineering (<b>A&CE</b>) was established in 2010 to provide data-driven engineering services.</p>
+        <p><b>A&CE</b> solves technical problems as algorithm or library solutions driven by abstracted data. 
+            <b>A&CE</b> helps drive futuristic algorithm solutions to help utilize machine learning and artificial intelligence for engineering systems. 
+            These algorithm solutions running in compute engines can be utilized by 
+            state-of-the-art Artificial Intelligence (AI) systems to drive insights and further automate engineering systems.</p>
+        <p>The typical use cases are:</p>
+        <ul>
+            <li>Reusable engineering algorithms.</li>
+            <li>Algorithms/library delivered as a service.</li>
+            <li>Compute engine algorithms as web services.</li>
+        </ul>
+
+        <br>
+        <p>For further information on <b>A&CE</b> capabilities and experience, get in touch using 
+            <a href="contact.html">our contact form</a>. We will respond within 24 hours.</p>
+    </div>
+
+    <div class="container">
+        <hr>
+        <p>Developed by <b>A&CE</b></p>
+    </div>
+
+    <script>
+        // Load the navbar dynamically from layout.html
+        fetch("layout.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("navbar-placeholder").innerHTML = data;
+            });
+
+        // Set page metadata and content dynamically
+        document.getElementById("page-title").textContent = "About A&CE";
+        document.getElementById("meta-description").setAttribute("content", "Learn about Analytical & Computational Engineering.");
+        document.getElementById("meta-keywords").setAttribute("content", "about, A&CE, engineering, AI, machine learning");
+        document.getElementById("page-h1").textContent = "About Us";
+    </script>
+
+</body>
+</html>

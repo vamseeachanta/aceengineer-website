@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" id="meta-description" content="">
+    <meta name="keywords" id="meta-keywords" content="">
+
+    <title id="page-title">Energy Solutions - A&CE</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <!-- Navigation (Imported from layout.html) -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+        <h1 id="page-h1"></h1>
+        
+        <p>The various areas of solutions are below.</p>
+
+        <h2>Field Development</h2>
+        <p>Previous field economics and related activities</p>
+
+        <h2>Design</h2>
+        <p>Engineering design</p>
+        <ul>
+            <li>A lifecycle <a href="https://github.com/vamseeachanta/digitalmodel">digital twin</a> package to help perform design, engineering, operations, and decommissioning.</li>
+        </ul>
+        <ul>
+            <li>A <a href="https://github.com/vamseeachanta/pipecapacity">pipe capacity</a> package to help perform load calculations on pipes.</li>
+        </ul>
+
+        <h2>Engineering</h2>
+        <p>Physics-based animations</p>
+
+        <h2>Drilling</h2>
+        <p>Day-to-day drilling-related algorithms in near real-time.</p>
+
+        <h2>Operations and Production</h2>
+        <p>Day-to-day operations and production-related algorithms in near real-time.</p>
+        <ul>
+            <li><a href="https://github.com/vamseeachanta/pyintegrity">Fitness for Service</a> (FFS) analysis utilizing API 579 (2016) and BS7910 standards.</li>
+        </ul>
+
+        <h2>Intervention</h2>
+        <p>Intervention or work-over activities.</p>
+
+        <h2>Decommission</h2>
+        <p>End-of-life or decommissioning engineering.</p>
+
+        <br>
+        <p>Let <b>A&CE</b> help your project by using the <a href="contact.html">contact form</a>. We will respond within 24 hours.</p>
+    </div>
+
+    <div class="container">
+        <hr>
+        <p>Developed by <b>A&CE</b></p>
+    </div>
+
+    <script>
+        // Load the navbar dynamically from layout.html
+        fetch("layout.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("navbar-placeholder").innerHTML = data;
+            });
+
+        // Set page metadata and content dynamically
+        document.getElementById("page-title").textContent = "Energy Solutions - A&CE";
+        document.getElementById("meta-description").setAttribute("content", "Explore A&CE's energy solutions, including field development, engineering simulations, and decommissioning.");
+        document.getElementById("meta-keywords").setAttribute("content", "energy, engineering, field development, drilling, decommissioning");
+        document.getElementById("page-h1").textContent = "Energy Solutions";
+    </script>
+
+</body>
+</html>

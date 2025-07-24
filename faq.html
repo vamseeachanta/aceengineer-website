@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" id="meta-description" content="">
+    <meta name="keywords" id="meta-keywords" content="">
+
+    <title id="page-title">FAQ - A&CE</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <!-- Navigation (Imported from layout.html) -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container">
+        <h1 id="page-h1"></h1>
+        
+        <br>
+        <p><b>What are the various project types performed?</b></p>
+        <p>The various project types performed to date are:</p>
+        <ul>
+            <li>Engineering analysis.</li>
+            <li>Engineering software simulations.</li>
+            <li>Physics-based animations.</li>
+            <li>Data analysis, machine learning, and artificial intelligence.</li>
+        </ul>
+
+        <p><b>What are the typical client engagements?</b></p>
+        <p>The typical client engagements are:</p>
+        <ul>
+            <li>Existing open-source libraries are available for general use: Free</li>
+            <li>New project with no existing library: Time and material basis</li>
+            <li>Customization of an existing open-source library: Time and material basis</li>
+            <li>New and cutting-edge libraries can be developed at a low cost, contingent on resource availability.</li>
+        </ul>
+
+        <p><b>Are algorithm libraries delivered as private property or open-source?</b></p>
+        <p>Data is completely abstracted from the algorithm, and the algorithm is released with assumed data.
+        If the algorithm contains client intellectual property (IP), it will be delivered via a private repository.
+        Where practical and not constrained by IP, algorithms are released as open-source libraries for general use.</p>
+
+        <p><b>What are the algorithm best practices?</b></p>
+        <p>The algorithms are prepared for real-world use. Best practices followed include:</p>
+        <ul>
+            <li><a href="https://en.wikipedia.org/wiki/Object-oriented_programming" target="_blank">Object-Oriented Programming (OOP) principles</a>.</li>
+            <li><a href="https://www.pentalog.com/blog/it-development-technology/solid-principles-object-oriented-programming/" target="_blank">SOLID programming principles</a>, with a demo on <a href="https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design" target="_blank">SOLID design using a calculator</a>.</li>
+            <li><a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank">Test-Driven Development (TDD)</a>.</li>
+            <li>Unit tests and behavior tests.</li>
+            <li>End-to-end behavior tests to cover critical edge cases.</li>
+            <li>Following OOD principles by Robert C. Martin (<a href="http://en.wikipedia.org/wiki/Robert_Cecil_Martin" target="_blank">Uncle Bob</a>).</li>
+        </ul>
+
+        <br>
+        <p>Let <b>A&CE</b> help your project by using the <a href="contact.html">contact form</a>. We will respond within 24 hours.</p>
+    </div>
+
+    <div class="container">
+        <hr>
+        <p>Developed by <b>A&CE</b></p>
+    </div>
+
+    <script>
+        // Load the navbar dynamically from layout.html
+        fetch("layout.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("navbar-placeholder").innerHTML = data;
+            });
+
+        // Set page metadata and content dynamically
+        document.getElementById("page-title").textContent = "FAQ - A&CE";
+        document.getElementById("meta-description").setAttribute("content", "Frequently Asked Questions about A&CE's services, including engineering, AI, and machine learning.");
+        document.getElementById("meta-keywords").setAttribute("content", "FAQ, engineering, AI, machine learning, open-source, OOP, TDD, SOLID principles");
+        document.getElementById("page-h1").textContent = "Frequently Asked Questions";
+    </script>
+
+</body>
+</html>

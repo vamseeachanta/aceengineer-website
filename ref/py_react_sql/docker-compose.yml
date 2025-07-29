@@ -1,0 +1,25 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: qep-welldata-api
+    ports:
+      - "5000:5000"
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    image: qep-welldata-client
+    ports:
+      - "3000:80"
+  db:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.database
+    image: qep-welldata-postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - .database/init.sql:/docker-entrypoint-initdb.d/init.sql

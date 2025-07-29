@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+	<h1 style='color:red; text-align: center;'>{{ data['title'] }}</h1>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<body>
+    <div class="row" style="margin-top: 7%; ">
+		<div class="col-md-6 sample">
+			<img src={{ data['image'] }} height="auto" max-width="100%">	
+			<div style="margin-top: 50px;"> 
+			   <p1 style='color:blue;'>{{ data['para'] }}</p1>
+			</div>
+		</div>
+	
+		<div class="col-md-6 sample">
+			<p><img src={{ data['image'] }} height="auto" max-width="100%"></p>
+			<div style="margin-top: 50px; align-items: center">
+				<p style='color:blue;'>{{ data['para'] }}</p>		
+			</div>
+		</div>
+		
+	</div>
+	<div style="text-align:center">
+	  <button class="btn-danger"><a  href="/next">Click here for next page!</a></button>
+	</div>
+</body>
+</html>
+ 

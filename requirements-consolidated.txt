@@ -1,0 +1,131 @@
+# Consolidated Requirements
+# Generated from all requirements.txt files in repository
+# This file is now replaced by pyproject.toml
+# Kept for reference only
+
+# From: digitaltwinfeed/requirements.txt
+Click==7.1.2
+Flask==1.1.2
+gunicorn==20.0.4
+itsdangerous==1.1.0
+Jinja2==2.11.2
+MarkupSafe==1.1.1
+Werkzeug==1.0.1
+WTForms==2.3.1
+flask-wtf==0.14.3
+flask-flatpages==0.7.2
+Markdown==3.2.2
+PyYAML==5.3.1
+flask-httpauth==4.1.0
+flask_restful==0.3.8
+pytest==6.0.1
+oyaml==1.0
+plotly==4.14.1
+pandas==1.1.5
+numpy==1.19.2
+pandas-datareader==0.9.0
+yfinance==0.1.59
+ta==0.7.0
+webcolors==1.11.1
+finvizfinance==0.7.2
+beautifulsoup4==4.9.3
+sec-edgar-downloader==4.0.0
+urllib3==1.26.3
+xmltodict==0.12.0
+sqlalchemy==1.3.23
+pyOpenSSL==20.0.1
+psycopg2==2.8.6
+EIA_python==1.22
+yahoo-fin==0.8.8
+lxml==4.6.3
+# From: ref/py_react_sql/api/requirements.txt
+click==8.0.1
+Flask==2.0.1
+gunicorn==20.1.0
+itsdangerous==2.0.1
+Jinja2==3.0.1
+MarkupSafe==2.0.1
+python-dotenv==0.17.1
+Werkzeug==2.0.1
+pandas==1.1.5
+numpy==1.19.2
+scipy==1.7.1
+webcolors==1.11.1
+plotly==4.14.1
+yapf
+isort
+
+# From: requirements.txt
+Flask
+flask-httpauth
+flask_restful
+flask_mail
+flask_wtf
+flask_sslify
+Werkzeug
+markupsafe
+email_validator
+gunicorn
+Jinja2
+PyYAML
+itsdangerous
+
+# From: src/external/assetutilities/docs/sub_databases/COD/MySQL/deployment/requirements.txt
+
+# From: src/external/assetutilities/docs/sub_k8_starter/app/requirements.txt
+Flask
+# From: src/external/assetutilities/docs/sub_python/leg_pycodes/COD/Dockers/composetest/requirements.txt
+flask
+redis
+# From: src/external/assetutilities/requirements.txt
+loguru
+pandas
+openpyxl
+xlsxwriter
+excel2img
+ruff
+
+# From: src/external/assetutilities/scripts/requirements.txt
+assetutilities
+build
+twine
+bumpver
+pyyaml
+numpy
+pandas
+plotly
+matplotlib
+chardet
+python-certifi-win32
+webcolors
+xlsxwriter
+plantuml
+pytest
+deepdiff
+pandoc
+wkhtmltopdf
+python-docx
+ruff
+scrapy==2.12
+bs4
+gitpython==3.1.31
+excel2img; sys_platform == 'win32'
+PyPDF2
+tabula
+sympy>=1.13.3
+utm
+ruamel.yaml
+jinja2
+openpyxl
+crochet
+
+loguru
+
+playwright
+
+selenium
+fake_headers
+
+undetected-chromedriver 
+parsel
+

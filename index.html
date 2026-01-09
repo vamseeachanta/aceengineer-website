@@ -3,23 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" id="meta-description" content="">
-    <meta name="keywords" id="meta-keywords" content="">
-    
-    <title id="page-title">A&CE</title>
+    <meta name="description" content="Analytical and Computational Engineering for physics based simulations utilizing algorithms">
+    <meta name="keywords" content="physics-based simulations, analytical algorithms, computational engineering, engineering by data, advanced computational engineering">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Analytical & Computational Engineering">
+    <meta property="og:description" content="Analytical and Computational Engineering for physics based simulations utilizing algorithms">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Analytical & Computational Engineering">
+    <meta name="twitter:description" content="Analytical and Computational Engineering for physics based simulations utilizing algorithms">
+
+    <title>Analytical & Computational Engineering</title>
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Analytical & Computational Engineering",
+        "alternateName": "A&CE",
+        "url": "https://aceengineer.com",
+        "description": "Analytical and Computational Engineering for physics based simulations utilizing algorithms",
+        "foundingDate": "2010",
+        "areaServed": "Worldwide",
+        "serviceType": [
+            "Physics-based simulations",
+            "Analytical algorithms",
+            "Computational engineering",
+            "Engineering by data"
+        ]
+    }
+    </script>
 </head>
 <body>
 
-    <!-- Navigation (Imported from layout.html) -->
-    <div id="navbar-placeholder"></div>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="index.html">
+                    <svg width="auto" height="50" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" width="50%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
+                        <title>Analytical & Computational Engineering</title>
+                        <text x="70" y="12" font-weight="bold" fill="black">A&CE</text>
+                        Analytical & Computational Engineering
+                        <style>
+                            <![CDATA[
+                            text {
+                                dominant-baseline: hanging;
+                                font: 40px sans-serif;
+                            }
+                            ]]>
+                        </style>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="engineering.html">Engineering</a></li>
+                    <li><a href="energy.html">Energy</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
-        <h1 id="page-h1"></h1>
-        
+        <h1>Analytical & Computational Engineering</h1>
+
         <p>Analytical & Computational Engineering (<b>A&CE</b>) is a design and engineering services firm providing analytical solutions.</p>
         <p>The innovative solutions utilize clean data and clean code programming practices to deliver algorithm solutions.</p>
         <p><b>A&CE</b> is driven by the passion to deliver algorithm libraries as solutions.
@@ -34,21 +104,6 @@
         <hr>
         <p>Developed by <b>A&CE</b></p>
     </div>
-
-    <script>
-        // Load the navbar dynamically from layout.html
-        fetch("layout.html")
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("navbar-placeholder").innerHTML = data;
-            });
-
-        // Set page metadata and content
-        document.getElementById("page-title").textContent = "aceengineer";
-        document.getElementById("meta-description").setAttribute("content", "Analytical & Computational Engineering - Engineering solutions firm");
-        document.getElementById("meta-keywords").setAttribute("content", "engineering, computational, analytical solutions");
-        document.getElementById("page-h1").textContent = "Analytical & Computational Engineering";
-    </script>
 
 </body>
 </html>

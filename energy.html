@@ -3,23 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" id="meta-description" content="">
-    <meta name="keywords" id="meta-keywords" content="">
+    <meta name="description" content="Explore A&CE's energy solutions, including field development, engineering simulations, and decommissioning.">
+    <meta name="keywords" content="energy, engineering, field development, drilling, decommissioning">
 
-    <title id="page-title">Energy Solutions - A&CE</title>
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Energy Solutions - A&CE">
+    <meta property="og:description" content="Explore A&CE's energy solutions, including field development, engineering simulations, and decommissioning.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/energy.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Energy Solutions - A&CE">
+    <meta name="twitter:description" content="Explore A&CE's energy solutions, including field development, engineering simulations, and decommissioning.">
+
+    <title>Energy Solutions - A&CE</title>
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://aceengineer.com/#organization",
+        "name": "Analytical & Computational Engineering",
+        "alternateName": "A&CE",
+        "url": "https://aceengineer.com",
+        "description": "Analytical and Computational Engineering for physics based simulations utilizing algorithms",
+        "foundingDate": "2010",
+        "areaServed": "Worldwide",
+        "serviceType": [
+            "Field Development",
+            "Engineering Design",
+            "Physics-based Simulations",
+            "Drilling Engineering",
+            "Operations and Production",
+            "Intervention Services",
+            "Decommissioning Engineering"
+        ]
+    }
+    </script>
 </head>
 <body>
 
-    <!-- Navigation (Imported from layout.html) -->
-    <div id="navbar-placeholder"></div>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="index.html">
+                    <svg width="auto" height="50" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" width="50%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
+                        <title>Analytical & Computational Engineering</title>
+                        <text x="70" y="12" font-weight="bold" fill="black">A&CE</text>
+                        Analytical & Computational Engineering
+                        <style>
+                            <![CDATA[
+                            text {
+                                dominant-baseline: hanging;
+                                font: 40px sans-serif;
+                            }
+                            ]]>
+                        </style>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="engineering.html">Engineering</a></li>
+                    <li><a href="energy.html">Energy</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
-        <h1 id="page-h1"></h1>
-        
+        <h1>Energy Solutions</h1>
+
         <p>The various areas of solutions are below.</p>
 
         <h2>Field Development</h2>
@@ -60,21 +134,6 @@
         <hr>
         <p>Developed by <b>A&CE</b></p>
     </div>
-
-    <script>
-        // Load the navbar dynamically from layout.html
-        fetch("layout.html")
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("navbar-placeholder").innerHTML = data;
-            });
-
-        // Set page metadata and content dynamically
-        document.getElementById("page-title").textContent = "Energy Solutions - A&CE";
-        document.getElementById("meta-description").setAttribute("content", "Explore A&CE's energy solutions, including field development, engineering simulations, and decommissioning.");
-        document.getElementById("meta-keywords").setAttribute("content", "energy, engineering, field development, drilling, decommissioning");
-        document.getElementById("page-h1").textContent = "Energy Solutions";
-    </script>
 
 </body>
 </html>

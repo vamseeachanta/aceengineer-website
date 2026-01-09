@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Page not found - A&CE">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>404 - Page Not Found | A&CE</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <style>
+        .error-page {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .error-content {
+            max-width: 600px;
+        }
+        .error-code {
+            font-size: 120px;
+            font-weight: bold;
+            color: #DD4814;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+        .error-message {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .error-description {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .helpful-links {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0;
+        }
+        .helpful-links li {
+            margin: 10px 0;
+        }
+        .helpful-links a {
+            font-size: 16px;
+            color: #DD4814;
+            text-decoration: none;
+        }
+        .helpful-links a:hover {
+            text-decoration: underline;
+        }
+        .btn-home {
+            background-color: #DD4814;
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .btn-home:hover {
+            background-color: #C03A11;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="index.html">
+                    <svg width="auto" height="50" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" width="50%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
+                        <title>Analytical & Computational Engineering</title>
+                        <text x="70" y="12" font-weight="bold" fill="black">A&CE</text>
+                        Analytical & Computational Engineering
+                        <style>
+                            <![CDATA[
+                            text {
+                                dominant-baseline: hanging;
+                                font: 40px sans-serif;
+                            }
+                            ]]>
+                        </style>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="engineering.html">Engineering</a></li>
+                    <li><a href="energy.html">Energy</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Error Content -->
+    <div class="error-page">
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <div class="error-message">Page Not Found</div>
+            <div class="error-description">
+                Sorry, the page you are looking for doesn't exist or has been moved.
+                <br>
+                Please check the URL or use the navigation menu to find what you're looking for.
+            </div>
+
+            <a href="index.html" class="btn-home">Return to Homepage</a>
+
+            <ul class="helpful-links">
+                <li><strong>Helpful Links:</strong></li>
+                <li><a href="about.html">→ About A&CE</a></li>
+                <li><a href="engineering.html">→ Engineering Services</a></li>
+                <li><a href="energy.html">→ Energy Solutions</a></li>
+                <li><a href="faq.html">→ Frequently Asked Questions</a></li>
+                <li><a href="contact.html">→ Contact Us</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background-color: #222; color: #999; padding: 20px 0; text-align: center; margin-top: 40px;">
+        <div class="container">
+            <p>&copy; 2025 Analytical & Computational Engineering. All rights reserved.</p>
+            <p>
+                <a href="index.html" style="color: #DD4814;">Home</a> |
+                <a href="about.html" style="color: #DD4814;">About</a> |
+                <a href="contact.html" style="color: #DD4814;">Contact</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Log 404 error for analytics (if Google Analytics is configured)
+        if (typeof ga === 'function') {
+            ga('send', 'event', 'Error', '404', window.location.pathname);
+        }
+
+        // Auto-redirect after 10 seconds (optional - can be removed)
+        // setTimeout(function() {
+        //     window.location.href = 'index.html';
+        // }, 10000);
+    </script>
+
+</body>
+</html>

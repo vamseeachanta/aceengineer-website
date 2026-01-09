@@ -3,27 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" id="meta-description" content="">
-    <meta name="keywords" id="meta-keywords" content="">
+    <meta name="description" content="Passion to deliver algorithms as service">
+    <meta name="keywords" content="advanced engineering systems, turn-key solutions, solution library as service, code & ui as service, clean code, unit tests, custom behavior tests, machine learning, artificial intelligence">
 
-    <title id="page-title">About A&CE</title>
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="About Us - A&CE">
+    <meta property="og:description" content="Passion to deliver algorithms as service">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/about.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="About Us - A&CE">
+    <meta name="twitter:description" content="Passion to deliver algorithms as service">
+
+    <title>About Us</title>
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Analytical & Computational Engineering",
+        "alternateName": "A&CE",
+        "url": "https://aceengineer.com",
+        "description": "Data-driven engineering services providing algorithm and library solutions powered by machine learning and artificial intelligence",
+        "foundingDate": "2010",
+        "areaServed": "Worldwide",
+        "serviceType": [
+            "Reusable engineering algorithms",
+            "Algorithms/library delivered as a service",
+            "Compute engine algorithms as web services"
+        ]
+    }
+    </script>
 </head>
 <body>
 
-    <!-- Navigation (Imported from layout.html) -->
-    <div id="navbar-placeholder"></div>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="index.html">
+                    <svg width="auto" height="50" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" width="50%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
+                        <title>Analytical & Computational Engineering</title>
+                        <text x="70" y="12" font-weight="bold" fill="black">A&CE</text>
+                        Analytical & Computational Engineering
+                        <style>
+                            <![CDATA[
+                            text {
+                                dominant-baseline: hanging;
+                                font: 40px sans-serif;
+                            }
+                            ]]>
+                        </style>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="engineering.html">Engineering</a></li>
+                    <li><a href="energy.html">Energy</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
-        <h1 id="page-h1"></h1>
-        
+        <h1>About Us</h1>
+
         <p>Analytical & Computational Engineering (<b>A&CE</b>) was established in 2010 to provide data-driven engineering services.</p>
-        <p><b>A&CE</b> solves technical problems as algorithm or library solutions driven by abstracted data. 
-            <b>A&CE</b> helps drive futuristic algorithm solutions to help utilize machine learning and artificial intelligence for engineering systems. 
-            These algorithm solutions running in compute engines can be utilized by 
+        <p><b>A&CE</b> solves technical problems as algorithm or library solutions driven by abstracted data.
+            <b>A&CE</b> helps drive futuristic algorithm solutions to help utilize machine learning and artificial intelligence for engineering systems.
+            These algorithm solutions running in compute engines can be utilized by
             state-of-the-art Artificial Intelligence (AI) systems to drive insights and further automate engineering systems.</p>
         <p>The typical use cases are:</p>
         <ul>
@@ -33,7 +102,7 @@
         </ul>
 
         <br>
-        <p>For further information on <b>A&CE</b> capabilities and experience, get in touch using 
+        <p>For further information on <b>A&CE</b> capabilities and experience, get in touch using
             <a href="contact.html">our contact form</a>. We will respond within 24 hours.</p>
     </div>
 
@@ -41,21 +110,6 @@
         <hr>
         <p>Developed by <b>A&CE</b></p>
     </div>
-
-    <script>
-        // Load the navbar dynamically from layout.html
-        fetch("layout.html")
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("navbar-placeholder").innerHTML = data;
-            });
-
-        // Set page metadata and content dynamically
-        document.getElementById("page-title").textContent = "About A&CE";
-        document.getElementById("meta-description").setAttribute("content", "Learn about Analytical & Computational Engineering.");
-        document.getElementById("meta-keywords").setAttribute("content", "about, A&CE, engineering, AI, machine learning");
-        document.getElementById("page-h1").textContent = "About Us";
-    </script>
 
 </body>
 </html>

@@ -3,29 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" id="meta-description" content="">
-    <meta name="keywords" id="meta-keywords" content="">
+    <meta name="description" content="Contact A&CE for engineering solutions and services. Less than 24-hour response with engineering thoroughness and expertise.">
+    <meta name="keywords" content="contact, engineering, AI, solutions, support, consultation">
 
-    <title id="page-title">Contact Us - A&CE</title>
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Contact Us - A&CE">
+    <meta property="og:description" content="Contact A&CE for engineering solutions and services. Less than 24-hour response with engineering thoroughness and expertise.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/contact.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Contact Us - A&CE">
+    <meta name="twitter:description" content="Contact A&CE for engineering solutions and services. Less than 24-hour response with engineering thoroughness and expertise.">
+
+    <title>Contact Us - A&CE</title>
 
     <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://aceengineer.com/#organization",
+        "name": "Analytical & Computational Engineering",
+        "alternateName": "A&CE",
+        "url": "https://aceengineer.com",
+        "description": "Analytical and Computational Engineering for physics based simulations utilizing algorithms",
+        "foundingDate": "2010",
+        "areaServed": "Worldwide",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "support@aceengineer.com",
+            "contactType": "Customer Support",
+            "areaServed": "Worldwide",
+            "availableLanguage": "English"
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "11511 Piping Rock Dr",
+            "addressLocality": "Houston",
+            "addressRegion": "TX",
+            "postalCode": "77077",
+            "addressCountry": "US"
+        },
+        "serviceType": [
+            "Engineering Analysis",
+            "Engineering Software Simulations",
+            "Physics-based Animations",
+            "Data Analysis",
+            "Machine Learning",
+            "Artificial Intelligence"
+        ]
+    }
+    </script>
 </head>
 <body>
 
-    <!-- Navigation (Imported from layout.html) -->
-    <div id="navbar-placeholder"></div>
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="index.html">
+                    <svg width="auto" height="50" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" width="50%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
+                        <title>Analytical & Computational Engineering</title>
+                        <text x="70" y="12" font-weight="bold" fill="black">A&CE</text>
+                        Analytical & Computational Engineering
+                        <style>
+                            <![CDATA[
+                            text {
+                                dominant-baseline: hanging;
+                                font: 40px sans-serif;
+                            }
+                            ]]>
+                        </style>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="engineering.html">Engineering</a></li>
+                    <li><a href="energy.html">Energy</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
-        <h1 id="page-h1"></h1>
-        
+        <h1>Contact Us</h1>
+
         <p>We'd love to hear from you.</p>
         <p><b>Email:</b> <a href="mailto:support@aceengineer.com">support@aceengineer.com</a></p>
 
         <p><b>US Address:</b>
             <br>
-            11511 Piping Rock Dr., Houston, TX 77077 
+            11511 Piping Rock Dr., Houston, TX 77077
             <a href="https://www.google.com/maps/place/11511+Piping+Rock+Dr,+Houston,+TX+77077/@29.7407084,-95.5815012,17z" target="_blank">(view map)</a>
         </p>
 
@@ -36,74 +124,58 @@
             <li>Plan of action summarized in an email follow-up.</li>
         </ul>
 
-        <!-- Contact Form -->
+        <!-- Contact Form with Web3Forms -->
         <h2>Send Us a Message</h2>
-        <form id="contact-form">
+        <form action="https://api.web3forms.com/submit" method="POST" id="contact-form">
+            <!-- Web3Forms Access Key (REPLACE WITH YOUR OWN KEY) -->
+            <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY_HERE">
+
+            <!-- Redirect URL after successful submission (optional) -->
+            <input type="hidden" name="redirect" value="https://aceengineer.com/contact.html?success=true">
+
+            <!-- Subject line customization -->
+            <input type="hidden" name="from_name" value="A&CE Contact Form">
+
             <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" id="name" class="form-control" required>
+                <input type="text" id="name" name="name" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" class="form-control" required>
+                <input type="email" id="email" name="email" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label for="subject">Subject:</label>
-                <input type="text" id="subject" class="form-control" required>
+                <input type="text" id="subject" name="subject" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label for="message">Message:</label>
-                <textarea id="message" class="form-control" rows="4" required></textarea>
+                <textarea id="message" name="message" class="form-control" rows="4" required></textarea>
             </div>
 
             <button type="submit" class="btn btn-success">Send Message</button>
         </form>
 
-        <div id="form-response" style="margin-top: 10px;"></div>
+        <!-- Success/Error Message Display -->
+        <div id="form-response" style="margin-top: 10px;">
+            <script>
+                // Display success message if redirected with success parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('success') === 'true') {
+                    document.getElementById('form-response').innerHTML =
+                        '<div class="alert alert-success">Thank you! Your message has been sent successfully. We will respond within 24 hours.</div>';
+                }
+            </script>
+        </div>
     </div>
 
     <div class="container">
         <hr>
         <p>Developed by <b>A&CE</b></p>
     </div>
-
-    <script>
-        // Load the navbar dynamically from layout.html
-        fetch("layout.html")
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("navbar-placeholder").innerHTML = data;
-            });
-
-        // Set page metadata and content dynamically
-        document.getElementById("page-title").textContent = "Contact Us - A&CE";
-        document.getElementById("meta-description").setAttribute("content", "Contact A&CE for engineering solutions and services.");
-        document.getElementById("meta-keywords").setAttribute("content", "contact, engineering, AI, solutions");
-        document.getElementById("page-h1").textContent = "Contact Us";
-
-        // Handle form submission
-        document.getElementById("contact-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            let name = document.getElementById("name").value;
-            let email = document.getElementById("email").value;
-            let subject = document.getElementById("subject").value;
-            let message = document.getElementById("message").value;
-
-            if (name && email && subject && message) {
-                document.getElementById("form-response").innerHTML = 
-                    "<div class='alert alert-success'>Your message has been sent successfully!</div>";
-                
-                // Here you can integrate with an email service or Google Forms submission
-            } else {
-                document.getElementById("form-response").innerHTML = 
-                    "<div class='alert alert-danger'>Please fill in all fields.</div>";
-            }
-        });
-    </script>
 
 </body>
 </html>

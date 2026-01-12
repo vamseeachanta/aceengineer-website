@@ -25,21 +25,105 @@
     <script src="assets/js/bootstrap.min.js"></script>
 
     <!-- JSON-LD Structured Data -->
+
+    <!-- Enhanced Organization Schema -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Organization",
+        "@id": "https://aceengineer.com/#organization",
         "name": "Analytical & Computational Engineering",
         "alternateName": "A&CE",
         "url": "https://aceengineer.com",
+        "logo": "https://aceengineer.com/assets/img/logo.png",
         "description": "Data-driven engineering services providing algorithm and library solutions powered by machine learning and artificial intelligence",
         "foundingDate": "2010",
         "areaServed": "Worldwide",
+        "sameAs": [
+            "https://www.linkedin.com/company/aceengineer",
+            "https://github.com/vamseeachanta"
+        ],
+        "founder": {
+            "@type": "Person",
+            "name": "Vamsee Achanta"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "support@aceengineer.com",
+            "contactType": "Customer Support",
+            "areaServed": "Worldwide",
+            "availableLanguage": "English"
+        },
         "serviceType": [
             "Reusable engineering algorithms",
             "Algorithms/library delivered as a service",
             "Compute engine algorithms as web services"
         ]
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://aceengineer.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "About",
+                "item": "https://aceengineer.com/about.html"
+            }
+        ]
+    }
+    </script>
+
+    <!-- Service Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "AI-Native Engineering Services",
+        "provider": {
+            "@id": "https://aceengineer.com/#organization"
+        },
+        "areaServed": "Worldwide",
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Algorithm Solutions",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Reusable Engineering Algorithms",
+                        "description": "Modular algorithm libraries for engineering applications"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Algorithms as a Service",
+                        "description": "Cloud-based algorithm execution and library delivery"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Compute Engine Integration",
+                        "description": "Web service integration for AI-powered engineering systems"
+                    }
+                }
+            ]
+        }
     }
     </script>
 </head>

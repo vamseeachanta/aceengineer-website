@@ -29,18 +29,117 @@
     {
         "@context": "https://schema.org",
         "@type": "Organization",
+        "@id": "https://aceengineer.com/#organization",
         "name": "Analytical & Computational Engineering",
         "alternateName": "A&CE",
         "url": "https://aceengineer.com",
+        "logo": "https://aceengineer.com/assets/img/logo.png",
         "description": "Analytical and Computational Engineering for physics based simulations utilizing algorithms",
         "foundingDate": "2010",
         "areaServed": "Worldwide",
+        "sameAs": [
+            "https://www.linkedin.com/company/aceengineer",
+            "https://github.com/vamseeachanta"
+        ],
+        "founder": {
+            "@type": "Person",
+            "name": "Vamsee Achanta"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "support@aceengineer.com",
+            "contactType": "Customer Support",
+            "areaServed": "Worldwide",
+            "availableLanguage": "English"
+        },
         "serviceType": [
             "Physics-based simulations",
             "Analytical algorithms",
             "Computational engineering",
             "Engineering by data"
         ]
+    }
+    </script>
+
+    <!-- WebSite Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Analytical & Computational Engineering",
+        "url": "https://aceengineer.com",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://aceengineer.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://aceengineer.com"
+            }
+        ]
+    }
+    </script>
+
+    <!-- Service Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Computational Engineering Services",
+        "provider": {
+            "@id": "https://aceengineer.com/#organization"
+        },
+        "areaServed": "Worldwide",
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Engineering Services",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Physics-based Simulations",
+                        "description": "Advanced computational simulations for engineering analysis"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Analytical Algorithms",
+                        "description": "Custom algorithm development for engineering problems"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Computational Engineering",
+                        "description": "Data-driven engineering solutions and analysis"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Engineering by Data",
+                        "description": "Machine learning and AI-powered engineering systems"
+                    }
+                }
+            ]
+        }
     }
     </script>
 </head>

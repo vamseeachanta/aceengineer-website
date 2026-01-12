@@ -25,6 +25,8 @@
     <script src="assets/js/bootstrap.min.js"></script>
 
     <!-- JSON-LD Structured Data -->
+
+    <!-- Enhanced Organization Schema -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -33,9 +35,18 @@
         "name": "Analytical & Computational Engineering",
         "alternateName": "A&CE",
         "url": "https://aceengineer.com",
-        "description": "Analytical and Computational Engineering for physics based simulations utilizing algorithms",
+        "logo": "https://aceengineer.com/assets/img/logo.png",
+        "description": "AI-native engineering with proven capabilities through open-source code, validated methodologies, and industry-standard compliance",
         "foundingDate": "2010",
         "areaServed": "Worldwide",
+        "sameAs": [
+            "https://www.linkedin.com/company/aceengineer",
+            "https://github.com/vamseeachanta"
+        ],
+        "founder": {
+            "@type": "Person",
+            "name": "Vamsee Achanta"
+        },
         "contactPoint": {
             "@type": "ContactPoint",
             "email": "support@aceengineer.com",
@@ -59,6 +70,80 @@
             "Machine Learning",
             "Artificial Intelligence"
         ]
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://aceengineer.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Contact",
+                "item": "https://aceengineer.com/contact.html"
+            }
+        ]
+    }
+    </script>
+
+    <!-- LocalBusiness Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Analytical & Computational Engineering",
+        "alternateName": "A&CE",
+        "description": "AI-native engineering with proven capabilities through open-source code, validated methodologies, and industry-standard compliance",
+        "image": "https://aceengineer.com/assets/img/logo.png",
+        "url": "https://aceengineer.com",
+        "telephone": "",
+        "email": "support@aceengineer.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "11511 Piping Rock Dr",
+            "addressLocality": "Houston",
+            "addressRegion": "TX",
+            "postalCode": "77077",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "29.7407084",
+            "longitude": "-95.5815012"
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+            ],
+            "opens": "09:00",
+            "closes": "17:00"
+        },
+        "priceRange": "$$",
+        "currenciesAccepted": "USD",
+        "paymentAccepted": "Cash, Credit Card, Invoice",
+        "areaServed": {
+            "@type": "GeoCircle",
+            "geoMidpoint": {
+                "@type": "GeoCoordinates",
+                "latitude": "29.7407084",
+                "longitude": "-95.5815012"
+            },
+            "geoRadius": "Worldwide"
+        }
     }
     </script>
 </head>

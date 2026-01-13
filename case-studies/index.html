@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Engineering case studies demonstrating AI-native approaches to structural analysis, fatigue assessment, and computational engineering projects.">
+    <meta name="keywords" content="engineering case studies, offshore engineering, fatigue analysis, structural analysis, AI engineering, machine learning engineering">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Case Studies - A&CE">
+    <meta property="og:description" content="Technical case studies demonstrating AI-native engineering approaches with quantifiable results.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/case-studies/">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Case Studies - A&CE">
+    <meta name="twitter:description" content="Technical case studies demonstrating AI-native engineering approaches.">
+
+    <title>Case Studies - A&CE</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "@id": "https://aceengineer.com/case-studies/#collection",
+        "name": "A&CE Engineering Case Studies",
+        "url": "https://aceengineer.com/case-studies/",
+        "description": "Technical case studies demonstrating AI-native engineering approaches with quantifiable results",
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering"
+        }
+    }
+    </script>
+
+    <style>
+        .case-study-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: box-shadow 0.3s ease;
+        }
+        .case-study-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .case-study-card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .case-study-meta {
+            color: #777;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        .case-study-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        .metric {
+            text-align: center;
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .metric-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #428bca;
+        }
+        .metric-label {
+            font-size: 0.8em;
+            color: #666;
+        }
+        .compliance-tag {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .page-header {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #428bca;
+        }
+    </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K31E51DQ47');
+    </script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="../index.html">
+                    <svg width="auto" height="50" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" width="50%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
+                        <title>Analytical & Computational Engineering</title>
+                        <text x="70" y="12" font-weight="bold" fill="black">A&CE</text>
+                        Analytical & Computational Engineering
+                        <style>
+                            <![CDATA[
+                            text {
+                                dominant-baseline: hanging;
+                                font: 40px sans-serif;
+                            }
+                            ]]>
+                        </style>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../engineering.html">Engineering</a></li>
+                    <li><a href="../energy.html">Energy</a></li>
+                    <li><a href="../faq.html">FAQ</a></li>
+                    <li><a href="../blog/">Blog</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Case Studies</h1>
+            <p class="lead">Real projects demonstrating AI-native engineering approaches with quantifiable results and validated methodologies.</p>
+        </div>
+
+        <!-- Case Study 1 -->
+        <div class="case-study-card">
+            <h3><a href="offshore-platform-fatigue-optimization.html">ML-Enhanced Fatigue Assessment for Offshore Platform</a></h3>
+            <div class="case-study-meta">
+                <strong>Industry:</strong> Oil & Gas |
+                <strong>Location:</strong> Gulf of Mexico |
+                <strong>Duration:</strong> 6 weeks
+            </div>
+            <p>
+                Comprehensive fatigue life assessment for a 40-year-old fixed platform using machine learning to incorporate 15 years of operational monitoring data. Reduced assessment time by 85% while improving prediction accuracy by 23%.
+            </p>
+            <div class="case-study-metrics">
+                <div class="metric">
+                    <div class="metric-value">85%</div>
+                    <div class="metric-label">Time Reduction</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">23%</div>
+                    <div class="metric-label">Accuracy Improvement</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">$2.1M</div>
+                    <div class="metric-label">Cost Avoided</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">847</div>
+                    <div class="metric-label">Joints Analyzed</div>
+                </div>
+            </div>
+            <div>
+                <span class="compliance-tag">API RP 2A</span>
+                <span class="compliance-tag">DNV-RP-C203</span>
+                <span class="compliance-tag">BSEE Accepted</span>
+            </div>
+            <p style="margin-top: 15px;">
+                <a href="offshore-platform-fatigue-optimization.html" class="btn btn-primary">Read Full Case Study</a>
+            </p>
+        </div>
+
+        <hr>
+
+        <h2>More Case Studies Coming Soon</h2>
+        <p>We're documenting additional projects across these areas:</p>
+        <ul>
+            <li><strong>Subsea Pipeline Integrity:</strong> ML-based anomaly detection for pipeline inspection data</li>
+            <li><strong>Wind Turbine Foundation:</strong> AI-enhanced fatigue assessment for offshore wind structures</li>
+            <li><strong>FPSO Mooring Analysis:</strong> Automated mooring line fatigue under operational loading</li>
+            <li><strong>Jacket Platform Decommissioning:</strong> Structural assessment for reverse installation</li>
+        </ul>
+
+        <p style="margin-top: 30px;">
+            <a href="../contact.html" class="btn btn-success btn-lg">Discuss Your Project</a>
+            <a href="../engineering.html" class="btn btn-default btn-lg">View Our Services</a>
+        </p>
+
+    </div>
+
+    <div class="container">
+        <hr>
+        <p>Developed by <b>A&CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></p>
+    </div>
+
+</body>
+</html>

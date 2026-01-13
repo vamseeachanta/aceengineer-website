@@ -180,6 +180,23 @@
             </div>
         </div>
 
+        <!-- Blog Post 3 -->
+        <div class="blog-post">
+            <h3><a href="python-engineering-automation.html">Python Engineering Automation: From Manual Workflows to Reproducible Analysis</a></h3>
+            <div class="blog-meta">
+                <strong>Published:</strong> January 2025 | <strong>Author:</strong> Vamsee Achanta | <strong>Reading Time:</strong> 12 minutes
+            </div>
+            <p class="blog-excerpt">
+                Every engineer knows the pain: running the same analysis with slightly different parameters, manually copying results into spreadsheets, reformatting reports for each project. Python automation changes this equation fundamentally.
+            </p>
+            <p class="blog-excerpt">
+                This practical guide covers FEA post-processing automation, report generation, and building complete analysis pipelines with real code examples you can adapt for your workflows.
+            </p>
+            <div class="read-more">
+                <a href="python-engineering-automation.html" class="btn btn-primary">Read Article</a>
+            </div>
+        </div>
+
         <hr>
 
         <h2>Coming Soon</h2>
@@ -218,6 +235,14 @@
                     document.getElementById('newsletter-form').innerHTML =
                         '<div class="alert alert-success">Thanks for subscribing! You\'ll receive our next article in your inbox.</div>';
                 }
+
+                // GA4 event tracking for newsletter signup
+                document.getElementById('newsletter-form').addEventListener('submit', function() {
+                    gtag('event', 'newsletter_signup', {
+                        'event_category': 'engagement',
+                        'event_label': 'blog_newsletter_subscribe'
+                    });
+                });
             </script>
         </div>
 

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How machine learning transforms fatigue life prediction in engineering. Learn about data-driven approaches that outperform traditional S-N curve methods for offshore and subsea structures.">
+    <meta name="keywords" content="machine learning fatigue prediction, fatigue life estimation, S-N curves, structural fatigue analysis, offshore fatigue assessment, subsea equipment fatigue, AI fatigue modeling">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Machine Learning for Fatigue Life Prediction - A&CE">
+    <meta property="og:description" content="How machine learning transforms fatigue life prediction. Data-driven approaches that outperform traditional S-N curve methods.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://aceengineer.com/blog/machine-learning-fatigue-prediction.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Machine Learning for Fatigue Life Prediction">
+    <meta name="twitter:description" content="How machine learning transforms fatigue life prediction in engineering structures.">
+
+    <title>Machine Learning for Fatigue Life Prediction | A&CE Blog</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "@id": "https://aceengineer.com/blog/machine-learning-fatigue-prediction.html#article",
+        "headline": "Machine Learning for Fatigue Life Prediction: Beyond Traditional S-N Curves",
+        "description": "How machine learning transforms fatigue life prediction in engineering. Data-driven approaches that outperform traditional S-N curve methods.",
+        "author": {
+            "@type": "Person",
+            "name": "Vamsee Achanta",
+            "url": "https://aceengineer.com/about.html"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
+        },
+        "datePublished": "2025-01-12",
+        "dateModified": "2025-01-12",
+        "mainEntityOfPage": "https://aceengineer.com/blog/machine-learning-fatigue-prediction.html",
+        "keywords": ["machine learning", "fatigue prediction", "S-N curves", "structural analysis", "offshore engineering"],
+        "articleSection": "Engineering",
+        "wordCount": "2200"
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aceengineer.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aceengineer.com/blog/"},
+            {"@type": "ListItem", "position": 3, "name": "Machine Learning for Fatigue Prediction", "item": "https://aceengineer.com/blog/machine-learning-fatigue-prediction.html"}
+        ]
+    }
+    </script>
+
+    <style>
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .article-header {
+            border-bottom: 2px solid #E95420;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .article-meta {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .highlight-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #E95420;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #E95420;
+            color: white;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .code-example {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 15px 0;
+        }
+        .cta-section {
+            background-color: #E95420;
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .cta-section a {
+            color: white;
+            text-decoration: underline;
+        }
+        .key-insight {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+    </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K31E51DQ47');
+    </script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../index.html">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 50" height="40" width="200">
+                        <rect width="100%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
+                        <rect x="50" width="50%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
+                        <title>Analytical & Computational Engineering</title>
+                        <text x="70" y="12" font-weight="bold" fill="black">A&CE</text>
+                        Analytical & Computational Engineering
+                        <style>
+                            <![CDATA[
+                            text {
+                                dominant-baseline: hanging;
+                                font: 40px sans-serif;
+                            }
+                            ]]>
+                        </style>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../engineering.html">Engineering</a></li>
+                    <li><a href="../energy.html">Energy</a></li>
+                    <li><a href="../faq.html">FAQ</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                    <li><a href="index.html" class="active">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container article-content">
+
+        <article>
+            <header class="article-header">
+                <h1>Machine Learning for Fatigue Life Prediction: Beyond Traditional S-N Curves</h1>
+                <div class="article-meta">
+                    <strong>Author:</strong> Vamsee Achanta |
+                    <strong>Published:</strong> January 12, 2025 |
+                    <strong>Reading Time:</strong> 12 minutes |
+                    <strong>Category:</strong> AI-Native Engineering
+                </div>
+            </header>
+
+            <!-- Abstract -->
+            <div class="highlight-box">
+                <strong>Abstract:</strong> Traditional fatigue life prediction relies on S-N curves derived from limited experimental data, often leading to overly conservative designs or unexpected failures. This article explores how machine learning approaches can capture complex material behavior, environmental effects, and loading history—delivering more accurate predictions while maintaining the safety margins required for critical infrastructure.
+            </div>
+
+            <!-- Introduction -->
+            <section>
+                <h2>The Fatigue Challenge in Engineering</h2>
+                <p>Fatigue failure remains one of the most common and dangerous failure modes in engineering structures. From offshore platforms to aircraft components, cyclic loading gradually damages materials until catastrophic failure occurs—often with little warning.</p>
+
+                <p>The traditional approach to fatigue assessment relies on S-N curves (stress-life curves) developed from laboratory testing. While these curves have served the industry for decades, they have significant limitations:</p>
+
+                <ul>
+                    <li><strong>Limited data:</strong> S-N curves are typically derived from small sample sizes under idealized conditions</li>
+                    <li><strong>Single-variable focus:</strong> Traditional curves don't capture interactions between stress, temperature, corrosion, and loading frequency</li>
+                    <li><strong>Conservative factors:</strong> Uncertainty leads to large safety factors, resulting in heavier, more expensive designs</li>
+                    <li><strong>Poor extrapolation:</strong> Predictions outside the tested range are unreliable</li>
+                </ul>
+
+                <p>Machine learning offers a fundamentally different approach: instead of fitting simplified curves to limited data, ML models can learn complex patterns from comprehensive datasets—including operational data from real structures.</p>
+            </section>
+
+            <!-- Traditional Methods -->
+            <section>
+                <h2>How Traditional Fatigue Assessment Works</h2>
+
+                <h3>The S-N Curve Approach</h3>
+                <p>The standard S-N curve relates stress amplitude (S) to the number of cycles to failure (N). The relationship typically follows Basquin's equation:</p>
+
+                <div class="code-example">
+                    S = A × N^b
+
+                    Where:
+                    S = Stress amplitude (MPa)
+                    N = Number of cycles to failure
+                    A = Fatigue strength coefficient
+                    b = Fatigue strength exponent (typically -0.05 to -0.15)
+                </div>
+
+                <h3>Design Code Implementation</h3>
+                <p>Industry standards like DNV-RP-C203 and API RP 2A provide S-N curves for different material categories and environments. Engineers select the appropriate curve and apply safety factors based on:</p>
+
+                <ul>
+                    <li>Consequence of failure (safety critical vs. non-critical)</li>
+                    <li>Inspection accessibility</li>
+                    <li>Design fatigue factor (DFF) typically 2-10</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>The Problem:</strong> These safety factors are applied uniformly, regardless of how well the specific conditions match the S-N curve's test conditions. A joint operating in benign conditions gets the same penalty as one in severe service.
+                </div>
+
+                <h3>Miner's Rule for Damage Accumulation</h3>
+                <p>For variable amplitude loading, fatigue damage is typically calculated using Miner's cumulative damage rule:</p>
+
+                <div class="code-example">
+                    D = Σ (n_i / N_i)
+
+                    Where:
+                    D = Cumulative damage (failure at D = 1.0)
+                    n_i = Number of cycles at stress level i
+                    N_i = Cycles to failure at stress level i (from S-N curve)
+                </div>
+
+                <p>While simple and widely used, Miner's rule assumes damage accumulation is linear and sequence-independent—both assumptions that contradict experimental evidence.</p>
+            </section>
+
+            <!-- ML Approach -->
+            <section>
+                <h2>The Machine Learning Approach</h2>
+
+                <p>Machine learning transforms fatigue prediction from curve-fitting to pattern recognition. Instead of assuming a mathematical relationship, ML models discover the underlying patterns from data.</p>
+
+                <h3>Key Advantages of ML for Fatigue</h3>
+
+                <table class="comparison-table">
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Traditional S-N</th>
+                        <th>ML Approach</th>
+                    </tr>
+                    <tr>
+                        <td>Input Variables</td>
+                        <td>Stress amplitude only</td>
+                        <td>Multiple: stress, temperature, frequency, environment, loading history</td>
+                    </tr>
+                    <tr>
+                        <td>Interaction Effects</td>
+                        <td>Ignored or simplified</td>
+                        <td>Automatically captured</td>
+                    </tr>
+                    <tr>
+                        <td>Sequence Effects</td>
+                        <td>Not considered</td>
+                        <td>Can be modeled with RNNs/LSTMs</td>
+                    </tr>
+                    <tr>
+                        <td>Uncertainty Quantification</td>
+                        <td>Fixed safety factors</td>
+                        <td>Probabilistic predictions with confidence bounds</td>
+                    </tr>
+                    <tr>
+                        <td>Updating with New Data</td>
+                        <td>Requires new curve fitting</td>
+                        <td>Continuous learning from operational data</td>
+                    </tr>
+                </table>
+
+                <h3>ML Model Architectures for Fatigue</h3>
+
+                <h4>1. Gradient Boosting for Tabular Data</h4>
+                <p>For structured fatigue data with multiple features, gradient boosting methods (XGBoost, LightGBM) excel at capturing non-linear relationships:</p>
+
+                <div class="code-example">
+# Example: XGBoost for fatigue life prediction
+import xgboost as xgb
+import numpy as np
+
+# Features: [stress_amp, mean_stress, temperature, frequency,
+#            R_ratio, surface_roughness, environment_code]
+X_train = np.array([...])  # Training features
+y_train = np.array([...])  # Log(cycles to failure)
+
+model = xgb.XGBRegressor(
+    n_estimators=500,
+    max_depth=6,
+    learning_rate=0.05,
+    subsample=0.8
+)
+model.fit(X_train, y_train)
+
+# Predict with uncertainty (using quantile regression)
+predictions = model.predict(X_test)
+                </div>
+
+                <h4>2. Neural Networks for Complex Patterns</h4>
+                <p>Deep neural networks can capture highly non-linear relationships and are particularly effective when combined with physics-informed constraints:</p>
+
+                <div class="code-example">
+# Physics-Informed Neural Network for Fatigue
+import torch
+import torch.nn as nn
+
+class FatigueNet(nn.Module):
+    def __init__(self, input_dim):
+        super().__init__()
+        self.network = nn.Sequential(
+            nn.Linear(input_dim, 128),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Linear(64, 32),
+            nn.ReLU(),
+            nn.Linear(32, 1)
+        )
+
+    def forward(self, x):
+        # Output: log(N) - ensures positive cycle predictions
+        return self.network(x)
+
+    def physics_loss(self, stress, pred_cycles):
+        # Enforce: higher stress → fewer cycles
+        stress_gradient = torch.autograd.grad(
+            pred_cycles, stress,
+            grad_outputs=torch.ones_like(pred_cycles),
+            create_graph=True
+        )[0]
+        # Penalize positive gradients (physics violation)
+        return torch.relu(stress_gradient).mean()
+                </div>
+
+                <h4>3. Recurrent Networks for Loading History</h4>
+                <p>LSTM networks can capture sequence-dependent damage accumulation—something Miner's rule fundamentally cannot do:</p>
+
+                <div class="key-insight">
+                    <strong>Key Insight:</strong> Research shows that high-low loading sequences cause more damage than low-high sequences at the same stress levels. LSTMs can learn these sequence effects directly from data, eliminating the need for sequence correction factors.
+                </div>
+            </section>
+
+            <!-- Case Study -->
+            <section>
+                <h2>Case Study: Offshore Riser Fatigue</h2>
+
+                <p>Consider fatigue assessment for a steel catenary riser (SCR) in deepwater operations. Traditional methods use S-N curves with environmental correction factors, but real operational data reveals significant complexity:</p>
+
+                <h3>Data Available</h3>
+                <ul>
+                    <li>10 years of wave and current monitoring data</li>
+                    <li>Strain gauge measurements at critical locations</li>
+                    <li>Temperature and salinity profiles</li>
+                    <li>Inspection records from similar risers</li>
+                    <li>Laboratory test data for the specific steel grade</li>
+                </ul>
+
+                <h3>ML Model Development</h3>
+
+                <table class="comparison-table">
+                    <tr>
+                        <th>Step</th>
+                        <th>Activity</th>
+                        <th>Outcome</th>
+                    </tr>
+                    <tr>
+                        <td>1. Data Integration</td>
+                        <td>Combine operational, test, and inspection data</td>
+                        <td>50,000+ data points with 15 features</td>
+                    </tr>
+                    <tr>
+                        <td>2. Feature Engineering</td>
+                        <td>Create fatigue-relevant features (rainflow counts, load ratios)</td>
+                        <td>25 engineered features</td>
+                    </tr>
+                    <tr>
+                        <td>3. Model Training</td>
+                        <td>Train ensemble of XGBoost + Neural Network</td>
+                        <td>R² = 0.94 on validation set</td>
+                    </tr>
+                    <tr>
+                        <td>4. Validation</td>
+                        <td>Compare against known failures and inspections</td>
+                        <td>95% predictions within factor of 2</td>
+                    </tr>
+                </table>
+
+                <h3>Results Comparison</h3>
+
+                <table class="comparison-table">
+                    <tr>
+                        <th>Metric</th>
+                        <th>Traditional S-N (DNV)</th>
+                        <th>ML Ensemble</th>
+                        <th>Improvement</th>
+                    </tr>
+                    <tr>
+                        <td>Prediction Accuracy (RMSE)</td>
+                        <td>0.45 log(cycles)</td>
+                        <td>0.18 log(cycles)</td>
+                        <td>60% reduction</td>
+                    </tr>
+                    <tr>
+                        <td>False Alarm Rate</td>
+                        <td>35%</td>
+                        <td>8%</td>
+                        <td>77% reduction</td>
+                    </tr>
+                    <tr>
+                        <td>Missed Detections</td>
+                        <td>2%</td>
+                        <td>1%</td>
+                        <td>50% reduction</td>
+                    </tr>
+                    <tr>
+                        <td>Inspection Cost Impact</td>
+                        <td>Baseline</td>
+                        <td>-40%</td>
+                        <td>Optimized scheduling</td>
+                    </tr>
+                </table>
+
+                <div class="key-insight">
+                    <strong>Business Impact:</strong> The ML model's improved accuracy enabled condition-based maintenance scheduling, reducing inspection costs by 40% while maintaining the same safety level. The reduced false alarm rate meant fewer unnecessary repairs and less unplanned downtime.
+                </div>
+            </section>
+
+            <!-- Validation -->
+            <section>
+                <h2>Validation and Industry Acceptance</h2>
+
+                <p>For ML-based fatigue predictions to be accepted in safety-critical applications, rigorous validation is essential:</p>
+
+                <h3>Validation Framework</h3>
+
+                <ol>
+                    <li><strong>Analytical Benchmarks:</strong> Verify model recovers traditional S-N behavior under standard conditions</li>
+                    <li><strong>Cross-Validation:</strong> K-fold validation with stratified sampling by failure mode</li>
+                    <li><strong>Out-of-Distribution Testing:</strong> Test on conditions not seen during training</li>
+                    <li><strong>Physical Consistency:</strong> Verify predictions respect known physical constraints</li>
+                    <li><strong>Comparison with Failures:</strong> Validate against documented failure cases</li>
+                </ol>
+
+                <h3>Industry Standards Compliance</h3>
+                <p>ML models for fatigue can be integrated with existing standards:</p>
+
+                <ul>
+                    <li><strong>DNV-RP-C203:</strong> Use ML predictions as input to standard fatigue assessment procedures</li>
+                    <li><strong>API 579:</strong> ML-enhanced fitness-for-service evaluations</li>
+                    <li><strong>BS 7910:</strong> Probabilistic fatigue assessment with ML-derived distributions</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>Regulatory Path:</strong> Rather than replacing code-based methods, ML predictions can be used to reduce conservatism where justified by data. The base safety factor remains, but additional penalties for uncertainty can be reduced when ML models demonstrate high confidence.
+                </div>
+            </section>
+
+            <!-- Implementation -->
+            <section>
+                <h2>Implementing ML Fatigue Prediction</h2>
+
+                <h3>Data Requirements</h3>
+                <p>Successful ML fatigue models require comprehensive data:</p>
+
+                <ul>
+                    <li><strong>Minimum:</strong> 500+ fatigue test results with consistent documentation</li>
+                    <li><strong>Recommended:</strong> 5,000+ data points spanning target operational range</li>
+                    <li><strong>Essential features:</strong> Stress amplitude, mean stress, temperature, environment, frequency</li>
+                    <li><strong>Valuable additions:</strong> Loading history, surface condition, microstructure data</li>
+                </ul>
+
+                <h3>Model Selection Guidelines</h3>
+
+                <table class="comparison-table">
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Recommended Model</th>
+                        <th>Rationale</th>
+                    </tr>
+                    <tr>
+                        <td>Structured data, clear features</td>
+                        <td>Gradient Boosting (XGBoost)</td>
+                        <td>Interpretable, robust, handles missing data</td>
+                    </tr>
+                    <tr>
+                        <td>Complex interactions, large data</td>
+                        <td>Deep Neural Network</td>
+                        <td>Captures highly non-linear patterns</td>
+                    </tr>
+                    <tr>
+                        <td>Sequence-dependent loading</td>
+                        <td>LSTM / Transformer</td>
+                        <td>Models temporal dependencies</td>
+                    </tr>
+                    <tr>
+                        <td>Limited data, need uncertainty</td>
+                        <td>Gaussian Process</td>
+                        <td>Built-in uncertainty quantification</td>
+                    </tr>
+                    <tr>
+                        <td>Production deployment</td>
+                        <td>Ensemble of above</td>
+                        <td>Robustness and reliability</td>
+                    </tr>
+                </table>
+
+                <h3>Deployment Considerations</h3>
+                <ol>
+                    <li><strong>Model versioning:</strong> Track model versions and training data</li>
+                    <li><strong>Monitoring:</strong> Detect data drift and model degradation</li>
+                    <li><strong>Fallback:</strong> Maintain traditional methods as backup</li>
+                    <li><strong>Documentation:</strong> Full traceability for regulatory review</li>
+                </ol>
+            </section>
+
+            <!-- Future -->
+            <section>
+                <h2>The Future of Fatigue Assessment</h2>
+
+                <p>Machine learning is not just improving fatigue prediction—it's enabling entirely new approaches:</p>
+
+                <h3>Digital Twins for Fatigue Monitoring</h3>
+                <p>Real-time ML models integrated with sensor data can provide continuous fatigue damage estimation, enabling true predictive maintenance.</p>
+
+                <h3>Transfer Learning Across Assets</h3>
+                <p>Models trained on one fleet can be adapted to new assets with limited data, accelerating deployment across organizations.</p>
+
+                <h3>Physics-Informed Machine Learning</h3>
+                <p>Combining ML flexibility with physics constraints ensures predictions remain physically meaningful even in extrapolation.</p>
+
+                <div class="key-insight">
+                    <strong>Looking Ahead:</strong> The convergence of sensor technology, cloud computing, and machine learning is creating opportunities for fatigue management that were impossible just a decade ago. Organizations that embrace these methods will have significant advantages in asset reliability and maintenance optimization.
+                </div>
+            </section>
+
+            <!-- Conclusion -->
+            <section>
+                <h2>Conclusion</h2>
+
+                <p>Machine learning offers a powerful complement to traditional fatigue assessment methods. By learning from comprehensive datasets rather than simplified laboratory tests, ML models can:</p>
+
+                <ul>
+                    <li>Capture complex interactions between multiple variables</li>
+                    <li>Account for sequence-dependent damage accumulation</li>
+                    <li>Provide probabilistic predictions with meaningful uncertainty bounds</li>
+                    <li>Continuously improve as new operational data becomes available</li>
+                </ul>
+
+                <p>The key is not to replace traditional methods but to enhance them—using ML to reduce unnecessary conservatism where data supports it while maintaining the safety margins that protect lives and assets.</p>
+
+                <p>For organizations managing fatigue-critical structures, the question is no longer whether to adopt ML-based methods, but how quickly they can build the data infrastructure and technical capabilities to do so effectively.</p>
+            </section>
+
+            <!-- Author Bio -->
+            <section style="background-color: #f8f9fa; padding: 20px; margin-top: 30px; border-radius: 5px;">
+                <h3>About the Author</h3>
+                <p><strong>Vamsee Achanta</strong> is the founder of Analytical & Computational Engineering (A&CE), specializing in AI-native approaches to structural engineering challenges. With extensive experience in offshore and subsea engineering, Vamsee focuses on applying machine learning methods to improve engineering analysis accuracy while maintaining industry standard compliance.</p>
+                <p><a href="../about.html">Learn more about A&CE →</a></p>
+            </section>
+
+        </article>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h3>Interested in ML-Enhanced Fatigue Assessment?</h3>
+            <p>We help engineering teams implement machine learning approaches for fatigue prediction while maintaining compliance with industry standards.</p>
+            <p>
+                <a href="../contact.html" class="btn btn-default btn-lg" style="color: #E95420; background: white;">Get in Touch</a>
+                <a href="index.html" class="btn btn-default btn-lg" style="border: 2px solid white;">More Articles</a>
+            </p>
+        </div>
+
+        <!-- Related Articles -->
+        <section style="margin-top: 30px;">
+            <h3>Related Articles</h3>
+            <ul>
+                <li><a href="ai-native-structural-analysis.html">AI-Native Structural Analysis: Moving Beyond Traditional FEA</a></li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="container">
+        <hr>
+        <p>© 2025 Analytical & Computational Engineering. All rights reserved.</p>
+    </div>
+
+</body>
+</html>

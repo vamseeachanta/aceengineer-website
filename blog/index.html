@@ -195,8 +195,30 @@
 
         <h2>Subscribe</h2>
         <p>Get notified when we publish new articles. We respect your privacy—no spam, only engineering insights.</p>
-        <div style="margin: 20px 0;">
-            <p><em>Newsletter subscription coming soon. Check back for updates.</em></p>
+        <div style="margin: 20px 0; max-width: 500px;">
+            <form action="https://api.web3forms.com/submit" method="POST" id="newsletter-form">
+                <input type="hidden" name="access_key" value="c7338953-f620-4831-92c4-d41b90f034ea">
+                <input type="hidden" name="subject" value="New Newsletter Subscriber - A&CE Blog">
+                <input type="hidden" name="from_name" value="A&CE Newsletter">
+                <input type="hidden" name="redirect" value="https://aceengineer.com/blog/?subscribed=true">
+                <div class="input-group">
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </span>
+                </div>
+                <p style="font-size: 12px; color: #777; margin-top: 8px;">
+                    Join 50+ engineers receiving technical insights. Unsubscribe anytime.
+                </p>
+            </form>
+            <script>
+                // Show success message if redirected with subscribed parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('subscribed') === 'true') {
+                    document.getElementById('newsletter-form').innerHTML =
+                        '<div class="alert alert-success">Thanks for subscribing! You\'ll receive our next article in your inbox.</div>';
+                }
+            </script>
         </div>
 
     </div>

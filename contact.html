@@ -251,6 +251,16 @@
             <button type="submit" class="btn btn-success">Send Message</button>
         </form>
 
+        <!-- Contact Form Event Tracking for GA4 -->
+        <script>
+            document.getElementById('contact-form').addEventListener('submit', function() {
+                gtag('event', 'contact_form_submission', {
+                    'event_category': 'contact',
+                    'event_label': 'contact_form_submit'
+                });
+            });
+        </script>
+
         <!-- Success/Error Message Display -->
         <div id="form-response" style="margin-top: 10px;">
             <script>

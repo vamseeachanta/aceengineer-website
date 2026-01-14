@@ -390,19 +390,19 @@
     <script>
     // S-N curve parameters from DNV-RP-C203
     // In-air curves: two-slope with transition at N=10^7
-    // Seawater CP curves: single slope m=3 per DNV-RP-C203 Table 2-2
-    // Seawater free corrosion: single slope m=3, reduced intercept
+    // Seawater curves: single slope (no transition) per DNV-RP-C203 Table 2-2
+    // B1/B2 seawater: m=4, C through W3 seawater: m=3
     const snCurves = {
         'B1': {
             air: { loga1: 15.117, m1: 4, loga2: 17.146, m2: 5 },
-            seawater_cp: { loga1: 14.917, m1: 4, loga2: 16.946, m2: 5 },
-            seawater_free: { loga1: 14.617, m1: 4, loga2: 16.646, m2: 5 },
+            seawater_cp: { loga1: 14.717, m1: 4, loga2: null, m2: null },
+            seawater_free: { loga1: 14.417, m1: 4, loga2: null, m2: null },
             desc: 'Non-welded base material with machined edges'
         },
         'B2': {
             air: { loga1: 14.885, m1: 4, loga2: 16.856, m2: 5 },
-            seawater_cp: { loga1: 14.685, m1: 4, loga2: 16.656, m2: 5 },
-            seawater_free: { loga1: 14.385, m1: 4, loga2: 16.356, m2: 5 },
+            seawater_cp: { loga1: 14.485, m1: 4, loga2: null, m2: null },
+            seawater_free: { loga1: 14.185, m1: 4, loga2: null, m2: null },
             desc: 'Butt welds ground flush to plate surface'
         },
         'C': {

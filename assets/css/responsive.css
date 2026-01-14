@@ -1,0 +1,460 @@
+/* ABOUTME: Responsive design fixes for aceengineer.com
+   ABOUTME: Mobile-first responsive styles for Bootstrap 3.x site */
+
+/* ============================================
+   Mobile First Base Styles (< 768px)
+   ============================================ */
+
+/* Logo SVG fixes */
+.navbar-header svg {
+    max-width: 180px;
+    height: auto;
+}
+
+.navbar-header svg text {
+    font-size: 28px !important;
+}
+
+.navbar-header a {
+    display: inline-block;
+    max-width: 100%;
+}
+
+/* Improve touch targets for navigation */
+.navbar-nav > li > a {
+    padding: 15px 15px;
+    min-height: 44px;
+}
+
+/* Ensure navbar-toggle is touch-friendly */
+.navbar-toggle {
+    padding: 12px 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+/* Responsive tables */
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.comparison-table,
+.table-results {
+    min-width: 500px;
+}
+
+/* Blog post cards - stack on mobile */
+.blog-post {
+    margin-bottom: 25px;
+    padding: 15px;
+}
+
+.blog-post h3 {
+    font-size: 1.3em;
+    line-height: 1.3;
+}
+
+.blog-meta {
+    font-size: 0.85em;
+    line-height: 1.5;
+}
+
+/* Case study metrics - stack on small screens */
+.metrics-row {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 15px;
+}
+
+.metric-box {
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+
+.metric-value {
+    font-size: 2.2em;
+}
+
+.case-study-metrics {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.case-study-metrics .metric {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+}
+
+/* Case study header responsive */
+.case-study-header {
+    padding: 30px 0;
+}
+
+.case-study-header h1 {
+    font-size: 1.6em;
+    line-height: 1.2;
+}
+
+.case-study-meta {
+    font-size: 0.9em;
+    line-height: 1.6;
+}
+
+/* Compliance badges wrap */
+.compliance-badge,
+.compliance-tag {
+    display: inline-block;
+    margin: 3px 3px 3px 0;
+    font-size: 0.75em;
+}
+
+/* Methodology steps - stack on mobile */
+.methodology-step {
+    flex-direction: column;
+    padding: 15px;
+}
+
+.step-number {
+    font-size: 1.5em;
+    min-width: auto;
+    margin-bottom: 10px;
+}
+
+/* Challenge/Solution/Result boxes */
+.challenge-box,
+.solution-box,
+.result-box,
+.highlight-box {
+    padding: 15px;
+    margin: 15px 0;
+}
+
+/* Article content improvements */
+.article-content {
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+.article-content h2 {
+    font-size: 1.4em;
+    margin-top: 25px;
+}
+
+.article-content h3 {
+    font-size: 1.2em;
+}
+
+/* CTA sections */
+.cta-section {
+    padding: 25px 15px;
+    margin-top: 30px;
+}
+
+.cta-section h3 {
+    font-size: 1.3em;
+}
+
+.cta-section .btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* Newsletter form */
+.input-group {
+    display: block;
+}
+
+.input-group .form-control {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.input-group .input-group-btn {
+    display: block;
+    width: 100%;
+}
+
+.input-group .input-group-btn .btn {
+    width: 100%;
+    border-radius: 4px;
+}
+
+/* Author bio */
+.author-bio {
+    padding: 15px;
+}
+
+.author-bio h3 {
+    font-size: 1.2em;
+}
+
+/* Footer improvements */
+.container > hr + p {
+    font-size: 0.9em;
+    text-align: center;
+}
+
+/* Form improvements for mobile */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+}
+
+/* Buttons - ensure touch-friendly sizing */
+.btn {
+    min-height: 44px;
+    padding: 10px 16px;
+}
+
+.btn-lg {
+    min-height: 50px;
+}
+
+/* Page header adjustments */
+.page-header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+}
+
+.page-header h1 {
+    font-size: 1.8em;
+}
+
+.lead {
+    font-size: 1.1em;
+}
+
+/* Case study cards */
+.case-study-card {
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.case-study-card h3 {
+    font-size: 1.2em;
+}
+
+/* Section titles */
+.section-title {
+    font-size: 1.5em;
+    margin-top: 35px;
+}
+
+/* Prevent horizontal scroll */
+body {
+    overflow-x: hidden;
+}
+
+.container,
+.container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ============================================
+   Tablet Styles (768px - 992px)
+   ============================================ */
+@media (min-width: 768px) {
+    .navbar-header svg {
+        max-width: 220px;
+    }
+
+    .navbar-header svg text {
+        font-size: 32px !important;
+    }
+
+    /* Metrics row - 2 columns */
+    .metrics-row {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .metric-box {
+        width: 45%;
+        max-width: 180px;
+    }
+
+    .case-study-metrics {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .case-study-metrics .metric {
+        width: auto;
+        text-align: center;
+    }
+
+    /* Methodology steps - side by side */
+    .methodology-step {
+        flex-direction: row;
+    }
+
+    .step-number {
+        min-width: 60px;
+        margin-bottom: 0;
+    }
+
+    /* Case study header */
+    .case-study-header {
+        padding: 45px 0;
+    }
+
+    .case-study-header h1 {
+        font-size: 2em;
+    }
+
+    /* CTA buttons inline */
+    .cta-section .btn {
+        display: inline-block;
+        width: auto;
+        margin: 10px 5px;
+    }
+
+    /* Newsletter form inline */
+    .input-group {
+        display: table;
+    }
+
+    .input-group .form-control {
+        display: table-cell;
+        border-radius: 4px 0 0 4px;
+        margin-bottom: 0;
+    }
+
+    .input-group .input-group-btn {
+        display: table-cell;
+        width: 1%;
+    }
+
+    .input-group .input-group-btn .btn {
+        border-radius: 0 4px 4px 0;
+    }
+
+    /* Article content */
+    .article-content {
+        font-size: 1.05em;
+    }
+
+    .article-content h2 {
+        font-size: 1.6em;
+    }
+
+    /* Blog post titles */
+    .blog-post h3 {
+        font-size: 1.4em;
+    }
+
+    .section-title {
+        font-size: 1.7em;
+    }
+}
+
+/* ============================================
+   Desktop Styles (> 992px)
+   ============================================ */
+@media (min-width: 992px) {
+    .navbar-header svg {
+        max-width: 280px;
+    }
+
+    .navbar-header svg text {
+        font-size: 40px !important;
+    }
+
+    /* Metrics row - all in one row */
+    .metrics-row {
+        flex-wrap: nowrap;
+        justify-content: space-around;
+    }
+
+    .metric-box {
+        width: auto;
+        max-width: none;
+    }
+
+    .metric-value {
+        font-size: 3em;
+    }
+
+    /* Case study header */
+    .case-study-header {
+        padding: 60px 0;
+    }
+
+    .case-study-header h1 {
+        font-size: 2.5em;
+    }
+
+    /* CTA section */
+    .cta-section {
+        padding: 40px;
+    }
+
+    /* Article content */
+    .article-content h2 {
+        font-size: 1.8em;
+        margin-top: 30px;
+    }
+
+    .article-content h3 {
+        font-size: 1.4em;
+    }
+
+    .section-title {
+        font-size: 1.8em;
+        margin-top: 50px;
+    }
+
+    .page-header h1 {
+        font-size: 2.2em;
+    }
+}
+
+/* ============================================
+   Large Desktop (> 1200px)
+   ============================================ */
+@media (min-width: 1200px) {
+    .navbar-header svg {
+        max-width: 320px;
+    }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+    .navbar,
+    .cta-section,
+    .btn,
+    .input-group {
+        display: none !important;
+    }
+
+    .container {
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    .case-study-header {
+        background: #f5f5f5 !important;
+        color: #333 !important;
+        -webkit-print-color-adjust: exact;
+    }
+}

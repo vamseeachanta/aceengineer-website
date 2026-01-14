@@ -20,26 +20,50 @@
     <script src="../assets/js/jquery.min.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>
 
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD Structured Data - WebApplication -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
+        "@type": "WebApplication",
         "@id": "https://aceengineer.com/calculators/fatigue-life-calculator.html#calculator",
         "name": "S-N Curve Fatigue Life Calculator",
-        "description": "Calculate fatigue life for welded steel joints using industry-standard S-N curves from DNV, API, and BS standards",
+        "description": "Calculate fatigue life for welded steel joints using industry-standard S-N curves from DNV-RP-C203, API RP 2A, and BS 7608 standards. Includes thickness correction factors and seawater environment effects.",
         "url": "https://aceengineer.com/calculators/fatigue-life-calculator.html",
-        "applicationCategory": "EngineeringApplication",
-        "operatingSystem": "Web Browser",
+        "applicationCategory": "Engineering Calculator",
+        "applicationSubCategory": "Fatigue Analysis",
+        "operatingSystem": "Any web browser",
+        "browserRequirements": "Requires JavaScript",
+        "softwareVersion": "1.0",
         "offers": {
             "@type": "Offer",
             "price": "0",
-            "priceCurrency": "USD"
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+        },
+        "featureList": [
+            "S-N curve calculations per DNV-RP-C203",
+            "15 weld detail classifications (B1 through W3, plus T)",
+            "Thickness correction for plates > 25mm",
+            "In-air and seawater environment curves",
+            "Two-slope S-N curves with automatic regime detection",
+            "Supports API RP 2A and BS 7608 standards"
+        ],
+        "screenshot": "https://aceengineer.com/assets/img/calculators/fatigue-calculator-screenshot.png",
+        "provider": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
         },
         "publisher": {
             "@type": "Organization",
-            "@id": "https://aceengineer.com/#organization",
-            "name": "Analytical & Computational Engineering"
+            "@id": "https://aceengineer.com/#organization"
+        },
+        "isPartOf": {
+            "@type": "CollectionPage",
+            "@id": "https://aceengineer.com/calculators/#collection",
+            "name": "A&CE Engineering Calculators",
+            "url": "https://aceengineer.com/calculators/"
         }
     }
     </script>

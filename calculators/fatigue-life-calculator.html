@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Free S-N curve fatigue life calculator for welded steel structures. Calculate cycles to failure using DNV, API, and BS standards with thickness correction.">
+    <meta name="keywords" content="fatigue calculator, S-N curve, fatigue life, welded joints, offshore fatigue, DNV-RP-C203, API RP 2A, stress range">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="S-N Curve Fatigue Life Calculator - A&CE">
+    <meta property="og:description" content="Calculate fatigue life for welded steel joints using industry-standard S-N curves.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/calculators/fatigue-life-calculator.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <title>S-N Curve Fatigue Life Calculator - A&CE</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "@id": "https://aceengineer.com/calculators/fatigue-life-calculator.html#calculator",
+        "name": "S-N Curve Fatigue Life Calculator",
+        "description": "Calculate fatigue life for welded steel joints using industry-standard S-N curves from DNV, API, and BS standards",
+        "url": "https://aceengineer.com/calculators/fatigue-life-calculator.html",
+        "applicationCategory": "EngineeringApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering"
+        }
+    }
+    </script>
+
+    <style>
+        .calculator-container {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .result-box {
+            background: #fff;
+            border: 2px solid #428bca;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .result-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #428bca;
+        }
+        .result-label {
+            font-size: 1.1em;
+            color: #666;
+        }
+        .result-warning {
+            border-color: #d9534f;
+        }
+        .result-warning .result-value {
+            color: #d9534f;
+        }
+        .result-success {
+            border-color: #5cb85c;
+        }
+        .result-success .result-value {
+            color: #5cb85c;
+        }
+        .formula-box {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: Georgia, serif;
+        }
+        .sn-params {
+            background: #e8f4f8;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .page-header {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #428bca;
+        }
+        .info-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .standard-tag {
+            display: inline-block;
+            background: #428bca;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .curve-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-K31E51DQ47');
+    </script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="../index.html" class="navbar-brand-link">
+                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                        <title id="logoTitle">Analytical & Computational Engineering</title>
+                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
+                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../engineering.html">Engineering</a></li>
+                    <li><a href="../energy.html">Energy</a></li>
+                    <li><a href="../faq.html">FAQ</a></li>
+                    <li><a href="../blog/">Blog</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>S-N Curve Fatigue Life Calculator</h1>
+            <p class="lead">Calculate fatigue life for welded steel joints using industry-standard S-N curves</p>
+            <div>
+                <span class="standard-tag">DNV-RP-C203</span>
+                <span class="standard-tag">API RP 2A</span>
+                <span class="standard-tag">BS 7608</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="calculator-container">
+                    <h3>Input Parameters</h3>
+
+                    <div class="form-group">
+                        <label for="snCurve">S-N Curve Classification</label>
+                        <select class="form-control" id="snCurve" onchange="updateCurveInfo()">
+                            <option value="B1">B1 - Non-welded base material</option>
+                            <option value="B2">B2 - Butt welds, ground flush</option>
+                            <option value="C">C - Butt welds, as-welded</option>
+                            <option value="C1">C1 - Transverse butt welds</option>
+                            <option value="C2">C2 - Cruciform joints</option>
+                            <option value="D" selected>D - Fillet welds, typical offshore</option>
+                            <option value="E">E - Attachments, cover plates</option>
+                            <option value="F">F - Lap joints, severe geometry</option>
+                            <option value="F1">F1 - Shear connectors</option>
+                            <option value="F3">F3 - Severe notch details</option>
+                            <option value="G">G - Partial penetration welds</option>
+                            <option value="W1">W1 - Weld root, backing left</option>
+                            <option value="W2">W2 - Weld root, backing removed</option>
+                            <option value="W3">W3 - Single-sided welds</option>
+                            <option value="T">T - Tubular joints (chord)</option>
+                        </select>
+                        <p class="curve-description" id="curveDescription">
+                            Typical fillet welded joints for offshore structures
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stressRange">Stress Range (MPa)</label>
+                        <input type="number" class="form-control" id="stressRange" value="100" min="1" max="1000" step="1">
+                        <p class="help-block">Hot-spot or nominal stress range depending on assessment method</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="thickness">Plate Thickness (mm)</label>
+                        <input type="number" class="form-control" id="thickness" value="25" min="1" max="200" step="1">
+                        <p class="help-block">Reference thickness is 25mm. Correction applied for t > 25mm</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="environment">Environment</label>
+                        <select class="form-control" id="environment">
+                            <option value="air" selected>In Air</option>
+                            <option value="seawater_cp">Seawater with Cathodic Protection</option>
+                            <option value="seawater_free">Seawater, Free Corrosion</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary btn-lg btn-block" onclick="calculateFatigue()">
+                        Calculate Fatigue Life
+                    </button>
+
+                    <div class="sn-params" id="snParams">
+                        <strong>S-N Curve Parameters (DNV-RP-C203):</strong><br>
+                        <span id="paramDisplay">log(a₁) = 12.164, m₁ = 3, log(a₂) = 15.606, m₂ = 5</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="result-box" id="resultBox">
+                    <div class="result-label">Calculated Fatigue Life</div>
+                    <div class="result-value" id="resultValue">--</div>
+                    <div id="resultUnit">cycles</div>
+                </div>
+
+                <div id="additionalResults" style="margin-top: 20px; display: none;">
+                    <h4>Calculation Details</h4>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>Thickness Correction Factor</td>
+                            <td id="thicknessFactor">1.000</td>
+                        </tr>
+                        <tr>
+                            <td>Environment Factor</td>
+                            <td id="envFactor">1.000</td>
+                        </tr>
+                        <tr>
+                            <td>Corrected Stress Range</td>
+                            <td id="correctedStress">-- MPa</td>
+                        </tr>
+                        <tr>
+                            <td>S-N Curve Regime</td>
+                            <td id="curveRegime">--</td>
+                        </tr>
+                        <tr>
+                            <td>log(N)</td>
+                            <td id="logN">--</td>
+                        </tr>
+                    </table>
+
+                    <div class="formula-box">
+                        <strong>S-N Curve Equation:</strong><br>
+                        log(N) = log(a) - m × log(S)<br><br>
+                        <strong>Thickness Correction:</strong><br>
+                        S<sub>corrected</sub> = S × (t/t<sub>ref</sub>)<sup>k</sup><br>
+                        where t<sub>ref</sub> = 25mm, k = 0.25 for t > 25mm
+                    </div>
+                </div>
+
+                <div class="alert alert-info" style="margin-top: 20px;">
+                    <strong>Note:</strong> This calculator uses two-slope S-N curves per DNV-RP-C203.
+                    The transition from slope m₁ to m₂ occurs at N = 10⁷ cycles.
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>About S-N Curve Fatigue Analysis</h2>
+            <p>
+                S-N curves (also called Wöhler curves) describe the relationship between applied stress range and
+                the number of cycles to failure for a given structural detail. The fatigue life N at a constant
+                amplitude stress range S is calculated using:
+            </p>
+
+            <div class="formula-box">
+                <center>
+                    <strong>N = a / S<sup>m</sup></strong><br>
+                    or in logarithmic form:<br>
+                    <strong>log(N) = log(a) - m × log(S)</strong>
+                </center>
+            </div>
+
+            <p>Where:</p>
+            <ul>
+                <li><strong>N</strong> = Number of cycles to failure</li>
+                <li><strong>S</strong> = Stress range (MPa)</li>
+                <li><strong>a</strong> = S-N curve intercept (material/detail dependent)</li>
+                <li><strong>m</strong> = S-N curve slope (typically 3 for high-cycle fatigue)</li>
+            </ul>
+
+            <h3>S-N Curve Classifications</h3>
+            <p>
+                The S-N curve classification (B1 through W3, plus T for tubulars) represents the fatigue
+                strength of different weld geometries and structural details. Key classifications include:
+            </p>
+            <ul>
+                <li><strong>B1-B2:</strong> Base material and ground butt welds (highest fatigue strength)</li>
+                <li><strong>C-C2:</strong> Butt welds with different finishing quality</li>
+                <li><strong>D:</strong> Most common for fillet welded offshore structures</li>
+                <li><strong>E-F3:</strong> Attachments and details with geometric stress risers</li>
+                <li><strong>G:</strong> Partial penetration welds</li>
+                <li><strong>W1-W3:</strong> Weld root details (most critical)</li>
+                <li><strong>T:</strong> Tubular joint hot-spot stress method</li>
+            </ul>
+
+            <h3>Thickness Correction</h3>
+            <p>
+                For plates thicker than the reference thickness (typically 25mm), a thickness correction is
+                applied to account for increased probability of defects and stress gradient effects:
+            </p>
+
+            <div class="formula-box">
+                <center>
+                    <strong>S<sub>corrected</sub> = S × (t/t<sub>ref</sub>)<sup>k</sup></strong>
+                </center>
+            </div>
+
+            <p>
+                Where k = 0.25 for welded joints (per DNV-RP-C203). This effectively reduces the allowable
+                fatigue life for thicker sections.
+            </p>
+
+            <h3>Environment Effects</h3>
+            <p>
+                Seawater environment significantly affects fatigue performance:
+            </p>
+            <ul>
+                <li><strong>In Air:</strong> Baseline S-N curve applies</li>
+                <li><strong>Seawater with CP:</strong> Approximately 2-3x reduction in fatigue life</li>
+                <li><strong>Free Corrosion:</strong> Approximately 3-4x reduction (avoid in design)</li>
+            </ul>
+
+            <h3>Limitations</h3>
+            <p>This calculator provides preliminary estimates based on constant amplitude loading. For actual design:</p>
+            <ul>
+                <li>Variable amplitude loading requires rainflow counting and damage accumulation (Miner's rule)</li>
+                <li>Stress concentration factors may need to be applied for hot-spot stress method</li>
+                <li>Mean stress effects may be significant for high R-ratios</li>
+                <li>Final design should be verified by qualified engineers</li>
+            </ul>
+
+            <div class="alert alert-warning">
+                <strong>Disclaimer:</strong> This calculator is for educational purposes only. All final
+                engineering calculations should be performed by qualified engineers and verified against
+                the applicable design codes.
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Need Professional Fatigue Analysis?</h2>
+            <p>
+                For complex fatigue assessments involving variable amplitude loading, FEA-based hot-spot stress
+                analysis, or AI-enhanced fatigue prediction, we offer professional consulting services.
+            </p>
+            <p>
+                <a href="../contact.html" class="btn btn-success btn-lg">Discuss Your Project</a>
+                <a href="../case-studies/offshore-platform-fatigue-optimization.html" class="btn btn-primary btn-lg">View Fatigue Case Study</a>
+                <a href="../blog/machine-learning-fatigue-prediction.html" class="btn btn-default btn-lg">Learn About ML for Fatigue</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <hr>
+        <p>Developed by <b>A&CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/aceengineer" target="_blank">GitHub</a></p>
+    </div>
+
+    <script>
+    // S-N curve parameters from DNV-RP-C203 (in-air)
+    const snCurves = {
+        'B1': { loga1: 15.117, m1: 4, loga2: 17.146, m2: 5, desc: 'Non-welded base material with machined edges' },
+        'B2': { loga1: 14.885, m1: 4, loga2: 16.856, m2: 5, desc: 'Butt welds ground flush to plate surface' },
+        'C':  { loga1: 12.592, m1: 3, loga2: 16.320, m2: 5, desc: 'Butt welds with weld cap intact' },
+        'C1': { loga1: 12.449, m1: 3, loga2: 16.081, m2: 5, desc: 'Transverse butt welds on backing strip' },
+        'C2': { loga1: 12.301, m1: 3, loga2: 15.835, m2: 5, desc: 'Cruciform joints with full penetration welds' },
+        'D':  { loga1: 12.164, m1: 3, loga2: 15.606, m2: 5, desc: 'Typical fillet welded joints for offshore structures' },
+        'E':  { loga1: 12.010, m1: 3, loga2: 15.350, m2: 5, desc: 'Attachments and cover plates' },
+        'F':  { loga1: 11.855, m1: 3, loga2: 15.091, m2: 5, desc: 'Lap joints with severe geometric discontinuities' },
+        'F1': { loga1: 11.699, m1: 3, loga2: 14.832, m2: 5, desc: 'Shear connectors and similar details' },
+        'F3': { loga1: 11.546, m1: 3, loga2: 14.576, m2: 5, desc: 'Severe notch details' },
+        'G':  { loga1: 11.398, m1: 3, loga2: 14.330, m2: 5, desc: 'Partial penetration welds' },
+        'W1': { loga1: 11.261, m1: 3, loga2: 14.101, m2: 5, desc: 'Weld root details with backing left in place' },
+        'W2': { loga1: 11.107, m1: 3, loga2: 13.845, m2: 5, desc: 'Weld root with backing removed' },
+        'W3': { loga1: 10.970, m1: 3, loga2: 13.617, m2: 5, desc: 'Single-sided fillet welds' },
+        'T':  { loga1: 12.164, m1: 3, loga2: 15.606, m2: 5, desc: 'Tubular joints using hot-spot stress method' }
+    };
+
+    // Environment factors (approximate per DNV)
+    const envFactors = {
+        'air': { factor: 1.0, desc: 'In Air' },
+        'seawater_cp': { factor: 0.4, desc: 'Seawater with CP (use seawater curve)' },
+        'seawater_free': { factor: 0.25, desc: 'Free Corrosion (not recommended)' }
+    };
+
+    function updateCurveInfo() {
+        const curve = document.getElementById('snCurve').value;
+        const params = snCurves[curve];
+        document.getElementById('curveDescription').textContent = params.desc;
+        document.getElementById('paramDisplay').textContent =
+            `log(a₁) = ${params.loga1}, m₁ = ${params.m1}, log(a₂) = ${params.loga2}, m₂ = ${params.m2}`;
+    }
+
+    function calculateFatigue() {
+        // Get inputs
+        const curve = document.getElementById('snCurve').value;
+        const stressRange = parseFloat(document.getElementById('stressRange').value);
+        const thickness = parseFloat(document.getElementById('thickness').value);
+        const environment = document.getElementById('environment').value;
+
+        // Validate inputs
+        if (isNaN(stressRange) || stressRange <= 0) {
+            alert('Please enter a valid stress range');
+            return;
+        }
+
+        // Get S-N curve parameters
+        const params = snCurves[curve];
+        const envFactor = envFactors[environment].factor;
+
+        // Calculate thickness correction (for t > 25mm)
+        const tRef = 25;
+        const k = 0.25;
+        let thicknessCorrFactor = 1.0;
+        if (thickness > tRef) {
+            thicknessCorrFactor = Math.pow(thickness / tRef, k);
+        }
+
+        // Apply corrections to stress range
+        const correctedStress = stressRange * thicknessCorrFactor;
+
+        // Calculate log(S)
+        const logS = Math.log10(correctedStress);
+
+        // Determine which regime (slope) to use
+        // Transition point at N = 10^7 cycles
+        // At transition: log(N) = 7, solve for S at transition
+        const transitionLogN = 7;
+        const transitionLogS1 = (params.loga1 - transitionLogN) / params.m1;
+        const transitionS = Math.pow(10, transitionLogS1);
+
+        let logN, regime;
+        if (correctedStress >= transitionS) {
+            // High stress, use first slope (m1)
+            logN = params.loga1 - params.m1 * logS;
+            regime = `Slope m₁ = ${params.m1} (N < 10⁷)`;
+        } else {
+            // Low stress, use second slope (m2)
+            logN = params.loga2 - params.m2 * logS;
+            regime = `Slope m₂ = ${params.m2} (N > 10⁷)`;
+        }
+
+        // Apply environment factor to fatigue life
+        if (environment !== 'air') {
+            logN = logN + Math.log10(envFactor);
+        }
+
+        // Calculate N
+        let N = Math.pow(10, logN);
+
+        // Update results display
+        const resultBox = document.getElementById('resultBox');
+        const resultValue = document.getElementById('resultValue');
+        const resultUnit = document.getElementById('resultUnit');
+
+        // Format the result
+        let displayValue, displayUnit;
+        if (N >= 1e9) {
+            displayValue = (N / 1e9).toFixed(2);
+            displayUnit = 'billion cycles';
+        } else if (N >= 1e6) {
+            displayValue = (N / 1e6).toFixed(2);
+            displayUnit = 'million cycles';
+        } else if (N >= 1e3) {
+            displayValue = (N / 1e3).toFixed(1);
+            displayUnit = 'thousand cycles';
+        } else {
+            displayValue = N.toFixed(0);
+            displayUnit = 'cycles';
+        }
+
+        resultValue.textContent = displayValue;
+        resultUnit.textContent = displayUnit;
+
+        // Set result box color based on fatigue life
+        resultBox.className = 'result-box';
+        if (N < 1e5) {
+            resultBox.classList.add('result-warning');
+        } else if (N > 1e7) {
+            resultBox.classList.add('result-success');
+        }
+
+        // Update additional results
+        document.getElementById('additionalResults').style.display = 'block';
+        document.getElementById('thicknessFactor').textContent = thicknessCorrFactor.toFixed(4);
+        document.getElementById('envFactor').textContent = envFactor.toFixed(2);
+        document.getElementById('correctedStress').textContent = correctedStress.toFixed(1) + ' MPa';
+        document.getElementById('curveRegime').textContent = regime;
+        document.getElementById('logN').textContent = logN.toFixed(3);
+
+        // Track calculator usage in GA4
+        gtag('event', 'calculator_use', {
+            'event_category': 'engagement',
+            'event_label': 'fatigue_life_calculator',
+            'sn_curve': curve,
+            'stress_range': stressRange,
+            'result_cycles': N
+        });
+    }
+
+    // Initialize on page load
+    updateCurveInfo();
+    </script>
+
+</body>
+</html>

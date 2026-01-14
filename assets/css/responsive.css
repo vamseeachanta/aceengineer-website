@@ -5,19 +5,17 @@
    Mobile First Base Styles (< 768px)
    ============================================ */
 
-/* Logo SVG fixes */
-.navbar-header svg {
-    max-width: 180px;
-    height: auto;
-}
-
-.navbar-header svg text {
-    font-size: 28px !important;
-}
-
-.navbar-header a {
+/* Logo SVG fixes - uses viewBox for proper scaling */
+.navbar-brand-link {
     display: inline-block;
+    padding: 8px 0;
     max-width: 100%;
+}
+
+.navbar-logo {
+    width: 100px;
+    height: auto;
+    display: block;
 }
 
 /* Improve touch targets for navigation */
@@ -271,12 +269,8 @@ img {
    Tablet Styles (768px - 992px)
    ============================================ */
 @media (min-width: 768px) {
-    .navbar-header svg {
-        max-width: 220px;
-    }
-
-    .navbar-header svg text {
-        font-size: 32px !important;
+    .navbar-logo {
+        width: 120px;
     }
 
     /* Metrics row - 2 columns */
@@ -370,12 +364,8 @@ img {
    Desktop Styles (> 992px)
    ============================================ */
 @media (min-width: 992px) {
-    .navbar-header svg {
-        max-width: 280px;
-    }
-
-    .navbar-header svg text {
-        font-size: 40px !important;
+    .navbar-logo {
+        width: 140px;
     }
 
     /* Metrics row - all in one row */
@@ -431,8 +421,8 @@ img {
    Large Desktop (> 1200px)
    ============================================ */
 @media (min-width: 1200px) {
-    .navbar-header svg {
-        max-width: 320px;
+    .navbar-logo {
+        width: 160px;
     }
 }
 

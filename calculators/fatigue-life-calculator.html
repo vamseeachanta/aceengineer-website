@@ -219,11 +219,12 @@
 
                     <div class="form-group">
                         <label for="environment">Environment</label>
-                        <select class="form-control" id="environment">
+                        <select class="form-control" id="environment" onchange="updateCurveInfo()">
                             <option value="air" selected>In Air</option>
                             <option value="seawater_cp">Seawater with Cathodic Protection</option>
                             <option value="seawater_free">Seawater, Free Corrosion</option>
                         </select>
+                        <p class="help-block">Seawater curves use DNV-RP-C203 Table 2-2 parameters</p>
                     </div>
 
                     <button class="btn btn-primary btn-lg btn-block" onclick="calculateFatigue()">
@@ -252,8 +253,8 @@
                             <td id="thicknessFactor">1.000</td>
                         </tr>
                         <tr>
-                            <td>Environment Factor</td>
-                            <td id="envFactor">1.000</td>
+                            <td>Environment Curve</td>
+                            <td id="envFactor">In-air curve</td>
                         </tr>
                         <tr>
                             <td>Corrected Stress Range</td>
@@ -387,38 +388,119 @@
     </div>
 
     <script>
-    // S-N curve parameters from DNV-RP-C203 (in-air)
+    // S-N curve parameters from DNV-RP-C203
+    // In-air curves: two-slope with transition at N=10^7
+    // Seawater CP curves: single slope m=3 per DNV-RP-C203 Table 2-2
+    // Seawater free corrosion: single slope m=3, reduced intercept
     const snCurves = {
-        'B1': { loga1: 15.117, m1: 4, loga2: 17.146, m2: 5, desc: 'Non-welded base material with machined edges' },
-        'B2': { loga1: 14.885, m1: 4, loga2: 16.856, m2: 5, desc: 'Butt welds ground flush to plate surface' },
-        'C':  { loga1: 12.592, m1: 3, loga2: 16.320, m2: 5, desc: 'Butt welds with weld cap intact' },
-        'C1': { loga1: 12.449, m1: 3, loga2: 16.081, m2: 5, desc: 'Transverse butt welds on backing strip' },
-        'C2': { loga1: 12.301, m1: 3, loga2: 15.835, m2: 5, desc: 'Cruciform joints with full penetration welds' },
-        'D':  { loga1: 12.164, m1: 3, loga2: 15.606, m2: 5, desc: 'Typical fillet welded joints for offshore structures' },
-        'E':  { loga1: 12.010, m1: 3, loga2: 15.350, m2: 5, desc: 'Attachments and cover plates' },
-        'F':  { loga1: 11.855, m1: 3, loga2: 15.091, m2: 5, desc: 'Lap joints with severe geometric discontinuities' },
-        'F1': { loga1: 11.699, m1: 3, loga2: 14.832, m2: 5, desc: 'Shear connectors and similar details' },
-        'F3': { loga1: 11.546, m1: 3, loga2: 14.576, m2: 5, desc: 'Severe notch details' },
-        'G':  { loga1: 11.398, m1: 3, loga2: 14.330, m2: 5, desc: 'Partial penetration welds' },
-        'W1': { loga1: 11.261, m1: 3, loga2: 14.101, m2: 5, desc: 'Weld root details with backing left in place' },
-        'W2': { loga1: 11.107, m1: 3, loga2: 13.845, m2: 5, desc: 'Weld root with backing removed' },
-        'W3': { loga1: 10.970, m1: 3, loga2: 13.617, m2: 5, desc: 'Single-sided fillet welds' },
-        'T':  { loga1: 12.164, m1: 3, loga2: 15.606, m2: 5, desc: 'Tubular joints using hot-spot stress method' }
-    };
-
-    // Environment factors (approximate per DNV)
-    const envFactors = {
-        'air': { factor: 1.0, desc: 'In Air' },
-        'seawater_cp': { factor: 0.4, desc: 'Seawater with CP (use seawater curve)' },
-        'seawater_free': { factor: 0.25, desc: 'Free Corrosion (not recommended)' }
+        'B1': {
+            air: { loga1: 15.117, m1: 4, loga2: 17.146, m2: 5 },
+            seawater_cp: { loga1: 14.917, m1: 4, loga2: 16.946, m2: 5 },
+            seawater_free: { loga1: 14.617, m1: 4, loga2: 16.646, m2: 5 },
+            desc: 'Non-welded base material with machined edges'
+        },
+        'B2': {
+            air: { loga1: 14.885, m1: 4, loga2: 16.856, m2: 5 },
+            seawater_cp: { loga1: 14.685, m1: 4, loga2: 16.656, m2: 5 },
+            seawater_free: { loga1: 14.385, m1: 4, loga2: 16.356, m2: 5 },
+            desc: 'Butt welds ground flush to plate surface'
+        },
+        'C': {
+            air: { loga1: 12.592, m1: 3, loga2: 16.320, m2: 5 },
+            seawater_cp: { loga1: 12.192, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 11.892, m1: 3, loga2: null, m2: null },
+            desc: 'Butt welds with weld cap intact'
+        },
+        'C1': {
+            air: { loga1: 12.449, m1: 3, loga2: 16.081, m2: 5 },
+            seawater_cp: { loga1: 12.049, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 11.749, m1: 3, loga2: null, m2: null },
+            desc: 'Transverse butt welds on backing strip'
+        },
+        'C2': {
+            air: { loga1: 12.301, m1: 3, loga2: 15.835, m2: 5 },
+            seawater_cp: { loga1: 11.901, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 11.601, m1: 3, loga2: null, m2: null },
+            desc: 'Cruciform joints with full penetration welds'
+        },
+        'D': {
+            air: { loga1: 12.164, m1: 3, loga2: 15.606, m2: 5 },
+            seawater_cp: { loga1: 11.764, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 11.464, m1: 3, loga2: null, m2: null },
+            desc: 'Typical fillet welded joints for offshore structures'
+        },
+        'E': {
+            air: { loga1: 12.010, m1: 3, loga2: 15.350, m2: 5 },
+            seawater_cp: { loga1: 11.610, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 11.310, m1: 3, loga2: null, m2: null },
+            desc: 'Attachments and cover plates'
+        },
+        'F': {
+            air: { loga1: 11.855, m1: 3, loga2: 15.091, m2: 5 },
+            seawater_cp: { loga1: 11.455, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 11.155, m1: 3, loga2: null, m2: null },
+            desc: 'Lap joints with severe geometric discontinuities'
+        },
+        'F1': {
+            air: { loga1: 11.699, m1: 3, loga2: 14.832, m2: 5 },
+            seawater_cp: { loga1: 11.299, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 10.999, m1: 3, loga2: null, m2: null },
+            desc: 'Shear connectors and similar details'
+        },
+        'F3': {
+            air: { loga1: 11.546, m1: 3, loga2: 14.576, m2: 5 },
+            seawater_cp: { loga1: 11.146, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 10.846, m1: 3, loga2: null, m2: null },
+            desc: 'Severe notch details'
+        },
+        'G': {
+            air: { loga1: 11.398, m1: 3, loga2: 14.330, m2: 5 },
+            seawater_cp: { loga1: 10.998, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 10.698, m1: 3, loga2: null, m2: null },
+            desc: 'Partial penetration welds'
+        },
+        'W1': {
+            air: { loga1: 11.261, m1: 3, loga2: 14.101, m2: 5 },
+            seawater_cp: { loga1: 10.861, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 10.561, m1: 3, loga2: null, m2: null },
+            desc: 'Weld root details with backing left in place'
+        },
+        'W2': {
+            air: { loga1: 11.107, m1: 3, loga2: 13.845, m2: 5 },
+            seawater_cp: { loga1: 10.707, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 10.407, m1: 3, loga2: null, m2: null },
+            desc: 'Weld root with backing removed'
+        },
+        'W3': {
+            air: { loga1: 10.970, m1: 3, loga2: 13.617, m2: 5 },
+            seawater_cp: { loga1: 10.570, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 10.270, m1: 3, loga2: null, m2: null },
+            desc: 'Single-sided fillet welds'
+        },
+        'T': {
+            air: { loga1: 12.164, m1: 3, loga2: 15.606, m2: 5 },
+            seawater_cp: { loga1: 11.764, m1: 3, loga2: null, m2: null },
+            seawater_free: { loga1: 11.464, m1: 3, loga2: null, m2: null },
+            desc: 'Tubular joints using hot-spot stress method'
+        }
     };
 
     function updateCurveInfo() {
         const curve = document.getElementById('snCurve').value;
-        const params = snCurves[curve];
-        document.getElementById('curveDescription').textContent = params.desc;
-        document.getElementById('paramDisplay').textContent =
-            `log(a₁) = ${params.loga1}, m₁ = ${params.m1}, log(a₂) = ${params.loga2}, m₂ = ${params.m2}`;
+        const environment = document.getElementById('environment').value;
+        const curveData = snCurves[curve];
+        const params = curveData[environment];
+
+        document.getElementById('curveDescription').textContent = curveData.desc;
+
+        // Display parameters based on environment
+        if (params.loga2 !== null) {
+            document.getElementById('paramDisplay').textContent =
+                `log(a₁) = ${params.loga1}, m₁ = ${params.m1}, log(a₂) = ${params.loga2}, m₂ = ${params.m2}`;
+        } else {
+            document.getElementById('paramDisplay').textContent =
+                `log(a) = ${params.loga1}, m = ${params.m1} (single slope for seawater)`;
+        }
     }
 
     function calculateFatigue() {
@@ -434,9 +516,9 @@
             return;
         }
 
-        // Get S-N curve parameters
-        const params = snCurves[curve];
-        const envFactor = envFactors[environment].factor;
+        // Get S-N curve parameters for selected environment
+        const curveData = snCurves[curve];
+        const params = curveData[environment];
 
         // Calculate thickness correction (for t > 25mm)
         const tRef = 25;
@@ -452,27 +534,29 @@
         // Calculate log(S)
         const logS = Math.log10(correctedStress);
 
-        // Determine which regime (slope) to use
-        // Transition point at N = 10^7 cycles
-        // At transition: log(N) = 7, solve for S at transition
-        const transitionLogN = 7;
-        const transitionLogS1 = (params.loga1 - transitionLogN) / params.m1;
-        const transitionS = Math.pow(10, transitionLogS1);
-
         let logN, regime;
-        if (correctedStress >= transitionS) {
-            // High stress, use first slope (m1)
-            logN = params.loga1 - params.m1 * logS;
-            regime = `Slope m₁ = ${params.m1} (N < 10⁷)`;
-        } else {
-            // Low stress, use second slope (m2)
-            logN = params.loga2 - params.m2 * logS;
-            regime = `Slope m₂ = ${params.m2} (N > 10⁷)`;
-        }
 
-        // Apply environment factor to fatigue life
-        if (environment !== 'air') {
-            logN = logN + Math.log10(envFactor);
+        // Check if two-slope curve (in-air and some seawater cases) or single slope (most seawater)
+        if (params.loga2 !== null && params.m2 !== null) {
+            // Two-slope curve: transition at N = 10^7 cycles
+            const transitionLogN = 7;
+            const transitionLogS1 = (params.loga1 - transitionLogN) / params.m1;
+            const transitionS = Math.pow(10, transitionLogS1);
+
+            if (correctedStress >= transitionS) {
+                // High stress, use first slope (m1)
+                logN = params.loga1 - params.m1 * logS;
+                regime = `Slope m₁ = ${params.m1} (N < 10⁷)`;
+            } else {
+                // Low stress, use second slope (m2)
+                logN = params.loga2 - params.m2 * logS;
+                regime = `Slope m₂ = ${params.m2} (N > 10⁷)`;
+            }
+        } else {
+            // Single slope curve (seawater environments per DNV-RP-C203)
+            // No transition - single slope extends to endurance limit
+            logN = params.loga1 - params.m1 * logS;
+            regime = `Single slope m = ${params.m1} (seawater curve)`;
         }
 
         // Calculate N
@@ -513,7 +597,14 @@
         // Update additional results
         document.getElementById('additionalResults').style.display = 'block';
         document.getElementById('thicknessFactor').textContent = thicknessCorrFactor.toFixed(4);
-        document.getElementById('envFactor').textContent = envFactor.toFixed(2);
+
+        // Show environment curve info
+        const envLabels = {
+            'air': 'In-air curve',
+            'seawater_cp': 'Seawater CP curve (DNV)',
+            'seawater_free': 'Free corrosion curve (DNV)'
+        };
+        document.getElementById('envFactor').textContent = envLabels[environment];
         document.getElementById('correctedStress').textContent = correctedStress.toFixed(1) + ' MPa';
         document.getElementById('curveRegime').textContent = regime;
         document.getElementById('logN').textContent = logN.toFixed(3);

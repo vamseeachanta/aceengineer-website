@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Case study: How Python automation reduced subsea equipment FEA post-processing time by 90% while eliminating manual errors. Detailed methodology and results.">
+    <meta name="keywords" content="subsea FEA automation, NASTRAN post-processing, Python engineering automation, API 17D, DNV-OS-F101, structural analysis">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Case Study: Automated FEA Post-Processing Pipeline for Subsea Equipment">
+    <meta property="og:description" content="How Python automation reduced FEA post-processing time by 90% and enabled 50+ reports per week for subsea equipment qualification.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://aceengineer.com/case-studies/subsea-fea-automation.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Case Study: Automated FEA Post-Processing Pipeline for Subsea Equipment">
+    <meta name="twitter:description" content="Python automation reduced FEA post-processing time by 90% for subsea equipment qualification.">
+
+    <title>Case Study: Automated FEA Post-Processing Pipeline for Subsea Equipment - A&CE</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "@id": "https://aceengineer.com/case-studies/subsea-fea-automation.html#article",
+        "headline": "Automated FEA Post-Processing Pipeline for Subsea Equipment Qualification",
+        "description": "Case study demonstrating how Python automation reduced FEA post-processing time by 90% while eliminating manual errors.",
+        "datePublished": "2025-01-13",
+        "dateModified": "2025-01-13",
+        "author": {
+            "@type": "Person",
+            "name": "Vamsee Achanta",
+            "url": "https://aceengineer.com/about.html"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://aceengineer.com/case-studies/subsea-fea-automation.html"
+        },
+        "keywords": ["subsea equipment", "FEA automation", "NASTRAN", "Python engineering", "API 17D", "DNV-OS-F101", "case study"]
+    }
+    </script>
+
+    <style>
+        .case-study-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        .case-study-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .case-study-meta {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .metrics-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .metric-box {
+            text-align: center;
+            padding: 20px;
+            min-width: 150px;
+        }
+        .metric-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: #428bca;
+        }
+        .metric-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .section-title {
+            margin-top: 50px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #428bca;
+            color: #2c3e50;
+        }
+        .challenge-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .solution-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .result-box {
+            background: #cce5ff;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .methodology-step {
+            display: flex;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .step-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #428bca;
+            min-width: 60px;
+        }
+        .step-content h4 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .compliance-badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+        }
+        .table-results {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .table-results th {
+            background: #2c3e50;
+            color: white;
+            padding: 12px;
+        }
+        .table-results td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        .table-results tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .cta-section {
+            background: #2c3e50;
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .cta-section h3 {
+            margin-bottom: 20px;
+        }
+        .cta-section .btn {
+            margin: 10px;
+        }
+        .code-block {
+            background: #2c3e50;
+            color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .code-block code {
+            color: #f8f9fa;
+        }
+    </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K31E51DQ47');
+    </script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="../index.html">
+                    <svg width="auto" height="50" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" width="50%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
+                        <title>Analytical & Computational Engineering</title>
+                        <text x="70" y="12" font-weight="bold" fill="black">A&CE</text>
+                        Analytical & Computational Engineering
+                        <style>
+                            <![CDATA[
+                            text {
+                                dominant-baseline: hanging;
+                                font: 40px sans-serif;
+                            }
+                            ]]>
+                        </style>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../engineering.html">Engineering</a></li>
+                    <li><a href="../energy.html">Energy</a></li>
+                    <li><a href="../faq.html">FAQ</a></li>
+                    <li><a href="../blog/">Blog</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Case Study Header -->
+    <div class="case-study-header">
+        <div class="container">
+            <h1>Automated FEA Post-Processing Pipeline for Subsea Equipment Qualification</h1>
+            <p class="case-study-meta">
+                <strong>Client:</strong> Subsea Equipment Manufacturer |
+                <strong>Industry:</strong> Oil & Gas |
+                <strong>Duration:</strong> 8 weeks |
+                <strong>Year:</strong> 2024
+            </p>
+            <p style="margin-top: 20px;">
+                <span class="compliance-badge">API 17D Compliant</span>
+                <span class="compliance-badge">DNV-OS-F101 Validated</span>
+                <span class="compliance-badge">ISO 13628 Aligned</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Key Metrics -->
+        <div class="metrics-row">
+            <div class="metric-box">
+                <div class="metric-value">90%</div>
+                <div class="metric-label">Time Reduction</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">50+</div>
+                <div class="metric-label">Reports/Week</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">0</div>
+                <div class="metric-label">Manual Errors</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">$340K</div>
+                <div class="metric-label">Annual Savings</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <h2 class="section-title">Executive Summary</h2>
+        <p>
+            A leading subsea equipment manufacturer faced a critical bottleneck in their engineering workflow: manual FEA post-processing was consuming weeks of engineering time for each equipment qualification package. With increasing project volumes and tighter delivery schedules, the traditional approach was unsustainable.
+        </p>
+        <p>
+            We developed a Python-based automation pipeline that integrates directly with NASTRAN output files, automatically extracts stress results, performs code checks against API 17D and DNV-OS-F101 requirements, and generates professional HTML reports with interactive visualizations. The solution reduced post-processing time by 90% while eliminating manual transcription errors entirely.
+        </p>
+
+        <!-- The Challenge -->
+        <h2 class="section-title">The Challenge</h2>
+
+        <div class="challenge-box">
+            <h4>Manual Processing Bottleneck</h4>
+            <p>
+                Engineers spent 3-5 days manually extracting stress results from NASTRAN output files for each equipment qualification. With 15-20 components requiring qualification per project, post-processing consumed 60-100 engineering days per project.
+            </p>
+        </div>
+
+        <div class="challenge-box">
+            <h4>Error-Prone Workflow</h4>
+            <p>
+                Manual data extraction and transcription led to an average of 2-3 errors per report, requiring extensive review cycles and occasional re-work after client submission. Quality assurance consumed an additional 20% of engineering time.
+            </p>
+        </div>
+
+        <div class="challenge-box">
+            <h4>Inconsistent Documentation</h4>
+            <p>
+                Different engineers produced reports with varying formats, making it difficult to compare results across projects and maintain consistent quality standards for regulatory submissions.
+            </p>
+        </div>
+
+        <div class="challenge-box">
+            <h4>Scaling Constraints</h4>
+            <p>
+                The company was winning more contracts but could not scale engineering capacity proportionally. Hiring additional FEA engineers was costly and the learning curve extended project timelines.
+            </p>
+        </div>
+
+        <!-- Our Approach -->
+        <h2 class="section-title">Our Approach</h2>
+
+        <div class="methodology-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h4>Workflow Analysis & Requirements Gathering</h4>
+                <p>
+                    Shadowed senior engineers through their post-processing workflow to understand data extraction patterns, code check calculations, and reporting requirements. Documented 47 distinct data extraction patterns across 8 equipment types.
+                </p>
+            </div>
+        </div>
+
+        <div class="methodology-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h4>NASTRAN Parser Development</h4>
+                <p>
+                    Built a robust Python parser for NASTRAN .f06 and .op2 output files. The parser handles multiple solution sequences (SOL 101, 103, 106), extracts element stresses, nodal displacements, and reaction forces with automatic unit handling.
+                </p>
+            </div>
+        </div>
+
+        <div class="methodology-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h4>Code Check Engine Implementation</h4>
+                <p>
+                    Implemented automated code checks for API 17D and DNV-OS-F101 requirements, including von Mises stress allowables, linearized stress calculations for pressure vessels, and fatigue screening assessments. All calculations are fully traceable with intermediate results documented.
+                </p>
+            </div>
+        </div>
+
+        <div class="methodology-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <h4>Interactive Report Generation</h4>
+                <p>
+                    Developed HTML report templates with Plotly-based interactive stress contour plots, tabular results with conditional formatting, and executive summaries with pass/fail indicators. Reports include all calculation backup for regulatory review.
+                </p>
+            </div>
+        </div>
+
+        <div class="methodology-step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+                <h4>Integration & Deployment</h4>
+                <p>
+                    Deployed the pipeline as a command-line tool integrated with the company's project folder structure. Engineers simply point the tool at a NASTRAN output folder and receive complete qualification reports within minutes.
+                </p>
+            </div>
+        </div>
+
+        <!-- Technical Details -->
+        <h2 class="section-title">Technical Implementation</h2>
+
+        <h3>Pipeline Architecture</h3>
+        <p>
+            The automation pipeline follows a modular architecture designed for maintainability and extensibility:
+        </p>
+
+        <div class="code-block">
+            <code>
+subsea-fea-pipeline/<br>
+├── parsers/<br>
+│   ├── nastran_f06.py      # Text output parser<br>
+│   ├── nastran_op2.py      # Binary output parser<br>
+│   └── result_mapper.py    # Element-to-component mapping<br>
+├── code_checks/<br>
+│   ├── api_17d.py          # API 17D stress allowables<br>
+│   ├── dnv_os_f101.py      # DNV pipeline code checks<br>
+│   └── linearization.py    # Stress linearization routines<br>
+├── reporting/<br>
+│   ├── html_generator.py   # Report assembly<br>
+│   ├── plotly_viz.py       # Interactive plots<br>
+│   └── templates/          # Jinja2 report templates<br>
+└── main.py                 # CLI entry point
+            </code>
+        </div>
+
+        <h3>Key Technical Features</h3>
+        <ul>
+            <li><strong>Multi-format support:</strong> Handles both text (.f06) and binary (.op2) NASTRAN outputs for flexibility across different solver configurations</li>
+            <li><strong>Automatic unit conversion:</strong> Detects input units and converts to consistent output units (SI or US customary) based on project settings</li>
+            <li><strong>Component grouping:</strong> Maps finite elements to named components using property ID or element set definitions for organized reporting</li>
+            <li><strong>Stress linearization:</strong> Implements through-thickness stress linearization per ASME Section VIII Division 2 for pressure vessel assessments</li>
+            <li><strong>Batch processing:</strong> Processes multiple load cases and components in parallel using Python multiprocessing</li>
+        </ul>
+
+        <h3>Code Check Implementation</h3>
+        <div class="table-responsive-wrapper">
+        <table class="table-results">
+            <tr>
+                <th>Standard</th>
+                <th>Check Type</th>
+                <th>Implementation</th>
+            </tr>
+            <tr>
+                <td>API 17D</td>
+                <td>Primary stress limits</td>
+                <td>von Mises vs. allowable based on material grade and temperature</td>
+            </tr>
+            <tr>
+                <td>API 17D</td>
+                <td>Local stress limits</td>
+                <td>Peak stress evaluation at geometric discontinuities</td>
+            </tr>
+            <tr>
+                <td>DNV-OS-F101</td>
+                <td>Burst capacity</td>
+                <td>Hoop stress check with safety factors per location class</td>
+            </tr>
+            <tr>
+                <td>DNV-OS-F101</td>
+                <td>Collapse capacity</td>
+                <td>External pressure check with ovality effects</td>
+            </tr>
+            <tr>
+                <td>Combined</td>
+                <td>Fatigue screening</td>
+                <td>Stress range extraction for fatigue assessment triggering</td>
+            </tr>
+        </table>
+        </div>
+
+        <h3>Report Features</h3>
+        <p>
+            Generated HTML reports include:
+        </p>
+        <ul>
+            <li><strong>Executive summary:</strong> Pass/fail status for all code checks with critical locations highlighted</li>
+            <li><strong>Interactive stress plots:</strong> Plotly-based contour plots with hover data and zoom capability</li>
+            <li><strong>Tabular results:</strong> Maximum stresses per component with utilization ratios and conditional formatting</li>
+            <li><strong>Calculation backup:</strong> Full calculation trail with intermediate values for regulatory review</li>
+            <li><strong>Load case summary:</strong> Applied loads and boundary conditions for traceability</li>
+            <li><strong>Material properties:</strong> Temperature-dependent allowables used in code checks</li>
+        </ul>
+
+        <!-- Results -->
+        <h2 class="section-title">Results</h2>
+
+        <div class="result-box">
+            <h4>90% Time Reduction</h4>
+            <p>
+                Post-processing time dropped from 3-5 days per component to 15-30 minutes. A complete qualification package for a subsea tree (12 components, 8 load cases) now takes 4 hours instead of 6 weeks.
+            </p>
+        </div>
+
+        <div class="result-box">
+            <h4>Zero Manual Errors</h4>
+            <p>
+                Automated data extraction eliminated transcription errors entirely. In the first 6 months of deployment, zero errors were found in stress values or code check calculations across 180 generated reports.
+            </p>
+        </div>
+
+        <div class="result-box">
+            <h4>Improved Throughput</h4>
+            <p>
+                Engineering team capacity increased from 8-10 qualification packages per month to 50+ per week. The same team now handles 20x the previous workload without overtime.
+            </p>
+        </div>
+
+        <div class="result-box">
+            <h4>Consistent Quality</h4>
+            <p>
+                Standardized report format improved client satisfaction and reduced review comments by 75%. Regulatory submissions are now accepted on first submission in 95% of cases.
+            </p>
+        </div>
+
+        <h3>Productivity Comparison</h3>
+        <div class="table-responsive-wrapper">
+        <table class="table-results">
+            <tr>
+                <th>Metric</th>
+                <th>Before Automation</th>
+                <th>After Automation</th>
+                <th>Improvement</th>
+            </tr>
+            <tr>
+                <td>Time per component</td>
+                <td>3-5 days</td>
+                <td>15-30 minutes</td>
+                <td>90% reduction</td>
+            </tr>
+            <tr>
+                <td>Reports per week</td>
+                <td>2-3</td>
+                <td>50+</td>
+                <td>20x increase</td>
+            </tr>
+            <tr>
+                <td>Error rate</td>
+                <td>2-3 per report</td>
+                <td>0</td>
+                <td>100% reduction</td>
+            </tr>
+            <tr>
+                <td>Review cycles</td>
+                <td>2-3 iterations</td>
+                <td>1 iteration</td>
+                <td>66% reduction</td>
+            </tr>
+            <tr>
+                <td>First-time regulatory acceptance</td>
+                <td>65%</td>
+                <td>95%</td>
+                <td>46% improvement</td>
+            </tr>
+        </table>
+        </div>
+
+        <h3>Return on Investment</h3>
+        <div class="table-responsive-wrapper">
+        <table class="table-results">
+            <tr>
+                <th>Category</th>
+                <th>Annual Impact</th>
+            </tr>
+            <tr>
+                <td>Engineering labor savings (8,000 hours @ $85/hr)</td>
+                <td>$680,000</td>
+            </tr>
+            <tr>
+                <td>Reduced rework and error correction</td>
+                <td>$45,000</td>
+            </tr>
+            <tr>
+                <td>Faster project delivery (reduced overhead)</td>
+                <td>$120,000</td>
+            </tr>
+            <tr>
+                <td>Implementation and maintenance cost</td>
+                <td>($85,000)</td>
+            </tr>
+            <tr>
+                <td>Training and change management</td>
+                <td>($20,000)</td>
+            </tr>
+            <tr>
+                <td><strong>Net Annual Benefit</strong></td>
+                <td><strong>$340,000</strong></td>
+            </tr>
+        </table>
+        </div>
+
+        <!-- Lessons Learned -->
+        <h2 class="section-title">Key Takeaways</h2>
+
+        <h3>For Engineering Managers</h3>
+        <ul>
+            <li>Repetitive post-processing tasks are prime candidates for automation with significant ROI</li>
+            <li>Standardized reporting improves client perception and reduces review cycles</li>
+            <li>Automation frees senior engineers to focus on complex analysis rather than data extraction</li>
+            <li>Quality consistency is easier to achieve and maintain with automated processes</li>
+        </ul>
+
+        <h3>For Engineers</h3>
+        <ul>
+            <li>Python's data processing libraries (pandas, numpy) are well-suited for FEA post-processing</li>
+            <li>Investing in robust parsing handles edge cases that break brittle scripts</li>
+            <li>Interactive HTML reports provide more value than static PDF documents</li>
+            <li>Maintaining calculation traceability is essential for regulatory acceptance</li>
+        </ul>
+
+        <!-- Technologies Used -->
+        <h2 class="section-title">Technologies & Tools</h2>
+        <p>
+            <strong>FEA Software:</strong> MSC NASTRAN, NX NASTRAN<br>
+            <strong>Programming:</strong> Python 3.10+<br>
+            <strong>Data Processing:</strong> pandas, numpy, scipy<br>
+            <strong>Visualization:</strong> Plotly for interactive charts and contour plots<br>
+            <strong>Reporting:</strong> Jinja2 templates for HTML generation<br>
+            <strong>Binary Parsing:</strong> pyNastran for .op2 file handling<br>
+            <strong>Deployment:</strong> PyInstaller for standalone executable distribution
+        </p>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h3>Drowning in FEA Post-Processing?</h3>
+            <p>We help engineering teams automate repetitive analysis tasks and focus on high-value work.</p>
+            <a href="../contact.html" class="btn btn-primary btn-lg">Discuss Your Workflow</a>
+            <a href="offshore-platform-fatigue-optimization.html" class="btn btn-default btn-lg">View Another Case Study</a>
+        </div>
+
+        <hr style="margin-top: 50px;">
+
+        <p>
+            <a href="../engineering.html">View All Engineering Services</a> |
+            <a href="index.html">All Case Studies</a> |
+            <a href="../blog/">Read Our Technical Blog</a>
+        </p>
+
+    </div>
+
+    <div class="container">
+        <hr>
+        <p>Developed by <b>A&CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></p>
+    </div>
+
+</body>
+</html>

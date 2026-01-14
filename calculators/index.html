@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Free interactive engineering calculators for fatigue analysis, stress calculations, and structural assessment. Based on API, DNV, and ISO standards.">
+    <meta name="keywords" content="engineering calculator, fatigue calculator, stress calculator, S-N curve, structural analysis, offshore engineering tools">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Engineering Calculators - A&CE">
+    <meta property="og:description" content="Free interactive engineering calculators for fatigue analysis and structural assessment.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/calculators/">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Engineering Calculators - A&CE">
+    <meta name="twitter:description" content="Free interactive engineering calculators for fatigue analysis and structural assessment.">
+
+    <title>Engineering Calculators - A&CE</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "@id": "https://aceengineer.com/calculators/#collection",
+        "name": "A&CE Engineering Calculators",
+        "url": "https://aceengineer.com/calculators/",
+        "description": "Free interactive engineering calculators for fatigue analysis, stress calculations, and structural assessment",
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering"
+        }
+    }
+    </script>
+
+    <style>
+        .calculator-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: box-shadow 0.3s ease;
+        }
+        .calculator-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .calculator-card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .calculator-meta {
+            color: #777;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        .standard-tag {
+            display: inline-block;
+            background: #428bca;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .page-header {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #428bca;
+        }
+        .coming-soon {
+            opacity: 0.7;
+        }
+        .coming-soon .btn {
+            pointer-events: none;
+        }
+    </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K31E51DQ47');
+    </script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="../index.html" class="navbar-brand-link">
+                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                        <title id="logoTitle">Analytical & Computational Engineering</title>
+                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
+                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../engineering.html">Engineering</a></li>
+                    <li><a href="../energy.html">Energy</a></li>
+                    <li><a href="../faq.html">FAQ</a></li>
+                    <li><a href="../blog/">Blog</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Engineering Calculators</h1>
+            <p class="lead">Free interactive tools for structural analysis, fatigue assessment, and engineering calculations. Based on industry standards.</p>
+        </div>
+
+        <!-- Calculator 1: Fatigue Life -->
+        <div class="calculator-card">
+            <h3><a href="fatigue-life-calculator.html">S-N Curve Fatigue Life Calculator</a></h3>
+            <div class="calculator-meta">
+                <strong>Application:</strong> Offshore Structures, Marine Equipment |
+                <strong>Method:</strong> S-N Curve Analysis
+            </div>
+            <p>
+                Calculate fatigue life for welded steel joints using industry-standard S-N curves.
+                Supports multiple weld classifications and includes thickness correction factors.
+                Perfect for preliminary fatigue assessments of offshore and marine structures.
+            </p>
+            <div>
+                <span class="standard-tag">DNV-RP-C203</span>
+                <span class="standard-tag">API RP 2A</span>
+                <span class="standard-tag">BS 7608</span>
+            </div>
+            <p style="margin-top: 15px;">
+                <a href="fatigue-life-calculator.html" class="btn btn-primary">Open Calculator</a>
+                <a href="../blog/machine-learning-fatigue-prediction.html" class="btn btn-default">Learn About Fatigue Analysis</a>
+            </p>
+        </div>
+
+        <!-- Calculator 2: Stress Concentration (Coming Soon) -->
+        <div class="calculator-card coming-soon">
+            <h3>Stress Concentration Factor Calculator</h3>
+            <div class="calculator-meta">
+                <strong>Application:</strong> Tubular Joints, Structural Details |
+                <strong>Status:</strong> Coming Soon
+            </div>
+            <p>
+                Calculate stress concentration factors (SCFs) for tubular joints and common structural details.
+                Includes parametric equations for T, Y, K, and X joints based on geometry and loading.
+            </p>
+            <div>
+                <span class="standard-tag">API RP 2A</span>
+                <span class="standard-tag">DNV-RP-C203</span>
+            </div>
+            <p style="margin-top: 15px;">
+                <span class="btn btn-default disabled">Coming Soon</span>
+            </p>
+        </div>
+
+        <!-- Calculator 3: Pressure Vessel (Coming Soon) -->
+        <div class="calculator-card coming-soon">
+            <h3>Pressure Vessel Thickness Calculator</h3>
+            <div class="calculator-meta">
+                <strong>Application:</strong> Process Equipment, Subsea Systems |
+                <strong>Status:</strong> Coming Soon
+            </div>
+            <p>
+                Calculate minimum wall thickness for cylindrical and spherical pressure vessels under internal
+                and external pressure. Includes corrosion allowance and manufacturing tolerance considerations.
+            </p>
+            <div>
+                <span class="standard-tag">ASME BPVC</span>
+                <span class="standard-tag">API 650</span>
+            </div>
+            <p style="margin-top: 15px;">
+                <span class="btn btn-default disabled">Coming Soon</span>
+            </p>
+        </div>
+
+        <hr>
+
+        <h2>About These Calculators</h2>
+        <p>
+            These calculators are provided as educational tools for preliminary engineering estimates.
+            They implement industry-standard methods from recognized codes and standards including:
+        </p>
+        <ul>
+            <li><strong>DNV-RP-C203:</strong> Fatigue Design of Offshore Steel Structures</li>
+            <li><strong>API RP 2A:</strong> Recommended Practice for Planning, Designing and Constructing Fixed Offshore Platforms</li>
+            <li><strong>BS 7608:</strong> Code of Practice for Fatigue Design and Assessment of Steel Structures</li>
+            <li><strong>ASME BPVC:</strong> Boiler and Pressure Vessel Code</li>
+        </ul>
+
+        <div class="alert alert-info">
+            <strong>Disclaimer:</strong> These calculators are for educational and preliminary assessment purposes only.
+            Final engineering calculations should be performed by qualified engineers using validated software and
+            verified against applicable codes and standards. A&CE accepts no liability for results obtained from these tools.
+        </div>
+
+        <h2>Need More Advanced Analysis?</h2>
+        <p>
+            For complex fatigue assessments, FEA-based stress analysis, or AI-enhanced engineering solutions,
+            we offer professional consulting services with validated methodologies.
+        </p>
+        <p>
+            <a href="../contact.html" class="btn btn-success btn-lg">Discuss Your Project</a>
+            <a href="../case-studies/" class="btn btn-default btn-lg">View Case Studies</a>
+        </p>
+    </div>
+
+    <div class="container">
+        <hr>
+        <p>Developed by <b>A&CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/aceengineer" target="_blank">GitHub</a></p>
+    </div>
+
+</body>
+</html>

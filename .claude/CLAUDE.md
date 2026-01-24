@@ -174,15 +174,15 @@ YOU MUST follow this debugging framework for ANY technical issue:
 
 # PART 2: AI ORCHESTRATION & SPARC METHODOLOGY
 
-## 🚨 CRITICAL: CONCURRENT EXECUTION & FILE MANAGEMENT
+## CRITICAL: CONCURRENT EXECUTION & FILE MANAGEMENT
 
 **ABSOLUTE RULES**:
 1. ALL operations MUST be concurrent/parallel in a single message
 2. **NEVER save working files, text/mds and tests to the root folder**
 3. ALWAYS organize files in appropriate subdirectories
-4. **USE CLAUDE CODE'S TASK TOOL** for spawning agents concurrently, not just MCP
+4. **USE CLAUDE CODE'S TASK TOOL** for spawning agents concurrently
 
-### ⚡ GOLDEN RULE: "1 MESSAGE = ALL RELATED OPERATIONS"
+### GOLDEN RULE: "1 MESSAGE = ALL RELATED OPERATIONS"
 
 **MANDATORY PATTERNS:**
 - **TodoWrite**: ALWAYS batch ALL todos in ONE call (5-10+ todos minimum)
@@ -191,11 +191,11 @@ YOU MUST follow this debugging framework for ANY technical issue:
 - **Bash commands**: ALWAYS batch ALL terminal operations in ONE message
 - **Memory operations**: ALWAYS batch ALL memory store/retrieve in ONE message
 
-### 🎯 CRITICAL: Claude Code Task Tool for Agent Execution
+### CRITICAL: Claude Code Task Tool for Agent Execution
 
 **Claude Code's Task tool is the PRIMARY way to spawn agents:**
 ```javascript
-// ✅ CORRECT: Use Claude Code's Task tool for parallel agent execution
+// CORRECT: Use Claude Code's Task tool for parallel agent execution
 [Single Message]:
   Task("Research agent", "Analyze requirements and patterns...", "researcher")
   Task("Coder agent", "Implement core features...", "coder")
@@ -204,12 +204,7 @@ YOU MUST follow this debugging framework for ANY technical issue:
   Task("Architect agent", "Design system architecture...", "system-architect")
 ```
 
-**MCP tools are ONLY for coordination setup:**
-- `mcp__claude-flow__swarm_init` - Initialize coordination topology
-- `mcp__claude-flow__agent_spawn` - Define agent types for coordination
-- `mcp__claude-flow__task_orchestrate` - Orchestrate high-level workflows
-
-### 📁 File Organization Rules
+### File Organization Rules
 
 **NEVER save to root folder. Use these directories:**
 - `/src` - Source code files
@@ -221,13 +216,13 @@ YOU MUST follow this debugging framework for ANY technical issue:
 - `/data` - CSV data files (raw/, processed/, results/)
 - `/reports` - Generated HTML reports
 
-### 📊 HTML Reporting Requirements
+### HTML Reporting Requirements
 
 **MANDATORY FOR ALL MODULES:**
 
 1. **Interactive Plots Only** - All visualizations MUST be interactive (Plotly, Bokeh, Altair, D3.js)
-   - ❌ NO static matplotlib PNG/SVG exports
-   - ✅ Interactive plots with hover, zoom, pan, export
+   - NO static matplotlib PNG/SVG exports
+   - Interactive plots with hover, zoom, pan, export
 
 2. **HTML Reports Required** - Every module MUST generate HTML reports
    - Analysis reports with visualizations
@@ -248,13 +243,13 @@ YOU MUST follow this debugging framework for ANY technical issue:
 
 **See full standards:** `docs/HTML_REPORTING_STANDARDS.md`
 
-## 🤖 AI Agent Orchestration System
+## AI Agent Orchestration System
 
 **IMPORTANT:** This repository uses an intelligent AI agent orchestration system that:
-- ✅ **Automatically selects the best AI agent** for each task type
-- ✅ **Runs gate-pass reviews** at critical SPARC checkpoints
-- ✅ **Updates agent capabilities daily** to stay current
-- ✅ **Integrates factory.ai, claude-flow, spec-kit, and agent-os**
+- **Automatically selects the best AI agent** for each task type
+- **Runs gate-pass reviews** at critical SPARC checkpoints
+- **Updates agent capabilities daily** to stay current
+- **Integrates factory.ai, spec-kit, and agent-os**
 
 ### Quick Start
 
@@ -275,19 +270,6 @@ YOU MUST follow this debugging framework for ANY technical issue:
 
 This project uses SPARC (Specification, Pseudocode, Architecture, Refinement, Completion) methodology with AI Agent Orchestration for systematic Test-Driven Development.
 
-## SPARC Commands
-
-### Core Commands
-- `npx claude-flow sparc modes` - List available modes
-- `npx claude-flow sparc run <mode> "<task>"` - Execute specific mode
-- `npx claude-flow sparc tdd "<feature>"` - Run complete TDD workflow
-- `npx claude-flow sparc info <mode>` - Get mode details
-
-### Batchtools Commands
-- `npx claude-flow sparc batch <modes> "<task>"` - Parallel execution
-- `npx claude-flow sparc pipeline "<task>"` - Full pipeline processing
-- `npx claude-flow sparc concurrent <mode> "<tasks-file>"` - Multi-task processing
-
 ### Build Commands
 - `npm run build` - Build project
 - `npm run test` - Run tests
@@ -296,11 +278,11 @@ This project uses SPARC (Specification, Pseudocode, Architecture, Refinement, Co
 
 ## SPARC Workflow Phases
 
-1. **Specification** - Requirements analysis (`sparc run spec-pseudocode`)
-2. **Pseudocode** - Algorithm design (`sparc run spec-pseudocode`)
-3. **Architecture** - System design (`sparc run architect`)
-4. **Refinement** - TDD implementation (`sparc tdd`)
-5. **Completion** - Integration (`sparc run integration`)
+1. **Specification** - Requirements analysis
+2. **Pseudocode** - Algorithm design
+3. **Architecture** - System design
+4. **Refinement** - TDD implementation
+5. **Completion** - Integration
 
 ## Code Style & Best Practices
 
@@ -310,7 +292,7 @@ This project uses SPARC (Specification, Pseudocode, Architecture, Refinement, Co
 - **Clean Architecture**: Separate concerns
 - **Documentation**: Keep updated
 
-## 🚀 Available Agents (54 Total)
+## Available Agents (54 Total)
 
 ### Core Development
 `coder`, `reviewer`, `tester`, `planner`, `researcher`
@@ -339,9 +321,7 @@ This project uses SPARC (Specification, Pseudocode, Architecture, Refinement, Co
 ### Migration & Planning
 `migration-planner`, `swarm-init`
 
-## 🎯 Claude Code vs MCP Tools
-
-### Claude Code Handles ALL EXECUTION:
+## Claude Code Handles ALL EXECUTION:
 - **Task tool**: Spawn and run agents concurrently for actual work
 - File operations (Read, Write, Edit, MultiEdit, Glob, Grep)
 - Code generation and programming
@@ -353,80 +333,24 @@ This project uses SPARC (Specification, Pseudocode, Architecture, Refinement, Co
 - Package management
 - Testing and debugging
 
-### MCP Tools ONLY COORDINATE:
-- Swarm initialization (topology setup)
-- Agent type definitions (coordination patterns)
-- Task orchestration (high-level planning)
-- Memory management
-- Neural features
-- Performance tracking
-- GitHub integration
-
-**KEY**: MCP coordinates the strategy, Claude Code's Task tool executes with real agents.
-
-## 🚀 Quick Setup
-
-```bash
-# Add MCP servers (Claude Flow required, others optional)
-claude mcp add claude-flow npx claude-flow@alpha mcp start
-claude mcp add ruv-swarm npx ruv-swarm mcp start  # Optional: Enhanced coordination
-claude mcp add flow-nexus npx flow-nexus@latest mcp start  # Optional: Cloud features
-```
-
-## MCP Tool Categories
-
-### Coordination
-`swarm_init`, `agent_spawn`, `task_orchestrate`
-
-### Monitoring
-`swarm_status`, `agent_list`, `agent_metrics`, `task_status`, `task_results`
-
-### Memory & Neural
-`memory_usage`, `neural_status`, `neural_train`, `neural_patterns`
-
-### GitHub Integration
-`github_swarm`, `repo_analyze`, `pr_enhance`, `issue_triage`, `code_review`
-
-### System
-`benchmark_run`, `features_detect`, `swarm_monitor`
-
-### Flow-Nexus MCP Tools (Optional Advanced Features)
-Flow-Nexus extends MCP capabilities with 70+ cloud-based orchestration tools:
-
-**Key MCP Tool Categories:**
-- **Swarm & Agents**: `swarm_init`, `swarm_scale`, `agent_spawn`, `task_orchestrate`
-- **Sandboxes**: `sandbox_create`, `sandbox_execute`, `sandbox_upload` (cloud execution)
-- **Templates**: `template_list`, `template_deploy` (pre-built project templates)
-- **Neural AI**: `neural_train`, `neural_patterns`, `seraphina_chat` (AI assistant)
-- **GitHub**: `github_repo_analyze`, `github_pr_manage` (repository management)
-- **Real-time**: `execution_stream_subscribe`, `realtime_subscribe` (live monitoring)
-- **Storage**: `storage_upload`, `storage_list` (cloud file management)
-
-**Authentication Required:**
-- Register: `mcp__flow-nexus__user_register` or `npx flow-nexus@latest register`
-- Login: `mcp__flow-nexus__user_login` or `npx flow-nexus@latest login`
-- Access 70+ specialized MCP tools for advanced orchestration
-
-## 🚀 Agent Execution Flow with Claude Code
+## Agent Execution Flow with Claude Code
 
 ### The Correct Pattern:
 
-1. **Optional**: Use MCP tools to set up coordination topology
-2. **REQUIRED**: Use Claude Code's Task tool to spawn agents that do actual work
-3. **REQUIRED**: Each agent runs hooks for coordination
-4. **REQUIRED**: Batch all operations in single messages
+1. **REQUIRED**: Use Claude Code's Task tool to spawn agents that do actual work
+2. **REQUIRED**: Batch all operations in single messages
 
 ### Example Full-Stack Development:
 
 ```javascript
 // Single message with all agent spawning via Claude Code's Task tool
 [Parallel Agent Execution]:
-  Task("Backend Developer", "Build REST API with Express. Use hooks for coordination.", "backend-dev")
-  Task("Frontend Developer", "Create React UI. Coordinate with backend via memory.", "coder")
-  Task("Database Architect", "Design PostgreSQL schema. Store schema in memory.", "code-analyzer")
-  Task("Test Engineer", "Write Jest tests. Check memory for API contracts.", "tester")
-  Task("DevOps Engineer", "Setup Docker and CI/CD. Document in memory.", "cicd-engineer")
-  Task("Security Auditor", "Review authentication. Report findings via hooks.", "reviewer")
+  Task("Backend Developer", "Build REST API with Express.", "backend-dev")
+  Task("Frontend Developer", "Create React UI.", "coder")
+  Task("Database Architect", "Design PostgreSQL schema.", "code-analyzer")
+  Task("Test Engineer", "Write Jest tests.", "tester")
+  Task("DevOps Engineer", "Setup Docker and CI/CD.", "cicd-engineer")
+  Task("Security Auditor", "Review authentication.", "reviewer")
 
   // All todos batched together
   TodoWrite { todos: [...8-10 todos...] }
@@ -437,48 +361,18 @@ Flow-Nexus extends MCP capabilities with 70+ cloud-based orchestration tools:
   Write "database/schema.sql"
 ```
 
-## 📋 Agent Coordination Protocol
+## Concurrent Execution Examples
 
-### Every Agent Spawned via Task Tool MUST:
-
-**1️⃣ BEFORE Work:**
-```bash
-npx claude-flow@alpha hooks pre-task --description "[task]"
-npx claude-flow@alpha hooks session-restore --session-id "swarm-[id]"
-```
-
-**2️⃣ DURING Work:**
-```bash
-npx claude-flow@alpha hooks post-edit --file "[file]" --memory-key "swarm/[agent]/[step]"
-npx claude-flow@alpha hooks notify --message "[what was done]"
-```
-
-**3️⃣ AFTER Work:**
-```bash
-npx claude-flow@alpha hooks post-task --task-id "[task]"
-npx claude-flow@alpha hooks session-end --export-metrics true
-```
-
-## 🎯 Concurrent Execution Examples
-
-### ✅ CORRECT WORKFLOW: MCP Coordinates, Claude Code Executes
+### CORRECT WORKFLOW:
 
 ```javascript
-// Step 1: MCP tools set up coordination (optional, for complex tasks)
-[Single Message - Coordination Setup]:
-  mcp__claude-flow__swarm_init { topology: "mesh", maxAgents: 6 }
-  mcp__claude-flow__agent_spawn { type: "researcher" }
-  mcp__claude-flow__agent_spawn { type: "coder" }
-  mcp__claude-flow__agent_spawn { type: "tester" }
-
-// Step 2: Claude Code Task tool spawns ACTUAL agents that do the work
 [Single Message - Parallel Agent Execution]:
   // Claude Code's Task tool spawns real agents concurrently
-  Task("Research agent", "Analyze API requirements and best practices. Check memory for prior decisions.", "researcher")
-  Task("Coder agent", "Implement REST endpoints with authentication. Coordinate via hooks.", "coder")
-  Task("Database agent", "Design and implement database schema. Store decisions in memory.", "code-analyzer")
+  Task("Research agent", "Analyze API requirements and best practices.", "researcher")
+  Task("Coder agent", "Implement REST endpoints with authentication.", "coder")
+  Task("Database agent", "Design and implement database schema.", "code-analyzer")
   Task("Tester agent", "Create comprehensive test suite with 90% coverage.", "tester")
-  Task("Reviewer agent", "Review code quality and security. Document findings.", "reviewer")
+  Task("Reviewer agent", "Review code quality and security.", "reviewer")
 
   // Batch ALL todos in ONE call
   TodoWrite { todos: [
@@ -500,12 +394,11 @@ npx claude-flow@alpha hooks session-end --export-metrics true
   Write "app/docs/API.md"
 ```
 
-### ❌ WRONG (Multiple Messages):
+### WRONG (Multiple Messages):
 ```javascript
-Message 1: mcp__claude-flow__swarm_init
-Message 2: Task("agent 1")
-Message 3: TodoWrite { todos: [single todo] }
-Message 4: Write "file.js"
+Message 1: Task("agent 1")
+Message 2: TodoWrite { todos: [single todo] }
+Message 3: Write "file.js"
 // This breaks parallel coordination!
 ```
 
@@ -516,55 +409,24 @@ Message 4: Write "file.js"
 - **2.8-4.4x speed improvement**
 - **27+ neural models**
 
-## Hooks Integration
-
-### Pre-Operation
-- Auto-assign agents by file type
-- Validate commands for safety
-- Prepare resources automatically
-- Optimize topology by complexity
-- Cache searches
-
-### Post-Operation
-- Auto-format code
-- Train neural patterns
-- Update memory
-- Analyze performance
-- Track token usage
-
-### Session Management
-- Generate summaries
-- Persist state
-- Track metrics
-- Restore context
-- Export workflows
-
 ## Advanced Features (v2.0.0)
 
-- 🚀 Automatic Topology Selection
-- ⚡ Parallel Execution (2.8-4.4x speed)
-- 🧠 Neural Training
-- 📊 Bottleneck Analysis
-- 🤖 Smart Auto-Spawning
-- 🛡️ Self-Healing Workflows
-- 💾 Cross-Session Memory
-- 🔗 GitHub Integration
+- Automatic Topology Selection
+- Parallel Execution (2.8-4.4x speed)
+- Neural Training
+- Bottleneck Analysis
+- Smart Auto-Spawning
+- Self-Healing Workflows
+- Cross-Session Memory
+- GitHub Integration
 
 ## Integration Tips
 
-1. Start with basic swarm init
-2. Scale agents gradually
-3. Use memory for context
-4. Monitor progress regularly
-5. Train patterns from success
-6. Enable hooks automation
-7. Use GitHub tools first
-
-## Support
-
-- Documentation: https://github.com/ruvnet/claude-flow
-- Issues: https://github.com/ruvnet/claude-flow/issues
-- Flow-Nexus Platform: https://flow-nexus.ruv.io (registration required for cloud features)
+1. Scale agents gradually
+2. Use memory for context
+3. Monitor progress regularly
+4. Train patterns from success
+5. Use GitHub tools first
 
 ---
 
@@ -637,7 +499,6 @@ When rules overlap:
 
 ## Remember
 
-- **Claude Flow coordinates, Claude Code creates!**
 - **TDD is non-negotiable** - write failing tests first, always
 - **YAGNI** - simple solutions over complex ones
 - **Batch all operations** - parallel execution is mandatory

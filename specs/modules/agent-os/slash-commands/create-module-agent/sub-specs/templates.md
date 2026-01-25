@@ -116,8 +116,7 @@ capabilities:
 
 context_sources:
   repositories:
-    - aceengineercode: "Engineering patterns and utilities"
-    - digitalmodel: "Digital modeling frameworks"
+    - digitalmodel: "Engineering patterns and digital modeling frameworks"
     - pyproject-starter: "Project templates"
   external:
     - "https://engineering.best-practices.com": "Engineering standards"

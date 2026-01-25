@@ -95,7 +95,7 @@ agents/
 
 ### Repository Sub-Agents
 The command will integrate with the 17 defined repository-specific sub-agents:
-- aceengineer-website, aceengineercode, digitalmodel
+- aceengineer-website, digitalmodel
 - energy, rock-oil-field, saipem
 - acma-projects, client_projects, investments
 - teamresumes, assethold, assetutilities

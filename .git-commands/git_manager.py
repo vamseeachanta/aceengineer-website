@@ -31,7 +31,7 @@ class GitManager:
         """Get list of all repository directories"""
         repos = [
             "doris", "aceengineer-admin", "aceengineer-website", 
-            "aceengineercode", "achantas-data", "achantas-media",
+            "achantas-data", "achantas-media",
             "acma-projects", "ai-native-traditional-eng", "assethold",
             "assetutilities", "client_projects", "digitalmodel",
             "energy", "frontierdeepwater", "hobbies", "investments",

@@ -20,11 +20,7 @@
 
     <title>Engineering Automation Services - A&CE</title>
 
-    <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/marketing.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <include src="partials/head-common.html"></include>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -70,52 +66,10 @@
         }
     }
     </script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li class="active"><a href="engineering.html">Engineering</a></li>
-                    <li><a href="energy.html">Energy</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="blog/">Blog</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="contact.html" class="btn-nav-cta">Get Started</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <include src="partials/nav.html"></include>
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -532,43 +486,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>A&CE</h4>
-                    <p>Engineering automation for offshore, subsea, and energy infrastructure.
-                       Transform weeks of manual analysis into hours.</p>
-                </div>
-                <div class="col-md-4">
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="engineering.html#offshore">Offshore Engineering</a></li>
-                        <li><a href="engineering.html#wind">Offshore Wind</a></li>
-                        <li><a href="engineering.html#epc">EPC Contractors</a></li>
-                        <li><a href="case-studies/">Case Studies</a></li>
-                        <li><a href="calculators/">Calculators</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h4>Contact</h4>
-                    <ul class="footer-links">
-                        <li><a href="contact.html">Get Started</a></li>
-                        <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
-                        <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
-                        <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
-                    </ul>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p style="opacity: 0.7;">© 2025 Analytical & Computational Engineering. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <include src="partials/footer.html"></include>
 
 </body>
 </html>

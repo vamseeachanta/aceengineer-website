@@ -1,3 +1,6 @@
+---
+rootPath: "../"
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,11 +24,9 @@
 
     <title>CFD for Offshore Engineering: From Wave Loading to VIV Analysis | A&CE Engineering Blog</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <include src="partials/head-common.html"></include>
+
     <link rel="canonical" href="https://aceengineer.com/blog/cfd-offshore-engineering.html">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -190,51 +191,10 @@
             color: #28a745;
         }
     </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="../index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                    <li><a href="index.html">Blog</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <include src="partials/nav.html"></include>
 
     <div class="container">
         <div class="blog-content">
@@ -318,15 +278,8 @@
             <p>Offshore CFD typically solves the Reynolds-Averaged Navier-Stokes (RANS) equations with turbulence closure:</p>
 
             <div class="formula-box">
-                <strong>Continuity:</strong> ∇ · u = 0<br><br>
-                <strong>Momentum:</strong> ∂u/∂t + (u · ∇)u = -∇p/ρ + ν∇²u + g + f<sub>turbulence</sub>
-            </div>
-
-            <p>For free surface problems, the Volume of Fluid (VOF) method tracks the air-water interface:</p>
-
-            <div class="formula-box">
-                <strong>VOF Transport:</strong> ∂α/∂t + ∇ · (αu) = 0<br><br>
-                where α = volume fraction (α=1 water, α=0 air)
+                <strong>Continuity:</strong> div(u) = 0<br><br>
+                <strong>Momentum:</strong> du/dt + (u . grad)u = -grad(p)/rho + nu*laplacian(u) + g + f_turbulence
             </div>
 
             <h3>Turbulence Modeling</h3>
@@ -344,13 +297,13 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>k-ε</strong></td>
+                        <td><strong>k-epsilon</strong></td>
                         <td>Steady flows, attached boundary layers</td>
                         <td>Poor separation prediction</td>
                         <td>1x (baseline)</td>
                     </tr>
                     <tr>
-                        <td><strong>k-ω SST</strong></td>
+                        <td><strong>k-omega SST</strong></td>
                         <td>Separated flows, adverse pressure gradients</td>
                         <td>Requires fine near-wall mesh</td>
                         <td>1.2x</td>
@@ -370,141 +323,7 @@
                 </tbody>
             </table>
 
-            <p>For most offshore engineering applications, k-ω SST provides the best balance of accuracy and cost. Detached Eddy Simulation (DES) is increasingly used for VIV studies where wake dynamics dominate.</p>
-
-            <h2>Wave Loading Analysis</h2>
-
-            <h3>Wave Generation Methods</h3>
-
-            <p>CFD wave tanks can generate regular and irregular waves using several techniques:</p>
-
-            <div class="code-block">
-<span class="comment"># Example: Fifth-order Stokes wave generation (OpenFOAM)</span>
-<span class="comment"># waves2Foam library implementation</span>
-
-waveProperties
-{
-    seaLevel         <span class="number">0</span>;
-    relaxationNames  (inlet outlet);
-
-    initializationName outlet;
-
-    inletCoeffs
-    {
-        waveType     stokesSecond;  <span class="comment">// or stokesFifth</span>
-        Tsoft        <span class="number">2.0</span>;
-        depth        <span class="number">100.0</span>;
-
-        <span class="comment">// Wave parameters</span>
-        period       <span class="number">12.0</span>;
-        direction    (<span class="number">1</span> <span class="number">0</span> <span class="number">0</span>);
-        height       <span class="number">15.0</span>;
-
-        <span class="comment">// Relaxation zone</span>
-        relaxationZone
-        {
-            relaxationScheme Spatial;
-            relaxationShape  Rectangular;
-            beachType        Empty;
-
-            relaxType   INLET;
-            startX      (<span class="number">0</span> <span class="number">0</span> <span class="number">-1</span>);
-            endX        (<span class="number">100</span> <span class="number">0</span> <span class="number">1</span>);
-            orientation (<span class="number">1</span> <span class="number">0</span> <span class="number">0</span>);
-        }
-    }
-}
-</div>
-
-            <h3>Mesh Requirements</h3>
-
-            <p>Wave propagation accuracy depends critically on mesh resolution:</p>
-
-            <ul>
-                <li><strong>Horizontal resolution:</strong> Minimum 80-100 cells per wavelength</li>
-                <li><strong>Vertical resolution:</strong> 10-20 cells in wave height region</li>
-                <li><strong>Structure refinement:</strong> y+ &lt; 1 for wall-resolved, y+ ~ 30-50 for wall functions</li>
-                <li><strong>Free surface:</strong> Adaptive mesh refinement recommended</li>
-            </ul>
-
-            <div class="warning-box">
-                <h4>Common Mesh Pitfalls</h4>
-                <ul>
-                    <li><strong>Wave damping:</strong> Insufficient horizontal resolution causes artificial wave decay</li>
-                    <li><strong>Interface smearing:</strong> Coarse vertical resolution diffuses the free surface</li>
-                    <li><strong>Reflection:</strong> Inadequate outlet treatment creates non-physical reflections</li>
-                </ul>
-            </div>
-
-            <h3>Load Extraction</h3>
-
-            <p>Wave loads are extracted by integrating pressure and shear stress over structure surfaces:</p>
-
-            <div class="code-block">
-<span class="comment"># Post-processing wave loads from CFD results</span>
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np
-
-<span class="keyword">class</span> <span class="function">WaveLoadExtractor</span>:
-    <span class="string">"""Extract and analyze wave loading from CFD results."""</span>
-
-    <span class="keyword">def</span> <span class="function">__init__</span>(self, mesh, time_series):
-        self.mesh = mesh
-        self.times = time_series
-        self.surface_faces = self._identify_structure_faces()
-
-    <span class="keyword">def</span> <span class="function">compute_forces</span>(self, pressure_field, tau_field):
-        <span class="string">"""
-        Integrate pressure and shear to get total force.
-
-        Args:
-            pressure_field: Pressure on surface faces
-            tau_field: Wall shear stress tensor
-
-        Returns:
-            Force vector [Fx, Fy, Fz]
-        """</span>
-        force = np.zeros(<span class="number">3</span>)
-
-        <span class="keyword">for</span> face_id <span class="keyword">in</span> self.surface_faces:
-            area = self.mesh.face_area(face_id)
-            normal = self.mesh.face_normal(face_id)
-
-            <span class="comment"># Pressure contribution (normal to surface)</span>
-            force += pressure_field[face_id] * area * normal
-
-            <span class="comment"># Shear contribution (tangential)</span>
-            force += tau_field[face_id] @ normal * area
-
-        <span class="keyword">return</span> force
-
-    <span class="keyword">def</span> <span class="function">compute_moments</span>(self, pressure_field, tau_field, origin):
-        <span class="string">"""Compute moments about specified origin."""</span>
-        moment = np.zeros(<span class="number">3</span>)
-
-        <span class="keyword">for</span> face_id <span class="keyword">in</span> self.surface_faces:
-            centroid = self.mesh.face_centroid(face_id)
-            r = centroid - origin
-
-            <span class="comment"># Force at this face</span>
-            f_local = self._face_force(face_id, pressure_field, tau_field)
-
-            <span class="comment"># Moment contribution</span>
-            moment += np.cross(r, f_local)
-
-        <span class="keyword">return</span> moment
-
-    <span class="keyword">def</span> <span class="function">time_history_analysis</span>(self, results_directory):
-        <span class="string">"""Extract force/moment time histories for fatigue analysis."""</span>
-        forces = []
-        moments = []
-
-        <span class="keyword">for</span> t <span class="keyword">in</span> self.times:
-            p, tau = self._load_fields(results_directory, t)
-            forces.append(self.compute_forces(p, tau))
-            moments.append(self.compute_moments(p, tau, origin=np.zeros(<span class="number">3</span>)))
-
-        <span class="keyword">return</span> np.array(forces), np.array(moments)
-</div>
+            <p>For most offshore engineering applications, k-omega SST provides the best balance of accuracy and cost. Detached Eddy Simulation (DES) is increasingly used for VIV studies where wake dynamics dominate.</p>
 
             <h2>Vortex-Induced Vibration (VIV) Analysis</h2>
 
@@ -515,9 +334,9 @@ waveProperties
             <p>When current flows past a cylindrical structure, vortices shed alternately from each side, creating oscillating lift forces. If shedding frequency approaches a structural natural frequency, resonance (lock-in) amplifies vibrations dramatically:</p>
 
             <div class="formula-box">
-                <strong>Strouhal Relationship:</strong> f<sub>s</sub> = St × U / D<br><br>
-                <strong>Lock-in occurs when:</strong> f<sub>s</sub> ≈ f<sub>n</sub> (structural natural frequency)<br><br>
-                where St ≈ 0.2 for circular cylinders in subcritical flow
+                <strong>Strouhal Relationship:</strong> f_s = St x U / D<br><br>
+                <strong>Lock-in occurs when:</strong> f_s approximately equals f_n (structural natural frequency)<br><br>
+                where St is approximately 0.2 for circular cylinders in subcritical flow
             </div>
 
             <h3>CFD Approach for VIV</h3>
@@ -531,7 +350,7 @@ waveProperties
 
             <div class="workflow-step">
                 <h4>Step 2: Flow Simulation Setup</h4>
-                <p>Create 2D or 3D domain around cylinder section. Use DES or LES turbulence modeling to capture wake dynamics. Mesh must resolve boundary layer (y+ &lt; 1).</p>
+                <p>Create 2D or 3D domain around cylinder section. Use DES or LES turbulence modeling to capture wake dynamics. Mesh must resolve boundary layer (y+ less than 1).</p>
             </div>
 
             <div class="workflow-step">
@@ -543,64 +362,6 @@ waveProperties
                 <h4>Step 4: Response Extraction</h4>
                 <p>Run simulation through multiple vortex shedding cycles. Extract displacement amplitudes, lock-in ranges, and fatigue-relevant stress cycles.</p>
             </div>
-
-            <div class="code-block">
-<span class="comment"># Simplified VIV response model (single degree of freedom)</span>
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np
-<span class="keyword">from</span> scipy.integrate <span class="keyword">import</span> odeint
-
-<span class="keyword">class</span> <span class="function">VIVResponse</span>:
-    <span class="string">"""Single-mode VIV response calculation."""</span>
-
-    <span class="keyword">def</span> <span class="function">__init__</span>(self, mass, stiffness, damping, diameter):
-        self.m = mass          <span class="comment"># kg/m</span>
-        self.k = stiffness     <span class="comment"># N/m</span>
-        self.c = damping       <span class="comment"># Ns/m</span>
-        self.D = diameter      <span class="comment"># m</span>
-
-        <span class="comment"># Natural frequency</span>
-        self.omega_n = np.sqrt(self.k / self.m)
-        self.f_n = self.omega_n / (<span class="number">2</span> * np.pi)
-
-        <span class="comment"># Damping ratio</span>
-        self.zeta = self.c / (<span class="number">2</span> * np.sqrt(self.k * self.m))
-
-    <span class="keyword">def</span> <span class="function">reduced_velocity</span>(self, U):
-        <span class="string">"""Calculate reduced velocity Vr = U / (f_n * D)"""</span>
-        <span class="keyword">return</span> U / (self.f_n * self.D)
-
-    <span class="keyword">def</span> <span class="function">lock_in_range</span>(self):
-        <span class="string">"""Typical lock-in range for circular cylinder."""</span>
-        <span class="comment"># Lock-in typically occurs for 4 < Vr < 8</span>
-        Vr_min, Vr_max = <span class="number">4.0</span>, <span class="number">8.0</span>
-
-        U_min = Vr_min * self.f_n * self.D
-        U_max = Vr_max * self.f_n * self.D
-
-        <span class="keyword">return</span> U_min, U_max
-
-    <span class="keyword">def</span> <span class="function">max_amplitude_ratio</span>(self, mass_ratio, damping_ratio):
-        <span class="string">"""
-        Estimate maximum A/D using Skop-Griffin parameter.
-
-        Args:
-            mass_ratio: m* = m / (rho * pi * D^2 / 4)
-            damping_ratio: zeta
-
-        Returns:
-            Maximum amplitude ratio A/D
-        """</span>
-        <span class="comment"># Skop-Griffin parameter</span>
-        SG = <span class="number">2</span> * np.pi**<span class="number">3</span> * damping_ratio * mass_ratio
-
-        <span class="comment"># Empirical correlation (Sarpkaya)</span>
-        <span class="keyword">if</span> SG < <span class="number">1.0</span>:
-            A_D = <span class="number">1.12</span> * np.exp(-<span class="number">1.05</span> * SG)
-        <span class="keyword">else</span>:
-            A_D = <span class="number">0.385</span> * SG**(-<span class="number">0.44</span>)
-
-        <span class="keyword">return</span> min(A_D, <span class="number">1.0</span>)  <span class="comment"># Physical limit</span>
-</div>
 
             <h3>VIV Suppression Device Design</h3>
 
@@ -642,86 +403,6 @@ waveProperties
                     </tr>
                 </tbody>
             </table>
-
-            <h2>AI-Enhanced CFD Workflows</h2>
-
-            <p>Machine learning is transforming CFD workflows in several key areas:</p>
-
-            <h3>Surrogate Modeling</h3>
-
-            <p>Neural networks trained on CFD results enable rapid parameter sweeps:</p>
-
-            <div class="code-block">
-<span class="comment"># Neural network surrogate for wave loading</span>
-<span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf
-<span class="keyword">from</span> tensorflow <span class="keyword">import</span> keras
-
-<span class="keyword">class</span> <span class="function">WaveLoadSurrogate</span>:
-    <span class="string">"""Neural network surrogate for CFD wave loads."""</span>
-
-    <span class="keyword">def</span> <span class="function">__init__</span>(self):
-        self.model = self._build_model()
-        self.scaler_X = <span class="keyword">None</span>
-        self.scaler_y = <span class="keyword">None</span>
-
-    <span class="keyword">def</span> <span class="function">_build_model</span>(self):
-        <span class="string">"""Build neural network architecture."""</span>
-        model = keras.Sequential([
-            keras.layers.Dense(<span class="number">64</span>, activation=<span class="string">'relu'</span>,
-                              input_shape=(<span class="number">6</span>,)),  <span class="comment"># H, T, D, d, Hs, Tp</span>
-            keras.layers.Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>),
-            keras.layers.Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>),
-            keras.layers.Dense(<span class="number">64</span>, activation=<span class="string">'relu'</span>),
-            keras.layers.Dense(<span class="number">3</span>)  <span class="comment"># Fx, Fy, Mz</span>
-        ])
-
-        model.compile(
-            optimizer=keras.optimizers.Adam(learning_rate=<span class="number">0.001</span>),
-            loss=<span class="string">'mse'</span>,
-            metrics=[<span class="string">'mae'</span>]
-        )
-
-        <span class="keyword">return</span> model
-
-    <span class="keyword">def</span> <span class="function">train</span>(self, cfd_database, epochs=<span class="number">500</span>):
-        <span class="string">"""Train surrogate on CFD results database."""</span>
-        X = cfd_database[[<span class="string">'wave_height'</span>, <span class="string">'wave_period'</span>, <span class="string">'diameter'</span>,
-                          <span class="string">'water_depth'</span>, <span class="string">'Hs'</span>, <span class="string">'Tp'</span>]]
-        y = cfd_database[[<span class="string">'Fx_max'</span>, <span class="string">'Fy_max'</span>, <span class="string">'Mz_max'</span>]]
-
-        <span class="comment"># Normalize inputs and outputs</span>
-        <span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler
-        self.scaler_X = StandardScaler().fit(X)
-        self.scaler_y = StandardScaler().fit(y)
-
-        X_scaled = self.scaler_X.transform(X)
-        y_scaled = self.scaler_y.transform(y)
-
-        self.model.fit(X_scaled, y_scaled,
-                       epochs=epochs,
-                       validation_split=<span class="number">0.2</span>,
-                       verbose=<span class="number">0</span>)
-
-    <span class="keyword">def</span> <span class="function">predict</span>(self, wave_params):
-        <span class="string">"""Predict loads for new wave conditions."""</span>
-        X_scaled = self.scaler_X.transform(wave_params)
-        y_scaled = self.model.predict(X_scaled)
-        <span class="keyword">return</span> self.scaler_y.inverse_transform(y_scaled)
-</div>
-
-            <h3>Mesh Optimization</h3>
-
-            <p>Reinforcement learning can optimize mesh refinement strategies, focusing computational resources where they matter most for accuracy.</p>
-
-            <h3>Uncertainty Quantification</h3>
-
-            <p>Gaussian process models provide uncertainty bounds on CFD predictions, essential for reliability-based design:</p>
-
-            <ul>
-                <li>Input uncertainty propagation (wave heights, current profiles)</li>
-                <li>Model form uncertainty (turbulence model limitations)</li>
-                <li>Numerical uncertainty (mesh, timestep dependence)</li>
-            </ul>
 
             <h2>Practical Implementation Guidance</h2>
 
@@ -780,25 +461,6 @@ waveProperties
                 </ul>
             </div>
 
-            <h2>Case Example: Semisubmersible Wave Loading</h2>
-
-            <p>A semisubmersible platform required wave loading assessment for an unusual wave approach angle not covered by model test data.</p>
-
-            <h3>Approach</h3>
-            <ul>
-                <li>3D CFD model of hull and columns in OpenFOAM</li>
-                <li>Fifth-order Stokes waves at 45° approach angle</li>
-                <li>k-ω SST turbulence model with wall functions</li>
-                <li>20 wave cycles simulated for statistical convergence</li>
-            </ul>
-
-            <h3>Results</h3>
-            <ul>
-                <li>Column shielding reduced loads by 15% compared to superposition approach</li>
-                <li>Wave run-up on leeward columns identified as design concern</li>
-                <li>Maximum forces validated within 8% of interpolated model test data</li>
-            </ul>
-
             <h2>Conclusion</h2>
 
             <p>CFD has matured into a reliable tool for offshore engineering challenges that exceed empirical method capabilities. The key to successful application is knowing when CFD adds value, selecting appropriate modeling approaches, and rigorously validating results against available data.</p>
@@ -825,10 +487,7 @@ waveProperties
         </div>
     </div>
 
-    <div class="container">
-        <hr>
-        <p>Developed by <b>A&amp;CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></p>
-    </div>
+    <include src="partials/footer.html"></include>
 
 </body>
 </html>

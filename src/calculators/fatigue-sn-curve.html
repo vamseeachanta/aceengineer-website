@@ -1,3 +1,6 @@
+---
+rootPath: "../"
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,11 +18,7 @@
 
     <title>S-N Curve Fatigue Calculator - A&CE</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="stylesheet" href="../assets/css/marketing.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <include src="partials/head-common.html"></include>
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 
     <!-- JSON-LD Structured Data -->
@@ -43,15 +42,6 @@
             "url": "https://aceengineer.com"
         }
     }
-    </script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-K31E51DQ47');
     </script>
 
     <style>
@@ -194,41 +184,7 @@
 </head>
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="../index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li><a href="../blog/">Blog</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../contact.html" class="btn-nav-cta">Get Started</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <include src="partials/nav.html"></include>
 
     <!-- Hero Section -->
     <section class="hero-section" style="padding: 50px 0;">
@@ -365,7 +321,7 @@
                                     D = Cumulative fatigue damage<br>
                                     n = Applied number of cycles<br>
                                     N = Allowable cycles from S-N curve<br>
-                                    Failure when D ≥ 1.0
+                                    Failure when D >= 1.0
                                 </p>
                             </div>
                         </div>
@@ -399,36 +355,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>A&CE</h4>
-                    <p>AI-native engineering automation for offshore, wind, and energy infrastructure. We turn manual iteration into automated infrastructure.</p>
-                </div>
-                <div class="col-md-4">
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="../engineering.html#offshore">Offshore Engineering</a></li>
-                        <li><a href="../engineering.html#wind">Wind Energy</a></li>
-                        <li><a href="../case-studies/">Case Studies</a></li>
-                        <li><a href="../blog/">Technical Blog</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h4>Connect</h4>
-                    <ul class="footer-links">
-                        <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
-                        <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
-                        <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
-                    </ul>
-                </div>
-            </div>
-            <hr>
-            <p class="text-center" style="color: rgba(255,255,255,0.6);">&copy; 2025 Analytical & Computational Engineering. All rights reserved.</p>
-        </div>
-    </footer>
+    <include src="partials/footer.html"></include>
 
     <!-- Calculator Logic -->
     <script>
@@ -697,9 +624,9 @@
 
         // Helper functions
         function formatNumber(num) {
-            if (num >= 1e9) return (num / 1e9).toFixed(2) + ' × 10⁹';
-            if (num >= 1e6) return (num / 1e6).toFixed(2) + ' × 10⁶';
-            if (num >= 1e3) return (num / 1e3).toFixed(2) + ' × 10³';
+            if (num >= 1e9) return (num / 1e9).toFixed(2) + ' x 10^9';
+            if (num >= 1e6) return (num / 1e6).toFixed(2) + ' x 10^6';
+            if (num >= 1e3) return (num / 1e3).toFixed(2) + ' x 10^3';
             return num.toFixed(0);
         }
 

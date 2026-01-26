@@ -1,3 +1,6 @@
+---
+rootPath: "../"
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,11 +17,7 @@
 
     <title>OrcaFlex Riser Sensitivity Automation - A&CE Case Study</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="stylesheet" href="../assets/css/marketing.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <include src="partials/head-common.html"></include>
 
     <style>
         .case-study-hero {
@@ -122,52 +121,10 @@
         "datePublished": "2025-01-14"
     }
     </script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="../index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li><a href="../blog/">Blog</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../contact.html" class="btn-nav-cta">Get Started</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <include src="partials/nav.html"></include>
 
     <!-- Hero Section -->
     <section class="case-study-hero">
@@ -268,9 +225,9 @@
                     <div class="section-box" style="margin-top: 30px;">
                         <h4>Traditional Cost Estimate</h4>
                         <table class="table">
-                            <tr><td>Model Setup (50 configs × 30 min)</td><td style="text-align: right;">25 hours</td></tr>
+                            <tr><td>Model Setup (50 configs x 30 min)</td><td style="text-align: right;">25 hours</td></tr>
                             <tr><td>Simulation Runtime</td><td style="text-align: right;">40 hours</td></tr>
-                            <tr><td>Results Extraction (50 configs × 30 min)</td><td style="text-align: right;">25 hours</td></tr>
+                            <tr><td>Results Extraction (50 configs x 30 min)</td><td style="text-align: right;">25 hours</td></tr>
                             <tr><td>Report Compilation</td><td style="text-align: right;">10 hours</td></tr>
                             <tr style="font-weight: bold; border-top: 2px solid #333;">
                                 <td>Total Engineer Hours</td><td style="text-align: right;">100 hours</td>
@@ -408,7 +365,7 @@ ofx.generate_sensitivity_report(results)</pre>
                         <h4>Additional Benefits</h4>
                         <ul>
                             <li><strong>Repeatability:</strong> Automation scripts now available for future projects with minimal modification</li>
-                            <li><strong>Consistency:</strong> All 50 configurations analyzed with identical methodology—no human variation</li>
+                            <li><strong>Consistency:</strong> All 50 configurations analyzed with identical methodology--no human variation</li>
                             <li><strong>Auditability:</strong> Complete traceability from input parameters to final results</li>
                             <li><strong>Scalability:</strong> Client later requested 30 additional configurations at marginal cost ($3K vs $30K traditional)</li>
                         </ul>
@@ -443,7 +400,7 @@ ofx.generate_sensitivity_report(results)</pre>
                         <span class="timeline-week">Day 3</span>
                         <h4>Results & Delivery</h4>
                         <p>Automated post-processing extracted all results. Generated sensitivity plots and comparison tables.
-                        Delivered final report by 2 PM—10 days ahead of traditional schedule.</p>
+                        Delivered final report by 2 PM--10 days ahead of traditional schedule.</p>
                     </div>
                 </div>
             </div>
@@ -461,7 +418,7 @@ ofx.generate_sensitivity_report(results)</pre>
                         "We submitted the design matrix Friday afternoon and had validated results Monday morning.
                         This would have taken our team 2-3 weeks. The cost savings let us include additional load
                         cases the operator originally cut from scope."
-                        <footer style="margin-top: 10px; font-style: normal;">— Principal Engineer, Houston Engineering Firm</footer>
+                        <footer style="margin-top: 10px; font-style: normal;">-- Principal Engineer, Houston Engineering Firm</footer>
                     </blockquote>
 
                     <div class="section-box">
@@ -491,7 +448,7 @@ ofx.generate_sensitivity_report(results)</pre>
                     <table class="table">
                         <tr><td><strong>Riser Type:</strong></td><td>Steel Catenary Riser (SCR)</td></tr>
                         <tr><td><strong>Water Depth:</strong></td><td>5,500 ft (1,680 m)</td></tr>
-                        <tr><td><strong>Sensitivity Parameters:</strong></td><td>TDP offset (±500 ft), hang-off angle (±3°), buoyancy length (±200 ft)</td></tr>
+                        <tr><td><strong>Sensitivity Parameters:</strong></td><td>TDP offset (+/-500 ft), hang-off angle (+/-3 deg), buoyancy length (+/-200 ft)</td></tr>
                         <tr><td><strong>Environmental Cases:</strong></td><td>10-year, 100-year hurricane, loop current</td></tr>
                         <tr><td><strong>Load Combinations:</strong></td><td>Operating, extreme, survival</td></tr>
                     </table>
@@ -527,7 +484,7 @@ ofx.generate_sensitivity_report(results)</pre>
                     <h2>Ready to Automate Your OrcaFlex Workflow?</h2>
                     <p>See how batch processing can deliver 60-80% cost savings for your next sensitivity study.</p>
                     <a href="../contact.html" class="btn btn-primary btn-lg">Schedule a Demo</a>
-                    <p class="cta-note">Free consultation • No commitment required • Response within 24 hours</p>
+                    <p class="cta-note">Free consultation - No commitment required - Response within 24 hours</p>
                 </div>
             </div>
         </div>
@@ -544,21 +501,21 @@ ofx.generate_sensitivity_report(results)</pre>
                             <div class="case-highlight-card">
                                 <h4>ML-Enhanced Fatigue Assessment</h4>
                                 <p>85% time reduction for offshore platform life extension</p>
-                                <a href="offshore-platform-fatigue-optimization.html">Read More →</a>
+                                <a href="offshore-platform-fatigue-optimization.html">Read More</a>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="case-highlight-card">
                                 <h4>Automated FEA Post-Processing</h4>
                                 <p>90% time reduction, 50+ reports/week capability</p>
-                                <a href="subsea-fea-automation.html">Read More →</a>
+                                <a href="subsea-fea-automation.html">Read More</a>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="case-highlight-card">
                                 <h4>Wind Turbine Foundation Analysis</h4>
                                 <p>70% time reduction, 25% weight optimization</p>
-                                <a href="wind-turbine-foundation-analysis.html">Read More →</a>
+                                <a href="wind-turbine-foundation-analysis.html">Read More</a>
                             </div>
                         </div>
                     </div>
@@ -567,41 +524,7 @@ ofx.generate_sensitivity_report(results)</pre>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>A&CE</h4>
-                    <p>Engineering automation for offshore, subsea, and energy infrastructure.
-                       Transform weeks of manual analysis into hours.</p>
-                </div>
-                <div class="col-md-4">
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="../engineering.html#offshore">Offshore Engineering</a></li>
-                        <li><a href="../engineering.html#wind">Offshore Wind</a></li>
-                        <li><a href="../engineering.html#epc">EPC Contractors</a></li>
-                        <li><a href="./">All Case Studies</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h4>Contact</h4>
-                    <ul class="footer-links">
-                        <li><a href="../contact.html">Get Started</a></li>
-                        <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
-                        <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
-                    </ul>
-                </div>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p style="opacity: 0.7;">© 2025 Analytical & Computational Engineering. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <include src="partials/footer.html"></include>
 
 </body>
 </html>

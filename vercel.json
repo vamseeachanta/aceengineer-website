@@ -2,6 +2,8 @@
   "version": 2,
   "public": true,
   "name": "aceengineer-website",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "headers": [
     {
       "source": "/(.*)",

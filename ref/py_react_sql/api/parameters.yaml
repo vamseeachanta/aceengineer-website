@@ -1,9 +1,0 @@
-Logging:
-  Console:
-    Enabled: true
-    Level: debug
-  File:
-    Enabled: true
-    Level: info
-    Path: .\Logs
-

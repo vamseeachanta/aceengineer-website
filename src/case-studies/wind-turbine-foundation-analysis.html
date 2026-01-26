@@ -1,3 +1,6 @@
+---
+rootPath: "../"
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,10 +23,7 @@
 
     <title>Case Study: AI-Enhanced Wind Turbine Foundation Analysis - A&CE</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <include src="partials/head-common.html"></include>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -194,51 +194,10 @@
             font-size: 0.9em;
         }
     </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="../index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li><a href="../blog/">Blog</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <include src="partials/nav.html"></include>
 
     <!-- Case Study Header -->
     <div class="case-study-header">
@@ -436,7 +395,7 @@
         <ul>
             <li><strong>Input Features (14):</strong> Wind speed, turbulence intensity, wind direction sector, H<sub>s</sub>, T<sub>p</sub>, wave direction, wind-wave misalignment, current velocity, water depth, soil stiffness parameters, foundation geometry ratios</li>
             <li><strong>Output Targets (7):</strong> DEL at mudline (M<sub>x</sub>, M<sub>y</sub>, F<sub>z</sub>), DEL at maximum stress concentration, peak loads for ULS verification</li>
-            <li><strong>Training Data:</strong> 2,400 DLC simulations × 92 site configurations = 220,800 training samples</li>
+            <li><strong>Training Data:</strong> 2,400 DLC simulations x 92 site configurations = 220,800 training samples</li>
             <li><strong>Validation:</strong> 5-fold cross-validation with site-stratified sampling</li>
             <li><strong>Performance:</strong> R<sup>2</sup> = 0.962, MAPE = 4.2%, maximum error < 12% (conservative)</li>
         </ul>
@@ -503,7 +462,7 @@
         <div class="result-box">
             <h4>Foundation Weight Optimization</h4>
             <p>
-                The AI-native approach achieved average steel weight reduction of 25% compared to initial designs using conventional safety factors. For a typical 10-meter diameter monopile with 40-meter embedment, optimized weight was 1,420 tonnes versus 1,890 tonnes for the conservative baseline—representing 470 tonnes of steel savings per foundation.
+                The AI-native approach achieved average steel weight reduction of 25% compared to initial designs using conventional safety factors. For a typical 10-meter diameter monopile with 40-meter embedment, optimized weight was 1,420 tonnes versus 1,890 tonnes for the conservative baseline--representing 470 tonnes of steel savings per foundation.
             </p>
         </div>
 
@@ -681,16 +640,13 @@
         <hr style="margin-top: 50px;">
 
         <p>
-            <a href="./">← View All Case Studies</a> |
+            <a href="./">View All Case Studies</a> |
             <a href="../blog/">Read Our Technical Blog</a>
         </p>
 
     </div>
 
-    <div class="container">
-        <hr>
-        <p>Developed by <b>A&CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></p>
-    </div>
+    <include src="partials/footer.html"></include>
 
 </body>
 </html>

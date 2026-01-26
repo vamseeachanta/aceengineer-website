@@ -1,0 +1,57 @@
+# Content synchronization configuration
+# Defines what to sync from source repositories
+
+sources:
+  digitalmodel:
+    description: "Digital Model Engineering Library"
+    base_path: "../digitalmodel"
+    sync_rules:
+      - source: "src/digitalmodel/data/sn_curves/"
+        action: "count"
+        target_stat: "sn_curves"
+
+      - source: "src/digitalmodel/"
+        action: "count_modules"
+        target_stat: "python_modules"
+        pattern: "**/*.py"
+
+      - source: "docs/modules/reports/"
+        action: "copy"
+        destination: "dist/demos/digitalmodel/"
+        patterns:
+          - "*.html"
+          - "*.png"
+          - "*.svg"
+
+  worldenergydata:
+    description: "World Energy Data Repository"
+    base_path: "../worldenergydata"
+    sync_rules:
+      - source: "reports/bsee/"
+        action: "copy"
+        destination: "dist/demos/energy/"
+        patterns:
+          - "*.html"
+          - "*.json"
+
+      - source: "docs/"
+        action: "extract_blog"
+        destination: "src/blog/"
+        patterns:
+          - "*.md"
+
+# Output configuration
+output:
+  statistics_file: "assets/data/statistics.json"
+  demo_directory: "dist/demos/"
+
+# Sync settings
+settings:
+  dry_run_default: false
+  create_missing_dirs: true
+  preserve_timestamps: false
+  ignore_patterns:
+    - "*.pyc"
+    - "__pycache__"
+    - ".git"
+    - ".DS_Store"

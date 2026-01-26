@@ -1,0 +1,37 @@
+# Keywords to track for SEO competitor analysis
+# Update this file to add/remove tracked keywords
+
+keywords:
+  primary:
+    - "orcaflex automation"
+    - "offshore engineering automation"
+    - "fatigue analysis software"
+    - "python engineering automation"
+
+  secondary:
+    - "S-N curve calculator"
+    - "mooring analysis software"
+    - "subsea engineering tools"
+    - "pipeline stress analysis"
+    - "offshore wind engineering"
+
+  long_tail:
+    - "orcaflex python scripting"
+    - "offshore fatigue analysis automation"
+    - "DNV S-N curves python"
+    - "subsea pipeline fatigue calculation"
+
+# Competitor domains to monitor
+competitors:
+  - wood.com
+  - dnv.com
+  - orcina.com
+  - bentley.com/moses
+  - offshore-technology.com
+
+# Analysis settings
+settings:
+  report_frequency: weekly
+  max_results_per_keyword: 20
+  track_rankings: true
+  track_snippets: true

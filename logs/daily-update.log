@@ -119,3 +119,113 @@ Changes committed. Run 'git push' to publish.
 
 === Daily update complete ===
 Finished at: Tue Jan 27 06:00:04 AM CST 2026
+=== AceEngineer Daily Update ===
+Started at: Wed Jan 28 06:00:01 AM CST 2026
+Project: /mnt/github/workspace-hub/aceengineer-website
+
+>>> Pulling latest changes...
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+>>> Running competitor analysis...
+
+============================================================
+COMPETITOR ANALYSIS SUMMARY
+============================================================
+
+Keywords Analyzed: 13
+Currently Ranking: 5 (38%)
+High Opportunity:  0
+
+Top Opportunities:
+  - mooring analysis software: Opportunity 35, Position 23
+  - offshore wind engineering: Opportunity 35, Position 23
+  - subsea pipeline fatigue calculation: Opportunity 35, Position 45
+  - orcaflex automation: Opportunity 30, Position None
+  - offshore engineering automation: Opportunity 30, Position None
+
+Report saved to: /mnt/github/workspace-hub/aceengineer-website/reports/competitor-analysis/2026-01-28.html
+============================================================
+
+
+>>> Running content sync...
+============================================================
+AceEngineer Content Sync
+============================================================
+Loaded config: /mnt/github/workspace-hub/aceengineer-website/config/content-sync.yaml
+
+Processing digitalmodel...
+  Base path: ../digitalmodel
+  Warning: S-N curves directory not found: ../digitalmodel/src/digitalmodel/data/sn_curves
+  Counted 0 S-N curves
+  Counted 1221 Python modules
+  Synced 0 files to dist/demos/digitalmodel/
+
+Processing worldenergydata...
+  Base path: ../worldenergydata
+  Warning: Source path not found: ../worldenergydata/reports/bsee
+  Synced 0 files to dist/demos/energy/
+  Extracted: AGENT_OS_COMMANDS.md
+  Extracted: AI_AGENT_ORCHESTRATION.md
+  Extracted: AI_USAGE_GUIDELINES.md
+  Extracted: CLI.md
+  Extracted: COMMANDS.md
+  Extracted: HTML_REPORTING_STANDARDS.md
+  Extracted: IMO_GISIS_DOWNLOAD_SETUP.md
+  Extracted: INSTALLATION_LLM.md
+  Extracted: MANDATORY_SLASH_COMMAND_ECOSYSTEM.md
+  Extracted: marine-safety-data-sources-comprehensive.md
+  Extracted: MIGRATION_GUIDE.md
+  Extracted: petrophysics.md
+  Extracted: PHASE_2_TIER_1_COVERAGE_EXPANSION.md
+  Extracted 13 blog posts to src/blog/
+
+Updated: /mnt/github/workspace-hub/aceengineer-website/assets/data/statistics.json
+
+============================================================
+Sync complete!
+============================================================
+
+Statistics collected:
+  sn_curves: 0
+  python_modules: 1221
+  standards: 17
+  last_updated: 2026-01-28
+
+>>> Building site...
+
+> aceengineer-website@1.0.0 build
+> node build.js
+
+Building site...
+
+Built: 404.html
+Built: about.html
+Built: blog/ai-native-structural-analysis.html
+Built: blog/cfd-offshore-engineering.html
+Built: blog/digital-twins-offshore-assets.html
+Built: blog/index.html
+Built: blog/machine-learning-fatigue-prediction.html
+Built: blog/offshore-engineering-standards.html
+Built: blog/open-source-engineering-tools.html
+Built: blog/python-engineering-automation.html
+Built: blog/risk-based-inspection-planning.html
+Built: calculators/fatigue-life-calculator.html
+Built: calculators/fatigue-sn-curve.html
+Built: calculators/index.html
+Built: case-studies/index.html
+Built: case-studies/offshore-platform-fatigue-optimization.html
+Built: case-studies/orcaflex-riser-sensitivity-automation.html
+Built: case-studies/subsea-fea-automation.html
+Built: case-studies/wind-turbine-foundation-analysis.html
+Built: contact.html
+Built: energy.html
+Built: engineering.html
+Built: faq.html
+Built: index.html
+Copied: assets/
+
+Build complete! 24 pages built.
+
+>>> Checking for changes...
+Changes detected, committing...

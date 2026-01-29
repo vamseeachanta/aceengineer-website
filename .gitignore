@@ -7,6 +7,9 @@ node_modules/
 *.swo
 .DS_Store
 
+# Logs (written by cron jobs)
+logs/
+
 # Environment
 .env
 .env.local

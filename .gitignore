@@ -17,3 +17,11 @@ logs/
 # Claude settings (local overrides)
 .claude/settings.local.json
 __pycache__/
+*.pyc
+
+# Test coverage artifacts
+.coverage
+coverage.xml
+
+# Package manager
+uv.lock

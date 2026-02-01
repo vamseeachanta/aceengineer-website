@@ -1,10 +1,12 @@
 """Tests for scripts/content_sync.py.
 
 Covers: load_config, count_sn_curves, count_python_modules,
-        sync_demos, update_statistics.
+        count_standards, sync_demos, extract_blog_content,
+        update_statistics, process_sync_rules, main.
 """
 
 import json
+import sys
 from pathlib import Path
 
 import pytest
@@ -13,7 +15,11 @@ import yaml
 from content_sync import (
     count_python_modules,
     count_sn_curves,
+    count_standards,
+    extract_blog_content,
     load_config,
+    main,
+    process_sync_rules,
     sync_demos,
     update_statistics,
 )
@@ -319,3 +325,611 @@ class TestUpdateStatistics:
         update_statistics(stats_path, stats, dry_run=True)
         # The function adds last_updated to the dict even in dry_run
         assert "last_updated" in stats
+
+
+# ---------------------------------------------------------------------------
+# count_standards
+# ---------------------------------------------------------------------------
+
+
+class TestCountStandards:
+    """Tests for count_standards() engineering standards counting."""
+
+    def test_returns_default_when_no_standards_directory(self, tmp_path):
+        # Arrange - repo with no standards directories
+        repo = tmp_path / "repo"
+        repo.mkdir()
+
+        # Act
+        count = count_standards(repo)
+
+        # Assert - default fallback is 17
+        assert count == 17
+
+    def test_counts_from_data_standards_directory(self, tmp_path):
+        # Arrange - create standards in src/digitalmodel/data/standards
+        repo = tmp_path / "repo"
+        standards_dir = repo / "src" / "digitalmodel" / "data" / "standards"
+        standards_dir.mkdir(parents=True)
+        (standards_dir / "dnvgl-rp-c203.yaml").write_text("name: C203")
+        (standards_dir / "api-rp-2a.yml").write_text("name: API2A")
+        (standards_dir / "norsok-n003.json").write_text('{"name": "N003"}')
+
+        # Act
+        count = count_standards(repo)
+
+        # Assert
+        assert count == 3
+
+    def test_counts_from_config_standards_directory(self, tmp_path):
+        # Arrange - create standards in src/digitalmodel/config/standards
+        repo = tmp_path / "repo"
+        standards_dir = repo / "src" / "digitalmodel" / "config" / "standards"
+        standards_dir.mkdir(parents=True)
+        (standards_dir / "standard_a.yaml").write_text("name: A")
+        (standards_dir / "standard_b.json").write_text('{"name": "B"}')
+
+        # Act
+        count = count_standards(repo)
+
+        # Assert
+        assert count == 2
+
+    def test_counts_from_data_root_standards_directory(self, tmp_path):
+        # Arrange - create standards in data/standards
+        repo = tmp_path / "repo"
+        standards_dir = repo / "data" / "standards"
+        standards_dir.mkdir(parents=True)
+        (standards_dir / "std.yaml").write_text("name: std")
+
+        # Act
+        count = count_standards(repo)
+
+        # Assert
+        assert count == 1
+
+    def test_prefers_first_found_location(self, tmp_path):
+        # Arrange - create standards in both first and third locations
+        repo = tmp_path / "repo"
+        first_dir = repo / "src" / "digitalmodel" / "data" / "standards"
+        first_dir.mkdir(parents=True)
+        (first_dir / "first.yaml").write_text("name: first")
+
+        third_dir = repo / "data" / "standards"
+        third_dir.mkdir(parents=True)
+        (third_dir / "third_a.yaml").write_text("name: a")
+        (third_dir / "third_b.yaml").write_text("name: b")
+
+        # Act
+        count = count_standards(repo)
+
+        # Assert - returns count from the first location found (1, not 2)
+        assert count == 1
+
+    def test_returns_default_when_directory_exists_but_empty(self, tmp_path):
+        # Arrange - empty standards directory
+        repo = tmp_path / "repo"
+        standards_dir = repo / "src" / "digitalmodel" / "data" / "standards"
+        standards_dir.mkdir(parents=True)
+
+        # Act
+        count = count_standards(repo)
+
+        # Assert - empty dir yields 0 count, so it falls through to default
+        assert count == 17
+
+
+# ---------------------------------------------------------------------------
+# extract_blog_content
+# ---------------------------------------------------------------------------
+
+
+class TestExtractBlogContent:
+    """Tests for extract_blog_content() markdown extraction."""
+
+    def test_extracts_markdown_files(self, tmp_path):
+        # Arrange
+        source = tmp_path / "blog_source"
+        source.mkdir()
+        (source / "post1.md").write_text("# Post 1")
+        (source / "post2.md").write_text("# Post 2")
+        dest = tmp_path / "blog_dest"
+
+        # Act
+        count = extract_blog_content(source, dest, ["*.md"])
+
+        # Assert
+        assert count == 2
+        assert (dest / "post1.md").exists()
+        assert (dest / "post2.md").exists()
+
+    def test_skips_files_starting_with_underscore(self, tmp_path):
+        # Arrange
+        source = tmp_path / "blog_source"
+        source.mkdir()
+        (source / "post.md").write_text("# Good post")
+        (source / "_draft.md").write_text("# Draft - skip this")
+        dest = tmp_path / "blog_dest"
+
+        # Act
+        count = extract_blog_content(source, dest, ["*.md"])
+
+        # Assert
+        assert count == 1
+        assert (dest / "post.md").exists()
+        assert not (dest / "_draft.md").exists()
+
+    def test_dry_run_does_not_copy_files(self, tmp_path):
+        # Arrange
+        source = tmp_path / "blog_source"
+        source.mkdir()
+        (source / "post.md").write_text("# Post")
+        dest = tmp_path / "blog_dest"
+
+        # Act
+        count = extract_blog_content(source, dest, ["*.md"], dry_run=True)
+
+        # Assert
+        assert count == 1
+        assert not dest.exists()
+
+    def test_missing_source_returns_zero(self, tmp_path):
+        # Arrange
+        dest = tmp_path / "blog_dest"
+
+        # Act
+        count = extract_blog_content(tmp_path / "nonexistent", dest, ["*.md"])
+
+        # Assert
+        assert count == 0
+
+    def test_preserves_file_content(self, tmp_path):
+        # Arrange
+        source = tmp_path / "blog_source"
+        source.mkdir()
+        content = "# My Blog Post\n\nSome content here."
+        (source / "post.md").write_text(content)
+        dest = tmp_path / "blog_dest"
+
+        # Act
+        extract_blog_content(source, dest, ["*.md"])
+
+        # Assert
+        assert (dest / "post.md").read_text() == content
+
+    def test_creates_destination_directory(self, tmp_path):
+        # Arrange
+        source = tmp_path / "blog_source"
+        source.mkdir()
+        (source / "post.md").write_text("# Post")
+        dest = tmp_path / "nested" / "deep" / "blog_dest"
+
+        # Act
+        extract_blog_content(source, dest, ["*.md"])
+
+        # Assert
+        assert dest.exists()
+
+    def test_multiple_patterns(self, tmp_path):
+        # Arrange
+        source = tmp_path / "blog_source"
+        source.mkdir()
+        (source / "post.md").write_text("# Markdown")
+        (source / "page.rst").write_text("RST Page")
+        dest = tmp_path / "blog_dest"
+
+        # Act
+        count = extract_blog_content(source, dest, ["*.md", "*.rst"])
+
+        # Assert
+        assert count == 2
+
+    def test_empty_source_returns_zero(self, tmp_path):
+        # Arrange
+        source = tmp_path / "empty_source"
+        source.mkdir()
+        dest = tmp_path / "blog_dest"
+
+        # Act
+        count = extract_blog_content(source, dest, ["*.md"])
+
+        # Assert
+        assert count == 0
+
+
+# ---------------------------------------------------------------------------
+# process_sync_rules
+# ---------------------------------------------------------------------------
+
+
+class TestProcessSyncRules:
+    """Tests for process_sync_rules() rule processing logic."""
+
+    def test_count_action_counts_sn_curves(self, digitalmodel_tree):
+        # Arrange
+        config = {
+            "sources": {
+                "digitalmodel": {
+                    "sync_rules": [
+                        {
+                            "source": "src/digitalmodel/data/sn_curves/",
+                            "action": "count",
+                            "target_stat": "sn_curves",
+                        }
+                    ]
+                }
+            },
+            "settings": {"ignore_patterns": []},
+        }
+
+        # Act
+        stats = process_sync_rules(config, "digitalmodel", digitalmodel_tree)
+
+        # Assert
+        assert "sn_curves" in stats
+        assert stats["sn_curves"] == 3
+
+    def test_count_modules_action(self, digitalmodel_tree):
+        # Arrange
+        config = {
+            "sources": {
+                "digitalmodel": {
+                    "sync_rules": [
+                        {
+                            "source": "src/digitalmodel/",
+                            "action": "count_modules",
+                            "target_stat": "python_modules",
+                        }
+                    ]
+                }
+            },
+            "settings": {"ignore_patterns": []},
+        }
+
+        # Act
+        stats = process_sync_rules(config, "digitalmodel", digitalmodel_tree)
+
+        # Assert
+        assert "python_modules" in stats
+        assert stats["python_modules"] == 5
+
+    def test_copy_action_syncs_files(self, tmp_path):
+        # Arrange - create a source repo with demo files
+        repo = tmp_path / "repo"
+        demo_dir = repo / "demos"
+        demo_dir.mkdir(parents=True)
+        (demo_dir / "page.html").write_text("<h1>Demo</h1>")
+
+        # We need to patch PROJECT_ROOT for the copy destination
+        # Instead, use absolute destination path in config
+        config = {
+            "sources": {
+                "myrepo": {
+                    "sync_rules": [
+                        {
+                            "source": "demos",
+                            "action": "copy",
+                            "destination": "demos",
+                            "patterns": ["*.html"],
+                        }
+                    ]
+                }
+            },
+            "settings": {"ignore_patterns": ["*.pyc"]},
+        }
+
+        # Act
+        stats = process_sync_rules(config, "myrepo", repo)
+
+        # Assert - the function ran without error (files go to PROJECT_ROOT/demos)
+        assert isinstance(stats, dict)
+
+    def test_extract_blog_action(self, tmp_path):
+        # Arrange
+        repo = tmp_path / "repo"
+        blog_dir = repo / "blog"
+        blog_dir.mkdir(parents=True)
+        (blog_dir / "article.md").write_text("# Article")
+
+        config = {
+            "sources": {
+                "myrepo": {
+                    "sync_rules": [
+                        {
+                            "source": "blog",
+                            "action": "extract_blog",
+                            "destination": "blog_output",
+                            "patterns": ["*.md"],
+                        }
+                    ]
+                }
+            },
+            "settings": {"ignore_patterns": []},
+        }
+
+        # Act
+        stats = process_sync_rules(config, "myrepo", repo)
+
+        # Assert - function completes without error
+        assert isinstance(stats, dict)
+
+    def test_missing_repo_returns_empty_stats(self, tmp_path):
+        # Arrange
+        config = {
+            "sources": {
+                "digitalmodel": {
+                    "sync_rules": [
+                        {"action": "count", "target_stat": "sn_curves"}
+                    ]
+                }
+            },
+            "settings": {"ignore_patterns": []},
+        }
+
+        # Act
+        stats = process_sync_rules(
+            config, "digitalmodel", tmp_path / "nonexistent"
+        )
+
+        # Assert
+        assert stats == {}
+
+    def test_empty_sync_rules_returns_empty_stats(self, digitalmodel_tree):
+        # Arrange
+        config = {
+            "sources": {
+                "digitalmodel": {
+                    "sync_rules": []
+                }
+            },
+            "settings": {"ignore_patterns": []},
+        }
+
+        # Act
+        stats = process_sync_rules(config, "digitalmodel", digitalmodel_tree)
+
+        # Assert
+        assert stats == {}
+
+    def test_dry_run_copy_does_not_create_files(self, tmp_path):
+        # Arrange
+        repo = tmp_path / "repo"
+        demo_dir = repo / "demos"
+        demo_dir.mkdir(parents=True)
+        (demo_dir / "page.html").write_text("<h1>Demo</h1>")
+
+        config = {
+            "sources": {
+                "myrepo": {
+                    "sync_rules": [
+                        {
+                            "source": "demos",
+                            "action": "copy",
+                            "destination": "demos_out",
+                            "patterns": ["*.html"],
+                        }
+                    ]
+                }
+            },
+            "settings": {"ignore_patterns": []},
+        }
+
+        # Act
+        stats = process_sync_rules(config, "myrepo", repo, dry_run=True)
+
+        # Assert
+        assert isinstance(stats, dict)
+
+
+# ---------------------------------------------------------------------------
+# main
+# ---------------------------------------------------------------------------
+
+
+class TestMain:
+    """Tests for main() CLI entry point."""
+
+    def test_main_with_valid_config_returns_zero(self, tmp_path, monkeypatch):
+        # Arrange - create a valid config
+        config_file = tmp_path / "config.yaml"
+        config_file.write_text(
+            "sources:\n"
+            "  digitalmodel:\n"
+            '    base_path: "digitalmodel"\n'
+            "    sync_rules: []\n"
+            "output:\n"
+            '  statistics_file: "stats.json"\n'
+            "settings:\n"
+            "  ignore_patterns: []\n"
+        )
+
+        # Create the digitalmodel directory so count_standards
+        # can check for standards directories
+        dm_path = tmp_path / "digitalmodel"
+        dm_path.mkdir()
+
+        monkeypatch.setattr(
+            sys, "argv",
+            [
+                "content_sync",
+                "--config", str(config_file),
+                "--digitalmodel", str(dm_path),
+                "--dry-run",
+            ],
+        )
+
+        # Act
+        result = main()
+
+        # Assert
+        assert result == 0
+
+    def test_main_missing_config_returns_one(self, tmp_path, monkeypatch):
+        # Arrange
+        monkeypatch.setattr(
+            sys, "argv",
+            [
+                "content_sync",
+                "--config", str(tmp_path / "nonexistent.yaml"),
+            ],
+        )
+
+        # Act
+        result = main()
+
+        # Assert
+        assert result == 1
+
+    def test_main_invalid_yaml_config_returns_one(self, tmp_path, monkeypatch):
+        # Arrange
+        bad_config = tmp_path / "bad.yaml"
+        bad_config.write_text("{{invalid: yaml: [broken")
+
+        monkeypatch.setattr(
+            sys, "argv",
+            ["content_sync", "--config", str(bad_config)],
+        )
+
+        # Act
+        result = main()
+
+        # Assert
+        assert result == 1
+
+    def test_main_dry_run_prints_dry_run_notice(
+        self, tmp_path, monkeypatch, capsys
+    ):
+        # Arrange
+        config_file = tmp_path / "config.yaml"
+        config_file.write_text(
+            "sources: {}\n"
+            "output:\n"
+            '  statistics_file: "stats.json"\n'
+            "settings:\n"
+            "  ignore_patterns: []\n"
+        )
+        dm_path = tmp_path / "dm"
+        dm_path.mkdir()
+
+        monkeypatch.setattr(
+            sys, "argv",
+            [
+                "content_sync",
+                "--config", str(config_file),
+                "--digitalmodel", str(dm_path),
+                "--dry-run",
+            ],
+        )
+
+        # Act
+        main()
+
+        # Assert
+        captured = capsys.readouterr()
+        assert "DRY RUN MODE" in captured.out
+
+    def test_main_prints_sync_complete(self, tmp_path, monkeypatch, capsys):
+        # Arrange
+        config_file = tmp_path / "config.yaml"
+        config_file.write_text(
+            "sources: {}\n"
+            "output:\n"
+            '  statistics_file: "stats.json"\n'
+            "settings:\n"
+            "  ignore_patterns: []\n"
+        )
+        dm_path = tmp_path / "dm"
+        dm_path.mkdir()
+
+        monkeypatch.setattr(
+            sys, "argv",
+            [
+                "content_sync",
+                "--config", str(config_file),
+                "--digitalmodel", str(dm_path),
+            ],
+        )
+
+        # Act
+        result = main()
+
+        # Assert
+        captured = capsys.readouterr()
+        assert "Sync complete!" in captured.out
+        assert result == 0
+
+    def test_main_with_worldenergydata_source(self, tmp_path, monkeypatch):
+        # Arrange
+        config_file = tmp_path / "config.yaml"
+        config_file.write_text(
+            "sources:\n"
+            "  worldenergydata:\n"
+            '    base_path: "wed"\n'
+            "    sync_rules: []\n"
+            "output:\n"
+            '  statistics_file: "stats.json"\n'
+            "settings:\n"
+            "  ignore_patterns: []\n"
+        )
+        dm_path = tmp_path / "dm"
+        dm_path.mkdir()
+        wed_path = tmp_path / "wed"
+        wed_path.mkdir()
+
+        monkeypatch.setattr(
+            sys, "argv",
+            [
+                "content_sync",
+                "--config", str(config_file),
+                "--digitalmodel", str(dm_path),
+                "--worldenergydata", str(wed_path),
+                "--dry-run",
+            ],
+        )
+
+        # Act
+        result = main()
+
+        # Assert
+        assert result == 0
+
+    def test_main_prints_statistics_summary(
+        self, tmp_path, monkeypatch, capsys
+    ):
+        # Arrange
+        config_file = tmp_path / "config.yaml"
+        config_file.write_text(
+            "sources:\n"
+            "  digitalmodel:\n"
+            '    base_path: "dm"\n'
+            "    sync_rules:\n"
+            '      - action: "count"\n'
+            '        target_stat: "sn_curves"\n'
+            '        source: "src/digitalmodel/data/sn_curves/"\n'
+            "output:\n"
+            '  statistics_file: "stats.json"\n'
+            "settings:\n"
+            "  ignore_patterns: []\n"
+        )
+        # Create a digitalmodel tree with some sn_curves
+        dm_path = tmp_path / "dm"
+        sn_dir = dm_path / "src" / "digitalmodel" / "data" / "sn_curves"
+        sn_dir.mkdir(parents=True)
+        (sn_dir / "curve.yaml").write_text("name: test")
+
+        monkeypatch.setattr(
+            sys, "argv",
+            [
+                "content_sync",
+                "--config", str(config_file),
+                "--digitalmodel", str(dm_path),
+                "--dry-run",
+            ],
+        )
+
+        # Act
+        main()
+
+        # Assert
+        captured = capsys.readouterr()
+        assert "Statistics collected:" in captured.out

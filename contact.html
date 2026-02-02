@@ -247,10 +247,9 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="engineering.html">Engineering</a></li>
-                    <li><a href="energy.html">Energy</a></li>
+                    <li><a href="energy.html">Energy Data</a></li>
                     <li><a href="faq.html">FAQ</a></li>
                     <li><a href="blog/">Blog</a></li>
-                    <li><a href="contact.html">Contact</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="contact.html" class="btn-nav-cta">Get Started</a></li>
@@ -310,12 +309,20 @@
                                 <label for="subject">Subject *</label>
                                 <select id="subject" name="subject" class="form-control" required>
                                     <option value="">Select a topic...</option>
-                                    <option value="OrcaFlex Automation">OrcaFlex Automation Project</option>
-                                    <option value="FEA Post-Processing">FEA Post-Processing Automation</option>
-                                    <option value="Fatigue Analysis">Fatigue Analysis Services</option>
-                                    <option value="Offshore Engineering">Offshore Platform/Riser Analysis</option>
-                                    <option value="Wind Energy">Offshore Wind Engineering</option>
-                                    <option value="EPC Support">EPC Project Support</option>
+                                    <optgroup label="Engineering Services">
+                                        <option value="OrcaFlex Automation">OrcaFlex Automation Project</option>
+                                        <option value="FEA Post-Processing">FEA Post-Processing Automation</option>
+                                        <option value="Fatigue Analysis">Fatigue Analysis Services</option>
+                                        <option value="Offshore Engineering">Offshore Platform/Riser Analysis</option>
+                                        <option value="Wind Energy">Offshore Wind Engineering</option>
+                                        <option value="EPC Support">EPC Project Support</option>
+                                    </optgroup>
+                                    <optgroup label="Energy Data Services">
+                                        <option value="Energy Operator">Energy Operator</option>
+                                        <option value="Energy Investor / Analyst">Energy Investor / Analyst</option>
+                                        <option value="Maritime / Shipping">Maritime / Shipping</option>
+                                        <option value="Regulatory / Government">Regulatory / Government</option>
+                                    </optgroup>
                                     <option value="General Inquiry">General Inquiry</option>
                                 </select>
                             </div>
@@ -486,7 +493,11 @@
                     'epc': 'EPC Support',
                     'orcaflex': 'OrcaFlex Automation',
                     'fea': 'FEA Post-Processing',
-                    'fatigue': 'Fatigue Analysis'
+                    'fatigue': 'Fatigue Analysis',
+                    'energy-operator': 'Energy Operator',
+                    'energy-investor': 'Energy Investor / Analyst',
+                    'maritime': 'Maritime / Shipping',
+                    'regulatory': 'Regulatory / Government'
                 };
 
                 if (subjectMap[vertical]) {

@@ -5,11 +5,11 @@
    Color Palette & Variables
    ============================================ */
 :root {
-    --primary-color: #e95420;
-    --primary-dark: #c44117;
+    --primary-color: #b84315;
+    --primary-dark: #a03b12;
     --secondary-color: #333333;
     --accent-color: #5bc0de;
-    --success-color: #5cb85c;
+    --success-color: #217821;
     --light-bg: #f8f9fa;
     --dark-bg: #2d3436;
     --text-muted: #666666;
@@ -19,7 +19,7 @@
    Navigation Enhancements
    ============================================ */
 .btn-nav-cta {
-    background-color: var(--primary-color) !important;
+    background-color: #b84315 !important;
     color: white !important;
     border-radius: 4px;
     margin-top: 8px;
@@ -28,7 +28,7 @@
 }
 
 .btn-nav-cta:hover {
-    background-color: var(--primary-dark) !important;
+    background-color: #a03b12 !important;
 }
 
 /* ============================================
@@ -69,13 +69,13 @@
 }
 
 .hero-cta .btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+    background-color: #b84315;
+    border-color: #b84315;
 }
 
 .hero-cta .btn-primary:hover {
-    background-color: var(--primary-dark);
-    border-color: var(--primary-dark);
+    background-color: #a03b12;
+    border-color: #a03b12;
 }
 
 .hero-cta .btn-default {
@@ -192,7 +192,7 @@ section {
     padding: 12px 15px;
     border-radius: 4px;
     margin-top: 15px;
-    color: #3c763d;
+    color: #2d5a2d;
     font-size: 0.95em;
 }
 
@@ -383,15 +383,49 @@ section {
 }
 
 .cta-section .btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+    background-color: #b84315;
+    border-color: #b84315;
     padding: 14px 35px;
     font-size: 1.1em;
 }
 
 .cta-section .btn-primary:hover {
-    background-color: var(--primary-dark);
-    border-color: var(--primary-dark);
+    background-color: #a03b12;
+    border-color: #a03b12;
+}
+
+/* Global btn-primary contrast fix for WCAG AA compliance */
+.btn-primary {
+    background-color: #b84315;
+    border-color: #b84315;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #a03b12;
+    border-color: #a03b12;
+}
+
+/* Global btn-default contrast fix */
+.btn-default {
+    color: #333333;
+    border-color: #999999;
+}
+
+/* Global btn-info contrast fix for WCAG AA compliance */
+.btn-info {
+    background-color: #2a7d9b;
+    border-color: #2a7d9b;
+    color: #ffffff;
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active {
+    background-color: #1f6380;
+    border-color: #1f6380;
+    color: #ffffff;
 }
 
 .cta-note {
@@ -415,17 +449,17 @@ section {
     min-height: 150px;
 }
 
-.blog-preview-card h4 {
+.blog-preview-card h3 {
     font-size: 1.15em;
     margin-bottom: 10px;
 }
 
-.blog-preview-card h4 a {
+.blog-preview-card h3 a {
     color: var(--secondary-color);
     text-decoration: none;
 }
 
-.blog-preview-card h4 a:hover {
+.blog-preview-card h3 a:hover {
     color: var(--primary-color);
 }
 
@@ -444,7 +478,7 @@ section {
     padding: 50px 0 30px;
 }
 
-.footer-section h4 {
+.footer-section h3 {
     font-size: 1.2em;
     font-weight: 600;
     margin-bottom: 20px;

@@ -21,7 +21,8 @@
 /* Improve touch targets for navigation */
 .navbar-nav > li > a {
     padding: 15px 15px;
-    min-height: 44px;
+    min-height: 48px;
+    line-height: 18px;
 }
 
 /* Ensure navbar-toggle is touch-friendly */

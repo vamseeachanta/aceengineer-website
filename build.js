@@ -3,6 +3,8 @@ const path = require('path');
 const posthtml = require('posthtml');
 const include = require('posthtml-include');
 const expressions = require('posthtml-expressions');
+const { PurgeCSS } = require('purgecss');
+const CleanCSS = require('clean-css');
 
 const srcDir = './src';
 const distDir = './dist';
@@ -101,7 +103,80 @@ async function build() {
   console.log(`\nBuild complete! ${files.length} pages built.`);
 }
 
-build().catch(err => {
-  console.error('Build failed:', err);
-  process.exit(1);
-});
+// PurgeCSS - strip unused Bootstrap CSS
+async function purgeBootstrapCSS() {
+  const cssSource = './assets/css/bootstrap-united.css';
+  if (!fs.existsSync(cssSource)) {
+    console.log('PurgeCSS: bootstrap-united.css not found, skipping.');
+    return;
+  }
+
+  console.log('\nRunning PurgeCSS...');
+  const purgeCSSResults = await new PurgeCSS().purge({
+    content: ['./dist/**/*.html'],
+    css: [cssSource],
+    safelist: {
+      standard: [
+        /^navbar/, /^collapse/, /^collapsing/, /^nav/, /^in$/,
+        /^container/, /^row/, /^col-/, /^btn/, /^form/,
+        /^sr-only/, /^text-/, /^table/, /^input-group/,
+        /^well/, /^lead/, /^breadcrumb/, /^list-/,
+        /^page-header/, /^alert/, /^label/
+      ],
+      deep: [/navbar/, /collapse/]
+    }
+  });
+
+  if (purgeCSSResults.length > 0) {
+    const outputPath = path.join('./dist/assets/css/bootstrap-united.css');
+    fs.writeFileSync(outputPath, purgeCSSResults[0].css);
+    const originalSize = fs.statSync(cssSource).size;
+    const purgedSize = Buffer.byteLength(purgeCSSResults[0].css, 'utf8');
+    console.log(`PurgeCSS: ${(originalSize / 1024).toFixed(1)}KB → ${(purgedSize / 1024).toFixed(1)}KB (${((1 - purgedSize / originalSize) * 100).toFixed(0)}% reduction)`);
+  }
+}
+
+// Concatenate and minify all CSS into a single file
+async function bundleCSS() {
+    console.log('\nBundling CSS...');
+    const distCssDir = path.join(distDir, 'assets/css');
+
+    // Read CSS files in correct order
+    const cssFiles = ['fonts.css', 'bootstrap-united.css', 'responsive.css', 'marketing.css'];
+    let combined = '';
+    let totalOriginal = 0;
+
+    for (const file of cssFiles) {
+        const filePath = path.join(distCssDir, file);
+        if (fs.existsSync(filePath)) {
+            const content = fs.readFileSync(filePath, 'utf8');
+            combined += content + '\n';
+            totalOriginal += Buffer.byteLength(content, 'utf8');
+        }
+    }
+
+    // Minify
+    const output = new CleanCSS({
+        level: 2,
+        compatibility: 'ie9'
+    }).minify(combined);
+
+    if (output.errors.length > 0) {
+        console.error('CSS minification errors:', output.errors);
+        return;
+    }
+
+    const outputPath = path.join(distCssDir, 'styles.min.css');
+    fs.writeFileSync(outputPath, output.styles);
+
+    const minifiedSize = Buffer.byteLength(output.styles, 'utf8');
+    console.log(`CSS Bundle: ${(totalOriginal / 1024).toFixed(1)}KB → ${(minifiedSize / 1024).toFixed(1)}KB (${((1 - minifiedSize / totalOriginal) * 100).toFixed(0)}% reduction)`);
+}
+
+build()
+  .then(() => purgeBootstrapCSS())
+  .then(() => bundleCSS())
+  .catch(err => {
+    console.error('Build failed:', err);
+    process.exit(1);
+  });

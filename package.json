@@ -6,8 +6,10 @@
     "serve": "npx serve dist"
   },
   "devDependencies": {
+    "clean-css": "^5.3.3",
     "posthtml": "^0.16.6",
     "posthtml-expressions": "^1.11.3",
-    "posthtml-include": "^2.0.1"
+    "posthtml-include": "^2.0.1",
+    "purgecss": "^8.0.0"
   }
 }

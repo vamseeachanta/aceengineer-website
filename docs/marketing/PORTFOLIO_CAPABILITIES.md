@@ -1,11 +1,11 @@
 # A&CE Portfolio Capabilities
 
-> Last Updated: 2026-01-14
+> Last Updated: 2026-02-09
 > Source: Workspace-Hub Repository Analysis
 
 ## Executive Summary
 
-Analytical & Computational Engineering (A&CE) has developed a comprehensive engineering software ecosystem with **704+ Python modules**, **221 fatigue curves** from international standards, and deep expertise across offshore, subsea, and energy domains.
+Analytical & Computational Engineering (A&CE) has developed a comprehensive engineering software ecosystem with **704+ Python modules**, **221 fatigue curves** from international standards, **24,000+ lines of hydrodynamic diffraction code**, **18-mode ML rod pump diagnostics**, and deep expertise across offshore, subsea, and energy domains.
 
 ---
 
@@ -23,7 +23,40 @@ Analytical & Computational Engineering (A&CE) has developed a comprehensive engi
 
 **Software Integrations:** OrcaFlex automation, WAMIT/AQWA processing, BEMRosetta
 
-### 2. Hydrodynamics & Motion Analysis
+### 2. Hydrodynamic Diffraction Analysis Suite (digitalmodel)
+
+**Primary Capabilities:**
+- **Unified Diffraction Framework**: ~24,000 LOC ecosystem supporting AQWA and OrcaWave with a single DiffractionResults schema (6-DOF RAOs, 6x6 added mass and damping matrices)
+- **Multi-Solver Comparison**: Run AQWA and OrcaWave on the same vessel, statistical comparison with consensus metrics and interactive benchmark plots
+- **Canonical Specification**: Define analysis once in spec.yml, generate inputs for any solver; reverse parsers convert existing models back to spec
+- **Physics-Based Validation**: 8+ automated checks (coefficient symmetry, positive semi-definiteness, Kramers-Kronig causality, RAO quality, geometry validation, resonance detection)
+- **Batch Processing**: Parallel execution of parametric sweeps across frequencies, headings, and loading conditions with automated postprocessing
+- **Mesh Pipeline**: PanelMesh common format with GDF, DAT, STL, OBJ conversion and GMSH integration for parametric generation
+
+**Industry Standards:** DNV-RP-H103, IMO, ISO 19901, DNV-RP-C205
+
+**Software Integrations:** AQWA (ANSYS), OrcaWave (Orcina), OrcaFlex, BEMRosetta, GMSH
+
+**Export Formats:** OrcaFlex YAML, CSV, Excel, JSON, HTML (Plotly interactive reports)
+
+**Brochure:** [Diffraction Analysis Brochure](../../digitalmodel/docs/marketing/diffraction-analysis-brochure.md)
+
+### 3. DynaCard AI Rod Pump Diagnostics (digitalmodel)
+
+**Primary Capabilities:**
+- **ML-Based Classification**: GradientBoosting classifier (100 estimators, depth 4) trained on 5,400 synthetic cards with 89.4% cross-validated accuracy
+- **18 Failure Modes**: Three-tier coverage -- Core conditions (7), field failures (5), mechanical issues (6)
+- **Feature Extraction**: Bezerra vertical projection method producing 16-dimensional feature vectors from dynamometer cards
+- **Portable Model**: JSON model export with zero sklearn runtime dependency; legacy threshold fallback preserved
+- **SVG Diagnostic Gallery**: Engineering-quality visualizations including rod pump schematics, 18-card diagnostic gallery, and annotated examples
+
+**Industry Standards:** API 11E, API RP 11AR
+
+**Software Integrations:** scikit-learn (training), Plotly (interactive reports), SVG (GitHub-compatible schematics)
+
+**Brochure:** [DynaCard AI Diagnostics Brochure](../../digitalmodel/docs/marketing/dynacard-ai-diagnostics-brochure.md)
+
+### 4. Vessel Motion Analysis
 
 **Capabilities:**
 - Wave load calculations (DNV-RP-H103)
@@ -34,7 +67,7 @@ Analytical & Computational Engineering (A&CE) has developed a comprehensive engi
 
 **Applications:** Platform motion studies, vessel operability, wave loading on risers
 
-### 3. Riser Engineering
+### 5. Riser Engineering
 
 **Systems Supported:**
 - Steel Catenary Risers (SCR)
@@ -48,7 +81,7 @@ Analytical & Computational Engineering (A&CE) has developed a comprehensive engi
 - Fatigue life assessment
 - Installation engineering
 
-### 4. Mooring Systems
+### 6. Mooring Systems
 
 **Capabilities:**
 - SALM (Single Anchor Leg Mooring) design
@@ -57,7 +90,7 @@ Analytical & Computational Engineering (A&CE) has developed a comprehensive engi
 - Catenary analysis
 - Environmental loading assessment
 
-### 5. Subsea Infrastructure
+### 7. Subsea Infrastructure
 
 **Systems:**
 - Pipeline design and analysis
@@ -72,7 +105,7 @@ Analytical & Computational Engineering (A&CE) has developed a comprehensive engi
 - Thermal analysis
 - Expansion/contraction
 
-### 6. Vessel Analysis
+### 8. Vessel Analysis
 
 **Vessel Types:**
 - Light Service Vessels (LSVs)
@@ -86,7 +119,7 @@ Analytical & Computational Engineering (A&CE) has developed a comprehensive engi
 - Deck load optimization
 - Crane operations
 
-### 7. Energy Data & Economics (worldenergydata)
+### 9. Energy Data & Economics (worldenergydata)
 
 **Data Integration:**
 - BSEE production and incident data
@@ -100,7 +133,7 @@ Analytical & Computational Engineering (A&CE) has developed a comprehensive engi
 - Timeline visualization
 - Resource valuation
 
-### 8. Manufacturing Engineering (OGManufacturing)
+### 10. Manufacturing Engineering (OGManufacturing)
 
 **Capabilities:**
 - Riser design verification
@@ -115,7 +148,8 @@ Analytical & Computational Engineering (A&CE) has developed a comprehensive engi
 | Software | Integration Level | Capabilities |
 |----------|------------------|--------------|
 | **OrcaFlex** | Full API | Model generation, batch analysis, results extraction |
-| **AQWA** | Full API | Hydrodynamic models, post-processing |
+| **AQWA** | Full API | Native .LIS/.DAT parsing, batch execution, input generation, RAO extraction |
+| **OrcaWave** | Full API | Diffraction/radiation solver orchestration, batch processing, result validation |
 | **WAMIT** | Output Processing | RAO conversion, response analysis |
 | **BEMRosetta** | Integration | Boundary element processing |
 | **Gmsh** | Full API | Mesh generation, quality control |

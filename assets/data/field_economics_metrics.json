@@ -1,0 +1,10 @@
+{
+  "npv_mm": 6078.05158096399,
+  "irr": 15.0,
+  "payback_months": 32,
+  "total_production_mmbbls": 373.53988903324284,
+  "peak_production_bopd": 100000.0,
+  "total_revenue_mm": 28015.491677493214,
+  "total_opex_mm": 6723.718002598372,
+  "total_capex_mm": 3500.0
+}

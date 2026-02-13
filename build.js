@@ -173,10 +173,15 @@ async function bundleCSS() {
     console.log(`CSS Bundle: ${(totalOriginal / 1024).toFixed(1)}KB → ${(minifiedSize / 1024).toFixed(1)}KB (${((1 - minifiedSize / totalOriginal) * 100).toFixed(0)}% reduction)`);
 }
 
-build()
-  .then(() => purgeBootstrapCSS())
-  .then(() => bundleCSS())
-  .catch(err => {
-    console.error('Build failed:', err);
-    process.exit(1);
-  });
+// Only run build when executed directly (not when required for testing)
+if (require.main === module) {
+  build()
+    .then(() => purgeBootstrapCSS())
+    .then(() => bundleCSS())
+    .catch(err => {
+      console.error('Build failed:', err);
+      process.exit(1);
+    });
+}
+
+module.exports = { parseFrontMatter, getHtmlFiles, ensureDir };

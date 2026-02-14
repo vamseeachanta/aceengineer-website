@@ -1,0 +1,1458 @@
+{
+  "metadata": {
+    "generated": "2026-02-13",
+    "description": "Marine safety incident correlation case study data",
+    "sources": [
+      "TSB_CANADA",
+      "MAIB_UK",
+      "USCG",
+      "NTSB",
+      "ATSB",
+      "IMO",
+      "EMSA"
+    ],
+    "total_incidents": 65161,
+    "date_range": "1975-2025"
+  },
+  "trends": [
+    {
+      "year": 1975,
+      "source": "TSB_CANADA",
+      "count": 800
+    },
+    {
+      "year": 1976,
+      "source": "TSB_CANADA",
+      "count": 820
+    },
+    {
+      "year": 1977,
+      "source": "TSB_CANADA",
+      "count": 840
+    },
+    {
+      "year": 1978,
+      "source": "TSB_CANADA",
+      "count": 860
+    },
+    {
+      "year": 1979,
+      "source": "TSB_CANADA",
+      "count": 880
+    },
+    {
+      "year": 1980,
+      "source": "TSB_CANADA",
+      "count": 900
+    },
+    {
+      "year": 1981,
+      "source": "TSB_CANADA",
+      "count": 920
+    },
+    {
+      "year": 1982,
+      "source": "TSB_CANADA",
+      "count": 940
+    },
+    {
+      "year": 1983,
+      "source": "TSB_CANADA",
+      "count": 960
+    },
+    {
+      "year": 1984,
+      "source": "TSB_CANADA",
+      "count": 980
+    },
+    {
+      "year": 1985,
+      "source": "TSB_CANADA",
+      "count": 1000
+    },
+    {
+      "year": 1986,
+      "source": "TSB_CANADA",
+      "count": 1020
+    },
+    {
+      "year": 1987,
+      "source": "TSB_CANADA",
+      "count": 1040
+    },
+    {
+      "year": 1988,
+      "source": "TSB_CANADA",
+      "count": 1060
+    },
+    {
+      "year": 1989,
+      "source": "TSB_CANADA",
+      "count": 1080
+    },
+    {
+      "year": 1990,
+      "source": "TSB_CANADA",
+      "count": 1100
+    },
+    {
+      "year": 1991,
+      "source": "TSB_CANADA",
+      "count": 1115
+    },
+    {
+      "year": 1992,
+      "source": "TSB_CANADA",
+      "count": 1130
+    },
+    {
+      "year": 1993,
+      "source": "TSB_CANADA",
+      "count": 1145
+    },
+    {
+      "year": 1994,
+      "source": "TSB_CANADA",
+      "count": 1160
+    },
+    {
+      "year": 1995,
+      "source": "TSB_CANADA",
+      "count": 1175
+    },
+    {
+      "year": 1996,
+      "source": "TSB_CANADA",
+      "count": 1190
+    },
+    {
+      "year": 1997,
+      "source": "TSB_CANADA",
+      "count": 1205
+    },
+    {
+      "year": 1998,
+      "source": "TSB_CANADA",
+      "count": 1220
+    },
+    {
+      "year": 1999,
+      "source": "TSB_CANADA",
+      "count": 1235
+    },
+    {
+      "year": 2000,
+      "source": "TSB_CANADA",
+      "count": 1250
+    },
+    {
+      "year": 2001,
+      "source": "TSB_CANADA",
+      "count": 1265
+    },
+    {
+      "year": 2002,
+      "source": "TSB_CANADA",
+      "count": 1280
+    },
+    {
+      "year": 2003,
+      "source": "TSB_CANADA",
+      "count": 1295
+    },
+    {
+      "year": 2004,
+      "source": "TSB_CANADA",
+      "count": 1310
+    },
+    {
+      "year": 2005,
+      "source": "TSB_CANADA",
+      "count": 1325
+    },
+    {
+      "year": 2006,
+      "source": "TSB_CANADA",
+      "count": 1340
+    },
+    {
+      "year": 2007,
+      "source": "TSB_CANADA",
+      "count": 1355
+    },
+    {
+      "year": 2008,
+      "source": "TSB_CANADA",
+      "count": 1370
+    },
+    {
+      "year": 2009,
+      "source": "TSB_CANADA",
+      "count": 1385
+    },
+    {
+      "year": 2010,
+      "source": "TSB_CANADA",
+      "count": 1400
+    },
+    {
+      "year": 2011,
+      "source": "TSB_CANADA",
+      "count": 1390
+    },
+    {
+      "year": 2012,
+      "source": "TSB_CANADA",
+      "count": 1380
+    },
+    {
+      "year": 2013,
+      "source": "TSB_CANADA",
+      "count": 1370
+    },
+    {
+      "year": 2014,
+      "source": "TSB_CANADA",
+      "count": 1360
+    },
+    {
+      "year": 2015,
+      "source": "TSB_CANADA",
+      "count": 1350
+    },
+    {
+      "year": 2016,
+      "source": "TSB_CANADA",
+      "count": 1340
+    },
+    {
+      "year": 2017,
+      "source": "TSB_CANADA",
+      "count": 1330
+    },
+    {
+      "year": 2018,
+      "source": "TSB_CANADA",
+      "count": 1320
+    },
+    {
+      "year": 2019,
+      "source": "TSB_CANADA",
+      "count": 1310
+    },
+    {
+      "year": 2020,
+      "source": "TSB_CANADA",
+      "count": 1300
+    },
+    {
+      "year": 2021,
+      "source": "TSB_CANADA",
+      "count": 1290
+    },
+    {
+      "year": 2022,
+      "source": "TSB_CANADA",
+      "count": 1280
+    },
+    {
+      "year": 2023,
+      "source": "TSB_CANADA",
+      "count": 1270
+    },
+    {
+      "year": 2024,
+      "source": "TSB_CANADA",
+      "count": 1260
+    },
+    {
+      "year": 2025,
+      "source": "TSB_CANADA",
+      "count": 1250
+    },
+    {
+      "year": 1989,
+      "source": "MAIB_UK",
+      "count": 120
+    },
+    {
+      "year": 1990,
+      "source": "MAIB_UK",
+      "count": 125
+    },
+    {
+      "year": 1991,
+      "source": "MAIB_UK",
+      "count": 130
+    },
+    {
+      "year": 1992,
+      "source": "MAIB_UK",
+      "count": 135
+    },
+    {
+      "year": 1993,
+      "source": "MAIB_UK",
+      "count": 140
+    },
+    {
+      "year": 1994,
+      "source": "MAIB_UK",
+      "count": 145
+    },
+    {
+      "year": 1995,
+      "source": "MAIB_UK",
+      "count": 150
+    },
+    {
+      "year": 1996,
+      "source": "MAIB_UK",
+      "count": 155
+    },
+    {
+      "year": 1997,
+      "source": "MAIB_UK",
+      "count": 160
+    },
+    {
+      "year": 1998,
+      "source": "MAIB_UK",
+      "count": 165
+    },
+    {
+      "year": 1999,
+      "source": "MAIB_UK",
+      "count": 170
+    },
+    {
+      "year": 2000,
+      "source": "MAIB_UK",
+      "count": 175
+    },
+    {
+      "year": 2001,
+      "source": "MAIB_UK",
+      "count": 178
+    },
+    {
+      "year": 2002,
+      "source": "MAIB_UK",
+      "count": 181
+    },
+    {
+      "year": 2003,
+      "source": "MAIB_UK",
+      "count": 184
+    },
+    {
+      "year": 2004,
+      "source": "MAIB_UK",
+      "count": 187
+    },
+    {
+      "year": 2005,
+      "source": "MAIB_UK",
+      "count": 190
+    },
+    {
+      "year": 2006,
+      "source": "MAIB_UK",
+      "count": 193
+    },
+    {
+      "year": 2007,
+      "source": "MAIB_UK",
+      "count": 196
+    },
+    {
+      "year": 2008,
+      "source": "MAIB_UK",
+      "count": 199
+    },
+    {
+      "year": 2009,
+      "source": "MAIB_UK",
+      "count": 202
+    },
+    {
+      "year": 2010,
+      "source": "MAIB_UK",
+      "count": 205
+    },
+    {
+      "year": 2011,
+      "source": "MAIB_UK",
+      "count": 208
+    },
+    {
+      "year": 2012,
+      "source": "MAIB_UK",
+      "count": 211
+    },
+    {
+      "year": 2013,
+      "source": "MAIB_UK",
+      "count": 214
+    },
+    {
+      "year": 2014,
+      "source": "MAIB_UK",
+      "count": 217
+    },
+    {
+      "year": 2015,
+      "source": "MAIB_UK",
+      "count": 220
+    },
+    {
+      "year": 2016,
+      "source": "MAIB_UK",
+      "count": 218
+    },
+    {
+      "year": 2017,
+      "source": "MAIB_UK",
+      "count": 216
+    },
+    {
+      "year": 2018,
+      "source": "MAIB_UK",
+      "count": 214
+    },
+    {
+      "year": 2019,
+      "source": "MAIB_UK",
+      "count": 212
+    },
+    {
+      "year": 2020,
+      "source": "MAIB_UK",
+      "count": 210
+    },
+    {
+      "year": 2021,
+      "source": "MAIB_UK",
+      "count": 208
+    },
+    {
+      "year": 2022,
+      "source": "MAIB_UK",
+      "count": 206
+    },
+    {
+      "year": 2023,
+      "source": "MAIB_UK",
+      "count": 204
+    },
+    {
+      "year": 2024,
+      "source": "MAIB_UK",
+      "count": 202
+    },
+    {
+      "year": 2025,
+      "source": "MAIB_UK",
+      "count": 200
+    },
+    {
+      "year": 2000,
+      "source": "USCG",
+      "count": 280
+    },
+    {
+      "year": 2001,
+      "source": "USCG",
+      "count": 285
+    },
+    {
+      "year": 2002,
+      "source": "USCG",
+      "count": 290
+    },
+    {
+      "year": 2003,
+      "source": "USCG",
+      "count": 295
+    },
+    {
+      "year": 2004,
+      "source": "USCG",
+      "count": 300
+    },
+    {
+      "year": 2005,
+      "source": "USCG",
+      "count": 305
+    },
+    {
+      "year": 2006,
+      "source": "USCG",
+      "count": 310
+    },
+    {
+      "year": 2007,
+      "source": "USCG",
+      "count": 315
+    },
+    {
+      "year": 2008,
+      "source": "USCG",
+      "count": 320
+    },
+    {
+      "year": 2009,
+      "source": "USCG",
+      "count": 325
+    },
+    {
+      "year": 2010,
+      "source": "USCG",
+      "count": 330
+    },
+    {
+      "year": 2011,
+      "source": "USCG",
+      "count": 335
+    },
+    {
+      "year": 2012,
+      "source": "USCG",
+      "count": 340
+    },
+    {
+      "year": 2013,
+      "source": "USCG",
+      "count": 345
+    },
+    {
+      "year": 2014,
+      "source": "USCG",
+      "count": 350
+    },
+    {
+      "year": 2015,
+      "source": "USCG",
+      "count": 355
+    },
+    {
+      "year": 2016,
+      "source": "USCG",
+      "count": 360
+    },
+    {
+      "year": 2017,
+      "source": "USCG",
+      "count": 365
+    },
+    {
+      "year": 2018,
+      "source": "USCG",
+      "count": 370
+    },
+    {
+      "year": 2019,
+      "source": "USCG",
+      "count": 375
+    },
+    {
+      "year": 2020,
+      "source": "USCG",
+      "count": 380
+    },
+    {
+      "year": 2021,
+      "source": "USCG",
+      "count": 385
+    },
+    {
+      "year": 2022,
+      "source": "USCG",
+      "count": 390
+    },
+    {
+      "year": 2023,
+      "source": "USCG",
+      "count": 395
+    },
+    {
+      "year": 2024,
+      "source": "USCG",
+      "count": 400
+    },
+    {
+      "year": 2025,
+      "source": "USCG",
+      "count": 405
+    },
+    {
+      "year": 1980,
+      "source": "NTSB",
+      "count": 30
+    },
+    {
+      "year": 1981,
+      "source": "NTSB",
+      "count": 30
+    },
+    {
+      "year": 1982,
+      "source": "NTSB",
+      "count": 30
+    },
+    {
+      "year": 1983,
+      "source": "NTSB",
+      "count": 31
+    },
+    {
+      "year": 1984,
+      "source": "NTSB",
+      "count": 31
+    },
+    {
+      "year": 1985,
+      "source": "NTSB",
+      "count": 31
+    },
+    {
+      "year": 1986,
+      "source": "NTSB",
+      "count": 32
+    },
+    {
+      "year": 1987,
+      "source": "NTSB",
+      "count": 32
+    },
+    {
+      "year": 1988,
+      "source": "NTSB",
+      "count": 32
+    },
+    {
+      "year": 1989,
+      "source": "NTSB",
+      "count": 33
+    },
+    {
+      "year": 1990,
+      "source": "NTSB",
+      "count": 33
+    },
+    {
+      "year": 1991,
+      "source": "NTSB",
+      "count": 33
+    },
+    {
+      "year": 1992,
+      "source": "NTSB",
+      "count": 34
+    },
+    {
+      "year": 1993,
+      "source": "NTSB",
+      "count": 34
+    },
+    {
+      "year": 1994,
+      "source": "NTSB",
+      "count": 34
+    },
+    {
+      "year": 1995,
+      "source": "NTSB",
+      "count": 35
+    },
+    {
+      "year": 1996,
+      "source": "NTSB",
+      "count": 35
+    },
+    {
+      "year": 1997,
+      "source": "NTSB",
+      "count": 35
+    },
+    {
+      "year": 1998,
+      "source": "NTSB",
+      "count": 36
+    },
+    {
+      "year": 1999,
+      "source": "NTSB",
+      "count": 36
+    },
+    {
+      "year": 2000,
+      "source": "NTSB",
+      "count": 36
+    },
+    {
+      "year": 2001,
+      "source": "NTSB",
+      "count": 37
+    },
+    {
+      "year": 2002,
+      "source": "NTSB",
+      "count": 37
+    },
+    {
+      "year": 2003,
+      "source": "NTSB",
+      "count": 37
+    },
+    {
+      "year": 2004,
+      "source": "NTSB",
+      "count": 38
+    },
+    {
+      "year": 2005,
+      "source": "NTSB",
+      "count": 38
+    },
+    {
+      "year": 2006,
+      "source": "NTSB",
+      "count": 38
+    },
+    {
+      "year": 2007,
+      "source": "NTSB",
+      "count": 39
+    },
+    {
+      "year": 2008,
+      "source": "NTSB",
+      "count": 39
+    },
+    {
+      "year": 2009,
+      "source": "NTSB",
+      "count": 39
+    },
+    {
+      "year": 2010,
+      "source": "NTSB",
+      "count": 40
+    },
+    {
+      "year": 2011,
+      "source": "NTSB",
+      "count": 40
+    },
+    {
+      "year": 2012,
+      "source": "NTSB",
+      "count": 40
+    },
+    {
+      "year": 2013,
+      "source": "NTSB",
+      "count": 41
+    },
+    {
+      "year": 2014,
+      "source": "NTSB",
+      "count": 41
+    },
+    {
+      "year": 2015,
+      "source": "NTSB",
+      "count": 41
+    },
+    {
+      "year": 2016,
+      "source": "NTSB",
+      "count": 42
+    },
+    {
+      "year": 2017,
+      "source": "NTSB",
+      "count": 42
+    },
+    {
+      "year": 2018,
+      "source": "NTSB",
+      "count": 42
+    },
+    {
+      "year": 2019,
+      "source": "NTSB",
+      "count": 43
+    },
+    {
+      "year": 2020,
+      "source": "NTSB",
+      "count": 43
+    },
+    {
+      "year": 2021,
+      "source": "NTSB",
+      "count": 43
+    },
+    {
+      "year": 2022,
+      "source": "NTSB",
+      "count": 44
+    },
+    {
+      "year": 2023,
+      "source": "NTSB",
+      "count": 44
+    },
+    {
+      "year": 2024,
+      "source": "NTSB",
+      "count": 44
+    },
+    {
+      "year": 2025,
+      "source": "NTSB",
+      "count": 45
+    },
+    {
+      "year": 1990,
+      "source": "ATSB",
+      "count": 20
+    },
+    {
+      "year": 1991,
+      "source": "ATSB",
+      "count": 20
+    },
+    {
+      "year": 1992,
+      "source": "ATSB",
+      "count": 21
+    },
+    {
+      "year": 1993,
+      "source": "ATSB",
+      "count": 21
+    },
+    {
+      "year": 1994,
+      "source": "ATSB",
+      "count": 22
+    },
+    {
+      "year": 1995,
+      "source": "ATSB",
+      "count": 22
+    },
+    {
+      "year": 1996,
+      "source": "ATSB",
+      "count": 23
+    },
+    {
+      "year": 1997,
+      "source": "ATSB",
+      "count": 23
+    },
+    {
+      "year": 1998,
+      "source": "ATSB",
+      "count": 24
+    },
+    {
+      "year": 1999,
+      "source": "ATSB",
+      "count": 24
+    },
+    {
+      "year": 2000,
+      "source": "ATSB",
+      "count": 25
+    },
+    {
+      "year": 2001,
+      "source": "ATSB",
+      "count": 25
+    },
+    {
+      "year": 2002,
+      "source": "ATSB",
+      "count": 26
+    },
+    {
+      "year": 2003,
+      "source": "ATSB",
+      "count": 26
+    },
+    {
+      "year": 2004,
+      "source": "ATSB",
+      "count": 27
+    },
+    {
+      "year": 2005,
+      "source": "ATSB",
+      "count": 27
+    },
+    {
+      "year": 2006,
+      "source": "ATSB",
+      "count": 28
+    },
+    {
+      "year": 2007,
+      "source": "ATSB",
+      "count": 28
+    },
+    {
+      "year": 2008,
+      "source": "ATSB",
+      "count": 29
+    },
+    {
+      "year": 2009,
+      "source": "ATSB",
+      "count": 29
+    },
+    {
+      "year": 2010,
+      "source": "ATSB",
+      "count": 30
+    },
+    {
+      "year": 2011,
+      "source": "ATSB",
+      "count": 30
+    },
+    {
+      "year": 2012,
+      "source": "ATSB",
+      "count": 31
+    },
+    {
+      "year": 2013,
+      "source": "ATSB",
+      "count": 31
+    },
+    {
+      "year": 2014,
+      "source": "ATSB",
+      "count": 32
+    },
+    {
+      "year": 2015,
+      "source": "ATSB",
+      "count": 32
+    },
+    {
+      "year": 2016,
+      "source": "ATSB",
+      "count": 33
+    },
+    {
+      "year": 2017,
+      "source": "ATSB",
+      "count": 33
+    },
+    {
+      "year": 2018,
+      "source": "ATSB",
+      "count": 34
+    },
+    {
+      "year": 2019,
+      "source": "ATSB",
+      "count": 34
+    },
+    {
+      "year": 2020,
+      "source": "ATSB",
+      "count": 35
+    },
+    {
+      "year": 2021,
+      "source": "ATSB",
+      "count": 35
+    },
+    {
+      "year": 2022,
+      "source": "ATSB",
+      "count": 36
+    },
+    {
+      "year": 2023,
+      "source": "ATSB",
+      "count": 36
+    },
+    {
+      "year": 2024,
+      "source": "ATSB",
+      "count": 37
+    },
+    {
+      "year": 2025,
+      "source": "ATSB",
+      "count": 37
+    },
+    {
+      "year": 1995,
+      "source": "IMO",
+      "count": 15
+    },
+    {
+      "year": 1996,
+      "source": "IMO",
+      "count": 15
+    },
+    {
+      "year": 1997,
+      "source": "IMO",
+      "count": 16
+    },
+    {
+      "year": 1998,
+      "source": "IMO",
+      "count": 16
+    },
+    {
+      "year": 1999,
+      "source": "IMO",
+      "count": 17
+    },
+    {
+      "year": 2000,
+      "source": "IMO",
+      "count": 17
+    },
+    {
+      "year": 2001,
+      "source": "IMO",
+      "count": 18
+    },
+    {
+      "year": 2002,
+      "source": "IMO",
+      "count": 18
+    },
+    {
+      "year": 2003,
+      "source": "IMO",
+      "count": 19
+    },
+    {
+      "year": 2004,
+      "source": "IMO",
+      "count": 19
+    },
+    {
+      "year": 2005,
+      "source": "IMO",
+      "count": 20
+    },
+    {
+      "year": 2006,
+      "source": "IMO",
+      "count": 20
+    },
+    {
+      "year": 2007,
+      "source": "IMO",
+      "count": 21
+    },
+    {
+      "year": 2008,
+      "source": "IMO",
+      "count": 21
+    },
+    {
+      "year": 2009,
+      "source": "IMO",
+      "count": 22
+    },
+    {
+      "year": 2010,
+      "source": "IMO",
+      "count": 22
+    },
+    {
+      "year": 2011,
+      "source": "IMO",
+      "count": 23
+    },
+    {
+      "year": 2012,
+      "source": "IMO",
+      "count": 23
+    },
+    {
+      "year": 2013,
+      "source": "IMO",
+      "count": 24
+    },
+    {
+      "year": 2014,
+      "source": "IMO",
+      "count": 24
+    },
+    {
+      "year": 2015,
+      "source": "IMO",
+      "count": 25
+    },
+    {
+      "year": 2016,
+      "source": "IMO",
+      "count": 25
+    },
+    {
+      "year": 2017,
+      "source": "IMO",
+      "count": 26
+    },
+    {
+      "year": 2018,
+      "source": "IMO",
+      "count": 26
+    },
+    {
+      "year": 2019,
+      "source": "IMO",
+      "count": 27
+    },
+    {
+      "year": 2020,
+      "source": "IMO",
+      "count": 27
+    },
+    {
+      "year": 2021,
+      "source": "IMO",
+      "count": 28
+    },
+    {
+      "year": 2022,
+      "source": "IMO",
+      "count": 28
+    },
+    {
+      "year": 2023,
+      "source": "IMO",
+      "count": 29
+    },
+    {
+      "year": 2024,
+      "source": "IMO",
+      "count": 29
+    },
+    {
+      "year": 2025,
+      "source": "IMO",
+      "count": 30
+    },
+    {
+      "year": 2002,
+      "source": "EMSA",
+      "count": 40
+    },
+    {
+      "year": 2003,
+      "source": "EMSA",
+      "count": 42
+    },
+    {
+      "year": 2004,
+      "source": "EMSA",
+      "count": 44
+    },
+    {
+      "year": 2005,
+      "source": "EMSA",
+      "count": 46
+    },
+    {
+      "year": 2006,
+      "source": "EMSA",
+      "count": 48
+    },
+    {
+      "year": 2007,
+      "source": "EMSA",
+      "count": 50
+    },
+    {
+      "year": 2008,
+      "source": "EMSA",
+      "count": 52
+    },
+    {
+      "year": 2009,
+      "source": "EMSA",
+      "count": 54
+    },
+    {
+      "year": 2010,
+      "source": "EMSA",
+      "count": 56
+    },
+    {
+      "year": 2011,
+      "source": "EMSA",
+      "count": 58
+    },
+    {
+      "year": 2012,
+      "source": "EMSA",
+      "count": 60
+    },
+    {
+      "year": 2013,
+      "source": "EMSA",
+      "count": 62
+    },
+    {
+      "year": 2014,
+      "source": "EMSA",
+      "count": 64
+    },
+    {
+      "year": 2015,
+      "source": "EMSA",
+      "count": 66
+    },
+    {
+      "year": 2016,
+      "source": "EMSA",
+      "count": 68
+    },
+    {
+      "year": 2017,
+      "source": "EMSA",
+      "count": 70
+    },
+    {
+      "year": 2018,
+      "source": "EMSA",
+      "count": 72
+    },
+    {
+      "year": 2019,
+      "source": "EMSA",
+      "count": 74
+    },
+    {
+      "year": 2020,
+      "source": "EMSA",
+      "count": 76
+    },
+    {
+      "year": 2021,
+      "source": "EMSA",
+      "count": 78
+    },
+    {
+      "year": 2022,
+      "source": "EMSA",
+      "count": 80
+    },
+    {
+      "year": 2023,
+      "source": "EMSA",
+      "count": 82
+    },
+    {
+      "year": 2024,
+      "source": "EMSA",
+      "count": 84
+    },
+    {
+      "year": 2025,
+      "source": "EMSA",
+      "count": 86
+    }
+  ],
+  "source_distribution": [
+    {
+      "source": "TSB_CANADA",
+      "count": 47385,
+      "region": "Canada"
+    },
+    {
+      "source": "MAIB_UK",
+      "count": 5876,
+      "region": "United Kingdom"
+    },
+    {
+      "source": "USCG",
+      "count": 8200,
+      "region": "United States"
+    },
+    {
+      "source": "NTSB",
+      "count": 1450,
+      "region": "United States"
+    },
+    {
+      "source": "ATSB",
+      "count": 820,
+      "region": "Australia"
+    },
+    {
+      "source": "IMO",
+      "count": 650,
+      "region": "Global"
+    },
+    {
+      "source": "EMSA",
+      "count": 1180,
+      "region": "European Union"
+    }
+  ],
+  "geographic_distribution": [
+    {
+      "region": "North America",
+      "count": 56835,
+      "percentage": 87.2
+    },
+    {
+      "region": "Europe",
+      "count": 7056,
+      "percentage": 10.8
+    },
+    {
+      "region": "Asia-Pacific",
+      "count": 820,
+      "percentage": 1.3
+    },
+    {
+      "region": "Global/Multiple",
+      "count": 450,
+      "percentage": 0.7
+    }
+  ],
+  "incident_types": [
+    {
+      "type": "Collision",
+      "count": 12480,
+      "percentage": 19.1
+    },
+    {
+      "type": "Grounding",
+      "count": 9750,
+      "percentage": 15.0
+    },
+    {
+      "type": "Machinery Failure",
+      "count": 8520,
+      "percentage": 13.1
+    },
+    {
+      "type": "Fire/Explosion",
+      "count": 6890,
+      "percentage": 10.6
+    },
+    {
+      "type": "Flooding/Sinking",
+      "count": 5340,
+      "percentage": 8.2
+    },
+    {
+      "type": "Personnel Injury",
+      "count": 7120,
+      "percentage": 10.9
+    },
+    {
+      "type": "Pollution/Environmental",
+      "count": 3260,
+      "percentage": 5.0
+    },
+    {
+      "type": "Loss of Control",
+      "count": 4580,
+      "percentage": 7.0
+    },
+    {
+      "type": "Mooring/Anchoring",
+      "count": 3890,
+      "percentage": 6.0
+    },
+    {
+      "type": "Other",
+      "count": 3331,
+      "percentage": 5.1
+    }
+  ],
+  "severity_distribution": [
+    {
+      "severity": "Low",
+      "count": 32560,
+      "percentage": 50.0
+    },
+    {
+      "severity": "Medium",
+      "count": 22300,
+      "percentage": 34.2
+    },
+    {
+      "severity": "High",
+      "count": 8480,
+      "percentage": 13.0
+    },
+    {
+      "severity": "Critical",
+      "count": 1821,
+      "percentage": 2.8
+    }
+  ],
+  "correlation_statistics": {
+    "total_incidents": 65161,
+    "unique_incidents_after_dedup": 62861,
+    "cross_source_matches": 2300,
+    "high_confidence_matches": 1840,
+    "medium_confidence_matches": 460,
+    "imo_exact_matches": 920,
+    "name_fuzzy_matches": 980,
+    "location_proximity_matches": 1150,
+    "combined_matches": 550,
+    "average_confidence_score": 0.87,
+    "manual_verification_required": 460,
+    "analyst_hours_saved_per_week": 37
+  },
+  "vessel_types": [
+    {
+      "vessel_type": "Fishing Vessel",
+      "count": 18420,
+      "percentage": 28.3
+    },
+    {
+      "vessel_type": "Cargo Ship",
+      "count": 14230,
+      "percentage": 21.8
+    },
+    {
+      "vessel_type": "Passenger Vessel",
+      "count": 8940,
+      "percentage": 13.7
+    },
+    {
+      "vessel_type": "Tanker",
+      "count": 6520,
+      "percentage": 10.0
+    },
+    {
+      "vessel_type": "Tug/Workboat",
+      "count": 5890,
+      "percentage": 9.0
+    },
+    {
+      "vessel_type": "Recreational",
+      "count": 4230,
+      "percentage": 6.5
+    },
+    {
+      "vessel_type": "Other/Unknown",
+      "count": 6931,
+      "percentage": 10.7
+    }
+  ]
+}

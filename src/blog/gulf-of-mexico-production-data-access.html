@@ -1,0 +1,682 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Access Gulf of Mexico production data programmatically using BSEE public datasets and Python APIs. Learn ETL strategies, data quality handling, and automated pipeline development for oil and gas production analysis.">
+    <meta name="keywords" content="BSEE production data, Gulf of Mexico data API, Python BSEE, oil gas production data, GoM production API, energy data automation, BSEE API Python, offshore production data">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Gulf of Mexico Production Data Access - A&CE">
+    <meta property="og:description" content="How to access and process Gulf of Mexico production data programmatically. BSEE data sources, Python code examples, and automated pipelines.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://aceengineer.com/blog/gulf-of-mexico-production-data-access.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Gulf of Mexico Production Data Access">
+    <meta name="twitter:description" content="Access Gulf of Mexico production data programmatically using BSEE public datasets and Python.">
+
+    <title>Gulf of Mexico Production Data Access | A&CE Blog</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "@id": "https://aceengineer.com/blog/gulf-of-mexico-production-data-access.html#article",
+        "headline": "Gulf of Mexico Production Data Access: Programmatic Access to BSEE Production Datasets",
+        "description": "Access Gulf of Mexico production data programmatically using BSEE public datasets and Python APIs. Learn ETL strategies and automated pipeline development.",
+        "author": {
+            "@type": "Person",
+            "name": "Vamsee Achanta",
+            "url": "https://aceengineer.com/about.html"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
+        },
+        "datePublished": "2026-02-13",
+        "dateModified": "2026-02-13",
+        "mainEntityOfPage": "https://aceengineer.com/blog/gulf-of-mexico-production-data-access.html",
+        "keywords": ["BSEE", "Gulf of Mexico", "production data", "Python", "data automation", "oil and gas"],
+        "articleSection": "Energy Data",
+        "wordCount": "3200"
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aceengineer.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aceengineer.com/blog/"},
+            {"@type": "ListItem", "position": 3, "name": "Gulf of Mexico Production Data Access", "item": "https://aceengineer.com/blog/gulf-of-mexico-production-data-access.html"}
+        ]
+    }
+    </script>
+
+    <style>
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .article-header {
+            border-bottom: 2px solid #E95420;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .article-meta {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .highlight-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #E95420;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #E95420;
+            color: white;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .code-example {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 15px 0;
+        }
+        .cta-section {
+            background-color: #E95420;
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .cta-section a {
+            color: white;
+            text-decoration: underline;
+        }
+        .key-insight {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <div class="container article-content">
+
+        <article>
+            <header class="article-header">
+                <h1>Gulf of Mexico Production Data Access: Programmatic Access to BSEE Production Datasets</h1>
+                <div class="article-meta">
+                    <strong>Author:</strong> Vamsee Achanta |
+                    <strong>Published:</strong> February 2026 |
+                    <strong>Reading Time:</strong> 16 minutes |
+                    <strong>Category:</strong> Energy Data
+                </div>
+            </header>
+
+            <!-- Abstract -->
+            <div class="highlight-box">
+                <strong>Abstract:</strong> The Bureau of Safety and Environmental Enforcement (BSEE) maintains comprehensive production datasets for Gulf of Mexico offshore operations, but accessing and processing this data programmatically requires navigating complex file formats, inconsistent structures, and data quality challenges. This article provides practical Python-based approaches for automated data retrieval, ETL pipeline development, and handling common data quality issues in BSEE production datasets.
+            </div>
+
+            <!-- Introduction -->
+            <section>
+                <h2>Why Gulf of Mexico Production Data Matters</h2>
+                <p>The Gulf of Mexico produces approximately 15% of U.S. crude oil and 2% of natural gas, representing critical national energy infrastructure. Production data from BSEE provides unprecedented transparency into offshore operations, enabling:</p>
+
+                <ul>
+                    <li><strong>Field development planning:</strong> Historical production trends inform reservoir performance models and decline curve analysis</li>
+                    <li><strong>Economic analysis:</strong> Production histories are essential for NPV calculations and reserve valuations</li>
+                    <li><strong>Regulatory compliance:</strong> Operators must report monthly production, creating auditable records</li>
+                    <li><strong>Market intelligence:</strong> Understanding regional production trends and operator performance</li>
+                </ul>
+
+                <p>However, BSEE data is published in formats designed for government recordkeeping, not computational analysis. Manual downloads and spreadsheet processing are time-consuming, error-prone, and impossible to scale across thousands of leases and decades of history.</p>
+
+                <div class="key-insight">
+                    <strong>Key Insight:</strong> Programmatic access transforms BSEE data from a compliance burden into a strategic asset. Automated pipelines enable daily updates, historical backtesting, and integration with proprietary analysis tools—all while maintaining reproducibility and audit trails.
+                </div>
+            </section>
+
+            <!-- Data Sources -->
+            <section>
+                <h2>BSEE Production Data Sources</h2>
+
+                <h3>Available Datasets</h3>
+                <p>BSEE publishes production data through multiple channels, each with different update frequencies and data granularity:</p>
+
+                <table class="comparison-table">
+                    <tr>
+                        <th>Dataset</th>
+                        <th>Granularity</th>
+                        <th>Update Frequency</th>
+                        <th>Format</th>
+                        <th>Best Use Case</th>
+                    </tr>
+                    <tr>
+                        <td>OGOR-A (Oil & Gas Operations Report)</td>
+                        <td>Monthly, per lease</td>
+                        <td>Monthly (60-day lag)</td>
+                        <td>ZIP/CSV</td>
+                        <td>Time series analysis, decline curves</td>
+                    </tr>
+                    <tr>
+                        <td>Production Summary</td>
+                        <td>Annual, per lease</td>
+                        <td>Annually</td>
+                        <td>ZIP/CSV</td>
+                        <td>Long-term trends, cumulative totals</td>
+                    </tr>
+                    <tr>
+                        <td>Platform Production</td>
+                        <td>Monthly, per platform</td>
+                        <td>Monthly</td>
+                        <td>ZIP/CSV</td>
+                        <td>Infrastructure-level analysis</td>
+                    </tr>
+                    <tr>
+                        <td>Well Production</td>
+                        <td>Monthly, per well</td>
+                        <td>Monthly</td>
+                        <td>ZIP/CSV</td>
+                        <td>Well-level performance, EUR estimation</td>
+                    </tr>
+                    <tr>
+                        <td>Public Data Repository (PDR)</td>
+                        <td>Varies</td>
+                        <td>Continuous</td>
+                        <td>Mixed (PDF, Excel, CSV)</td>
+                        <td>Specialized reports, historical data</td>
+                    </tr>
+                </table>
+
+                <h3>Data Access Points</h3>
+                <p>BSEE provides data through several portals:</p>
+
+                <ul>
+                    <li><strong>Data Center Downloads:</strong> Bulk ZIP files updated monthly at <code>data.bsee.gov</code></li>
+                    <li><strong>Public Data Repository:</strong> Document-centric archive with search functionality</li>
+                    <li><strong>API Access:</strong> Limited JSON endpoints for recent data (undocumented, subject to change)</li>
+                    <li><strong>Freedom of Information Act (FOIA):</strong> Requests for non-public or historical data</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>Important:</strong> BSEE does not provide a formal API with versioning or SLA guarantees. Data formats change without notice, requiring defensive programming and validation logic in production pipelines.
+                </div>
+            </section>
+
+            <!-- Python Access -->
+            <section>
+                <h2>Python-Based Data Access</h2>
+
+                <h3>Basic Download Automation</h3>
+                <p>The simplest approach downloads monthly ZIP files and extracts CSV data:</p>
+
+                <div class="code-example">
+import requests
+import zipfile
+import pandas as pd
+from pathlib import Path
+from io import BytesIO
+
+def download_bsee_production(year, month, data_dir="data/bsee"):
+    """
+    Download and extract BSEE monthly production data.
+
+    Args:
+        year: Four-digit year (e.g., 2024)
+        month: Two-digit month (e.g., "01" for January)
+        data_dir: Local directory for downloaded data
+
+    Returns:
+        DataFrame with production records
+    """
+    # BSEE data center URL pattern
+    base_url = "https://www.data.bsee.gov/Production/Files"
+    filename = f"ogor{year}{month}.zip"
+    url = f"{base_url}/{filename}"
+
+    # Download ZIP file
+    response = requests.get(url, timeout=60)
+    response.raise_for_status()
+
+    # Extract CSV from ZIP
+    with zipfile.ZipFile(BytesIO(response.content)) as z:
+        # BSEE ZIPs typically contain single CSV
+        csv_name = [f for f in z.namelist() if f.endswith('.csv')][0]
+
+        # Read directly into pandas
+        with z.open(csv_name) as csv_file:
+            df = pd.read_csv(csv_file, low_memory=False)
+
+    # Cache locally
+    output_path = Path(data_dir) / f"production_{year}_{month}.parquet"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    df.to_parquet(output_path, index=False)
+
+    return df
+                </div>
+
+                <h3>Handling Data Quality Issues</h3>
+                <p>BSEE data contains common quality problems that must be handled programmatically:</p>
+
+                <div class="code-example">
+def clean_bsee_production(df):
+    """
+    Standardize and clean BSEE production data.
+
+    Handles:
+    - Missing/invalid production values
+    - Water depth encoding inconsistencies
+    - Lease number formatting variations
+    - Date parsing across different schemas
+    """
+    df_clean = df.copy()
+
+    # Standardize column names (BSEE uses inconsistent casing)
+    df_clean.columns = df_clean.columns.str.upper().str.strip()
+
+    # Parse production date (multiple formats exist)
+    if 'PROD_DATE' in df_clean.columns:
+        df_clean['PROD_DATE'] = pd.to_datetime(
+            df_clean['PROD_DATE'],
+            errors='coerce'
+        )
+    elif 'PRODUCTION_DATE' in df_clean.columns:
+        df_clean['PROD_DATE'] = pd.to_datetime(
+            df_clean['PRODUCTION_DATE'],
+            format='%Y%m',
+            errors='coerce'
+        )
+
+    # Clean numeric production values
+    prod_cols = ['OIL_PROD', 'GAS_PROD', 'COND_PROD', 'WATER_PROD']
+    for col in prod_cols:
+        if col in df_clean.columns:
+            # Replace common invalid values
+            df_clean[col] = pd.to_numeric(
+                df_clean[col].replace(['NA', 'NULL', '-'], None),
+                errors='coerce'
+            )
+            # Zero fill missing values (reported as no production)
+            df_clean[col] = df_clean[col].fillna(0)
+
+    # Standardize lease numbers (remove leading zeros)
+    if 'LEASE_NUMBER' in df_clean.columns:
+        df_clean['LEASE_NUMBER'] = df_clean['LEASE_NUMBER'].astype(str).str.lstrip('0')
+
+    # Water depth classification
+    if 'WATER_DEPTH' in df_clean.columns:
+        df_clean['DEPTH_CLASS'] = pd.cut(
+            df_clean['WATER_DEPTH'],
+            bins=[0, 400, 1000, 5000, 12000],
+            labels=['Shelf', 'Deepwater', 'Ultra-Deepwater', 'Frontier']
+        )
+
+    return df_clean
+                </div>
+
+                <div class="key-insight">
+                    <strong>Data Quality Reality:</strong> Approximately 3-5% of BSEE production records contain data quality issues: negative production values, impossible dates, missing lease identifiers, or encoding errors. Production pipelines must handle these gracefully without failing entire batches.
+                </div>
+            </section>
+
+            <!-- ETL Pipeline -->
+            <section>
+                <h2>Building Production-Grade ETL Pipelines</h2>
+
+                <h3>Pipeline Architecture</h3>
+                <p>A robust BSEE data pipeline includes extraction, transformation, validation, and storage layers:</p>
+
+                <div class="code-example">
+from dataclasses import dataclass
+from typing import List, Dict
+import logging
+
+@dataclass
+class BSEEPipeline:
+    """Production-grade BSEE data pipeline."""
+
+    start_year: int
+    end_year: int
+    output_format: str = "parquet"  # or "sqlite", "postgresql"
+    validate: bool = True
+
+    def run(self):
+        """Execute complete ETL pipeline."""
+        logger = logging.getLogger(__name__)
+
+        # 1. Extract - download all months in range
+        raw_data = []
+        for year in range(self.start_year, self.end_year + 1):
+            for month in range(1, 13):
+                try:
+                    df = download_bsee_production(year, f"{month:02d}")
+                    raw_data.append(df)
+                    logger.info(f"Downloaded {year}-{month:02d}: {len(df)} records")
+                except requests.HTTPError as e:
+                    logger.warning(f"Missing data for {year}-{month:02d}: {e}")
+                    continue
+
+        # 2. Transform - concatenate and clean
+        df_all = pd.concat(raw_data, ignore_index=True)
+        df_clean = clean_bsee_production(df_all)
+
+        # 3. Validate - check data quality
+        if self.validate:
+            issues = self._validate_data(df_clean)
+            if issues['critical']:
+                raise ValueError(f"Critical validation errors: {issues['critical']}")
+            if issues['warnings']:
+                logger.warning(f"Data quality warnings: {len(issues['warnings'])}")
+
+        # 4. Load - write to output format
+        self._save_data(df_clean)
+
+        return df_clean
+
+    def _validate_data(self, df) -> Dict[str, List]:
+        """Validate cleaned data against business rules."""
+        issues = {'critical': [], 'warnings': []}
+
+        # Critical: must have production date and lease number
+        if df['PROD_DATE'].isna().any():
+            issues['critical'].append("Missing production dates detected")
+
+        if df['LEASE_NUMBER'].isna().any():
+            issues['critical'].append("Missing lease numbers detected")
+
+        # Warning: negative production (data error, not critical)
+        neg_oil = (df['OIL_PROD'] < 0).sum()
+        if neg_oil > 0:
+            issues['warnings'].append(f"{neg_oil} records with negative oil production")
+
+        # Warning: unrealistic production spikes
+        if 'OIL_PROD' in df.columns:
+            q99 = df['OIL_PROD'].quantile(0.99)
+            outliers = (df['OIL_PROD'] > q99 * 10).sum()
+            if outliers > 0:
+                issues['warnings'].append(f"{outliers} extreme outliers detected")
+
+        return issues
+                </div>
+
+                <h3>Incremental Updates</h3>
+                <p>Production systems should download only new data to minimize bandwidth and processing time:</p>
+
+                <div class="code-example">
+def incremental_update(existing_db_path, output_path):
+    """
+    Update existing production database with new monthly data.
+
+    Detects last available month and downloads only new releases.
+    """
+    # Read existing data
+    df_existing = pd.read_parquet(existing_db_path)
+
+    # Find last complete month
+    last_date = df_existing['PROD_DATE'].max()
+    last_year = last_date.year
+    last_month = last_date.month
+
+    # Download new months (BSEE has 60-day reporting lag)
+    today = pd.Timestamp.now()
+    target_month = today - pd.DateOffset(months=2)
+
+    new_data = []
+    current = pd.Timestamp(year=last_year, month=last_month, day=1)
+
+    while current <= target_month:
+        current += pd.DateOffset(months=1)
+        year = current.year
+        month = current.month
+
+        try:
+            df = download_bsee_production(year, f"{month:02d}")
+            new_data.append(df)
+        except requests.HTTPError:
+            # Data not yet available
+            break
+
+    if new_data:
+        # Merge with existing
+        df_new = pd.concat(new_data, ignore_index=True)
+        df_combined = pd.concat([df_existing, df_new], ignore_index=True)
+        df_combined = df_combined.drop_duplicates(
+            subset=['LEASE_NUMBER', 'PROD_DATE'],
+            keep='last'
+        )
+        df_combined.to_parquet(output_path, index=False)
+        return len(df_new)
+
+    return 0
+                </div>
+            </section>
+
+            <!-- Integration -->
+            <section>
+                <h2>Integration with Analysis Tools</h2>
+
+                <h3>Decline Curve Analysis Integration</h3>
+                <p>Production data feeds directly into reservoir engineering workflows:</p>
+
+                <table class="comparison-table">
+                    <tr>
+                        <th>Analysis Type</th>
+                        <th>Required Data</th>
+                        <th>BSEE Source</th>
+                        <th>Typical Workflow</th>
+                    </tr>
+                    <tr>
+                        <td>Single-well EUR</td>
+                        <td>Monthly production by well</td>
+                        <td>Well Production dataset</td>
+                        <td>Arps hyperbolic decline fit</td>
+                    </tr>
+                    <tr>
+                        <td>Field-level reserves</td>
+                        <td>Lease-aggregated production</td>
+                        <td>OGOR-A dataset</td>
+                        <td>Multi-well type curve analysis</td>
+                    </tr>
+                    <tr>
+                        <td>Platform economics</td>
+                        <td>Platform-allocated volumes</td>
+                        <td>Platform Production dataset</td>
+                        <td>NPV with infrastructure costs</td>
+                    </tr>
+                    <tr>
+                        <td>Regional trends</td>
+                        <td>Area/basin aggregates</td>
+                        <td>Production Summary</td>
+                        <td>Play-level opportunity screening</td>
+                    </tr>
+                </table>
+
+                <h3>Example: Automated Decline Analysis</h3>
+                <div class="code-example">
+from scipy.optimize import curve_fit
+import numpy as np
+
+def arps_hyperbolic(t, qi, Di, b):
+    """Arps hyperbolic decline equation."""
+    return qi / ((1 + b * Di * t) ** (1 / b))
+
+def fit_decline_curve(lease_number, bsee_data):
+    """
+    Fit Arps decline curve to BSEE production history.
+
+    Returns forecast parameters and EUR estimate.
+    """
+    # Filter to specific lease
+    df_lease = bsee_data[
+        bsee_data['LEASE_NUMBER'] == lease_number
+    ].sort_values('PROD_DATE')
+
+    # Convert to monthly time index
+    df_lease['MONTHS'] = (
+        (df_lease['PROD_DATE'] - df_lease['PROD_DATE'].min()) /
+        pd.Timedelta(days=30.44)
+    ).astype(int)
+
+    # Fit hyperbolic decline
+    t = df_lease['MONTHS'].values
+    q = df_lease['OIL_PROD'].values
+
+    # Initial guesses: qi=max rate, Di=10%/year, b=0.5
+    p0 = [q.max(), 0.10/12, 0.5]
+
+    try:
+        params, _ = curve_fit(
+            arps_hyperbolic,
+            t, q,
+            p0=p0,
+            bounds=([0, 0, 0], [q.max()*2, 1.0, 2.0])
+        )
+        qi, Di, b = params
+
+        # Forecast 30 years
+        t_forecast = np.arange(0, 360)
+        q_forecast = arps_hyperbolic(t_forecast, qi, Di, b)
+
+        # EUR calculation (cumulative to economic limit)
+        eur = np.trapz(q_forecast, dx=1)  # Monthly barrels
+
+        return {
+            'qi': qi,
+            'Di': Di,
+            'b': b,
+            'eur': eur,
+            'forecast': q_forecast
+        }
+
+    except RuntimeError:
+        return None  # Fit failed
+                </div>
+            </section>
+
+            <!-- Best Practices -->
+            <section>
+                <h2>Best Practices and Gotchas</h2>
+
+                <h3>Common Pitfalls</h3>
+                <ul>
+                    <li><strong>Reporting lag:</strong> BSEE data is 60-90 days delayed; don't expect real-time updates</li>
+                    <li><strong>Lease vs. well vs. platform:</strong> Ensure you're aggregating at the correct level for your analysis</li>
+                    <li><strong>Shut-in periods:</strong> Zero production may indicate temporary shutdown, not well exhaustion</li>
+                    <li><strong>Unit conversions:</strong> BSEE reports oil in barrels (BBL), gas in MCF; check your formulas</li>
+                    <li><strong>Confidentiality periods:</strong> Some recent data may be withheld for competitive reasons</li>
+                </ul>
+
+                <h3>Performance Optimization</h3>
+                <div class="key-insight">
+                    <strong>Performance Tip:</strong> BSEE production datasets span 50+ years and millions of records. Use Parquet or DuckDB for local storage instead of CSV—query times improve 10-100x for typical analyses.
+                </div>
+
+                <h3>Validation Checklist</h3>
+                <ul>
+                    <li>Verify total GoM production matches EIA reported values (within 5%)</li>
+                    <li>Check for duplicate records after merging monthly downloads</li>
+                    <li>Validate water depth classification against lease maps</li>
+                    <li>Cross-reference major field names with operator press releases</li>
+                    <li>Test pipeline on historical data before deploying to production</li>
+                </ul>
+            </section>
+
+            <!-- Conclusion -->
+            <section>
+                <h2>Conclusion</h2>
+
+                <p>Programmatic access to BSEE production data transforms Gulf of Mexico analysis from manual, error-prone spreadsheet work into automated, reproducible pipelines. The investment in building robust ETL infrastructure pays dividends through:</p>
+
+                <ul>
+                    <li><strong>Speed:</strong> Daily updates instead of quarterly manual downloads</li>
+                    <li><strong>Scale:</strong> Analyze all 3,500+ active leases simultaneously</li>
+                    <li><strong>Reproducibility:</strong> Auditable data lineage and transformation logic</li>
+                    <li><strong>Integration:</strong> Seamless connection to decline analysis, economics, and visualization tools</li>
+                </ul>
+
+                <p>The code examples in this article provide a starting point for production pipelines. Real-world implementations should add monitoring, error handling, data quality dashboards, and integration with your organization's data infrastructure.</p>
+
+                <p>For <a href="../energy.html">energy sector consulting</a> projects requiring Gulf of Mexico production analysis, we've developed comprehensive ETL frameworks that handle BSEE, state regulatory data, and operator reporting—delivering clean, analysis-ready datasets with full documentation.</p>
+            </section>
+
+            <!-- Author Bio -->
+            <section style="background-color: #f8f9fa; padding: 20px; margin-top: 30px; border-radius: 5px;">
+                <h3>About the Author</h3>
+                <p><strong>Vamsee Achanta</strong> is the founder of Analytical & Computational Engineering (A&CE), specializing in energy data automation and offshore engineering analytics. With experience processing multi-terabyte energy datasets, Vamsee helps organizations transition from manual data workflows to automated, reproducible pipelines.</p>
+                <p><a href="../about.html">Learn more about A&CE →</a></p>
+            </section>
+
+        </article>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h3>Need Help with Energy Data Automation?</h3>
+            <p>We build production-grade ETL pipelines for BSEE, state regulatory data, and proprietary energy datasets—transforming manual workflows into automated, reproducible analysis infrastructure.</p>
+            <p>
+                <a href="../contact.html?vertical=energy" class="btn btn-default btn-lg" style="color: #E95420; background: white;">Get in Touch</a>
+                <a href="index.html" class="btn btn-default btn-lg" style="border: 2px solid white;">More Articles</a>
+            </p>
+        </div>
+
+        <!-- Related Articles -->
+        <section style="margin-top: 30px;">
+            <h3>Related Articles</h3>
+            <ul>
+                <li><a href="../energy.html">Energy Sector Consulting - A&CE</a></li>
+                <li><a href="npv-analysis-deepwater-field-development.html">NPV Analysis for Deepwater Field Development</a></li>
+                <li><a href="energy-data-automation-pipelines.html">Energy Data Automation Pipelines: From Manual to Automated Workflows</a></li>
+            </ul>
+        </section>
+
+    </div>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

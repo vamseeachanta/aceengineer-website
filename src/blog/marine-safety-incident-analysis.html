@@ -1,0 +1,739 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Cross-database correlation for marine safety incident analysis. Data sources from BSEE, USCG, and IMO. Python code for entity resolution, temporal correlation, and regulatory compliance analysis.">
+    <meta name="keywords" content="marine safety analysis, offshore incident data, IMO casualty database, BSEE incident analysis, USCG marine safety, safety data correlation, Python safety analysis, offshore HSE data">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Marine Safety Incident Analysis - A&CE">
+    <meta property="og:description" content="Cross-database correlation for marine safety analysis. Data sources, entity resolution, and regulatory compliance with Python code examples.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://aceengineer.com/blog/marine-safety-incident-analysis.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Marine Safety Incident Analysis">
+    <meta name="twitter:description" content="Cross-database correlation for marine safety incident analysis with BSEE, USCG, and IMO data.">
+
+    <title>Marine Safety Incident Analysis | A&CE Blog</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "@id": "https://aceengineer.com/blog/marine-safety-incident-analysis.html#article",
+        "headline": "Marine Safety Incident Analysis: Cross-Database Correlation and Regulatory Compliance",
+        "description": "Cross-database correlation for marine safety incident analysis. Data sources from BSEE, USCG, and IMO with entity resolution and temporal correlation.",
+        "author": {
+            "@type": "Person",
+            "name": "Vamsee Achanta",
+            "url": "https://aceengineer.com/about.html"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
+        },
+        "datePublished": "2026-02-13",
+        "dateModified": "2026-02-13",
+        "mainEntityOfPage": "https://aceengineer.com/blog/marine-safety-incident-analysis.html",
+        "keywords": ["marine safety", "incident analysis", "BSEE", "USCG", "IMO", "regulatory compliance"],
+        "articleSection": "Marine Safety",
+        "wordCount": "2900"
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aceengineer.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aceengineer.com/blog/"},
+            {"@type": "ListItem", "position": 3, "name": "Marine Safety Incident Analysis", "item": "https://aceengineer.com/blog/marine-safety-incident-analysis.html"}
+        ]
+    }
+    </script>
+
+    <style>
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .article-header {
+            border-bottom: 2px solid #E95420;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .article-meta {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .highlight-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #E95420;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #E95420;
+            color: white;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .code-example {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 15px 0;
+        }
+        .cta-section {
+            background-color: #E95420;
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .cta-section a {
+            color: white;
+            text-decoration: underline;
+        }
+        .key-insight {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <div class="container article-content">
+
+        <article>
+            <header class="article-header">
+                <h1>Marine Safety Incident Analysis: Cross-Database Correlation and Regulatory Compliance</h1>
+                <div class="article-meta">
+                    <strong>Author:</strong> Vamsee Achanta |
+                    <strong>Published:</strong> February 2026 |
+                    <strong>Reading Time:</strong> 14 minutes |
+                    <strong>Category:</strong> Marine Safety
+                </div>
+            </header>
+
+            <!-- Abstract -->
+            <div class="highlight-box">
+                <strong>Abstract:</strong> Marine safety incident analysis requires integrating data from multiple regulatory databases—BSEE offshore incidents, USCG marine casualties, and IMO casualty reports. Each database uses different identifiers, classification schemes, and reporting standards, creating significant challenges for cross-database correlation. This article presents practical Python-based approaches for entity resolution, temporal correlation, and regulatory compliance analysis across heterogeneous marine safety datasets.
+            </div>
+
+            <!-- Introduction -->
+            <section>
+                <h2>The Challenge of Fragmented Safety Data</h2>
+                <p>Marine safety incidents are reported to different regulatory authorities depending on location, vessel type, and incident severity:</p>
+
+                <ul>
+                    <li><strong>BSEE (Bureau of Safety and Environmental Enforcement):</strong> Offshore oil and gas incidents in U.S. waters</li>
+                    <li><strong>USCG (U.S. Coast Guard):</strong> Marine casualties involving vessels in U.S. navigable waters</li>
+                    <li><strong>IMO (International Maritime Organization):</strong> Global casualty database for international shipping</li>
+                    <li><strong>NTSB (National Transportation Safety Board):</strong> Major maritime accident investigations</li>
+                    <li><strong>Flag State authorities:</strong> Country-specific incident databases</li>
+                </ul>
+
+                <p>No single database provides comprehensive coverage. A platform supply vessel collision in the Gulf of Mexico may appear in BSEE records (if near a platform), USCG reports (vessel casualty), and potentially IMO databases (if internationally flagged)—but with different incident IDs, dates, and descriptions.</p>
+
+                <div class="key-insight">
+                    <strong>Key Insight:</strong> Cross-database correlation is essential for comprehensive risk analysis. Single-source analyses systematically undercount incidents, misidentify root causes, and fail to capture industry-wide trends—leading to incomplete risk assessments and ineffective safety interventions.
+                </div>
+            </section>
+
+            <!-- Data Sources -->
+            <section>
+                <h2>Marine Safety Data Sources</h2>
+
+                <h3>Database Comparison</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Database</th>
+                        <th>Coverage</th>
+                        <th>Update Frequency</th>
+                        <th>Access Method</th>
+                        <th>Key Limitations</th>
+                    </tr>
+                    <tr>
+                        <td>BSEE Incident Investigations</td>
+                        <td>U.S. offshore O&G</td>
+                        <td>Quarterly</td>
+                        <td>Public download (data.bsee.gov)</td>
+                        <td>Excludes vessel-only incidents</td>
+                    </tr>
+                    <tr>
+                        <td>BSEE Incident of Non-Compliance (INC)</td>
+                        <td>U.S. offshore O&G</td>
+                        <td>Monthly</td>
+                        <td>Public download</td>
+                        <td>Regulatory violations only</td>
+                    </tr>
+                    <tr>
+                        <td>USCG Marine Information for Safety and Law Enforcement (MISLE)</td>
+                        <td>U.S. navigable waters</td>
+                        <td>Real-time</td>
+                        <td>FOIA requests, limited API</td>
+                        <td>Restricted access, FOIA delays</td>
+                    </tr>
+                    <tr>
+                        <td>IMO GISIS Casualty Database</td>
+                        <td>Global (IMO member states)</td>
+                        <td>Continuous</td>
+                        <td>Web portal (registration required)</td>
+                        <td>Voluntary reporting, quality varies</td>
+                    </tr>
+                    <tr>
+                        <td>NTSB Marine Accident Database</td>
+                        <td>Major U.S. incidents</td>
+                        <td>Per investigation</td>
+                        <td>Public website, reports</td>
+                        <td>Only major incidents investigated</td>
+                    </tr>
+                </table>
+
+                <h3>Data Quality Challenges</h3>
+                <p>Each database presents unique data quality issues:</p>
+
+                <ul>
+                    <li><strong>Vessel name variations:</strong> "M/V OCEAN CAPTAIN" vs. "OCEAN CAPTAIN" vs. "MV OCEAN CAPT"</li>
+                    <li><strong>Date discrepancies:</strong> Incident date vs. report date vs. investigation completion date</li>
+                    <li><strong>Location encoding:</strong> Lat/lon vs. lease numbers vs. geographic descriptions</li>
+                    <li><strong>Severity classification:</strong> Non-standardized severity scales across databases</li>
+                    <li><strong>Missing data:</strong> 20-40% of records have incomplete vessel identifiers or incident details</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>Important:</strong> USCG MISLE data requires FOIA requests and can take 30-90 days to obtain. Plan data acquisition timelines accordingly for time-sensitive projects.
+                </div>
+            </section>
+
+            <!-- Entity Resolution -->
+            <section>
+                <h2>Entity Resolution and Record Linkage</h2>
+
+                <h3>Vessel Name Matching</h3>
+                <p>Fuzzy matching resolves vessel name variations across databases:</p>
+
+                <div class="code-example">
+from fuzzywuzzy import fuzz
+import pandas as pd
+
+def normalize_vessel_name(name):
+    """
+    Standardize vessel names for matching.
+
+    Handles:
+    - Prefix removal (M/V, MV, MT, etc.)
+    - Case normalization
+    - Special character removal
+    - Common abbreviations
+    """
+    if pd.isna(name):
+        return ""
+
+    name = str(name).upper().strip()
+
+    # Remove common prefixes
+    prefixes = ['M/V ', 'MV ', 'MT ', 'M.V. ', 'M.T. ', 'S/V ', 'SV ']
+    for prefix in prefixes:
+        if name.startswith(prefix):
+            name = name[len(prefix):]
+
+    # Remove special characters
+    name = ''.join(c for c in name if c.isalnum() or c.isspace())
+
+    # Normalize whitespace
+    name = ' '.join(name.split())
+
+    # Expand common abbreviations
+    abbreviations = {
+        'CAPT': 'CAPTAIN',
+        'STR': 'STAR',
+        'SERV': 'SERVICE',
+        'SUPP': 'SUPPLY'
+    }
+    for abbr, full in abbreviations.items():
+        name = name.replace(abbr, full)
+
+    return name
+
+def match_vessels(df_source, df_target, threshold=85):
+    """
+    Match vessels between two databases using fuzzy matching.
+
+    Args:
+        df_source: DataFrame with 'vessel_name' column
+        df_target: DataFrame with 'vessel_name' column
+        threshold: Minimum fuzzy match score (0-100)
+
+    Returns:
+        DataFrame with matched pairs and match scores
+    """
+    # Normalize names
+    df_source['vessel_normalized'] = df_source['vessel_name'].apply(
+        normalize_vessel_name
+    )
+    df_target['vessel_normalized'] = df_target['vessel_name'].apply(
+        normalize_vessel_name
+    )
+
+    matches = []
+
+    for idx_src, row_src in df_source.iterrows():
+        name_src = row_src['vessel_normalized']
+        if not name_src:
+            continue
+
+        best_match = None
+        best_score = 0
+
+        for idx_tgt, row_tgt in df_target.iterrows():
+            name_tgt = row_tgt['vessel_normalized']
+            if not name_tgt:
+                continue
+
+            # Fuzzy ratio
+            score = fuzz.ratio(name_src, name_tgt)
+
+            if score > best_score and score >= threshold:
+                best_score = score
+                best_match = idx_tgt
+
+        if best_match is not None:
+            matches.append({
+                'source_idx': idx_src,
+                'target_idx': best_match,
+                'source_name': row_src['vessel_name'],
+                'target_name': df_target.loc[best_match, 'vessel_name'],
+                'match_score': best_score
+            })
+
+    return pd.DataFrame(matches)
+                </div>
+
+                <h3>IMO Number Matching</h3>
+                <p>IMO numbers provide definitive vessel identification when available:</p>
+
+                <div class="code-example">
+def match_by_imo(df_bsee, df_uscg, df_imo):
+    """
+    Match incidents across databases using IMO vessel numbers.
+
+    IMO numbers are unique, permanent vessel identifiers assigned
+    by the International Maritime Organization.
+
+    Args:
+        df_bsee: BSEE incident data
+        df_uscg: USCG casualty data
+        df_imo: IMO casualty data
+
+    Returns:
+        DataFrame with cross-referenced incidents
+    """
+    # Extract IMO numbers (format: IMO1234567)
+    for df in [df_bsee, df_uscg, df_imo]:
+        if 'imo_number' in df.columns:
+            df['imo_clean'] = df['imo_number'].astype(str).str.extract(
+                r'(\d{7})'
+            )[0]
+
+    # Merge on IMO number
+    df_merged = df_bsee.merge(
+        df_uscg,
+        on='imo_clean',
+        how='outer',
+        suffixes=('_bsee', '_uscg')
+    )
+
+    df_merged = df_merged.merge(
+        df_imo,
+        on='imo_clean',
+        how='outer',
+        suffixes=('', '_imo')
+    )
+
+    # Flag which databases contain the incident
+    df_merged['in_bsee'] = df_merged['incident_id_bsee'].notna()
+    df_merged['in_uscg'] = df_merged['case_number_uscg'].notna()
+    df_merged['in_imo'] = df_merged['casualty_id_imo'].notna()
+
+    return df_merged
+                </div>
+
+                <div class="key-insight">
+                    <strong>Data Quality Reality:</strong> Only 40-60% of offshore support vessels have IMO numbers in incident databases. Smaller vessels (under 500 GT) are not required to have IMO numbers, necessitating fuzzy name matching as a fallback strategy.
+                </div>
+            </section>
+
+            <!-- Temporal Correlation -->
+            <section>
+                <h2>Temporal Correlation Analysis</h2>
+
+                <h3>Time-Window Matching</h3>
+                <p>Match incidents occurring within a defined time window at similar locations:</p>
+
+                <div class="code-example">
+from datetime import timedelta
+from scipy.spatial.distance import cdist
+
+def temporal_spatial_match(df_bsee, df_uscg,
+                           time_window_days=7,
+                           distance_threshold_km=50):
+    """
+    Match incidents using temporal and spatial proximity.
+
+    Args:
+        df_bsee: BSEE incidents with [incident_date, latitude, longitude]
+        df_uscg: USCG casualties with [casualty_date, lat, lon]
+        time_window_days: Maximum days between incident dates
+        distance_threshold_km: Maximum distance for spatial match
+
+    Returns:
+        DataFrame with potential cross-database matches
+    """
+    matches = []
+
+    # Convert dates to datetime
+    df_bsee['incident_date'] = pd.to_datetime(df_bsee['incident_date'])
+    df_uscg['casualty_date'] = pd.to_datetime(df_uscg['casualty_date'])
+
+    for idx_bsee, row_bsee in df_bsee.iterrows():
+        # Time window filter
+        time_delta = timedelta(days=time_window_days)
+        df_uscg_window = df_uscg[
+            (df_uscg['casualty_date'] >= row_bsee['incident_date'] - time_delta) &
+            (df_uscg['casualty_date'] <= row_bsee['incident_date'] + time_delta)
+        ]
+
+        if len(df_uscg_window) == 0:
+            continue
+
+        # Spatial distance calculation (Haversine)
+        for idx_uscg, row_uscg in df_uscg_window.iterrows():
+            distance_km = haversine_distance(
+                row_bsee['latitude'], row_bsee['longitude'],
+                row_uscg['lat'], row_uscg['lon']
+            )
+
+            if distance_km <= distance_threshold_km:
+                matches.append({
+                    'bsee_idx': idx_bsee,
+                    'uscg_idx': idx_uscg,
+                    'time_diff_days': abs(
+                        (row_uscg['casualty_date'] - row_bsee['incident_date']).days
+                    ),
+                    'distance_km': distance_km,
+                    'match_confidence': calculate_match_confidence(
+                        time_diff_days=abs((row_uscg['casualty_date'] -
+                                           row_bsee['incident_date']).days),
+                        distance_km=distance_km
+                    )
+                })
+
+    return pd.DataFrame(matches)
+
+def haversine_distance(lat1, lon1, lat2, lon2):
+    """Calculate great-circle distance in kilometers."""
+    from math import radians, sin, cos, sqrt, atan2
+
+    R = 6371.0  # Earth radius in km
+
+    lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
+
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1-a))
+
+    return R * c
+
+def calculate_match_confidence(time_diff_days, distance_km):
+    """
+    Calculate match confidence score (0-100).
+
+    Perfect match: same day, same location (100)
+    Weak match: 7 days apart, 50km distance (~40)
+    """
+    time_score = max(0, 100 - (time_diff_days * 14))  # -14 pts per day
+    distance_score = max(0, 100 - (distance_km * 2))  # -2 pts per km
+
+    # Weighted average
+    confidence = 0.6 * time_score + 0.4 * distance_score
+
+    return round(confidence, 1)
+                </div>
+            </section>
+
+            <!-- Analysis Patterns -->
+            <section>
+                <h2>Cross-Database Analysis Patterns</h2>
+
+                <h3>Incident Severity Comparison</h3>
+                <p>Standardize severity classifications across databases:</p>
+
+                <div class="code-example">
+def standardize_severity(df, source_db):
+    """
+    Map database-specific severity codes to unified scale.
+
+    Unified scale:
+        1 = Minor (no injury, minimal damage)
+        2 = Moderate (medical treatment, equipment damage)
+        3 = Serious (lost time injury, significant damage)
+        4 = Major (fatality, total loss)
+
+    Args:
+        df: Incident DataFrame
+        source_db: 'bsee', 'uscg', or 'imo'
+
+    Returns:
+        DataFrame with 'severity_unified' column
+    """
+    severity_maps = {
+        'bsee': {
+            'NON-INJURY': 1,
+            'FIRST AID': 1,
+            'MTC': 2,  # Medical Treatment Case
+            'RWC': 2,  # Restricted Work Case
+            'LWC': 3,  # Lost Workday Case
+            'FATALITY': 4
+        },
+        'uscg': {
+            'MINOR': 1,
+            'MODERATE': 2,
+            'SERIOUS': 3,
+            'MAJOR': 4,
+            'CASUALTY': 4
+        },
+        'imo': {
+            'Less Serious': 1,
+            'Serious': 3,
+            'Very Serious': 4
+        }
+    }
+
+    if source_db not in severity_maps:
+        raise ValueError(f"Unknown database: {source_db}")
+
+    severity_col = {
+        'bsee': 'injury_severity',
+        'uscg': 'casualty_class',
+        'imo': 'severity_description'
+    }[source_db]
+
+    df['severity_unified'] = df[severity_col].map(
+        severity_maps[source_db]
+    )
+
+    # Handle unmapped values
+    df['severity_unified'] = df['severity_unified'].fillna(2)  # Default moderate
+
+    return df
+                </div>
+
+                <h3>Root Cause Aggregation</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Root Cause Category</th>
+                        <th>BSEE Term</th>
+                        <th>USCG Term</th>
+                        <th>IMO Term</th>
+                    </tr>
+                    <tr>
+                        <td>Human Error</td>
+                        <td>Personnel Error</td>
+                        <td>Human Factors</td>
+                        <td>Human Element</td>
+                    </tr>
+                    <tr>
+                        <td>Equipment Failure</td>
+                        <td>Equipment Failure</td>
+                        <td>Material Failure</td>
+                        <td>Technical Failure</td>
+                    </tr>
+                    <tr>
+                        <td>Weather/Environment</td>
+                        <td>Environmental</td>
+                        <td>Weather</td>
+                        <td>External Factors</td>
+                    </tr>
+                    <tr>
+                        <td>Procedural</td>
+                        <td>Procedure Violation</td>
+                        <td>Operational</td>
+                        <td>Operational/Procedural</td>
+                    </tr>
+                    <tr>
+                        <td>Design/Engineering</td>
+                        <td>Design Deficiency</td>
+                        <td>Design</td>
+                        <td>Design Related</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Regulatory Compliance -->
+            <section>
+                <h2>Regulatory Compliance Reporting</h2>
+
+                <h3>Multi-Jurisdiction Reporting Requirements</h3>
+                <p>Offshore incidents often trigger reporting obligations to multiple authorities:</p>
+
+                <div class="code-example">
+def determine_reporting_requirements(incident):
+    """
+    Identify which regulatory authorities must be notified.
+
+    Args:
+        incident: Dict with keys [location, water_depth, vessel_flag,
+                  injury_count, spill_volume, damage_cost]
+
+    Returns:
+        List of required reports
+    """
+    required_reports = []
+
+    # BSEE reporting (30 CFR 250.188)
+    if incident['location'] == 'OCS':  # Outer Continental Shelf
+        if (incident['injury_count'] > 0 or
+            incident['spill_volume'] > 1 or  # barrels
+            incident['damage_cost'] > 25000):  # USD
+            required_reports.append({
+                'authority': 'BSEE',
+                'regulation': '30 CFR 250.188',
+                'deadline': '15 minutes (verbal) + 2 hours (written)',
+                'form': 'Incident of Non-Compliance (INC)'
+            })
+
+    # USCG reporting (46 CFR 4.05)
+    if incident['injury_count'] > 0:
+        required_reports.append({
+            'authority': 'USCG',
+            'regulation': '46 CFR 4.05-1',
+            'deadline': 'Immediately',
+            'form': 'CG-2692 (Marine Casualty Report)'
+        })
+
+    # IMO reporting (SOLAS Chapter V)
+    if incident['vessel_flag'] == 'international':
+        if incident['injury_count'] > 0 or incident['damage_cost'] > 100000:
+            required_reports.append({
+                'authority': 'IMO',
+                'regulation': 'SOLAS V/21',
+                'deadline': 'Within 7 days',
+                'form': 'IMO Casualty Report'
+            })
+
+    # EPA reporting (40 CFR 110)
+    if incident['spill_volume'] > 0:
+        required_reports.append({
+            'authority': 'EPA/NRC',
+            'regulation': '40 CFR 110.6',
+            'deadline': 'Immediately',
+            'form': 'National Response Center notification'
+        })
+
+    return required_reports
+                </div>
+
+                <div class="warning-box">
+                    <strong>Legal Note:</strong> Reporting requirements vary by jurisdiction and incident type. This code provides general guidance only—consult legal counsel for specific compliance obligations. Late or incomplete reporting can result in significant penalties.
+                </div>
+            </section>
+
+            <!-- Conclusion -->
+            <section>
+                <h2>Conclusion</h2>
+
+                <p>Cross-database marine safety incident analysis transforms fragmented regulatory data into comprehensive risk intelligence. The Python-based approaches in this article enable:</p>
+
+                <ul>
+                    <li><strong>Entity resolution:</strong> Fuzzy matching and IMO number correlation across databases</li>
+                    <li><strong>Temporal correlation:</strong> Time-window and spatial proximity matching</li>
+                    <li><strong>Standardized severity:</strong> Unified classification across regulatory schemes</li>
+                    <li><strong>Regulatory compliance:</strong> Multi-jurisdiction reporting requirement identification</li>
+                </ul>
+
+                <p>Organizations managing offshore operations face increasing regulatory scrutiny and reporting complexity. Automated cross-database correlation provides defensible incident tracking, comprehensive root cause analysis, and proactive risk identification—transforming compliance obligations into strategic safety intelligence.</p>
+
+                <p>For <a href="../energy.html">energy sector consulting</a> projects requiring HSE data integration, we've developed comprehensive incident tracking systems that correlate BSEE, USCG, OSHA, and EPA datasets—delivering unified safety dashboards with automated regulatory reporting workflows.</p>
+            </section>
+
+            <!-- Author Bio -->
+            <section style="background-color: #f8f9fa; padding: 20px; margin-top: 30px; border-radius: 5px;">
+                <h3>About the Author</h3>
+                <p><strong>Vamsee Achanta</strong> is the founder of Analytical & Computational Engineering (A&CE), specializing in marine safety analytics and offshore regulatory compliance. With experience integrating multi-agency safety databases, Vamsee helps operators transform fragmented incident data into actionable risk intelligence.</p>
+                <p><a href="../about.html">Learn more about A&CE →</a></p>
+            </section>
+
+        </article>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h3>Need Help with Marine Safety Data Integration?</h3>
+            <p>We build automated incident correlation systems that integrate BSEE, USCG, IMO, and proprietary safety databases—transforming regulatory compliance into strategic risk management.</p>
+            <p>
+                <a href="../contact.html?vertical=energy" class="btn btn-default btn-lg" style="color: #E95420; background: white;">Get in Touch</a>
+                <a href="index.html" class="btn btn-default btn-lg" style="border: 2px solid white;">More Articles</a>
+            </p>
+        </div>
+
+        <!-- Related Articles -->
+        <section style="margin-top: 30px;">
+            <h3>Related Articles</h3>
+            <ul>
+                <li><a href="../energy.html">Energy Sector Consulting - A&CE</a></li>
+                <li><a href="energy-data-automation-pipelines.html">Energy Data Automation Pipelines</a></li>
+                <li><a href="gulf-of-mexico-production-data-access.html">Gulf of Mexico Production Data Access</a></li>
+            </ul>
+        </section>
+
+    </div>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

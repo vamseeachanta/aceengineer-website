@@ -1,0 +1,721 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="NPV and IRR analysis fundamentals for deepwater field development. Python code for decline curves, DCF modeling, sensitivity analysis, and Gulf of Mexico economic evaluation with real examples.">
+    <meta name="keywords" content="NPV deepwater, field development economics, Python NPV, IRR analysis offshore, deepwater economics, DCF oil gas, Python decline curves, Gulf of Mexico NPV">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="NPV Analysis for Deepwater Field Development - A&CE">
+    <meta property="og:description" content="NPV and IRR fundamentals for offshore economics. Python code for decline curves, DCF analysis, and sensitivity studies for deepwater projects.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://aceengineer.com/blog/npv-analysis-deepwater-field-development.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NPV Analysis for Deepwater Field Development">
+    <meta name="twitter:description" content="Complete guide to NPV and IRR analysis for deepwater field development with Python code examples.">
+
+    <title>NPV Analysis for Deepwater Field Development | A&CE Blog</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "@id": "https://aceengineer.com/blog/npv-analysis-deepwater-field-development.html#article",
+        "headline": "NPV Analysis for Deepwater Field Development: Economics and Python Implementation",
+        "description": "NPV and IRR analysis fundamentals for deepwater field development. Python code for decline curves, DCF modeling, and sensitivity analysis.",
+        "author": {
+            "@type": "Person",
+            "name": "Vamsee Achanta",
+            "url": "https://aceengineer.com/about.html"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
+        },
+        "datePublished": "2026-02-13",
+        "dateModified": "2026-02-13",
+        "mainEntityOfPage": "https://aceengineer.com/blog/npv-analysis-deepwater-field-development.html",
+        "keywords": ["NPV", "IRR", "deepwater", "field development", "economics", "Python", "DCF"],
+        "articleSection": "Energy Economics",
+        "wordCount": "3100"
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aceengineer.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aceengineer.com/blog/"},
+            {"@type": "ListItem", "position": 3, "name": "NPV Analysis for Deepwater Field Development", "item": "https://aceengineer.com/blog/npv-analysis-deepwater-field-development.html"}
+        ]
+    }
+    </script>
+
+    <style>
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .article-header {
+            border-bottom: 2px solid #E95420;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .article-meta {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .highlight-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #E95420;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #E95420;
+            color: white;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .code-example {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 15px 0;
+        }
+        .cta-section {
+            background-color: #E95420;
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .cta-section a {
+            color: white;
+            text-decoration: underline;
+        }
+        .key-insight {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <div class="container article-content">
+
+        <article>
+            <header class="article-header">
+                <h1>NPV Analysis for Deepwater Field Development: Economics and Python Implementation</h1>
+                <div class="article-meta">
+                    <strong>Author:</strong> Vamsee Achanta |
+                    <strong>Published:</strong> February 2026 |
+                    <strong>Reading Time:</strong> 15 minutes |
+                    <strong>Category:</strong> Energy Economics
+                </div>
+            </header>
+
+            <!-- Abstract -->
+            <div class="highlight-box">
+                <strong>Abstract:</strong> Deepwater field development requires capital investments of $2-10 billion with project lifecycles spanning 20-30 years. Net Present Value (NPV) and Internal Rate of Return (IRR) analysis are fundamental tools for investment decisions, but deepwater projects introduce unique complexities: multi-phase development, production sharing agreements, and high operating cost sensitivity. This article presents practical Python-based approaches for deepwater economics, from production forecasting to probabilistic sensitivity analysis.
+            </div>
+
+            <!-- Introduction -->
+            <section>
+                <h2>The Economics of Deepwater Development</h2>
+                <p>Deepwater oil and gas projects are among the most capital-intensive industrial undertakings. A typical Gulf of Mexico development includes:</p>
+
+                <ul>
+                    <li><strong>Subsea infrastructure:</strong> $500M-$1.5B for wells, trees, manifolds, and flowlines</li>
+                    <li><strong>Floating production system:</strong> $1B-$3B for FPSO, TLP, or spar platform</li>
+                    <li><strong>Drilling campaigns:</strong> $100M-$200M per well at 5,000+ ft water depth</li>
+                    <li><strong>Export pipelines:</strong> $500M-$1B depending on distance to shore</li>
+                </ul>
+
+                <p>These massive upfront costs must be recovered through production revenue over decades, making accurate NPV modeling critical for:</p>
+
+                <ul>
+                    <li><strong>Investment decisions:</strong> Which fields to develop, in what sequence</li>
+                    <li><strong>Concept selection:</strong> FPSO vs. TLP vs. subsea tieback economics</li>
+                    <li><strong>Portfolio optimization:</strong> Allocating capital across multiple opportunities</li>
+                    <li><strong>Financing:</strong> Demonstrating project viability to lenders and partners</li>
+                </ul>
+
+                <div class="key-insight">
+                    <strong>Key Insight:</strong> Deepwater projects are highly sensitive to oil price assumptions—a $10/bbl change can swing NPV by $500M+ for a 100 MMbbl field. Sensitivity analysis and probabilistic modeling are not optional; they're essential for understanding project risk.
+                </div>
+            </section>
+
+            <!-- NPV Fundamentals -->
+            <section>
+                <h2>NPV and IRR Fundamentals</h2>
+
+                <h3>Net Present Value (NPV)</h3>
+                <p>NPV discounts future cash flows to present value, accounting for the time value of money:</p>
+
+                <div class="code-example">
+NPV = Σ [Cash Flow_t / (1 + r)^t] - Initial Investment
+
+Where:
+  Cash Flow_t = Revenue - Operating Costs - Taxes (in year t)
+  r = Discount rate (typically 8-12% for oil & gas)
+  t = Time period (years)
+                </div>
+
+                <p>A positive NPV indicates the project creates shareholder value; a negative NPV destroys value.</p>
+
+                <h3>Internal Rate of Return (IRR)</h3>
+                <p>IRR is the discount rate at which NPV equals zero—representing the project's effective rate of return:</p>
+
+                <div class="code-example">
+0 = Σ [Cash Flow_t / (1 + IRR)^t] - Initial Investment
+                </div>
+
+                <p>IRR provides an intuitive comparison metric: if IRR exceeds the company's hurdle rate (required return), the project is economically attractive.</p>
+
+                <h3>Comparison: NPV vs. IRR</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Metric</th>
+                        <th>NPV</th>
+                        <th>IRR</th>
+                    </tr>
+                    <tr>
+                        <td>Meaning</td>
+                        <td>Absolute value created ($ millions)</td>
+                        <td>Rate of return (%)</td>
+                    </tr>
+                    <tr>
+                        <td>Decision Rule</td>
+                        <td>Accept if NPV > 0</td>
+                        <td>Accept if IRR > hurdle rate</td>
+                    </tr>
+                    <tr>
+                        <td>Scale Consideration</td>
+                        <td>Reflects project size</td>
+                        <td>Size-independent (can mislead)</td>
+                    </tr>
+                    <tr>
+                        <td>Multiple Solutions</td>
+                        <td>Always unique</td>
+                        <td>Can have multiple values (rare)</td>
+                    </tr>
+                    <tr>
+                        <td>Industry Preference</td>
+                        <td>Preferred for final decisions</td>
+                        <td>Common for initial screening</td>
+                    </tr>
+                </table>
+
+                <div class="warning-box">
+                    <strong>Important:</strong> IRR can be misleading when comparing projects of different scales. A small project with 25% IRR may create less value than a large project with 15% IRR—NPV captures this difference.
+                </div>
+            </section>
+
+            <!-- Production Forecasting -->
+            <section>
+                <h2>Production Forecasting for DCF Analysis</h2>
+
+                <h3>Decline Curve Analysis</h3>
+                <p>Deepwater wells typically follow hyperbolic or harmonic decline patterns:</p>
+
+                <div class="code-example">
+import numpy as np
+import pandas as pd
+
+def arps_hyperbolic_decline(qi, Di, b, time_months):
+    """
+    Arps hyperbolic decline equation.
+
+    Args:
+        qi: Initial production rate (bbl/month)
+        Di: Initial decline rate (fraction/month)
+        b: Hyperbolic exponent (0 to 2, typically 0.3-0.8)
+        time_months: Array of months since first production
+
+    Returns:
+        Array of production rates
+    """
+    return qi / ((1 + b * Di * time_months) ** (1 / b))
+
+def forecast_production(qi, Di, b, years=20, economic_limit=50):
+    """
+    Generate monthly production forecast until economic limit.
+
+    Args:
+        qi: Initial rate (bbl/day)
+        Di: Annual decline rate (e.g., 0.25 = 25%/year)
+        b: Hyperbolic exponent
+        years: Maximum forecast period
+        economic_limit: Minimum economic rate (bbl/day)
+
+    Returns:
+        DataFrame with monthly production forecast
+    """
+    # Convert to monthly parameters
+    qi_monthly = qi * 30.44  # bbl/month
+    Di_monthly = Di / 12
+
+    # Generate forecast
+    months = np.arange(0, years * 12)
+    q_monthly = arps_hyperbolic_decline(qi_monthly, Di_monthly, b, months)
+
+    # Truncate at economic limit
+    limit_monthly = economic_limit * 30.44
+    mask = q_monthly >= limit_monthly
+    q_monthly = q_monthly[mask]
+    months = months[mask]
+
+    df = pd.DataFrame({
+        'month': months,
+        'year': months / 12,
+        'oil_bbl_month': q_monthly,
+        'oil_bbl_day': q_monthly / 30.44
+    })
+
+    return df
+                </div>
+
+                <h3>Multi-Well Type Curves</h3>
+                <p>Field-level forecasts aggregate individual well profiles with phased drilling:</p>
+
+                <div class="code-example">
+def field_development_forecast(well_schedule, well_params):
+    """
+    Aggregate production from multi-well development.
+
+    Args:
+        well_schedule: DataFrame with columns [well_id, start_month, qi, Di, b]
+        well_params: Dict with economic_limit, max_years
+
+    Returns:
+        Monthly field production forecast
+    """
+    max_months = well_params['max_years'] * 12
+    field_production = np.zeros(max_months)
+
+    for _, well in well_schedule.iterrows():
+        # Generate well-specific forecast
+        df_well = forecast_production(
+            qi=well['qi'],
+            Di=well['Di'],
+            b=well['b'],
+            years=well_params['max_years'],
+            economic_limit=well_params['economic_limit']
+        )
+
+        # Add to field profile starting at well's start month
+        start = well['start_month']
+        for _, row in df_well.iterrows():
+            month_idx = start + int(row['month'])
+            if month_idx < max_months:
+                field_production[month_idx] += row['oil_bbl_month']
+
+    return pd.DataFrame({
+        'month': range(max_months),
+        'year': np.arange(max_months) / 12,
+        'field_oil_bbl_month': field_production
+    })
+                </div>
+            </section>
+
+            <!-- DCF Model -->
+            <section>
+                <h2>Discounted Cash Flow (DCF) Model</h2>
+
+                <h3>Complete NPV Calculation</h3>
+                <div class="code-example">
+def calculate_npv(production_forecast, economic_params):
+    """
+    Calculate NPV and IRR for field development.
+
+    Args:
+        production_forecast: DataFrame with monthly production
+        economic_params: Dict with oil_price, opex_per_bbl,
+                        capex_schedule, royalty_rate, tax_rate,
+                        discount_rate
+
+    Returns:
+        Dict with npv, irr, and annual cash flows
+    """
+    # Aggregate to annual
+    df = production_forecast.copy()
+    df['year_int'] = df['year'].astype(int)
+    df_annual = df.groupby('year_int').agg({
+        'field_oil_bbl_month': 'sum'
+    }).reset_index()
+    df_annual.rename(columns={'field_oil_bbl_month': 'oil_bbl_year'}, inplace=True)
+
+    # Calculate revenue
+    oil_price = economic_params['oil_price']
+    df_annual['revenue'] = df_annual['oil_bbl_year'] * oil_price
+
+    # Operating expenses
+    opex_per_bbl = economic_params['opex_per_bbl']
+    df_annual['opex'] = df_annual['oil_bbl_year'] * opex_per_bbl
+
+    # Capital expenses (from schedule)
+    capex_schedule = economic_params['capex_schedule']  # Dict: {year: amount}
+    df_annual['capex'] = df_annual['year_int'].map(
+        lambda y: capex_schedule.get(y, 0)
+    )
+
+    # Royalties and taxes
+    royalty_rate = economic_params['royalty_rate']
+    tax_rate = economic_params['tax_rate']
+
+    df_annual['royalty'] = df_annual['revenue'] * royalty_rate
+    df_annual['taxable_income'] = (
+        df_annual['revenue'] -
+        df_annual['royalty'] -
+        df_annual['opex'] -
+        df_annual['capex']  # Simplified: assume full expensing
+    )
+    df_annual['tax'] = df_annual['taxable_income'].clip(lower=0) * tax_rate
+
+    # Net cash flow
+    df_annual['cash_flow'] = (
+        df_annual['revenue'] -
+        df_annual['royalty'] -
+        df_annual['opex'] -
+        df_annual['capex'] -
+        df_annual['tax']
+    )
+
+    # NPV calculation
+    discount_rate = economic_params['discount_rate']
+    df_annual['discount_factor'] = 1 / (1 + discount_rate) ** df_annual['year_int']
+    df_annual['pv_cash_flow'] = df_annual['cash_flow'] * df_annual['discount_factor']
+
+    npv = df_annual['pv_cash_flow'].sum()
+
+    # IRR calculation (using numpy_financial if available)
+    try:
+        import numpy_financial as npf
+        irr = npf.irr(df_annual['cash_flow'].values)
+    except ImportError:
+        # Fallback: manual IRR search
+        irr = find_irr(df_annual['cash_flow'].values)
+
+    return {
+        'npv': npv,
+        'irr': irr,
+        'cash_flows': df_annual,
+        'total_production': df_annual['oil_bbl_year'].sum(),
+        'total_revenue': df_annual['revenue'].sum(),
+        'total_capex': df_annual['capex'].sum()
+    }
+
+def find_irr(cash_flows, max_iter=100, tol=1e-6):
+    """Manual IRR calculation using Newton-Raphson."""
+    irr_guess = 0.1  # Start with 10%
+
+    for _ in range(max_iter):
+        npv = sum(cf / (1 + irr_guess) ** i for i, cf in enumerate(cash_flows))
+        npv_derivative = sum(
+            -i * cf / (1 + irr_guess) ** (i + 1)
+            for i, cf in enumerate(cash_flows)
+        )
+
+        if abs(npv) < tol:
+            return irr_guess
+
+        irr_guess -= npv / npv_derivative
+
+    return None  # Failed to converge
+                </div>
+            </section>
+
+            <!-- Sensitivity Analysis -->
+            <section>
+                <h2>Sensitivity Analysis</h2>
+
+                <h3>Tornado Diagram Analysis</h3>
+                <p>Identify which parameters have the greatest impact on NPV:</p>
+
+                <div class="code-example">
+def sensitivity_analysis(base_params, production_forecast, variables):
+    """
+    Calculate NPV sensitivity to key variables.
+
+    Args:
+        base_params: Base case economic parameters
+        production_forecast: Production forecast DataFrame
+        variables: Dict of {param_name: [low_value, high_value]}
+
+    Returns:
+        DataFrame with sensitivity results for tornado diagram
+    """
+    results = []
+
+    # Base case NPV
+    base_result = calculate_npv(production_forecast, base_params)
+    base_npv = base_result['npv']
+
+    # Test each variable
+    for var_name, (low_val, high_val) in variables.items():
+        # Low case
+        params_low = base_params.copy()
+        params_low[var_name] = low_val
+        npv_low = calculate_npv(production_forecast, params_low)['npv']
+
+        # High case
+        params_high = base_params.copy()
+        params_high[var_name] = high_val
+        npv_high = calculate_npv(production_forecast, params_high)['npv']
+
+        results.append({
+            'variable': var_name,
+            'base_npv': base_npv,
+            'npv_low': npv_low,
+            'npv_high': npv_high,
+            'swing': abs(npv_high - npv_low),
+            'downside_risk': base_npv - npv_low,
+            'upside_potential': npv_high - base_npv
+        })
+
+    df_sensitivity = pd.DataFrame(results)
+    df_sensitivity = df_sensitivity.sort_values('swing', ascending=False)
+
+    return df_sensitivity
+                </div>
+
+                <h3>Example: Gulf of Mexico Deepwater Field</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Low Case</th>
+                        <th>Base Case</th>
+                        <th>High Case</th>
+                        <th>NPV Swing (±$MM)</th>
+                    </tr>
+                    <tr>
+                        <td>Oil Price ($/bbl)</td>
+                        <td>60</td>
+                        <td>75</td>
+                        <td>90</td>
+                        <td>±625</td>
+                    </tr>
+                    <tr>
+                        <td>EUR (MMbbl)</td>
+                        <td>80</td>
+                        <td>100</td>
+                        <td>120</td>
+                        <td>±510</td>
+                    </tr>
+                    <tr>
+                        <td>CAPEX ($B)</td>
+                        <td>2.0</td>
+                        <td>2.5</td>
+                        <td>3.0</td>
+                        <td>±380</td>
+                    </tr>
+                    <tr>
+                        <td>OPEX ($/bbl)</td>
+                        <td>18</td>
+                        <td>22</td>
+                        <td>26</td>
+                        <td>±220</td>
+                    </tr>
+                    <tr>
+                        <td>First Oil Delay (months)</td>
+                        <td>0</td>
+                        <td>6</td>
+                        <td>12</td>
+                        <td>±145</td>
+                    </tr>
+                </table>
+
+                <div class="key-insight">
+                    <strong>Business Insight:</strong> Oil price and EUR dominate project economics—efforts to de-risk reserves (additional appraisal wells, pilot production) can dramatically reduce NPV uncertainty even if CAPEX increases moderately.
+                </div>
+            </section>
+
+            <!-- Monte Carlo -->
+            <section>
+                <h2>Probabilistic Analysis (Monte Carlo)</h2>
+
+                <h3>Monte Carlo Simulation</h3>
+                <p>Combine uncertainties probabilistically to generate NPV distributions:</p>
+
+                <div class="code-example">
+def monte_carlo_npv(production_forecast_base, base_params,
+                    distributions, n_iterations=10000):
+    """
+    Monte Carlo simulation for NPV uncertainty quantification.
+
+    Args:
+        production_forecast_base: Base production forecast
+        base_params: Base economic parameters
+        distributions: Dict of {param: (dist_type, params)}
+                      e.g., {'oil_price': ('normal', [75, 10])}
+        n_iterations: Number of Monte Carlo draws
+
+    Returns:
+        DataFrame with NPV distribution and statistics
+    """
+    npv_results = []
+
+    for _ in range(n_iterations):
+        # Draw random parameters
+        mc_params = base_params.copy()
+
+        for param, (dist_type, dist_params) in distributions.items():
+            if dist_type == 'normal':
+                value = np.random.normal(*dist_params)
+            elif dist_type == 'lognormal':
+                value = np.random.lognormal(*dist_params)
+            elif dist_type == 'triangular':
+                value = np.random.triangular(*dist_params)
+            else:
+                raise ValueError(f"Unknown distribution: {dist_type}")
+
+            mc_params[param] = value
+
+        # Calculate NPV for this draw
+        result = calculate_npv(production_forecast_base, mc_params)
+        npv_results.append(result['npv'])
+
+    # Statistical analysis
+    npv_array = np.array(npv_results)
+    stats = {
+        'mean': npv_array.mean(),
+        'median': np.median(npv_array),
+        'std': npv_array.std(),
+        'p10': np.percentile(npv_array, 10),
+        'p50': np.percentile(npv_array, 50),
+        'p90': np.percentile(npv_array, 90),
+        'prob_positive': (npv_array > 0).mean(),
+        'values': npv_array
+    }
+
+    return stats
+                </div>
+
+                <div class="key-insight">
+                    <strong>Decision Framework:</strong> If P90 NPV is positive, the project has strong economics even under pessimistic scenarios. If P50 NPV is negative, the project likely fails to meet hurdle rates even in base case.
+                </div>
+            </section>
+
+            <!-- Best Practices -->
+            <section>
+                <h2>Best Practices for Deepwater Economics</h2>
+
+                <h3>Model Validation Checklist</h3>
+                <ul>
+                    <li>Verify total EUR matches reservoir engineering estimates</li>
+                    <li>Check that peak facility throughput doesn't exceed design capacity</li>
+                    <li>Ensure CAPEX schedule aligns with project execution plan</li>
+                    <li>Validate tax calculations against fiscal regime (PSA vs. concession)</li>
+                    <li>Cross-check NPV against analogous field developments</li>
+                </ul>
+
+                <h3>Common Pitfalls</h3>
+                <ul>
+                    <li><strong>Optimistic decline curves:</strong> Conservative b-factors (0.3-0.5) are more realistic than aggressive (0.8+)</li>
+                    <li><strong>Ignoring abandonment costs:</strong> Deepwater P&A can cost $50-100M; include in cash flow</li>
+                    <li><strong>Static oil prices:</strong> Use forward curves or price scenarios, not single point estimates</li>
+                    <li><strong>Underestimating OPEX:</strong> Deepwater operating costs increase over field life due to water handling</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>Regulatory Note:</strong> Gulf of Mexico projects must comply with BSEE royalty reporting and MMS valuation rules. Ensure your economic model correctly calculates royalty basis (wellhead vs. sales point).
+                </div>
+            </section>
+
+            <!-- Conclusion -->
+            <section>
+                <h2>Conclusion</h2>
+
+                <p>Deepwater field development economics demand rigorous NPV and IRR analysis due to massive capital requirements and long project lifecycles. The Python-based approaches in this article provide:</p>
+
+                <ul>
+                    <li><strong>Production forecasting:</strong> Arps decline curves for individual wells and field-level aggregation</li>
+                    <li><strong>DCF modeling:</strong> Complete NPV and IRR calculation with CAPEX, OPEX, royalties, and taxes</li>
+                    <li><strong>Sensitivity analysis:</strong> Identifying key value drivers and quantifying risks</li>
+                    <li><strong>Probabilistic modeling:</strong> Monte Carlo simulation for uncertainty quantification</li>
+                </ul>
+
+                <p>These tools enable rapid scenario testing, portfolio optimization, and defensible investment decisions. For organizations developing deepwater assets, implementing reproducible economic models transforms ad-hoc spreadsheets into strategic decision support systems.</p>
+
+                <p>Our <a href="../energy.html">energy sector consulting</a> practice has developed comprehensive field development economic models for Gulf of Mexico, West Africa, and Brazil deepwater projects—integrating reservoir engineering, facility design, and fiscal regime analysis into unified NPV frameworks.</p>
+            </section>
+
+            <!-- Author Bio -->
+            <section style="background-color: #f8f9fa; padding: 20px; margin-top: 30px; border-radius: 5px;">
+                <h3>About the Author</h3>
+                <p><strong>Vamsee Achanta</strong> is the founder of Analytical & Computational Engineering (A&CE), specializing in field development economics and computational reservoir engineering. With experience evaluating multi-billion dollar deepwater projects, Vamsee helps operators and investors assess project economics using reproducible, auditable methodologies.</p>
+                <p><a href="../about.html">Learn more about A&CE →</a></p>
+            </section>
+
+        </article>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h3>Need Help with Field Development Economics?</h3>
+            <p>We build comprehensive NPV models for deepwater field development—from production forecasting to fiscal regime compliance, delivering defensible economics for investment decisions and partner negotiations.</p>
+            <p>
+                <a href="../contact.html?vertical=energy" class="btn btn-default btn-lg" style="color: #E95420; background: white;">Get in Touch</a>
+                <a href="index.html" class="btn btn-default btn-lg" style="border: 2px solid white;">More Articles</a>
+            </p>
+        </div>
+
+        <!-- Related Articles -->
+        <section style="margin-top: 30px;">
+            <h3>Related Articles</h3>
+            <ul>
+                <li><a href="../energy.html">Energy Sector Consulting - A&CE</a></li>
+                <li><a href="gulf-of-mexico-production-data-access.html">Gulf of Mexico Production Data Access</a></li>
+                <li><a href="energy-data-automation-pipelines.html">Energy Data Automation Pipelines</a></li>
+            </ul>
+        </section>
+
+    </div>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

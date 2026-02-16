@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Case study: How cross-database correlation unified 269,000+ maritime and offshore safety records from 5 national authorities into a single intelligence platform spanning 50 years.">
+    <meta name="keywords" content="marine safety, incident correlation, cross-database analysis, maritime intelligence, TSB, MAIB, BSEE, offshore safety, risk assessment">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Case Study: Cross-Database Marine Safety Incident Correlation - A&CE">
+    <meta property="og:description" content="Unified 269,000+ incident records from 5 safety authorities into a single intelligence platform with automated cross-database correlation and pattern detection.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://aceengineer.com/case-studies/marine-safety-correlation.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Case Study: Cross-Database Marine Safety Incident Correlation">
+    <meta name="twitter:description" content="Unified 269,000+ incident records from 5 safety authorities with automated correlation and pattern detection.">
+
+    <title>Case Study: Cross-Database Marine Safety Incident Correlation - A&CE</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "@id": "https://aceengineer.com/case-studies/marine-safety-correlation.html#article",
+        "headline": "Cross-Database Marine Safety Incident Correlation",
+        "description": "Case study demonstrating how automated cross-database correlation unified 269,000+ maritime and offshore safety records from 5 national authorities into a single intelligence platform.",
+        "datePublished": "2026-02-15",
+        "dateModified": "2026-02-15",
+        "author": {
+            "@type": "Person",
+            "name": "Vamsee Achanta",
+            "url": "https://aceengineer.com/about.html"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://aceengineer.com/case-studies/marine-safety-correlation.html"
+        },
+        "keywords": ["marine safety", "incident correlation", "cross-database analysis", "maritime intelligence", "offshore safety", "risk assessment"]
+    }
+    </script>
+
+    <style>
+        .case-study-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        .case-study-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .case-study-meta {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .metrics-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .metric-box {
+            text-align: center;
+            padding: 20px;
+            min-width: 150px;
+        }
+        .metric-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: #428bca;
+        }
+        .metric-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .section-title {
+            margin-top: 50px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #428bca;
+            color: #2c3e50;
+        }
+        .challenge-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .solution-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .result-box {
+            background: #cce5ff;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .methodology-step {
+            display: flex;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .step-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #428bca;
+            min-width: 60px;
+        }
+        .step-content h4 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .compliance-badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+        }
+        .table-results {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .table-results th {
+            background: #2c3e50;
+            color: white;
+            padding: 12px;
+        }
+        .table-results td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        .table-results tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .cta-section {
+            background: #2c3e50;
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .cta-section h3 {
+            margin-bottom: 20px;
+        }
+        .cta-section .btn {
+            margin: 10px;
+        }
+    </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K31E51DQ47');
+    </script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a href="../index.html" class="navbar-brand-link">
+                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                        <title id="logoTitle">Analytical & Computational Engineering</title>
+                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
+                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../about.html">About</a></li>
+                    <li><a href="../engineering.html">Engineering</a></li>
+                    <li><a href="../energy.html">Energy</a></li>
+                    <li><a href="../faq.html">FAQ</a></li>
+                    <li><a href="../blog/">Blog</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Case Study Header -->
+    <div class="case-study-header">
+        <div class="container">
+            <h1>Cross-Database Marine Safety Incident Correlation</h1>
+            <p class="case-study-meta">
+                <strong>Domain:</strong> Maritime &amp; Offshore Safety |
+                <strong>Coverage:</strong> Global (Canada, UK, US) |
+                <strong>Data Span:</strong> 50 Years (1975&ndash;2025)
+            </p>
+            <p style="margin-top: 20px;">
+                <span class="compliance-badge">TSB Canada</span>
+                <span class="compliance-badge">MAIB UK</span>
+                <span class="compliance-badge">BSEE US</span>
+                <span class="compliance-badge">OSHA</span>
+                <span class="compliance-badge">EPA TRI</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Key Metrics -->
+        <div class="metrics-row">
+            <div class="metric-box">
+                <div class="metric-value">269K+</div>
+                <div class="metric-label">Records Integrated</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">5</div>
+                <div class="metric-label">Safety Databases</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">50 yrs</div>
+                <div class="metric-label">Historical Coverage</div>
+            </div>
+            <div class="metric-box">
+                <div class="metric-value">3</div>
+                <div class="metric-label">Countries</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <h2 class="section-title">Executive Summary</h2>
+        <p>
+            Maritime safety data is fragmented across national investigation authorities, each with different reporting formats, classification schemes, and access methods. An operator or insurer seeking a comprehensive safety picture must manually search multiple databases with no way to detect patterns that span jurisdictions.
+        </p>
+        <p>
+            We built an automated multi-source ingestion and correlation platform that unifies incident records from the Canadian Transportation Safety Board (TSB), UK Marine Accident Investigation Branch (MAIB), US Bureau of Safety and Environmental Enforcement (BSEE), OSHA, and EPA Toxics Release Inventory into a single queryable database. The platform includes fuzzy matching for cross-source deduplication, configurable risk scoring, and automated trend detection across 269,000+ records spanning 50 years.
+        </p>
+
+        <!-- The Challenge -->
+        <h2 class="section-title">The Challenge</h2>
+
+        <div class="challenge-box">
+            <h4>Fragmented Data Silos</h4>
+            <p>
+                Each national authority maintains its own incident database with unique schemas, severity classifications, and access mechanisms. TSB Canada uses web-searchable investigation reports, MAIB UK publishes structured annual datasets, and BSEE provides bulk data via FOIA downloads. There is no unified interface.
+            </p>
+        </div>
+
+        <div class="challenge-box">
+            <h4>Inconsistent Classification</h4>
+            <p>
+                Incident types are labelled differently across sources: what TSB calls a "COLLISION" may appear as "Contact" in MAIB data and "Equipment Strike" in BSEE records. Severity scales, vessel type categories, and geographic references vary between every authority.
+            </p>
+        </div>
+
+        <div class="challenge-box">
+            <h4>Scale of Data</h4>
+            <p>
+                With 53,000+ maritime incidents and 98,000+ offshore HSE records, manual cross-referencing is not feasible. Identifying whether the same vessel or event appears in multiple databases requires automated matching across name variations, approximate locations, and overlapping date windows.
+            </p>
+        </div>
+
+        <!-- Our Approach -->
+        <h2 class="section-title">Our Approach</h2>
+
+        <div class="methodology-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h4>Automated Multi-Source Ingestion</h4>
+                <p>
+                    Built dedicated importers for each authority (TSB, MAIB, BSEE, OSHA, EPA TRI) that handle source-specific formats&mdash;HTML scraping for web-published reports, CSV parsing for bulk datasets, and API integration where available. Each importer normalizes records into a common schema with standardized incident types, severity levels, and geographic coordinates.
+                </p>
+            </div>
+        </div>
+
+        <div class="methodology-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h4>Fuzzy Cross-Source Correlation Engine</h4>
+                <p>
+                    Developed a multi-strategy matching engine that identifies related incidents across databases using: IMO number matching (exact), vessel name similarity (token-set fuzzy ratio with 80% threshold), geographic proximity (haversine distance within 50 km), and temporal alignment (3-day window). A weighted confidence score combines all signals to rank potential matches.
+                </p>
+            </div>
+        </div>
+
+        <div class="methodology-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h4>Pattern Detection &amp; Trend Analysis</h4>
+                <p>
+                    Applied statistical analysis across the unified dataset to detect temporal trends, geographic hotspots, and recurring incident patterns. Root cause analysis extracts contributing factors from narrative text fields using NLP classification, enabling cross-jurisdictional pattern identification.
+                </p>
+            </div>
+        </div>
+
+        <div class="methodology-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <h4>Three-Dimensional Risk Scoring</h4>
+                <p>
+                    Implemented a configurable risk index that scores activities across three dimensions&mdash;acute safety (fatalities, injuries, incident frequency), chronic environmental (toxic releases, spill volumes), and regulatory compliance (violation rates). Scores are normalized to a 1&ndash;10 scale with percentile ranking, sliceable by field, water depth band, and time period.
+                </p>
+            </div>
+        </div>
+
+        <!-- Technical Details -->
+        <h2 class="section-title">Technical Implementation</h2>
+
+        <h3>Data Integration Summary</h3>
+        <div class="table-responsive-wrapper">
+        <table class="table-results">
+            <tr>
+                <th>Source Authority</th>
+                <th>Records</th>
+                <th>Date Range</th>
+                <th>Coverage</th>
+            </tr>
+            <tr>
+                <td>TSB Canada</td>
+                <td>47,385</td>
+                <td>1975&ndash;2025</td>
+                <td>Canadian waters, all vessel types</td>
+            </tr>
+            <tr>
+                <td>MAIB UK</td>
+                <td>5,876</td>
+                <td>1990&ndash;2025</td>
+                <td>UK waters, commercial vessels</td>
+            </tr>
+            <tr>
+                <td>BSEE (Offshore HSE)</td>
+                <td>97,993</td>
+                <td>1948&ndash;2026</td>
+                <td>US OCS, offshore oil &amp; gas</td>
+            </tr>
+            <tr>
+                <td>BSEE Violations (INCs)</td>
+                <td>66,561</td>
+                <td>1990&ndash;2025</td>
+                <td>US OCS regulatory compliance</td>
+            </tr>
+            <tr>
+                <td>EPA Toxics Release Inventory</td>
+                <td>51,487</td>
+                <td>2020&ndash;2024</td>
+                <td>US oil &amp; gas facilities</td>
+            </tr>
+            <tr>
+                <td><strong>Total</strong></td>
+                <td><strong>269,302</strong></td>
+                <td><strong>1948&ndash;2026</strong></td>
+                <td><strong>3 countries, maritime + offshore</strong></td>
+            </tr>
+        </table>
+        </div>
+
+        <h3>Correlation Engine Architecture</h3>
+        <p>The matching engine uses a weighted multi-signal approach:</p>
+        <ul>
+            <li><strong>IMO Number (40% weight):</strong> Exact match on 7-digit IMO identifier provides highest-confidence vessel linkage</li>
+            <li><strong>Vessel Name (25% weight):</strong> Token-set fuzzy ratio handles abbreviations, spelling variations, and name changes</li>
+            <li><strong>Location (20% weight):</strong> Haversine distance calculation with configurable radius (default 50 km)</li>
+            <li><strong>Date (15% weight):</strong> Temporal proximity within configurable window (default 3 days)</li>
+        </ul>
+
+        <h3>Incident Type Distribution</h3>
+        <div class="table-responsive-wrapper">
+        <table class="table-results">
+            <tr>
+                <th>Incident Type</th>
+                <th>Maritime (TSB+MAIB)</th>
+                <th>Offshore (BSEE)</th>
+                <th>Combined</th>
+            </tr>
+            <tr>
+                <td>Collision / Contact</td>
+                <td>29,523</td>
+                <td>&mdash;</td>
+                <td>29,523</td>
+            </tr>
+            <tr>
+                <td>Violation / Non-Compliance</td>
+                <td>&mdash;</td>
+                <td>91,527</td>
+                <td>91,527</td>
+            </tr>
+            <tr>
+                <td>Personnel Injury</td>
+                <td>1,694</td>
+                <td>4,709</td>
+                <td>6,403</td>
+            </tr>
+            <tr>
+                <td>Equipment Failure</td>
+                <td>&mdash;</td>
+                <td>1,293</td>
+                <td>1,293</td>
+            </tr>
+            <tr>
+                <td>Grounding</td>
+                <td>569</td>
+                <td>&mdash;</td>
+                <td>569</td>
+            </tr>
+            <tr>
+                <td>Spill / Environmental</td>
+                <td>&mdash;</td>
+                <td>464</td>
+                <td>464</td>
+            </tr>
+            <tr>
+                <td>Fire / Explosion</td>
+                <td>329</td>
+                <td>&mdash;</td>
+                <td>329</td>
+            </tr>
+            <tr>
+                <td>Flooding / Capsizing</td>
+                <td>303</td>
+                <td>&mdash;</td>
+                <td>303</td>
+            </tr>
+        </table>
+        </div>
+
+        <h3>Harm Statistics</h3>
+        <p>Across the unified dataset, the platform tracks:</p>
+        <ul>
+            <li><strong>1,434 fatalities</strong> recorded in maritime incidents (TSB + MAIB sources, 1975&ndash;2025)</li>
+            <li><strong>6,497 injuries</strong> in maritime operations across Canadian and UK waters</li>
+            <li><strong>4,709 offshore injuries</strong> in BSEE-regulated operations (US Outer Continental Shelf)</li>
+            <li><strong>51,487 toxic release reports</strong> from oil &amp; gas facilities (EPA TRI, 2020&ndash;2024)</li>
+        </ul>
+
+        <!-- Results -->
+        <h2 class="section-title">Results</h2>
+
+        <div class="result-box">
+            <h4>Unified Safety Intelligence Platform</h4>
+            <p>
+                Consolidated 269,302 records from 5 databases into a single queryable platform. An analyst can now search across all sources simultaneously, filtering by incident type, date range, severity, geographic region, or vessel. What previously required manual searches across 5 separate systems now takes seconds.
+            </p>
+        </div>
+
+        <div class="result-box">
+            <h4>Cross-Jurisdictional Pattern Detection</h4>
+            <p>
+                Trend analysis revealed that collision incidents account for 55% of all maritime events across both Canadian and UK waters&mdash;a pattern invisible when viewing each authority's data in isolation. The platform also identified a reporting volume increase starting in 2021 (from ~1,200 to ~2,500 annual incidents in TSB data), flagging it as a reporting methodology change rather than a genuine safety deterioration.
+            </p>
+        </div>
+
+        <div class="result-box">
+            <h4>Configurable Risk Scoring</h4>
+            <p>
+                The three-dimensional risk index (acute, chronic, compliance) enables operators to assess risk profiles across activities, fields, and water depth bands. Weights are configurable via YAML, allowing clients to adjust the scoring to their specific risk appetite. The 1&ndash;10 scale with descriptive bands (Low, Moderate, Elevated, High, Critical) provides an intuitive framework for decision-making.
+            </p>
+        </div>
+
+        <!-- Data Caveats -->
+        <h2 class="section-title">Data Limitations &amp; Caveats</h2>
+        <ul>
+            <li><strong>Source coverage:</strong> Currently 5 of 10+ planned authorities are ingested. USCG MISLE, NTSB, IMO GISIS, ATSB, and EMSA importers are built but awaiting data refresh.</li>
+            <li><strong>Severity uniformity:</strong> TSB and MAIB data currently use a single severity level; granular severity differentiation is an ongoing enrichment effort.</li>
+            <li><strong>Vessel linkage:</strong> 13% of maritime incidents have vessel identifiers linked; coverage improves as additional IMO number matching is applied.</li>
+            <li><strong>Temporal bias:</strong> Older records (pre-2000) have fewer structured fields. Trend analysis should account for evolving reporting standards.</li>
+            <li><strong>Geographic scope:</strong> Maritime data covers Canadian and UK waters. US coverage is primarily offshore oil &amp; gas operations (BSEE jurisdiction).</li>
+        </ul>
+
+        <!-- Key Takeaways -->
+        <h2 class="section-title">Key Takeaways</h2>
+
+        <h3>For Maritime Operators &amp; Insurers</h3>
+        <ul>
+            <li>Fragmented safety databases create blind spots; unified platforms reveal patterns that no single source can show</li>
+            <li>Automated ingestion and normalization eliminates the manual effort of cross-referencing authorities</li>
+            <li>Configurable risk scoring enables data-driven safety investment prioritization</li>
+        </ul>
+
+        <h3>For Safety Professionals</h3>
+        <ul>
+            <li>Fuzzy matching across vessel names, locations, and dates identifies related incidents that exact-match searches miss</li>
+            <li>Transparent methodology with documented weights and caveats builds credibility with regulators</li>
+            <li>50 years of historical data enables long-term trend detection beyond annual reporting cycles</li>
+        </ul>
+
+        <!-- Technologies Used -->
+        <h2 class="section-title">Technologies &amp; Tools</h2>
+        <p>
+            <strong>Data Collection:</strong> Custom Python importers for TSB, MAIB, BSEE, OSHA, EPA TRI<br>
+            <strong>Correlation Engine:</strong> rapidfuzz (fuzzy matching), haversine (geographic proximity), SQLite<br>
+            <strong>Risk Scoring:</strong> Percentile-rank normalization, YAML-configurable composite weights<br>
+            <strong>Analysis:</strong> pandas, numpy for statistical analysis and trend detection<br>
+            <strong>NLP:</strong> Incident narrative classification for root cause extraction<br>
+            <strong>Visualization:</strong> Plotly for interactive dashboards and trend charts
+        </p>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h3>Need Safety Intelligence Across Your Operations?</h3>
+            <p>We help operators and insurers turn fragmented safety data into actionable intelligence.</p>
+            <a href="../contact.html?vertical=maritime" class="btn btn-primary btn-lg">Discuss Your Safety Data</a>
+            <a href="../energy.html#maritime" class="btn btn-default btn-lg">View Maritime Services</a>
+        </div>
+
+        <hr style="margin-top: 50px;">
+
+        <p>
+            <a href="../energy.html">&#8592; View Energy Data Services</a> |
+            <a href="index.html">All Case Studies</a>
+        </p>
+
+    </div>
+
+    <div class="container">
+        <hr>
+        <p>Developed by <b>A&CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></p>
+    </div>
+
+</body>
+</html>

@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Engineering case studies demonstrating AI-native approaches to structural analysis, fatigue assessment, and computational engineering projects.">
-    <meta name="keywords" content="engineering case studies, offshore engineering, fatigue analysis, structural analysis, AI engineering, machine learning engineering">
+    <meta name="description" content="Engineering case studies demonstrating advanced computational methods for structural analysis, fatigue assessment, and offshore engineering projects.">
+    <meta name="keywords" content="engineering case studies, offshore engineering, fatigue analysis, structural analysis, computational engineering, engineering automation">
 
     <!-- Open Graph meta tags -->
     <meta property="og:title" content="Case Studies - A&CE">
-    <meta property="og:description" content="Technical case studies demonstrating AI-native engineering approaches with quantifiable results.">
+    <meta property="og:description" content="Technical case studies demonstrating advanced computational methods with quantifiable results.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aceengineer.com/case-studies/">
     <meta property="og:site_name" content="Analytical & Computational Engineering">
@@ -16,14 +16,34 @@
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Case Studies - A&CE">
-    <meta name="twitter:description" content="Technical case studies demonstrating AI-native engineering approaches.">
+    <meta name="twitter:description" content="Technical case studies demonstrating advanced computational methods.">
 
     <title>Case Studies - A&CE</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/styles.min.css">
+<script defer="" src="../assets/js/navbar-toggle.js"></script>
+
+<!-- Google Analytics - deferred until after page is interactive -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K31E51DQ47');
+  (function() {
+    function loadGtag() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag);
+    } else {
+      window.addEventListener('load', loadGtag);
+    }
+  })();
+</script>
+
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -33,7 +53,7 @@
         "@id": "https://aceengineer.com/case-studies/#collection",
         "name": "A&CE Engineering Case Studies",
         "url": "https://aceengineer.com/case-studies/",
-        "description": "Technical case studies demonstrating AI-native engineering approaches with quantifiable results",
+        "description": "Technical case studies demonstrating advanced computational methods with quantifiable results",
         "publisher": {
             "@type": "Organization",
             "@id": "https://aceengineer.com/#organization",
@@ -100,61 +120,52 @@
             border-bottom: 2px solid #428bca;
         }
     </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="../index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li><a href="../blog/">Blog</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical & Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../engineering.html">Services</a></li>
+                <li><a href="../energy.html">Energy Data</a></li>
+                <li><a href="../case-studies/">Case Studies</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="../contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <div class="container">
         <div class="page-header">
             <h1>Case Studies</h1>
-            <p class="lead">Real projects demonstrating AI-native engineering approaches with quantifiable results and validated methodologies.</p>
+            <p class="lead">Real projects demonstrating advanced computational methods with quantifiable results and validated methodologies.</p>
         </div>
 
         <!-- Case Study 1 -->
         <div class="case-study-card">
-            <h3><a href="offshore-platform-fatigue-optimization.html">ML-Enhanced Fatigue Assessment for Offshore Platform</a></h3>
+            <h3><a href="offshore-platform-fatigue-optimization.html">Computational Fatigue Assessment for Offshore Platform</a></h3>
             <div class="case-study-meta">
                 <strong>Industry:</strong> Oil & Gas |
                 <strong>Location:</strong> Gulf of Mexico |
@@ -187,7 +198,7 @@
                 <span class="compliance-tag">BSEE Accepted</span>
             </div>
             <p style="margin-top: 15px;">
-                <a href="offshore-platform-fatigue-optimization.html" class="btn btn-primary">Read Full Case Study</a>
+                <a href="offshore-platform-fatigue-optimization.html" class="btn btn-primary" aria-label="Read full case study: Computational Fatigue Assessment for Offshore Platform">Read Full Case Study</a>
             </p>
         </div>
 
@@ -226,13 +237,13 @@
                 <span class="compliance-tag">ISO 13628</span>
             </div>
             <p style="margin-top: 15px;">
-                <a href="subsea-fea-automation.html" class="btn btn-primary">Read Full Case Study</a>
+                <a href="subsea-fea-automation.html" class="btn btn-primary" aria-label="Read full case study: Automated FEA Post-Processing for Subsea Equipment">Read Full Case Study</a>
             </p>
         </div>
 
         <!-- Case Study 3 -->
         <div class="case-study-card">
-            <h3><a href="wind-turbine-foundation-analysis.html">AI-Enhanced Wind Turbine Foundation Analysis</a></h3>
+            <h3><a href="wind-turbine-foundation-analysis.html">Computational Wind Turbine Foundation Analysis</a></h3>
             <div class="case-study-meta">
                 <strong>Industry:</strong> Offshore Wind |
                 <strong>Location:</strong> North Sea |
@@ -265,7 +276,7 @@
                 <span class="compliance-tag">DNVGL-RP-C203</span>
             </div>
             <p style="margin-top: 15px;">
-                <a href="wind-turbine-foundation-analysis.html" class="btn btn-primary">Read Full Case Study</a>
+                <a href="wind-turbine-foundation-analysis.html" class="btn btn-primary" aria-label="Read full case study: Computational Wind Turbine Foundation Analysis">Read Full Case Study</a>
             </p>
         </div>
 
@@ -304,47 +315,85 @@
                 <span class="compliance-tag">DNV-RP-C203</span>
             </div>
             <p style="margin-top: 15px;">
-                <a href="orcaflex-riser-sensitivity-automation.html" class="btn btn-primary">Read Full Case Study</a>
+                <a href="orcaflex-riser-sensitivity-automation.html" class="btn btn-primary" aria-label="Read full case study: OrcaFlex Riser Sensitivity Automation">Read Full Case Study</a>
             </p>
         </div>
 
         <!-- Case Study 5 -->
         <div class="case-study-card">
-            <h3><a href="marine-safety-correlation.html">Cross-Database Marine Safety Incident Correlation</a></h3>
+            <h3><a href="bsee-field-economics.html">BSEE Field Economics Analysis with NPV/IRR</a></h3>
             <div class="case-study-meta">
-                <strong>Industry:</strong> Maritime &amp; Offshore Safety |
-                <strong>Coverage:</strong> Canada, UK, US |
-                <strong>Data Span:</strong> 50 Years
+                <strong>Industry:</strong> Oil & Gas |
+                <strong>Region:</strong> Gulf of Mexico |
+                <strong>Duration:</strong> 3 weeks
             </div>
             <p>
-                Automated multi-source ingestion and fuzzy-matching correlation engine that unifies incident records from 5 national safety authorities into a single intelligence platform. Enables cross-jurisdictional pattern detection across 269,000+ records spanning 50 years.
+                Comprehensive field economics analysis using BSEE production data delivered $6.1B NPV calculation with 15% IRR for deepwater development. Automated workflow enabled rapid scenario analysis and sensitivity testing for investment decision support.
             </p>
             <div class="case-study-metrics">
                 <div class="metric">
-                    <div class="metric-value">269K+</div>
-                    <div class="metric-label">Records Integrated</div>
+                    <div class="metric-value">$6.1B</div>
+                    <div class="metric-label">NPV (10%)</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value">5</div>
-                    <div class="metric-label">Safety Databases</div>
+                    <div class="metric-value">15%</div>
+                    <div class="metric-label">IRR</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value">50 yrs</div>
-                    <div class="metric-label">Historical Coverage</div>
+                    <div class="metric-value">32 mo</div>
+                    <div class="metric-label">Payback Period</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value">3</div>
-                    <div class="metric-label">Countries</div>
+                    <div class="metric-value">374</div>
+                    <div class="metric-label">MMbbls Recoverable</div>
                 </div>
             </div>
             <div>
-                <span class="compliance-tag">TSB Canada</span>
-                <span class="compliance-tag">MAIB UK</span>
-                <span class="compliance-tag">BSEE US</span>
-                <span class="compliance-tag">EPA TRI</span>
+                <span class="compliance-tag">BSEE Public Data</span>
+                <span class="compliance-tag">Industry Standard Economics</span>
+                <span class="compliance-badge">Auditable Methodology</span>
             </div>
             <p style="margin-top: 15px;">
-                <a href="marine-safety-correlation.html" class="btn btn-primary">Read Full Case Study</a>
+                <a href="bsee-field-economics.html" class="btn btn-primary" aria-label="Read full case study: BSEE Field Economics Analysis">Read Full Case Study</a>
+            </p>
+        </div>
+
+        <!-- Case Study 6 -->
+        <div class="case-study-card">
+            <h3><a href="marine-safety-correlation.html">Marine Safety Incident Correlation Across 7 Authorities</a></h3>
+            <div class="case-study-meta">
+                <strong>Industry:</strong> Maritime |
+                <strong>Scope:</strong> Global |
+                <strong>Duration:</strong> 8 weeks
+            </div>
+            <p>
+                Cross-database incident correlation system integrating 7 maritime authorities (MAIB, TSB, USCG, NTSB, ATSB, IMO, EMSA) using fuzzy matching and intelligent deduplication. Delivered 92% reduction in manual correlation time with automated cross-reference of 53K+ incidents.
+            </p>
+            <div class="case-study-metrics">
+                <div class="metric">
+                    <div class="metric-value">7</div>
+                    <div class="metric-label">Maritime Authorities</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">53K+</div>
+                    <div class="metric-label">Incidents</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">92%</div>
+                    <div class="metric-label">Time Reduction</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">2,300+</div>
+                    <div class="metric-label">Cross-Links Found</div>
+                </div>
+            </div>
+            <div>
+                <span class="compliance-tag">Public Maritime Data</span>
+                <span class="compliance-tag">Fuzzy Matching</span>
+                <span class="compliance-tag">Auditable Deduplication</span>
+            </div>
+            <p style="margin-top: 15px;">
+                <a href="marine-safety-correlation.html" class="btn btn-primary" aria-label="Read full case study: Marine Safety Incident Correlation">Read Full Case Study</a>
             </p>
         </div>
 
@@ -353,7 +402,7 @@
         <h2>More Case Studies Coming Soon</h2>
         <p>We're documenting additional projects across these areas:</p>
         <ul>
-            <li><strong>Subsea Pipeline Integrity:</strong> ML-based anomaly detection for pipeline inspection data</li>
+            <li><strong>Subsea Pipeline Integrity:</strong> Algorithmic anomaly detection for pipeline inspection data</li>
             <li><strong>FPSO Mooring Analysis:</strong> Automated mooring line fatigue under operational loading</li>
             <li><strong>Jacket Platform Decommissioning:</strong> Structural assessment for reverse installation</li>
         </ul>
@@ -365,10 +414,43 @@
 
     </div>
 
+    <footer class="footer-section">
     <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../engineering.html">Services</a></li>
+                    <li><a href="../energy.html">Energy Data</a></li>
+                    <li><a href="../case-studies/">Case Studies</a></li>
+                    <li><a href="../blog/">Technical Blog</a></li>
+                    <li><a href="../calculators/">Free Calculators</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
+            </div>
+        </div>
         <hr>
-        <p>Developed by <b>A&CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></p>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
     </div>
+</footer>
+
 
 </body>
 </html>

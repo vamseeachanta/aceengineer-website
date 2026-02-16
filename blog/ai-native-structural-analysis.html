@@ -22,10 +22,30 @@
 
     <title>AI-Native Structural Analysis | A&CE Engineering Blog</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/styles.min.css">
+<script defer="" src="../assets/js/navbar-toggle.js"></script>
+
+<!-- Google Analytics - deferred until after page is interactive -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K31E51DQ47');
+  (function() {
+    function loadGtag() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag);
+    } else {
+      window.addEventListener('load', loadGtag);
+    }
+  })();
+</script>
+
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -157,51 +177,42 @@
             text-decoration: underline;
         }
     </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="../index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                    <li><a href="index.html" class="active">Blog</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical & Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../engineering.html">Services</a></li>
+                <li><a href="../energy.html">Energy Data</a></li>
+                <li><a href="../case-studies/">Case Studies</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="../contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <div class="container">
         <article>
@@ -260,13 +271,13 @@
                 <p><strong>AI-native approach:</strong> Train models on existing platform designs and simulation databases. New designs can be analyzed in minutes, with uncertainty quantification built-in. Optimization across 100+ design parameters becomes computationally feasible.</p>
 
                 <p><strong>Results:</strong>
-                    <ul>
+                    </p><ul>
                         <li>10-50x faster analysis time</li>
                         <li>Better exploration of design space</li>
                         <li>Quantified confidence in predictions</li>
                         <li>Validation against known good designs and experimental data</li>
                     </ul>
-                </p>
+                <p></p>
 
                 <h3>2. Fatigue Life Prediction</h3>
 
@@ -275,13 +286,13 @@
                 <p><strong>AI-native approach:</strong> Machine learning models trained on experimental fatigue data can predict life with higher accuracy while accounting for interactions between variables. New materials and conditions can be incorporated as data becomes available.</p>
 
                 <p><strong>Results:</strong>
-                    <ul>
+                    </p><ul>
                         <li>Higher accuracy fatigue predictions</li>
                         <li>Faster assessment of new materials</li>
                         <li>Better handling of combined loading conditions</li>
                         <li>Continuous improvement as test data accumulates</li>
                     </ul>
-                </p>
+                <p></p>
 
                 <h3>3. Design Optimization</h3>
 
@@ -290,13 +301,13 @@
                 <p><strong>AI-native approach:</strong> Surrogate models trained on a small set of FEA runs can explore the design space efficiently. Gradient-based and evolutionary optimization algorithms can navigate complex design spaces rapidly.</p>
 
                 <p><strong>Results:</strong>
-                    <ul>
+                    </p><ul>
                         <li>10-100x reduction in required FEA runs</li>
                         <li>Better global optimization (not just local minima)</li>
                         <li>Multi-objective optimization becomes practical</li>
                         <li>Exploration of unconventional designs</li>
                     </ul>
-                </p>
+                <p></p>
 
                 <h2>Comparison: Traditional FEA vs AI-Native</h2>
 
@@ -433,10 +444,43 @@
         </article>
     </div>
 
+    <footer class="footer-section">
     <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../engineering.html">Services</a></li>
+                    <li><a href="../energy.html">Energy Data</a></li>
+                    <li><a href="../case-studies/">Case Studies</a></li>
+                    <li><a href="../blog/">Technical Blog</a></li>
+                    <li><a href="../calculators/">Free Calculators</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
+            </div>
+        </div>
         <hr>
-        <p>Developed by <b>A&CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></p>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
     </div>
+</footer>
+
 
 </body>
 </html>

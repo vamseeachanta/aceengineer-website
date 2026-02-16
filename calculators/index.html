@@ -20,10 +20,30 @@
 
     <title>Engineering Calculators - A&CE</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/styles.min.css">
+<script defer="" src="../assets/js/navbar-toggle.js"></script>
+
+<!-- Google Analytics - deferred until after page is interactive -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K31E51DQ47');
+  (function() {
+    function loadGtag() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag);
+    } else {
+      window.addEventListener('load', loadGtag);
+    }
+  })();
+</script>
+
 
     <!-- JSON-LD Structured Data - CollectionPage -->
     <script type="application/ld+json">
@@ -47,10 +67,56 @@
                     "position": 1,
                     "item": {
                         "@type": "WebApplication",
+                        "@id": "https://aceengineer.com/calculators/fatigue-sn-curve.html#calculator",
+                        "name": "S-N Curve Fatigue Calculator",
+                        "url": "https://aceengineer.com/calculators/fatigue-sn-curve.html",
+                        "description": "Calculate fatigue life using 40+ S-N curve classes from DNV-RP-C203, API RP 2A, BS 7608, and Eurocode 3 with interactive visualization",
+                        "applicationCategory": "Engineering Calculator",
+                        "operatingSystem": "Any web browser",
+                        "offers": {
+                            "@type": "Offer",
+                            "price": "0",
+                            "priceCurrency": "USD",
+                            "availability": "https://schema.org/InStock"
+                        },
+                        "provider": {
+                            "@type": "Organization",
+                            "@id": "https://aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
+                        "@type": "WebApplication",
+                        "@id": "https://aceengineer.com/calculators/npv-field-development.html#calculator",
+                        "name": "NPV Field Development Calculator",
+                        "url": "https://aceengineer.com/calculators/npv-field-development.html",
+                        "description": "Calculate net present value, IRR, and payback period for oil and gas field development with cashflow visualization",
+                        "applicationCategory": "Engineering Calculator",
+                        "operatingSystem": "Any web browser",
+                        "offers": {
+                            "@type": "Offer",
+                            "price": "0",
+                            "priceCurrency": "USD",
+                            "availability": "https://schema.org/InStock"
+                        },
+                        "provider": {
+                            "@type": "Organization",
+                            "@id": "https://aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": {
+                        "@type": "WebApplication",
                         "@id": "https://aceengineer.com/calculators/fatigue-life-calculator.html#calculator",
-                        "name": "S-N Curve Fatigue Life Calculator",
+                        "name": "Basic Fatigue Life Calculator",
                         "url": "https://aceengineer.com/calculators/fatigue-life-calculator.html",
-                        "description": "Calculate fatigue life for welded steel joints using industry-standard S-N curves from DNV-RP-C203, API RP 2A, and BS 7608",
+                        "description": "Simple fatigue life calculator for welded steel joints using DNV-RP-C203 S-N curves",
                         "applicationCategory": "Engineering Calculator",
                         "operatingSystem": "Any web browser",
                         "offers": {
@@ -113,51 +179,42 @@
             pointer-events: none;
         }
     </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="../index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li><a href="../blog/">Blog</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical & Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../engineering.html">Services</a></li>
+                <li><a href="../energy.html">Energy Data</a></li>
+                <li><a href="../case-studies/">Case Studies</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="../contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <div class="container">
         <div class="page-header">
@@ -189,7 +246,30 @@
             </p>
         </div>
 
-        <!-- Calculator 2: Fatigue Life (Original) -->
+        <!-- Calculator 2: NPV Field Development -->
+        <div class="calculator-card">
+            <h3><a href="npv-field-development.html">NPV Field Development Calculator</a> <span style="background: #5cb85c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.6em; vertical-align: middle;">NEW</span></h3>
+            <div class="calculator-meta">
+                <strong>Application:</strong> Oil & Gas Field Development, Project Economics |
+                <strong>Method:</strong> Discounted Cashflow Analysis
+            </div>
+            <p>
+                Calculate net present value (NPV), internal rate of return (IRR), and payback period for
+                field development projects. Features production decline modeling, price escalation,
+                tax/royalty calculations, and interactive cashflow visualization with Plotly.
+            </p>
+            <div>
+                <span class="standard-tag">DCF Analysis</span>
+                <span class="standard-tag">Production Decline</span>
+                <span class="standard-tag">Economic Metrics</span>
+            </div>
+            <p style="margin-top: 15px;">
+                <a href="npv-field-development.html" class="btn btn-primary">Open Calculator</a>
+                <a href="../case-studies/bsee-field-economics.html" class="btn btn-default">View Economics Case Study</a>
+            </p>
+        </div>
+
+        <!-- Calculator 3: Fatigue Life (Original) -->
         <div class="calculator-card">
             <h3><a href="fatigue-life-calculator.html">Basic Fatigue Life Calculator</a></h3>
             <div class="calculator-meta">
@@ -209,7 +289,7 @@
             </p>
         </div>
 
-        <!-- Calculator 2: Stress Concentration (Coming Soon) -->
+        <!-- Calculator 4: Stress Concentration (Coming Soon) -->
         <div class="calculator-card coming-soon">
             <h3>Stress Concentration Factor Calculator</h3>
             <div class="calculator-meta">
@@ -229,7 +309,7 @@
             </p>
         </div>
 
-        <!-- Calculator 3: Pressure Vessel (Coming Soon) -->
+        <!-- Calculator 5: Pressure Vessel (Coming Soon) -->
         <div class="calculator-card coming-soon">
             <h3>Pressure Vessel Thickness Calculator</h3>
             <div class="calculator-meta">
@@ -271,7 +351,7 @@
 
         <h2>Need More Advanced Analysis?</h2>
         <p>
-            For complex fatigue assessments, FEA-based stress analysis, or AI-enhanced engineering solutions,
+            For complex fatigue assessments, FEA-based stress analysis, or advanced engineering solutions,
             we offer professional consulting services with validated methodologies.
         </p>
         <p>
@@ -280,10 +360,43 @@
         </p>
     </div>
 
+    <footer class="footer-section">
     <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../engineering.html">Services</a></li>
+                    <li><a href="../energy.html">Energy Data</a></li>
+                    <li><a href="../case-studies/">Case Studies</a></li>
+                    <li><a href="../blog/">Technical Blog</a></li>
+                    <li><a href="../calculators/">Free Calculators</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
+            </div>
+        </div>
         <hr>
-        <p>Developed by <b>A&CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/aceengineer" target="_blank">GitHub</a></p>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
     </div>
+</footer>
+
 
 </body>
 </html>

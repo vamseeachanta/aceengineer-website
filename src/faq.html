@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Frequently Asked Questions about A&CE's services, including engineering, AI, and machine learning.">
-    <meta name="keywords" content="FAQ, engineering, AI, machine learning, open-source, OOP, TDD, SOLID principles">
+    <meta name="description" content="Frequently Asked Questions about A&CE's engineering automation services, including OrcaFlex automation, fatigue analysis, and computational workflows.">
+    <meta name="keywords" content="FAQ, engineering automation, OrcaFlex automation, fatigue analysis, computational engineering, offshore engineering">
 
     <!-- Open Graph meta tags -->
     <meta property="og:title" content="FAQ - A&CE">
-    <meta property="og:description" content="Frequently Asked Questions about A&CE's services, including engineering, AI, and machine learning.">
+    <meta property="og:description" content="Frequently Asked Questions about A&CE's engineering automation services and computational workflows.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aceengineer.com/faq.html">
     <meta property="og:site_name" content="Analytical & Computational Engineering">
@@ -16,7 +16,7 @@
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="FAQ - A&CE">
-    <meta name="twitter:description" content="Frequently Asked Questions about A&CE's services, including engineering, AI, and machine learning.">
+    <meta name="twitter:description" content="Frequently Asked Questions about A&CE's engineering automation services and computational workflows.">
 
     <title>FAQ - A&CE</title>
 
@@ -34,7 +34,7 @@
         "alternateName": "A&CE",
         "url": "https://aceengineer.com",
         "logo": "https://aceengineer.com/assets/img/logo.png",
-        "description": "AI-native engineering with proven capabilities through open-source code, validated methodologies, and industry-standard compliance",
+        "description": "Engineering automation with proven capabilities through open-source code, validated methodologies, and industry-standard compliance",
         "foundingDate": "2010",
         "areaServed": "Worldwide",
         "sameAs": [
@@ -54,11 +54,11 @@
         },
         "serviceType": [
             "Engineering Analysis",
-            "Engineering Software Simulations",
-            "Physics-based Animations",
+            "Engineering Automation",
+            "OrcaFlex Batch Processing",
+            "Fatigue Analysis",
             "Data Analysis",
-            "Machine Learning",
-            "Artificial Intelligence"
+            "Computational Engineering"
         ]
     }
     </script>
@@ -96,7 +96,7 @@
                 "name": "What are the various project types performed?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "The various project types performed include: Engineering analysis, Engineering software simulations, Physics-based animations, and Data analysis with machine learning and artificial intelligence."
+                    "text": "The various project types performed include: Engineering analysis and automation, OrcaFlex and AQWA batch processing, Fatigue analysis with 221 S-N curves from 17 standards, and Energy data analytics with automated workflows."
                 }
             },
             {
@@ -131,51 +131,57 @@
 
     <include src="partials/nav.html"></include>
 
-    <div class="container">
+    <div class="container" style="max-width: 800px; padding-top: 30px; padding-bottom: 50px;">
         <h1>Frequently Asked Questions</h1>
 
-        <br>
-        <p><b>What are the various project types performed?</b></p>
-        <p>The various project types performed to date are:</p>
-        <ul>
-            <li>Engineering analysis.</li>
-            <li>Engineering software simulations.</li>
-            <li>Physics-based animations.</li>
-            <li>Data analysis, machine learning, and artificial intelligence.</li>
-        </ul>
+        <div style="margin-top: 30px;">
+            <p><b>How does A&amp;CE deliver 60-80% time savings?</b></p>
+            <p>We replace manual, repetitive engineering workflows with automated pipelines. For example, a 50-configuration OrcaFlex sensitivity study that takes 100 engineer-hours manually runs overnight through our batch automation&mdash;delivering validated results by morning. The savings come from eliminating manual model setup, results extraction, and report compilation.</p>
 
-        <p><b>What are the typical client engagements?</b></p>
-        <p>The typical client engagements are:</p>
-        <ul>
-            <li>Existing open-source libraries are available for general use: Free</li>
-            <li>New project with no existing library: Time and material basis</li>
-            <li>Customization of an existing open-source library: Time and material basis</li>
-            <li>New and cutting-edge libraries can be developed at a low cost, contingent on resource availability.</li>
-        </ul>
+            <p><b>What standards do you support?</b></p>
+            <p>Our modules codify 17 international standards including:</p>
+            <ul>
+                <li><strong>Fatigue:</strong> DNV-RP-C203, API RP 2A, BS 7608, ABS, Norsok</li>
+                <li><strong>Riser/Pipeline:</strong> API RP 2RD, API STD 2RD, DNV-OS-F201</li>
+                <li><strong>Offshore Wind:</strong> IEC 61400-3, DNV-ST-0126</li>
+                <li><strong>Pressure Vessels:</strong> ASME B31.8, API 579</li>
+            </ul>
+            <p>All 221 S-N curves are validated against published standard values with automated regression testing.</p>
 
-        <p><b>Are algorithm libraries delivered as private property or open-source?</b></p>
-        <p>Data is completely abstracted from the algorithm, and the algorithm is released with assumed data.
-        If the algorithm contains client intellectual property (IP), it will be delivered via a private repository.
-        Where practical and not constrained by IP, algorithms are released as open-source libraries for general use.</p>
+            <p><b>What software tools do you integrate with?</b></p>
+            <p>Our primary integrations are:</p>
+            <ul>
+                <li><strong>OrcaFlex:</strong> Full Python API integration for batch model generation, simulation, and post-processing</li>
+                <li><strong>AQWA:</strong> Hydrodynamic model generation, RAO processing, and operability analysis</li>
+                <li><strong>NASTRAN/ANSYS:</strong> FEA post-processing automation and report generation</li>
+                <li><strong>Python/Polars:</strong> High-performance data processing for large engineering datasets</li>
+            </ul>
 
-        <p><b>What are the algorithm best practices?</b></p>
-        <p>The algorithms are prepared for real-world use. Best practices followed include:</p>
-        <ul>
-            <li><a href="https://en.wikipedia.org/wiki/Object-oriented_programming" target="_blank">Object-Oriented Programming (OOP) principles</a>.</li>
-            <li><a href="https://www.pentalog.com/blog/it-development-technology/solid-principles-object-oriented-programming/" target="_blank">SOLID programming principles</a>, with a demo on <a href="https://www.digitalocean.com/community/conceptual-articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design" target="_blank">SOLID design using a calculator</a>.</li>
-            <li><a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank">Test-Driven Development (TDD)</a>.</li>
-            <li>Unit tests and behavior tests.</li>
-            <li>End-to-end behavior tests to cover critical edge cases.</li>
-            <li>Following OOD principles by Robert C. Martin (<a href="http://en.wikipedia.org/wiki/Robert_Cecil_Martin" target="_blank">Uncle Bob</a>).</li>
-        </ul>
+            <p><b>What are the typical engagement models?</b></p>
+            <ul>
+                <li><strong>Per-project:</strong> Fixed-price deliverables (e.g., $15K for 50-configuration riser study)</li>
+                <li><strong>Annual retainer:</strong> $120K/year for unlimited automation runs and priority support</li>
+                <li><strong>Custom development:</strong> Time and materials for bespoke automation pipelines</li>
+            </ul>
 
-        <br>
-        <p>Let <b>A&CE</b> help your project by using the <a href="contact.html">contact form</a>. We will respond within 24 hours.</p>
-    </div>
+            <p><b>How is intellectual property handled?</b></p>
+            <p>Data is completely abstracted from the computational methods. Client-specific configurations and results remain confidential. Where practical and not constrained by IP, our core engineering libraries are open-source for transparency and validation. Client-specific automation scripts are delivered via private repositories.</p>
 
-    <div class="container">
-        <hr>
-        <p>Developed by <b>A&CE</b></p>
+            <p><b>What engineering quality practices do you follow?</b></p>
+            <p>All code follows production software engineering standards:</p>
+            <ul>
+                <li>Test-Driven Development (TDD) with comprehensive unit and integration tests</li>
+                <li>Version-controlled, documented, and peer-reviewed code</li>
+                <li>Full traceability from input parameters to final results</li>
+                <li>Automated regression testing against published standard values</li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 40px; text-align: center;">
+            <p>Have a question not answered here?</p>
+            <a href="contact.html" class="btn btn-primary btn-lg">Contact Us</a>
+            <p style="margin-top: 10px; color: #777;">We respond within 24 hours.</p>
+        </div>
     </div>
 
 </body>

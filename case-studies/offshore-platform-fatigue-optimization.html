@@ -7,7 +7,7 @@
     <meta name="keywords" content="offshore platform fatigue, ML fatigue analysis, case study, structural integrity, DNV compliance, API RP 2A">
 
     <!-- Open Graph meta tags -->
-    <meta property="og:title" content="Case Study: ML-Enhanced Fatigue Assessment for Offshore Platform">
+    <meta property="og:title" content="Case Study: Computational Fatigue Assessment for Offshore Platform">
     <meta property="og:description" content="How machine learning reduced fatigue assessment time by 85% while improving prediction accuracy for a Gulf of Mexico fixed platform.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://aceengineer.com/case-studies/offshore-platform-fatigue-optimization.html">
@@ -15,15 +15,35 @@
 
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Case Study: ML-Enhanced Fatigue Assessment for Offshore Platform">
+    <meta name="twitter:title" content="Case Study: Computational Fatigue Assessment for Offshore Platform">
     <meta name="twitter:description" content="Machine learning reduced fatigue assessment time by 85% while improving accuracy for Gulf of Mexico platform.">
 
-    <title>Case Study: ML-Enhanced Fatigue Assessment for Offshore Platform - A&CE</title>
+    <title>Case Study: Computational Fatigue Assessment for Offshore Platform - A&CE</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/styles.min.css">
+<script defer="" src="../assets/js/navbar-toggle.js"></script>
+
+<!-- Google Analytics - deferred until after page is interactive -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K31E51DQ47');
+  (function() {
+    function loadGtag() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag);
+    } else {
+      window.addEventListener('load', loadGtag);
+    }
+  })();
+</script>
+
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -31,7 +51,7 @@
         "@context": "https://schema.org",
         "@type": "Article",
         "@id": "https://aceengineer.com/case-studies/offshore-platform-fatigue-optimization.html#article",
-        "headline": "ML-Enhanced Fatigue Assessment for Offshore Platform",
+        "headline": "Computational Fatigue Assessment for Offshore Platform",
         "description": "Case study demonstrating how machine learning reduced fatigue assessment time by 85% while improving prediction accuracy.",
         "datePublished": "2025-01-12",
         "dateModified": "2025-01-12",
@@ -174,56 +194,47 @@
             margin: 10px;
         }
     </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="../index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li><a href="../blog/">Blog</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical & Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../engineering.html">Services</a></li>
+                <li><a href="../energy.html">Energy Data</a></li>
+                <li><a href="../case-studies/">Case Studies</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="../contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <!-- Case Study Header -->
     <div class="case-study-header">
         <div class="container">
-            <h1>ML-Enhanced Fatigue Assessment for Offshore Platform</h1>
+            <h1>Computational Fatigue Assessment for Offshore Platform</h1>
             <p class="case-study-meta">
                 <strong>Client:</strong> Major Oil & Gas Operator |
                 <strong>Location:</strong> Gulf of Mexico |
@@ -258,6 +269,15 @@
                 <div class="metric-value">847</div>
                 <div class="metric-label">Joints Analyzed</div>
             </div>
+        </div>
+
+        <!-- Narrative Opening -->
+        <div style="background: #f0f7ff; border-left: 4px solid #428bca; padding: 25px 30px; border-radius: 0 8px 8px 0; margin-bottom: 40px;">
+            <p style="font-size: 1.15em; line-height: 1.7; color: #2c3e50; margin: 0;">
+                <strong>The Challenge:</strong> A 40-year-old Gulf of Mexico platform was approaching its design life. BSEE required a complete fatigue assessment within 8 weeks&mdash;traditional methods would take 16+.
+                <strong>The Process:</strong> We trained surrogate models on validated FEA results, then reconstructed stress histories at 847 joints from 15 years of operational monitoring data.
+                <strong>The Outcome:</strong> Assessment completed in 6 weeks. 12 joints reclassified from critical to acceptable. $2.1M in repairs avoided. Platform approved for 10 additional years.
+            </p>
         </div>
 
         <!-- Executive Summary -->
@@ -321,7 +341,7 @@
             <div class="step-content">
                 <h4>Operational Load Reconstruction</h4>
                 <p>
-                    Used the trained models to reconstruct stress histories at all 847 fatigue-critical joints from operational monitoring data—something that would be computationally impossible with FEA alone.
+                    Used the trained models to reconstruct stress histories at all 847 fatigue-critical joints from operational monitoring data--something that would be computationally impossible with FEA alone.
                 </p>
             </div>
         </div>
@@ -347,7 +367,7 @@
             <li><strong>Input features:</strong> Wave height, period, direction, current velocity, wind speed, operational deck loads</li>
             <li><strong>Output:</strong> Hot spot stress ranges at critical joint locations</li>
             <li><strong>Validation:</strong> 80/20 train-test split with 5-fold cross-validation</li>
-            <li><strong>Performance:</strong> R² > 0.94 on held-out test data</li>
+            <li><strong>Performance:</strong> R^2 > 0.94 on held-out test data</li>
         </ul>
 
         <h3>Computational Efficiency</h3>
@@ -482,7 +502,7 @@
         <!-- CTA Section -->
         <div class="cta-section">
             <h3>Facing Similar Challenges?</h3>
-            <p>We help operators extend asset life through AI-native structural assessment.</p>
+            <p>We help operators extend asset life through computational structural assessment and automated workflows.</p>
             <a href="../contact.html" class="btn btn-primary btn-lg">Discuss Your Project</a>
             <a href="../blog/machine-learning-fatigue-prediction.html" class="btn btn-default btn-lg">Read Technical Details</a>
         </div>
@@ -490,16 +510,49 @@
         <hr style="margin-top: 50px;">
 
         <p>
-            <a href="../engineering.html">← View All Engineering Services</a> |
+            <a href="../engineering.html">View All Engineering Services</a> |
             <a href="../blog/">Read Our Technical Blog</a>
         </p>
 
     </div>
 
+    <footer class="footer-section">
     <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../engineering.html">Services</a></li>
+                    <li><a href="../energy.html">Energy Data</a></li>
+                    <li><a href="../case-studies/">Case Studies</a></li>
+                    <li><a href="../blog/">Technical Blog</a></li>
+                    <li><a href="../calculators/">Free Calculators</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
+            </div>
+        </div>
         <hr>
-        <p>Developed by <b>A&CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></p>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
     </div>
+</footer>
+
 
 </body>
 </html>

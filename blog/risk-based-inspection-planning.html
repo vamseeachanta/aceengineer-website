@@ -21,11 +21,32 @@
 
     <title>Risk-Based Inspection for Offshore Structures: AI-Enhanced Approaches | A&CE Engineering Blog</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/styles.min.css">
+<script defer="" src="../assets/js/navbar-toggle.js"></script>
+
+<!-- Google Analytics - deferred until after page is interactive -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K31E51DQ47');
+  (function() {
+    function loadGtag() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag);
+    } else {
+      window.addEventListener('load', loadGtag);
+    }
+  })();
+</script>
+
+
     <link rel="canonical" href="https://aceengineer.com/blog/risk-based-inspection-planning.html">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -194,51 +215,42 @@
             margin-top: 0;
         }
     </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="../index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                    <li><a href="index.html">Blog</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical & Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../engineering.html">Services</a></li>
+                <li><a href="../energy.html">Energy Data</a></li>
+                <li><a href="../case-studies/">Case Studies</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="../contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <div class="container">
         <div class="blog-content">
@@ -283,104 +295,10 @@
             <p>Risk-based inspection follows a structured methodology defined in industry standards. The core equation is deceptively simple:</p>
 
             <div class="formula-box">
-                <strong>Risk = Probability of Failure (PoF) × Consequence of Failure (CoF)</strong>
+                <strong>Risk = Probability of Failure (PoF) x Consequence of Failure (CoF)</strong>
             </div>
 
             <p>The challenge lies in quantifying both terms rigorously for offshore structures with multiple degradation mechanisms, uncertain loading histories, and complex failure modes.</p>
-
-            <h3>Industry Standards Framework</h3>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Standard</th>
-                        <th>Scope</th>
-                        <th>Key Features</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>API 580/581</strong></td>
-                        <td>Process equipment, pressure vessels</td>
-                        <td>Quantitative PoF/CoF methods, damage factor approach, inspection effectiveness</td>
-                    </tr>
-                    <tr>
-                        <td><strong>DNV-RP-G101</strong></td>
-                        <td>Offshore topsides and structures</td>
-                        <td>Semi-quantitative screening, structural criticality assessment</td>
-                    </tr>
-                    <tr>
-                        <td><strong>API RP 2SIM</strong></td>
-                        <td>Fixed offshore platforms</td>
-                        <td>Structural integrity management, fitness-for-service integration</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ISO 19901-9</strong></td>
-                        <td>Offshore structures</td>
-                        <td>Lifecycle structural integrity, inspection planning framework</td>
-                    </tr>
-                    <tr>
-                        <td><strong>ASME PCC-3</strong></td>
-                        <td>Pressure equipment</td>
-                        <td>Inspection planning using risk analysis</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Probability of Failure Assessment</h3>
-
-            <p>PoF quantification considers multiple degradation mechanisms, each with distinct physics and progression rates:</p>
-
-            <ul>
-                <li><strong>Fatigue:</strong> Cyclic loading from waves, operations, and vortex-induced vibration</li>
-                <li><strong>Corrosion:</strong> General wastage, pitting, microbiologically influenced corrosion (MIC)</li>
-                <li><strong>Erosion:</strong> Sand production, flow-induced erosion, cavitation</li>
-                <li><strong>Cracking:</strong> Stress corrosion cracking, hydrogen-induced cracking</li>
-                <li><strong>Mechanical damage:</strong> Impact, overload, third-party interference</li>
-            </ul>
-
-            <p>For structural components dominated by fatigue, probability of failure derives from cumulative damage calculations:</p>
-
-            <div class="code-block">
-<span class="comment"># Probability of failure based on fatigue damage accumulation</span>
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np
-<span class="keyword">from</span> scipy.stats <span class="keyword">import</span> lognorm
-
-<span class="keyword">class</span> <span class="function">FatiguePoF</span>:
-    <span class="string">"""Calculate probability of failure from fatigue damage."""</span>
-
-    <span class="keyword">def</span> <span class="function">__init__</span>(self, design_life_years=<span class="number">25</span>):
-        self.design_life = design_life_years
-        <span class="comment"># Uncertainty parameters from DNV-RP-C203</span>
-        self.damage_cov = <span class="number">0.3</span>  <span class="comment"># Coefficient of variation in damage</span>
-        self.sn_uncertainty = <span class="number">0.2</span>  <span class="comment"># S-N curve uncertainty</span>
-
-    <span class="keyword">def</span> <span class="function">calculate_pof</span>(self, cumulative_damage, years_in_service):
-        <span class="string">"""
-        Calculate PoF using lognormal damage distribution.
-
-        Args:
-            cumulative_damage: Miner's sum to date
-            years_in_service: Current service years
-
-        Returns:
-            Probability of failure before next inspection
-        """</span>
-        <span class="comment"># Project damage to end of interval</span>
-        damage_rate = cumulative_damage / years_in_service
-
-        <span class="comment"># Combined uncertainty (damage + S-N curve)</span>
-        total_cov = np.sqrt(self.damage_cov**<span class="number">2</span> + self.sn_uncertainty**<span class="number">2</span>)
-
-        <span class="comment"># Lognormal distribution parameters</span>
-        sigma = np.sqrt(np.log(<span class="number">1</span> + total_cov**<span class="number">2</span>))
-        mu = np.log(cumulative_damage) - sigma**<span class="number">2</span>/<span class="number">2</span>
-
-        <span class="comment"># PoF = P(damage > 1.0)</span>
-        pof = <span class="number">1</span> - lognorm.cdf(<span class="number">1.0</span>, s=sigma, scale=np.exp(mu))
-
-        <span class="keyword">return</span> pof
-</div>
 
             <h3>Consequence of Failure Assessment</h3>
 
@@ -471,334 +389,6 @@
 
             <p>Traditional RBI assessments are periodic snapshots. AI-enhanced approaches enable continuous risk updating based on real-time data streams. This transforms RBI from a planning exercise into a dynamic decision support system.</p>
 
-            <h3>Dynamic PoF Updating</h3>
-
-            <p>Machine learning models can update failure probabilities as new information becomes available:</p>
-
-            <div class="code-block">
-<span class="comment"># AI-enhanced probability of failure updating</span>
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np
-<span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> GradientBoostingClassifier
-
-<span class="keyword">class</span> <span class="function">DynamicRiskModel</span>:
-    <span class="string">"""Update risk predictions using operational data."""</span>
-
-    <span class="keyword">def</span> <span class="function">__init__</span>(self):
-        self.base_model = GradientBoostingClassifier(
-            n_estimators=<span class="number">200</span>,
-            max_depth=<span class="number">6</span>,
-            learning_rate=<span class="number">0.1</span>
-        )
-        self.feature_names = [
-            <span class="string">'cumulative_damage'</span>,
-            <span class="string">'years_in_service'</span>,
-            <span class="string">'inspection_findings'</span>,
-            <span class="string">'metocean_severity'</span>,
-            <span class="string">'operational_exceedances'</span>,
-            <span class="string">'corrosion_rate'</span>,
-            <span class="string">'coating_condition'</span>,
-            <span class="string">'cp_performance'</span>
-        ]
-
-    <span class="keyword">def</span> <span class="function">predict_risk_category</span>(self, component_features):
-        <span class="string">"""
-        Predict risk category incorporating latest data.
-
-        Returns probability distribution over risk categories.
-        """</span>
-        probabilities = self.base_model.predict_proba(component_features)
-
-        <span class="comment"># Categories: Low, Medium, High, Critical</span>
-        risk_categories = [<span class="string">'low'</span>, <span class="string">'medium'</span>, <span class="string">'high'</span>, <span class="string">'critical'</span>]
-
-        <span class="keyword">return</span> dict(zip(risk_categories, probabilities[<span class="number">0</span>]))
-
-    <span class="keyword">def</span> <span class="function">identify_risk_drivers</span>(self, component_features):
-        <span class="string">"""Explain which factors are driving current risk level."""</span>
-        importances = self.base_model.feature_importances_
-
-        <span class="comment"># Rank factors by contribution to current prediction</span>
-        driver_ranking = sorted(
-            zip(self.feature_names, importances),
-            key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>],
-            reverse=<span class="keyword">True</span>
-        )
-
-        <span class="keyword">return</span> driver_ranking
-</div>
-
-            <h3>Inspection Effectiveness Integration</h3>
-
-            <p>Not all inspections are equally effective at detecting degradation. AI models can account for inspection method capabilities:</p>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Inspection Method</th>
-                        <th>Detection Capability</th>
-                        <th>Probability of Detection (PoD)</th>
-                        <th>Best Application</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>General Visual Inspection (GVI)</td>
-                        <td>Gross damage, coating failure</td>
-                        <td>50-70%</td>
-                        <td>Screening, trending</td>
-                    </tr>
-                    <tr>
-                        <td>Close Visual Inspection (CVI)</td>
-                        <td>Surface cracks > 25mm</td>
-                        <td>70-85%</td>
-                        <td>Weld toes, connections</td>
-                    </tr>
-                    <tr>
-                        <td>Magnetic Particle Inspection (MPI)</td>
-                        <td>Surface cracks > 5mm</td>
-                        <td>85-95%</td>
-                        <td>Critical weld details</td>
-                    </tr>
-                    <tr>
-                        <td>Ultrasonic Testing (UT)</td>
-                        <td>Thickness, subsurface flaws</td>
-                        <td>90-98%</td>
-                        <td>Corrosion mapping</td>
-                    </tr>
-                    <tr>
-                        <td>Flooded Member Detection (FMD)</td>
-                        <td>Through-wall cracks</td>
-                        <td>95-99%</td>
-                        <td>Tubular members</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p>Post-inspection PoF updates using Bayesian inference:</p>
-
-            <div class="code-block">
-<span class="comment"># Bayesian updating of PoF after inspection</span>
-<span class="keyword">def</span> <span class="function">update_pof_after_inspection</span>(prior_pof, inspection_result, pod):
-    <span class="string">"""
-    Update probability of failure based on inspection outcome.
-
-    Args:
-        prior_pof: Pre-inspection failure probability
-        inspection_result: 'no_defect' or 'defect_found'
-        pod: Probability of detection for inspection method
-
-    Returns:
-        Updated (posterior) probability of failure
-    """</span>
-    <span class="keyword">if</span> inspection_result == <span class="string">'no_defect'</span>:
-        <span class="comment"># No defect found - reduces PoF (but not to zero)</span>
-        <span class="comment"># P(fail | no detection) = P(no detect | fail) * P(fail) / P(no detect)</span>
-        p_no_detect_given_fail = <span class="number">1</span> - pod
-        p_no_detect = p_no_detect_given_fail * prior_pof + (<span class="number">1</span> - prior_pof)
-        posterior_pof = (p_no_detect_given_fail * prior_pof) / p_no_detect
-    <span class="keyword">else</span>:
-        <span class="comment"># Defect found - PoF depends on defect severity</span>
-        <span class="comment"># Requires fitness-for-service assessment</span>
-        posterior_pof = prior_pof  <span class="comment"># Placeholder - actual FFS needed</span>
-
-    <span class="keyword">return</span> posterior_pof
-
-<span class="comment"># Example: MPI inspection with no defects found</span>
-prior = <span class="number">0.05</span>  <span class="comment"># 5% PoF before inspection</span>
-pod_mpi = <span class="number">0.90</span>  <span class="comment"># 90% probability of detection</span>
-posterior = update_pof_after_inspection(prior, <span class="string">'no_defect'</span>, pod_mpi)
-<span class="comment"># posterior ≈ 0.005 (10x reduction from clean MPI)</span>
-</div>
-
-            <h2>Implementing AI-Enhanced RBI</h2>
-
-            <h3>Data Requirements</h3>
-
-            <p>Effective AI-enhanced RBI requires integration of multiple data sources:</p>
-
-            <ul>
-                <li><strong>Design basis:</strong> Original structural analysis, material specifications, fabrication records</li>
-                <li><strong>Inspection history:</strong> All previous inspection results, methods used, findings</li>
-                <li><strong>Operational data:</strong> Production rates, vessel approaches, crane operations</li>
-                <li><strong>Environmental data:</strong> Wave heights, current speeds, temperature, CP readings</li>
-                <li><strong>Monitoring data:</strong> Strain gauges, accelerometers, corrosion probes (if available)</li>
-            </ul>
-
-            <div class="warning-box">
-                <h4>Data Quality Challenges</h4>
-                <ul>
-                    <li><strong>Inconsistent formats:</strong> Inspection records span decades with varying documentation standards</li>
-                    <li><strong>Missing data:</strong> Historical environmental conditions may not be recorded</li>
-                    <li><strong>Uncertain locations:</strong> Component identification schemes change over platform life</li>
-                    <li><strong>Survivor bias:</strong> Failed components aren't available for model training</li>
-                </ul>
-            </div>
-
-            <h3>Model Validation Approaches</h3>
-
-            <p>AI models for RBI require rigorous validation before deployment:</p>
-
-            <ol>
-                <li><strong>Historical backtesting:</strong> Can the model predict known failures from pre-failure data?</li>
-                <li><strong>Cross-validation:</strong> Performance on held-out data from similar platforms</li>
-                <li><strong>Expert review:</strong> Do risk rankings align with engineering judgment?</li>
-                <li><strong>Sensitivity analysis:</strong> How do predictions change with input variations?</li>
-                <li><strong>Benchmark comparison:</strong> Agreement with traditional RBI methods on well-understood cases</li>
-            </ol>
-
-            <h3>Integration with Inspection Execution</h3>
-
-            <p>AI-enhanced RBI outputs must translate into actionable inspection work scopes:</p>
-
-            <div class="code-block">
-<span class="comment"># Generate inspection work scope from risk rankings</span>
-<span class="keyword">class</span> <span class="function">InspectionPlanner</span>:
-    <span class="string">"""Convert risk rankings to inspection work packages."""</span>
-
-    <span class="keyword">def</span> <span class="function">__init__</span>(self, risk_thresholds):
-        self.thresholds = risk_thresholds
-        self.method_selection = {
-            <span class="string">'critical'</span>: [<span class="string">'CVI'</span>, <span class="string">'MPI'</span>, <span class="string">'UT'</span>],
-            <span class="string">'high'</span>: [<span class="string">'CVI'</span>, <span class="string">'MPI'</span>],
-            <span class="string">'medium'</span>: [<span class="string">'CVI'</span>],
-            <span class="string">'low'</span>: [<span class="string">'GVI'</span>]
-        }
-        self.intervals = {
-            <span class="string">'critical'</span>: <span class="number">1</span>,   <span class="comment"># Annual</span>
-            <span class="string">'high'</span>: <span class="number">2</span>,       <span class="comment"># Biennial</span>
-            <span class="string">'medium'</span>: <span class="number">4</span>,     <span class="comment"># 4-year cycle</span>
-            <span class="string">'low'</span>: <span class="number">8</span>         <span class="comment"># 8-year cycle</span>
-        }
-
-    <span class="keyword">def</span> <span class="function">generate_work_scope</span>(self, components_df, target_year):
-        <span class="string">"""
-        Generate inspection work scope for upcoming campaign.
-
-        Args:
-            components_df: DataFrame with component risk rankings
-            target_year: Year of planned inspection
-
-        Returns:
-            Work scope dictionary by inspection method
-        """</span>
-        work_scope = {method: [] <span class="keyword">for</span> method <span class="keyword">in</span>
-                      [<span class="string">'GVI'</span>, <span class="string">'CVI'</span>, <span class="string">'MPI'</span>, <span class="string">'UT'</span>, <span class="string">'FMD'</span>]}
-
-        <span class="keyword">for</span> _, comp <span class="keyword">in</span> components_df.iterrows():
-            risk_cat = comp[<span class="string">'risk_category'</span>]
-            last_inspection = comp[<span class="string">'last_inspection_year'</span>]
-            interval = self.intervals[risk_cat]
-
-            <span class="comment"># Check if inspection due</span>
-            <span class="keyword">if</span> target_year - last_inspection >= interval:
-                methods = self.method_selection[risk_cat]
-                <span class="keyword">for</span> method <span class="keyword">in</span> methods:
-                    work_scope[method].append({
-                        <span class="string">'component_id'</span>: comp[<span class="string">'id'</span>],
-                        <span class="string">'location'</span>: comp[<span class="string">'location'</span>],
-                        <span class="string">'risk_category'</span>: risk_cat,
-                        <span class="string">'priority'</span>: comp[<span class="string">'risk_score'</span>]
-                    })
-
-        <span class="keyword">return</span> work_scope
-</div>
-
-            <h2>Case Example: Gulf of Mexico Platform</h2>
-
-            <p>Consider a 35-year-old fixed platform with 847 welded joints requiring periodic inspection:</p>
-
-            <h3>Traditional Approach</h3>
-            <ul>
-                <li>5-year underwater inspection cycle per regulatory requirements</li>
-                <li>~170 joints inspected per campaign (20% sampling)</li>
-                <li>Uniform sampling across all joint types</li>
-                <li>Typical campaign duration: 14 days</li>
-            </ul>
-
-            <h3>AI-Enhanced RBI Approach</h3>
-            <ul>
-                <li>Risk ranking incorporating 15 years of operational monitoring data</li>
-                <li>Critical joints (87): Inspected every 2 years with MPI</li>
-                <li>High-risk joints (156): Inspected every 3 years with CVI</li>
-                <li>Medium-risk joints (298): Inspected every 5 years with CVI</li>
-                <li>Low-risk joints (306): GVI only on 8-year cycle</li>
-            </ul>
-
-            <h3>Results Comparison</h3>
-
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Metric</th>
-                        <th>Traditional</th>
-                        <th>AI-Enhanced RBI</th>
-                        <th>Improvement</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Annual inspection cost</td>
-                        <td>$485,000</td>
-                        <td>$312,000</td>
-                        <td>36% reduction</td>
-                    </tr>
-                    <tr>
-                        <td>Critical joint coverage</td>
-                        <td>20% per campaign</td>
-                        <td>100% at required interval</td>
-                        <td>Complete coverage</td>
-                    </tr>
-                    <tr>
-                        <td>Defects detected (5-year period)</td>
-                        <td>12</td>
-                        <td>19</td>
-                        <td>58% improvement</td>
-                    </tr>
-                    <tr>
-                        <td>False call rate</td>
-                        <td>8%</td>
-                        <td>3%</td>
-                        <td>63% reduction</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Standards Compliance Considerations</h2>
-
-            <p>AI-enhanced RBI must demonstrate compliance with applicable regulations and standards:</p>
-
-            <ul>
-                <li><strong>API 580/581:</strong> Quantitative RBI methodology must be documented and auditable</li>
-                <li><strong>BSEE regulations:</strong> Platform Safety and Environmental Management System (SEMS) requirements</li>
-                <li><strong>Class society rules:</strong> DNV, ABS, or Lloyd's certification requirements</li>
-                <li><strong>Insurance requirements:</strong> Underwriter approval for modified inspection intervals</li>
-            </ul>
-
-            <div class="highlight-box">
-                <h4>Documentation Requirements</h4>
-                <p>AI-enhanced RBI implementations should maintain:</p>
-                <ul>
-                    <li>Model development and validation reports</li>
-                    <li>Training data sources and quality assessments</li>
-                    <li>Algorithm version control and change management</li>
-                    <li>Prediction audit trails with model explanations</li>
-                    <li>Performance monitoring and periodic recalibration records</li>
-                </ul>
-            </div>
-
-            <h2>Getting Started with AI-Enhanced RBI</h2>
-
-            <p>Organizations considering AI-enhanced RBI should follow a phased approach:</p>
-
-            <ol>
-                <li><strong>Baseline assessment:</strong> Document current inspection program effectiveness and costs</li>
-                <li><strong>Data audit:</strong> Evaluate available data quality, gaps, and integration requirements</li>
-                <li><strong>Pilot implementation:</strong> Apply AI methods to subset of assets with good data</li>
-                <li><strong>Validation:</strong> Compare AI predictions with expert judgment and historical outcomes</li>
-                <li><strong>Regulatory engagement:</strong> Discuss modified intervals with applicable authorities</li>
-                <li><strong>Rollout:</strong> Expand to full asset portfolio with continuous monitoring</li>
-            </ol>
-
             <h2>Conclusion</h2>
 
             <p>Risk-based inspection transforms offshore integrity management from calendar-driven compliance to risk-informed decision-making. AI enhancement enables dynamic updating, better prediction, and more efficient resource allocation. The key is rigorous methodology, quality data, and transparent validation.</p>
@@ -819,16 +409,49 @@ posterior = update_pof_after_inspection(prior, <span class="string">'no_defect'<
             <hr>
 
             <h3>About the Author</h3>
-            <p>Vamsee Achanta is a structural engineer specializing in AI-native approaches to offshore and marine engineering. With experience in fatigue analysis, structural integrity management, and computational methods, he helps organizations leverage machine learning to improve engineering outcomes.</p>
+            <p>Vamsee Achanta is a structural engineer specializing in computational methods for offshore and marine engineering. With experience in fatigue analysis, structural integrity management, and automated workflows, he helps organizations leverage data-driven approaches to improve engineering outcomes.</p>
             <p><a href="../about.html">Read more about A&amp;CE</a> or <a href="https://github.com/vamseeachanta">view code on GitHub</a></p>
 
         </div>
     </div>
 
+    <footer class="footer-section">
     <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../engineering.html">Services</a></li>
+                    <li><a href="../energy.html">Energy Data</a></li>
+                    <li><a href="../case-studies/">Case Studies</a></li>
+                    <li><a href="../blog/">Technical Blog</a></li>
+                    <li><a href="../calculators/">Free Calculators</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
+            </div>
+        </div>
         <hr>
-        <p>Developed by <b>A&amp;CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></p>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
     </div>
+</footer>
+
 
 </body>
 </html>

@@ -20,11 +20,30 @@
 
     <title>Contact Us - A&CE Engineering</title>
 
-    <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/marketing.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/css/styles.min.css">
+<script defer="" src="assets/js/navbar-toggle.js"></script>
+
+<!-- Google Analytics - deferred until after page is interactive -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K31E51DQ47');
+  (function() {
+    function loadGtag() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag);
+    } else {
+      window.addEventListener('load', loadGtag);
+    }
+  })();
+</script>
+
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -85,15 +104,6 @@
             }
         ]
     }
-    </script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-K31E51DQ47');
     </script>
 
     <style>
@@ -223,40 +233,39 @@
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="engineering.html">Engineering</a></li>
-                    <li><a href="energy.html">Energy Data</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="blog/">Blog</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="contact.html" class="btn-nav-cta">Get Started</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical & Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="engineering.html">Services</a></li>
+                <li><a href="energy.html">Energy Data</a></li>
+                <li><a href="case-studies/">Case Studies</a></li>
+                <li><a href="blog/">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <!-- Hero Section -->
     <section class="hero-section" style="padding: 60px 0;">
@@ -292,12 +301,12 @@
 
                             <div class="form-group">
                                 <label for="name">Your Name *</label>
-                                <input type="text" id="name" name="name" class="form-control" placeholder="John Smith" required>
+                                <input type="text" id="name" name="name" class="form-control" placeholder="John Smith" required="">
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Email Address *</label>
-                                <input type="email" id="email" name="email" class="form-control" placeholder="john@company.com" required>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="john@company.com" required="">
                             </div>
 
                             <div class="form-group">
@@ -307,30 +316,22 @@
 
                             <div class="form-group">
                                 <label for="subject">Subject *</label>
-                                <select id="subject" name="subject" class="form-control" required>
+                                <select id="subject" name="subject" class="form-control" required="">
                                     <option value="">Select a topic...</option>
-                                    <optgroup label="Engineering Services">
-                                        <option value="OrcaFlex Automation">OrcaFlex Automation Project</option>
-                                        <option value="FEA Post-Processing">FEA Post-Processing Automation</option>
-                                        <option value="Fatigue Analysis">Fatigue Analysis Services</option>
-                                        <option value="Offshore Engineering">Offshore Platform/Riser Analysis</option>
-                                        <option value="Wind Energy">Offshore Wind Engineering</option>
-                                        <option value="EPC Support">EPC Project Support</option>
-                                    </optgroup>
-                                    <optgroup label="Energy Data Services">
-                                        <option value="Energy Operator">Energy Operator</option>
-                                        <option value="Energy Investor / Analyst">Energy Investor / Analyst</option>
-                                        <option value="Maritime / Shipping">Maritime / Shipping</option>
-                                        <option value="Regulatory / Government">Regulatory / Government</option>
-                                    </optgroup>
+                                    <option value="OrcaFlex Automation">OrcaFlex Automation Project</option>
+                                    <option value="FEA Post-Processing">FEA Post-Processing Automation</option>
+                                    <option value="Fatigue Analysis">Fatigue Analysis Services</option>
+                                    <option value="Offshore Engineering">Offshore Platform/Riser Analysis</option>
+                                    <option value="Wind Energy">Offshore Wind Engineering</option>
+                                    <option value="EPC Support">EPC Project Support</option>
+                                    <option value="Energy Data">Energy Data Services</option>
                                     <option value="General Inquiry">General Inquiry</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="message">Project Details *</label>
-                                <textarea id="message" name="message" class="form-control" rows="5"
-                                    placeholder="Describe your project or challenge. Include any specific requirements, timeline, or software tools involved." required></textarea>
+                                <textarea id="message" name="message" class="form-control" rows="5" placeholder="Describe your project or challenge. Include any specific requirements, timeline, or software tools involved." required=""></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-submit">Send Message</button>
@@ -425,36 +426,43 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>A&CE</h4>
-                    <p>AI-native engineering automation for offshore, wind, and energy infrastructure. We turn manual iteration into automated infrastructure.</p>
-                </div>
-                <div class="col-md-4">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="engineering.html#offshore">Offshore Engineering</a></li>
-                        <li><a href="engineering.html#wind">Wind Energy</a></li>
-                        <li><a href="case-studies/">Case Studies</a></li>
-                        <li><a href="blog/">Technical Blog</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h3>Connect</h3>
-                    <ul class="footer-links">
-                        <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
-                        <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
-                        <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
-                    </ul>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
             </div>
-            <hr>
-            <p class="text-center" style="color: rgba(255,255,255,0.6);">&copy; 2025 Analytical & Computational Engineering. All rights reserved.</p>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="engineering.html">Services</a></li>
+                    <li><a href="energy.html">Energy Data</a></li>
+                    <li><a href="case-studies/">Case Studies</a></li>
+                    <li><a href="blog/">Technical Blog</a></li>
+                    <li><a href="calculators/">Free Calculators</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
+            </div>
         </div>
-    </footer>
+        <hr>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
 
     <!-- Form Scripts -->
     <script>
@@ -494,10 +502,7 @@
                     'orcaflex': 'OrcaFlex Automation',
                     'fea': 'FEA Post-Processing',
                     'fatigue': 'Fatigue Analysis',
-                    'energy-operator': 'Energy Operator',
-                    'energy-investor': 'Energy Investor / Analyst',
-                    'maritime': 'Maritime / Shipping',
-                    'regulatory': 'Regulatory / Government'
+                    'energy': 'Energy Data'
                 };
 
                 if (subjectMap[vertical]) {

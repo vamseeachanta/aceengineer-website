@@ -20,10 +20,30 @@
 
     <title>Machine Learning for Fatigue Life Prediction | A&CE Blog</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/styles.min.css">
+<script defer="" src="../assets/js/navbar-toggle.js"></script>
+
+<!-- Google Analytics - deferred until after page is interactive -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K31E51DQ47');
+  (function() {
+    function loadGtag() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag);
+    } else {
+      window.addEventListener('load', loadGtag);
+    }
+  })();
+</script>
+
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -140,60 +160,42 @@
             margin: 20px 0;
         }
     </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="../index.html">
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 50" height="40" width="200">
-                        <rect width="100%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
-                        <rect x="50" width="50%" height="100%" style="fill:rgb(240,240,240);stroke-width:3;stroke:rgb(240,240,240)" />
-                        <title>Analytical & Computational Engineering</title>
-                        <text x="70" y="12" font-weight="bold" fill="black">A&CE</text>
-                        Analytical & Computational Engineering
-                        <style>
-                            <![CDATA[
-                            text {
-                                dominant-baseline: hanging;
-                                font: 40px sans-serif;
-                            }
-                            ]]>
-                        </style>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                    <li><a href="index.html" class="active">Blog</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical & Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../engineering.html">Services</a></li>
+                <li><a href="../energy.html">Energy Data</a></li>
+                <li><a href="../case-studies/">Case Studies</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="../contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <div class="container article-content">
 
@@ -204,7 +206,7 @@
                     <strong>Author:</strong> Vamsee Achanta |
                     <strong>Published:</strong> January 12, 2025 |
                     <strong>Reading Time:</strong> 12 minutes |
-                    <strong>Category:</strong> AI-Native Engineering
+                    <strong>Category:</strong> Computational Engineering
                 </div>
             </header>
 
@@ -602,7 +604,7 @@ class FatigueNet(nn.Module):
             <!-- Author Bio -->
             <section style="background-color: #f8f9fa; padding: 20px; margin-top: 30px; border-radius: 5px;">
                 <h3>About the Author</h3>
-                <p><strong>Vamsee Achanta</strong> is the founder of Analytical & Computational Engineering (A&CE), specializing in AI-native approaches to structural engineering challenges. With extensive experience in offshore and subsea engineering, Vamsee focuses on applying machine learning methods to improve engineering analysis accuracy while maintaining industry standard compliance.</p>
+                <p><strong>Vamsee Achanta</strong> is the founder of Analytical & Computational Engineering (A&CE), specializing in computational methods for structural engineering challenges. With extensive experience in offshore and subsea engineering, Vamsee focuses on applying data-driven methods to improve engineering analysis accuracy while maintaining industry standard compliance.</p>
                 <p><a href="../about.html">Learn more about A&CE →</a></p>
             </section>
 
@@ -628,11 +630,43 @@ class FatigueNet(nn.Module):
 
     </div>
 
-    <!-- Footer -->
+    <footer class="footer-section">
     <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../engineering.html">Services</a></li>
+                    <li><a href="../energy.html">Energy Data</a></li>
+                    <li><a href="../case-studies/">Case Studies</a></li>
+                    <li><a href="../blog/">Technical Blog</a></li>
+                    <li><a href="../calculators/">Free Calculators</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
+            </div>
+        </div>
         <hr>
-        <p>© 2025 Analytical & Computational Engineering. All rights reserved.</p>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
     </div>
+</footer>
+
 
 </body>
 </html>

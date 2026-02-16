@@ -20,11 +20,30 @@
 
     <title>Engineering Automation Services - A&CE</title>
 
-    <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/marketing.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/css/styles.min.css">
+<script defer="" src="assets/js/navbar-toggle.js"></script>
+
+<!-- Google Analytics - deferred until after page is interactive -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K31E51DQ47');
+  (function() {
+    function loadGtag() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag);
+    } else {
+      window.addEventListener('load', loadGtag);
+    }
+  })();
+</script>
+
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -70,52 +89,42 @@
         }
     }
     </script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li class="active"><a href="engineering.html">Engineering</a></li>
-                    <li><a href="energy.html">Energy Data</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="blog/">Blog</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="contact.html" class="btn-nav-cta">Get Started</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical & Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="engineering.html">Services</a></li>
+                <li><a href="energy.html">Energy Data</a></li>
+                <li><a href="case-studies/">Case Studies</a></li>
+                <li><a href="blog/">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -356,7 +365,7 @@
                                 <td><strong>Riser Fatigue Study</strong><br><small>50 configurations</small></td>
                                 <td>$50,000<br><small>100 hrs × $500/hr</small></td>
                                 <td>$15,000 flat</td>
-                                <td class="savings">70%</td>
+                                <td class="savings">70% <a href="case-studies/orcaflex-riser-sensitivity-automation.html" style="display:block; font-size:0.8em;">See case study &rarr;</a></td>
                             </tr>
                             <tr>
                                 <td><strong>Mooring Sensitivity</strong><br><small>100 cases</small></td>
@@ -368,7 +377,7 @@
                                 <td><strong>Platform Integrity Assessment</strong><br><small>Full reassessment</small></td>
                                 <td>$100,000<br><small>200 hrs × $500/hr</small></td>
                                 <td>$40,000 flat</td>
-                                <td class="savings">60%</td>
+                                <td class="savings">60% <a href="case-studies/offshore-platform-fatigue-optimization.html" style="display:block; font-size:0.8em;">See case study &rarr;</a></td>
                             </tr>
                             <tr>
                                 <td><strong>Annual Retainer</strong><br><small>Unlimited automation runs</small></td>
@@ -452,14 +461,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="case-highlight-card">
-                        <h3>ML-Enhanced Fatigue Assessment</h3>
+                        <h3>Computational Fatigue Assessment</h3>
                         <p>Offshore platform life extension study for Gulf of Mexico operator</p>
                         <div class="case-metrics">
                             <span class="case-metric"><strong>85%</strong> time reduction</span>
                             <span class="case-metric"><strong>23%</strong> accuracy improvement</span>
                             <span class="case-metric"><strong>5+ years</strong> extended platform life</span>
                         </div>
-                        <a href="case-studies/offshore-platform-fatigue-optimization.html">Read Case Study →</a>
+                        <a href="case-studies/offshore-platform-fatigue-optimization.html" aria-label="Read case study: Computational Fatigue Assessment">Read Case Study →</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -471,7 +480,7 @@
                             <span class="case-metric"><strong>50+</strong> reports/week capability</span>
                             <span class="case-metric"><strong>100%</strong> standards compliant</span>
                         </div>
-                        <a href="case-studies/subsea-fea-automation.html">Read Case Study →</a>
+                        <a href="case-studies/subsea-fea-automation.html" aria-label="Read case study: Automated FEA Post-Processing">Read Case Study →</a>
                     </div>
                 </div>
             </div>
@@ -518,6 +527,51 @@
         </div>
     </section>
 
+    <!-- Related Articles Section -->
+    <section style="padding: 50px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3 class="text-center" style="margin-bottom: 30px;">Related Technical Articles</h3>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="blog/python-engineering-automation.html" style="text-decoration:none; color:inherit;">
+                                <div class="vertical-card" style="min-height:120px;">
+                                    <h4 style="font-size:0.95em;">Python Engineering Automation</h4>
+                                    <p style="font-size:0.85em;">From manual workflows to reproducible analysis</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="blog/machine-learning-fatigue-prediction.html" style="text-decoration:none; color:inherit;">
+                                <div class="vertical-card" style="min-height:120px;">
+                                    <h4 style="font-size:0.95em;">Fatigue Life Prediction</h4>
+                                    <p style="font-size:0.85em;">Beyond S-N curves with data-driven methods</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="blog/offshore-engineering-standards.html" style="text-decoration:none; color:inherit;">
+                                <div class="vertical-card" style="min-height:120px;">
+                                    <h4 style="font-size:0.95em;">Offshore Standards Guide</h4>
+                                    <p style="font-size:0.85em;">DNV, API, BS, and multi-standard compliance</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="blog/cfd-offshore-engineering.html" style="text-decoration:none; color:inherit;">
+                                <div class="vertical-card" style="min-height:120px;">
+                                    <h4 style="font-size:0.95em;">CFD for Offshore</h4>
+                                    <p style="font-size:0.85em;">Wave loading, VIV analysis, and practical guidance</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="container">
@@ -532,43 +586,43 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>A&CE</h4>
-                    <p>Engineering automation for offshore, subsea, and energy infrastructure.
-                       Transform weeks of manual analysis into hours.</p>
-                </div>
-                <div class="col-md-4">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="engineering.html">Engineering</a></li>
-                        <li><a href="energy.html">Energy Data</a></li>
-                        <li><a href="case-studies/">Case Studies</a></li>
-                        <li><a href="blog/">Technical Blog</a></li>
-                        <li><a href="calculators/">Free Calculators</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h3>Connect</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
-                        <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
-                        <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
-                    </ul>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
             </div>
-            <hr>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p style="opacity: 0.7;">© 2025 Analytical & Computational Engineering. All rights reserved.</p>
-                </div>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="engineering.html">Services</a></li>
+                    <li><a href="energy.html">Energy Data</a></li>
+                    <li><a href="case-studies/">Case Studies</a></li>
+                    <li><a href="blog/">Technical Blog</a></li>
+                    <li><a href="calculators/">Free Calculators</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
             </div>
         </div>
-    </footer>
+        <hr>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
 
 </body>
 </html>

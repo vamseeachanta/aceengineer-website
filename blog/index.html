@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Technical blog on AI-native engineering, computational methods, machine learning for engineering analysis, and open-source tools.">
+    <meta name="description" content="Technical blog on computational engineering, automated analysis methods, engineering software tools, and open-source projects.">
     <meta name="keywords" content="AI engineering, computational methods, machine learning, structural analysis, engineering blog, technical articles">
 
     <!-- Open Graph meta tags -->
     <meta property="og:title" content="Engineering Blog - A&CE">
-    <meta property="og:description" content="Technical articles on AI-native engineering approaches, computational methods, and industry insights.">
+    <meta property="og:description" content="Technical articles on computational engineering methods, automated workflows, and industry insights.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aceengineer.com/blog/">
     <meta property="og:site_name" content="Analytical & Computational Engineering">
@@ -16,14 +16,34 @@
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Engineering Blog - A&CE">
-    <meta name="twitter:description" content="Technical articles on AI-native engineering approaches and computational methods.">
+    <meta name="twitter:description" content="Technical articles on computational engineering methods and automated workflows.">
 
     <title>Engineering Blog - A&CE</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/styles.min.css">
+<script defer="" src="../assets/js/navbar-toggle.js"></script>
+
+<!-- Google Analytics - deferred until after page is interactive -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K31E51DQ47');
+  (function() {
+    function loadGtag() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag);
+    } else {
+      window.addEventListener('load', loadGtag);
+    }
+  })();
+</script>
+
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -33,7 +53,7 @@
         "@id": "https://aceengineer.com/blog/#blog",
         "name": "A&CE Engineering Blog",
         "url": "https://aceengineer.com/blog/",
-        "description": "Technical articles on AI-native engineering, computational methods, and industry insights",
+        "description": "Technical articles on computational engineering, automated analysis methods, and industry insights",
         "publisher": {
             "@type": "Organization",
             "@id": "https://aceengineer.com/#organization",
@@ -88,55 +108,114 @@
             margin-top: 10px;
         }
     </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="../index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                    <li><a href="index.html" class="active">Blog</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical & Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../engineering.html">Services</a></li>
+                <li><a href="../energy.html">Energy Data</a></li>
+                <li><a href="../case-studies/">Case Studies</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="../contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <div class="container">
         <h1>Engineering Blog</h1>
-        <p class="lead">Technical articles on AI-native engineering approaches, computational methods, and industry insights.</p>
+        <p class="lead">Technical articles on computational engineering methods, automated workflows, and industry insights.</p>
+
+        <!-- Blog Post 12 -->
+        <div class="blog-post">
+            <h3><a href="energy-data-automation-pipelines.html">Energy Data Automation Pipelines: From Manual to Automated Workflows</a></h3>
+            <div class="blog-meta">
+                <strong>Published:</strong> February 2026 | <strong>Author:</strong> Vamsee Achanta | <strong>Reading Time:</strong> 16 minutes
+            </div>
+            <p class="blog-excerpt">
+                Energy companies spend millions annually on manual data collection, yet face delays, errors, and reproducibility challenges. Automated pipelines reduce collection costs by 60-80% while improving quality and enabling real-time analytics.
+            </p>
+            <p class="blog-excerpt">
+                This practical guide covers the cost of manual workflows, ETL architecture patterns, Python implementation examples, data quality monitoring, and ROI calculation for oil and gas data automation.
+            </p>
+            <div class="read-more">
+                <a href="energy-data-automation-pipelines.html" class="btn btn-primary" aria-label="Read article: Energy Data Automation Pipelines">Read Article</a>
+            </div>
+        </div>
+
+        <!-- Blog Post 11 -->
+        <div class="blog-post">
+            <h3><a href="marine-safety-incident-analysis.html">Marine Safety Incident Analysis: Cross-Database Correlation</a></h3>
+            <div class="blog-meta">
+                <strong>Published:</strong> February 2026 | <strong>Author:</strong> Vamsee Achanta | <strong>Reading Time:</strong> 14 minutes
+            </div>
+            <p class="blog-excerpt">
+                Marine safety incidents are reported to multiple regulatory databases—BSEE, USCG, and IMO—each with different identifiers, classification schemes, and reporting standards. Cross-database correlation is essential for comprehensive risk analysis.
+            </p>
+            <p class="blog-excerpt">
+                This article presents practical Python approaches for entity resolution, temporal correlation, regulatory compliance analysis, and integrating heterogeneous marine safety datasets for offshore operations.
+            </p>
+            <div class="read-more">
+                <a href="marine-safety-incident-analysis.html" class="btn btn-primary" aria-label="Read article: Marine Safety Incident Analysis">Read Article</a>
+            </div>
+        </div>
+
+        <!-- Blog Post 10 -->
+        <div class="blog-post">
+            <h3><a href="npv-analysis-deepwater-field-development.html">NPV Analysis for Deepwater Field Development</a></h3>
+            <div class="blog-meta">
+                <strong>Published:</strong> February 2026 | <strong>Author:</strong> Vamsee Achanta | <strong>Reading Time:</strong> 15 minutes
+            </div>
+            <p class="blog-excerpt">
+                Deepwater projects require $2-10 billion investments with 20-30 year lifecycles. Net Present Value and Internal Rate of Return analysis are fundamental for investment decisions, but deepwater introduces unique complexities.
+            </p>
+            <p class="blog-excerpt">
+                This guide covers NPV/IRR fundamentals for offshore economics, Python code for decline curves and DCF modeling, sensitivity analysis, Monte Carlo simulation, and Gulf of Mexico economic evaluation examples.
+            </p>
+            <div class="read-more">
+                <a href="npv-analysis-deepwater-field-development.html" class="btn btn-primary" aria-label="Read article: NPV Analysis for Deepwater Field Development">Read Article</a>
+            </div>
+        </div>
+
+        <!-- Blog Post 9 -->
+        <div class="blog-post">
+            <h3><a href="gulf-of-mexico-production-data-access.html">Gulf of Mexico Production Data Access: Programmatic BSEE Data</a></h3>
+            <div class="blog-meta">
+                <strong>Published:</strong> February 2026 | <strong>Author:</strong> Vamsee Achanta | <strong>Reading Time:</strong> 16 minutes
+            </div>
+            <p class="blog-excerpt">
+                BSEE maintains comprehensive Gulf of Mexico production datasets, but accessing this data programmatically requires navigating complex file formats, inconsistent structures, and data quality challenges.
+            </p>
+            <p class="blog-excerpt">
+                This practical guide covers BSEE data sources, Python-based automated retrieval, ETL pipeline development, data quality handling, and integration with decline curve analysis and field development economics.
+            </p>
+            <div class="read-more">
+                <a href="gulf-of-mexico-production-data-access.html" class="btn btn-primary" aria-label="Read article: Gulf of Mexico Production Data Access">Read Article</a>
+            </div>
+        </div>
 
         <!-- Blog Post 8 -->
         <div class="blog-post">
@@ -148,10 +227,10 @@
                 Computational Fluid Dynamics (CFD) has become essential for offshore engineering challenges that empirical formulas cannot address. From complex wave-structure interactions to vortex-induced vibration prediction, CFD provides detailed flow field information needed for reliable design.
             </p>
             <p class="blog-excerpt">
-                This practical guide covers when CFD adds value, wave loading analysis with free surface modeling, VIV prediction and suppression device optimization, AI-enhanced surrogate models, and verification approaches for offshore applications.
+                This practical guide covers when CFD adds value, wave loading analysis with free surface modeling, VIV prediction and suppression device optimization, computational surrogate models, and verification approaches for offshore applications.
             </p>
             <div class="read-more">
-                <a href="cfd-offshore-engineering.html" class="btn btn-primary">Read Article</a>
+                <a href="cfd-offshore-engineering.html" class="btn btn-primary" aria-label="Read article: CFD for Offshore Engineering">Read Article</a>
             </div>
         </div>
 
@@ -168,7 +247,7 @@
                 This guide covers probability of failure modeling, consequence assessment, inspection effectiveness integration, Bayesian updating after inspections, and practical implementation strategies for API 580/581 and DNV-RP-G101 compliant programs.
             </p>
             <div class="read-more">
-                <a href="risk-based-inspection-planning.html" class="btn btn-primary">Read Article</a>
+                <a href="risk-based-inspection-planning.html" class="btn btn-primary" aria-label="Read article: Risk-Based Inspection Planning">Read Article</a>
             </div>
         </div>
 
@@ -185,7 +264,7 @@
                 We explore the digital twin maturity spectrum, architectural layers from data acquisition to decision interfaces, sensor deployment strategies, Bayesian model updating for fatigue estimation, and frameworks for evaluating digital twin investments on offshore platforms and wind turbines.
             </p>
             <div class="read-more">
-                <a href="digital-twins-offshore-assets.html" class="btn btn-primary">Read Article</a>
+                <a href="digital-twins-offshore-assets.html" class="btn btn-primary" aria-label="Read article: Digital Twins for Offshore Assets">Read Article</a>
             </div>
         </div>
 
@@ -199,10 +278,10 @@
                 Offshore engineering projects must comply with multiple international standards that govern design, fabrication, installation, and operation. DNV-RP-C203, API RP 2A, BS 7608, and ISO 19901 represent different regulatory frameworks with varying requirements, safety factors, and methodologies.
             </p>
             <p class="blog-excerpt">
-                This comprehensive guide covers how different standards apply to different project phases, AI-native approaches to multi-standard compliance verification, and practical tips for navigating complex regulatory requirements on global offshore projects.
+                This comprehensive guide covers how different standards apply to different project phases, automated approaches to multi-standard compliance verification, and practical tips for navigating complex regulatory requirements on global offshore projects.
             </p>
             <div class="read-more">
-                <a href="offshore-engineering-standards.html" class="btn btn-primary">Read Article</a>
+                <a href="offshore-engineering-standards.html" class="btn btn-primary" aria-label="Read article: Navigating Offshore Engineering Standards">Read Article</a>
             </div>
         </div>
 
@@ -219,7 +298,7 @@
                 This article explores why open-source matters for engineering software, introduces our GitHub repositories for fatigue analysis and FEA post-processing, and explains how engineers can use and contribute to these tools.
             </p>
             <div class="read-more">
-                <a href="open-source-engineering-tools.html" class="btn btn-primary">Read Article</a>
+                <a href="open-source-engineering-tools.html" class="btn btn-primary" aria-label="Read article: Open-Source Engineering Tools">Read Article</a>
             </div>
         </div>
 
@@ -230,13 +309,13 @@
                 <strong>Published:</strong> January 2025 | <strong>Author:</strong> Vamsee Achanta | <strong>Reading Time:</strong> 8 minutes
             </div>
             <p class="blog-excerpt">
-                Finite Element Analysis (FEA) has been the cornerstone of structural engineering for decades. But AI-native approaches are changing how we analyze, validate, and optimize complex structures. This article explores what AI-native means, why it matters, and how it's different from traditional FEA.
+                Finite Element Analysis (FEA) has been the cornerstone of structural engineering for decades. But computational approaches combining surrogate models with traditional methods are changing how we analyze, validate, and optimize complex structures. This article explores what this means, why it matters, and how it differs from traditional FEA.
             </p>
             <p class="blog-excerpt">
                 We'll examine real-world applications in offshore engineering, compare computational performance, discuss validation methodologies, and show why technical evaluators should care about this shift.
             </p>
             <div class="read-more">
-                <a href="ai-native-structural-analysis.html" class="btn btn-primary">Read Article</a>
+                <a href="ai-native-structural-analysis.html" class="btn btn-primary" aria-label="Read article: AI-Native Structural Analysis">Read Article</a>
             </div>
         </div>
 
@@ -253,7 +332,7 @@
                 This article explores how ML models trained on operational data can improve fatigue life predictions by 15-40% compared to traditional methods, with practical implementation guidance and validation approaches.
             </p>
             <div class="read-more">
-                <a href="machine-learning-fatigue-prediction.html" class="btn btn-primary">Read Article</a>
+                <a href="machine-learning-fatigue-prediction.html" class="btn btn-primary" aria-label="Read article: Machine Learning for Fatigue Life Prediction">Read Article</a>
             </div>
         </div>
 
@@ -270,7 +349,7 @@
                 This practical guide covers FEA post-processing automation, report generation, and building complete analysis pipelines with real code examples you can adapt for your workflows.
             </p>
             <div class="read-more">
-                <a href="python-engineering-automation.html" class="btn btn-primary">Read Article</a>
+                <a href="python-engineering-automation.html" class="btn btn-primary" aria-label="Read article: Python Engineering Automation">Read Article</a>
             </div>
         </div>
 
@@ -296,7 +375,7 @@
                 <input type="hidden" name="from_name" value="A&CE Newsletter">
                 <input type="hidden" name="redirect" value="https://aceengineer.com/blog/?subscribed=true">
                 <div class="input-group">
-                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required="">
                     <span class="input-group-btn">
                         <button type="submit" class="btn btn-primary">Subscribe</button>
                     </span>
@@ -325,10 +404,43 @@
 
     </div>
 
+    <footer class="footer-section">
     <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../engineering.html">Services</a></li>
+                    <li><a href="../energy.html">Energy Data</a></li>
+                    <li><a href="../case-studies/">Case Studies</a></li>
+                    <li><a href="../blog/">Technical Blog</a></li>
+                    <li><a href="../calculators/">Free Calculators</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
+            </div>
+        </div>
         <hr>
-        <p>Developed by <b>A&CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></p>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
     </div>
+</footer>
+
 
 </body>
 </html>

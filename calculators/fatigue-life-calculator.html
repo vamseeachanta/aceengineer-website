@@ -15,10 +15,30 @@
 
     <title>S-N Curve Fatigue Life Calculator - A&CE</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/styles.min.css">
+<script defer="" src="../assets/js/navbar-toggle.js"></script>
+
+<!-- Google Analytics - deferred until after page is interactive -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K31E51DQ47');
+  (function() {
+    function loadGtag() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag);
+    } else {
+      window.addEventListener('load', loadGtag);
+    }
+  })();
+</script>
+
 
     <!-- JSON-LD Structured Data - WebApplication -->
     <script type="application/ld+json">
@@ -144,50 +164,42 @@
             margin-top: 5px;
         }
     </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="../index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li><a href="../blog/">Blog</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical & Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../engineering.html">Services</a></li>
+                <li><a href="../energy.html">Energy Data</a></li>
+                <li><a href="../case-studies/">Case Studies</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="../contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <div class="container">
         <div class="page-header">
@@ -213,7 +225,7 @@
                             <option value="C">C - Butt welds, as-welded</option>
                             <option value="C1">C1 - Transverse butt welds</option>
                             <option value="C2">C2 - Cruciform joints</option>
-                            <option value="D" selected>D - Fillet welds, typical offshore</option>
+                            <option value="D" selected="">D - Fillet welds, typical offshore</option>
                             <option value="E">E - Attachments, cover plates</option>
                             <option value="F">F - Lap joints, severe geometry</option>
                             <option value="F1">F1 - Shear connectors</option>
@@ -244,7 +256,7 @@
                     <div class="form-group">
                         <label for="environment">Environment</label>
                         <select class="form-control" id="environment" onchange="updateCurveInfo()">
-                            <option value="air" selected>In Air</option>
+                            <option value="air" selected="">In Air</option>
                             <option value="seawater_cp">Seawater with Cathodic Protection</option>
                             <option value="seawater_free">Seawater, Free Corrosion</option>
                         </select>
@@ -257,7 +269,7 @@
 
                     <div class="sn-params" id="snParams">
                         <strong>S-N Curve Parameters (DNV-RP-C203):</strong><br>
-                        <span id="paramDisplay">log(a₁) = 12.164, m₁ = 3, log(a₂) = 15.606, m₂ = 5</span>
+                        <span id="paramDisplay">log(a1) = 12.164, m1 = 3, log(a2) = 15.606, m2 = 5</span>
                     </div>
                 </div>
             </div>
@@ -296,16 +308,16 @@
 
                     <div class="formula-box">
                         <strong>S-N Curve Equation:</strong><br>
-                        log(N) = log(a) - m × log(S)<br><br>
+                        log(N) = log(a) - m x log(S)<br><br>
                         <strong>Thickness Correction:</strong><br>
-                        S<sub>corrected</sub> = S × (t/t<sub>ref</sub>)<sup>k</sup><br>
+                        S<sub>corrected</sub> = S x (t/t<sub>ref</sub>)<sup>k</sup><br>
                         where t<sub>ref</sub> = 25mm, k = 0.25 for t > 25mm
                     </div>
                 </div>
 
                 <div class="alert alert-info" style="margin-top: 20px;">
                     <strong>Note:</strong> This calculator uses two-slope S-N curves per DNV-RP-C203.
-                    The transition from slope m₁ to m₂ occurs at N = 10⁷ cycles.
+                    The transition from slope m1 to m2 occurs at N = 10^7 cycles.
                 </div>
             </div>
         </div>
@@ -313,7 +325,7 @@
         <div class="info-section">
             <h2>About S-N Curve Fatigue Analysis</h2>
             <p>
-                S-N curves (also called Wöhler curves) describe the relationship between applied stress range and
+                S-N curves (also called Wohler curves) describe the relationship between applied stress range and
                 the number of cycles to failure for a given structural detail. The fatigue life N at a constant
                 amplitude stress range S is calculated using:
             </p>
@@ -322,7 +334,7 @@
                 <center>
                     <strong>N = a / S<sup>m</sup></strong><br>
                     or in logarithmic form:<br>
-                    <strong>log(N) = log(a) - m × log(S)</strong>
+                    <strong>log(N) = log(a) - m x log(S)</strong>
                 </center>
             </div>
 
@@ -357,7 +369,7 @@
 
             <div class="formula-box">
                 <center>
-                    <strong>S<sub>corrected</sub> = S × (t/t<sub>ref</sub>)<sup>k</sup></strong>
+                    <strong>S<sub>corrected</sub> = S x (t/t<sub>ref</sub>)<sup>k</sup></strong>
                 </center>
             </div>
 
@@ -396,7 +408,7 @@
             <h2>Need Professional Fatigue Analysis?</h2>
             <p>
                 For complex fatigue assessments involving variable amplitude loading, FEA-based hot-spot stress
-                analysis, or AI-enhanced fatigue prediction, we offer professional consulting services.
+                analysis, or advanced fatigue prediction, we offer professional consulting services.
             </p>
             <p>
                 <a href="../contact.html" class="btn btn-success btn-lg">Discuss Your Project</a>
@@ -406,10 +418,43 @@
         </div>
     </div>
 
+    <footer class="footer-section">
     <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../engineering.html">Services</a></li>
+                    <li><a href="../energy.html">Energy Data</a></li>
+                    <li><a href="../case-studies/">Case Studies</a></li>
+                    <li><a href="../blog/">Technical Blog</a></li>
+                    <li><a href="../calculators/">Free Calculators</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
+            </div>
+        </div>
         <hr>
-        <p>Developed by <b>A&CE</b> | <a href="../contact.html">Contact Us</a> | <a href="https://github.com/aceengineer" target="_blank">GitHub</a></p>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
     </div>
+</footer>
+
 
     <script>
     // S-N curve parameters from DNV-RP-C203
@@ -520,7 +565,7 @@
         // Display parameters based on environment
         if (params.loga2 !== null) {
             document.getElementById('paramDisplay').textContent =
-                `log(a₁) = ${params.loga1}, m₁ = ${params.m1}, log(a₂) = ${params.loga2}, m₂ = ${params.m2}`;
+                `log(a1) = ${params.loga1}, m1 = ${params.m1}, log(a2) = ${params.loga2}, m2 = ${params.m2}`;
         } else {
             document.getElementById('paramDisplay').textContent =
                 `log(a) = ${params.loga1}, m = ${params.m1} (single slope for seawater)`;
@@ -570,11 +615,11 @@
             if (correctedStress >= transitionS) {
                 // High stress, use first slope (m1)
                 logN = params.loga1 - params.m1 * logS;
-                regime = `Slope m₁ = ${params.m1} (N < 10⁷)`;
+                regime = `Slope m1 = ${params.m1} (N < 10^7)`;
             } else {
                 // Low stress, use second slope (m2)
                 logN = params.loga2 - params.m2 * logS;
-                regime = `Slope m₂ = ${params.m2} (N > 10⁷)`;
+                regime = `Slope m2 = ${params.m2} (N > 10^7)`;
             }
         } else {
             // Single slope curve (seawater environments per DNV-RP-C203)

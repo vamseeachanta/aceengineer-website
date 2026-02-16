@@ -20,11 +20,30 @@
 
     <title>Engineering Automation for Offshore & Energy | A&CE</title>
 
-    <link rel="stylesheet" href="assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/marketing.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/css/styles.min.css">
+<script defer="" src="assets/js/navbar-toggle.js"></script>
+
+<!-- Google Analytics - deferred until after page is interactive -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K31E51DQ47');
+  (function() {
+    function loadGtag() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag);
+    } else {
+      window.addEventListener('load', loadGtag);
+    }
+  })();
+</script>
+
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -62,11 +81,7 @@
             "Mooring system design",
             "Riser engineering",
             "Offshore wind foundations",
-            "Subsea engineering",
-            "Energy data analytics",
-            "Field development economics",
-            "Marine safety intelligence",
-            "Production data aggregation"
+            "Subsea engineering"
         ]
     }
     </script>
@@ -108,74 +123,47 @@
                         "name": "AQWA Automation",
                         "description": "Hydrodynamic model generation and post-processing"
                     }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "Energy Data Analytics",
-                        "description": "Aggregation and analysis of 15+ global energy data sources"
-                    }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Service",
-                        "name": "Marine Safety Intelligence",
-                        "description": "Cross-database safety incident correlation from 10+ international authorities"
-                    }
                 }
             ]
         }
     }
     </script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a href="index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="engineering.html">Engineering</a></li>
-                    <li><a href="energy.html">Energy Data</a></li>
-                    <li><a href="case-studies/">Case Studies</a></li>
-                    <li><a href="blog/">Blog</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="contact.html" class="btn-nav-cta">Get a Quote</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical & Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="engineering.html">Services</a></li>
+                <li><a href="energy.html">Energy Data</a></li>
+                <li><a href="case-studies/">Case Studies</a></li>
+                <li><a href="blog/">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -183,7 +171,8 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <h1 class="hero-title">Run 50 Riser Configurations Overnight.<br>Wake Up to Validated Results.</h1>
-                    <p class="hero-subtitle">Engineering automation and energy data intelligence that transforms weeks of manual work into hours. From OrcaFlex batch processing to production analytics&mdash;stop paying for tedious tasks, start paying for insights.</p>
+                    <p class="hero-subtitle">Engineering automation that transforms weeks of manual OrcaFlex and AQWA work into hours. Stop paying for tedious model setup&mdash;start paying for insights.</p>
+                    <p class="hero-identity">Analytical &amp; Computational Engineering &mdash; 15+ years of offshore engineering distilled into 704 production-tested Python modules</p>
                     <div class="hero-cta">
                         <a href="contact.html" class="btn btn-primary btn-lg">Get a Free Assessment</a>
                         <a href="case-studies/" class="btn btn-default btn-lg">See Case Studies</a>
@@ -219,6 +208,40 @@
                                 <div class="pain-icon">&#128101;</div>
                                 <h3>Knowledge Concentration Risk</h3>
                                 <p>Your OrcaFlex expertise lives in the heads of 1-2 senior engineers. When they're unavailable, projects stall.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why A&CE Section -->
+    <section class="why-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">Why A&amp;CE</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="why-card text-center">
+                                <div class="why-number">704+</div>
+                                <h3>Production Modules</h3>
+                                <p>Validated, tested, production-grade Python code covering fatigue, mooring, riser analysis, and more. Not prototypes&mdash;battle-tested tools used on real projects.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="why-card text-center">
+                                <div class="why-number">15+</div>
+                                <h3>Years Offshore Experience</h3>
+                                <p>Deep expertise in DNV, API, ABS, and Norsok standards. Gulf of Mexico, North Sea, and global deepwater projects. We speak your engineering language.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="why-card text-center">
+                                <div class="why-number">60-80%</div>
+                                <h3>Automated Time Savings</h3>
+                                <p>We deliver automated workflows, not consulting hours. You send a design matrix, we return validated results&mdash;often overnight.</p>
                             </div>
                         </div>
                     </div>
@@ -307,14 +330,14 @@
                             <div class="metric-detail">vs. manual analysis</div>
                         </div>
                         <div class="metric-box">
-                            <div class="metric-value">1,200+</div>
+                            <div class="metric-value">704+</div>
                             <div class="metric-label">Python Modules</div>
-                            <div class="metric-detail">Engineering + Data platforms</div>
+                            <div class="metric-detail">Production-tested code</div>
                         </div>
                         <div class="metric-box">
-                            <div class="metric-value">15+</div>
-                            <div class="metric-label">Data Sources</div>
-                            <div class="metric-detail">Global energy coverage</div>
+                            <div class="metric-value">17</div>
+                            <div class="metric-label">Standards</div>
+                            <div class="metric-detail">International compliance</div>
                         </div>
                     </div>
                 </div>
@@ -330,36 +353,28 @@
                     <h2 class="section-title text-center">Who We Help</h2>
 
                     <div class="row vertical-cards">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="vertical-card">
                                 <h3>Offshore Engineering Firms</h3>
                                 <p class="vertical-problem"><strong>Problem:</strong> Engineers drowning in repetitive OrcaFlex tasks</p>
                                 <p class="vertical-solution"><strong>Solution:</strong> Batch automation that runs 50+ cases overnight</p>
-                                <a href="engineering.html#offshore" class="btn btn-sm btn-info">Learn More</a>
+                                <a href="engineering.html#offshore" class="btn btn-sm btn-info" aria-label="Learn more about offshore engineering automation">Learn More<span class="sr-only"> about offshore engineering automation</span></a>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="vertical-card">
                                 <h3>Offshore Wind Developers</h3>
                                 <p class="vertical-problem"><strong>Problem:</strong> Monopile fatigue analysis bottleneck (200+ joints)</p>
                                 <p class="vertical-solution"><strong>Solution:</strong> Pre-validated DNV curves with batch processing</p>
-                                <a href="engineering.html#wind" class="btn btn-sm btn-info">Learn More</a>
+                                <a href="engineering.html#wind" class="btn btn-sm btn-info" aria-label="Learn more about offshore wind foundation analysis">Learn More<span class="sr-only"> about offshore wind analysis</span></a>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="vertical-card">
                                 <h3>EPC Contractors</h3>
                                 <p class="vertical-problem"><strong>Problem:</strong> Weather window analysis delays installation</p>
                                 <p class="vertical-solution"><strong>Solution:</strong> Automated operability studies in real-time</p>
-                                <a href="engineering.html#epc" class="btn btn-sm btn-info">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="vertical-card">
-                                <h3>Energy Data Clients</h3>
-                                <p class="vertical-problem"><strong>Problem:</strong> Weeks spent manually collecting data from fragmented sources</p>
-                                <p class="vertical-solution"><strong>Solution:</strong> 15+ sources aggregated with validated financial models</p>
-                                <a href="energy.html" class="btn btn-sm btn-info">Learn More</a>
+                                <a href="engineering.html#epc" class="btn btn-sm btn-info" aria-label="Learn more about EPC contractor automation">Learn More<span class="sr-only"> about EPC contractor solutions</span></a>
                             </div>
                         </div>
                     </div>
@@ -378,13 +393,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="case-highlight-card">
-                                <h3>ML-Enhanced Fatigue Assessment</h3>
+                                <h3>Computational Fatigue Assessment</h3>
                                 <p>Gulf of Mexico platform life extension project</p>
                                 <div class="case-metrics">
                                     <span class="case-metric"><strong>85%</strong> time reduction</span>
                                     <span class="case-metric"><strong>23%</strong> accuracy improvement</span>
                                 </div>
-                                <a href="case-studies/offshore-platform-fatigue-optimization.html" class="btn btn-primary">Read Case Study</a>
+                                <a href="case-studies/offshore-platform-fatigue-optimization.html" class="btn btn-primary" aria-label="Read case study: Computational Fatigue Assessment">Read Case Study</a>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -395,7 +410,7 @@
                                     <span class="case-metric"><strong>90%</strong> time reduction</span>
                                     <span class="case-metric"><strong>50+</strong> reports/week</span>
                                 </div>
-                                <a href="case-studies/subsea-fea-automation.html" class="btn btn-primary">Read Case Study</a>
+                                <a href="case-studies/subsea-fea-automation.html" class="btn btn-primary" aria-label="Read case study: Automated FEA Post-Processing">Read Case Study</a>
                             </div>
                         </div>
                     </div>
@@ -431,13 +446,47 @@
                             <div class="badge-icon">Python</div>
                             <div class="badge-label">Open Source Tools</div>
                         </div>
-                        <div class="badge-item">
-                            <div class="badge-icon">BSEE</div>
-                            <div class="badge-label">Production Data</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 text-center">
+                    <h2 class="section-title">Standards Compliance You Can Trust</h2>
+                    <p class="section-subtitle">17 international standards codified into automated, auditable workflows</p>
+                    <div class="standards-badges">
+                        <span class="standard-badge">DNV-RP-C203</span>
+                        <span class="standard-badge">API RP 2A</span>
+                        <span class="standard-badge">BS 7608</span>
+                        <span class="standard-badge">ABS</span>
+                        <span class="standard-badge">Norsok</span>
+                        <span class="standard-badge">IEC 61400-3</span>
+                        <span class="standard-badge">ASME B31.8</span>
+                        <span class="standard-badge">API RP 2RD</span>
+                    </div>
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-md-4">
+                            <div class="proof-item">
+                                <strong>221 S-N Curves</strong>
+                                <p>From 17 international fatigue standards</p>
+                            </div>
                         </div>
-                        <div class="badge-item">
-                            <div class="badge-icon">SODIR</div>
-                            <div class="badge-label">NCS Coverage</div>
+                        <div class="col-md-4">
+                            <div class="proof-item">
+                                <strong>8 Design Codes</strong>
+                                <p>Wall thickness, riser, and pressure vessel</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="proof-item">
+                                <strong>245 Curated Datasets</strong>
+                                <p>BSEE, metocean, production, and HSE data</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -468,19 +517,19 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="blog-preview-card">
-                                <h4><a href="blog/cfd-offshore-engineering.html">CFD for Offshore Engineering</a></h4>
+                                <h3><a href="blog/cfd-offshore-engineering.html">CFD for Offshore Engineering</a></h3>
                                 <p>From wave loading to VIV analysis&mdash;when CFD adds value and how to get it right.</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="blog-preview-card">
-                                <h4><a href="blog/risk-based-inspection-planning.html">Risk-Based Inspection Planning</a></h4>
-                                <p>AI-enhanced RBI approaches for offshore structures with API 580/581 compliance.</p>
+                                <h3><a href="blog/risk-based-inspection-planning.html">Risk-Based Inspection Planning</a></h3>
+                                <p>Data-driven RBI approaches for offshore structures with API 580/581 compliance.</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="blog-preview-card">
-                                <h4><a href="blog/digital-twins-offshore-assets.html">Digital Twins for Offshore Assets</a></h4>
+                                <h3><a href="blog/digital-twins-offshore-assets.html">Digital Twins for Offshore Assets</a></h3>
                                 <p>From concept to implementation&mdash;practical guidance for asset integrity management.</p>
                             </div>
                         </div>
@@ -493,42 +542,43 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>A&CE</h4>
-                    <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
-                </div>
-                <div class="col-md-4">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="engineering.html">Engineering</a></li>
-                        <li><a href="energy.html">Energy Data</a></li>
-                        <li><a href="case-studies/">Case Studies</a></li>
-                        <li><a href="blog/">Technical Blog</a></li>
-                        <li><a href="calculators/">Free Calculators</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h3>Connect</h3>
-                    <ul class="footer-links">
-                        <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
-                        <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
-                        <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
-                    </ul>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
             </div>
-            <hr>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
-                </div>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="engineering.html">Services</a></li>
+                    <li><a href="energy.html">Energy Data</a></li>
+                    <li><a href="case-studies/">Case Studies</a></li>
+                    <li><a href="blog/">Technical Blog</a></li>
+                    <li><a href="calculators/">Free Calculators</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
             </div>
         </div>
-    </footer>
+        <hr>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
 
 </body>
 </html>

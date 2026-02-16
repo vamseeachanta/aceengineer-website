@@ -20,10 +20,30 @@
 
     <title>Digital Twins for Offshore Asset Integrity: From Concept to Implementation - A&CE</title>
 
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.united.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/styles.min.css">
+<script defer="" src="../assets/js/navbar-toggle.js"></script>
+
+<!-- Google Analytics - deferred until after page is interactive -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K31E51DQ47');
+  (function() {
+    function loadGtag() {
+      var s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+      document.head.appendChild(s);
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGtag);
+    } else {
+      window.addEventListener('load', loadGtag);
+    }
+  })();
+</script>
+
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -262,48 +282,42 @@
             flex-shrink: 0;
         }
     </style>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-K31E51DQ47');
-    </script>
 </head>
 <body>
 
-    <!-- Navigation -->
     <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="../index.html" class="navbar-brand-link">
-                    <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
-                        <title id="logoTitle">Analytical & Computational Engineering</title>
-                        <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"/>
-                        <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
-                    </svg>
-                </a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../about.html">About</a></li>
-                    <li><a href="../engineering.html">Engineering</a></li>
-                    <li><a href="../energy.html">Energy</a></li>
-                    <li><a href="../faq.html">FAQ</a></li>
-                    <li class="active"><a href="index.html">Blog</a></li>
-                    <li><a href="../contact.html">Contact</a></li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo" aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical & Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../engineering.html">Services</a></li>
+                <li><a href="../energy.html">Energy Data</a></li>
+                <li><a href="../case-studies/">Case Studies</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="../contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 
     <div class="container">
         <div class="row">
@@ -391,110 +405,6 @@
                         </div>
                     </div>
 
-                    <h3>Data Integration Layer</h3>
-
-                    <p>The foundation of any digital twin is data. For offshore structures, relevant data sources include:</p>
-
-                    <ul>
-                        <li><strong>Structural sensors:</strong> Strain gauges, accelerometers, displacement transducers, corrosion probes</li>
-                        <li><strong>Environmental sensors:</strong> Wave buoys, current meters, wind anemometers, temperature sensors</li>
-                        <li><strong>Operational data:</strong> SCADA systems, vessel movements, crane operations, production rates</li>
-                        <li><strong>Inspection records:</strong> Underwater inspection reports, NDE results, thickness measurements, visual inspection photographs</li>
-                        <li><strong>Historical data:</strong> Original design basis, fabrication records, installation reports, modification history</li>
-                    </ul>
-
-                    <p>Data quality and consistency are critical challenges. Sensor data arrives at different frequencies (milliseconds to years), different formats, and different reliability levels. A robust data integration layer must handle:</p>
-
-                    <div class="code-block">
-<span class="comment"># Example: Data normalization and quality flagging</span>
-<span class="keyword">class</span> <span class="function">SensorDataProcessor</span>:
-    <span class="keyword">def</span> <span class="function">process_strain_reading</span>(self, raw_value, sensor_id, timestamp):
-        <span class="comment"># Apply calibration factors</span>
-        calibrated = raw_value * self.calibration[sensor_id]
-
-        <span class="comment"># Check against physical limits</span>
-        <span class="keyword">if</span> abs(calibrated) > self.yield_strain:
-            self.flag_anomaly(sensor_id, timestamp, <span class="string">'exceeds_yield'</span>)
-
-        <span class="comment"># Temperature compensation</span>
-        temp = self.get_temperature(timestamp)
-        compensated = calibrated - self.thermal_coefficient * (temp - self.reference_temp)
-
-        <span class="comment"># Apply quality score based on sensor health</span>
-        quality = self.assess_sensor_health(sensor_id)
-
-        <span class="keyword">return</span> {
-            <span class="string">'value'</span>: compensated,
-            <span class="string">'quality'</span>: quality,
-            <span class="string">'timestamp'</span>: timestamp,
-            <span class="string">'sensor_id'</span>: sensor_id
-        }
-</div>
-
-                    <h3>Physics Engine Layer</h3>
-
-                    <p>The physics engine transforms data into engineering insight. Key components include:</p>
-
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Component</th>
-                                <th>Purpose</th>
-                                <th>Typical Implementation</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Structural Model</td>
-                                <td>Compute stresses and deformations from loads</td>
-                                <td>Reduced-order FEA, beam models, or surrogate models</td>
-                            </tr>
-                            <tr>
-                                <td>Load Calculation</td>
-                                <td>Convert environmental data to structural loads</td>
-                                <td>Morison equation, panel methods, spectral analysis</td>
-                            </tr>
-                            <tr>
-                                <td>Fatigue Module</td>
-                                <td>Accumulate fatigue damage from stress cycles</td>
-                                <td>Rainflow counting, S-N curves per DNV-RP-C203</td>
-                            </tr>
-                            <tr>
-                                <td>Corrosion Model</td>
-                                <td>Predict wall thickness loss over time</td>
-                                <td>Linear, power-law, or mechanism-based models</td>
-                            </tr>
-                            <tr>
-                                <td>Capacity Assessment</td>
-                                <td>Compare demand to capacity with safety factors</td>
-                                <td>Code-based checks per API RP 2A, ISO 19902</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <p>For real-time applications, full finite element analysis is often too slow. Surrogate models trained on FEA results can provide rapid stress estimates:</p>
-
-                    <div class="code-block">
-<span class="comment"># Surrogate model for rapid stress estimation</span>
-<span class="keyword">class</span> <span class="function">StressSurrogate</span>:
-    <span class="keyword">def</span> <span class="function">__init__</span>(self, fea_training_data):
-        <span class="comment"># Train gradient boosting model on FEA results</span>
-        self.model = XGBRegressor(
-            n_estimators=500,
-            max_depth=8,
-            learning_rate=0.05
-        )
-        self.model.fit(
-            fea_training_data[<span class="string">'inputs'</span>],  <span class="comment"># Wave height, period, direction, current</span>
-            fea_training_data[<span class="string">'stresses'</span>]   <span class="comment"># Hot-spot stresses from FEA</span>
-        )
-
-    <span class="keyword">def</span> <span class="function">predict_stress</span>(self, wave_height, wave_period, wave_dir, current):
-        <span class="comment"># Predict stress in milliseconds vs minutes for FEA</span>
-        inputs = np.array([[wave_height, wave_period, wave_dir, current]])
-        <span class="keyword">return</span> self.model.predict(inputs)
-</div>
-
                     <h3>Analytics Layer</h3>
 
                     <p>The analytics layer adds intelligence to physics-based results:</p>
@@ -542,87 +452,6 @@
                         </ul>
                     </div>
 
-                    <h3>Sensor Strategy</h3>
-
-                    <p>Effective sensor placement requires engineering judgment, not just coverage:</p>
-
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Sensor Type</th>
-                                <th>Typical Application</th>
-                                <th>Key Considerations</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Strain Gauges</td>
-                                <td>Hot-spot stress monitoring at critical joints</td>
-                                <td>Drift over time, temperature compensation, calibration access</td>
-                            </tr>
-                            <tr>
-                                <td>Accelerometers</td>
-                                <td>Global structural response, modal analysis</td>
-                                <td>Frequency range, noise floor, mounting quality</td>
-                            </tr>
-                            <tr>
-                                <td>Corrosion Probes</td>
-                                <td>Real-time corrosion rate monitoring</td>
-                                <td>Representative location, probe type selection</td>
-                            </tr>
-                            <tr>
-                                <td>Tiltmeters</td>
-                                <td>Foundation settlement, structural deformation</td>
-                                <td>Resolution, temperature sensitivity</td>
-                            </tr>
-                            <tr>
-                                <td>Wave Radar</td>
-                                <td>Local wave measurement for load calculation</td>
-                                <td>Coverage area, directional capability</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h3>Model Validation and Calibration</h3>
-
-                    <p>Digital twin credibility depends on demonstrated accuracy. Validation approaches include:</p>
-
-                    <ul>
-                        <li><strong>Historical comparison:</strong> Reproduce known events (storms, vessel impacts) and compare predicted vs. measured response</li>
-                        <li><strong>Cross-validation:</strong> Use subset of sensors for model input, remaining sensors for validation</li>
-                        <li><strong>Inspection correlation:</strong> Compare predicted damage accumulation with inspection findings</li>
-                        <li><strong>Modal analysis:</strong> Compare predicted vs. measured natural frequencies as structural health indicator</li>
-                    </ul>
-
-                    <p>Bayesian updating provides a rigorous framework for incorporating new data:</p>
-
-                    <div class="code-block">
-<span class="comment"># Bayesian model updating for fatigue damage</span>
-<span class="keyword">def</span> <span class="function">update_fatigue_estimate</span>(prior_damage, prior_uncertainty,
-                               measured_stress_cycles, inspection_result):
-    <span class="comment"># Prior distribution: Log-normal for damage accumulation</span>
-    prior = lognorm(s=prior_uncertainty, scale=prior_damage)
-
-    <span class="comment"># Likelihood from measured stress data</span>
-    predicted_increment = calculate_damage_increment(measured_stress_cycles)
-
-    <span class="comment"># Update with inspection evidence if available</span>
-    <span class="keyword">if</span> inspection_result:
-        <span class="comment"># Inspection provides bounds on actual damage state</span>
-        likelihood = inspection_likelihood(inspection_result)
-    <span class="keyword">else</span>:
-        likelihood = stress_based_likelihood(predicted_increment)
-
-    <span class="comment"># Posterior via numerical integration or MCMC</span>
-    posterior = compute_posterior(prior, likelihood)
-
-    <span class="keyword">return</span> {
-        <span class="string">'mean_damage'</span>: posterior.mean(),
-        <span class="string">'95_upper'</span>: posterior.ppf(0.95),
-        <span class="string">'probability_of_failure'</span>: 1 - posterior.cdf(1.0)
-    }
-</div>
-
                     <h2>Business Value and ROI</h2>
 
                     <p>Digital twin implementations must demonstrate tangible value. Key benefit categories include:</p>
@@ -636,9 +465,6 @@
                     <h3>Life Extension Decisions</h3>
                     <p>Quantified remaining life estimates support informed decisions about continued operation, required modifications, or decommissioning timing. For aging assets, this can enable years of additional production.</p>
 
-                    <h3>Design Feedback</h3>
-                    <p>Operational data from digital twins improves future designs by revealing actual loading patterns, identifying conservative assumptions, and validating analysis methods.</p>
-
                     <div class="highlight-box">
                         <h4>ROI Example: Jacket Platform Digital Twin</h4>
                         <p>A North Sea jacket platform implemented a fatigue-focused digital twin with 12 strain gauges and integrated metocean data. Results over 3 years:</p>
@@ -648,40 +474,6 @@
                             <li>Life extension case supported with quantified remaining fatigue life</li>
                             <li>Estimated NPV benefit: $4.2M against implementation cost of $800K</li>
                         </ul>
-                    </div>
-
-                    <h2>Standards and Regulatory Context</h2>
-
-                    <p>Digital twins operate within established regulatory frameworks. Relevant standards include:</p>
-
-                    <ul>
-                        <li><strong>DNV-RP-C210:</strong> Probabilistic methods for planning of inspection for fatigue cracks in offshore structures</li>
-                        <li><strong>ISO 19901-9:</strong> Structural integrity management for fixed offshore structures</li>
-                        <li><strong>API RP 2SIM:</strong> Structural Integrity Management of Fixed Offshore Structures</li>
-                        <li><strong>DNVGL-RP-0510:</strong> Framework for assurance of data-driven algorithms and models</li>
-                    </ul>
-
-                    <p>Regulators are increasingly supportive of digital monitoring approaches, but require demonstration of validation, uncertainty quantification, and human oversight of automated recommendations.</p>
-
-                    <h2>A&CE's Approach to Digital Twins</h2>
-
-                    <p>Our digital twin implementations emphasize:</p>
-
-                    <ul>
-                        <li><strong>Physics-first design:</strong> Machine learning augments but does not replace validated engineering models</li>
-                        <li><strong>Transparent uncertainty:</strong> All predictions include confidence bounds and sensitivity analysis</li>
-                        <li><strong>Open architecture:</strong> Avoid proprietary lock-in through standard data formats and documented interfaces</li>
-                        <li><strong>Incremental value:</strong> Start with focused use cases and expand based on demonstrated ROI</li>
-                        <li><strong>Integration with existing workflows:</strong> Digital twins should enhance, not replace, established integrity management processes</li>
-                    </ul>
-
-                    <p>We provide digital twin development from concept through operational deployment, including sensor specification, physics model development, data integration, and ongoing model maintenance.</p>
-
-                    <div class="cta-section">
-                        <h3>Explore Digital Twin Solutions for Your Assets</h3>
-                        <p>Whether you're evaluating digital twin feasibility, implementing a pilot project, or scaling an existing deployment, we can help with physics-based modeling, data integration, and predictive analytics.</p>
-                        <a href="../contact.html" class="btn btn-light btn-lg">Discuss Your Project</a>
-                        <a href="../case-studies/offshore-platform-fatigue-optimization.html" class="btn btn-default btn-lg">View Related Case Study</a>
                     </div>
 
                     <h2>Conclusion</h2>
@@ -714,10 +506,43 @@
         </div>
     </div>
 
+    <footer class="footer-section">
     <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../engineering.html">Services</a></li>
+                    <li><a href="../energy.html">Energy Data</a></li>
+                    <li><a href="../case-studies/">Case Studies</a></li>
+                    <li><a href="../blog/">Technical Blog</a></li>
+                    <li><a href="../calculators/">Free Calculators</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
+            </div>
+        </div>
         <hr>
-        <p>Developed by <b>A&CE</b></p>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical & Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
     </div>
+</footer>
+
 
 </body>
 </html>

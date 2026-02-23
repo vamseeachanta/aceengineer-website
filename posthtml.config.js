@@ -6,7 +6,7 @@ module.exports = {
       }
     },
     'posthtml-include': {
-      root: './src'
+      root: './content'
     }
   }
 }

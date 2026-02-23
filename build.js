@@ -6,7 +6,7 @@ const expressions = require('posthtml-expressions');
 const { PurgeCSS } = require('purgecss');
 const CleanCSS = require('clean-css');
 
-const srcDir = './src';
+const srcDir = './content';
 const distDir = './dist';
 
 // Parse YAML front matter

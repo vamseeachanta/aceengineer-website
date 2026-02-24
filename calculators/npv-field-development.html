@@ -40,6 +40,7 @@
 </script>
 
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="../assets/js/npv-calculator-engine.js"></script>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -419,10 +420,36 @@
                                 <p class="text-muted">
                                     IRR is the discount rate at which NPV equals zero.<br>
                                     Calculated numerically using bisection method.<br>
-                                    IRR > discount rate indicates viable project.
+                                    IRR &gt; discount rate indicates viable project.
+                                </p>
+                            </div>
+                            <div class="row" style="margin-top: 20px;">
+                            <div class="col-md-6">
+                                <p><strong>Modified IRR (MIRR):</strong></p>
+                                <p style="font-size: 1.1em; font-family: monospace; background: #fff; padding: 15px; border-radius: 4px;">
+                                    MIRR = (FV<sub>+</sub> / PV<sub>-</sub>)<sup>1/n</sup> - 1
+                                </p>
+                                <p class="text-muted">
+                                    Where:<br>
+                                    FV<sub>+</sub> = Future value of positive cashflows at reinvestment rate<br>
+                                    PV<sub>-</sub> = Present value of negative cashflows at finance rate<br>
+                                    n = Number of project periods
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>MIRR vs IRR:</strong></p>
+                                <p class="text-muted">
+                                    MIRR corrects two weaknesses of IRR:<br>
+                                    (1) It assumes positive cashflows are reinvested at
+                                    the firm's cost of capital (discount rate), not at the IRR itself.<br>
+                                    (2) It avoids the multiple-IRR problem for non-conventional
+                                    cashflow series.<br>
+                                    MIRR is generally considered a more realistic indicator of
+                                    project profitability.
                                 </p>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -503,84 +530,57 @@
             });
         });
 
-        // Calculate NPV and economics
+        // Calculate NPV and economics — delegates to npv-calculator-engine.js
         function calculateNPV() {
-            // Get input values
             const initialRate = parseFloat(document.getElementById('initial_rate').value);
             const declineRate = parseFloat(document.getElementById('decline_rate').value) / 100;
             const projectYears = parseInt(document.getElementById('project_years').value);
             const oilPrice = parseFloat(document.getElementById('oil_price').value);
             const priceEscalation = parseFloat(document.getElementById('price_escalation').value) / 100;
             const capex = parseFloat(document.getElementById('capex').value);
-            const opex = parseFloat(document.getElementById('opex').value);
+            const opex = parseFloat(document.getElementById('opex').value) * 1e6;
             const opexEscalation = parseFloat(document.getElementById('opex_escalation').value) / 100;
             const discountRate = parseFloat(document.getElementById('discount_rate').value) / 100;
             const taxRate = parseFloat(document.getElementById('tax_rate').value) / 100;
             const royaltyRate = parseFloat(document.getElementById('royalty_rate').value) / 100;
+            const capexDollars = capex * 1e6;
 
-            // Calculate year-by-year cashflows
-            const years = [];
-            const production = [];
-            const revenue = [];
-            const costs = [];
-            const netCashflow = [];
-            const cumulativeCashflow = [];
-            const discountedCashflow = [];
+            const { years, revenue, costs, netCashflow, cumulativeCashflow } =
+                buildYearlyCashflows({
+                    initialRate,
+                    declineRate,
+                    projectYears,
+                    oilPrice,
+                    priceEscalation,
+                    opex,
+                    opexEscalation,
+                    taxRate,
+                    royaltyRate,
+                });
 
-            let cumulative = -capex; // Year 0 CAPEX
-            let npv = -capex; // Start with negative CAPEX
+            // Adjust cumulative to start from -CAPEX
+            const cumulativeWithCapex = cumulativeCashflow.map(
+                (v, i) => (v - capexDollars)
+            );
 
-            for (let year = 1; year <= projectYears; year++) {
-                // Production decline: Q(t) = Q0 * (1 - decline)^t
-                const prod = initialRate * Math.pow(1 - declineRate, year - 1);
+            const npvDollars = calcNPV(capexDollars, netCashflow, discountRate);
+            const npv = npvDollars / 1e6; // Convert to $M for display
 
-                // Revenue with price escalation
-                const price = oilPrice * Math.pow(1 + priceEscalation, year - 1);
-                const annualRevenue = prod * price * 365 * (1 - royaltyRate);
+            const irr = calcIRR(capexDollars, netCashflow);
+            const mirr = calcMIRR(capexDollars, netCashflow, discountRate, discountRate);
+            const payback = calcPayback(cumulativeWithCapex, years);
+            const totalProfit = cumulativeWithCapex[cumulativeWithCapex.length - 1];
+            const profitRatio = totalProfit / capexDollars;
 
-                // OPEX with escalation
-                const annualOpex = opex * Math.pow(1 + opexEscalation, year - 1);
+            displayResults(npv, irr, mirr, payback, profitRatio, discountRate);
+            plotCashflow(
+                years,
+                revenue.map(v => v / 1e6),
+                costs.map(v => v / 1e6),
+                netCashflow.map(v => v / 1e6),
+                cumulativeWithCapex.map(v => v / 1e6)
+            );
 
-                // Net cashflow before tax
-                const beforeTax = annualRevenue - annualOpex;
-                const tax = beforeTax > 0 ? beforeTax * taxRate : 0;
-                const afterTax = beforeTax - tax;
-
-                // Discounted cashflow
-                const discountFactor = Math.pow(1 + discountRate, year);
-                const dcf = afterTax / discountFactor;
-
-                // Cumulative cashflow
-                cumulative += afterTax;
-                npv += dcf;
-
-                // Store values
-                years.push(year);
-                production.push(prod);
-                revenue.push(annualRevenue);
-                costs.push(annualOpex);
-                netCashflow.push(afterTax);
-                cumulativeCashflow.push(cumulative);
-                discountedCashflow.push(dcf);
-            }
-
-            // Calculate IRR using bisection method
-            const irr = calculateIRR(capex, netCashflow);
-
-            // Calculate payback period
-            const payback = calculatePayback(cumulativeCashflow, years);
-
-            // Calculate profit-to-investment ratio
-            const totalProfit = cumulativeCashflow[cumulativeCashflow.length - 1];
-            const profitRatio = totalProfit / capex;
-
-            // Display results
-            displayResults(npv, irr, payback, profitRatio, discountRate);
-
-            // Plot cashflow chart
-            plotCashflow(years, revenue, costs, netCashflow, cumulativeCashflow);
-
-            // Track calculation
             gtag('event', 'calculator_use', {
                 'event_category': 'calculator',
                 'event_label': 'npv_calculation',
@@ -588,84 +588,65 @@
             });
         }
 
-        // Calculate IRR using bisection method
-        function calculateIRR(capex, cashflows) {
-            let low = -0.5;
-            let high = 2.0;
-            const tolerance = 0.0001;
-            const maxIterations = 100;
-
-            for (let i = 0; i < maxIterations; i++) {
-                const mid = (low + high) / 2;
-                let npvAtMid = -capex;
-
-                for (let year = 0; year < cashflows.length; year++) {
-                    npvAtMid += cashflows[year] / Math.pow(1 + mid, year + 1);
-                }
-
-                if (Math.abs(npvAtMid) < tolerance) {
-                    return mid * 100; // Return as percentage
-                }
-
-                if (npvAtMid > 0) {
-                    low = mid;
-                } else {
-                    high = mid;
-                }
-            }
-
-            return null; // IRR not found
-        }
-
-        // Calculate payback period
-        function calculatePayback(cumulative, years) {
-            for (let i = 0; i < cumulative.length; i++) {
-                if (cumulative[i] > 0) {
-                    // Linear interpolation for fractional year
-                    if (i === 0) {
-                        return years[i];
-                    }
-                    const prevYear = i === 0 ? 0 : years[i - 1];
-                    const prevCum = i === 0 ? 0 : cumulative[i - 1];
-                    const fraction = -prevCum / (cumulative[i] - prevCum);
-                    return prevYear + fraction;
-                }
-            }
-            return null; // No payback within project life
-        }
-
-        // Display results
-        function displayResults(npv, irr, payback, profitRatio, discountRate) {
+        // Display results — uses formatMoney from engine
+        function displayResults(npv, irr, mirr, payback, profitRatio, discountRate) {
             const npvClass = npv >= 0 ? 'positive' : 'negative';
             const npvStatus = npv >= 0 ? 'VIABLE' : 'NOT VIABLE';
             const npvStatusClass = npv >= 0 ? 'success-text' : 'danger-text';
+            const discountPct = discountRate * 100;
 
             let resultHTML = `
                 <div class="result-value ${npvClass}">$${formatMoney(npv)} M</div>
                 <div class="result-label">Net Present Value (NPV)</div>
                 <div class="result-detail">
-                    <p><strong>Project Status:</strong> <span class="${npvStatusClass}">${npvStatus}</span></p>
+                    <p><strong>Project Status:</strong>
+                        <span class="${npvStatusClass}">${npvStatus}</span></p>
             `;
 
             if (irr !== null) {
-                const irrClass = irr > discountRate * 100 ? 'success-text' : 'danger-text';
+                const irrClass = irr > discountPct ? 'success-text' : 'danger-text';
                 resultHTML += `
-                    <p><strong>Internal Rate of Return:</strong> <span class="${irrClass}">${irr.toFixed(2)}%</span></p>
-                    <p><small>Discount rate: ${(discountRate * 100).toFixed(1)}% | IRR ${irr > discountRate * 100 ? '>' : '<'} discount rate</small></p>
+                    <p><strong>IRR:</strong>
+                        <span class="${irrClass}">${irr.toFixed(2)}%</span>
+                        <small>(discount rate: ${discountPct.toFixed(1)}%)</small></p>
                 `;
             } else {
-                resultHTML += `<p><strong>Internal Rate of Return:</strong> <span class="danger-text">Not calculable</span></p>`;
+                resultHTML += `
+                    <p><strong>IRR:</strong>
+                        <span class="danger-text">Not calculable</span></p>
+                `;
+            }
+
+            if (mirr !== null) {
+                const mirrClass = mirr > discountPct ? 'success-text' : 'danger-text';
+                resultHTML += `
+                    <p><strong>MIRR:</strong>
+                        <span class="${mirrClass}">${mirr.toFixed(2)}%</span>
+                        <small>(finance &amp; reinvest rate: ${discountPct.toFixed(1)}%)</small></p>
+                `;
+            } else {
+                resultHTML += `
+                    <p><strong>MIRR:</strong>
+                        <span class="danger-text">Not calculable</span></p>
+                `;
             }
 
             if (payback !== null) {
-                const paybackClass = payback < 10 ? 'success-text' : (payback < 15 ? 'warning-text' : 'danger-text');
-                resultHTML += `<p><strong>Payback Period:</strong> <span class="${paybackClass}">${payback.toFixed(1)} years</span></p>`;
+                const cls = payback < 10 ? 'success-text' : (payback < 15 ? 'warning-text' : 'danger-text');
+                resultHTML += `
+                    <p><strong>Payback Period:</strong>
+                        <span class="${cls}">${payback.toFixed(1)} years</span></p>
+                `;
             } else {
-                resultHTML += `<p><strong>Payback Period:</strong> <span class="danger-text">No payback within project life</span></p>`;
+                resultHTML += `
+                    <p><strong>Payback Period:</strong>
+                        <span class="danger-text">No payback within project life</span></p>
+                `;
             }
 
             resultHTML += `
-                    <p><strong>Profit-to-Investment Ratio:</strong> ${profitRatio.toFixed(2)}x</p>
+                    <p><strong>Profit-to-Investment Ratio:</strong>
+                        ${profitRatio.toFixed(2)}x</p>
                 </div>
             `;
 
@@ -673,26 +654,26 @@
             document.getElementById('results-card').style.display = 'block';
         }
 
-        // Plot cashflow chart
-        function plotCashflow(years, revenue, costs, netCashflow, cumulative) {
+        // Plot cashflow chart — all values already in $M
+        function plotCashflow(years, revenueMM, costsMM, netCashflowMM, cumulativeMM) {
             const traces = [
                 {
                     x: years,
-                    y: revenue.map(v => v / 1e6),
+                    y: revenueMM,
                     name: 'Revenue',
                     type: 'bar',
                     marker: { color: '#5cb85c' }
                 },
                 {
                     x: years,
-                    y: costs.map(v => v / 1e6),
+                    y: costsMM,
                     name: 'OPEX',
                     type: 'bar',
                     marker: { color: '#d9534f' }
                 },
                 {
                     x: years,
-                    y: netCashflow.map(v => v / 1e6),
+                    y: netCashflowMM,
                     name: 'Net Cashflow',
                     type: 'scatter',
                     mode: 'lines+markers',
@@ -701,7 +682,7 @@
                 },
                 {
                     x: years,
-                    y: cumulative.map(v => v / 1e6),
+                    y: cumulativeMM,
                     name: 'Cumulative Cashflow',
                     type: 'scatter',
                     mode: 'lines',
@@ -711,18 +692,9 @@
             ];
 
             const layout = {
-                title: {
-                    text: 'Project Cashflow Analysis',
-                    font: { size: 16 }
-                },
-                xaxis: {
-                    title: 'Year',
-                    gridcolor: '#eee'
-                },
-                yaxis: {
-                    title: 'Annual Cashflow ($M)',
-                    gridcolor: '#eee'
-                },
+                title: { text: 'Project Cashflow Analysis', font: { size: 16 } },
+                xaxis: { title: 'Year', gridcolor: '#eee' },
+                yaxis: { title: 'Annual Cashflow ($M)', gridcolor: '#eee' },
                 yaxis2: {
                     title: 'Cumulative Cashflow ($M)',
                     overlaying: 'y',
@@ -744,15 +716,6 @@
             };
 
             Plotly.newPlot('cashflow-chart', traces, layout, config);
-        }
-
-        // Helper function to format money
-        function formatMoney(value) {
-            const absValue = Math.abs(value);
-            if (absValue >= 1000) {
-                return (value / 1000).toFixed(1) + 'B';
-            }
-            return value.toFixed(1);
         }
     </script>
 

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Download free sample energy datasets from Gulf of Mexico BSEE public data. Explore production summaries, deepwater well completions, and rig fleet data.">
+    <meta name="keywords" content="BSEE data download, Gulf of Mexico production data, offshore well data, energy sample datasets, deepwater completions, rig fleet data">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Sample Energy Datasets - A&CE">
+    <meta property="og:description" content="Free downloadable Gulf of Mexico energy datasets from BSEE public data. Production summaries, well completions, and rig fleet data.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/samples/">
+    <meta property="og:site_name" content="Analytical &amp; Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Sample Energy Datasets - A&CE">
+    <meta name="twitter:description" content="Free downloadable Gulf of Mexico energy datasets from BSEE public data.">
+
+    <title>Sample Energy Datasets - A&CE</title>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../assets/css/styles.min.css">
+    <script defer src="../assets/js/navbar-toggle.js"></script>
+
+    <!-- Google Analytics - deferred until after page is interactive -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-K31E51DQ47');
+      (function() {
+        function loadGtag() {
+          var s = document.createElement('script');
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+          document.head.appendChild(s);
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadGtag);
+        } else {
+          window.addEventListener('load', loadGtag);
+        }
+      })();
+    </script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "DataCatalog",
+        "@id": "https://aceengineer.com/samples/#datacatalog",
+        "name": "A&CE Energy Data Samples",
+        "description": "Free sample datasets from Gulf of Mexico BSEE public data, curated by Analytical & Computational Engineering",
+        "url": "https://aceengineer.com/samples/",
+        "provider": {
+            "@id": "https://aceengineer.com/#organization"
+        },
+        "dataset": [
+            {
+                "@type": "Dataset",
+                "name": "GoM Production Summary",
+                "description": "Annual oil, gas, and water production by major Gulf of Mexico field (2018-2022)",
+                "keywords": ["Gulf of Mexico", "production", "BSEE", "oil", "gas"],
+                "license": "https://www.usa.gov/government-works",
+                "isAccessibleForFree": true,
+                "distribution": {
+                    "@type": "DataDownload",
+                    "encodingFormat": "text/csv",
+                    "contentUrl": "https://aceengineer.com/assets/data/samples/gom-production-summary.csv"
+                }
+            },
+            {
+                "@type": "Dataset",
+                "name": "Deepwater Well Completions",
+                "description": "Deepwater well completion records with API numbers, field names, water depths, and status",
+                "keywords": ["deepwater", "well completions", "BSEE", "Gulf of Mexico", "API well number"],
+                "license": "https://www.usa.gov/government-works",
+                "isAccessibleForFree": true,
+                "distribution": {
+                    "@type": "DataDownload",
+                    "encodingFormat": "text/csv",
+                    "contentUrl": "https://aceengineer.com/assets/data/samples/deepwater-well-completions.csv"
+                }
+            },
+            {
+                "@type": "Dataset",
+                "name": "Rig Fleet Summary",
+                "description": "Gulf of Mexico drilling rig fleet with type, water depth rating, build year, and operational status",
+                "keywords": ["rig fleet", "drillship", "semi-submersible", "jack-up", "BSEE", "offshore drilling"],
+                "license": "https://www.usa.gov/government-works",
+                "isAccessibleForFree": true,
+                "distribution": {
+                    "@type": "DataDownload",
+                    "encodingFormat": "text/csv",
+                    "contentUrl": "https://aceengineer.com/assets/data/samples/rig-fleet-summary.csv"
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://aceengineer.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Energy Data",
+                "item": "https://aceengineer.com/energy.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Sample Datasets",
+                "item": "https://aceengineer.com/samples/"
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        .samples-hero {
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1e2e 100%);
+            color: #fff;
+            padding: 60px 0 50px;
+            border-bottom: 3px solid #e95420;
+        }
+        .samples-hero h1 {
+            font-size: 2.2em;
+            margin-bottom: 14px;
+            color: #fff;
+        }
+        .samples-hero p.lead {
+            font-size: 1.1em;
+            color: rgba(255,255,255,0.82);
+            max-width: 680px;
+        }
+        .samples-hero .bsee-badge {
+            display: inline-block;
+            background: rgba(233,84,32,0.18);
+            border: 1px solid rgba(233,84,32,0.5);
+            color: #f9a07a;
+            border-radius: 4px;
+            padding: 4px 12px;
+            font-size: 0.88em;
+            margin-top: 14px;
+        }
+        .datasets-section {
+            padding: 50px 0 40px;
+            background: #f7f8fa;
+        }
+        .datasets-section h2 {
+            margin-bottom: 8px;
+        }
+        .datasets-section .section-intro {
+            color: #555;
+            margin-bottom: 32px;
+            font-size: 1.02em;
+        }
+        .dataset-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+            padding: 28px 24px 22px;
+            margin-bottom: 24px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .dataset-card h3 {
+            font-size: 1.15em;
+            color: #1a2a3a;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .dataset-card .dataset-desc {
+            color: #555;
+            font-size: 0.95em;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+        .dataset-meta {
+            font-size: 0.82em;
+            color: #777;
+            margin-bottom: 14px;
+        }
+        .dataset-meta span {
+            margin-right: 14px;
+        }
+        .dataset-preview-table {
+            font-size: 0.78em;
+            margin-bottom: 18px;
+            overflow-x: auto;
+        }
+        .dataset-preview-table table {
+            width: 100%;
+        }
+        .dataset-preview-table th {
+            background: #1a2a3a;
+            color: #e0e4ec;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .dataset-preview-table td {
+            white-space: nowrap;
+        }
+        .btn-download {
+            background-color: #e95420;
+            border-color: #e95420;
+            color: #fff;
+            font-weight: 600;
+            padding: 9px 20px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: auto;
+        }
+        .btn-download:hover,
+        .btn-download:focus {
+            background-color: #c44117;
+            border-color: #c44117;
+            color: #fff;
+            text-decoration: none;
+        }
+        .btn-download .glyphicon {
+            margin-right: 6px;
+        }
+        .screenshots-section {
+            padding: 50px 0 40px;
+            background: #fff;
+        }
+        .screenshots-section h2 {
+            margin-bottom: 8px;
+        }
+        .screenshots-section .section-intro {
+            color: #555;
+            margin-bottom: 32px;
+            font-size: 1.02em;
+        }
+        .screenshot-card {
+            margin-bottom: 28px;
+        }
+        .screenshot-card img,
+        .screenshot-card object {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #dde2ea;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.09);
+        }
+        .screenshot-caption {
+            margin-top: 12px;
+            font-size: 0.92em;
+            color: #555;
+            line-height: 1.5;
+        }
+        .screenshot-caption strong {
+            color: #1a2a3a;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .cta-section {
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1e2e 100%);
+            color: #fff;
+            padding: 54px 0;
+            text-align: center;
+        }
+        .cta-section h2 {
+            color: #fff;
+            font-size: 1.8em;
+            margin-bottom: 14px;
+        }
+        .cta-section p {
+            color: rgba(255,255,255,0.82);
+            font-size: 1.05em;
+            max-width: 640px;
+            margin: 0 auto 26px;
+            line-height: 1.7;
+        }
+        .cta-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        .cta-stat {
+            text-align: center;
+        }
+        .cta-stat .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #f9a07a;
+            display: block;
+        }
+        .cta-stat .stat-label {
+            font-size: 0.88em;
+            color: rgba(255,255,255,0.65);
+        }
+        .btn-cta-primary {
+            background-color: #e95420;
+            border: 2px solid #e95420;
+            color: #fff;
+            font-size: 1.05em;
+            font-weight: 600;
+            padding: 13px 36px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .btn-cta-primary:hover,
+        .btn-cta-primary:focus {
+            background-color: #c44117;
+            border-color: #c44117;
+            color: #fff;
+            text-decoration: none;
+        }
+        .source-note {
+            font-size: 0.82em;
+            color: #999;
+            margin-top: 8px;
+        }
+        @media (max-width: 767px) {
+            .cta-stats { gap: 20px; }
+            .samples-hero h1 { font-size: 1.6em; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="../index.html" class="navbar-brand-link">
+                <svg viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" class="navbar-logo"
+                     aria-labelledby="logoTitle">
+                    <title id="logoTitle">Analytical &amp; Computational Engineering</title>
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333"
+                          font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../engineering.html">Services</a></li>
+                <li class="active"><a href="../energy.html">Energy Data</a></li>
+                <li><a href="../case-studies/">Case Studies</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="../contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <!-- Hero Section -->
+    <section class="samples-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <h1>Sample Energy Datasets</h1>
+                    <p class="lead">
+                        Evaluate data quality and analytical capabilities before committing to a full engagement.
+                        All samples below are drawn from BSEE public data — the same source powering our
+                        production dashboards and field economics tools.
+                    </p>
+                    <span class="bsee-badge">
+                        &#x2713; All data sourced from BSEE public records — freely redistributable
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dataset Cards Section -->
+    <section class="datasets-section">
+        <div class="container">
+            <h2>Downloadable Datasets</h2>
+            <p class="section-intro">
+                Three curated samples covering production history, well completions, and rig fleet composition
+                for the Gulf of Mexico. Each file opens directly in Excel or any CSV-compatible tool.
+            </p>
+
+            <div class="row">
+
+                <!-- Dataset 1: GoM Production Summary -->
+                <div class="col-md-4">
+                    <div class="dataset-card">
+                        <h3>GoM Production Summary</h3>
+                        <p class="dataset-desc">
+                            Annual oil, gas, and water production volumes for 10 major Gulf of Mexico deepwater
+                            fields spanning 2018–2022. Includes water depth for each field, enabling
+                            depth-stratified analysis.
+                        </p>
+                        <div class="dataset-meta">
+                            <span><strong>Rows:</strong> 50</span>
+                            <span><strong>Format:</strong> CSV</span>
+                            <span><strong>Size:</strong> ~3 KB</span>
+                        </div>
+                        <div class="dataset-preview-table">
+                            <div style="overflow-x:auto">
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>field_name</th>
+                                            <th>year</th>
+                                            <th>oil_bbl</th>
+                                            <th>gas_mcf</th>
+                                            <th>water_depth_ft</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>THUNDER HORSE</td><td>2018</td><td>31,250,000</td><td>98,400,000</td><td>6,050</td></tr>
+                                        <tr><td>THUNDER HORSE</td><td>2019</td><td>28,900,000</td><td>91,200,000</td><td>6,050</td></tr>
+                                        <tr><td>ATLANTIS</td><td>2018</td><td>18,700,000</td><td>41,200,000</td><td>7,070</td></tr>
+                                        <tr><td>MARS</td><td>2018</td><td>22,100,000</td><td>67,400,000</td><td>2,940</td></tr>
+                                        <tr><td>URSA</td><td>2018</td><td>14,800,000</td><td>31,200,000</td><td>3,900</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="source-note">Showing 5 of 50 rows &mdash; 10 fields &times; 5 years</p>
+                        </div>
+                        <a href="../assets/data/samples/gom-production-summary.csv"
+                           download="gom-production-summary.csv"
+                           class="btn btn-download"
+                           onclick="gtag('event','sample_download',{'event_category':'data','event_label':'gom-production-summary'})">
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                            Download CSV
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Dataset 2: Deepwater Well Completions -->
+                <div class="col-md-4">
+                    <div class="dataset-card">
+                        <h3>Deepwater Well Completions</h3>
+                        <p class="dataset-desc">
+                            30 deepwater well completion records including API well numbers, associated field names,
+                            water depth, completion date, well type (oil/gas), and current operational status.
+                            Useful for completions workflow and spatial analysis.
+                        </p>
+                        <div class="dataset-meta">
+                            <span><strong>Rows:</strong> 30</span>
+                            <span><strong>Format:</strong> CSV</span>
+                            <span><strong>Size:</strong> ~2 KB</span>
+                        </div>
+                        <div class="dataset-preview-table">
+                            <div style="overflow-x:auto">
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>api_well_number</th>
+                                            <th>field_name</th>
+                                            <th>water_depth_ft</th>
+                                            <th>well_type</th>
+                                            <th>status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>608074031400</td><td>THUNDER HORSE</td><td>4,878</td><td>OIL</td><td>ACTIVE</td></tr>
+                                        <tr><td>608174128900</td><td>MARS</td><td>2,047</td><td>OIL</td><td>ACTIVE</td></tr>
+                                        <tr><td>608084004700</td><td>URSA</td><td>6,827</td><td>OIL</td><td>ACTIVE</td></tr>
+                                        <tr><td>608114061500</td><td>NAKIKA</td><td>4,428</td><td>GAS</td><td>ACTIVE</td></tr>
+                                        <tr><td>608124009400</td><td>ATLANTIS</td><td>7,138</td><td>OIL</td><td>ACTIVE</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="source-note">Showing 5 of 30 rows</p>
+                        </div>
+                        <a href="../assets/data/samples/deepwater-well-completions.csv"
+                           download="deepwater-well-completions.csv"
+                           class="btn btn-download"
+                           onclick="gtag('event','sample_download',{'event_category':'data','event_label':'deepwater-well-completions'})">
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                            Download CSV
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Dataset 3: Rig Fleet Summary -->
+                <div class="col-md-4">
+                    <div class="dataset-card">
+                        <h3>Rig Fleet Summary</h3>
+                        <p class="dataset-desc">
+                            16-record Gulf of Mexico drilling rig fleet snapshot covering rig name, rig type
+                            (drillship, semi-submersible, jack-up), water depth rating, year built, and
+                            current operational status. Reflects the current active and stacked fleet.
+                        </p>
+                        <div class="dataset-meta">
+                            <span><strong>Rows:</strong> 16</span>
+                            <span><strong>Format:</strong> CSV</span>
+                            <span><strong>Size:</strong> ~1 KB</span>
+                        </div>
+                        <div class="dataset-preview-table">
+                            <div style="overflow-x:auto">
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>rig_name</th>
+                                            <th>rig_type</th>
+                                            <th>depth_rating_ft</th>
+                                            <th>year_built</th>
+                                            <th>status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>DEEPWATER CHAMPION</td><td>drillship</td><td>12,000</td><td>2011</td><td>ACTIVE</td></tr>
+                                        <tr><td>OCEAN BLACKHORNET</td><td>semi-submersible</td><td>10,000</td><td>2014</td><td>ACTIVE</td></tr>
+                                        <tr><td>NOBLE GLOBETROTTER II</td><td>drillship</td><td>12,000</td><td>2013</td><td>ACTIVE</td></tr>
+                                        <tr><td>OCEAN PATRIOT</td><td>semi-submersible</td><td>5,000</td><td>1983</td><td>STACKED</td></tr>
+                                        <tr><td>HERCULES TRIUMPH</td><td>jack-up</td><td>400</td><td>2008</td><td>ACTIVE</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="source-note">Showing 5 of 16 rigs</p>
+                        </div>
+                        <a href="../assets/data/samples/rig-fleet-summary.csv"
+                           download="rig-fleet-summary.csv"
+                           class="btn btn-download"
+                           onclick="gtag('event','sample_download',{'event_category':'data','event_label':'rig-fleet-summary'})">
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                            Download CSV
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Screenshots Section -->
+    <section class="screenshots-section">
+        <div class="container">
+            <h2>Dashboard Previews</h2>
+            <p class="section-intro">
+                These charts illustrate the analytical outputs A&amp;CE produces from BSEE data.
+                Full interactive dashboards are available to qualified prospects — contact us to arrange access.
+            </p>
+
+            <div class="row">
+
+                <div class="col-md-4 screenshot-card">
+                    <object type="image/svg+xml"
+                            data="../assets/img/samples/production-dashboard.svg"
+                            width="100%"
+                            aria-label="GoM Field Production Dashboard showing annual oil output for Thunder Horse, Mars, and Atlantis fields (2018-2022)">
+                        <img src="../assets/img/samples/production-dashboard.svg"
+                             alt="GoM Field Production Dashboard — annual oil output by field 2018-2022"
+                             style="width:100%;border-radius:6px;border:1px solid #dde2ea;">
+                    </object>
+                    <div class="screenshot-caption">
+                        <strong>Field Production Dashboard</strong>
+                        Annual oil output by major GoM field (2018–2022). Compares Thunder Horse, Mars,
+                        Atlantis, and seven additional deepwater fields across a five-year window.
+                    </div>
+                </div>
+
+                <div class="col-md-4 screenshot-card">
+                    <object type="image/svg+xml"
+                            data="../assets/img/samples/rig-fleet-map.svg"
+                            width="100%"
+                            aria-label="Gulf of Mexico rig fleet map showing geographic distribution of drillships, semi-submersibles, and jack-ups">
+                        <img src="../assets/img/samples/rig-fleet-map.svg"
+                             alt="Gulf of Mexico rig fleet map — geographic distribution by rig type"
+                             style="width:100%;border-radius:6px;border:1px solid #dde2ea;">
+                    </object>
+                    <div class="screenshot-caption">
+                        <strong>Rig Fleet Geographic Distribution</strong>
+                        Spatial view of active GoM drilling rigs by type. Drillships concentrate in
+                        ultra-deepwater; jack-ups cluster on the shelf near the coastline.
+                    </div>
+                </div>
+
+                <div class="col-md-4 screenshot-card">
+                    <object type="image/svg+xml"
+                            data="../assets/img/samples/decline-curve-analysis.svg"
+                            width="100%"
+                            aria-label="Production decline curve analysis for Thunder Horse field with Arps model fit">
+                        <img src="../assets/img/samples/decline-curve-analysis.svg"
+                             alt="Production decline curve analysis — Thunder Horse field with Arps model fit"
+                             style="width:100%;border-radius:6px;border:1px solid #dde2ea;">
+                    </object>
+                    <div class="screenshot-caption">
+                        <strong>Decline Curve Analysis</strong>
+                        Arps hyperbolic model fitted to Thunder Horse production history. Initial decline
+                        rate (Di) of 28%/yr with EUR projection overlaid on actual BSEE production data.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Full Access CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Want Full Data Access?</h2>
+            <p>
+                Our full energy data catalog covers 246 datasets totalling over 8.5 GB of curated BSEE,
+                pipeline safety, and metocean data. Get production histories, well records, completions,
+                and rig fleet data for the entire Gulf of Mexico — ready to integrate with your models.
+            </p>
+
+            <div class="cta-stats">
+                <div class="cta-stat">
+                    <span class="stat-number">246</span>
+                    <span class="stat-label">Curated Datasets</span>
+                </div>
+                <div class="cta-stat">
+                    <span class="stat-number">8.5 GB</span>
+                    <span class="stat-label">Total Data Volume</span>
+                </div>
+                <div class="cta-stat">
+                    <span class="stat-number">10+</span>
+                    <span class="stat-label">Data Domains</span>
+                </div>
+                <div class="cta-stat">
+                    <span class="stat-number">BSEE</span>
+                    <span class="stat-label">Primary Source</span>
+                </div>
+            </div>
+
+            <a href="../contact.html?vertical=energy-data" class="btn btn-cta-primary">
+                Request Full Access
+            </a>
+            <br>
+            <small style="color:rgba(255,255,255,0.45);display:block;margin-top:12px;">
+                We respond within 24 hours with dataset scope and delivery options.
+            </small>
+        </div>
+    </section>
+
+    <footer class="footer-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>A&CE</h3>
+                <p>Engineering automation for offshore and energy industries. Turning weeks of manual analysis into hours.</p>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 10px;">Standards: DNV &bull; API &bull; ABS &bull; BS &bull; Norsok</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="../engineering.html">Services</a></li>
+                    <li><a href="../energy.html">Energy Data</a></li>
+                    <li><a href="../case-studies/">Case Studies</a></li>
+                    <li><a href="../blog/">Technical Blog</a></li>
+                    <li><a href="../calculators/">Free Calculators</a></li>
+                    <li><a href="../contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Connect</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/vamseeachanta" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/company/aceengineer" target="_blank">LinkedIn</a></li>
+                    <li><a href="mailto:support@aceengineer.com">support@aceengineer.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>&copy; 2026 Analytical &amp; Computational Engineering. Houston, TX.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

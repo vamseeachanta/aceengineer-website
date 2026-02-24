@@ -22,11 +22,17 @@
         "displayName": "hse-dashboard",
         "testEnvironment": "jsdom",
         "testMatch": ["<rootDir>/tests/js/hse-risk-dashboard.test.js"]
+      },
+      {
+        "displayName": "npv-calculator",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/npv-calculator.test.js"]
       }
     ],
     "collectCoverageFrom": [
       "build.js",
       "assets/js/navbar-toggle.js",
+      "assets/js/npv-calculator-engine.js",
       "demos/hse-risk-dashboard-data.js"
     ]
   },

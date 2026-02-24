@@ -2,6 +2,18 @@
 dist/
 node_modules/
 
+# Python virtual environments
+.venv/
+venv/
+
+# Backup files
+*.backup*
+*.backup-*
+CLAUDE.md.backup*
+
+# Blog output (generated)
+blog_output/
+
 # Editor
 *.swp
 *.swo

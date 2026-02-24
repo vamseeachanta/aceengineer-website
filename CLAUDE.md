@@ -1,39 +1,31 @@
-# AceEngineer Website
+# Aceengineer-website Agent Adapter
 
-> Inherits: workspace-hub base configuration
+> Generated from workspace-hub/AGENTS.md
+> Contract-Version: 1.0.0
+> Generated-At: 2026-02-17T16:39:59Z
 
-## Overview
+## Adapter Role
 
-AI-native engineering showcase platform for energy companies and engineering firms. Static website demonstrating computational engineering expertise through interactive portfolios, open-source code examples, and validated methodologies.
+This file is a provider-specific adapter for Claude-compatible tooling.
+The canonical contract is in workspace-hub/AGENTS.md.
 
-## Tech Stack
+## Required Gates
 
-- Static HTML/CSS/JS (migrating from Flask)
-- Bootstrap 3.x with United theme
-- GitHub Pages hosting
-- Formspree for contact forms
+1. Every non-trivial task must map to a WRK-* item in .claude/work-queue/.
+2. Planning + explicit approval are required before implementation.
+3. Route B/C work requires cross-review before completion.
 
-## Commands
+## Plan and Spec Locality
 
-```bash
-# Static site - no build required
-# Local preview with any static server
-python -m http.server 8000
-```
+1. Route A/B plan details can live in WRK body sections.
+2. Route C execution specs: specs/wrk/WRK-<id>/.
+3. Repository/domain specs: specs/repos/<repo>/.
+4. Templates: specs/templates/.
 
-## Deployment
+## Compatibility
 
-- **Hosting:** GitHub Pages
-- **Domain:** aceengineer.com (GoDaddy DNS)
-- **SSL:** Automatic via GitHub Pages
+Legacy docs may exist during migration, but AGENTS.md is canonical.
 
-## Project-Specific Rules
+## Repo Overrides
 
-- Maintain technical transparency through open-source code
-- Target AI-native engineering keywords for SEO
-- Preserve existing Bootstrap styling during migration
-- Interactive demonstrations over static PDFs
-
----
-
-*Rules inherited from workspace-hub/CLAUDE.md*
+Add repo-specific details below this section without weakening required gates.

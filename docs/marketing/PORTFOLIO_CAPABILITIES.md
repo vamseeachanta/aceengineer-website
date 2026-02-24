@@ -1,7 +1,7 @@
 # A&CE Portfolio Capabilities
 
-> Last Updated: 2026-02-09
-> Source: Workspace-Hub Repository Analysis
+> Last Updated: 2026-02-24
+> Source: Workspace-Hub Repository Analysis — WRK-382 (WRK-373, WRK-375 outputs)
 
 ## Executive Summary
 
@@ -223,6 +223,72 @@ Analytical & Computational Engineering (A&CE) has developed a comprehensive engi
 | Working Examples | 12+ |
 | Documentation Files | 352+ |
 | Commits (digitalmodel) | 305+ |
+
+---
+
+## Autonomous Production Engineering Vision
+
+ACE Engineering is building toward "Agile, Adaptive and Autonomous Production" --
+an engineering ecosystem where AI agents receive a client brief, select the appropriate
+physics solver, run the analysis, and deliver a validated engineering report without human
+initiation of any intermediate step.
+
+Current ecosystem position: **Level 2–3** on the 6-level autonomy ladder (Feuer framework):
+- Level 2 — Automated: CI/CD, test pipelines, batch analysis, OrcaFlex/AQWA automation
+- Level 3 — Predictive: AI triage of work items, multi-agent review pipeline, nightly
+  learning pipeline, active work tracking
+
+Target: **Level 4** within 12–18 months. Gap-closing roadmap:
+
+- **H1 (now–6 months)**: AI interface skills for all P1/P2 engineering tools complete;
+  multi-physics workflow chains documented (Gmsh → OpenFOAM → OrcaFlex); drilling
+  automation H1 modules shipped (ROP model, wellbore hydraulics, torque and drag)
+- **H2 (6–18 months)**: Agent-initiated simulation runs on schedule without a human
+  work item; surrogate model layer for fast design-space exploration; digital twin pilot
+  for at least one active client asset; Engineering as a Service pilot (brief → simulation
+  → report without human initiation of any intermediate step)
+- **H3 (18+ months)**: Self-optimising skill library; external Engineering as a Service
+  offering — clients submit briefs, receive AI-orchestrated validated deliverables
+
+The operating pattern at Level 4 and 5:
+```
+SENSE  — ingest live signals: CI results, sensor data, client data feeds
+PLAN   — AI agents simulate "what-if"; select best action
+ACT    — run solver, generate report, alert human on exceptions only
+```
+
+Full vision: `docs/vision/VISION.md` (workspace-hub)
+
+---
+
+## Drilling Automation Capabilities
+
+ACE Engineering is building a modular drilling automation capability within `digitalmodel`,
+designed to close H1 capability gaps with standalone client value and build toward a
+full autonomous well-delivery workflow.
+
+**H1 Roadmap (now–6 months) — standalone client value:**
+- **ROP Model**: Bourgoyne-Young 8-parameter + Warren 2-parameter formation-dependent rate
+  of penetration; nonlinear constrained WOB/RPM optimisation for well programme design
+- **Wellbore Hydraulics**: ECD, pressure-drop, annular velocity, pump pressure for managed
+  pressure drilling and casing seat design — generalised from existing coiled-tubing module
+- **Torque and Drag**: Soft-string model for drillstring axial/torsional load analysis,
+  stuck-pipe risk assessment, and torque limit management
+
+**H2 Roadmap (6–18 months) — autonomous workflow assembly:**
+- 3D directional trajectory planner (cubic Bezier / minimum-curvature; DLS constraints)
+- Closed-loop drilling controller (PID → MPC) for WOB/RPM/flow optimisation
+- Well control module (kick detection and automated shut-in; false-alarm rate tracking)
+- Formation classification (real-time ML from surface drilling signals)
+
+**Drillbotics Engagement:**
+SPE Drillbotics Mode V defines the target state concretely: a Python autonomous drilling
+agent that drills a blind 3D directional well within three hours. The Mode V module
+requirements map exactly to the H1/H2 roadmap above. ACE Engineering's role is industry
+mentor and open-source contributor. H1 builds will be contributed to the Open Source
+Drilling Community, increasing visibility in the SPE community.
+
+Brochure: [Drilling Automation Brochure](../../digitalmodel/docs/marketing/drilling-automation-brochure.md)
 
 ---
 

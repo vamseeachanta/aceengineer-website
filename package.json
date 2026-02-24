@@ -17,11 +17,17 @@
         "displayName": "jsdom",
         "testEnvironment": "jsdom",
         "testMatch": ["<rootDir>/tests/js/navbar-toggle.test.js"]
+      },
+      {
+        "displayName": "hse-dashboard",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/hse-risk-dashboard.test.js"]
       }
     ],
     "collectCoverageFrom": [
       "build.js",
-      "assets/js/navbar-toggle.js"
+      "assets/js/navbar-toggle.js",
+      "demos/hse-risk-dashboard-data.js"
     ]
   },
   "devDependencies": {

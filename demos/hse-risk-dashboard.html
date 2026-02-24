@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Interactive HSE risk index dashboard for offshore oil and gas operations. Explore BSEE-based risk scores by activity, water depth, and time period.">
+    <meta name="keywords" content="HSE risk index, offshore safety, BSEE incidents, oil gas safety dashboard, risk score, drilling risk, deepwater safety">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="HSE Risk Index Dashboard - A&CE">
+    <meta property="og:description" content="Explore offshore HSE risk scores by activity category, water depth, and time period. Built on BSEE incident data.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/demos/hse-risk-dashboard.html">
+    <meta property="og:site_name" content="Analytical &amp; Computational Engineering">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="HSE Risk Index Dashboard - A&CE">
+    <meta name="twitter:description" content="Interactive offshore safety risk explorer backed by BSEE incident data.">
+
+    <title>HSE Risk Index Dashboard - A&amp;CE</title>
+
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../assets/css/styles.min.css">
+    <script defer src="../assets/js/navbar-toggle.js"></script>
+
+    <!-- Google Analytics -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-K31E51DQ47');
+      (function() {
+        function loadGtag() {
+          var s = document.createElement('script');
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
+          document.head.appendChild(s);
+        }
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadGtag);
+        } else {
+          window.addEventListener('load', loadGtag);
+        }
+      })();
+    </script>
+
+    <!-- Plotly (interactive charts) -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "HSE Risk Index Dashboard",
+        "description": "Interactive offshore HSE risk index explorer based on BSEE incident data",
+        "url": "https://aceengineer.com/demos/hse-risk-dashboard.html",
+        "applicationCategory": "Engineering Tool",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "Analytical &amp; Computational Engineering",
+            "url": "https://aceengineer.com"
+        }
+    }
+    </script>
+
+    <style>
+        /* ---------------------------------------------------------------
+           Dashboard layout
+        --------------------------------------------------------------- */
+        .dashboard-header {
+            background: linear-gradient(135deg, #c0392b 0%, #6c3483 100%);
+            color: #fff;
+            padding: 40px 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .dashboard-header h1 {
+            margin: 0 0 8px;
+            font-size: 2em;
+            font-weight: 700;
+        }
+        .dashboard-header .subtitle {
+            font-size: 1.05em;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        /* Filter bar */
+        .filter-bar {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 180px;
+        }
+        .filter-group label {
+            font-size: 0.82em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        .filter-group select {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 0.95em;
+            color: #333;
+            background: #fafafa;
+            cursor: pointer;
+        }
+        .filter-group select:focus {
+            outline: none;
+            border-color: #c0392b;
+            box-shadow: 0 0 0 2px rgba(192,57,43,0.15);
+        }
+        .btn-reset {
+            padding: 8px 20px;
+            background: #c0392b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+        .btn-reset:hover {
+            background: #a93226;
+        }
+
+        /* Summary stats strip */
+        .stats-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 18px 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .stat-card .stat-val {
+            font-size: 2em;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+        .stat-card .stat-lbl {
+            font-size: 0.82em;
+            color: #666;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .val-critical { color: #8e44ad; }
+        .val-high     { color: #e74c3c; }
+        .val-medium   { color: #e67e22; }
+        .val-low      { color: #27ae60; }
+
+        /* Chart containers */
+        .chart-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .chart-card h2 {
+            font-size: 1.15em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8e8e8;
+        }
+        .chart-card .chart-note {
+            font-size: 0.82em;
+            color: #888;
+            margin-top: 8px;
+        }
+
+        /* Risk category legend */
+        .legend-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0 0;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .dot-low      { background: #27ae60; }
+        .dot-medium   { background: #f39c12; }
+        .dot-high     { background: #e74c3c; }
+        .dot-critical { background: #8e44ad; }
+
+        /* Ranked table */
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+        .risk-table thead tr {
+            background: #2c3e50;
+            color: #fff;
+        }
+        .risk-table th, .risk-table td {
+            padding: 9px 12px;
+            text-align: left;
+        }
+        .risk-table tbody tr:nth-child(even) {
+            background: #f7f8fa;
+        }
+        .risk-table tbody tr:hover {
+            background: #eef0f3;
+        }
+        .risk-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.78em;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.3px;
+        }
+        .badge-low      { background: #27ae60; }
+        .badge-medium   { background: #f39c12; }
+        .badge-high     { background: #e74c3c; }
+        .badge-critical { background: #8e44ad; }
+
+        .conf-high   { color: #27ae60; font-weight: 600; }
+        .conf-medium { color: #e67e22; font-weight: 600; }
+        .conf-low    { color: #c0392b; font-weight: 600; }
+
+        /* Score bar */
+        .score-bar-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .score-bar-bg {
+            flex: 1;
+            background: #eee;
+            border-radius: 3px;
+            height: 8px;
+            max-width: 100px;
+        }
+        .score-bar-fill {
+            height: 8px;
+            border-radius: 3px;
+        }
+
+        /* Methodology section */
+        .methodology-section {
+            background: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .methodology-section h2 {
+            font-size: 1.15em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8e8e8;
+        }
+        .methodology-section h3 {
+            font-size: 1em;
+            color: #444;
+            margin: 18px 0 6px;
+        }
+        .methodology-section p,
+        .methodology-section li {
+            font-size: 0.92em;
+            color: #555;
+            line-height: 1.65;
+        }
+        .formula-box {
+            background: #f0f4f8;
+            border-left: 4px solid #2c3e50;
+            padding: 10px 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.88em;
+            margin: 10px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .meth-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88em;
+            margin: 10px 0;
+        }
+        .meth-table th {
+            background: #2c3e50;
+            color: #fff;
+            padding: 7px 10px;
+            text-align: left;
+        }
+        .meth-table td {
+            padding: 6px 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .meth-table tr:nth-child(even) td {
+            background: #f7f8fa;
+        }
+        .caveat-list { padding-left: 20px; }
+        .caveat-list li { margin-bottom: 6px; }
+
+        /* Disclaimer */
+        .disclaimer-box {
+            background: #fff8e6;
+            border: 1px solid #f0c040;
+            border-radius: 6px;
+            padding: 14px 18px;
+            font-size: 0.85em;
+            color: #7a5c00;
+            margin-bottom: 25px;
+        }
+        .disclaimer-box strong { display: block; margin-bottom: 4px; }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .dashboard-header h1 { font-size: 1.5em; }
+            .filter-bar { flex-direction: column; }
+            .filter-group { min-width: 100%; }
+            .stats-strip { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Site navigation -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" id="navbar-toggle-btn" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../index.html">
+                <svg width="120" height="50" viewBox="0 0 120 50" xmlns="http://www.w3.org/2000/svg" aria-label="A&CE logo">
+                    <rect x="0" y="0" width="120" height="50" fill="#f0f0f0" rx="4"></rect>
+                    <text x="60" y="28" text-anchor="middle" font-weight="bold" fill="#333" font-family="sans-serif" font-size="26">A&amp;CE</text>
+                </svg>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../engineering.html">Services</a></li>
+                <li><a href="../energy.html">Energy Data</a></li>
+                <li><a href="../case-studies/">Case Studies</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="../contact.html" class="btn-nav-cta">Get a Quote</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="padding-top: 80px; padding-bottom: 40px;">
+
+    <!-- Page header -->
+    <div class="dashboard-header">
+        <h1>HSE Risk Index Dashboard</h1>
+        <p class="subtitle">Offshore operational risk scores derived from BSEE incident data &mdash; explore by activity, water depth, and time period</p>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer-box">
+        <strong>Informational use only.</strong>
+        Scores reflect <em>relative</em> risk ranking within this dataset based on publicly available regulatory incident records (BSEE, OSHA, EPA TRI).
+        They do not constitute safety advice or predict future incidents.
+        Data period: Gulf of Mexico offshore operations, 2010&ndash;2024.
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar">
+        <div class="filter-group">
+            <label for="filter-category">Activity Category</label>
+            <select id="filter-category">
+                <option value="all">All activities</option>
+                <option value="DRILLING">Drilling</option>
+                <option value="COMPLETION">Completion</option>
+                <option value="PRODUCTION">Production</option>
+                <option value="INTERVENTION">Intervention</option>
+                <option value="LIFTING_RIGGING">Lifting &amp; Rigging</option>
+                <option value="PIPELINE_OPS">Pipeline Ops</option>
+                <option value="DECOMMISSION">Decommissioning</option>
+                <option value="MARINE_OPS">Marine &amp; Vessel</option>
+                <option value="DIVING_OPS">Diving</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="filter-depth">Water Depth Band</label>
+            <select id="filter-depth">
+                <option value="all">All depths</option>
+                <option value="shallow">Shallow (&lt;500 ft)</option>
+                <option value="mid">Mid (500&ndash;5,000 ft)</option>
+                <option value="deep">Deep (&gt;5,000 ft)</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="filter-period">Time Period (trend chart)</label>
+            <select id="filter-period">
+                <option value="all">All years (2010&ndash;2024)</option>
+                <option value="2010-2015">2010&ndash;2015</option>
+                <option value="2015-2020">2015&ndash;2020</option>
+                <option value="2020-2024">2020&ndash;2024</option>
+            </select>
+        </div>
+        <button class="btn-reset" id="btn-reset">Reset Filters</button>
+    </div>
+
+    <!-- Summary stats -->
+    <div class="stats-strip" id="stats-strip">
+        <!-- Populated by JS -->
+    </div>
+
+    <!-- Ranked table -->
+    <div class="chart-card">
+        <h2>Risk Score Rankings &mdash; By Activity</h2>
+        <div class="legend-strip">
+            <div class="legend-item"><div class="legend-dot dot-low"></div> Low (1&ndash;3)</div>
+            <div class="legend-item"><div class="legend-dot dot-medium"></div> Medium (3.1&ndash;5)</div>
+            <div class="legend-item"><div class="legend-dot dot-high"></div> High (5.1&ndash;7)</div>
+            <div class="legend-item"><div class="legend-dot dot-critical"></div> Critical (7.1&ndash;10)</div>
+        </div>
+        <div style="overflow-x: auto; margin-top: 14px;">
+            <table class="risk-table" id="risk-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Activity</th>
+                        <th>Water Depth</th>
+                        <th>Composite</th>
+                        <th>Acute</th>
+                        <th>Chronic</th>
+                        <th>Compliance</th>
+                        <th>Incidents</th>
+                        <th>Confidence</th>
+                    </tr>
+                </thead>
+                <tbody id="risk-table-body">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+        <p class="chart-note">Sorted by composite risk score (highest first). Scores are percentile-rank normalized (1=lowest relative risk, 10=highest).</p>
+    </div>
+
+    <!-- Heatmap: activity vs dimension -->
+    <div class="chart-card">
+        <h2>Risk Heatmap &mdash; Activity &times; Dimension</h2>
+        <div id="chart-heatmap"></div>
+        <p class="chart-note">Each cell shows the normalized sub-score (1&ndash;10). Red indicates higher relative risk within this dataset.</p>
+    </div>
+
+    <!-- Composite bar chart -->
+    <div class="chart-card">
+        <h2>Composite Risk Index &mdash; Ranked Bar Chart</h2>
+        <div id="chart-bar"></div>
+        <p class="chart-note">Composite = 0.50 &times; Acute + 0.25 &times; Chronic + 0.25 &times; Compliance.</p>
+    </div>
+
+    <!-- Time trend chart -->
+    <div class="chart-card">
+        <h2>Annual Risk Trend &mdash; Industry-Wide Composite Score</h2>
+        <div id="chart-trend"></div>
+        <p class="chart-note">Annual composite score with 3-year rolling average. Declining trend reflects industry safety improvements over the period.</p>
+    </div>
+
+    <!-- Methodology explainer -->
+    <div class="methodology-section" id="methodology">
+        <h2>Methodology</h2>
+
+        <h3>1. Overview</h3>
+        <p>
+            The HSE Risk Index quantifies occupational and environmental risk using a
+            <strong>three-dimensional framework</strong>:
+        </p>
+        <ul>
+            <li><strong>Acute Risk</strong> &mdash; sudden incident severity (fatalities, injuries, spills) weighted at 50%.</li>
+            <li><strong>Chronic Risk</strong> &mdash; long-term exposure proxied by EPA Toxic Release Inventory carcinogen emissions, weighted at 25%.</li>
+            <li><strong>Compliance Risk</strong> &mdash; regulatory non-compliance rate from BSEE inspection records, weighted at 25%.</li>
+        </ul>
+
+        <h3>2. Composite Formula</h3>
+        <div class="formula-box">
+            Composite Score = 0.50 &times; Acute + 0.25 &times; Chronic + 0.25 &times; Compliance
+        </div>
+        <p>
+            Within the Acute dimension, sub-weights are: Fatality rate (0.40), Injury rate (0.35),
+            Weighted incident count (0.25).
+        </p>
+
+        <h3>3. Normalization</h3>
+        <p>
+            Raw metrics are converted to percentile ranks within the dataset and mapped to a
+            1&ndash;10 scale. A score of 1 represents the lowest relative risk; 10 represents
+            the highest within the assessed activity set.
+        </p>
+
+        <h3>4. Data Sources</h3>
+        <table class="meth-table">
+            <thead>
+                <tr><th>Source</th><th>Dimension</th><th>Weight</th><th>Coverage</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>BSEE</td><td>Acute / Compliance</td><td>0.30</td><td>Gulf of Mexico offshore operations</td></tr>
+                <tr><td>OSHA</td><td>Acute</td><td>0.20</td><td>Onshore oil &amp; gas workplaces</td></tr>
+                <tr><td>EPA TRI</td><td>Chronic</td><td>0.10</td><td>Annual toxic chemical release inventory</td></tr>
+                <tr><td>Marine Safety</td><td>Acute</td><td>0.25</td><td>USCG maritime incident records</td></tr>
+                <tr><td>PHMSA</td><td>Acute</td><td>0.15</td><td>Pipeline incident data</td></tr>
+            </tbody>
+        </table>
+
+        <h3>5. Risk Categories</h3>
+        <table class="meth-table">
+            <thead>
+                <tr><th>Category</th><th>Score Range</th><th>Interpretation</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="risk-badge badge-low">LOW</span></td><td>1.0 &ndash; 3.0</td><td>Below-average risk; standard monitoring</td></tr>
+                <tr><td><span class="risk-badge badge-medium">MEDIUM</span></td><td>3.1 &ndash; 5.0</td><td>Average risk; routine controls adequate</td></tr>
+                <tr><td><span class="risk-badge badge-high">HIGH</span></td><td>5.1 &ndash; 7.0</td><td>Above-average risk; enhanced controls warranted</td></tr>
+                <tr><td><span class="risk-badge badge-critical">CRITICAL</span></td><td>7.1 &ndash; 10.0</td><td>Highest relative risk; immediate review recommended</td></tr>
+            </tbody>
+        </table>
+
+        <h3>6. Caveats and Limitations</h3>
+        <ul class="caveat-list">
+            <li><strong>Relative, not absolute.</strong> Scores indicate ranking within this dataset, not the probability of an incident occurring.</li>
+            <li><strong>Source coverage varies.</strong> BSEE covers offshore operations; OSHA covers onshore workplaces. Cross-domain comparisons should be made with care.</li>
+            <li><strong>Chronic dimension is a proxy.</strong> EPA TRI captures chemical releases but does not directly measure worker exposure or health outcomes.</li>
+            <li><strong>Low-confidence flag.</strong> Activities with fewer than 10 total incidents are marked low confidence. Interpret these scores with caution.</li>
+            <li><strong>Water depth bands.</strong> Shallow &lt;500 ft, Mid 500&ndash;5,000 ft, Deep &gt;5,000 ft. Activities with "all" band aggregate across depths.</li>
+        </ul>
+    </div>
+
+    <div class="container" style="padding: 0 0 20px;">
+        <hr>
+        <p>
+            Built by <strong>A&amp;CE</strong> using publicly available BSEE, OSHA, and EPA data. &mdash;
+            <a href="../contact.html">Contact us</a> to discuss a custom risk assessment for your operations.
+        </p>
+    </div>
+
+</div><!-- /.container -->
+
+<!-- Pre-computed data module -->
+<script src="hse-risk-dashboard-data.js"></script>
+
+<!-- Dashboard controller -->
+<script>
+(function () {
+    'use strict';
+
+    var data = window.HseRiskDashboardData;
+
+    var CATEGORY_COLORS = {
+        LOW:      '#27ae60',
+        MEDIUM:   '#f39c12',
+        HIGH:     '#e74c3c',
+        CRITICAL: '#8e44ad',
+    };
+
+    // Depth band display labels
+    var DEPTH_LABELS = {
+        shallow: 'Shallow (<500 ft)',
+        mid:     'Mid (500-5k ft)',
+        deep:    'Deep (>5k ft)',
+        all:     'All depths',
+    };
+
+    // -------------------------------------------------------------------
+    // State
+    // -------------------------------------------------------------------
+    var state = { category: 'all', depth: 'all', period: 'all' };
+
+    // -------------------------------------------------------------------
+    // Data helpers
+    // -------------------------------------------------------------------
+    function filteredRisk() {
+        var d = data.filterByCategory(data.RISK_DATA, state.category);
+        return data.filterByWaterDepth(d, state.depth);
+    }
+
+    function filteredTrend() {
+        return data.filterByTimePeriod(data.TIME_TREND_DATA, state.period);
+    }
+
+    // Deduplicate: for ranked table, keep highest-composite row per
+    // activity_code when multiple depth bands match (e.g. "all" + specific)
+    function dedupByActivity(rows) {
+        var seen = {};
+        return rows
+            .slice()
+            .sort(function (a, b) { return b.composite_score - a.composite_score; })
+            .filter(function (row) {
+                if (seen[row.activity_code]) return false;
+                seen[row.activity_code] = true;
+                return true;
+            });
+    }
+
+    // -------------------------------------------------------------------
+    // Summary stats
+    // -------------------------------------------------------------------
+    function updateStats(rows) {
+        var strip = document.getElementById('stats-strip');
+        if (!strip) return;
+
+        var counts = { LOW: 0, MEDIUM: 0, HIGH: 0, CRITICAL: 0 };
+        var totalInc = 0;
+        rows.forEach(function (r) {
+            counts[data.getRiskCategory(r.composite_score)]++;
+            totalInc += r.incident_count;
+        });
+
+        var avgScore = rows.length
+            ? (rows.reduce(function (s, r) { return s + r.composite_score; }, 0) / rows.length).toFixed(1)
+            : '—';
+
+        strip.innerHTML =
+            '<div class="stat-card"><div class="stat-val">' + rows.length + '</div><div class="stat-lbl">Activity Rows</div></div>' +
+            '<div class="stat-card"><div class="stat-val">' + totalInc.toLocaleString() + '</div><div class="stat-lbl">Total Incidents</div></div>' +
+            '<div class="stat-card"><div class="stat-val">' + avgScore + '</div><div class="stat-lbl">Avg Composite</div></div>' +
+            '<div class="stat-card"><div class="stat-val val-critical">' + counts.CRITICAL + '</div><div class="stat-lbl">Critical</div></div>' +
+            '<div class="stat-card"><div class="stat-val val-high">' + counts.HIGH + '</div><div class="stat-lbl">High</div></div>' +
+            '<div class="stat-card"><div class="stat-val val-medium">' + counts.MEDIUM + '</div><div class="stat-lbl">Medium</div></div>' +
+            '<div class="stat-card"><div class="stat-val val-low">' + counts.LOW + '</div><div class="stat-lbl">Low</div></div>';
+    }
+
+    // -------------------------------------------------------------------
+    // Ranked table
+    // -------------------------------------------------------------------
+    function colorForScore(score) {
+        var cat = data.getRiskCategory(score).toLowerCase();
+        return CATEGORY_COLORS[data.getRiskCategory(score)];
+    }
+
+    function badgeHtml(score) {
+        var cat = data.getRiskCategory(score);
+        var lower = cat.toLowerCase();
+        return '<span class="risk-badge badge-' + lower + '">' + cat + '</span>';
+    }
+
+    function scoreBarHtml(score, color) {
+        var pct = ((score - 1) / 9 * 100).toFixed(1);
+        return '<div class="score-bar-wrap">' +
+            '<span style="min-width:30px;font-weight:600;">' + score.toFixed(1) + '</span>' +
+            '<div class="score-bar-bg"><div class="score-bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div>' +
+            '</div>';
+    }
+
+    function updateTable(rows) {
+        var tbody = document.getElementById('risk-table-body');
+        if (!tbody) return;
+
+        var sorted = rows.slice().sort(function (a, b) { return b.composite_score - a.composite_score; });
+        tbody.innerHTML = sorted.map(function (r, i) {
+            var cat   = data.getRiskCategory(r.composite_score);
+            var color = CATEGORY_COLORS[cat];
+            var confCls = 'conf-' + r.confidence;
+            return '<tr>' +
+                '<td>' + (i + 1) + '</td>' +
+                '<td>' + r.activity_name + '</td>' +
+                '<td>' + (DEPTH_LABELS[r.water_depth_band] || r.water_depth_band) + '</td>' +
+                '<td>' + scoreBarHtml(r.composite_score, color) + '</td>' +
+                '<td style="color:' + color + ';font-weight:600;">' + r.acute_score.toFixed(1) + '</td>' +
+                '<td style="color:' + color + ';font-weight:600;">' + r.chronic_score.toFixed(1) + '</td>' +
+                '<td style="color:' + color + ';font-weight:600;">' + r.compliance_score.toFixed(1) + '</td>' +
+                '<td>' + r.incident_count.toLocaleString() + '</td>' +
+                '<td class="' + confCls + '">' + r.confidence.charAt(0).toUpperCase() + r.confidence.slice(1) + '</td>' +
+                '</tr>';
+        }).join('');
+    }
+
+    // -------------------------------------------------------------------
+    // Heatmap
+    // -------------------------------------------------------------------
+    function renderHeatmap(rows) {
+        var el = document.getElementById('chart-heatmap');
+        if (!el || !rows.length) {
+            if (el) el.innerHTML = '<p style="color:#999;padding:20px;">No data for selected filters.</p>';
+            return;
+        }
+
+        var matrix = data.buildHeatmapMatrix(rows);
+        var z    = matrix.z;
+        var acts = matrix.activities;
+        var dims = matrix.dimensions;
+
+        // Build text annotations
+        var text = z.map(function (row) {
+            return row.map(function (v) { return v.toFixed(1); });
+        });
+
+        Plotly.react(el, [{
+            type: 'heatmap',
+            z: z,
+            x: dims,
+            y: acts,
+            colorscale: 'RdYlGn_r',
+            zmin: 1,
+            zmax: 10,
+            colorbar: { title: 'Score' },
+            text: text,
+            texttemplate: '%{text}',
+            hovertemplate: 'Activity: %{y}<br>Dimension: %{x}<br>Score: %{z:.1f}<extra></extra>',
+        }], {
+            margin: { l: 180, r: 60, t: 30, b: 60 },
+            height: Math.max(300, 55 * acts.length),
+            xaxis: { title: 'Risk Dimension' },
+            yaxis: { title: '' },
+        }, { responsive: true });
+    }
+
+    // -------------------------------------------------------------------
+    // Composite bar chart
+    // -------------------------------------------------------------------
+    function renderBar(rows) {
+        var el = document.getElementById('chart-bar');
+        if (!el || !rows.length) {
+            if (el) el.innerHTML = '<p style="color:#999;padding:20px;">No data for selected filters.</p>';
+            return;
+        }
+
+        var sorted = rows.slice().sort(function (a, b) { return a.composite_score - b.composite_score; });
+        var names   = sorted.map(function (r) { return r.activity_name + '\n(' + (DEPTH_LABELS[r.water_depth_band] || r.water_depth_band) + ')'; });
+        var values  = sorted.map(function (r) { return r.composite_score; });
+        var colors  = sorted.map(function (r) { return CATEGORY_COLORS[data.getRiskCategory(r.composite_score)]; });
+
+        Plotly.react(el, [{
+            type: 'bar',
+            x: values,
+            y: names,
+            orientation: 'h',
+            marker: { color: colors },
+            text: values.map(function (v) { return v.toFixed(1); }),
+            textposition: 'outside',
+            hovertemplate: '%{y}<br>Composite: %{x:.2f}<extra></extra>',
+        }], {
+            margin: { l: 200, r: 80, t: 30, b: 60 },
+            height: Math.max(280, 50 * names.length),
+            xaxis: { title: 'Composite Score (1-10)', range: [0, 11] },
+            yaxis: { title: '' },
+        }, { responsive: true });
+    }
+
+    // -------------------------------------------------------------------
+    // Time trend chart
+    // -------------------------------------------------------------------
+    function renderTrend(trendRows) {
+        var el = document.getElementById('chart-trend');
+        if (!el) return;
+
+        if (!trendRows.length) {
+            el.innerHTML = '<p style="color:#999;padding:20px;">No data for selected period.</p>';
+            return;
+        }
+
+        var years  = trendRows.map(function (r) { return r.year; });
+        var scores = trendRows.map(function (r) { return r.composite_score; });
+        var rolling = data.computeRollingAverage(trendRows, 3);
+
+        var traces = [{
+            type: 'scatter',
+            x: years,
+            y: scores,
+            mode: 'lines+markers',
+            name: 'Annual Composite',
+            line:   { color: '#e74c3c', width: 2 },
+            marker: { size: 7 },
+            hovertemplate: 'Year: %{x}<br>Score: %{y:.1f}<extra></extra>',
+        }];
+
+        if (trendRows.length >= 3) {
+            traces.push({
+                type: 'scatter',
+                x: years,
+                y: rolling,
+                mode: 'lines',
+                name: '3-Year Rolling Avg',
+                line: { color: '#2980b9', width: 2, dash: 'dash' },
+                hovertemplate: 'Year: %{x}<br>Rolling Avg: %{y:.1f}<extra></extra>',
+            });
+        }
+
+        Plotly.react(el, traces, {
+            margin: { l: 60, r: 40, t: 30, b: 60 },
+            height: 380,
+            xaxis: { title: 'Year' },
+            yaxis: { title: 'Composite Risk Score', range: [0, 11] },
+            legend: { orientation: 'h', y: -0.2 },
+        }, { responsive: true });
+    }
+
+    // -------------------------------------------------------------------
+    // Full render
+    // -------------------------------------------------------------------
+    function render() {
+        var riskRows  = filteredRisk();
+        var trendRows = filteredTrend();
+
+        updateStats(riskRows);
+        updateTable(riskRows);
+        renderHeatmap(riskRows);
+        renderBar(riskRows);
+        renderTrend(trendRows);
+    }
+
+    // -------------------------------------------------------------------
+    // Event wiring
+    // -------------------------------------------------------------------
+    document.getElementById('filter-category').addEventListener('change', function (e) {
+        state.category = e.target.value;
+        render();
+    });
+
+    document.getElementById('filter-depth').addEventListener('change', function (e) {
+        state.depth = e.target.value;
+        render();
+    });
+
+    document.getElementById('filter-period').addEventListener('change', function (e) {
+        state.period = e.target.value;
+        render();
+    });
+
+    document.getElementById('btn-reset').addEventListener('click', function () {
+        state = { category: 'all', depth: 'all', period: 'all' };
+        document.getElementById('filter-category').value = 'all';
+        document.getElementById('filter-depth').value = 'all';
+        document.getElementById('filter-period').value = 'all';
+        render();
+    });
+
+    // Initial render
+    render();
+
+}());
+</script>
+
+</body>
+</html>

@@ -6,7 +6,7 @@ rootPath: "../"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Free interactive engineering calculators for fatigue analysis, stress calculations, and structural assessment. Based on API, DNV, and ISO standards.">
+    <meta name="description" content="Free interactive engineering calculators for pipeline stability, wall thickness, fatigue analysis, and field economics. Based on DNV, ASME, API, and BS standards.">
     <meta name="keywords" content="engineering calculator, fatigue calculator, stress calculator, S-N curve, structural analysis, offshore engineering tools">
 
     <!-- Open Graph meta tags -->
@@ -47,6 +47,52 @@ rootPath: "../"
                     "position": 1,
                     "item": {
                         "@type": "WebApplication",
+                        "@id": "https://aceengineer.com/calculators/on-bottom-stability.html#calculator",
+                        "name": "On-Bottom Stability Calculator",
+                        "url": "https://aceengineer.com/calculators/on-bottom-stability.html",
+                        "description": "Calculate pipeline lateral stability per DNV-RP-F109 with hydrodynamic force analysis",
+                        "applicationCategory": "Engineering Calculator",
+                        "operatingSystem": "Any web browser",
+                        "offers": {
+                            "@type": "Offer",
+                            "price": "0",
+                            "priceCurrency": "USD",
+                            "availability": "https://schema.org/InStock"
+                        },
+                        "provider": {
+                            "@type": "Organization",
+                            "@id": "https://aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
+                        "@type": "WebApplication",
+                        "@id": "https://aceengineer.com/calculators/wall-thickness.html#calculator",
+                        "name": "Pipeline Wall Thickness Calculator",
+                        "url": "https://aceengineer.com/calculators/wall-thickness.html",
+                        "description": "Burst and collapse wall thickness checks per ASME B31.4 with corrosion allowance",
+                        "applicationCategory": "Engineering Calculator",
+                        "operatingSystem": "Any web browser",
+                        "offers": {
+                            "@type": "Offer",
+                            "price": "0",
+                            "priceCurrency": "USD",
+                            "availability": "https://schema.org/InStock"
+                        },
+                        "provider": {
+                            "@type": "Organization",
+                            "@id": "https://aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": {
+                        "@type": "WebApplication",
                         "@id": "https://aceengineer.com/calculators/fatigue-sn-curve.html#calculator",
                         "name": "S-N Curve Fatigue Calculator",
                         "url": "https://aceengineer.com/calculators/fatigue-sn-curve.html",
@@ -67,7 +113,7 @@ rootPath: "../"
                 },
                 {
                     "@type": "ListItem",
-                    "position": 2,
+                    "position": 4,
                     "item": {
                         "@type": "WebApplication",
                         "@id": "https://aceengineer.com/calculators/npv-field-development.html#calculator",
@@ -90,7 +136,7 @@ rootPath: "../"
                 },
                 {
                     "@type": "ListItem",
-                    "position": 3,
+                    "position": 5,
                     "item": {
                         "@type": "WebApplication",
                         "@id": "https://aceengineer.com/calculators/fatigue-life-calculator.html#calculator",
@@ -170,6 +216,52 @@ rootPath: "../"
             <p class="lead">Free interactive tools for structural analysis, fatigue assessment, and engineering calculations. Based on industry standards.</p>
         </div>
 
+        <!-- Calculator: On-Bottom Stability (NEW) -->
+        <div class="calculator-card">
+            <h3><a href="on-bottom-stability.html">On-Bottom Stability Calculator</a> <span style="background: #5cb85c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.6em; vertical-align: middle;">NEW</span></h3>
+            <div class="calculator-meta">
+                <strong>Application:</strong> Subsea Pipeline Engineering |
+                <strong>Method:</strong> DNV-RP-F109 Absolute Stability
+            </div>
+            <p>
+                Calculate on-bottom stability for subsea pipelines using DNV-RP-F109.
+                Includes hydrodynamic drag, inertia, and lift forces, submerged weight calculation
+                with coating and contents, and lateral stability utilisation ratio with interactive
+                velocity sweep visualization.
+            </p>
+            <div>
+                <span class="standard-tag">DNV-RP-F109</span>
+                <span class="standard-tag">Pipeline Stability</span>
+                <span class="standard-tag">Subsea Engineering</span>
+            </div>
+            <p style="margin-top: 15px;">
+                <a href="on-bottom-stability.html" class="btn btn-primary">Open Calculator</a>
+            </p>
+        </div>
+
+        <!-- Calculator: Wall Thickness (NEW) -->
+        <div class="calculator-card">
+            <h3><a href="wall-thickness.html">Pipeline Wall Thickness Calculator</a> <span style="background: #5cb85c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.6em; vertical-align: middle;">NEW</span></h3>
+            <div class="calculator-meta">
+                <strong>Application:</strong> Pipeline Engineering |
+                <strong>Method:</strong> ASME B31.4 Burst & Collapse Checks
+            </div>
+            <p>
+                Calculate minimum wall thickness and verify burst and collapse resistance
+                for pipelines per ASME B31.4. Includes Barlow formula burst check with
+                corrosion allowance, elastic collapse check, and minimum wall thickness
+                calculation with interactive visualization.
+            </p>
+            <div>
+                <span class="standard-tag">ASME B31.4</span>
+                <span class="standard-tag">Pipeline Design</span>
+                <span class="standard-tag">Barlow Formula</span>
+            </div>
+            <p style="margin-top: 15px;">
+                <a href="wall-thickness.html" class="btn btn-primary">Open Calculator</a>
+            </p>
+        </div>
+
         <!-- Calculator 1: S-N Curve Fatigue Calculator (New) -->
         <div class="calculator-card">
             <h3><a href="fatigue-sn-curve.html">S-N Curve Fatigue Calculator</a> <span style="background: #5cb85c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.6em; vertical-align: middle;">NEW</span></h3>
@@ -237,46 +329,6 @@ rootPath: "../"
             </p>
         </div>
 
-        <!-- Calculator 4: Stress Concentration (Coming Soon) -->
-        <div class="calculator-card coming-soon">
-            <h3>Stress Concentration Factor Calculator</h3>
-            <div class="calculator-meta">
-                <strong>Application:</strong> Tubular Joints, Structural Details |
-                <strong>Status:</strong> Coming Soon
-            </div>
-            <p>
-                Calculate stress concentration factors (SCFs) for tubular joints and common structural details.
-                Includes parametric equations for T, Y, K, and X joints based on geometry and loading.
-            </p>
-            <div>
-                <span class="standard-tag">API RP 2A</span>
-                <span class="standard-tag">DNV-RP-C203</span>
-            </div>
-            <p style="margin-top: 15px;">
-                <span class="btn btn-default disabled">Coming Soon</span>
-            </p>
-        </div>
-
-        <!-- Calculator 5: Pressure Vessel (Coming Soon) -->
-        <div class="calculator-card coming-soon">
-            <h3>Pressure Vessel Thickness Calculator</h3>
-            <div class="calculator-meta">
-                <strong>Application:</strong> Process Equipment, Subsea Systems |
-                <strong>Status:</strong> Coming Soon
-            </div>
-            <p>
-                Calculate minimum wall thickness for cylindrical and spherical pressure vessels under internal
-                and external pressure. Includes corrosion allowance and manufacturing tolerance considerations.
-            </p>
-            <div>
-                <span class="standard-tag">ASME BPVC</span>
-                <span class="standard-tag">API 650</span>
-            </div>
-            <p style="margin-top: 15px;">
-                <span class="btn btn-default disabled">Coming Soon</span>
-            </p>
-        </div>
-
         <hr>
 
         <h2>About These Calculators</h2>
@@ -285,6 +337,8 @@ rootPath: "../"
             They implement industry-standard methods from recognized codes and standards including:
         </p>
         <ul>
+            <li><strong>DNV-RP-F109:</strong> On-Bottom Stability Design of Submarine Pipelines</li>
+            <li><strong>ASME B31.4:</strong> Pipeline Transportation Systems for Liquids and Slurries</li>
             <li><strong>DNV-RP-C203:</strong> Fatigue Design of Offshore Steel Structures</li>
             <li><strong>API RP 2A:</strong> Recommended Practice for Planning, Designing and Constructing Fixed Offshore Platforms</li>
             <li><strong>BS 7608:</strong> Code of Practice for Fatigue Design and Assessment of Steel Structures</li>

@@ -32,6 +32,11 @@
         "displayName": "obs-calculator",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/obs-calculator.test.js"]
+      },
+      {
+        "displayName": "wall-thickness",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/wall-thickness.test.js"]
       }
     ],
     "collectCoverageFrom": [

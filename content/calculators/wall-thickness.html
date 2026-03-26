@@ -1,0 +1,492 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Free wall thickness calculator for pipelines per ASME B31.4. Burst and collapse checks with corrosion allowance. Compare minimum wall thickness across design codes.">
+    <meta name="keywords" content="wall thickness calculator, ASME B31.4, pipeline wall thickness, burst check, collapse check, Barlow formula, pipeline design, corrosion allowance">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Pipeline Wall Thickness Calculator (ASME B31.4) - A&CE">
+    <meta property="og:description" content="Free pipeline wall thickness calculator. Burst and collapse checks per ASME B31.4 with corrosion allowance and design factor.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/calculators/wall-thickness.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <title>Pipeline Wall Thickness Calculator (ASME B31.4) - A&CE</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- Plotly for interactive charts -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <!-- JSON-LD Structured Data - WebApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "@id": "https://aceengineer.com/calculators/wall-thickness.html#calculator",
+        "name": "Pipeline Wall Thickness Calculator",
+        "description": "Calculate minimum wall thickness and verify burst and collapse resistance for pipelines per ASME B31.4. Includes Barlow formula burst check with corrosion allowance and elastic collapse check.",
+        "url": "https://aceengineer.com/calculators/wall-thickness.html",
+        "applicationCategory": "Engineering Calculator",
+        "applicationSubCategory": "Pipeline Engineering",
+        "operatingSystem": "Any web browser",
+        "browserRequirements": "Requires JavaScript",
+        "softwareVersion": "1.0",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+        },
+        "featureList": [
+            "ASME B31.4 burst pressure check (Barlow formula)",
+            "Elastic collapse check (Timoshenko)",
+            "Minimum wall thickness calculation",
+            "Corrosion allowance included",
+            "Design factor application",
+            "Interactive result visualization"
+        ],
+        "provider": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization"
+        },
+        "isPartOf": {
+            "@type": "CollectionPage",
+            "@id": "https://aceengineer.com/calculators/#collection",
+            "name": "A&CE Engineering Calculators",
+            "url": "https://aceengineer.com/calculators/"
+        }
+    }
+    </script>
+
+    <style>
+        .calculator-container {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .result-box {
+            background: #fff;
+            border: 2px solid #428bca;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .result-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #428bca;
+        }
+        .result-label {
+            font-size: 1.1em;
+            color: #666;
+        }
+        .result-warning {
+            border-color: #d9534f;
+        }
+        .result-warning .result-value {
+            color: #d9534f;
+        }
+        .result-success {
+            border-color: #5cb85c;
+        }
+        .result-success .result-value {
+            color: #5cb85c;
+        }
+        .standard-tag {
+            display: inline-block;
+            background: #428bca;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .page-header {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #428bca;
+        }
+        .info-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Pipeline Wall Thickness Calculator</h1>
+            <p class="lead">Burst and collapse wall thickness checks per ASME B31.4 with corrosion allowance and design factor</p>
+            <div>
+                <span class="standard-tag">ASME B31.4</span>
+                <span class="standard-tag">Pipeline Design</span>
+                <span class="standard-tag">Barlow Formula</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="calculator-container">
+                    <h3>Input Parameters</h3>
+
+                    <div class="form-group">
+                        <label for="D_outer">Pipe Outer Diameter (m)</label>
+                        <input type="number" class="form-control" id="D_outer" value="0.3238" step="any">
+                        <p class="help-block">Nominal outer diameter of the pipe</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="t_wall">Wall Thickness (m)</label>
+                        <input type="number" class="form-control" id="t_wall" value="0.0127" step="any">
+                        <p class="help-block">Nominal wall thickness to be checked</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="SMYS">Specified Min Yield Strength (MPa)</label>
+                        <input type="number" class="form-control" id="SMYS" value="450" step="any">
+                        <p class="help-block">SMYS of pipe material (e.g., API 5L X65 = 450 MPa)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="P_i">Internal Pressure (MPa)</label>
+                        <input type="number" class="form-control" id="P_i" value="15" step="any">
+                        <p class="help-block">Maximum allowable internal pressure (design pressure)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="P_e">External Pressure (MPa)</label>
+                        <input type="number" class="form-control" id="P_e" value="5" step="any">
+                        <p class="help-block">External hydrostatic pressure at installation depth</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ca">Corrosion Allowance (m)</label>
+                        <input type="number" class="form-control" id="ca" value="0.003" step="any">
+                        <p class="help-block">Corrosion allowance for wall thickness reduction over design life</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="df">Design Factor (-)</label>
+                        <input type="number" class="form-control" id="df" value="0.72" step="any">
+                        <p class="help-block">Per ASME B31.4 S403.2.1 (typically 0.72 for liquid pipelines)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="E">Young's Modulus (MPa)</label>
+                        <input type="number" class="form-control" id="E" value="207000" step="any">
+                        <p class="help-block">Elastic modulus of steel (typical: 207,000 MPa)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nu">Poisson's Ratio (-)</label>
+                        <input type="number" class="form-control" id="nu" value="0.3" step="any">
+                        <p class="help-block">Poisson's ratio for steel (typical: 0.3)</p>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="calculateWallThickness()">Calculate Wall Thickness</button>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="result-box" id="burstResult">
+                    <span class="result-value" id="burstValue">--</span>
+                    <br>
+                    <span class="result-label">Burst Utilisation</span>
+                </div>
+
+                <div class="result-box" id="collapseResult">
+                    <span class="result-value" id="collapseValue">--</span>
+                    <br>
+                    <span class="result-label">Collapse Utilisation</span>
+                </div>
+
+                <div class="result-box" id="minWallResult">
+                    <span class="result-value" id="minWallValue">--</span>
+                    <br>
+                    <span class="result-label">Minimum Wall Thickness (mm)</span>
+                </div>
+
+                <div id="additionalResults" style="margin-top: 20px; display: none;">
+                    <h4>Calculation Details</h4>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>Effective Wall Thickness (t_eff)</td>
+                            <td id="tEffValue">-- mm</td>
+                        </tr>
+                        <tr>
+                            <td>Burst Pressure (P_burst)</td>
+                            <td id="pBurstValue">-- MPa</td>
+                        </tr>
+                        <tr>
+                            <td>Net Internal Pressure (delta_P)</td>
+                            <td id="deltaPValue">-- MPa</td>
+                        </tr>
+                        <tr>
+                            <td>Collapse Pressure (P_collapse)</td>
+                            <td id="pCollapseValue">-- MPa</td>
+                        </tr>
+                        <tr>
+                            <td>Minimum Required Wall Thickness</td>
+                            <td id="tMinValue">-- mm</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="wallThicknessChart" style="width:100%; height:400px;"></div>
+
+                <div class="alert alert-info" style="margin-top: 20px;">
+                    <strong>Standard Reference:</strong> ASME B31.4 S403.2.1 (Burst), Timoshenko elastic collapse formula. Design factor per ASME B31.4 Table A403.2.1-1.
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>Disclaimer:</strong> This calculator is for educational and illustrative purposes only. Final engineering calculations should be performed by qualified engineers using validated software and verified against applicable codes and standards.
+        </div>
+
+        <div class="info-section">
+            <h2>About This Calculator</h2>
+            <p>
+                Pipeline wall thickness design is one of the most fundamental steps in pipeline engineering.
+                The wall thickness must be sufficient to contain internal pressure (burst resistance), resist
+                external hydrostatic pressure (collapse resistance), and provide adequate corrosion allowance
+                over the design life of the pipeline. This calculator implements the primary design checks
+                required by <strong>ASME B31.4</strong> (Pipeline Transportation Systems for Liquids and
+                Slurries), which is the governing code for liquid pipeline design in North America.
+            </p>
+            <h3>Burst Check (Barlow Formula)</h3>
+            <p>
+                The burst check verifies that the pipe wall can withstand the maximum internal pressure. The
+                allowable burst pressure is calculated using the modified Barlow formula:
+            </p>
+            <p style="text-align: center; font-size: 1.2em;">
+                <strong>P_burst = 2 x SMYS x t_eff x df / D</strong>
+            </p>
+            <p>
+                Where SMYS is the Specified Minimum Yield Strength of the pipe material, t_eff is the
+                effective wall thickness (nominal minus corrosion allowance), df is the design factor
+                (typically 0.72 for liquid pipelines per ASME B31.4), and D is the pipe outer diameter.
+                The burst utilisation ratio compares the net internal pressure (P_internal - P_external)
+                to the allowable burst pressure. A utilisation ratio less than or equal to 1.0 confirms
+                that the wall thickness is adequate for burst resistance.
+            </p>
+            <h3>Collapse Check (Timoshenko Formula)</h3>
+            <p>
+                For deepwater pipelines or during installation, external hydrostatic pressure may exceed
+                the internal pressure, creating a net external pressure that can cause the pipe to collapse.
+                The elastic collapse pressure is calculated using the Timoshenko formula:
+            </p>
+            <p style="text-align: center; font-size: 1.2em;">
+                <strong>P_collapse = 2E / (1 - nu^2) x (t/D)^3</strong>
+            </p>
+            <p>
+                Where E is Young's modulus and nu is Poisson's ratio. This formula gives the critical
+                elastic buckling pressure for a thin-walled cylinder under uniform external pressure.
+                The collapse utilisation ratio compares the external pressure to the collapse pressure.
+            </p>
+            <h3>Corrosion Allowance</h3>
+            <p>
+                The corrosion allowance accounts for material loss over the pipeline's design life due to
+                internal corrosion, external corrosion, or erosion. Typical values range from 1.5 mm to
+                6 mm depending on the transported fluid, coating system, and cathodic protection design.
+                The effective wall thickness used in burst calculations is the nominal wall thickness
+                minus the corrosion allowance.
+            </p>
+            <h3>Design Factors</h3>
+            <p>
+                ASME B31.4 specifies design factors that reduce the allowable stress to provide a safety
+                margin. The standard design factor of 0.72 applies to most liquid pipeline segments. Higher
+                design factors (up to 0.80) may apply in specific locations per ASME B31.4 Table A403.2.1-1.
+                Other codes such as ASME B31.8 (gas pipelines) and API 1111 (offshore pipelines) use different
+                design factor approaches.
+            </p>
+            <h3>Limitations</h3>
+            <p>
+                This calculator provides simplified burst and collapse checks. A complete wall thickness
+                design should also consider:
+            </p>
+            <ul>
+                <li>Combined loading (bending + pressure + axial force)</li>
+                <li>Propagation buckling resistance</li>
+                <li>Manufacturing tolerance and ovality</li>
+                <li>Thermal stress and strain-based design</li>
+                <li>Installation loads (laying, reeling, J-tube pull-in)</li>
+                <li>Hydrotest pressure requirements</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h2>Need Professional Pipeline Design?</h2>
+            <p>
+                For complex scenarios including combined loading analysis, deepwater collapse assessment,
+                installation engineering, and multi-code wall thickness comparison, we offer professional
+                consulting services with validated methodologies.
+            </p>
+            <p>
+                <a href="../contact.html" class="btn btn-success btn-lg">Discuss Your Project</a>
+                <a href="../case-studies/" class="btn btn-default btn-lg">View Case Studies</a>
+            </p>
+        </div>
+    </div>
+
+    <include src="partials/footer.html"></include>
+
+    <script src="../assets/js/wall-thickness-engine.js"></script>
+    <script>
+    function calculateWallThickness() {
+        // Read input values
+        var D_outer = parseFloat(document.getElementById('D_outer').value);
+        var t_wall = parseFloat(document.getElementById('t_wall').value);
+        var SMYS = parseFloat(document.getElementById('SMYS').value);
+        var P_i = parseFloat(document.getElementById('P_i').value);
+        var P_e = parseFloat(document.getElementById('P_e').value);
+        var ca = parseFloat(document.getElementById('ca').value);
+        var df = parseFloat(document.getElementById('df').value);
+        var E = parseFloat(document.getElementById('E').value);
+        var nu = parseFloat(document.getElementById('nu').value);
+
+        // Validate inputs
+        var inputs = [
+            { val: D_outer, name: 'Pipe Outer Diameter' },
+            { val: t_wall, name: 'Wall Thickness' },
+            { val: SMYS, name: 'Specified Min Yield Strength' },
+            { val: P_i, name: 'Internal Pressure' },
+            { val: P_e, name: 'External Pressure' },
+            { val: ca, name: 'Corrosion Allowance' },
+            { val: df, name: 'Design Factor' },
+            { val: E, name: "Young's Modulus" },
+            { val: nu, name: "Poisson's Ratio" }
+        ];
+
+        for (var i = 0; i < inputs.length; i++) {
+            if (isNaN(inputs[i].val)) {
+                alert('Please enter a valid ' + inputs[i].name);
+                return;
+            }
+        }
+
+        // Calculate using engine
+        var burstResult = burstCheck(D_outer, t_wall, SMYS, P_i, P_e, ca, df);
+        var collapseResult = collapseCheck(D_outer, t_wall, P_e, SMYS, E, nu);
+        var tMin = minWallThickness(D_outer, SMYS, P_i, P_e, ca, df);
+
+        // Update burst result box
+        var burstEl = document.getElementById('burstResult');
+        var burstValueEl = document.getElementById('burstValue');
+        burstValueEl.textContent = (burstResult.utilisation * 100).toFixed(1) + '%';
+        burstEl.classList.remove('result-success', 'result-warning');
+        if (burstResult.is_passing) {
+            burstEl.classList.add('result-success');
+        } else {
+            burstEl.classList.add('result-warning');
+        }
+
+        // Update collapse result box
+        var collapseEl = document.getElementById('collapseResult');
+        var collapseValueEl = document.getElementById('collapseValue');
+        collapseValueEl.textContent = (collapseResult.utilisation * 100).toFixed(1) + '%';
+        collapseEl.classList.remove('result-success', 'result-warning');
+        if (collapseResult.is_passing) {
+            collapseEl.classList.add('result-success');
+        } else {
+            collapseEl.classList.add('result-warning');
+        }
+
+        // Update minimum wall thickness result box
+        var minWallValueEl = document.getElementById('minWallValue');
+        minWallValueEl.textContent = (tMin * 1000).toFixed(2);
+
+        // Update additional results
+        var additionalDiv = document.getElementById('additionalResults');
+        additionalDiv.style.display = 'block';
+
+        document.getElementById('tEffValue').textContent = (burstResult.t_eff * 1000).toFixed(2) + ' mm';
+        document.getElementById('pBurstValue').textContent = burstResult.P_burst.toFixed(2) + ' MPa';
+        document.getElementById('deltaPValue').textContent = burstResult.delta_P.toFixed(2) + ' MPa';
+        document.getElementById('pCollapseValue').textContent = collapseResult.P_collapse.toFixed(2) + ' MPa';
+        document.getElementById('tMinValue').textContent = (tMin * 1000).toFixed(2) + ' mm';
+
+        // Generate Plotly grouped bar chart
+        var burstColor = burstResult.utilisation <= 1.0 ? '#5cb85c' : '#d9534f';
+        var collapseColor = collapseResult.utilisation <= 1.0 ? '#5cb85c' : '#d9534f';
+
+        var traceUtilisation = {
+            x: ['Burst Utilisation', 'Collapse Utilisation'],
+            y: [burstResult.utilisation, collapseResult.utilisation],
+            type: 'bar',
+            marker: {
+                color: [burstColor, collapseColor]
+            },
+            text: [
+                (burstResult.utilisation * 100).toFixed(1) + '%',
+                (collapseResult.utilisation * 100).toFixed(1) + '%'
+            ],
+            textposition: 'auto'
+        };
+
+        var layout = {
+            title: 'Wall Thickness Check Results',
+            yaxis: { title: 'Utilisation Ratio' },
+            showlegend: false,
+            shapes: [{
+                type: 'line',
+                xref: 'paper',
+                yref: 'y',
+                x0: 0,
+                x1: 1,
+                y0: 1.0,
+                y1: 1.0,
+                line: {
+                    color: '#d9534f',
+                    width: 2,
+                    dash: 'dash'
+                }
+            }],
+            annotations: [{
+                xref: 'paper',
+                yref: 'y',
+                x: 1.02,
+                y: 1.0,
+                text: 'Limit',
+                showarrow: false,
+                font: { color: '#d9534f', size: 11 }
+            }]
+        };
+
+        Plotly.newPlot('wallThicknessChart', [traceUtilisation], layout, {responsive: true, displayModeBar: false});
+
+        // Fire GA4 event
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'calculator_use', {
+                'event_category': 'engagement',
+                'event_label': 'wall_thickness',
+                'pipe_diameter': D_outer,
+                'wall_thickness': t_wall,
+                'burst_utilisation': burstResult.utilisation,
+                'collapse_utilisation': collapseResult.utilisation
+            });
+        }
+    }
+    </script>
+
+</body>
+</html>

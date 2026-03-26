@@ -27,6 +27,11 @@
         "displayName": "npv-calculator",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/npv-calculator.test.js"]
+      },
+      {
+        "displayName": "obs-calculator",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/obs-calculator.test.js"]
       }
     ],
     "collectCoverageFrom": [

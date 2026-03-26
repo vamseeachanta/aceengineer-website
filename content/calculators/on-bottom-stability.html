@@ -1,0 +1,524 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Free on-bottom stability calculator for subsea pipelines per DNV-RP-F109. Calculate hydrodynamic loads, submerged weight, and lateral stability utilisation ratio.">
+    <meta name="keywords" content="on-bottom stability calculator, DNV-RP-F109, pipeline stability, hydrodynamic loads, subsea pipeline design, lateral stability, pipe-soil interaction">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="On-Bottom Stability Calculator (DNV-RP-F109) - A&CE">
+    <meta property="og:description" content="Free pipeline stability calculator. Hydrodynamic loads, submerged weight, and utilisation ratio per DNV-RP-F109.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/calculators/on-bottom-stability.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <title>On-Bottom Stability Calculator (DNV-RP-F109) - A&CE</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- Plotly for interactive charts -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <!-- JSON-LD Structured Data - WebApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "@id": "https://aceengineer.com/calculators/on-bottom-stability.html#calculator",
+        "name": "On-Bottom Stability Calculator",
+        "description": "Calculate on-bottom stability for subsea pipelines per DNV-RP-F109. Includes hydrodynamic drag, inertia, and lift forces, submerged weight calculation with coating and contents, and lateral stability utilisation ratio.",
+        "url": "https://aceengineer.com/calculators/on-bottom-stability.html",
+        "applicationCategory": "Engineering Calculator",
+        "applicationSubCategory": "Subsea Pipeline Engineering",
+        "operatingSystem": "Any web browser",
+        "browserRequirements": "Requires JavaScript",
+        "softwareVersion": "1.0",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+        },
+        "featureList": [
+            "DNV-RP-F109 absolute stability check",
+            "Hydrodynamic drag and inertia forces",
+            "Lift force calculation",
+            "Submerged weight with coating and contents",
+            "Interactive velocity sweep chart",
+            "Pipeline utilisation ratio"
+        ],
+        "provider": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization"
+        },
+        "isPartOf": {
+            "@type": "CollectionPage",
+            "@id": "https://aceengineer.com/calculators/#collection",
+            "name": "A&CE Engineering Calculators",
+            "url": "https://aceengineer.com/calculators/"
+        }
+    }
+    </script>
+
+    <style>
+        .calculator-container {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .result-box {
+            background: #fff;
+            border: 2px solid #428bca;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .result-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #428bca;
+        }
+        .result-label {
+            font-size: 1.1em;
+            color: #666;
+        }
+        .result-warning {
+            border-color: #d9534f;
+        }
+        .result-warning .result-value {
+            color: #d9534f;
+        }
+        .result-success {
+            border-color: #5cb85c;
+        }
+        .result-success .result-value {
+            color: #5cb85c;
+        }
+        .standard-tag {
+            display: inline-block;
+            background: #428bca;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .page-header {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #428bca;
+        }
+        .info-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>On-Bottom Stability Calculator</h1>
+            <p class="lead">Calculate pipeline lateral stability using DNV-RP-F109 absolute stability method</p>
+            <div>
+                <span class="standard-tag">DNV-RP-F109</span>
+                <span class="standard-tag">Pipeline Stability</span>
+                <span class="standard-tag">Subsea Engineering</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="calculator-container">
+                    <h3>Input Parameters</h3>
+
+                    <div class="form-group">
+                        <label for="rho_w">Seawater Density (kg/m3)</label>
+                        <input type="number" class="form-control" id="rho_w" value="1025" step="any">
+                        <p class="help-block">Seawater density (typical: 1025 kg/m3)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="D_outer">Pipe Outer Diameter (m)</label>
+                        <input type="number" class="form-control" id="D_outer" value="0.3238" step="any">
+                        <p class="help-block">Outer diameter including any concrete coating</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="t_wall">Wall Thickness (m)</label>
+                        <input type="number" class="form-control" id="t_wall" value="0.0127" step="any">
+                        <p class="help-block">Steel pipe wall thickness</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rho_steel">Steel Density (kg/m3)</label>
+                        <input type="number" class="form-control" id="rho_steel" value="7850" step="any">
+                        <p class="help-block">Steel density (typical: 7850 kg/m3)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rho_coat">Coating Density (kg/m3)</label>
+                        <input type="number" class="form-control" id="rho_coat" value="900" step="any">
+                        <p class="help-block">Coating material density (e.g., polypropylene ~900 kg/m3)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="t_coat">Coating Thickness (m)</label>
+                        <input type="number" class="form-control" id="t_coat" value="0.003" step="any">
+                        <p class="help-block">External coating thickness</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rho_contents">Contents Density (kg/m3)</label>
+                        <input type="number" class="form-control" id="rho_contents" value="800" step="any">
+                        <p class="help-block">Density of pipe contents (e.g., oil ~800, gas ~100, water ~1000 kg/m3)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="U">Current Velocity (m/s)</label>
+                        <input type="number" class="form-control" id="U" value="0.5" step="any">
+                        <p class="help-block">Steady-state near-bed current velocity</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="a">Wave Acceleration (m/s2)</label>
+                        <input type="number" class="form-control" id="a" value="0.3" step="any">
+                        <p class="help-block">Maximum wave-induced water particle acceleration at pipe level</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="C_D">Drag Coefficient (-)</label>
+                        <input type="number" class="form-control" id="C_D" value="0.9" step="any">
+                        <p class="help-block">Hydrodynamic drag coefficient (typical: 0.7-1.2)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="C_M">Inertia Coefficient (-)</label>
+                        <input type="number" class="form-control" id="C_M" value="3.29" step="any">
+                        <p class="help-block">Hydrodynamic inertia coefficient (typical: 2.0-3.29)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="C_L">Lift Coefficient (-)</label>
+                        <input type="number" class="form-control" id="C_L" value="0.9" step="any">
+                        <p class="help-block">Hydrodynamic lift coefficient (typical: 0.5-0.9)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mu">Soil Friction Coefficient (-)</label>
+                        <input type="number" class="form-control" id="mu" value="0.6" step="any">
+                        <p class="help-block">Lateral pipe-soil friction coefficient (sand ~0.6, clay ~0.2-0.4)</p>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="calculateStability()">Calculate Stability</button>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="result-box" id="mainResult">
+                    <span class="result-value" id="resultValue">--</span>
+                    <br>
+                    <span class="result-label">Utilisation Ratio</span>
+                </div>
+
+                <div id="additionalResults" style="margin-top: 20px; display: none;">
+                    <h4>Calculation Details</h4>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>Hydrodynamic Drag Force (F_H)</td>
+                            <td id="fhValue">-- N/m</td>
+                        </tr>
+                        <tr>
+                            <td>Lift Force (F_L)</td>
+                            <td id="flValue">-- N/m</td>
+                        </tr>
+                        <tr>
+                            <td>Submerged Weight (W_s)</td>
+                            <td id="wsValue">-- N/m</td>
+                        </tr>
+                        <tr>
+                            <td>Lateral Resistance</td>
+                            <td id="resistanceValue">-- N/m</td>
+                        </tr>
+                        <tr>
+                            <td>Utilisation Ratio</td>
+                            <td id="utilisationValue">--%</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td id="statusValue">--</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="stabilityChart" style="width:100%; height:400px;"></div>
+
+                <div class="alert alert-info" style="margin-top: 20px;">
+                    <strong>Standard Reference:</strong> DNV-RP-F109 Rev. 2021, Section 3 (Hydrodynamic Forces) and Section 4 (Absolute Stability). This calculator implements the simplified absolute stability method (Eq 4.1).
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>Disclaimer:</strong> This calculator is for educational and illustrative purposes only. Final engineering calculations should be performed by qualified engineers using validated software and verified against applicable codes and standards.
+        </div>
+
+        <div class="info-section">
+            <h2>About This Calculator</h2>
+            <p>
+                On-bottom stability (OBS) assessment is a critical step in the design of subsea pipelines.
+                When a pipeline rests on the seabed, it is subjected to hydrodynamic forces from waves and
+                currents that can cause it to move laterally. The pipeline must be heavy enough, or
+                sufficiently restrained by soil friction, to resist these forces and remain stable on the
+                seabed throughout its design life.
+            </p>
+            <p>
+                This calculator implements the <strong>absolute stability method</strong> from
+                <strong>DNV-RP-F109</strong> (On-Bottom Stability Design of Submarine Pipelines), which is
+                the most widely used industry standard for pipeline stability assessment. The absolute stability
+                method ensures that the pipeline remains stationary under the design environmental conditions
+                by checking that the soil resistance exceeds the applied hydrodynamic forces at all times.
+            </p>
+            <h3>Hydrodynamic Forces</h3>
+            <p>
+                A subsea pipeline on the seabed experiences three main hydrodynamic force components:
+            </p>
+            <ul>
+                <li><strong>Drag force (F_D):</strong> Acts in the direction of flow, proportional to the
+                    square of the flow velocity. Calculated using the Morison equation with a drag coefficient
+                    C_D that depends on pipe roughness, Reynolds number, and proximity to the seabed.</li>
+                <li><strong>Inertia force (F_I):</strong> Proportional to the water particle acceleration.
+                    Significant in wave-dominated conditions where acceleration is high. Uses the inertia
+                    coefficient C_M, which accounts for the added mass effect of the pipe displacing water.</li>
+                <li><strong>Lift force (F_L):</strong> Acts vertically upward due to asymmetric flow around
+                    the pipe near the seabed. Reduces the effective weight of the pipe and therefore its
+                    resistance to lateral movement. The lift coefficient C_L is particularly important for
+                    pipelines with low submerged weight.</li>
+            </ul>
+            <h3>Utilisation Ratio</h3>
+            <p>
+                The utilisation ratio is the key output of an absolute stability check. It compares the
+                horizontal hydrodynamic force demand to the available lateral resistance:
+            </p>
+            <p style="text-align: center; font-size: 1.2em;">
+                <strong>Utilisation = F_H / [mu x (W_s - F_L)]</strong>
+            </p>
+            <p>
+                Where F_H is the combined horizontal force (drag + inertia), mu is the soil friction
+                coefficient, W_s is the submerged weight per unit length, and F_L is the lift force.
+                A utilisation ratio less than or equal to 1.0 indicates that the pipeline is stable.
+                Values above 1.0 indicate that the pipeline may move laterally and additional measures
+                are needed, such as concrete weight coating, trenching, rock dumping, or mattress placement.
+            </p>
+            <h3>Limitations</h3>
+            <p>
+                This calculator implements a simplified absolute stability check. For detailed design, engineers
+                should consider additional factors including:
+            </p>
+            <ul>
+                <li>Generalized stability analysis (allowing limited lateral displacement)</li>
+                <li>Dynamic time-domain simulation of pipe response</li>
+                <li>Soil liquefaction and scour effects</li>
+                <li>Multi-directional wave and current loading</li>
+                <li>Span assessment for uneven seabed conditions</li>
+                <li>Temperature and pressure induced pipeline walking</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h2>Need Professional Pipeline Stability Analysis?</h2>
+            <p>
+                For complex scenarios including soil liquefaction, span assessment, seabed intervention,
+                and multi-directional wave loading, we offer professional consulting services with validated
+                methodologies.
+            </p>
+            <p>
+                <a href="../contact.html" class="btn btn-success btn-lg">Discuss Your Project</a>
+                <a href="../case-studies/" class="btn btn-default btn-lg">View Case Studies</a>
+            </p>
+        </div>
+    </div>
+
+    <include src="partials/footer.html"></include>
+
+    <script src="../assets/js/obs-calculator-engine.js"></script>
+    <script>
+    function calculateStability() {
+        // Read input values
+        var rho_w = parseFloat(document.getElementById('rho_w').value);
+        var D_outer = parseFloat(document.getElementById('D_outer').value);
+        var t_wall = parseFloat(document.getElementById('t_wall').value);
+        var rho_steel = parseFloat(document.getElementById('rho_steel').value);
+        var rho_coat = parseFloat(document.getElementById('rho_coat').value);
+        var t_coat = parseFloat(document.getElementById('t_coat').value);
+        var rho_contents = parseFloat(document.getElementById('rho_contents').value);
+        var U = parseFloat(document.getElementById('U').value);
+        var a = parseFloat(document.getElementById('a').value);
+        var C_D = parseFloat(document.getElementById('C_D').value);
+        var C_M = parseFloat(document.getElementById('C_M').value);
+        var C_L = parseFloat(document.getElementById('C_L').value);
+        var mu = parseFloat(document.getElementById('mu').value);
+
+        // Validate inputs
+        var inputs = [
+            { val: rho_w, name: 'Seawater Density' },
+            { val: D_outer, name: 'Pipe Outer Diameter' },
+            { val: t_wall, name: 'Wall Thickness' },
+            { val: rho_steel, name: 'Steel Density' },
+            { val: rho_coat, name: 'Coating Density' },
+            { val: t_coat, name: 'Coating Thickness' },
+            { val: rho_contents, name: 'Contents Density' },
+            { val: U, name: 'Current Velocity' },
+            { val: a, name: 'Wave Acceleration' },
+            { val: C_D, name: 'Drag Coefficient' },
+            { val: C_M, name: 'Inertia Coefficient' },
+            { val: C_L, name: 'Lift Coefficient' },
+            { val: mu, name: 'Soil Friction Coefficient' }
+        ];
+
+        for (var i = 0; i < inputs.length; i++) {
+            if (isNaN(inputs[i].val)) {
+                alert('Please enter a valid ' + inputs[i].name);
+                return;
+            }
+        }
+
+        // Calculate using engine
+        var result = obsPipeline({
+            rho_w: rho_w,
+            D_outer: D_outer,
+            t_wall: t_wall,
+            rho_steel: rho_steel,
+            rho_coat: rho_coat,
+            t_coat: t_coat,
+            rho_contents: rho_contents,
+            U: U,
+            a: a,
+            C_D: C_D,
+            C_M: C_M,
+            C_L: C_L,
+            mu: mu
+        });
+
+        // Update main result
+        var resultEl = document.getElementById('mainResult');
+        var resultValueEl = document.getElementById('resultValue');
+        resultValueEl.textContent = (result.utilisation * 100).toFixed(1) + '%';
+
+        // Apply result styling
+        resultEl.classList.remove('result-success', 'result-warning');
+        if (result.is_stable) {
+            resultEl.classList.add('result-success');
+        } else {
+            resultEl.classList.add('result-warning');
+        }
+
+        // Update additional results
+        var additionalDiv = document.getElementById('additionalResults');
+        additionalDiv.style.display = 'block';
+
+        var resistance = mu * (result.W_s - result.F_L);
+        document.getElementById('fhValue').textContent = result.F_H.toFixed(2) + ' N/m';
+        document.getElementById('flValue').textContent = result.F_L.toFixed(2) + ' N/m';
+        document.getElementById('wsValue').textContent = result.W_s.toFixed(2) + ' N/m';
+        document.getElementById('resistanceValue').textContent = resistance.toFixed(2) + ' N/m';
+        document.getElementById('utilisationValue').textContent = (result.utilisation * 100).toFixed(1) + '%';
+        document.getElementById('statusValue').textContent = result.is_stable ? 'STABLE' : 'UNSTABLE';
+        document.getElementById('statusValue').style.color = result.is_stable ? '#5cb85c' : '#d9534f';
+        document.getElementById('statusValue').style.fontWeight = 'bold';
+
+        // Generate velocity sweep chart
+        var velocities = [];
+        var utilisations = [];
+        for (var v = 0.1; v <= 2.0; v += (2.0 - 0.1) / 19) {
+            velocities.push(parseFloat(v.toFixed(3)));
+            var sweepResult = obsPipeline({
+                rho_w: rho_w, D_outer: D_outer, t_wall: t_wall,
+                rho_steel: rho_steel, rho_coat: rho_coat, t_coat: t_coat,
+                rho_contents: rho_contents, U: v, a: a,
+                C_D: C_D, C_M: C_M, C_L: C_L, mu: mu
+            });
+            utilisations.push(sweepResult.utilisation);
+        }
+
+        var traceUtilisation = {
+            x: velocities,
+            y: utilisations,
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Utilisation Ratio',
+            line: { color: '#428bca', width: 2 },
+            marker: { size: 5 }
+        };
+
+        var traceLimitLine = {
+            x: [0.1, 2.0],
+            y: [1.0, 1.0],
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Stability Limit (1.0)',
+            line: { color: '#d9534f', width: 2, dash: 'dash' }
+        };
+
+        var layout = {
+            title: 'Stability vs Current Velocity',
+            xaxis: { title: 'Current Velocity (m/s)' },
+            yaxis: { title: 'Utilisation Ratio' },
+            showlegend: true,
+            legend: { x: 0.02, y: 0.98 },
+            shapes: [{
+                type: 'rect',
+                xref: 'paper',
+                yref: 'y',
+                x0: 0,
+                x1: 1,
+                y0: 0,
+                y1: 1.0,
+                fillcolor: 'rgba(92, 184, 92, 0.1)',
+                line: { width: 0 }
+            }, {
+                type: 'rect',
+                xref: 'paper',
+                yref: 'y',
+                x0: 0,
+                x1: 1,
+                y0: 1.0,
+                y1: Math.max(3.0, Math.max.apply(null, utilisations) * 1.1),
+                fillcolor: 'rgba(217, 83, 79, 0.1)',
+                line: { width: 0 }
+            }]
+        };
+
+        Plotly.newPlot('stabilityChart', [traceUtilisation, traceLimitLine], layout, {responsive: true, displayModeBar: false});
+
+        // Fire GA4 event
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'calculator_use', {
+                'event_category': 'engagement',
+                'event_label': 'on_bottom_stability',
+                'pipe_diameter': D_outer,
+                'current_velocity': U,
+                'result_utilisation': result.utilisation
+            });
+        }
+    }
+    </script>
+
+</body>
+</html>

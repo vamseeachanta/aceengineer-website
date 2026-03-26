@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Engineering automation that delivers 50 riser configurations overnight. OrcaFlex & AQWA automation, fatigue analysis, mooring design for offshore and energy industries.">
+    <meta name="description" content="Offshore engineering calculations you can trust. Traceable to 17 international standards. Free interactive calculators, automation services, and consulting for subsea, fatigue, and structural analysis.">
     <meta name="keywords" content="offshore engineering automation, OrcaFlex automation, AQWA automation, fatigue analysis, mooring design, riser analysis, subsea engineering, offshore wind engineering">
 
     <!-- Open Graph meta tags -->
-    <meta property="og:title" content="A&CE - Engineering Automation for Offshore & Energy">
-    <meta property="og:description" content="Run 50 riser configurations overnight. Wake up to validated results. Engineering automation for OrcaFlex, AQWA, and fatigue analysis.">
+    <meta property="og:title" content="A&CE - Engineering Calculations Traceable to International Standards">
+    <meta property="og:description" content="Free offshore engineering calculators and automation services. Every calculation traces to its standard. DNV, API, ASME, BS compliance.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aceengineer.com">
     <meta property="og:site_name" content="Analytical & Computational Engineering">
 
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="A&CE - Engineering Automation for Offshore & Energy">
-    <meta name="twitter:description" content="Run 50 riser configurations overnight. Wake up to validated results.">
+    <meta name="twitter:title" content="A&CE - Engineering Calculations Traceable to International Standards">
+    <meta name="twitter:description" content="Free offshore engineering calculators and automation services. Every calculation traces to its standard.">
 
-    <title>Engineering Automation for Offshore & Energy | A&CE</title>
+    <title>Offshore Engineering Calculations & Automation | A&CE</title>
 
     <include src="partials/head-common.html"></include>
 
@@ -105,6 +105,28 @@
         }
     }
     </script>
+
+    <style>
+        .calculator-showcase-section {
+            padding: 64px 0;
+            background: #f8f9fa;
+        }
+        .showcase-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 24px;
+            transition: box-shadow 0.3s ease;
+        }
+        .showcase-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .showcase-card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+    </style>
 </head>
 <body>
 
@@ -115,13 +137,51 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
-                    <h1 class="hero-title">Run 50 Riser Configurations Overnight.<br>Wake Up to Validated Results.</h1>
-                    <p class="hero-subtitle">Engineering automation that transforms weeks of manual OrcaFlex and AQWA work into hours. Stop paying for tedious model setup&mdash;start paying for insights.</p>
-                    <p class="hero-identity">Analytical &amp; Computational Engineering &mdash; 15+ years of offshore engineering distilled into 704 production-tested Python modules</p>
+                    <h1 class="hero-title">Engineering Calculations You Can Trust.<br>Traceable to International Standards.</h1>
+                    <p class="hero-subtitle">Tethering timeless engineering to a single source of truth. Every calculation traces to its standard, every standard to its implementation. Powered by open-source digitalmodel.</p>
+                    <p class="hero-identity">Analytical &amp; Computational Engineering &mdash; 15+ years of offshore engineering, 17 international standards, 704+ production-tested Python modules</p>
                     <div class="hero-cta">
                         <a href="contact.html" class="btn btn-primary btn-lg">Get a Free Assessment</a>
                         <a href="case-studies/" class="btn btn-default btn-lg">See Case Studies</a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Showcase Section -->
+    <section class="calculator-showcase-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">Try Our Engineering Calculators</h2>
+                    <p class="section-subtitle text-center">Free, browser-based tools built on international standards. No signup required.</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="showcase-card text-center">
+                                <h3>Pipeline Stability</h3>
+                                <p>On-bottom stability per DNV-RP-F109. Hydrodynamic loads, submerged weight, utilisation ratio.</p>
+                                <a href="calculators/on-bottom-stability.html" class="btn btn-info">Try Calculator</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="showcase-card text-center">
+                                <h3>Wall Thickness</h3>
+                                <p>Burst and collapse checks per ASME B31.4. Multi-code comparison with corrosion allowance.</p>
+                                <a href="calculators/wall-thickness.html" class="btn btn-info">Try Calculator</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="showcase-card text-center">
+                                <h3>Fatigue Life</h3>
+                                <p>S-N curve fatigue analysis per DNV-RP-C203, API RP 2A, BS 7608 with interactive plotting.</p>
+                                <a href="calculators/fatigue-sn-curve.html" class="btn btn-info">Try Calculator</a>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-center" style="margin-top: 24px;">
+                        <a href="calculators/" class="btn btn-default">View All Calculators</a>
+                    </p>
                 </div>
             </div>
         </div>

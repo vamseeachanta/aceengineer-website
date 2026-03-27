@@ -276,6 +276,20 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="project-type">Project Type (optional)</label>
+                                <select id="project-type" name="project_type" class="form-control">
+                                    <option value="">Select analysis type...</option>
+                                    <option value="Pipeline Stability (OBS)">Pipeline Stability (OBS)</option>
+                                    <option value="Wall Thickness Design">Wall Thickness Design</option>
+                                    <option value="Fatigue Assessment">Fatigue Assessment</option>
+                                    <option value="Riser/Mooring Analysis">Riser/Mooring Analysis</option>
+                                    <option value="Full Engineering Study">Full Engineering Study</option>
+                                    <option value="Data/Analytics">Data/Analytics</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="message">Project Details *</label>
                                 <textarea id="message" name="message" class="form-control" rows="5"
                                     placeholder="Describe your project or challenge. Include any specific requirements, timeline, or software tools involved." required></textarea>
@@ -403,6 +417,20 @@
                 });
             }
 
+            // Handle project-type parameter
+            var projectType = urlParams.get('project_type');
+            if (projectType) {
+                var projectTypeSelect = document.getElementById('project-type');
+                if (projectTypeSelect) {
+                    for (var i = 0; i < projectTypeSelect.options.length; i++) {
+                        if (projectTypeSelect.options[i].value === projectType) {
+                            projectTypeSelect.value = projectType;
+                            break;
+                        }
+                    }
+                }
+            }
+
             // Handle vertical parameter
             const vertical = urlParams.get('vertical');
             if (vertical) {
@@ -422,12 +450,25 @@
             }
         });
 
+        // Track project type selection
+        document.getElementById('project-type').addEventListener('change', function() {
+            if (this.value && typeof gtag !== 'undefined') {
+                gtag('event', 'contact_project_type', {
+                    'event_category': 'contact',
+                    'project_type': this.value
+                });
+            }
+        });
+
         // Form submission tracking
         document.getElementById('contact-form').addEventListener('submit', function() {
-            gtag('event', 'contact_form_submission', {
-                'event_category': 'contact',
-                'event_label': document.getElementById('subject').value
-            });
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'contact_form_submission', {
+                    'event_category': 'contact',
+                    'event_label': document.getElementById('subject').value,
+                    'project_type': document.getElementById('project-type').value || 'not_selected'
+                });
+            }
         });
     </script>
 

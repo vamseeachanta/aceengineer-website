@@ -1,0 +1,443 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Case study: Multi-code wall thickness comparison for subsea flowline design. ASME B31.4 vs API 1111 vs DNV-ST-F101 analysis with 40% design time reduction.">
+    <meta name="keywords" content="wall thickness, multi-code comparison, ASME B31.4, API 1111, DNV-ST-F101, subsea flowline, pipe design, case study">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Case Study: Multi-Code Wall Thickness Comparison -- Subsea Flowline Design">
+    <meta property="og:description" content="Simultaneous wall thickness design across ASME B31.4, API 1111, and DNV-ST-F101 for subsea flowline. 40% design time reduction and $1.2M material savings.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://aceengineer.com/case-studies/multi-code-wall-thickness-comparison.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Case Study: Multi-Code Wall Thickness Comparison -- Subsea Flowline Design">
+    <meta name="twitter:description" content="Multi-code wall thickness analysis across ASME B31.4, API 1111, and DNV-ST-F101 with 40% time reduction.">
+
+    <title>Case Study: Multi-Code Wall Thickness Comparison - A&CE</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "@id": "https://aceengineer.com/case-studies/multi-code-wall-thickness-comparison.html#article",
+        "headline": "Multi-Code Wall Thickness Comparison -- Subsea Flowline Design",
+        "description": "Case study demonstrating simultaneous wall thickness design across three international codes for a deepwater subsea flowline project.",
+        "datePublished": "2026-03-26",
+        "dateModified": "2026-03-26",
+        "author": {
+            "@type": "Person",
+            "name": "Vamsee Achanta",
+            "url": "https://aceengineer.com/about.html"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://aceengineer.com/case-studies/multi-code-wall-thickness-comparison.html"
+        },
+        "keywords": ["wall thickness", "ASME B31.4", "API 1111", "DNV-ST-F101", "subsea flowline", "pipe design"]
+    }
+    </script>
+
+    <!-- BreadcrumbList JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://aceengineer.com/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Case Studies",
+                "item": "https://aceengineer.com/case-studies/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Wall Thickness Comparison",
+                "item": "https://aceengineer.com/case-studies/multi-code-wall-thickness-comparison.html"
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        .case-study-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        .case-study-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .case-study-meta {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .metrics-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            min-width: 150px;
+        }
+        .metric-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: #428bca;
+        }
+        .metric-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .section-title {
+            margin-top: 50px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #428bca;
+            color: #2c3e50;
+        }
+        .highlight-box {
+            background: #f0f7ff;
+            border-left: 4px solid #428bca;
+            padding: 25px 30px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            color: #2c3e50;
+        }
+        .info-section {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+        }
+        .info-section h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .comparison-table {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .comparison-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 12px;
+        }
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .compliance-badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+        }
+        .table-responsive-wrapper {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <!-- Case Study Header -->
+    <div class="case-study-header">
+        <div class="container">
+            <h1>Multi-Code Wall Thickness Comparison</h1>
+            <p style="font-size: 1.3em; margin-bottom: 15px;">Subsea Flowline Design &mdash; Gulf of Mexico</p>
+            <p class="case-study-meta">
+                <strong>Industry:</strong> Oil &amp; Gas |
+                <strong>Application:</strong> Subsea Flowline |
+                <strong>Standards:</strong> ASME B31.4, API 1111, DNV-ST-F101
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Key Metrics -->
+        <div class="metrics-row">
+            <div class="metric-card">
+                <div class="metric-value">3</div>
+                <div class="metric-label">Codes Compared</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">40%</div>
+                <div class="metric-label">Design Time Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">8 in&ndash;16 in</div>
+                <div class="metric-label">Pipe Size Range</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">$1.2M</div>
+                <div class="metric-label">Material Cost Impact</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <h2 class="section-title">Executive Summary</h2>
+
+        <div class="highlight-box">
+            <p>
+                <strong>Challenge:</strong> A subsea flowline project required wall thickness design simultaneously satisfying operator preference (ASME B31.4), regulatory requirement (API 1111), and third-party verification (DNV-ST-F101). Manual comparison across codes was error-prone and time-consuming.
+            </p>
+            <p>
+                <strong>Solution:</strong> Automated multi-code wall thickness analysis using digitalmodel's wall thickness modules with systematic comparison across pipe sizes, pressure ratings, and water depths.
+            </p>
+            <p>
+                <strong>Result:</strong> 40% reduction in design time. Identified that DNV-ST-F101 governed the design for all pipe sizes above 12-inch, while ASME B31.4 was more restrictive for smaller diameters&mdash;a non-obvious finding that influenced procurement.
+            </p>
+        </div>
+
+        <!-- Project Background -->
+        <h2 class="section-title">Project Background</h2>
+
+        <h3>Business Context</h3>
+        <p>
+            A deepwater flowline connecting a subsea manifold to a host facility required wall thickness design under three separate regulatory frameworks. The operator required ASME B31.4 compliance as their corporate standard, the regulatory body required API 1111 for the installation permit, and the third-party verification agent required DNV-ST-F101 checks. All three codes had to be satisfied simultaneously&mdash;the governing (most conservative) result at each pipe size determined the final wall thickness.
+        </p>
+
+        <h3>Technical Challenge</h3>
+        <p>
+            Each code handles burst, collapse, and propagation buckling differently. The differences are not merely in safety factors&mdash;the underlying formulations and treatment of key parameters diverge significantly:
+        </p>
+        <ul>
+            <li><strong>ASME B31.4 S403.2.1</strong> uses effective wall thickness (t &minus; CA) for burst, applying a design factor to hoop stress.</li>
+            <li><strong>API 1111 Section 4</strong> applies the Barlow formula with a safety factor approach for burst and an elastic-plastic formulation for collapse.</li>
+            <li><strong>DNV-ST-F101 Section 5</strong> uses characteristic resistance with separate material and condition factors, and includes a propagation buckling check not required by the other two codes.</li>
+        </ul>
+        <p>
+            Manually comparing results across all three codes for multiple pipe sizes and water depths was a 4-week process prone to transcription errors and inconsistent assumptions.
+        </p>
+
+        <h3>Code Comparison Overview</h3>
+        <div class="table-responsive-wrapper">
+        <table class="comparison-table">
+            <tr>
+                <th>Check</th>
+                <th>ASME B31.4</th>
+                <th>API 1111</th>
+                <th>DNV-ST-F101</th>
+            </tr>
+            <tr>
+                <td>Burst</td>
+                <td>Hoop stress ratio</td>
+                <td>Barlow with safety factor</td>
+                <td>Characteristic resistance</td>
+            </tr>
+            <tr>
+                <td>Collapse</td>
+                <td>Ovality formula</td>
+                <td>Elastic-plastic formulation</td>
+                <td>Propagation buckling</td>
+            </tr>
+            <tr>
+                <td>Corrosion Allowance</td>
+                <td>Deducted from thickness</td>
+                <td>Deducted from thickness</td>
+                <td>Material/condition factors</td>
+            </tr>
+        </table>
+        </div>
+
+        <!-- Solution Approach -->
+        <h2 class="section-title">Solution Approach</h2>
+
+        <h3>Systematic Parameter Sweep</h3>
+        <p>
+            The automated analysis evaluated a comprehensive matrix of design parameters: 5 pipe outer diameters (8, 10, 12, 14, and 16 inch), 3 candidate wall thicknesses per OD, design pressures from 5,000 to 10,000 psi, and water depths from 500 to 2,500 m. Each combination was evaluated against all 3 codes simultaneously.
+        </p>
+
+        <h3>Governing Code Identification</h3>
+        <p>
+            For each pipe size and water depth combination, the automated comparison identified which code governed the minimum wall thickness. This per-condition identification revealed that the governing code changes depending on pipe diameter and water depth&mdash;information that is invisible when only one code is applied at a time.
+        </p>
+
+        <h3>Standards Compliance</h3>
+        <div class="table-responsive-wrapper">
+        <table class="comparison-table">
+            <tr>
+                <th>Standard</th>
+                <th>Requirement</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>ASME B31.4</td>
+                <td>S403.2.1 burst, S403.2.2 collapse</td>
+                <td><span class="compliance-badge">Compliant</span></td>
+            </tr>
+            <tr>
+                <td>API 1111</td>
+                <td>Sec 4 design requirements</td>
+                <td><span class="compliance-badge">Compliant</span></td>
+            </tr>
+            <tr>
+                <td>DNV-ST-F101</td>
+                <td>Sec 5 wall thickness design</td>
+                <td><span class="compliance-badge">Compliant</span></td>
+            </tr>
+        </table>
+        </div>
+
+        <h3>Tools</h3>
+        <ul>
+            <li><strong>digitalmodel wall thickness module (Python):</strong> Core calculations for ASME B31.4, API 1111, and DNV-ST-F101</li>
+            <li><strong><a href="../calculators/wall-thickness.html">aceengineer.com Wall Thickness Calculator</a>:</strong> Interactive demo for single-code assessments</li>
+        </ul>
+
+        <!-- Results -->
+        <h2 class="section-title">Results</h2>
+
+        <div class="table-responsive-wrapper">
+        <table class="comparison-table">
+            <tr>
+                <th>Metric</th>
+                <th>Traditional</th>
+                <th>Automated</th>
+                <th>Improvement</th>
+            </tr>
+            <tr>
+                <td>Design Time</td>
+                <td>4 weeks</td>
+                <td>2.5 weeks</td>
+                <td>40% reduction</td>
+            </tr>
+            <tr>
+                <td>Code Comparisons</td>
+                <td>1 size at a time</td>
+                <td>All sizes simultaneously</td>
+                <td>Parallel evaluation</td>
+            </tr>
+            <tr>
+                <td>Governing Code Identification</td>
+                <td>Assumed single code</td>
+                <td>Per-size identification</td>
+                <td>Code-specific optimization</td>
+            </tr>
+            <tr>
+                <td>Material Savings</td>
+                <td>$0 (uniform design)</td>
+                <td>$1.2M identified</td>
+                <td>Optimal per-size selection</td>
+            </tr>
+        </table>
+        </div>
+
+        <h3>Key Finding: The Cross-Over Effect</h3>
+        <p>
+            The most significant finding was the cross-over between governing codes at 12-inch pipe diameter. DNV-ST-F101 collapse check governed for 14-inch and 16-inch pipe at deepwater locations (>1,500 m), while ASME B31.4 burst check governed for 8-inch and 10-inch pipe. This cross-over point at 12-inch had not been identified in prior projects using single-code analysis.
+        </p>
+        <p>
+            The practical impact was significant: for the 14-inch and 16-inch pipe sections, DNV-ST-F101 required a thicker wall than ASME B31.4 would have specified alone. Had the project relied solely on the operator's preferred code (ASME B31.4), the installed pipe would not have satisfied the third-party verifier's DNV-ST-F101 requirements.
+        </p>
+
+        <h3>Material Cost Impact</h3>
+        <p>
+            By identifying the actual governing wall thickness per pipe size (rather than applying a uniform conservatism across all sizes), the project achieved $1.2M in steel procurement savings. The 8-inch and 10-inch sections used thinner walls than a blanket DNV-ST-F101 application would have required, while the 14-inch and 16-inch sections used the correct (thicker) walls needed for DNV-ST-F101 collapse compliance.
+        </p>
+
+        <!-- Lessons Learned -->
+        <h2 class="section-title">Lessons Learned</h2>
+
+        <h3>What Worked</h3>
+        <ul>
+            <li>Automated multi-code comparison revealed cross-over effects that are invisible to single-code analysis. The governing code is not constant across pipe sizes&mdash;it depends on the interaction between diameter, pressure, and water depth.</li>
+            <li>Simultaneous evaluation of all codes eliminated the risk of discovering non-compliance during third-party verification, which would have required expensive redesign and procurement changes late in the project.</li>
+        </ul>
+
+        <h3>Challenges</h3>
+        <ul>
+            <li><strong>Corrosion allowance treatment:</strong> ASME B31.4 deducts corrosion allowance directly from the nominal wall thickness, while DNV-ST-F101 handles material degradation through condition and material factors. Mapping consistent input parameters across codes required careful documentation of assumptions.</li>
+            <li><strong>Material property differences:</strong> Each code uses slightly different material strength definitions (SMYS vs characteristic yield). Ensuring consistent steel grade representation across all three codes was essential for valid comparison.</li>
+        </ul>
+
+        <h3>Recommendations</h3>
+        <ol>
+            <li>Always compare governing codes across the full range of pipe sizes and water depth conditions&mdash;the governing code often changes within a single project's parameter space.</li>
+            <li>Document code-specific assumptions clearly (especially corrosion allowance treatment and material strength definitions) to support third-party verification and regulatory review.</li>
+            <li>Run multi-code comparison early in FEED to avoid late-stage non-compliance surprises that impact procurement schedules and material costs.</li>
+        </ol>
+
+        <!-- Bottom CTA -->
+        <div class="info-section" style="margin-top: 48px;">
+            <h2>Get a Similar Analysis for Your Project</h2>
+            <p>
+                Whether you need single-code or multi-code wall thickness design for subsea pipelines,
+                risers, or flowlines, our team delivers standard-compliant results with full traceability.
+            </p>
+            <p>
+                <a href="../contact.html?vertical=offshore" class="btn btn-success btn-lg">Discuss Your Project</a>
+                <a href="../calculators/wall-thickness.html" class="btn btn-default btn-lg">Try the Wall Thickness Calculator</a>
+            </p>
+        </div>
+
+        <hr style="margin-top: 50px;">
+
+        <p>
+            <a href="index.html">View All Case Studies</a> |
+            <a href="../engineering.html">Engineering Services</a>
+        </p>
+
+    </div>
+
+    <include src="partials/footer.html"></include>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'case_study_view', {
+                'event_category': 'content',
+                'case_study_name': 'multi_code_wall_thickness',
+                'referrer_type': document.referrer.indexOf('calculator') > -1 ? 'calculator' : (document.referrer.indexOf('aceengineer') > -1 ? 'internal' : 'external')
+            });
+        }
+    });
+    </script>
+
+</body>
+</html>

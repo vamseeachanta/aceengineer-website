@@ -1,0 +1,450 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Case study: Pipeline on-bottom stability assessment for deepwater Gulf of Mexico export pipeline using DNV-RP-F109 methodology. 60% reduction in analysis time.">
+    <meta name="keywords" content="pipeline stability, on-bottom stability, OBS, DNV-RP-F109, deepwater pipeline, Gulf of Mexico, case study">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Case Study: Pipeline On-Bottom Stability Assessment -- Deepwater Gulf of Mexico">
+    <meta property="og:description" content="Automated on-bottom stability assessment for a 12 km deepwater export pipeline using DNV-RP-F109 methodology. 60% reduction in analysis time.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://aceengineer.com/case-studies/pipeline-on-bottom-stability-assessment.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Case Study: Pipeline On-Bottom Stability Assessment -- Deepwater Gulf of Mexico">
+    <meta name="twitter:description" content="Automated OBS assessment for deepwater export pipeline with 60% time reduction using DNV-RP-F109 methodology.">
+
+    <title>Case Study: Pipeline On-Bottom Stability Assessment - A&CE</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "@id": "https://aceengineer.com/case-studies/pipeline-on-bottom-stability-assessment.html#article",
+        "headline": "Pipeline On-Bottom Stability Assessment -- Deepwater Gulf of Mexico",
+        "description": "Case study demonstrating automated on-bottom stability assessment for a 12 km deepwater export pipeline using DNV-RP-F109 methodology.",
+        "datePublished": "2026-03-26",
+        "dateModified": "2026-03-26",
+        "author": {
+            "@type": "Person",
+            "name": "Vamsee Achanta",
+            "url": "https://aceengineer.com/about.html"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://aceengineer.com/case-studies/pipeline-on-bottom-stability-assessment.html"
+        },
+        "keywords": ["pipeline stability", "on-bottom stability", "DNV-RP-F109", "deepwater pipeline", "Gulf of Mexico"]
+    }
+    </script>
+
+    <!-- BreadcrumbList JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://aceengineer.com/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Case Studies",
+                "item": "https://aceengineer.com/case-studies/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Pipeline OBS Assessment",
+                "item": "https://aceengineer.com/case-studies/pipeline-on-bottom-stability-assessment.html"
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        .case-study-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        .case-study-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .case-study-meta {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .metrics-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+            min-width: 150px;
+        }
+        .metric-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: #428bca;
+        }
+        .metric-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .section-title {
+            margin-top: 50px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #428bca;
+            color: #2c3e50;
+        }
+        .highlight-box {
+            background: #f0f7ff;
+            border-left: 4px solid #428bca;
+            padding: 25px 30px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            color: #2c3e50;
+        }
+        .info-section {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+        }
+        .info-section h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .comparison-table {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .comparison-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 12px;
+        }
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .compliance-badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin: 5px;
+        }
+        .table-responsive-wrapper {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <!-- Case Study Header -->
+    <div class="case-study-header">
+        <div class="container">
+            <h1>Pipeline On-Bottom Stability Assessment</h1>
+            <p style="font-size: 1.3em; margin-bottom: 15px;">Deepwater Gulf of Mexico Export Pipeline</p>
+            <p class="case-study-meta">
+                <strong>Industry:</strong> Oil &amp; Gas |
+                <strong>Location:</strong> Gulf of Mexico |
+                <strong>Standard:</strong> DNV-RP-F109
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Key Metrics -->
+        <div class="metrics-row">
+            <div class="metric-card">
+                <div class="metric-value">60%</div>
+                <div class="metric-label">Time Reduction</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">12 km</div>
+                <div class="metric-label">Pipeline Length</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">48</div>
+                <div class="metric-label">Load Cases</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">DNV-RP-F109</div>
+                <div class="metric-label">Standard Applied</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <h2 class="section-title">Executive Summary</h2>
+
+        <div class="highlight-box">
+            <p>
+                <strong>Challenge:</strong> A deepwater export pipeline required on-bottom stability assessment across 12 km of varying seabed conditions with 48 environmental load cases. Traditional manual analysis was taking 3+ weeks per route variant.
+            </p>
+            <p>
+                <strong>Solution:</strong> Automated stability assessment using digitalmodel's OBS calculation module with systematic parameter sweeps across water depth, current velocity, wave height, and soil type combinations.
+            </p>
+            <p>
+                <strong>Result:</strong> Reduced assessment time from 3 weeks to under 1 week (60% reduction). Identified 3 critical spans requiring additional stabilization that manual spot-checks had missed.
+            </p>
+        </div>
+
+        <!-- Project Background -->
+        <h2 class="section-title">Project Background</h2>
+
+        <h3>Business Context</h3>
+        <p>
+            A deepwater export pipeline connecting a subsea wellhead to a host platform required on-bottom stability verification before procurement of concrete weight coating. The operator needed confidence that the selected pipe configuration and coating weight would keep the pipeline stable under all environmental conditions along the route, while avoiding unnecessary over-design that would increase material and installation costs.
+        </p>
+
+        <h3>Technical Challenge</h3>
+        <p>
+            The stability assessment required evaluation of 48 environmental load cases&mdash;combinations of 100-year, 10-year, and operating conditions for wave, current, and soil parameters. Each load case required lateral stability, vertical stability, and flotation checks per DNV-RP-F109 Section 3. The 12 km route crossed varying seabed conditions including clay, sand, and mixed soil zones with different friction characteristics.
+        </p>
+        <ul>
+            <li>48 environmental load cases (wave, current, soil combinations)</li>
+            <li>Lateral stability, vertical stability, and flotation checks per DNV-RP-F109 Section 3</li>
+            <li>12 km route with varying seabed conditions (clay, sand, mixed soil)</li>
+            <li>Multiple route variants under evaluation for cost optimization</li>
+        </ul>
+
+        <h3>Traditional Approach</h3>
+        <p>
+            Manual spreadsheet calculations per load case. Engineers typically evaluated 10&ndash;15 representative points along the route, then extrapolated results. A single route assessment took 3+ weeks, and comparing alternative routes required 6+ weeks of duplicated effort.
+        </p>
+
+        <div class="table-responsive-wrapper">
+        <table class="comparison-table">
+            <tr>
+                <th>Metric</th>
+                <th>Traditional</th>
+                <th>Automated</th>
+            </tr>
+            <tr>
+                <td>Analysis Time</td>
+                <td>3+ weeks</td>
+                <td>5 days</td>
+            </tr>
+            <tr>
+                <td>Load Cases per Route</td>
+                <td>10&ndash;15 spot checks</td>
+                <td>48 systematic</td>
+            </tr>
+            <tr>
+                <td>Route Variants</td>
+                <td>1&ndash;2</td>
+                <td>4 compared</td>
+            </tr>
+        </table>
+        </div>
+
+        <!-- Solution Approach -->
+        <h2 class="section-title">Solution Approach</h2>
+
+        <h3>Methodology</h3>
+        <p>
+            DNV-RP-F109 Generalized Stability Method (absolute stability) applied systematically using digitalmodel's <code>on_bottom_stability</code> module. The method evaluates pipeline stability by comparing hydrodynamic loads from wave and current action against the soil resistance, accounting for pipe weight, buoyancy, and seabed friction.
+        </p>
+
+        <h3>Technical Implementation</h3>
+
+        <h4>Parameter Definition</h4>
+        <p>
+            Input parameters were organized into three categories: pipe properties (outer diameter, wall thickness, concrete coating thickness and density), environmental parameters (significant wave height Hs, peak period Tp, current velocity, water depth at each KP station), and soil properties (friction coefficients per DNV-RP-F109 Table 3-2 for clay, sand, and mixed soil zones).
+        </p>
+
+        <h4>Automated Sweep</h4>
+        <p>
+            Each KP station along the 12 km route was evaluated against all 48 load cases. The automated sweep systematically combined environmental conditions with local seabed properties to produce a complete stability map of the pipeline route.
+        </p>
+
+        <h4>Result Classification</h4>
+        <p>
+            Results were classified by utilisation ratio: green (ratio &lt; 0.8, stable with margin), yellow (ratio 0.8&ndash;1.0, marginally stable), and red (ratio &gt; 1.0, unstable, remediation required). This classification enabled rapid identification of problem spans without reviewing individual calculation sheets.
+        </p>
+
+        <h3>Standards Compliance</h3>
+        <div class="table-responsive-wrapper">
+        <table class="comparison-table">
+            <tr>
+                <th>Standard</th>
+                <th>Requirement</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>DNV-RP-F109</td>
+                <td>Generalized stability Eq 3.1&ndash;3.6</td>
+                <td><span class="compliance-badge">Compliant</span></td>
+            </tr>
+            <tr>
+                <td>DNV-ST-F101</td>
+                <td>Pipeline design basis</td>
+                <td><span class="compliance-badge">Compliant</span></td>
+            </tr>
+        </table>
+        </div>
+
+        <h3>Tools</h3>
+        <ul>
+            <li><strong>digitalmodel OBS module (Python):</strong> Core stability calculations per DNV-RP-F109</li>
+            <li><strong><a href="../calculators/on-bottom-stability.html">aceengineer.com OBS Calculator</a>:</strong> Interactive demo for single-point assessments</li>
+        </ul>
+
+        <!-- Results -->
+        <h2 class="section-title">Results</h2>
+
+        <div class="table-responsive-wrapper">
+        <table class="comparison-table">
+            <tr>
+                <th>Metric</th>
+                <th>Traditional</th>
+                <th>Automated</th>
+                <th>Improvement</th>
+            </tr>
+            <tr>
+                <td>Analysis Time</td>
+                <td>3+ weeks</td>
+                <td>5 days</td>
+                <td>60% reduction</td>
+            </tr>
+            <tr>
+                <td>Load Cases Evaluated</td>
+                <td>10&ndash;15</td>
+                <td>48</td>
+                <td>3.2x more</td>
+            </tr>
+            <tr>
+                <td>Critical Spans Found</td>
+                <td>1</td>
+                <td>3</td>
+                <td>Additional issues caught</td>
+            </tr>
+            <tr>
+                <td>Route Variants Compared</td>
+                <td>1</td>
+                <td>4</td>
+                <td>Enabled optimization</td>
+            </tr>
+        </table>
+        </div>
+
+        <h3>Key Findings</h3>
+        <ul>
+            <li>Pipeline stable for operating conditions along the full 12 km route under operating and 10-year return period conditions.</li>
+            <li>Three spans at KP 3.2, KP 7.8, and KP 11.1 exceeded the utilisation ratio under 100-year conditions&mdash;concrete mattress remediation was recommended for these locations.</li>
+            <li>The optimized route (variant 3 of 4) saved 15% on weight coating cost by avoiding the deepest seabed trough where 100-year currents were most severe.</li>
+        </ul>
+
+        <h3>Qualitative Benefits</h3>
+        <ul>
+            <li><strong>Systematic coverage:</strong> Full parameter sweeps eliminated the gaps inherent in manual spot-checking, catching critical spans that would have been missed.</li>
+            <li><strong>Rapid route comparison:</strong> Four route variants evaluated in the time traditionally needed for one, enabling informed routing decisions before FEED completion.</li>
+            <li><strong>Audit trail:</strong> Full parameter traceability for every load case at every KP station, simplifying regulatory submission documentation.</li>
+        </ul>
+
+        <!-- Lessons Learned -->
+        <h2 class="section-title">Lessons Learned</h2>
+
+        <h3>What Worked</h3>
+        <ul>
+            <li>Systematic parameter sweeps caught issues that spot-checking missed&mdash;the 3 critical spans at KP 3.2, 7.8, and 11.1 were all in transition zones between soil types that manual selection would have skipped.</li>
+            <li>Automated reporting provided consistent documentation for regulatory submission, with every calculation traceable to input parameters and DNV-RP-F109 equation references.</li>
+        </ul>
+
+        <h3>Challenges</h3>
+        <ul>
+            <li><strong>Soil parameter uncertainty:</strong> Friction coefficients varied significantly between geotechnical survey points. Sensitivity analysis across the DNV-RP-F109 Table 3-2 range for each soil type was essential to bound the uncertainty.</li>
+            <li><strong>Wave-current interaction:</strong> Shallow water transition zones required careful treatment of wave-current interaction effects, particularly where the pipeline crossed the shelf break.</li>
+        </ul>
+
+        <h3>Recommendations</h3>
+        <ol>
+            <li>Always evaluate the full environmental matrix rather than representative cases&mdash;critical conditions often occur at parameter combinations that are not intuitively obvious.</li>
+            <li>Include soil friction sensitivity in stability assessments, especially in areas with limited geotechnical data or mixed soil conditions.</li>
+            <li>Document parameter sources for every load case to support regulatory traceability and third-party verification.</li>
+        </ol>
+
+        <!-- Bottom CTA -->
+        <div class="info-section" style="margin-top: 48px;">
+            <h2>Get a Similar Analysis for Your Project</h2>
+            <p>
+                Whether you need pipeline stability assessment for deepwater installation,
+                shore approach, or route optimization, our team delivers standard-compliant
+                results using validated DNV-RP-F109 methodologies.
+            </p>
+            <p>
+                <a href="../contact.html?vertical=offshore" class="btn btn-success btn-lg">Discuss Your Project</a>
+                <a href="../calculators/on-bottom-stability.html" class="btn btn-default btn-lg">Try the OBS Calculator</a>
+            </p>
+        </div>
+
+        <hr style="margin-top: 50px;">
+
+        <p>
+            <a href="index.html">View All Case Studies</a> |
+            <a href="../engineering.html">Engineering Services</a>
+        </p>
+
+    </div>
+
+    <include src="partials/footer.html"></include>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'case_study_view', {
+                'event_category': 'content',
+                'case_study_name': 'pipeline_obs_assessment',
+                'referrer_type': document.referrer.indexOf('calculator') > -1 ? 'calculator' : (document.referrer.indexOf('aceengineer') > -1 ? 'internal' : 'external')
+            });
+        }
+    });
+    </script>
+
+</body>
+</html>

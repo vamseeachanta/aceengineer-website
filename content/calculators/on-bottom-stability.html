@@ -349,7 +349,7 @@ rootPath: "../"
                 methodologies.
             </p>
             <p>
-                <a href="../contact.html" class="btn btn-success btn-lg">Discuss Your Project</a>
+                <a href="../contact.html?vertical=offshore" class="btn btn-success btn-lg" onclick="if(typeof gtag!=='undefined'){gtag('event','cta_click',{'event_category':'conversion','cta_text':'Discuss Your Project','cta_location':'calculator_bottom','page_type':'calculator','calculator_name':'on_bottom_stability'})}">Discuss Your Project</a>
                 <a href="../case-studies/" class="btn btn-default btn-lg">View Case Studies</a>
             </p>
         </div>
@@ -359,6 +359,7 @@ rootPath: "../"
 
     <script src="../assets/js/obs-calculator-engine.js"></script>
     <script>
+    var sessionCalculationCount = 0;
     function calculateStability() {
         // Read input values
         var rho_w = parseFloat(document.getElementById('rho_w').value);
@@ -508,13 +509,15 @@ rootPath: "../"
         Plotly.newPlot('stabilityChart', [traceUtilisation, traceLimitLine], layout, {responsive: true, displayModeBar: false});
 
         // Fire GA4 event
+        sessionCalculationCount++;
         if (typeof gtag !== 'undefined') {
             gtag('event', 'calculator_use', {
                 'event_category': 'engagement',
                 'event_label': 'on_bottom_stability',
                 'pipe_diameter': D_outer,
                 'current_velocity': U,
-                'result_utilisation': result.utilisation
+                'result_utilisation': result.utilisation,
+                'input_count': sessionCalculationCount
             });
         }
     }

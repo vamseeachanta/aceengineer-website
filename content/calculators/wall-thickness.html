@@ -342,7 +342,7 @@ rootPath: "../"
                 consulting services with validated methodologies.
             </p>
             <p>
-                <a href="../contact.html" class="btn btn-success btn-lg">Discuss Your Project</a>
+                <a href="../contact.html?vertical=offshore" class="btn btn-success btn-lg" onclick="if(typeof gtag!=='undefined'){gtag('event','cta_click',{'event_category':'conversion','cta_text':'Discuss Your Project','cta_location':'calculator_bottom','page_type':'calculator','calculator_name':'wall_thickness'})}">Discuss Your Project</a>
                 <a href="../case-studies/" class="btn btn-default btn-lg">View Case Studies</a>
             </p>
         </div>
@@ -352,6 +352,7 @@ rootPath: "../"
 
     <script src="../assets/js/wall-thickness-engine.js"></script>
     <script>
+    var sessionCalculationCount = 0;
     function calculateWallThickness() {
         // Read input values
         var D_outer = parseFloat(document.getElementById('D_outer').value);
@@ -475,6 +476,7 @@ rootPath: "../"
         Plotly.newPlot('wallThicknessChart', [traceUtilisation], layout, {responsive: true, displayModeBar: false});
 
         // Fire GA4 event
+        sessionCalculationCount++;
         if (typeof gtag !== 'undefined') {
             gtag('event', 'calculator_use', {
                 'event_category': 'engagement',
@@ -482,7 +484,8 @@ rootPath: "../"
                 'pipe_diameter': D_outer,
                 'wall_thickness': t_wall,
                 'burst_utilisation': burstResult.utilisation,
-                'collapse_utilisation': collapseResult.utilisation
+                'collapse_utilisation': collapseResult.utilisation,
+                'input_count': sessionCalculationCount
             });
         }
     }

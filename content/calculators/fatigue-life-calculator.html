@@ -359,7 +359,7 @@ rootPath: "../"
                 analysis, or advanced fatigue prediction, we offer professional consulting services.
             </p>
             <p>
-                <a href="../contact.html" class="btn btn-success btn-lg">Discuss Your Project</a>
+                <a href="../contact.html?vertical=fatigue" class="btn btn-success btn-lg" onclick="if(typeof gtag!=='undefined'){gtag('event','cta_click',{'event_category':'conversion','cta_text':'Discuss Your Project','cta_location':'calculator_bottom','page_type':'calculator','calculator_name':'fatigue_life'})}">Discuss Your Project</a>
                 <a href="../case-studies/offshore-platform-fatigue-optimization.html" class="btn btn-primary btn-lg">View Fatigue Case Study</a>
                 <a href="../blog/machine-learning-fatigue-prediction.html" class="btn btn-default btn-lg">Learn About ML for Fatigue</a>
             </p>
@@ -369,6 +369,8 @@ rootPath: "../"
     <include src="partials/footer.html"></include>
 
     <script>
+    var sessionCalculationCount = 0;
+
     // S-N curve parameters from DNV-RP-C203
     // In-air curves: two-slope with transition at N=10^7
     // Seawater curves: single slope (no transition) per DNV-RP-C203 Table 2-2
@@ -591,13 +593,17 @@ rootPath: "../"
         document.getElementById('logN').textContent = logN.toFixed(3);
 
         // Track calculator usage in GA4
-        gtag('event', 'calculator_use', {
-            'event_category': 'engagement',
-            'event_label': 'fatigue_life_calculator',
-            'sn_curve': curve,
-            'stress_range': stressRange,
-            'result_cycles': N
-        });
+        sessionCalculationCount++;
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'calculator_use', {
+                'event_category': 'engagement',
+                'event_label': 'fatigue_life_calculator',
+                'sn_curve': curve,
+                'stress_range': stressRange,
+                'result_cycles': N,
+                'input_count': sessionCalculationCount
+            });
+        }
     }
 
     // Initialize on page load

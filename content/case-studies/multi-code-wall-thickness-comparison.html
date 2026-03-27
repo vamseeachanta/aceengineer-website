@@ -439,5 +439,33 @@ rootPath: "../"
     });
     </script>
 
+    <script>
+    // Scroll depth tracking for case study engagement (Phase 4, D-15)
+    (function() {
+        var thresholds = [25, 50, 75, 100];
+        var fired = {};
+        var caseName = 'multi_code_wall_thickness';
+
+        window.addEventListener('scroll', function() {
+            var docHeight = document.body.scrollHeight - window.innerHeight;
+            if (docHeight <= 0) return;
+            var scrollPercent = Math.round((window.scrollY / docHeight) * 100);
+            for (var i = 0; i < thresholds.length; i++) {
+                var threshold = thresholds[i];
+                if (scrollPercent >= threshold && !fired[threshold]) {
+                    fired[threshold] = true;
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'case_study_scroll', {
+                            'event_category': 'content',
+                            'case_study_name': caseName,
+                            'percent_scrolled': threshold
+                        });
+                    }
+                }
+            }
+        });
+    })();
+    </script>
+
 </body>
 </html>

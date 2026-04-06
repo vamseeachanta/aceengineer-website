@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>A&CE — Subsea Jumper Installation Analysis Demo</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:900px;margin:0 auto;padding:2rem;color:#1a1a2e;background:#f8f9fa}
+h1{color:#0d47a1;border-bottom:3px solid #1565c0;padding-bottom:.5rem;margin-top:0}
+h2{color:#1565c0}table{border-collapse:collapse;width:100%;margin:1rem 0}
+th,td{border:1px solid #ddd;padding:.5rem .75rem;text-align:left;font-size:.95rem}
+th{background:#1565c0;color:#fff}tr:nth-child(even){background:#e3f2fd}
+.kpi{display:inline-block;background:#e3f2fd;border-radius:12px;padding:1.5rem;margin:.5rem;text-align:center;min-width:150px}
+.kpi strong{font-size:2rem;color:#0d47a1;display:block}
+.section{background:#fff;border-radius:8px;padding:1.5rem;margin:1rem 0;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.bar{height:24px;background:linear-gradient(90deg,#0d47a1,#42a5f5);border-radius:4px;margin:.25rem 0}
+.bar-bg{height:24px;background:#e0e0e0;border-radius:4px;margin:.25rem 0}
+.code{background:#263238;color:#a5d6a7;padding:1rem;border-radius:8px;font-family:monospace;font-size:.85rem;overflow-x:auto}
+.badge{background:#c8e6c9;color:#2e7d32;padding:.2rem .5rem;border-radius:4px;font-size:.8rem}
+.badge-warn{background:#fff3e0;color:#e65100;padding:.2rem .5rem;border-radius:4px;font-size:.8rem}
+</style></head><body>
+<h1>Subsea Jumper Installation Analysis</h1>
+<p style="font-size:1.1rem">Automated deepwater jumper lift engineering — from Excel workbook calculations to auditable Python code with 81 validated tests.</p>
+
+<div style="display:flex;flex-wrap:wrap;justify-space-between">
+<div class="kpi"><strong>1007</strong>module lines</div>
+<div class="kpi"><strong>81/81</strong>tests passing</div>
+<div class="kpi"><strong>27</strong>OrcaFlex sections</div>
+<div class="kpi"><strong>46.0</strong>tonne lift weight</div>
+</div>
+
+<div class="section"><h2>Ballymore Manifold-to-PLET Jumper</h2><table>
+<tr><th>Parameter</th><th>Value</th><th>Source</th></tr>
+<tr><td>Pipe OD</td><td>10.75 in (273.05 mm)</td><td>Bare pipe!C4</td></tr>
+<tr><td>Wall Thickness</td><td>1.79 in (45.47 mm)</td><td>Bare pipe!C6</td></tr>
+<tr><td>Bend Radius</td><td>50 in (1.27 m)</td><td>Bare pipe!C7</td></tr>
+<tr><td>Total Pipe Length</td><td>71.64 m</td><td>GA!D32</td></tr>
+<tr><td>Steel Linear Weight</td><td>255.18 kg/m</td><td>Bare pipe!H4</td></tr>
+<tr><td>Insulated Linear Weight</td><td>337.01 kg/m</td><td>Bare pipe (derived)</td></tr>
+<tr><td>Buoyancy Modules</td><td>22 x 583.77 kg</td><td>Bouyancy!C8</td></tr>
+<tr><td>Strake Modules</td><td>2 x 17.24 kg</td><td>Strake!C8</td></tr>
+<tr><td>Grand Total (insulated)</td><td>46,032 kg (46.0 Te)</td><td>Weight Check!C27</td></tr>
+<tr><td>Pipe Segments</td><td>7 (A-G) with 6 bends</td><td>GA!C5:C11</td></tr>
+</table></div>
+
+<div class="section"><h2>Crane Utilisation Check</h2><table>
+<tr><th>Crane</th><th>Radius</th><th>SWL</th><th>Dynamic Cap</th><th>Status</th></tr>
+<tr><td>SZ (Saipem 7000)</td><td>18 m</td><td>77.5 Te</td><td>100.75 Te</td><td>Go <span class="badge">PASS</span></td></tr>
+<tr><td>DZ Configuration</td><td>12 m</td><td>100.0 Te</td><td>130.0 Te</td><td>Go <span class="badge">PASS</span></td></tr>
+</table></div>
+
+<div class="section"><h2>OrcaFlex Line Sections (27 segments)</h2><table>
+<tr><th>Section</th><th>Line Type</th><th>Length (m)</th></tr>
+<tr><td>Connector-start</td><td>OCS 200-V</td><td>1.30</td></tr>
+<tr><td>A-straight</td><td>10.75"Jumper_wCoat</td><td>7.26</td></tr>
+<tr><td>B-straight</td><td>10.75"Jumper_wCoat</td><td>1.52</td></tr>
+<tr><td>C-bare-start</td><td>10.75"Jumper_wCoat</td><td>1.04</td></tr>
+<tr><td>C-strake-1</td><td>10.75"Jumper_wCoat_wStrake</td><td>2.16</td></tr>
+<tr><td>C-buoy</td><td>10.75"Jumper_wCoat_wBuoy</td><td>2.03</td></tr>
+<tr><td>...20 more sections...</td><td></td><td></td></tr>
+</table></div>
+
+<div class="section"><h2>Code Pipeline</h2><div class="code">spec.yml (declarative input)
+  |
+  v
+jumper_lift.run_jumper_analysis(JumperConfig)
+  |-- compute_pipe_properties()        # Steel, insulation, linear weights
+  |-- compute_buoyancy_module()         # Buoyancy hydrostatics
+  |-- compute_strake_module()           # VIV suppression properties  
+  |-- compute_pipe_geometry()           # GA: A-G segments + bends
+  |-- compute_rigging()                 # Sling stiffness + spreader bar
+  |-- compute_crane_check()            # SZ + DZ crane utilisation
+  |-- compute_weight_tally()           # Grand total weight + COG
+  |-- compute_orcaflex_sections()      # 27 line-type segments
+  |
+  v
+generate_orcaflex_line_sections_yaml() → model.yml
+  |
+  v
+OrcaFlex analysis → post-processing → report</div></div>
+
+<div class="section"><h2>GTM Value</h2><table>
+<tr><th>Metric</th><th>Before</th><th>After</th></tr>
+<tr><td>Calculation audit</td><td>Hours of manual review</td><td>81 automated tests <span class="badge">INSTANT</span></td></tr>
+<tr><td>Variant analysis</td><td>Copy spreadsheet, risk errors</td><td>New JumperConfig params <span class="badge">MINUTES</span></td></tr>
+<tr><td>OrcaFlex model gen</td><td>Manual line section entry</td><td>27-section YAML auto <span class="badge">SECONDS</span></td></tr>
+<tr><td>Version control</td><td>Which Excel is latest?</td><td>Git-tracked, reviewed <span class="badge">AUDITABLE</span></td></tr>
+</table></div>
+
+<p style="color:#666;font-size:.9rem;margin-top:2rem">Source: Ballymore MC-651, GOM. Validated against Jumper_Input_Ballymore_Manifold-PLET V2.xlsx — all 81 tests pass.</p>
+</body></html>

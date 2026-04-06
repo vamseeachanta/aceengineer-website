@@ -23,6 +23,22 @@ Analytical & Computational Engineering (A&CE) has developed a comprehensive engi
 
 **Software Integrations:** OrcaFlex automation, WAMIT/AQWA processing, BEMRosetta
 
+### 1b. Subsea Jumper Installation Analysis (digitalmodel, NEW 2026-04)
+
+**Primary Capabilities:**
+- **Jumper Lift Engineering**: Automated pipe geometry, bend arc, and weight analysis from Excel workbooks
+- **OrcaFlex Model Generation**: 27-section line-type breakdown (bare/strake/buoyancy/connector) with spec.yml pipeline
+- **Weight Tally & COG**: Automated KIT weight calculations with insulated/uninsulated variants, center-of-gravity for each
+- **Multi-Crane Verification**: Simultaneous SZ + DZ crane utilisation checks with dynamic design factors
+- **Buoyancy & Strake Design**: Buoyancy module and VIV suppression strake characterization with hydrostatic OD
+
+**Engineering Standards:** DNV-RP-H103, DNV-ST-N001
+**Software Integrations:** OrcaFlex modular model generator, Excel workbook conversions (81-test validated)
+**Proven Accuracy:** 81/81 pytest tests matching Ballymore workbook to 6+ decimal places
+**GTM Value:** Reusable 60-80% time savings for jumper design — convert Excel to auditable Python
+
+
+
 ### 2. Hydrodynamic Diffraction Analysis Suite (digitalmodel)
 
 **Primary Capabilities:**

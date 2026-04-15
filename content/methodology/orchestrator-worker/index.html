@@ -1,0 +1,143 @@
+---
+rootPath: "../../"
+---
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Why separating planning from execution improves complex engineering delivery."><title>Orchestrator-Worker Delivery Model - A&CE</title><include src="partials/head-common.html"></include><style>
+.method-hero{background:linear-gradient(135deg,#16385f 0%,#24538d 100%);color:#fff;padding:70px 0 45px;margin-top:-20px}
+.method-hero h1{font-size:2.5em;font-weight:700;line-height:1.2;margin-bottom:12px}.method-hero .lead{font-size:1.2em;opacity:.92;max-width:860px;margin:0 auto 18px;line-height:1.6}.method-hero .meta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;font-size:.95em;opacity:.88}.method-layout{padding:55px 0;background:#f8f9fa}.method-shell{background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:40px}.method-shell h2,.method-shell h3,.method-shell h4{color:#1a365d;margin-top:28px}.method-shell p,.method-shell li{color:#4a5568;line-height:1.75;font-size:1.02em}.method-shell blockquote{border-left:4px solid #1a365d;padding:12px 18px;background:#edf4ff;margin:18px 0}.method-shell hr{border:none;border-top:1px solid #dfe7ef;margin:28px 0}.method-code{background:#263238;color:#d3f9d8;padding:16px;border-radius:8px;overflow:auto;font-size:.9em;line-height:1.5}.methodology-table{width:100%;border-collapse:collapse;margin:18px 0}.methodology-table th,.methodology-table td{border:1px solid #d7dee8;padding:10px 12px;vertical-align:top}.methodology-table th{background:#1a365d;color:#fff}.methodology-table tr:nth-child(even) td{background:#f8fbff}.method-toc{background:#eef5ff;border:1px solid #d9e6fb;border-radius:8px;padding:18px;margin-bottom:26px}.method-toc h3{margin-top:0}.method-toc ul{margin-bottom:0}.method-cta{margin-top:30px;background:linear-gradient(135deg,#2d3436 0%,#4a5568 100%);color:#fff;border-radius:10px;padding:28px}.method-cta h2{color:#fff;margin-top:0}.method-cta p{color:#f1f5f9}@media (max-width: 767px){.method-hero{padding:50px 0 35px}.method-hero h1{font-size:1.9em}.method-shell{padding:24px}}</style></head><body><include src="partials/nav.html"></include><section class="method-hero"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1 text-center"><h1>Orchestrator-Worker Delivery Model</h1><p class="lead">Why separating planning from execution improves complex engineering delivery.</p><div class="meta"><span>ACE Engineering Methodology</span><span>Offshore • Structural • Pipeline Delivery</span><span>Client-facing publication</span></div></div></div></div></section><section class="method-layout"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1"><article class="method-shell"><div class="method-toc"><h3>On this page</h3><ul><li><a href="#the-problem-context-overload">The Problem: Context Overload</a></li><li><a href="#why-self-review-fails">Why Self-Review Fails</a></li><li><a href="#the-solution-orchestrator-workers">The Solution: Orchestrator + Workers</a></li><li><a href="#why-this-works">Why This Works</a></li><li><a href="#how-we-apply-this-in-practice">How We Apply This in Practice</a></li><li><a href="#multi-discipline-project-delivery">Multi-Discipline Project Delivery</a></li><li><a href="#provider-and-tool-allocation">Provider and Tool Allocation</a></li><li><a href="#contention-avoidance">Contention Avoidance</a></li><li><a href="#pattern-variants">Pattern Variants</a></li><li><a href="#variant-1-delegated-subtasks">Variant 1: Delegated Subtasks</a></li><li><a href="#variant-2-isolated-workspaces">Variant 2: Isolated Workspaces</a></li><li><a href="#variant-3-staged-cascade">Variant 3: Staged Cascade</a></li></ul></div><h1 id="orchestrator-worker-separating-planning-from-execution">Orchestrator-Worker: Separating Planning from Execution</h1>
+<blockquote><p>Why context isolation is a prerequisite for reliable complex engineering.</p><p>Based on 12+ months of production multi-discipline project delivery.</p></blockquote>
+<hr>
+<h2 id="the-problem-context-overload">The Problem: Context Overload</h2>
+<p>Complex engineering projects degrade predictably when a single team member or workflow tries to plan, implement, review, and deliver in one continuous session. As work progresses, the accumulated detail overwhelms the original plan:</p>
+<pre class="method-code"><code>Single-Session Workflow (4+ hours)
+  Hour 1: Plans the analysis (reads specifications, creates approach)
+      --&gt; Plan is clear, context is fresh
+  Hour 2: Begins implementation (modeling, debugging, reading references)
+      --&gt; Plan details start to fade under operational detail
+  Hour 3: Continues work (error resolution, refinement, iteration)
+      --&gt; Working from current state, not from original specification
+  Hour 4: Reviews own work (checks what was built, not what was planned)
+      --&gt; Cannot recall original requirements clearly
+  Result: Drift between specification and deliverable, self-review is ineffective</code></pre>
+<p>This pattern is not about individual capability. It is a property of bounded attention applied over extended periods. The more complex the project, the faster context overload sets in.</p>
+<h3 id="why-self-review-fails">Why Self-Review Fails</h3>
+<p>An engineer reviewing their own analysis is like a developer reviewing their own code. They built it, so it looks correct. The reasoning that justified each decision is still fresh. Blind spots are invisible precisely because they are the analyst&#x27;s blind spots.</p>
+<p>Independent review catches what self-review cannot &mdash; not because the reviewer is smarter, but because they approach the work without the accumulated assumptions of the person who created it.</p>
+<hr>
+<h2 id="the-solution-orchestrator-workers">The Solution: Orchestrator + Workers</h2>
+<p><strong>Orchestrator</strong>: Maintains the master plan, delegates focused tasks, verifies results against specification.</p>
+<p><strong>Workers</strong>: Execute focused tasks with fresh context, return results without accumulated baggage.</p>
+<pre class="method-code"><code>Orchestrator
+  ├── Reads requirements, creates detailed plan
+  ├── Designs focused task briefs (each self-contained)
+  ├── Assigns Worker 1: Mooring analysis with relevant specs only
+  ├── Assigns Worker 2: Riser assessment with relevant specs only
+  ├── Collects results from both workers
+  ├── Verifies each result against the original specification
+  └── Delivers or sends back with specific feedback
+
+Worker 1 (fresh context)
+  ├── Receives: Analysis scope + relevant specifications
+  ├── Executes only what the brief specifies
+  ├── Validates results against acceptance criteria
+  └── Returns: Analysis results + summary of findings
+
+Worker 2 (fresh context)
+  ├── Receives: Assessment scope + relevant specifications
+  ├── Executes only what the brief specifies
+  ├── Validates results against acceptance criteria
+  └── Returns: Assessment results + summary of findings</code></pre>
+<h3 id="why-this-works">Why This Works</h3>
+<div class="table-responsive"><table class="table methodology-table"><thead><tr><th>Challenge</th><th>Single Session</th><th>Orchestrator-Worker</th></tr></thead><tbody>
+<tr><td>Context overload</td><td>Grows with project duration</td><td>Each worker starts fresh</td></tr>
+<tr><td>Plan drift</td><td>Specification forgotten as details accumulate</td><td>Orchestrator maintains specification throughout</td></tr>
+<tr><td>Parallel work</td><td>Sequential only</td><td>Workers proceed in parallel</td></tr>
+<tr><td>Self-review bias</td><td>Same person reviews their own work</td><td>Independent review by different team members</td></tr>
+<tr><td>Failure recovery</td><td>Must reconstruct lost context</td><td>Restart worker with the same brief</td></tr>
+<tr><td>Session duration</td><td>4+ hours with degrading quality</td><td>1-2 hours per worker with sustained quality</td></tr>
+</tbody></table></div>
+<hr>
+<h2 id="how-we-apply-this-in-practice">How We Apply This in Practice</h2>
+<h3 id="multi-discipline-project-delivery">Multi-Discipline Project Delivery</h3>
+<p>For projects involving multiple engineering disciplines &mdash; mooring analysis, riser assessment, structural evaluation &mdash; the orchestrator-worker pattern is essential.</p>
+<p>The orchestrator:</p>
+<ol>
+<li><strong>Triages the project scope</strong> into independent analysis packages</li>
+<li><strong>Designs self-contained briefs</strong> for each discipline, with full context embedded (no cross-references that require chasing)</li>
+<li><strong>Maps deliverable boundaries</strong> to ensure no two workers modify the same output</li>
+<li><strong>Launches workers in parallel</strong> across disciplines</li>
+<li><strong>Reviews results</strong> against the original project specification, not against what was convenient to produce</li>
+</ol>
+<h3 id="provider-and-tool-allocation">Provider and Tool Allocation</h3>
+<p>Different analysis tools and team members have different strengths. Our allocation pattern emerged from hundreds of project deliveries:</p>
+<div class="table-responsive"><table class="table methodology-table"><thead><tr><th>Workstream</th><th>Best Suited For</th></tr></thead><tbody>
+<tr><td>High-context synthesis</td><td>Architecture review, cross-discipline coordination, specification development</td></tr>
+<tr><td>Bounded analysis</td><td>Focused numerical analysis with defined inputs and outputs</td></tr>
+<tr><td>Documentation and audit</td><td>Staleness scanning, report generation, compliance documentation</td></tr>
+<tr><td>Pipeline development</td><td>Automation scripts, data integration, toolchain work</td></tr>
+</tbody></table></div>
+<p>This allocation is not arbitrary. It emerged from observing which approaches succeed at which tasks across extensive production experience.</p>
+<h3 id="contention-avoidance">Contention Avoidance</h3>
+<p>When multiple workstreams operate on the same project simultaneously, coordination failures are the primary risk. Our contention avoidance rules:</p>
+<ol>
+<li><strong>No two workers modify the same deliverable.</strong> No exceptions.</li>
+<li><strong>No two workers operate in the same output directory</strong> when possible.</li>
+<li><strong>Negative boundaries</strong>: Each worker brief includes explicit lists of deliverables they must NOT produce (owned by other workers).</li>
+<li><strong>Synchronization checkpoints</strong> before integration points.</li>
+<li><strong>Staggered delivery</strong> if output overlap is unavoidable.</li>
+</ol>
+<hr>
+<h2 id="pattern-variants">Pattern Variants</h2>
+<h3 id="variant-1-delegated-subtasks">Variant 1: Delegated Subtasks</h3>
+<p>For work that can be subdivided within a single session:</p>
+<pre class="method-code"><code>Lead engineer (orchestrator role)
+  ├── Subtask: &quot;Complete the metocean data analysis&quot;
+  │   Context: Project spec section 2.1 + relevant data files
+  ├── Subtask: &quot;Run the fatigue assessment for riser section 3&quot;
+  │   Context: Project spec section 2.2 + structural model
+  └── Lead verifies each subtask result against master specification</code></pre>
+<h3 id="variant-2-isolated-workspaces">Variant 2: Isolated Workspaces</h3>
+<p>For work that cannot share a single project environment:</p>
+<pre class="method-code"><code>Each worker gets an independent workspace
+  - Complete isolation from other workstreams
+  - Orchestrator reviews outputs from each workspace
+  - Integration happens at defined merge points</code></pre>
+<h3 id="variant-3-staged-cascade">Variant 3: Staged Cascade</h3>
+<p>For projects with mandatory approval gates:</p>
+<ol>
+<li><strong>Planning workers</strong> (stage 1): Each produces one analysis plan or assessment brief. No implementation.</li>
+<li><strong>Approval gate</strong>: Plans reviewed and approved before execution begins.</li>
+<li><strong>Execution workers</strong> (stage 2): Convert approved plans into deliverables.</li>
+<li><strong>Review workers</strong> (stage 3): Independent review of each deliverable.</li>
+</ol>
+<p>This cascade respects hard-stop workflow gates while maximizing parallel throughput.</p>
+<hr>
+<h2 id="common-pitfalls">Common Pitfalls</h2>
+<ol>
+<li><strong>Workers creating their own plans.</strong> This defeats the purpose. Workers should receive plans, not create them. Plan-approval enforcement prevents this.</li>
+</ol>
+<ol>
+<li><strong>Orchestrator implementing directly.</strong> Context overload returns immediately. If the orchestrator starts doing analysis work, they stop being an orchestrator.</li>
+</ol>
+<ol>
+<li><strong>No verification step.</strong> The orchestrator must verify worker output against the specification, not trust it. Workers optimize for task completion, not specification adherence.</li>
+</ol>
+<ol>
+<li><strong>Stale context in worker briefs.</strong> Workers must get the current specification version. If the spec was updated after the brief was written, the worker produces the wrong deliverable.</li>
+</ol>
+<ol>
+<li><strong>Missing handoff documentation.</strong> If a worker cannot complete their task, the next person must pick up from where work stopped. Handoffs require explicit status documentation.</li>
+</ol>
+<hr>
+<h2 id="performance-comparison">Performance Comparison</h2>
+<div class="table-responsive"><table class="table methodology-table"><thead><tr><th>Metric</th><th>Single Session</th><th>Orchestrator-Worker</th></tr></thead><tbody>
+<tr><td>Time to complete complex project</td><td>4+ hours</td><td>1-2 hours per worker</td></tr>
+<tr><td>Attention span utilization</td><td>Degrades linearly</td><td>Flat per worker</td></tr>
+<tr><td>Plan drift frequency</td><td>Common after hour 2</td><td>Rare (orchestrator maintains plan)</td></tr>
+<tr><td>Review effectiveness</td><td>Low (self-review)</td><td>High (independent review)</td></tr>
+<tr><td>Parallel throughput</td><td>1x</td><td>3-5x (limited by available workers)</td></tr>
+</tbody></table></div>
+<hr>
+<h2 id="key-takeaway">Key Takeaway</h2>
+<p>Context isolation is not a nice-to-have. It is a prerequisite for reliable complex engineering. The orchestrator-worker pattern works because it converts one hard problem &mdash; maintaining coherence over a 4+ hour project session &mdash; into multiple easier problems: focused workers executing well-defined tasks in 30-90 minutes each. Every complex project we deliver uses some variant of this pattern.</p>
+<p>The result for our clients: faster delivery, higher quality, and better adherence to original project specifications. The orchestrator always knows the plan. The workers always have fresh attention. The deliverable always gets independent review.</p>
+<p><strong>Our AI-augmented orchestrator-worker workflow delivers better results for complex engineering projects.</strong> <a href="https://aceengineer.com/contact">Contact ACE Engineering</a> to learn how this methodology applies to your offshore, structural, or pipeline engineering challenges.</p><div class="method-cta text-center"><h2>Apply this methodology to your project</h2><p>We use these delivery patterns to reduce rework, improve traceability, and keep complex engineering programs moving.</p><a class="btn btn-primary btn-lg" href="../../contact.html">Talk to ACE Engineering</a></div></article></div></div></div></section><include src="partials/footer.html"></include></body></html>

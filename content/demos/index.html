@@ -1,0 +1,462 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Overnight parametric engineering demos. See 680 freespan cases, 72 wall thickness checks, 180 installation scenarios, and more — all computed overnight with auditable Python code.">
+    <meta name="keywords" content="parametric engineering, offshore automation, freespan analysis, wall thickness, mudmat installation, pipelay analysis, jumper installation, OrcaFlex automation, digitalmodel">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Overnight Parametric Engineering Demos - A&CE">
+    <meta property="og:description" content="Send a design matrix at 6 PM. Get 300+ validated results by morning. See live demos of automated offshore engineering analysis.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aceengineer.com/demos/">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Overnight Parametric Engineering Demos - A&CE">
+    <meta name="twitter:description" content="See live demos of automated offshore engineering: freespan, wall thickness, mudmat, pipelay, and jumper installation.">
+
+    <title>Overnight Parametric Engineering Demos - A&CE</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "@id": "https://www.aceengineer.com/demos/#collection",
+        "name": "A&CE Overnight Parametric Engineering Demos",
+        "url": "https://www.aceengineer.com/demos/",
+        "description": "Live demos of automated offshore engineering analysis — freespan VIV screening, wall thickness, mudmat installation, pipelay, and jumper installation.",
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering"
+        }
+    }
+    </script>
+
+    <style>
+        /* Demo Gallery Styles */
+        .demo-hero {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 80px 0 60px;
+            margin-top: -20px;
+        }
+        .demo-hero h1 {
+            font-size: 2.6em;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .demo-hero .lead {
+            font-size: 1.25em;
+            opacity: 0.9;
+            line-height: 1.6;
+            max-width: 720px;
+            margin: 0 auto 30px;
+        }
+        .demo-hero .hero-kpis {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .hero-kpi {
+            text-align: center;
+        }
+        .hero-kpi .number {
+            font-size: 2.4em;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+        }
+        .hero-kpi .label {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        /* Demo Cards */
+        .demos-section {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+        .demo-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: box-shadow 0.3s ease;
+        }
+        .demo-card:hover {
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+        }
+        .demo-card .gif-wrap {
+            background: #1a1a2e;
+            padding: 12px;
+            text-align: center;
+        }
+        .demo-card .gif-wrap img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .demo-card .card-body {
+            padding: 24px 28px 28px;
+        }
+        .demo-card .demo-number {
+            display: inline-block;
+            background: #1a365d;
+            color: white;
+            font-size: 0.75em;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        .demo-card h3 {
+            font-size: 1.4em;
+            font-weight: 600;
+            margin: 0 0 8px;
+            color: #2c3e50;
+        }
+        .demo-card .standards {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 12px;
+        }
+        .demo-card .summary {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .demo-card .case-badge {
+            display: inline-block;
+            background: #ebf8ff;
+            color: #1a365d;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.95em;
+            margin-bottom: 16px;
+        }
+        .demo-card .card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .demo-card .card-actions .btn {
+            font-size: 0.9em;
+            padding: 8px 18px;
+        }
+
+        /* Comparison Matrix */
+        .matrix-section {
+            padding: 60px 0;
+            background: white;
+        }
+        .matrix-section .matrix-wrap {
+            background: #1a1a2e;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .matrix-section .matrix-wrap img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        /* Methodology */
+        .methodology-section {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+        .method-card {
+            background: white;
+            border-radius: 8px;
+            padding: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+            border-left: 4px solid #1a365d;
+        }
+        .method-card h4 {
+            color: #1a365d;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .method-card p {
+            color: #555;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* CTA */
+        .demo-cta-section {
+            background: linear-gradient(135deg, #2d3436 0%, #4a5568 100%);
+            color: white;
+            padding: 60px 0;
+        }
+        .demo-cta-section h2 {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .demo-cta-section p {
+            font-size: 1.15em;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+        .demo-cta-section .btn-primary {
+            background-color: #b84315;
+            border-color: #b84315;
+            padding: 14px 35px;
+            font-size: 1.1em;
+        }
+        .demo-cta-section .btn-primary:hover {
+            background-color: #a03b12;
+            border-color: #a03b12;
+        }
+
+        /* Responsive */
+        @media (max-width: 767px) {
+            .demo-hero { padding: 50px 0 40px; }
+            .demo-hero h1 { font-size: 1.8em; }
+            .demo-hero .lead { font-size: 1.05em; }
+            .hero-kpis { gap: 15px; }
+            .hero-kpi .number { font-size: 1.8em; }
+            .demo-card .card-body { padding: 20px; }
+            .demo-card .card-actions { flex-direction: column; }
+            .demo-card .card-actions .btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <!-- Hero -->
+    <section class="demo-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 text-center">
+                    <h1>Overnight Parametric Engineering</h1>
+                    <p class="lead">Send a design matrix at 6 PM. Get hundreds of validated, auditable results by morning. Every calculation traces to its international standard. Powered by <strong>digitalmodel</strong> &mdash; open-source Python for offshore engineering.</p>
+                    <div class="hero-kpis">
+                        <div class="hero-kpi">
+                            <span class="number">1,292</span>
+                            <span class="label">Cases across 5 demos</span>
+                        </div>
+                        <div class="hero-kpi">
+                            <span class="number">5</span>
+                            <span class="label">Engineering disciplines</span>
+                        </div>
+                        <div class="hero-kpi">
+                            <span class="number">6</span>
+                            <span class="label">International standards</span>
+                        </div>
+                        <div class="hero-kpi">
+                            <span class="number">&lt; 8 hrs</span>
+                            <span class="label">Overnight turnaround</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Cards -->
+    <section class="demos-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">Live Engineering Demos</h2>
+                    <p class="section-subtitle text-center">Each demo runs a real parametric analysis, generates validated results, and produces an auditable HTML report.</p>
+
+                    <!-- Demo 01: Freespan -->
+                    <div class="demo-card">
+                        <div class="row" style="margin:0">
+                            <div class="col-md-5 gif-wrap">
+                                <img src="{{ rootPath }}assets/img/demos/demo_01_freespan.gif" alt="Pipeline freespan VIV screening analysis — 680 parametric cases across 3 pipe sizes" loading="lazy" width="600" height="400">
+                            </div>
+                            <div class="col-md-7 card-body">
+                                <span class="demo-number">DEMO 01</span>
+                                <h3>Pipeline Freespan / VIV Screening</h3>
+                                <p class="standards">DNV-RP-F105 &bull; DNV-RP-F110</p>
+                                <p class="summary">Automated screening of pipeline freespans for vortex-induced vibration and static stress. Parametric sweep across 3 pipe sizes, 5 current velocities, and multiple gap ratios &mdash; including in-line and cross-flow response.</p>
+                                <span class="case-badge">680 parametric cases</span>
+                                <div class="card-actions">
+                                    <a href="{{ rootPath }}contact.html" class="btn btn-primary">Run this on your data</a>
+                                    <a href="{{ rootPath }}case-studies/" class="btn btn-default">View case studies</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Demo 02: Wall Thickness -->
+                    <div class="demo-card">
+                        <div class="row" style="margin:0">
+                            <div class="col-md-5 gif-wrap">
+                                <img src="{{ rootPath }}assets/img/demos/demo_02_wall_thickness.gif" alt="Multi-code wall thickness comparison — 72 parametric cases across 3 design codes" loading="lazy" width="600" height="400">
+                            </div>
+                            <div class="col-md-7 card-body">
+                                <span class="demo-number">DEMO 02</span>
+                                <h3>Pipeline Wall Thickness &mdash; Multi-Code Comparison</h3>
+                                <p class="standards">ASME B31.4 &bull; ASME B31.8 &bull; DNV-OS-F101</p>
+                                <p class="summary">Burst and collapse wall thickness checks across 6 pipe sizes, 3 design codes, and 4 operating pressures. Automated comparison highlights code-to-code differences and governing cases.</p>
+                                <span class="case-badge">72 parametric cases</span>
+                                <div class="card-actions">
+                                    <a href="{{ rootPath }}contact.html" class="btn btn-primary">Run this on your data</a>
+                                    <a href="{{ rootPath }}calculators/wall-thickness.html" class="btn btn-info">Try free calculator</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Demo 03: Mudmat Installation -->
+                    <div class="demo-card">
+                        <div class="row" style="margin:0">
+                            <div class="col-md-5 gif-wrap">
+                                <img src="{{ rootPath }}assets/img/demos/demo_03_mudmat_installation.gif" alt="Deepwater mudmat installation analysis — 180 parametric cases" loading="lazy" width="600" height="400">
+                            </div>
+                            <div class="col-md-7 card-body">
+                                <span class="demo-number">DEMO 03</span>
+                                <h3>Deepwater Mudmat Installation</h3>
+                                <p class="standards">DNV-RP-H103 &bull; OrcaFlex time-domain</p>
+                                <p class="summary">Time-domain installation analysis for subsea mudmat foundations. Full factorial sweep of 2 vessels, 6 water depths, 3 mudmat sizes, and 5 sea states &mdash; with crane tip motions, sling tensions, and operational weather windows.</p>
+                                <span class="case-badge">180 parametric cases</span>
+                                <div class="card-actions">
+                                    <a href="{{ rootPath }}contact.html" class="btn btn-primary">Run this on your data</a>
+                                    <a href="{{ rootPath }}case-studies/" class="btn btn-default">View case studies</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Demo 04: Shallow Pipelay -->
+                    <div class="demo-card">
+                        <div class="row" style="margin:0">
+                            <div class="col-md-5 gif-wrap">
+                                <img src="{{ rootPath }}assets/img/demos/demo_04_shallow_pipelay.gif" alt="Shallow water pipeline S-lay installation — 60 parametric cases" loading="lazy" width="600" height="400">
+                            </div>
+                            <div class="col-md-7 card-body">
+                                <span class="demo-number">DEMO 04</span>
+                                <h3>Shallow Water Pipeline Installation (S-lay)</h3>
+                                <p class="standards">DNV-OS-F101 &bull; OrcaFlex time-domain</p>
+                                <p class="summary">S-lay pipeline installation analysis with stinger geometry, vessel RAOs, and departure angle optimisation. Sweep of 2 lay vessels, 5 pipe sizes, and 6 water depths &mdash; with sagbend strain, stinger tip departure, and lay tension extraction.</p>
+                                <span class="case-badge">60 parametric cases</span>
+                                <div class="card-actions">
+                                    <a href="{{ rootPath }}contact.html" class="btn btn-primary">Run this on your data</a>
+                                    <a href="{{ rootPath }}case-studies/" class="btn btn-default">View case studies</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Demo 05: Jumper Installation -->
+                    <div class="demo-card">
+                        <div class="row" style="margin:0">
+                            <div class="col-md-5 gif-wrap">
+                                <img src="{{ rootPath }}assets/img/demos/demo_05_jumper_installation.gif" alt="Subsea jumper installation analysis — 300 parametric cases" loading="lazy" width="600" height="400">
+                            </div>
+                            <div class="col-md-7 card-body">
+                                <span class="demo-number">DEMO 05</span>
+                                <h3>Subsea Jumper Installation</h3>
+                                <p class="standards">DNV-RP-H103 &bull; OrcaFlex time-domain</p>
+                                <p class="summary">Deepwater rigid jumper lift and installation analysis. Full factorial sweep across 2 vessels, 6 water depths, 5 jumper lengths, and 5 sea states &mdash; with crane utilisation, sling tension, and operational limits for each combination.</p>
+                                <span class="case-badge">300 parametric cases</span>
+                                <div class="card-actions">
+                                    <a href="{{ rootPath }}contact.html" class="btn btn-primary">Run this on your data</a>
+                                    <a href="{{ rootPath }}demos/jumper-installation.html" class="btn btn-info">View detailed report</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Matrix -->
+    <section class="matrix-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 text-center">
+                    <h2 class="section-title">Cross-Demo Comparison</h2>
+                    <p class="section-subtitle">Side-by-side view of all 5 demo analyses &mdash; scope, parametric dimensions, case counts, and automation value at a glance.</p>
+                    <div class="matrix-wrap">
+                        <img src="{{ rootPath }}assets/img/demos/demo_comparison_matrix.gif" alt="Comparison matrix across all 5 parametric engineering demos" loading="lazy" width="900" height="500">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology -->
+    <section class="methodology-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">How It Works</h2>
+                    <p class="section-subtitle text-center">Every demo follows the same auditable, repeatable pipeline.</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="method-card">
+                                <h4>1. Declarative Input</h4>
+                                <p>You provide a YAML spec with your design matrix &mdash; pipe sizes, water depths, sea states, vessel data. No code changes required.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="method-card">
+                                <h4>2. Automated Analysis</h4>
+                                <p>digitalmodel runs the parametric sweep overnight: code-checked calculations, OrcaFlex batch runs, post-processing, and validation against international standards.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="method-card">
+                                <h4>3. Auditable Output</h4>
+                                <p>Results arrive as interactive HTML reports with plotted data, governing cases highlighted, and full traceability to the standard clause.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center" style="margin-top: 24px;">
+                        <a href="{{ rootPath }}engineering.html" class="btn btn-default">View engineering services</a>
+                        <a href="{{ rootPath }}case-studies/" class="btn btn-default" style="margin-left: 10px;">View case studies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="demo-cta-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h2>Ready to Automate Your Analysis?</h2>
+                    <p>Send us your design matrix. We'll run a pilot analysis overnight and return validated results &mdash; free for the first engagement.</p>
+                    <a href="{{ rootPath }}contact.html" class="btn btn-primary btn-lg">Get a Free Assessment</a>
+                    <p style="font-size: 0.9em; opacity: 0.7; margin-top: 15px;">Or email us directly: <a href="mailto:support@aceengineer.com" style="color: #fff; text-decoration: underline;">support@aceengineer.com</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

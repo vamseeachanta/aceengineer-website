@@ -1,0 +1,14 @@
+# capability-summary.pdf sidecar metadata
+# Written by scripts/gtm/render-capability-summary-pdf.sh
+renderer: google-chrome
+renderer_version: 147.0.7727.101
+html_source: docs/gtm/website-pages/capability-summary.html
+source_html_sha256: 21bd83a2da81dad1658cc979965fa678a9842d2521b9069998bed6594f87b2d5
+git_sha: 6b074804649fd7071cd6e43c9c6a47251be40ca4
+rendered_at_utc: 2026-04-20T20:44:20Z
+pages: 1
+sha256_internal: 84b3febd2bcd37f9db4bbec969283c9fee6ac9c2bc2d27411117ea5c19ad2b88
+output_pdf_sha256: 84b3febd2bcd37f9db4bbec969283c9fee6ac9c2bc2d27411117ea5c19ad2b88
+internal_path: docs/gtm/capability-summary.pdf
+public_path: aceengineer-website/assets/capability-summary-v1.pdf
+public_url: https://www.aceengineer.com/assets/capability-summary-v1.pdf

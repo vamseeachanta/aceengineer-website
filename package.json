@@ -37,6 +37,11 @@
         "displayName": "wall-thickness",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/wall-thickness.test.js"]
+      },
+      {
+        "displayName": "demo-links",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/demo-links.test.js"]
       }
     ],
     "collectCoverageFrom": [

@@ -229,4 +229,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- Demo Detail Pages -->
+  <url>
+    <loc>https://www.aceengineer.com/demos/jumper-installation.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

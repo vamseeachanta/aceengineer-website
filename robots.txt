@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://aceengineer.com/sitemap.xml
+Sitemap: https://www.aceengineer.com/sitemap.xml
 
 # Disallow admin/private areas (none currently, but good practice)
 # Disallow: /admin/

@@ -81,6 +81,29 @@ function copyAssets() {
   }
 }
 
+// Copy sitemap.xml from repo root into dist/ so Vercel serves it
+function copySitemap(srcFile = './sitemap.xml', destDirArg = distDir) {
+  const dest = path.join(destDirArg, 'sitemap.xml');
+  if (fs.existsSync(srcFile)) {
+    fs.copyFileSync(srcFile, dest);
+    console.log('Copied: sitemap.xml');
+  } else {
+    console.warn('sitemap.xml not found at repo root; skipping');
+  }
+}
+
+// Copy robots.txt from repo root into dist/ so Vercel serves it
+// (same root cause as sitemap.xml — source file was never reaching dist/)
+function copyRobotsTxt(srcFile = './robots.txt', destDirArg = distDir) {
+  const dest = path.join(destDirArg, 'robots.txt');
+  if (fs.existsSync(srcFile)) {
+    fs.copyFileSync(srcFile, dest);
+    console.log('Copied: robots.txt');
+  } else {
+    console.warn('robots.txt not found at repo root; skipping');
+  }
+}
+
 // Main build function
 async function build() {
   console.log('Building site...\n');
@@ -99,6 +122,8 @@ async function build() {
 
   // Copy assets
   copyAssets();
+  copySitemap();
+  copyRobotsTxt();
 
   console.log(`\nBuild complete! ${files.length} pages built.`);
 }
@@ -184,4 +209,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { parseFrontMatter, getHtmlFiles, ensureDir };
+module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt };

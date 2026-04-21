@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const { parseFrontMatter, getHtmlFiles, ensureDir } = require('../../build');
+const { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt } = require('../../build');
 
 describe('parseFrontMatter', () => {
   test('parses valid front matter with multiple fields', () => {
@@ -167,5 +167,89 @@ describe('ensureDir', () => {
     fs.mkdirSync(existingDir);
 
     expect(() => ensureDir(existingDir)).not.toThrow();
+  });
+});
+
+describe('copySitemap', () => {
+  let tmpDir;
+  let warnSpy;
+  let logSpy;
+
+  beforeEach(() => {
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'copysitemap-test-'));
+    warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+    jest.restoreAllMocks();
+  });
+
+  test('copies sitemap.xml to destDir byte-identically to source', () => {
+    const srcFile = path.join(tmpDir, 'sitemap.xml');
+    const destDir = path.join(tmpDir, 'dist');
+    fs.mkdirSync(destDir);
+    const body = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://www.aceengineer.com/</loc></url></urlset>\n';
+    fs.writeFileSync(srcFile, body);
+
+    copySitemap(srcFile, destDir);
+
+    const destFile = path.join(destDir, 'sitemap.xml');
+    expect(fs.existsSync(destFile)).toBe(true);
+    expect(fs.readFileSync(destFile, 'utf8')).toBe(body);
+    expect(logSpy).toHaveBeenCalledWith('Copied: sitemap.xml');
+  });
+
+  test('warns and skips (does not throw) when source file is missing', () => {
+    const srcFile = path.join(tmpDir, 'does-not-exist.xml');
+    const destDir = path.join(tmpDir, 'dist');
+    fs.mkdirSync(destDir);
+
+    expect(() => copySitemap(srcFile, destDir)).not.toThrow();
+    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('sitemap.xml not found'));
+    expect(fs.existsSync(path.join(destDir, 'sitemap.xml'))).toBe(false);
+  });
+});
+
+describe('copyRobotsTxt', () => {
+  let tmpDir;
+  let warnSpy;
+  let logSpy;
+
+  beforeEach(() => {
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'copyrobotstxt-test-'));
+    warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+    jest.restoreAllMocks();
+  });
+
+  test('copies robots.txt to destDir byte-identically to source', () => {
+    const srcFile = path.join(tmpDir, 'robots.txt');
+    const destDir = path.join(tmpDir, 'dist');
+    fs.mkdirSync(destDir);
+    const body = 'User-agent: *\nAllow: /\n\nSitemap: https://www.aceengineer.com/sitemap.xml\n';
+    fs.writeFileSync(srcFile, body);
+
+    copyRobotsTxt(srcFile, destDir);
+
+    const destFile = path.join(destDir, 'robots.txt');
+    expect(fs.existsSync(destFile)).toBe(true);
+    expect(fs.readFileSync(destFile, 'utf8')).toBe(body);
+    expect(logSpy).toHaveBeenCalledWith('Copied: robots.txt');
+  });
+
+  test('warns and skips (does not throw) when source file is missing', () => {
+    const srcFile = path.join(tmpDir, 'does-not-exist.txt');
+    const destDir = path.join(tmpDir, 'dist');
+    fs.mkdirSync(destDir);
+
+    expect(() => copyRobotsTxt(srcFile, destDir)).not.toThrow();
+    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('robots.txt not found'));
+    expect(fs.existsSync(path.join(destDir, 'robots.txt'))).toBe(false);
   });
 });

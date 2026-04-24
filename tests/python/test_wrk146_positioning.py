@@ -26,7 +26,7 @@ SITE_ROOT = Path(__file__).parent.parent.parent
 
 
 def read_page(relative_path: str) -> str:
-    """Read an HTML page from the site root."""
+    """Read an HTML page from the site root for legacy positioning coverage."""
     return (SITE_ROOT / relative_path).read_text(encoding="utf-8")
 
 
@@ -184,8 +184,8 @@ class TestAboutPagePositioning:
     def test_about_firm_positioning_not_freelancer(self):
         """About page should position as firm, not solo freelancer."""
         content = read_page("about.html")
-        assert "A&amp;CE" in content or "A&CE" in content or "analytical" in content.lower(), (
-            "About page must use firm name (A&CE)"
+        assert "AceEngineer" in content or "analytical" in content.lower(), (
+            "About page must use approved firm/site brand"
         )
 
     def test_about_founder_section_has_substance(self):
@@ -405,8 +405,8 @@ class TestConsistentPositioning:
     def test_footer_firm_name_consistent(self):
         for page in ["index.html", "about.html", "engineering.html"]:
             content = read_page(page)
-            assert "Analytical" in content or "A&CE" in content or "A&amp;CE" in content, (
-                f"Footer in {page} must use firm name"
+            assert "AceEngineer" in content or "Analytical" in content, (
+                f"Footer in {page} must use approved firm/site brand"
             )
 
     def test_no_page_says_freelancer(self):
@@ -414,7 +414,7 @@ class TestConsistentPositioning:
         for page in ["index.html", "about.html", "engineering.html"]:
             content = read_page(page)
             assert "freelancer" not in content.lower(), (
-                f"{page} must not describe A&CE as a 'freelancer'"
+                f"{page} must not describe AceEngineer as a 'freelancer'"
             )
 
     def test_all_pages_have_contact_cta(self):

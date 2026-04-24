@@ -21,13 +21,13 @@ This site is deployed on **Vercel** using a static HTML/CSS/JavaScript architect
 - **Domain**: aceengineer.com (via GoDaddy)
 - **SSL**: Automatic HTTPS (Vercel-managed)
 - **Deployment Branch**: `main`
-- **Build**: Static files (no build process needed)
+- **Build**: `npm run build` renders `content/**` into `dist/**` for deployment
 
 ### Making Changes
 
-1. **Edit HTML files** in the root directory
-2. **Commit and push** to `main` branch
-3. **Vercel automatically deploys** within 1-2 minutes
+1. **Edit canonical source files** under `content/**` and shared assets under `assets/**`
+2. **Run `npm run build`** to regenerate `dist/**`
+3. **Commit and push** to `main` branch; Vercel deploys `dist/**` within 1-2 minutes
 4. **Changes live** at https://aceengineer.com
 
 ### DNS Configuration
@@ -104,9 +104,9 @@ aceengineer-website/
 ### Local Development
 
 1. Clone the repository
-2. Edit HTML files in root directory
-3. Test locally by opening HTML files in browser
-4. Use `npx http-server` for local testing with proper paths
+2. Edit canonical HTML sources under `content/**`
+3. Run `npm run build`
+4. Test locally from `dist/**` with `npm run serve` or equivalent
 
 ### Deployment
 

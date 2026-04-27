@@ -230,7 +230,7 @@ The enhanced workflow integrates with the AssetUtilities hub to share components
 @assetutilities:hub-config.yaml
 
 # Internal project reference
-@.agent-os/product/mission.md
+@docs/README.md
 
 # Spec cross-reference
 @specs/modules/auth/user-login-spec/spec.md

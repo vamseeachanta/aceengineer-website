@@ -61,7 +61,6 @@ aceengineer-website/
 │   ├── img/                # Images
 │   └── svg/                # SVG graphics
 ├── docs/                   # Documentation
-├── .agent-os/              # Agent OS configuration
 ├── vercel.json             # Vercel configuration
 └── CNAME                   # Domain name (aceengineer.com)
 ```
@@ -94,10 +93,11 @@ aceengineer-website/
 
 ## Documentation
 
-- **Deployment Guide**: See `VERCEL_DEPLOY.md`
-- **Product Mission**: See `.agent-os/product/mission.md`
-- **Technical Architecture**: See `.agent-os/product/tech-stack.md`
-- **Roadmap**: See `.agent-os/product/roadmap.md`
+- **Docs Entry Point**: See `docs/README.md`
+- **Operator Map**: See `docs/maps/aceengineer-website-operator-map.md`
+- **Deployment Guide**: See `docs/DEPLOYMENT_GUIDE.md`
+- **Technical Architecture**: See `docs/WEBSITE_ARCHITECTURE.md`
+- **Strategic Planning**: See `PHASE_4_AND_6_PLAN.md` and `PHASE_6_EXECUTION_CHECKLIST.md`
 
 ## Development Workflow
 

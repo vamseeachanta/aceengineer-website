@@ -10,6 +10,10 @@ The site is a static marketing and technical showcase deployed on Vercel. It com
 - `assets/data/` generated metrics and sample datasets
 - `scripts/` for content sync, competitor analysis, and data generation
 
+Canonical routing docs:
+- `docs/README.md`
+- `docs/maps/aceengineer-website-operator-map.md`
+
 ## Deployment Model
 - branch: `main`
 - hosting: Vercel

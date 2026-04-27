@@ -246,7 +246,7 @@ To restore a previous version:
 ## Contact
 
 For questions about this deployment:
-- Check `.agent-os/product/` for product documentation
+- Use `docs/README.md` as the canonical documentation entry point
 - Review Git commit history for deployment changes
 - Check Vercel dashboard logs for technical issues
 

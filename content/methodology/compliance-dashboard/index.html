@@ -1,0 +1,73 @@
+---
+rootPath: "../../"
+---
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="How ACE Engineering measures and reports workflow compliance across every project deliverable."><title>Compliance Dashboard - AceEngineer</title><include src="partials/head-common.html"></include><style>
+.method-hero{background:linear-gradient(135deg,#16385f 0%,#24538d 100%);color:#fff;padding:70px 0 45px;margin-top:-20px}
+.method-hero h1{font-size:2.5em;font-weight:700;line-height:1.2;margin-bottom:12px}.method-hero .lead{font-size:1.2em;opacity:.92;max-width:860px;margin:0 auto 18px;line-height:1.6}.method-hero .meta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;font-size:.95em;opacity:.88}.method-layout{padding:55px 0;background:#f8f9fa}.method-shell{background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:40px}.method-shell h2,.method-shell h3,.method-shell h4{color:#1a365d;margin-top:28px}.method-shell p,.method-shell li{color:#4a5568;line-height:1.75;font-size:1.02em}.method-shell blockquote{border-left:4px solid #1a365d;padding:12px 18px;background:#edf4ff;margin:18px 0}.method-shell hr{border:none;border-top:1px solid #dfe7ef;margin:28px 0}.method-code{background:#263238;color:#d3f9d8;padding:16px;border-radius:8px;overflow:auto;font-size:.9em;line-height:1.5}.methodology-table{width:100%;border-collapse:collapse;margin:18px 0}.methodology-table th,.methodology-table td{border:1px solid #d7dee8;padding:10px 12px;vertical-align:top}.methodology-table th{background:#1a365d;color:#fff}.methodology-table tr:nth-child(even) td{background:#f8fbff}.method-toc{background:#eef5ff;border:1px solid #d9e6fb;border-radius:8px;padding:18px;margin-bottom:26px}.method-toc h3{margin-top:0}.method-toc ul{margin-bottom:0}.method-cta{margin-top:30px;background:linear-gradient(135deg,#2d3436 0%,#4a5568 100%);color:#fff;border-radius:10px;padding:28px}.method-cta h2{color:#fff;margin-top:0}.method-cta p{color:#f1f5f9}@media (max-width: 767px){.method-hero{padding:50px 0 35px}.method-hero h1{font-size:1.9em}.method-shell{padding:24px}}</style></head><body><include src="partials/nav.html"></include><section class="method-hero"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1 text-center"><h1>The Compliance Dashboard</h1><p class="lead">How we measure whether engineering work actually followed the workflow it was supposed to follow.</p><div class="meta"><span>ACE Engineering Methodology</span><span>Quality assurance &bull; Workflow auditing</span><span>Client-facing publication</span></div></div></div></div></section><section class="method-layout"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1"><article class="method-shell"><div class="method-toc"><h3>On this page</h3><ul><li><a href="#what-it-measures">What the Dashboard Measures</a></li><li><a href="#how-compliance-is-calculated">How Compliance Is Calculated</a></li><li><a href="#enforcement-levels">Enforcement Levels</a></li><li><a href="#audit-trail">The Audit Trail</a></li><li><a href="#why-this-matters">Why This Matters for Clients</a></li><li><a href="#integration">Integration With Project Delivery</a></li></ul></div><h1 id="compliance-dashboard">Compliance Dashboard: Trust, but Verify</h1>
+<blockquote><p>Engineering policies that are not measured are policies that are not followed.</p><p>The compliance dashboard converts our delivery workflow from aspiration into auditable evidence.</p></blockquote>
+<hr>
+<h2 id="what-it-measures">What the Dashboard Measures</h2>
+<p>Every engineering deliverable produced through our workflow is supposed to follow the same path: plan, independent review, implement, independent review, ship. The compliance dashboard answers a simple question: <strong>did it actually happen?</strong></p>
+<p>For any window of work &mdash; the last 24 hours, the last week, an entire project &mdash; the dashboard scans every commit, classifies which ones required review, and checks whether review evidence exists for each. The output is a single number: the percentage of reviewable work that received independent review.</p>
+<h3 id="why-the-question-matters">Why the Question Matters</h3>
+<p>Without measurement, workflow compliance drifts. Reviewers get busy, deadlines compress, and "we'll review the next one" becomes the default. We saw this directly in our own historical data: when we first instrumented the dashboard, compliance was running at 4 percent. That number was a wake-up call. It has since climbed past the 80 percent threshold and stayed there because the dashboard makes drift visible the day it happens, not the quarter after.</p>
+<hr>
+<h2 id="how-compliance-is-calculated">How Compliance Is Calculated</h2>
+<p>The calculation is deliberately transparent so that any client or auditor can reproduce it from the underlying repository:</p>
+<ol>
+<li><strong>Scan recent commits</strong> over a configurable window (default: 24 hours).</li>
+<li><strong>Classify each commit</strong> by its purpose. Documentation, formatting, sync, and merge commits are skipped &mdash; they do not require independent review. Feature work, fixes, refactors, performance changes, and security work are flagged as reviewable.</li>
+<li><strong>Check each reviewable commit for review evidence.</strong> Evidence sources include approved plan markers, recorded review files in the planning archive, formal review reports, and review keywords in commit messages.</li>
+<li><strong>Calculate the rate</strong>: reviewed commits divided by reviewable commits, expressed as a percentage.</li>
+<li><strong>Compare against the threshold</strong>: 80 percent by default, configurable per project.</li>
+</ol>
+<h3 id="example-output">Example Output</h3>
+<pre class="method-code"><code>============================================================
+Compliance Report &mdash; Last 24h
+============================================================
+
+Total commits:      42
+Skipped (docs/etc): 19
+Reviewable:         23
+
+Reviewed:           1
+Unreviewed:         22
+--------------------------------------------
+Compliance rate:    4% (threshold: 80%)
+Verdict:            FAIL</code></pre>
+<p>This is the actual output from an early audit run. The verdict line is what made the problem actionable: not a 60-page report, but a one-line score that anyone on the team could read in three seconds.</p>
+<hr>
+<h2 id="enforcement-levels">Enforcement Levels</h2>
+<p>The dashboard is one half of the compliance story; gates that block out-of-policy work are the other. We operate at two enforcement levels depending on project criticality:</p>
+<div class="table-responsive"><table class="table methodology-table"><thead><tr><th>Level</th><th>Behavior</th><th>When We Use It</th></tr></thead><tbody>
+<tr><td>Advisory</td><td>Prints warnings, allows the work through</td><td>Early-stage exploration, internal tooling</td></tr>
+<tr><td>Hard</td><td>Blocks the operation until the policy is satisfied</td><td>Client deliverables, regulated work, production projects</td></tr>
+</tbody></table></div>
+<p>For client engagements, we default to hard enforcement. The cost of letting one undetected unreviewed change slip into a deliverable is higher than the cost of a five-minute review pause.</p>
+<hr>
+<h2 id="audit-trail">The Audit Trail</h2>
+<p>Behind the dashboard's single compliance number sits a structured log trail that makes every claim verifiable:</p>
+<div class="table-responsive"><table class="table methodology-table"><thead><tr><th>Log</th><th>What It Tracks</th></tr></thead><tbody>
+<tr><td>Daily compliance metrics</td><td>One JSON file per day capturing the full report</td></tr>
+<tr><td>Plan-gate events</td><td>Every block or pass at the planning gate</td></tr>
+<tr><td>Review-gate bypass log</td><td>Any attempt to bypass review, with user and branch attribution</td></tr>
+<tr><td>Review-gate latency log</td><td>Execution timing so the gate stays fast</td></tr>
+<tr><td>Pattern log</td><td>Repeated drift signals worth investigating</td></tr>
+</tbody></table></div>
+<p>Each log is append-only and timestamped. If a regulator, partner, or client asks "did your team follow your stated review process on project X between dates A and B?", the answer is reconstructable from the logs alone &mdash; we are not relying on memory or after-the-fact reconstruction.</p>
+<hr>
+<h2 id="why-this-matters">Why This Matters for Clients</h2>
+<p>Three concrete benefits flow from running this dashboard on every project:</p>
+<ol>
+<li><strong>Defensible deliverables.</strong> When we hand over an analysis, we can show that every reviewable change passed through independent review. The audit trail is part of the deliverable, not separate from it.</li>
+<li><strong>Early drift detection.</strong> Compliance dropping from 90 percent to 70 percent over a week is a leading indicator that something has changed in how the team is working. We see it immediately rather than discovering it during a delivery review.</li>
+<li><strong>Accountability without ceremony.</strong> The dashboard does not require status meetings or compliance officers to function. The numbers update automatically, the gates fire automatically, and the logs accumulate automatically. The team's energy stays on engineering work.</li>
+</ol>
+<hr>
+<h2 id="integration">Integration With Project Delivery</h2>
+<p>For client engagements, the compliance dashboard runs nightly via scheduled jobs. When the rate drops below the threshold, the system automatically opens an internal ticket capturing the affected commits, the missing evidence, and the responsible reviewers. By the time the next workday starts, the gap is already on someone's queue.</p>
+<p>For high-criticality work &mdash; safety-relevant analyses, structural assessments backing regulatory submissions, or anything labeled engineering-critical &mdash; we track a separate, stricter compliance rate. This rate has its own threshold and its own escalation path. The principle: not every change carries equal weight, and the measurement should reflect that.</p>
+<hr>
+<h2 id="key-takeaway">Key Takeaway</h2>
+<p>The compliance dashboard is what turns a stated workflow into a verifiable workflow. We do not ask clients to take our word for whether our engineering process was followed. The number is published, the logs are auditable, and the gates fire on every commit regardless of who is at the keyboard. That is the difference between a quality system and a quality slogan.</p>
+<p><strong>Want auditable engineering with measurable workflow compliance built in?</strong> <a href="https://aceengineer.com/contact">Contact ACE Engineering</a> to learn how this dashboard pattern integrates with your project governance.</p><div class="method-cta text-center"><h2>Engineering you can audit</h2><p>We instrument every project with the compliance signals you need to verify our process &mdash; not just trust it.</p><a class="btn btn-primary btn-lg" href="../../contact.html">Talk to ACE Engineering</a><a href="../../assets/capability-summary-v1.pdf" class="btn btn-info btn-lg" style="margin-left: 10px;" download>Download Capability Summary (PDF, 1 page)</a></div></article></div></div></div></section><include src="partials/footer.html"></include></body></html>

@@ -1,0 +1,104 @@
+---
+rootPath: "../../"
+---
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="How three independent reviewers catch engineering failures that self-review structurally cannot."><title>3-Agent Cross-Review - AceEngineer</title><include src="partials/head-common.html"></include><style>
+.method-hero{background:linear-gradient(135deg,#16385f 0%,#24538d 100%);color:#fff;padding:70px 0 45px;margin-top:-20px}
+.method-hero h1{font-size:2.5em;font-weight:700;line-height:1.2;margin-bottom:12px}.method-hero .lead{font-size:1.2em;opacity:.92;max-width:860px;margin:0 auto 18px;line-height:1.6}.method-hero .meta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;font-size:.95em;opacity:.88}.method-layout{padding:55px 0;background:#f8f9fa}.method-shell{background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:40px}.method-shell h2,.method-shell h3,.method-shell h4{color:#1a365d;margin-top:28px}.method-shell p,.method-shell li{color:#4a5568;line-height:1.75;font-size:1.02em}.method-shell blockquote{border-left:4px solid #1a365d;padding:12px 18px;background:#edf4ff;margin:18px 0}.method-shell hr{border:none;border-top:1px solid #dfe7ef;margin:28px 0}.method-code{background:#263238;color:#d3f9d8;padding:16px;border-radius:8px;overflow:auto;font-size:.9em;line-height:1.5}.methodology-table{width:100%;border-collapse:collapse;margin:18px 0}.methodology-table th,.methodology-table td{border:1px solid #d7dee8;padding:10px 12px;vertical-align:top}.methodology-table th{background:#1a365d;color:#fff}.methodology-table tr:nth-child(even) td{background:#f8fbff}.method-toc{background:#eef5ff;border:1px solid #d9e6fb;border-radius:8px;padding:18px;margin-bottom:26px}.method-toc h3{margin-top:0}.method-toc ul{margin-bottom:0}.method-cta{margin-top:30px;background:linear-gradient(135deg,#2d3436 0%,#4a5568 100%);color:#fff;border-radius:10px;padding:28px}.method-cta h2{color:#fff;margin-top:0}.method-cta p{color:#f1f5f9}@media (max-width: 767px){.method-hero{padding:50px 0 35px}.method-hero h1{font-size:1.9em}.method-shell{padding:24px}}</style></head><body><include src="partials/nav.html"></include><section class="method-hero"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1 text-center"><h1>3-Agent Cross-Review</h1><p class="lead">How independent reviewers catch failures that self-review structurally cannot.</p><div class="meta"><span>ACE Engineering Methodology</span><span>Quality assurance &bull; Adversarial review</span><span>Client-facing publication</span></div></div></div></div></section><section class="method-layout"><div class="container"><div class="row"><div class="col-md-10 col-md-offset-1"><article class="method-shell"><div class="method-toc"><h3>On this page</h3><ul><li><a href="#the-problem">The Problem: Single-Reviewer Blindness</a></li><li><a href="#three-independent-reviewers">Three Independent Reviewers</a></li><li><a href="#two-stage-review-model">The Two-Stage Review Model</a></li><li><a href="#why-different-reviewers-catch-different-things">Why Different Reviewers Catch Different Things</a></li><li><a href="#enforcement">How the Workflow Is Enforced</a></li><li><a href="#review-verdicts">Review Verdicts</a></li><li><a href="#what-this-catches">What Cross-Review Actually Catches</a></li><li><a href="#key-takeaway">Key Takeaway</a></li></ul></div><h1 id="three-agent-cross-review">3-Agent Cross-Review: Independent Eyes on Every Deliverable</h1>
+<blockquote><p>Running in production since early 2025 &mdash; before "adversarial review" became standard terminology in the AI engineering community.</p></blockquote>
+<hr>
+<h2 id="the-problem">The Problem: Single-Reviewer Blindness</h2>
+<p>An engineer reviewing their own work is structurally incapable of catching certain classes of error. This is not a quality issue with any individual reviewer; it is a property of the review context being contaminated by the authoring context.</p>
+<p>When the same person who built the analysis turns around to review it:</p>
+<ul>
+<li>The reasoning that justified each decision is still in their head, so the decisions look obviously correct</li>
+<li>Assumptions made during authoring feel like established facts</li>
+<li>Missing requirements are invisible because they were never considered in the first place</li>
+<li>Edge cases the author did not think of remain unconsidered</li>
+</ul>
+<p>This is the engineering equivalent of a developer reviewing their own code. They might catch typos. They almost never catch architectural misalignment.</p>
+<h3 id="the-evidence">The Evidence</h3>
+<p>Before we enforced cross-review on our own work, the failure pattern was consistent: plans shipped with unstated assumptions; implementations diverged from plans because the same person rationalized the drift; the few self-reviews that did happen caught surface issues but missed structural problems. Independent review compliance was running at 4 percent. With cross-review enforced, that number is now consistently above 80 percent &mdash; and the issues caught are qualitatively different.</p>
+<hr>
+<h2 id="three-independent-reviewers">Three Independent Reviewers</h2>
+<p>For every plan and every deliverable, we engage three independent reviewers. Each operates in a fresh context, without access to the authoring session's reasoning or rationalizations.</p>
+<div class="table-responsive"><table class="table methodology-table"><thead><tr><th>Reviewer Role</th><th>Primary Focus</th><th>Review Strengths</th></tr></thead><tbody>
+<tr><td>Orchestrator-reviewer</td><td>Task framing and plan coherence</td><td>Scope verification, cross-file consistency, convention alignment</td></tr>
+<tr><td>Implementation-reviewer</td><td>Code and analysis correctness</td><td>Off-by-one errors, test coverage, file-path verification, diff analysis</td></tr>
+<tr><td>Adversarial reviewer</td><td>Architecture and completeness</td><td>Missing edge cases, requirement gaps, large-context structural review</td></tr>
+</tbody></table></div>
+<p>The key word is <em>independent</em>. A reviewer operating in the same session as the author is not independent &mdash; they share the same context contamination. Cross-review works because each reviewer starts with only the artifact and the specification, not the authoring session's history of dead ends, retries, and rationalizations.</p>
+<hr>
+<h2 id="two-stage-review-model">The Two-Stage Review Model</h2>
+<p>Cross-review happens at two distinct stages, not just one. Skipping either stage produces predictable failure modes.</p>
+<h3 id="stage-1-plan-review">Stage 1: Plan Review</h3>
+<pre class="method-code"><code>Author creates implementation plan
+    |
+    v
+Implementation-reviewer reviews plan --&gt; finds execution concerns
+    |   "This approach won&#x27;t handle concurrent access"
+    v
+Adversarial reviewer reviews plan --&gt; finds architectural concerns
+    |   "This duplicates logic already in the existing toolchain"
+    v
+Author updates plan based on both reviews
+    |
+    v
+Client / project lead approves the updated plan</code></pre>
+<h3 id="stage-2-artifact-review">Stage 2: Artifact Review</h3>
+<pre class="method-code"><code>Implementation-reviewer's plan is executed
+    |
+    v
+Orchestrator-reviewer checks against plan
+    |   "The plan called for 7 checkpoints; only 5 are present"
+    v
+Adversarial reviewer checks architecture
+    |   "This component should follow the same protocol as its peer"
+    v
+Issues resolved --&gt; deliverable ships</code></pre>
+<p>Both stages are mandatory. Plans receive adversarial review before approval. Code, analysis output, and deliverable artifacts receive adversarial review before completion. There is no path to ship that bypasses either stage.</p>
+<hr>
+<h2 id="why-different-reviewers-catch-different-things">Why Different Reviewers Catch Different Things</h2>
+<p>Different review perspectives have characteristic blind spots and strengths. These are not random &mdash; they are consistent enough to be exploited deliberately.</p>
+<div class="table-responsive"><table class="table methodology-table"><thead><tr><th>Failure Mode</th><th>Best Caught By</th><th>Why</th></tr></thead><tbody>
+<tr><td>Plan-implementation drift</td><td>Orchestrator-reviewer</td><td>Maintains the plan context, can cross-reference</td></tr>
+<tr><td>Off-by-one errors in code or formulas</td><td>Implementation-reviewer</td><td>Strong at line-level analysis</td></tr>
+<tr><td>Missing edge cases in plan</td><td>Adversarial reviewer</td><td>Large context window, good at "what about..." questions</td></tr>
+<tr><td>Scope creep</td><td>Any independent reviewer</td><td>Fresh context = no investment in existing approach</td></tr>
+<tr><td>Incorrect file or reference paths</td><td>Implementation-reviewer</td><td>Good at verifying paths exist where claimed</td></tr>
+<tr><td>Architectural inconsistency</td><td>Adversarial reviewer</td><td>Holds the entire repo structure in context</td></tr>
+<tr><td>Unstated assumptions</td><td>Any independent reviewer</td><td>Author's assumptions are not in the reviewer's context</td></tr>
+</tbody></table></div>
+<p>The probability that all three reviewers miss the same issue is far lower than the probability that any single one misses it. That is the structural reason cross-review works.</p>
+<hr>
+<h2 id="enforcement">How the Workflow Is Enforced</h2>
+<p>Cross-review is not voluntary. It is enforced at the strongest level we operate &mdash; technical gates that block operations rather than warnings that suggest review.</p>
+<div class="table-responsive"><table class="table methodology-table"><thead><tr><th>Gate</th><th>Trigger</th><th>What It Enforces</th></tr></thead><tbody>
+<tr><td>Plan-execution gate</td><td>Implementation start</td><td>Blocks execution without plan review</td></tr>
+<tr><td>PR creation gate</td><td>Pull request opened</td><td>Blocks if no review evidence is present</td></tr>
+<tr><td>Pre-push review gate</td><td>Push to shared branches</td><td>Blocks feature commits lacking review</td></tr>
+<tr><td>Ship gate</td><td>Final delivery</td><td>Blocks without test pairing and review</td></tr>
+</tbody></table></div>
+<p>The gates check four evidence sources: review results files, recorded reviews in the planning archive, formal review reports, and review keywords in commit messages. If any source has evidence for the change in question, the gate passes. If none do, the gate blocks &mdash; regardless of who initiated the operation or what deadline pressure exists.</p>
+<hr>
+<h2 id="review-verdicts">Review Verdicts</h2>
+<p>Reviews resolve to one of three explicit verdicts:</p>
+<div class="table-responsive"><table class="table methodology-table"><thead><tr><th>Verdict</th><th>Meaning</th><th>Action</th></tr></thead><tbody>
+<tr><td>APPROVE</td><td>No issues found</td><td>Proceed to ship</td></tr>
+<tr><td>MINOR</td><td>Small issues, non-blocking</td><td>Fix recommended; not required</td></tr>
+<tr><td>MAJOR</td><td>Significant issues found</td><td>Must fix before shipping</td></tr>
+</tbody></table></div>
+<p>MAJOR findings require resolution and re-review. They do not count as passing evidence on their own &mdash; only resolution + re-review closes the gate.</p>
+<hr>
+<h2 id="what-this-catches">What Cross-Review Actually Catches</h2>
+<p>Real examples from production engagements:</p>
+<ol>
+<li><strong>Configuration mismatches between policy and implementation.</strong> A review caught a threshold configured at one value in policy but a different value in the enforcing hook &mdash; a silent drift that would have made our own configuration misleading.</li>
+<li><strong>Default-mode misalignment.</strong> A reviewer noticed that the "advisory" mode was the default for a strict-by-stated-intent enforcement script. The contradiction was caught and corrected before it shipped to clients.</li>
+<li><strong>Concurrency failure modes that only appear at scale.</strong> Reviewers identified file-locking races, file-handle issues, and policy hooks blocking final writes &mdash; failure modes that would only have surfaced under client load, where they would have been far costlier.</li>
+</ol>
+<p>None of these were caught by self-review. All were caught by an independent reviewer with no investment in the original approach.</p>
+<hr>
+<h2 id="key-takeaway">Key Takeaway</h2>
+<p>Cross-review works because it exploits a structural property: independent reviewers have non-overlapping blind spots. A deliverable reviewed through three different lenses, with three different sets of assumptions, in three fresh contexts, has been examined more thoroughly than any single review can achieve.</p>
+<p>The enforcement is what makes it real. Without technical gates, review compliance was 4 percent. With gates, every shippable artifact is examined. The combination of independent reviewers and automatic enforcement creates a quality floor that no single reviewer can produce alone.</p>
+<p><strong>Want engineering deliverables with three layers of independent review built into the workflow?</strong> <a href="https://aceengineer.com/contact">Contact ACE Engineering</a> to learn how this pattern applies to your project governance.</p><div class="method-cta text-center"><h2>Three reviewers. Every deliverable. No exceptions.</h2><p>Cross-review is not a checklist. It is enforced at every shipping gate so that the work you receive has already been adversarially examined.</p><a class="btn btn-primary btn-lg" href="../../contact.html">Talk to ACE Engineering</a><a href="../../assets/capability-summary-v1.pdf" class="btn btn-info btn-lg" style="margin-left: 10px;" download>Download Capability Summary (PDF, 1 page)</a></div></article></div></div></div></section><include src="partials/footer.html"></include></body></html>

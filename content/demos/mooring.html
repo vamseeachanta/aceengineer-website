@@ -1,0 +1,345 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AceEngineer — Mooring &amp; Station-Keeping Screening</title>
+    <include src="partials/head-common.html"></include>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --clr-primary: #1a365d;
+    --clr-secondary: #2c5282;
+    --clr-accent: #ed8936;
+    --clr-success: #38a169;
+    --clr-warning: #d69e2e;
+    --clr-danger: #e53e3e;
+    --clr-bg: #f7fafc;
+    --clr-text: #2d3748;
+    --clr-muted: #718096;
+    --clr-border: #e2e8f0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--clr-text);
+    background: var(--clr-bg);
+    line-height: 1.6;
+    font-size: 15px;
+}
+.report-header {
+    background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-secondary) 100%);
+    color: white;
+    padding: 2.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+}
+.report-header::after {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 400px; height: 400px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 50%;
+}
+.report-header .brand {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+}
+.report-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+}
+.report-header .subtitle {
+    font-size: 1.05rem;
+    opacity: 0.85;
+    font-weight: 400;
+}
+.report-header .case-badge {
+    display: inline-block;
+    background: var(--clr-accent);
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+}
+.report-header .meta {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+.report-body {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 3rem;
+}
+.section { margin-bottom: 2.5rem; }
+.section h2 {
+    font-size: 1.3rem;
+    color: var(--clr-primary);
+    border-bottom: 2px solid var(--clr-accent);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1rem;
+}
+.section h3 {
+    font-size: 1.05rem;
+    color: var(--clr-secondary);
+    margin: 1rem 0 0.5rem;
+}
+.section p, .section li {
+    color: var(--clr-text);
+    margin-bottom: 0.5rem;
+}
+.section ul, .section ol { padding-left: 1.5rem; }
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+.data-table th {
+    background: var(--clr-primary);
+    color: white;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.data-table td {
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid var(--clr-border);
+}
+.data-table tr:nth-child(even) { background: rgba(247,250,252,0.5); }
+.data-table tr:hover { background: rgba(44,82,130,0.04); }
+.status-pass { color: var(--clr-success); font-weight: 700; }
+.status-fail { color: var(--clr-danger); font-weight: 700; }
+.status-marginal { color: var(--clr-warning); font-weight: 700; }
+.illustrative-note {
+    background: rgba(237,137,54,0.08);
+    border-left: 4px solid var(--clr-accent);
+    padding: 0.85rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    color: var(--clr-text);
+}
+.illustrative-note strong { color: var(--clr-accent); }
+.boundary-callout {
+    background: rgba(237,137,54,0.08);
+    border-left: 4px solid var(--clr-accent);
+    padding: 0.9rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+}
+.cta-block {
+    text-align: center;
+    margin: 2.5rem 0 1rem;
+    padding: 1.5rem;
+    background: white;
+    border: 1px solid var(--clr-border);
+    border-radius: 8px;
+}
+.report-footer {
+    border-top: 2px solid var(--clr-border);
+    padding: 1.5rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: 0.8rem;
+    color: var(--clr-muted);
+}
+@media print {
+    body { background: white; font-size: 12px; }
+    .report-header { padding: 1.5rem 2rem; }
+    .report-body { padding: 1rem 2rem; }
+    .data-table { break-inside: avoid; page-break-inside: avoid; }
+    @page { margin: 1.5cm; }
+}
+    </style>
+</head>
+<body>
+<include src="partials/nav.html"></include>
+
+<div class="report-header">
+    <div class="brand">digitalmodel — Engineering Intelligence</div>
+    <h1>Mooring &amp; Station-Keeping Screening Analysis</h1>
+    <div class="subtitle">~120 parametric cases across catenary, taut, and hybrid concepts</div>
+    <div class="case-badge">Demo template — values illustrative until project run</div>
+    <div class="meta">Pre-FEED / early-FEED screening · MoorPy quasi-static + RAFT frequency-domain · API RP 2SK / DNV-OS-E301 reference basis</div>
+</div>
+
+<div class="report-body">
+
+    <div class="section">
+        <h2>Methodology</h2>
+        <p>This screening evaluates whether a candidate floater-mooring concept is fit-for-purpose at a pre-FEED / early-FEED decision gate. The workflow uses <strong>MoorPy quasi-static stiffness analysis</strong> to characterise restoring behaviour, then <strong>RAFT-based frequency-domain response screening</strong> to flag concepts whose surge, heave, or pitch periods sit too close to the wave-energy band. The standards basis is <em>API RP 2SK</em> (stationkeeping system design and analysis) and <em>DNV-OS-E301</em> (position mooring), which set the safety-factor and analysis-tier expectations the screening is meant to feed.</p>
+        <p>Each candidate concept (catenary, taut, hybrid) is screened for restoring stiffness, line tension margin against minimum breaking load (MBL), vessel offset against the typical 10% water-depth band, and sensitivity of those trends to a &plusmn;20% sweep on mooring stiffness assumptions. A concept whose ranking flips under that sweep is flagged for coupled time-domain follow-on rather than declared acceptable. The tier is intentionally screening-grade — quasi-static plus frequency-domain — and is the layer that decides whether the more expensive coupled analysis is worth running.</p>
+        <h3>Applicable Codes &amp; Standards</h3>
+        <ul>
+            <li>API RP 2SK — Stationkeeping Systems for Floating Structures</li>
+            <li>DNV-OS-E301 — Position Mooring</li>
+            <li>DNV-OS-E302 / E304 — Offshore Mooring Chain &amp; Steel-wire reference</li>
+            <li>RAFT (NREL) — frequency-domain floating response, screening-tier</li>
+            <li>MoorPy — quasi-static mooring analysis, screening-tier</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Parameter Matrix</h2>
+        <p>Illustrative parametric envelope: <strong>3 platforms &times; 4 mooring concepts &times; 5 water depths &times; 2 sea states = 120 cases</strong>. The matrix is sized for an overnight screening sweep; on a real engagement, axes are replaced with the project's actual platform, candidate spreads, site water depth, and operating / survival metocean.</p>
+        <table class="data-table">
+            <thead>
+                <tr><th>Axis</th><th>Range</th><th>Notes</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Platform</td><td>Semi-submersible, spar, FPSO-class</td><td>Public-reference floater archetypes</td></tr>
+                <tr><td>Mooring concept</td><td>3-line catenary, 4-line catenary, taut polyester, chain-polyester hybrid</td><td>120&deg; or 90&deg; spread depending on concept</td></tr>
+                <tr><td>Water depth</td><td>200, 500, 1000, 1500, 2000 m</td><td>Spans intermediate to deepwater</td></tr>
+                <tr><td>Sea state</td><td>Operating (1-yr), Survival (100-yr)</td><td>Hs / Tp pair per state</td></tr>
+                <tr><td>Anchor strategy</td><td>Drag-embedment, suction pile (downstream of concept)</td><td>Geotechnical handoff at next gate</td></tr>
+                <tr><td>Pre-tension</td><td>Set to bring quasi-static surge offset under environmental loading inside the 10% water-depth band</td><td>Per-line pretension is a result, not a free axis</td></tr>
+            </tbody>
+        </table>
+        <div class="illustrative-note"><strong>Note:</strong> all ranges in this template are illustrative envelope values. A project run replaces them with the actual floater mass / hydrostatic input, candidate spreads, site water depth, and project-specific metocean.</div>
+    </div>
+
+    <div class="section">
+        <h2>Screening Results Summary</h2>
+        <p>PASS / MARGIN / FAIL distribution by concept and condition. Pass = quasi-static offset inside 10% water-depth band, line tension below API RP 2SK / DNV-OS-E301 intact safety factor, and surge / heave / pitch natural periods clear of the wave-energy band. Margin = at least one of those checks within 10% of the limit or sensitive to the &plusmn;20% stiffness sweep. Fail = limit exceeded or rank-flip under sensitivity.</p>
+        <div class="illustrative-note"><strong>All numbers below are illustrative.</strong> They show the shape of the screening output, not project-specific results. Per-prospect numbers are produced by the 48-hour project run on submission of vessel and station-keeping data.</div>
+        <table class="dataframe data-table">
+            <thead>
+                <tr>
+                    <th>Concept</th>
+                    <th>Cases</th>
+                    <th>PASS</th>
+                    <th>MARGIN</th>
+                    <th>FAIL</th>
+                    <th>Acceptable %</th>
+                    <th>Dominant flag</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>3-line catenary</td>
+                    <td>30</td>
+                    <td><span class="status-pass">21</span></td>
+                    <td><span class="status-marginal">6</span></td>
+                    <td><span class="status-fail">3</span></td>
+                    <td>90%</td>
+                    <td>Offset margin at 2000 m, survival</td>
+                </tr>
+                <tr>
+                    <td>4-line catenary</td>
+                    <td>30</td>
+                    <td><span class="status-pass">25</span></td>
+                    <td><span class="status-marginal">4</span></td>
+                    <td><span class="status-fail">1</span></td>
+                    <td>97%</td>
+                    <td>Tension margin in survival sea state</td>
+                </tr>
+                <tr>
+                    <td>Taut polyester</td>
+                    <td>30</td>
+                    <td><span class="status-pass">18</span></td>
+                    <td><span class="status-marginal">8</span></td>
+                    <td><span class="status-fail">4</span></td>
+                    <td>87%</td>
+                    <td>Surge period drift under stiffness sweep</td>
+                </tr>
+                <tr>
+                    <td>Chain-polyester hybrid</td>
+                    <td>30</td>
+                    <td><span class="status-pass">22</span></td>
+                    <td><span class="status-marginal">6</span></td>
+                    <td><span class="status-fail">2</span></td>
+                    <td>93%</td>
+                    <td>Anchor footprint at shallow depths</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.85rem; color: var(--clr-muted); font-style: italic;">Pass-rate column includes PASS only; MARGIN cases require either tightened assumptions or escalation into coupled time-domain analysis before they can be cleared.</p>
+    </div>
+
+    <div class="section">
+        <h2>Concept Comparison Chart</h2>
+        <p>Quasi-static restoring stiffness <em>k<sub>xx</sub></em> by concept (kN/m, illustrative public-reference order of magnitude only):</p>
+        <table class="data-table">
+            <thead>
+                <tr><th>Concept</th><th>k<sub>xx</sub> (kN/m, illustrative)</th><th>Restoring character</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>3-line catenary</td><td>~80</td><td>Soft, geometry-driven; gentle offset growth, large footprint</td></tr>
+                <tr><td>4-line catenary</td><td>~110</td><td>Symmetric restoring, redundancy on line failure</td></tr>
+                <tr><td>Chain-polyester hybrid</td><td>~140</td><td>Tunable via polyester axial stiffness, smaller footprint</td></tr>
+                <tr><td>Taut polyester</td><td>~220</td><td>Stiff, axial-driven; small footprint, sensitive to pre-tension</td></tr>
+            </tbody>
+        </table>
+        <div class="illustrative-note"><strong>Reading guide:</strong> the chart above is a directional ordering, not a quantitative claim about a specific project. The screening method gives the project's actual k-matrix once mass, hydrostatic, and metocean inputs are loaded; expect the order of magnitude to track the table above, but expect the ratios to shift with floater scale and water depth.</div>
+    </div>
+
+    <div class="section">
+        <h2>Where this stops</h2>
+        <p>This is a <strong>screening-tier</strong> deliverable. It is intentionally not, and ACE will not represent it as:</p>
+        <ul>
+            <li>Detailed time-domain coupled analysis (OrcaFlex / OpenFAST coupled runs across the full DLC matrix).</li>
+            <li>Full IEC 61400-3-2 design load case execution for a floating wind turbine, including controller-coupled DLCs.</li>
+            <li>Geotechnical anchor capacity design or site-specific foundation engineering — those scopes go to specialist consultants once the screening clears the gate.</li>
+            <li>Final fatigue verification of mooring components for life-cycle signoff or class / certifier submission.</li>
+        </ul>
+        <div class="boundary-callout"><strong>What this screening is for:</strong> ranking concepts, finding first-order red flags, and deciding whether a concept is mature enough to spend coupled-analysis or geotechnical budget on. It is not a substitute for that follow-on work.</div>
+    </div>
+
+    <div class="section">
+        <h2>GTM Value</h2>
+        <table class="data-table">
+            <thead>
+                <tr><th>Activity</th><th>Before</th><th>After</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Mooring concept selection</td><td>Weeks of bespoke setup before any concept is ranked</td><td>~120 screened cases in 24 hours, decision-grade memo in 48</td></tr>
+                <tr><td>Sensitivity check</td><td>Manual rerun of bespoke models per axis</td><td>&plusmn;20% stiffness sweep baked into the workflow</td></tr>
+                <tr><td>Anchor strategy framing</td><td>Late-stage hand-off, often after concept locked</td><td>Anchor implications surfaced at concept gate</td></tr>
+                <tr><td>Escalation gate</td><td>Implicit, often missed</td><td>Explicit gap register: which concepts need coupled time-domain follow-on, which do not</td></tr>
+                <tr><td>Reviewer audit trail</td><td>Spreadsheet provenance</td><td>Git-tracked Python + YAML, reviewable by a third party</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section demo-media">
+        <figure style="margin: 0; text-align: center;">
+            <img src="{{ rootPath }}assets/img/demos/demo_comparison_matrix.gif"
+                 alt="Composite walkthrough of the five overnight engineering demos shipped to date — freespan VIV, wall thickness, mudmat installation, shallow pipelay, and jumper installation"
+                 style="max-width: 100%; height: auto; border: 1px solid var(--clr-border); border-radius: 8px;"
+                 loading="lazy" />
+            <figcaption style="font-size: 0.85rem; color: var(--clr-muted); margin-top: 0.75rem;">
+                Composite of the five shipped overnight runs. The mooring screening above will be replaced with a per-prospect parametric run on submission of vessel and station-keeping data, following the same 48-hour SOP used for the other demos.
+            </figcaption>
+        </figure>
+    </div>
+
+    <div class="cta-block">
+        <p style="margin-bottom: 1rem; font-weight: 600; color: var(--clr-primary);">Reviewing ACE for early-stage mooring or station-keeping work? Start with the one-page capability summary.</p>
+        <a href="{{ rootPath }}assets/capability-summary-v1.pdf"
+           class="btn btn-info btn-lg"
+           download
+           style="display: inline-block; background: var(--clr-secondary); color: white; padding: 0.85rem 2rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 1rem;">
+            Download Capability Summary (PDF, 1 page)
+        </a>
+    </div>
+
+</div>
+
+<include src="partials/footer.html"></include>
+</body>
+</html>

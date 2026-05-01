@@ -19,7 +19,7 @@ const REPO_ROOT = path.resolve(__dirname, '..', '..');
 const DIST_DEMOS = path.join(REPO_ROOT, 'dist', 'demos');
 const SITEMAP = path.join(REPO_ROOT, 'sitemap.xml');
 
-const DETAIL_SLUGS = ['freespan', 'wall-thickness', 'mudmat', 'pipelay', 'jumper-installation'];
+const DETAIL_SLUGS = ['freespan', 'wall-thickness', 'mudmat', 'pipelay', 'jumper-installation', 'mooring'];
 const CHART_SLUGS = ['freespan', 'wall-thickness', 'mudmat', 'pipelay'];
 
 function readSitemap() {
@@ -77,7 +77,7 @@ describe('demo gallery CTAs', () => {
     const reportAnchors = anchors.filter(
       (a) => /view detailed report/i.test(a.text) && /\/?demos\/[a-z-]+\.html$/i.test(a.href),
     );
-    expect(reportAnchors.length).toBe(5);
+    expect(reportAnchors.length).toBe(6);
 
     // Each slug appears at least once in a "View detailed report" anchor href
     for (const slug of DETAIL_SLUGS) {

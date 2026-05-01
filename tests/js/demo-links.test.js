@@ -1,7 +1,7 @@
 /**
  * Demo gallery link-check tests.
  *
- * Verifies the 5 demo detail pages (freespan, wall-thickness, mudmat, pipelay,
+ * Verifies the 6 demo detail pages (freespan, wall-thickness, mudmat, pipelay,
  * jumper-installation) are wired into the gallery at /demos/index.html, are
  * listed in sitemap.xml, do not reference the external Plotly CDN, include
  * the Google Analytics marker from head-common.html, and — for the four chart
@@ -71,7 +71,7 @@ beforeAll(() => {
 }, 120000);
 
 describe('demo gallery CTAs', () => {
-  test('gallery has exactly 5 "View detailed report" anchors linking to /demos/*.html', () => {
+  test('gallery has exactly 6 "View detailed report" anchors linking to /demos/*.html', () => {
     const html = readDist('index.html');
     const anchors = collectAnchors(html);
     const reportAnchors = anchors.filter(
@@ -94,7 +94,7 @@ describe('demo gallery CTAs', () => {
 });
 
 describe('sitemap.xml', () => {
-  test('has 5 <loc> entries for /demos/*.html at www host', () => {
+  test('has all <loc> entries for /demos/*.html at www host', () => {
     const xml = readSitemap();
     const re = /<loc>\s*https:\/\/www\.aceengineer\.com\/demos\/([a-z-]+)\.html\s*<\/loc>/gi;
     const found = [];

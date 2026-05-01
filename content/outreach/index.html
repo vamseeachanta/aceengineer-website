@@ -1,0 +1,229 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AceEngineer — Outreach Hub for Installation Contractors &amp; Wind Developers</title>
+    <include src="partials/head-common.html"></include>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --clr-primary: #1a365d;
+    --clr-secondary: #2c5282;
+    --clr-accent: #ed8936;
+    --clr-bg: #f7fafc;
+    --clr-text: #2d3748;
+    --clr-muted: #718096;
+    --clr-border: #e2e8f0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--clr-text);
+    background: var(--clr-bg);
+    line-height: 1.6;
+    font-size: 15px;
+}
+.hub-header {
+    background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-secondary) 100%);
+    color: white;
+    padding: 3rem 2rem;
+    text-align: center;
+}
+.hub-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.hub-header .subtitle {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    max-width: 720px;
+    margin: 0 auto;
+}
+.hub-body {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+}
+.hub-section {
+    margin-bottom: 3rem;
+}
+.hub-section h2 {
+    color: var(--clr-primary);
+    font-size: 1.4rem;
+    border-bottom: 2px solid var(--clr-accent);
+    padding-bottom: 0.4rem;
+    margin-bottom: 1rem;
+}
+.hub-section .lead {
+    color: var(--clr-muted);
+    margin-bottom: 1.25rem;
+    max-width: 800px;
+}
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+.card {
+    background: white;
+    border: 1px solid var(--clr-border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    display: block;
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-color: var(--clr-accent);
+}
+.card .label {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--clr-accent);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+.card h3 {
+    color: var(--clr-primary);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.card p {
+    color: var(--clr-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+.card .meta {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--clr-muted);
+    margin-top: 0.6rem;
+}
+.cta-block {
+    background: white;
+    border: 1px solid var(--clr-border);
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+.cta-block .btn-primary {
+    display: inline-block;
+    background: var(--clr-secondary);
+    color: white;
+    padding: 0.85rem 2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+.cta-block .btn-primary:hover { background: var(--clr-primary); }
+@media (max-width: 600px) {
+    .hub-header { padding: 2rem 1.25rem; }
+    .hub-header h1 { font-size: 1.5rem; }
+    .hub-body { padding: 1.5rem 1rem; }
+}
+    </style>
+</head>
+<body>
+<include src="partials/nav.html"></include>
+
+<div class="hub-header">
+    <h1>Engineering Demos &amp; Outreach Resources</h1>
+    <p class="subtitle">Five overnight parametric installation engineering demos, two contractor-targeted briefs, and a 1-page capability summary. Everything below is meant to be sent directly to a prospective client.</p>
+</div>
+
+<div class="hub-body">
+
+    <div class="hub-section">
+        <h2>Briefs by audience</h2>
+        <p class="lead">Pick the brief that matches your audience and pair with one or two of the demos below.</p>
+        <div class="card-grid">
+            <a class="card" href="{{ rootPath }}outreach/vessel-contractor-brochure.html">
+                <span class="label">For vessel installation contractors</span>
+                <h3>Heavy-lift, pipelay, PLSV, FOWT-installation</h3>
+                <p>1-screen brief on installation engineering screening, operability envelopes, and contractor-specific tooling. Built for procurement &amp; engineering managers.</p>
+                <span class="meta">418 words · embedded 5-demo overnight composite</span>
+            </a>
+            <a class="card" href="{{ rootPath }}outreach/fowt-mooring-screening.html">
+                <span class="label">For floating offshore wind</span>
+                <h3>FOWT mooring screening — OC4 worked example</h3>
+                <p>Pre-FEED / early-FEED mooring concept screening on the OC4-DeepCwind public reference. Explicit screening-tier scope; no IEC over-claim.</p>
+                <span class="meta">789 words · NREL-cited reference platform</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="hub-section">
+        <h2>Demos to attach</h2>
+        <p class="lead">Each demo is one parametric overnight run with a 30-second walkthrough GIF embedded. Send the URL directly or paste the GIF into a follow-up.</p>
+        <div class="card-grid">
+            <a class="card" href="{{ rootPath }}demos/freespan.html">
+                <span class="label">Demo 1 · pipeline integrity</span>
+                <h3>DNV freespan / VIV screening</h3>
+                <p>680 parametric cases across 3 pipe sizes &amp; rigid jumpers. DNV-RP-F105 simplified VIV with seabed-gap correction.</p>
+            </a>
+            <a class="card" href="{{ rootPath }}demos/wall-thickness.html">
+                <span class="label">Demo 2 · pipeline design</span>
+                <h3>Pipeline wall thickness — multi-code</h3>
+                <p>72 parametric cases under ASME B31.4/B31.8, DNV-OS-F101, API 1111 simultaneously. Conservative governing-code ranking.</p>
+            </a>
+            <a class="card" href="{{ rootPath }}demos/mudmat.html">
+                <span class="label">Demo 3 · subsea installation</span>
+                <h3>Deepwater mudmat installation</h3>
+                <p>180 cases across vessel RAO, sea state, mudmat geometry. DNV H103 coupled with OrcaFlex screening.</p>
+            </a>
+            <a class="card" href="{{ rootPath }}demos/pipelay.html">
+                <span class="label">Demo 4 · marine operations</span>
+                <h3>Shallow water pipelay</h3>
+                <p>60 parametric cases. Vessel-RAO and sag-bend tension sensitivity across the sea-state envelope.</p>
+            </a>
+            <a class="card" href="{{ rootPath }}demos/jumper-installation.html">
+                <span class="label">Demo 5 · subsea installation</span>
+                <h3>Subsea jumper lift &mdash; Ballymore</h3>
+                <p>Manifold-to-PLET jumper. 27 OrcaFlex line sections auto-generated; 81/81 validated tests.</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="hub-section">
+        <h2>One-page capability summary</h2>
+        <div class="cta-block">
+            <p>The shortest answer to "what does AceEngineer do?" — one page, sendable as an attachment.</p>
+            <a class="btn-primary"
+               href="{{ rootPath }}assets/capability-summary-v1.pdf"
+               download>
+                Download Capability Summary (PDF, 1 page)
+            </a>
+        </div>
+    </div>
+
+    <div class="hub-section">
+        <h2>Talk to us</h2>
+        <p class="lead">Quickest path to a 48-hour parametric run on your data: email with the vessel/structure type, location, and one or two design questions. We pre-stage the canonical models, so the turnaround is the run, not the setup.</p>
+        <div class="cta-block">
+            <a class="btn-primary"
+               href="mailto:vamsee.achanta@aceengineer.com?subject=AceEngineer%20outreach%20hub%20%E2%80%94%20parametric%20run%20inquiry">
+                Email us
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<include src="partials/footer.html"></include>
+</body>
+</html>

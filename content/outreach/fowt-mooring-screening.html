@@ -1,0 +1,135 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AceEngineer — FOWT Mooring Screening (OC4-DeepCwind Worked Example)</title>
+    <include src="partials/head-common.html"></include>
+    <style>
+:root {
+    --clr-primary: #1a365d;
+    --clr-secondary: #2c5282;
+    --clr-accent: #ed8936;
+    --clr-bg: #f7fafc;
+    --clr-text: #2d3748;
+    --clr-muted: #718096;
+    --clr-border: #e2e8f0;
+}
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--clr-text); background: var(--clr-bg); line-height: 1.6; font-size: 15px; }
+.report-header { background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-secondary) 100%); color: white; padding: 2.5rem 3rem; }
+.report-header .brand { font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; margin-bottom: 0.5rem; }
+.report-header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.3rem; }
+.report-header .subtitle { font-size: 1.05rem; opacity: 0.85; font-weight: 400; }
+.report-header .case-badge { display: inline-block; background: var(--clr-accent); color: white; padding: 0.3rem 1rem; border-radius: 20px; font-weight: 700; font-size: 0.95rem; margin-top: 1rem; }
+.report-header .meta { margin-top: 1rem; font-size: 0.8rem; opacity: 0.6; }
+.report-body { max-width: 1100px; margin: 0 auto; padding: 2rem 3rem; }
+.section { margin-bottom: 2.25rem; }
+.section h2 { font-size: 1.25rem; color: var(--clr-primary); border-bottom: 2px solid var(--clr-accent); padding-bottom: 0.4rem; margin-bottom: 0.85rem; }
+.section h3 { font-size: 1rem; color: var(--clr-secondary); margin: 0.9rem 0 0.4rem; }
+.section p, .section li { color: var(--clr-text); margin-bottom: 0.5rem; }
+.section ul, .section ol { padding-left: 1.4rem; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-bottom: 1rem; }
+.data-table th { background: var(--clr-primary); color: white; padding: 0.55rem 0.8rem; text-align: left; font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.data-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--clr-border); }
+.data-table tr:nth-child(even) { background: rgba(247,250,252,0.5); }
+.boundary-callout { background: rgba(237,137,54,0.08); border-left: 4px solid var(--clr-accent); padding: 0.9rem 1.2rem; margin: 1rem 0; font-size: 0.92rem; }
+.cta-block { text-align: center; margin: 2.5rem 0 1rem; padding: 1.5rem; background: white; border: 1px solid var(--clr-border); border-radius: 8px; }
+.note { font-size: 0.85rem; color: var(--clr-muted); font-style: italic; }
+@media print { body { background: white; } .report-header { padding: 1.5rem 2rem; } .report-body { padding: 1rem 2rem; } @page { margin: 1.5cm; } }
+    </style>
+</head>
+<body>
+<include src="partials/nav.html"></include>
+
+<div class="report-header">
+    <div class="brand">AceEngineer — Floating Offshore Wind</div>
+    <h1>FOWT Mooring Screening — Worked Example</h1>
+    <div class="subtitle">OC4-DeepCwind semi-sub reference, catenary 3-line concept</div>
+    <div class="case-badge">Screening-tier deliverable, not certification-grade</div>
+    <div class="meta">Pre-FEED / early-FEED mooring screening · OC4-DeepCwind public reference</div>
+</div>
+
+<div class="report-body">
+
+    <div class="section">
+        <h2>Scope and Boundary</h2>
+        <p>This worked example shows the shape of an ACE FOWT mooring screening deliverable at pre-FEED / early-FEED stage. The intent is to help a wind contractor or developer rank floater-mooring concepts, find first-order red flags, and decide whether the design is mature enough to escalate into coupled aero-hydro-servo-elastic verification with a partner. ACE leads on mooring concept selection, anchor strategy framing, quasi-static stiffness, frequency-domain response trends, and tow-out / hook-up logic transferred from offshore oil-and-gas practice.</p>
+        <p>ACE does not deliver certification-grade IEC design-load-case execution, controller co-design, or full time-domain coupled simulation in this scope. Those workstreams are explicitly handed off to OpenFAST / WEIS partners or to specialist geotechnical consultants when the project clears the screening gate.</p>
+        <div class="boundary-callout"><strong>Positioning:</strong> screening-tier engineering review based on RAFT (frequency-domain) and MoorPy (quasi-static) workflows, anchored to API RP 2SK and DNV-OS-E301 stationkeeping references.</div>
+    </div>
+
+    <div class="section">
+        <h2>Reference Platform: OC4-DeepCwind Semi-Sub</h2>
+        <p>The OC4-DeepCwind semi-submersible (Robertson et al., NREL/TP-5000-60601, 2014) is the canonical public floating-wind reference platform paired with the NREL 5 MW baseline turbine. We use commonly cited public values to demonstrate the screening shape; on a real engagement these are replaced with the project's mass, hydrostatic, and metocean inputs.</p>
+        <table class="data-table">
+            <thead><tr><th>Parameter</th><th>Public reference value</th><th>Notes</th></tr></thead>
+            <tbody>
+                <tr><td>Reference turbine</td><td>NREL 5 MW baseline</td><td>Public coupled reference</td></tr>
+                <tr><td>Platform displacement</td><td>~13,470 t</td><td>Including ballast water</td></tr>
+                <tr><td>Operating draft</td><td>20.0 m</td><td>Below SWL</td></tr>
+                <tr><td>Water depth</td><td>200 m</td><td>OC4 reference site</td></tr>
+                <tr><td>Number of columns</td><td>3 outer + 1 main</td><td>Semi-submersible</td></tr>
+                <tr><td>Mooring concept</td><td>3-line catenary</td><td>120&deg; spread</td></tr>
+            </tbody>
+        </table>
+        <p class="note">Source: OC4 Phase II definition, NREL/TP-5000-60601. Values are cited to illustrate the screening method; final-design analyses use project-specific inputs.</p>
+    </div>
+
+    <div class="section">
+        <h2>Mooring Concept Screened</h2>
+        <p>Three-line catenary spread at 120&deg;, fairleads at the column bases, anchors at 837 m radius (OC4 reference). Each line is a chain–polyester–chain composite to manage axial stiffness and seabed footprint. Pre-tension is set to bring quasi-static surge offset under environmental loading inside the typical 10% water-depth screening band.</p>
+        <table class="data-table">
+            <thead><tr><th>Element</th><th>Reference value</th><th>Screening intent</th></tr></thead>
+            <tbody>
+                <tr><td>Line count</td><td>3 (120&deg; spread)</td><td>Symmetric restoring</td></tr>
+                <tr><td>Top chain (fairlead)</td><td>~120 mm studless, ~80 m</td><td>Wear / fairlead interface</td></tr>
+                <tr><td>Mid section</td><td>Polyester rope</td><td>Compliance, weight relief</td></tr>
+                <tr><td>Ground chain (anchor)</td><td>~120 mm studless, ~100 m</td><td>Seabed abrasion margin</td></tr>
+                <tr><td>Anchor radius</td><td>~837 m from platform CG</td><td>OC4 baseline</td></tr>
+                <tr><td>Pre-tension (per line)</td><td>~1.1 MN (illustrative)</td><td>Replace with project values</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Screening Outputs</h2>
+        <h3>(a) Quasi-static stiffness</h3>
+        <p>MoorPy quasi-static evaluation produces a restoring matrix the project team can use to sanity-check surge / sway / yaw stiffness against floater displacement. Indicative magnitudes for the OC4 catenary are k_xx ≈ k_yy ≈ 70–90 kN/m and k_yaw on the order of 1.0×10^8 N·m/rad — <em>screening-only, replace with project values</em>. The screening flags any concept where stiffness is dominated by a single line or where pre-tension drift would push offset outside the operability envelope.</p>
+        <h3>(b) Frequency-domain response trends</h3>
+        <p>RAFT-based frequency-domain runs give surge / heave / pitch RAOs and natural-period estimates the team can compare against the wave-energy band. Screening looks for surge natural period sitting cleanly above the wind-sea peak, heave and pitch periods avoiding the swell band, and sensitivity of those trends to a ±20% change in mooring stiffness assumptions. A concept whose response trends move materially under that sensitivity sweep is flagged for coupled time-domain follow-on rather than declared acceptable.</p>
+        <h3>(c) Installation and operability flags</h3>
+        <p>Screening also surfaces marine-operations red flags: tow-out draft and stability margin, hook-up sequence on the three lines under expected weather windows, anchor installation method consistent with the pre-tension target, and inspection access for the chain–polyester transitions. Items here are decision-support inputs, not procurement specifications.</p>
+    </div>
+
+    <div class="section">
+        <h2>Where this stops</h2>
+        <p>The screening above intentionally does not cover, and ACE will not represent it as covering:</p>
+        <ul>
+            <li>Full IEC 61400-3-2 design load case set, including the certification-grade DLC matrix.</li>
+            <li>Controller co-design or controls-sensitive optimization of the turbine-platform-mooring system.</li>
+            <li>Time-domain coupled aero-hydro-servo-elastic simulation (OpenFAST / WEIS scope).</li>
+            <li>Geotechnical anchor capacity design and site-specific foundation engineering.</li>
+            <li>Final fatigue verification of mooring components for life-cycle signoff.</li>
+            <li>Class / certifier submission packages and final-design procurement specifications.</li>
+        </ul>
+        <p>If the screening passes the decision gate, ACE hands these scopes to OpenFAST / WEIS partners or specialist consultants and stays engaged as the offshore-mooring and marine-operations technical reviewer.</p>
+    </div>
+
+    <div class="section">
+        <h2>Engagement model</h2>
+        <p>A real engagement starts with a 1-hour intake to capture floater concept, site metocean, mooring layout candidates, and the decision the screening must support. ACE then runs the 48-hour screening using RAFT + MoorPy with the project's actual inputs and produces a decision-grade memo covering scope, assumptions, screening outputs, red flags, and the explicit gap register. A review session walks the contractor or developer through the result and the recommended escalation path. This follows the prospect-demo SOP already used for other ACE screening deliverables.</p>
+    </div>
+
+    <div class="cta-block">
+        <p style="margin-bottom: 1rem; font-weight: 600; color: var(--clr-primary);">Reviewing ACE for early-FEED FOWT mooring work? Start with the one-page capability summary.</p>
+        <a href="{{ rootPath }}assets/capability-summary-v1.pdf" class="btn btn-info btn-lg" download style="display: inline-block; background: var(--clr-secondary); color: white; padding: 0.85rem 2rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 1rem;">Download Capability Summary (PDF, 1 page)</a>
+    </div>
+
+</div>
+
+<include src="partials/footer.html"></include>
+</body>
+</html>

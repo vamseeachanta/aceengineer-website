@@ -44,6 +44,18 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build site for dist-backed tests
+        run: npm run build
+
       - name: Set up uv
         uses: astral-sh/setup-uv@v6
 

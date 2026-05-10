@@ -1,0 +1,129 @@
+# aceengineer-website repository structure contract
+# Issue: https://github.com/vamseeachanta/aceengineer-website/issues/13
+# Scope: Phase 1 contract/checker only; no broad moves or deletion authorized.
+
+allowed_roots:
+  # Static-site source and runtime/deploy roots intentionally tracked today
+  - content
+  - assets
+  - blog
+  - calculators
+  - case-studies
+  - demos
+  - brand
+  - samples
+
+  # Standard project roots
+  - tests
+  - docs
+  - config
+  - scripts
+
+  # Agent/tooling and repo metadata roots intentionally tracked today
+  - .claude
+  - .codex
+  - .gemini
+  - .github
+  - .planning
+
+  # Approved root files and checked-in deploy artifacts
+  - 404.html
+  - about.html
+  - AGENTS.md
+  - build.js
+  - CASE_STUDY_TEMPLATE.md
+  - CLAUDE.md
+  - CNAME
+  - contact.html
+  - energy.html
+  - engineering.html
+  - faq.html
+  - GITHUB_ORG_SETUP.md
+  - .gitignore
+  - google36887341ed911d28.html
+  - GOOGLE_ANALYTICS_SETUP.md
+  - index.html
+  - .nojekyll
+  - package.json
+  - package-lock.json
+  - PHASE_4_AND_6_PLAN.md
+  - PHASE_6_EXECUTION_CHECKLIST.md
+  - posthtml.config.js
+  - pyproject.toml
+  - README.md
+  - robots.txt
+  - sitemap.xml
+  - VERCEL_DEPLOY.md
+  - vercel.json
+  - .pre-commit-config.yaml
+
+ignored_roots:
+  - .git
+  - .venv
+  - node_modules
+  - dist
+  - __pycache__
+  - .mypy_cache
+  - .pytest_cache
+  - .ruff_cache
+  - .hypothesis
+  - .benchmarks
+  - .tox
+  - .nox
+  - htmlcov
+  - site
+  - build
+  - coverage
+  - .cache
+  - test-results
+  - test-reports
+
+generated_artifact_roots:
+  - reports
+  - blog_output
+  - stats.json
+  - logs
+  - output
+  - results
+  - coverage.xml
+  - .coverage
+  - htmlcov
+  - site
+  - dist
+
+temporary_exceptions:
+  reports:
+    category: durable-evidence
+    owner: aceengineer-website maintainers
+    review_date: "2026-06-30"
+    follow_up: https://github.com/vamseeachanta/aceengineer-website/issues/13
+    justification: Tracked competitor-analysis report artifacts are preserved as existing durable evidence until a dedicated generated-evidence migration classifies retention, relocation, or deletion.
+    allowed_paths:
+      - reports/competitor-analysis/2026-01-26.html
+      - reports/competitor-analysis/2026-01-27.html
+      - reports/competitor-analysis/2026-01-28.html
+      - reports/competitor-analysis/2026-01-29.html
+      - reports/competitor-analysis/2026-01-30.html
+      - reports/competitor-analysis/2026-01-31.html
+      - reports/competitor-analysis/2026-02-01.html
+      - reports/competitor-analysis/2026-02-02.html
+      - reports/competitor-analysis/2026-02-03.html
+      - reports/competitor-analysis/2026-02-04.html
+      - reports/competitor-analysis/2026-02-06.html
+      - reports/competitor-analysis/latest.html
+  blog_output:
+    category: temporary-durable-exception
+    owner: aceengineer-website maintainers
+    review_date: "2026-06-30"
+    follow_up: https://github.com/vamseeachanta/aceengineer-website/issues/13
+    justification: Tracked blog generation output is preserved until content pipeline cleanup is explicitly approved.
+    allowed_paths:
+      - blog_output/article.md
+  stats.json:
+    category: authorized-generated-artifact
+    owner: aceengineer-website maintainers
+    review_date: "2026-06-30"
+    follow_up: https://github.com/vamseeachanta/aceengineer-website/issues/13
+    justification: Root stats.json is a currently tracked build telemetry artifact and must not be silently removed.
+    allowed_paths:
+      - stats.json

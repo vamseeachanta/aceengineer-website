@@ -1,0 +1,12 @@
+# Pre-commit configuration for aceengineer-website
+# Install: uv run pre-commit install
+# Run manually: uv run pre-commit run --all-files
+
+repos:
+  - repo: local
+    hooks:
+      - id: repo-structure-contract
+        name: repo structure contract
+        language: system
+        entry: uv run python scripts/maintenance/verify_repo_structure.py
+        pass_filenames: false

@@ -73,7 +73,7 @@ for config in design_matrix:
 - Stress Engineering Services (TX): 50-100 engineers, high OrcaFlex usage
 - Mustang Engineering (TX): Mid-sized, subsea focus
 - Genesis Oil & Gas (TX): 20-50 engineers, riser specialists
-- 2H Offshore (TX/UK): Riser/mooring specialists
+- Riser/mooring specialty firms (TX/UK)
 
 ### 2. Offshore Wind Developers (US East Coast)
 

@@ -43,7 +43,7 @@
 - Stress Engineering Services (Houston)
 - Mustang Engineering (Houston)
 - Genesis Oil & Gas (Houston)
-- 2H Offshore (Houston/Aberdeen)
+- Riser/mooring specialty firms (Houston/Aberdeen)
 - INTECSEA (Houston)
 - Wood Group (Houston)
 

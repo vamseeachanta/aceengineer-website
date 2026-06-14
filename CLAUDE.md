@@ -6,3 +6,4 @@
 - Context budget: 16KB max (Global 2KB + Workspace 4KB + Project 8KB + Local 2KB)
 ## Repo Overrides
 <!-- Add repo-specific overrides below without weakening required gates -->
+> Memory: read THIS repo's `.claude/memory/` first; consult workspace-hub memory only for cross-repo concerns

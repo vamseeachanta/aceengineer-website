@@ -1,0 +1,145 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Catenary riser: Catenary riser shape, layback and top tension. Run it from chat with Deckhand — standards-traceable, deterministic, with every assumption shown.">
+    <meta name="keywords" content="Catenary, Steel catenary riser (SCR), Top tension, Layback, Touchdown, Catenary riser calculator, offshore engineering AI">
+
+    <meta property="og:title" content="Catenary riser — Catenary riser shape, layback and top tension | AceEngineer">
+    <meta property="og:description" content="Catenary riser: Catenary riser shape, layback and top tension. Run it from chat with Deckhand — standards-traceable, deterministic, with every assumption shown.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aceengineer.com/standards/catenary-riser.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Catenary riser — Catenary riser shape, layback and top tension">
+    <meta name="twitter:description" content="Catenary riser: Catenary riser shape, layback and top tension. Run it from chat with Deckhand — standards-traceable, deterministic, with every assumption shown.">
+
+    <title>Catenary riser — Catenary riser shape, layback and top tension | AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Standards",
+      "item": "https://www.aceengineer.com/standards/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Catenary riser",
+      "item": "https://www.aceengineer.com/standards/catenary-riser.html"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does a catenary calculation give me?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The static shape of a riser or line hanging as a catenary \u2014 the layback, the touchdown point, and the top and bottom tensions \u2014 for a given submerged weight and water depth."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is it used for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "First-pass sizing of steel catenary risers and similar lines, and a sanity check before a full dynamic analysis."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- shared component styles: assets/css/components.css -->
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <section class="hero-section" style="padding-bottom:36px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-md-offset-1">
+                    <p style="text-transform:uppercase;letter-spacing:.08em;color:#6b7785;font-size:.85em;"><a href="index.html" style="color:#6b7785;">Standards</a> &rsaquo; Riser</p>
+                    <h1 class="hero-title" style="text-align:left;">Catenary riser</h1>
+                    <p style="font-size:1.05em;color:#52606d;margin:-6px 0 14px;">Catenary riser shape, layback and top tension</p>
+                    <p class="hero-subtitle" style="text-align:left;margin-left:0;">Ask Deckhand to work out the shape, layback and top tension of a catenary riser or line from its weight and the water depth.</p>
+                    <div class="hero-cta" style="text-align:left;">
+                        <!-- OPEN_DECK_CTA: swap to https://t.me/the_deckhand_bot?start=src_web_std_catenary-riser once deckhand#432 live -->
+                        <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="src_web_std_catenary-riser">Run it on Open Deck</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding:56px 0;background:#f8f9fa;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">What you can ask it to do</h2>
+                    <ul class="ask-list">
+                        <li>Work out the catenary shape, layback and touchdown point of a riser or line.</li>
+                        <li>Compute the top tension and the bottom tension.</li>
+                        <li>Screen how shape and top tension move with weight, depth or current.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;text-align:center;">
+        <div class="container">
+            <h2 class="section-title">Related standards</h2>
+            <div style="margin:18px 0;">
+                <span class="domain-chip">Catenary</span>
+                <span class="domain-chip">Steel catenary riser (SCR)</span>
+                <span class="domain-chip">Top tension</span>
+                <span class="domain-chip">Layback</span>
+                <span class="domain-chip">Touchdown</span>
+            </div>
+            <p>Part of <a href="../solutions/subsea-pipelines-integrity.html">Subsea, Pipelines &amp; Integrity</a> &middot; <a href="../platform.html">see the platform engine</a></p>
+        </div>
+    </section>
+
+    <section style="padding:40px 0;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">Questions</h2>
+                    <details class="faq"><summary>What does a catenary calculation give me?</summary><p>The static shape of a riser or line hanging as a catenary — the layback, the touchdown point, and the top and bottom tensions — for a given submerged weight and water depth.</p></details>
+                    <details class="faq"><summary>What is it used for?</summary><p>First-pass sizing of steel catenary risers and similar lines, and a sanity check before a full dynamic analysis.</p></details>
+            </div></div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container"><div class="row"><div class="col-md-8 col-md-offset-2 text-center">
+            <h2>Run Catenary riser on your own inputs</h2>
+            <p>Open Deck is free &mdash; bring your numbers and check the result against your own methods.</p>
+            <!-- OPEN_DECK_CTA -->
+            <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="src_web_std_catenary-riser_footer">Try Open Deck on Telegram</a>
+        </div></div></div>
+    </section>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

@@ -39,6 +39,16 @@
         "testMatch": ["<rootDir>/tests/js/wall-thickness.test.js"]
       },
       {
+        "displayName": "mooring-fatigue",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/mooring-fatigue.test.js"]
+      },
+      {
+        "displayName": "decline-curve",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/decline-curve.test.js"]
+      },
+      {
         "displayName": "demo-links",
         "testEnvironment": "jsdom",
         "testMatch": ["<rootDir>/tests/js/demo-links.test.js"]
@@ -54,6 +64,8 @@
       "assets/js/navbar-toggle.js",
       "assets/js/cta-tracking.js",
       "assets/js/npv-calculator-engine.js",
+      "assets/js/mooring-fatigue-engine.js",
+      "assets/js/decline-curve-engine.js",
       "demos/hse-risk-dashboard-data.js"
     ]
   },

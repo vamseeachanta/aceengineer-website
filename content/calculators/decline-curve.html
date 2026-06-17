@@ -1,0 +1,387 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Free Arps decline curve and EUR calculator. Exponential, hyperbolic, and harmonic decline with closed-form cumulative production to an economic limit, plus interactive rate-vs-time forecast.">
+    <meta name="keywords" content="decline curve calculator, Arps decline, EUR calculator, estimated ultimate recovery, exponential decline, hyperbolic decline, harmonic decline, production forecast, economic limit, reserves">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Decline Curve & EUR Calculator (Arps) - AceEngineer">
+    <meta property="og:description" content="Free Arps decline curve calculator. Exponential, hyperbolic, and harmonic decline with closed-form EUR and rate forecast.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/calculators/decline-curve.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <title>Decline Curve & EUR Calculator (Arps) - AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- Plotly for interactive charts -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <!-- JSON-LD Structured Data - WebApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "@id": "https://aceengineer.com/calculators/decline-curve.html#calculator",
+        "name": "Decline Curve & EUR Calculator (Arps)",
+        "description": "Forecast production using Arps decline (exponential, hyperbolic, harmonic). Computes time to economic limit, closed-form cumulative production (EUR), and an interactive rate-vs-time forecast.",
+        "url": "https://aceengineer.com/calculators/decline-curve.html",
+        "applicationCategory": "Engineering Calculator",
+        "applicationSubCategory": "Petroleum Production Engineering",
+        "operatingSystem": "Any web browser",
+        "browserRequirements": "Requires JavaScript",
+        "softwareVersion": "1.0",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+        },
+        "featureList": [
+            "Arps exponential, hyperbolic and harmonic decline",
+            "Closed-form cumulative production (EUR)",
+            "Time to economic limit",
+            "Economic-limit or fixed-horizon modes",
+            "Per-day or per-year rate unit handling",
+            "Interactive rate-vs-time forecast chart"
+        ],
+        "provider": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization"
+        },
+        "isPartOf": {
+            "@type": "CollectionPage",
+            "@id": "https://aceengineer.com/calculators/#collection",
+            "name": "AceEngineer Engineering Calculators",
+            "url": "https://aceengineer.com/calculators/"
+        }
+    }
+    </script>
+
+    <style>
+        .calculator-container {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .result-box {
+            background: #fff;
+            border: 2px solid #428bca;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .result-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #428bca;
+        }
+        .result-label {
+            font-size: 1.1em;
+            color: #666;
+        }
+        .standard-tag {
+            display: inline-block;
+            background: #428bca;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .page-header {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #428bca;
+        }
+        .info-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Decline Curve &amp; EUR Calculator</h1>
+            <p class="lead">Arps decline (exponential / hyperbolic / harmonic) with closed-form EUR to an economic limit</p>
+            <div>
+                <span class="standard-tag">Arps Decline</span>
+                <span class="standard-tag">EUR</span>
+                <span class="standard-tag">Production Forecast</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="calculator-container">
+                    <h3>Input Parameters</h3>
+
+                    <div class="form-group">
+                        <label for="qi">Initial Rate q<sub>i</sub></label>
+                        <input type="number" class="form-control" id="qi" value="1000" step="any">
+                        <p class="help-block">Initial production rate (generic rate units, e.g. bbl/d or Mscf/d).</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rateUnit">Rate Unit</label>
+                        <select class="form-control" id="rateUnit">
+                            <option value="per-day" selected>Per day (rate x 365 for annual volume)</option>
+                            <option value="per-year">Per year (cumulative in rate &times; year)</option>
+                        </select>
+                        <p class="help-block">D<sub>i</sub> is always a nominal ANNUAL decline. Per-day rates are multiplied by 365 so EUR is in the rate's own volume unit.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Di_pct">Initial Nominal Decline D<sub>i</sub> (% per year)</label>
+                        <input type="number" class="form-control" id="Di_pct" value="10" step="any">
+                        <p class="help-block">Entered as percent per year (e.g. 10 = 0.10 /yr).</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b">b-exponent</label>
+                        <input type="number" class="form-control" id="b" value="0" step="any" min="0" max="1">
+                        <p class="help-block">0 = exponential, 0&lt;b&lt;1 = hyperbolic, 1 = harmonic.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="limitMode">Forecast Limit</label>
+                        <select class="form-control" id="limitMode" onchange="toggleLimitMode()">
+                            <option value="rate" selected>Economic limit rate</option>
+                            <option value="horizon">Forecast horizon (years)</option>
+                        </select>
+                        <p class="help-block">Choose whether the forecast ends at an economic rate or a fixed number of years.</p>
+                    </div>
+
+                    <div class="form-group" id="qLimGroup">
+                        <label for="qLim">Economic Limit Rate q<sub>lim</sub></label>
+                        <input type="number" class="form-control" id="qLim" value="100" step="any">
+                        <p class="help-block">Same units as q<sub>i</sub>. Production stops when the rate drops to here.</p>
+                    </div>
+
+                    <div class="form-group" id="horizonGroup" style="display:none;">
+                        <label for="tHorizon">Forecast Horizon (years)</label>
+                        <input type="number" class="form-control" id="tHorizon" value="20" step="any">
+                        <p class="help-block">EUR is cumulative production over this many years.</p>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="calculateDecline()">Calculate EUR</button>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="result-box" id="mainResult">
+                    <span class="result-value" id="resultValue">--</span>
+                    <br>
+                    <span class="result-label">EUR (cumulative production)</span>
+                </div>
+
+                <div id="additionalResults" style="margin-top: 20px; display: none;">
+                    <h4>Calculation Details</h4>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>Decline Regime</td>
+                            <td id="regimeValue">--</td>
+                        </tr>
+                        <tr>
+                            <td>Time to Economic Limit</td>
+                            <td id="timeValue">-- yr</td>
+                        </tr>
+                        <tr>
+                            <td>Economic Limit Rate Used</td>
+                            <td id="qlimValue">--</td>
+                        </tr>
+                        <tr>
+                            <td>EUR (cumulative)</td>
+                            <td id="eurValue">--</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="declineChart" style="width:100%; height:400px;"></div>
+
+                <div class="alert alert-info" style="margin-top: 20px;">
+                    <strong>Method:</strong> Arps (1945) decline. Cumulative (EUR) uses the closed-form integral of the rate equation for each regime. Units: D<sub>i</sub> is per year; per-day rates are converted with 365 days/year.
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>Disclaimer:</strong> This calculator is for educational and illustrative purposes only. Final reserves and production forecasts should be performed by qualified reservoir engineers using validated software and history-matched data.
+        </div>
+
+        <div class="info-section">
+            <h2>About This Calculator</h2>
+            <p>
+                Decline curve analysis (DCA) is the workhorse of production forecasting and reserves
+                estimation. The <strong>Arps (1945)</strong> equations describe how a well's production
+                rate falls over time and provide closed-form expressions for cumulative production
+                (the basis of the Estimated Ultimate Recovery, or EUR).
+            </p>
+            <h3>Rate vs Time</h3>
+            <ul>
+                <li><strong>Exponential (b = 0):</strong> q(t) = q<sub>i</sub> &middot; e<sup>&minus;D<sub>i</sub>t</sup></li>
+                <li><strong>Hyperbolic (0 &lt; b &lt; 1):</strong> q(t) = q<sub>i</sub> &middot; (1 + b&middot;D<sub>i</sub>&middot;t)<sup>&minus;1/b</sup></li>
+                <li><strong>Harmonic (b = 1):</strong> q(t) = q<sub>i</sub> / (1 + D<sub>i</sub>&middot;t)</li>
+            </ul>
+            <h3>Cumulative Production (EUR)</h3>
+            <p>
+                Integrating the rate from the initial rate down to the economic limit q<sub>lim</sub> gives
+                the closed-form cumulative production:
+            </p>
+            <ul>
+                <li><strong>Exponential:</strong> N<sub>p</sub> = (q<sub>i</sub> &minus; q<sub>lim</sub>) / D<sub>i</sub></li>
+                <li><strong>Hyperbolic:</strong> N<sub>p</sub> = q<sub>i</sub><sup>b</sup> / [(1&minus;b)&middot;D<sub>i</sub>] &middot; (q<sub>i</sub><sup>1&minus;b</sup> &minus; q<sub>lim</sub><sup>1&minus;b</sup>)</li>
+                <li><strong>Harmonic:</strong> N<sub>p</sub> = q<sub>i</sub>/D<sub>i</sub> &middot; ln(q<sub>i</sub>/q<sub>lim</sub>)</li>
+            </ul>
+            <h3>Unit Handling</h3>
+            <p>
+                The nominal decline D<sub>i</sub> is always entered per year, so the closed-form cumulative
+                comes out in (rate &times; year). When the rate is a per-day rate (e.g. bbl/d), the result is
+                multiplied by 365 days/year so that EUR is expressed in the rate's own volume unit
+                (barrels, Mscf, etc.). Choose "per-year" to skip that conversion.
+            </p>
+            <h3>Limitations</h3>
+            <ul>
+                <li>Boundary-dominated flow assumption — does not model transient or linear flow regimes.</li>
+                <li>Single-segment decline; multi-segment (e.g. b switching at a terminal decline) is not modelled.</li>
+                <li>Harmonic and hyperbolic EUR can be large; always cap with an economic limit or horizon.</li>
+                <li>Not a substitute for history-matched, probabilistic reserves estimation.</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h2>Need Professional Reserves &amp; Forecasting Support?</h2>
+            <p>
+                For probabilistic decline analysis, multi-segment forecasts, type-curve generation, and
+                field-level economics integration, we offer professional consulting with validated workflows.
+            </p>
+            <p>
+                <a href="../contact.html?vertical=energy" class="btn btn-success btn-lg" onclick="if(typeof gtag!=='undefined'){gtag('event','cta_click',{'event_category':'conversion','cta_text':'Discuss Your Project','cta_location':'calculator_bottom','page_type':'calculator','calculator_name':'decline_curve'})}">Discuss Your Project</a>
+                <a href="npv-field-development.html" class="btn btn-default btn-lg">NPV Field Development Calculator</a>
+            </p>
+        </div>
+    </div>
+
+    <include src="partials/footer.html"></include>
+
+    <script src="../assets/js/decline-curve-engine.js"></script>
+    <script>
+    var sessionCalculationCount = 0;
+
+    function toggleLimitMode() {
+        var mode = document.getElementById('limitMode').value;
+        document.getElementById('qLimGroup').style.display = (mode === 'rate') ? 'block' : 'none';
+        document.getElementById('horizonGroup').style.display = (mode === 'horizon') ? 'block' : 'none';
+    }
+
+    function fmtVol(v) {
+        if (!isFinite(v)) { return 'infinite'; }
+        if (Math.abs(v) >= 1e6) { return v.toExponential(3); }
+        return v.toFixed(1);
+    }
+
+    function calculateDecline() {
+        var qi = parseFloat(document.getElementById('qi').value);
+        var rateUnit = document.getElementById('rateUnit').value;
+        var Di = parseFloat(document.getElementById('Di_pct').value) / 100;
+        var b = parseFloat(document.getElementById('b').value);
+        var mode = document.getElementById('limitMode').value;
+        var qLim = parseFloat(document.getElementById('qLim').value);
+        var tHorizon = parseFloat(document.getElementById('tHorizon').value);
+
+        if (isNaN(qi) || isNaN(Di) || isNaN(b)) {
+            alert('Please enter valid initial rate, decline, and b-exponent.');
+            return;
+        }
+        if (b < 0 || b > 1) {
+            alert('b-exponent must be between 0 and 1.');
+            return;
+        }
+
+        var params = { qi: qi, Di: Di, b: b, rateUnit: rateUnit, steps: 60 };
+        if (mode === 'rate') {
+            if (isNaN(qLim)) { alert('Please enter a valid economic limit rate.'); return; }
+            params.qLim = qLim;
+        } else {
+            if (isNaN(tHorizon)) { alert('Please enter a valid forecast horizon.'); return; }
+            params.tHorizon = tHorizon;
+        }
+
+        var result = declineCurve(params);
+
+        document.getElementById('resultValue').textContent = fmtVol(result.eur);
+
+        var additionalDiv = document.getElementById('additionalResults');
+        additionalDiv.style.display = 'block';
+        document.getElementById('regimeValue').textContent = result.regime;
+        document.getElementById('timeValue').textContent = isFinite(result.timeToLimit_yr)
+            ? result.timeToLimit_yr.toFixed(2) + ' yr'
+            : 'never reaches limit';
+        document.getElementById('qlimValue').textContent = result.qLimUsed.toFixed(2);
+        document.getElementById('eurValue').textContent = fmtVol(result.eur) +
+            (rateUnit === 'per-day' ? ' (volume)' : ' (rate x year)');
+
+        // Rate vs time chart
+        var traceRate = {
+            x: result.series.t,
+            y: result.series.q,
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Rate',
+            line: { color: '#428bca', width: 2 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(66, 139, 202, 0.15)'
+        };
+        var traceLimit = {
+            x: [result.series.t[0], result.series.t[result.series.t.length - 1]],
+            y: [result.qLimUsed, result.qLimUsed],
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Economic Limit',
+            line: { color: '#d9534f', width: 2, dash: 'dash' }
+        };
+        var layout = {
+            title: 'Production Rate vs Time (' + result.regime + ')',
+            xaxis: { title: 'Time (years)' },
+            yaxis: { title: 'Rate' },
+            showlegend: true,
+            legend: { x: 0.55, y: 0.98 }
+        };
+        Plotly.newPlot('declineChart', [traceRate, traceLimit], layout, {responsive: true, displayModeBar: false});
+
+        sessionCalculationCount++;
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'calculator_use', {
+                'event_category': 'engagement',
+                'event_label': 'decline_curve',
+                'b_exponent': b,
+                'initial_decline': Di,
+                'result_eur': result.eur,
+                'input_count': sessionCalculationCount
+            });
+        }
+    }
+    </script>
+
+</body>
+</html>

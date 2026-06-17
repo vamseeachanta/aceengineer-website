@@ -14,12 +14,40 @@ keywords:
     - "subsea engineering tools"
     - "pipeline stress analysis"
     - "offshore wind engineering"
+    - "mooring fatigue analysis"
+    - "FPSO spread mooring"
+    - "vessel seakeeping analysis"
+    - "decline curve analysis"
+    - "field development economics"
 
   long_tail:
     - "orcaflex python scripting"
     - "offshore fatigue analysis automation"
     - "DNV S-N curves python"
     - "subsea pipeline fatigue calculation"
+    # Batch 2 — Floating & Marine
+    - "OCIMF MEG4 mooring loads"
+    - "API RP 2SK mooring analysis"
+    - "synthetic rope mooring fatigue"
+    - "intact stability GM righting arm"
+    - "hull diffraction OrcaWave AQWA"
+    # Batch 3 — Wells & Subsurface
+    - "Arps decline curve EUR"
+    - "field development NPV IRR calculator"
+    - "well nodal analysis IPR VLP"
+    - "dynamometer card sucker rod pump"
+    - "BSEE Gulf of Mexico production data"
+    # Batch 4 — Subsea depth (riser + buckling)
+    - "riser combined loading API RP 2RD"
+    - "DNV-OS-F201 riser LRFD"
+    - "catenary riser top tension"
+    - "pipeline lateral buckling DNV-RP-F110"
+    - "pipeline upheaval buckling cover"
+    # Standard-designation (low difficulty, high relevance)
+    - "DNV-RP-F105 free span"
+    - "API 579 level 1"
+    - "DNV-RP-B401 cathodic protection"
+    - "DNV-RP-F110 global buckling"
 
 # Competitor domains to monitor
 competitors:

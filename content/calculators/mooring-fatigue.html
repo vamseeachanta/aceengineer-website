@@ -1,0 +1,428 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Free mooring line fatigue calculator for mooring chain per DNV-OS-E301. T-N curve screen: nominal stress range, cycles to failure, annual damage and fatigue life for studless and studlink chain.">
+    <meta name="keywords" content="mooring fatigue calculator, DNV-OS-E301, mooring chain fatigue, T-N curve, studless chain, studlink chain, tension range, position mooring, offshore mooring">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Mooring Line Fatigue Calculator (DNV-OS-E301) - AceEngineer">
+    <meta property="og:description" content="Free mooring chain fatigue calculator. T-N curve screen for studless and studlink chain per DNV-OS-E301.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/calculators/mooring-fatigue.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <title>Mooring Line Fatigue Calculator (DNV-OS-E301) - AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- Plotly for interactive charts -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <!-- JSON-LD Structured Data - WebApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "@id": "https://aceengineer.com/calculators/mooring-fatigue.html#calculator",
+        "name": "Mooring Line Fatigue Calculator",
+        "description": "Screen mooring chain fatigue using the T-N curve approach per DNV-OS-E301. Computes nominal stress range, cycles to failure, annual damage and fatigue life for studless and studlink chain.",
+        "url": "https://aceengineer.com/calculators/mooring-fatigue.html",
+        "applicationCategory": "Engineering Calculator",
+        "applicationSubCategory": "Offshore Mooring Engineering",
+        "operatingSystem": "Any web browser",
+        "browserRequirements": "Requires JavaScript",
+        "softwareVersion": "1.0",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+        },
+        "featureList": [
+            "DNV-OS-E301 T-N fatigue curve",
+            "Studless and studlink chain parameters",
+            "Nominal stress range from tension range",
+            "Cycles to failure and annual damage",
+            "Fatigue life vs design life screen",
+            "Interactive tension-range sweep chart"
+        ],
+        "provider": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://aceengineer.com"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://aceengineer.com/#organization"
+        },
+        "isPartOf": {
+            "@type": "CollectionPage",
+            "@id": "https://aceengineer.com/calculators/#collection",
+            "name": "AceEngineer Engineering Calculators",
+            "url": "https://aceengineer.com/calculators/"
+        }
+    }
+    </script>
+
+    <style>
+        .calculator-container {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .result-box {
+            background: #fff;
+            border: 2px solid #428bca;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .result-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #428bca;
+        }
+        .result-label {
+            font-size: 1.1em;
+            color: #666;
+        }
+        .result-warning {
+            border-color: #d9534f;
+        }
+        .result-warning .result-value {
+            color: #d9534f;
+        }
+        .result-success {
+            border-color: #5cb85c;
+        }
+        .result-success .result-value {
+            color: #5cb85c;
+        }
+        .standard-tag {
+            display: inline-block;
+            background: #428bca;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .page-header {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #428bca;
+        }
+        .info-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Mooring Line Fatigue Calculator</h1>
+            <p class="lead">Single-stress-range fatigue screen for mooring chain using the DNV-OS-E301 T-N curve</p>
+            <div>
+                <span class="standard-tag">DNV-OS-E301</span>
+                <span class="standard-tag">T-N Curve</span>
+                <span class="standard-tag">Mooring Chain</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="calculator-container">
+                    <h3>Input Parameters</h3>
+
+                    <div class="form-group">
+                        <label for="chainType">Chain Type</label>
+                        <select class="form-control" id="chainType">
+                            <option value="studless" selected>Studless (m=3.0, a_D=6.0e10)</option>
+                            <option value="studlink">Studlink (m=3.0, a_D=1.2e11)</option>
+                        </select>
+                        <p class="help-block">DNV-OS-E301 T-N curve class. Studlink has ~2x the fatigue capacity of studless.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="d_mm">Chain Bar Diameter d (mm)</label>
+                        <input type="number" class="form-control" id="d_mm" value="100" step="any">
+                        <p class="help-block">Nominal chain bar diameter. Nominal area = 2 x (pi/4 x d^2) (two bars carry the load).</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tensionRange_kN">Tension Range &Delta;T (kN)</label>
+                        <input type="number" class="form-control" id="tensionRange_kN" value="1000" step="any">
+                        <p class="help-block">Representative peak-to-trough tension range for the screen.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cyclesPerYear">Cycles per Year (cycles/yr)</label>
+                        <input type="number" class="form-control" id="cyclesPerYear" value="50000" step="any">
+                        <p class="help-block">Number of stress cycles applied per year at this tension range.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="designLife_yr">Design Life (years)</label>
+                        <input type="number" class="form-control" id="designLife_yr" value="20" step="any">
+                        <p class="help-block">Target service life to check against.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="safetyFactor">Safety Factor on Damage (-)</label>
+                        <input type="number" class="form-control" id="safetyFactor" value="1.0" step="any">
+                        <p class="help-block">Default 1.0. DNV-OS-E301 applies a Design Fatigue Factor (typically 3-10 depending on consequence/inspectability); enter a higher value to reflect it.</p>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-lg btn-block" onclick="calculateMooringFatigue()">Calculate Fatigue Life</button>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="result-box" id="mainResult">
+                    <span class="result-value" id="resultValue">--</span>
+                    <br>
+                    <span class="result-label">Fatigue Life (years)</span>
+                </div>
+
+                <div id="additionalResults" style="margin-top: 20px; display: none;">
+                    <h4>Calculation Details</h4>
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>Nominal Cross-Section Area</td>
+                            <td id="areaValue">-- mm2</td>
+                        </tr>
+                        <tr>
+                            <td>Nominal Stress Range (S)</td>
+                            <td id="stressValue">-- MPa</td>
+                        </tr>
+                        <tr>
+                            <td>Cycles to Failure (N)</td>
+                            <td id="nValue">-- cycles</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Damage</td>
+                            <td id="damageValue">--</td>
+                        </tr>
+                        <tr>
+                            <td>Fatigue Life</td>
+                            <td id="lifeValue">-- yr</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td id="statusValue">--</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="fatigueChart" style="width:100%; height:400px;"></div>
+
+                <div class="alert alert-info" style="margin-top: 20px;">
+                    <strong>Standard Reference:</strong> DNV-OS-E301 "Position Mooring". T-N fatigue curve N = a_D &middot; S<sup>-m</sup>. Studless chain: m = 3.0, a_D = 6.0e10. Studlink chain: m = 3.0, a_D = 1.2e11. (S in MPa.)
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-warning">
+            <strong>Single-stress-range screen:</strong> This tool applies ONE representative tension range to the whole cycle count. A real fatigue analysis sums Miner's-rule damage over a full rainflow-counted tension-range histogram from the mooring time-domain response. Treat the result as a first-pass screen, not a design value.
+        </div>
+
+        <div class="alert alert-info">
+            <strong>Disclaimer:</strong> This calculator is for educational and illustrative purposes only. Final engineering calculations should be performed by qualified engineers using validated software and verified against applicable codes and standards.
+        </div>
+
+        <div class="info-section">
+            <h2>About This Calculator</h2>
+            <p>
+                Mooring lines on floating offshore units (FPSOs, semi-submersibles, spars, and floating wind
+                platforms) accumulate fatigue damage from the cyclic tension induced by waves, low-frequency
+                vessel motions, and the platform's mean offset. Chain links are a common fatigue-critical
+                component, and <strong>DNV-OS-E301 "Position Mooring"</strong> provides a tension-range vs.
+                cycles (T-N) curve to estimate their fatigue capacity.
+            </p>
+            <h3>Method</h3>
+            <p>
+                The tension range is first converted to a nominal stress range by dividing by the chain's
+                load-bearing cross-section. A chain link is built from two parallel bars that together carry
+                the load, so the nominal area is:
+            </p>
+            <p style="text-align: center; font-size: 1.2em;">
+                <strong>A = 2 &times; (&pi;/4 &times; d&sup2;)</strong>
+            </p>
+            <p>
+                where <em>d</em> is the chain bar diameter. The nominal stress range is then
+                <strong>S = &Delta;T / A</strong> (with &Delta;T in newtons and A in mm&sup2;, S comes out in MPa).
+            </p>
+            <p>
+                The cycles to failure at that stress range come from the DNV-OS-E301 T-N curve:
+            </p>
+            <p style="text-align: center; font-size: 1.2em;">
+                <strong>N = a<sub>D</sub> &middot; S<sup>&minus;m</sup></strong>
+            </p>
+            <p>
+                with curve parameters (per DNV-OS-E301): studless chain m = 3.0, a<sub>D</sub> = 6.0&times;10<sup>10</sup>;
+                studlink chain m = 3.0, a<sub>D</sub> = 1.2&times;10<sup>11</sup> (S expressed in MPa). The annual
+                damage is the cycles applied per year divided by N, and the fatigue life is the reciprocal of the
+                annual damage (divided by any safety factor on damage). A fatigue life at least equal to the design
+                life passes the screen.
+            </p>
+            <h3>Limitations</h3>
+            <ul>
+                <li>Single representative tension range only — real analysis uses a rainflow histogram + Miner summation.</li>
+                <li>No mean-load (mean tension) correction or thickness/size effect.</li>
+                <li>The default safety factor is 1.0; DNV applies higher Design Fatigue Factors based on consequence and inspectability.</li>
+                <li>Corrosion, out-of-plane bending (OPB), and proof-load effects are not modelled.</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h2>Need Professional Mooring Fatigue Analysis?</h2>
+            <p>
+                For full time-domain mooring analysis, rainflow-counted fatigue with histograms, OPB/IPB
+                assessment, and Design Fatigue Factor application, we offer professional consulting services
+                with validated methodologies.
+            </p>
+            <p>
+                <a href="../contact.html?vertical=offshore" class="btn btn-success btn-lg" onclick="if(typeof gtag!=='undefined'){gtag('event','cta_click',{'event_category':'conversion','cta_text':'Discuss Your Project','cta_location':'calculator_bottom','page_type':'calculator','calculator_name':'mooring_fatigue'})}">Discuss Your Project</a>
+                <a href="../demos/mooring.html" class="btn btn-default btn-lg">View Mooring Demo</a>
+            </p>
+        </div>
+    </div>
+
+    <include src="partials/footer.html"></include>
+
+    <script src="../assets/js/mooring-fatigue-engine.js"></script>
+    <script>
+    var sessionCalculationCount = 0;
+    function calculateMooringFatigue() {
+        var chainType = document.getElementById('chainType').value;
+        var d_mm = parseFloat(document.getElementById('d_mm').value);
+        var tensionRange_kN = parseFloat(document.getElementById('tensionRange_kN').value);
+        var cyclesPerYear = parseFloat(document.getElementById('cyclesPerYear').value);
+        var designLife_yr = parseFloat(document.getElementById('designLife_yr').value);
+        var safetyFactor = parseFloat(document.getElementById('safetyFactor').value);
+
+        var inputs = [
+            { val: d_mm, name: 'Chain Bar Diameter' },
+            { val: tensionRange_kN, name: 'Tension Range' },
+            { val: cyclesPerYear, name: 'Cycles per Year' },
+            { val: designLife_yr, name: 'Design Life' },
+            { val: safetyFactor, name: 'Safety Factor' }
+        ];
+        for (var i = 0; i < inputs.length; i++) {
+            if (isNaN(inputs[i].val)) {
+                alert('Please enter a valid ' + inputs[i].name);
+                return;
+            }
+        }
+
+        var result = mooringFatigue({
+            chainType: chainType,
+            d_mm: d_mm,
+            tensionRange_kN: tensionRange_kN,
+            cyclesPerYear: cyclesPerYear,
+            designLife_yr: designLife_yr,
+            safetyFactor: safetyFactor
+        });
+
+        var resultEl = document.getElementById('mainResult');
+        var resultValueEl = document.getElementById('resultValue');
+        resultValueEl.textContent = (result.fatigueLife_yr === Infinity)
+            ? '∞'
+            : result.fatigueLife_yr.toFixed(1);
+
+        resultEl.classList.remove('result-success', 'result-warning');
+        if (result.is_passing) {
+            resultEl.classList.add('result-success');
+        } else {
+            resultEl.classList.add('result-warning');
+        }
+
+        var additionalDiv = document.getElementById('additionalResults');
+        additionalDiv.style.display = 'block';
+
+        document.getElementById('areaValue').textContent = result.area_mm2.toFixed(1) + ' mm2';
+        document.getElementById('stressValue').textContent = result.stressRange_MPa.toFixed(2) + ' MPa';
+        document.getElementById('nValue').textContent = (result.N === Infinity)
+            ? 'infinite'
+            : result.N.toExponential(3) + ' cycles';
+        document.getElementById('damageValue').textContent = result.annualDamage.toExponential(3) + ' /yr';
+        document.getElementById('lifeValue').textContent = (result.fatigueLife_yr === Infinity)
+            ? 'infinite'
+            : result.fatigueLife_yr.toFixed(2) + ' yr';
+        document.getElementById('statusValue').textContent = result.is_passing ? 'PASS' : 'FAIL';
+        document.getElementById('statusValue').style.color = result.is_passing ? '#5cb85c' : '#d9534f';
+        document.getElementById('statusValue').style.fontWeight = 'bold';
+
+        // Tension-range sweep chart: fatigue life vs tension range
+        var ranges = [];
+        var lives = [];
+        var tMax = tensionRange_kN * 2;
+        var tMin = Math.max(tMax / 40, 1);
+        for (var k = 0; k <= 40; k++) {
+            var dT = tMin + (tMax - tMin) * k / 40;
+            var sweep = mooringFatigue({
+                chainType: chainType, d_mm: d_mm, tensionRange_kN: dT,
+                cyclesPerYear: cyclesPerYear, designLife_yr: designLife_yr,
+                safetyFactor: safetyFactor
+            });
+            ranges.push(parseFloat(dT.toFixed(1)));
+            lives.push(isFinite(sweep.fatigueLife_yr) ? sweep.fatigueLife_yr : null);
+        }
+
+        var traceLife = {
+            x: ranges,
+            y: lives,
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: 'Fatigue Life',
+            line: { color: '#428bca', width: 2 },
+            marker: { size: 4 }
+        };
+        var traceDesign = {
+            x: [ranges[0], ranges[ranges.length - 1]],
+            y: [designLife_yr, designLife_yr],
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Design Life (' + designLife_yr + ' yr)',
+            line: { color: '#d9534f', width: 2, dash: 'dash' }
+        };
+        var layout = {
+            title: 'Fatigue Life vs Tension Range',
+            xaxis: { title: 'Tension Range ΔT (kN)' },
+            yaxis: { title: 'Fatigue Life (years)', type: 'log' },
+            showlegend: true,
+            legend: { x: 0.55, y: 0.98 }
+        };
+        Plotly.newPlot('fatigueChart', [traceLife, traceDesign], layout, {responsive: true, displayModeBar: false});
+
+        sessionCalculationCount++;
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'calculator_use', {
+                'event_category': 'engagement',
+                'event_label': 'mooring_fatigue',
+                'chain_type': chainType,
+                'chain_diameter': d_mm,
+                'tension_range': tensionRange_kN,
+                'result_life': result.fatigueLife_yr,
+                'input_count': sessionCalculationCount
+            });
+        }
+    }
+    </script>
+
+</body>
+</html>

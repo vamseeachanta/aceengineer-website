@@ -163,3 +163,331 @@ standards:
         a: The design of sacrificial-anode cathodic-protection systems for offshore structures — current-density demand, coating breakdown factors, anode mass and current-capacity checks over the design life.
       - q: What structures can Deckhand size?
         a: Jackets, subsea manifolds, offshore-wind monopiles, FPSO hulls and pipelines (the pipeline case uses DNV-RP-F103 for anode spacing and reach).
+
+  # ===== Batch 2 — Floating & Marine cluster (W8 batch 2) =====================
+
+  - slug: mooring-line-fatigue
+    code: Mooring line fatigue
+    name: Mooring line fatigue (API RP 2SK / DNV-OS-E301)
+    discipline: Mooring
+    pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
+    calculator: { label: "Mooring fatigue calculator", href: "../calculators/mooring-fatigue.html" }
+    src_tag: src_web_std_mooring-line-fatigue
+    intro: >-
+      Ask Deckhand to estimate the fatigue life of a chain or wire mooring line from its
+      tension cycles, to the offshore mooring codes — the assumptions traced.
+    does:
+      - Estimate fatigue life of a chain or wire mooring line from its tension-cycle history.
+      - Apply T-N / S-N data for the component and report the damage and the safety factor.
+      - Flag the governing line and where life falls short of the design service life.
+    chips: ["API RP 2SK", "DNV-OS-E301", "Mooring fatigue", "T-N curves", "Tension cycles"]
+    faqs:
+      - q: How is mooring fatigue estimated?
+        a: From the line's tension-cycle history and the component T-N (or S-N) data, accumulating damage by Miner's rule against the design service life. Deckhand reports the damage, the implied life and the governing line.
+      - q: Which codes apply?
+        a: Offshore station-keeping codes — API RP 2SK and DNV-OS-E301 — govern mooring strength and fatigue; the component fatigue data depends on chain, wire or connector type.
+
+  - slug: fpso-spread-mooring-api-rp-2sk
+    code: API RP 2SK
+    name: FPSO spread mooring — strength and utilisation
+    discipline: Mooring
+    pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
+    src_tag: src_web_std_fpso-spread-mooring-api-rp-2sk
+    intro: >-
+      Ask Deckhand to screen an FPSO spread-mooring system for line safety factors, or run the
+      full environmental-load static equilibrium of the system.
+    does:
+      - Screen a spread-mooring system for line tensions and safety factors (API RP 2SK).
+      - Run the environmental-load static equilibrium of the moored system.
+      - Report the most-loaded line and its utilisation against the criterion.
+    chips: ["API RP 2SK", "DNV-OS-E301", "Spread mooring", "FPSO", "Line safety factor"]
+    faqs:
+      - q: What does API RP 2SK cover?
+        a: The design and analysis of station-keeping (mooring) systems for floating structures — line tensions, safety factors, and the intact and damaged conditions.
+      - q: What can Deckhand return?
+        a: Line tensions and safety factors for a spread-mooring layout, the static equilibrium under environmental load, and the governing line and its utilisation.
+
+  - slug: synthetic-rope-mooring
+    code: Synthetic rope mooring
+    name: Synthetic (polyester) fibre-rope mooring service life
+    discipline: Mooring
+    pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
+    src_tag: src_web_std_synthetic-rope-mooring
+    intro: >-
+      Ask Deckhand to screen a polyester fibre-rope mooring for service life — fatigue, creep
+      and minimum tension — to the fibre-rope guidance.
+    does:
+      - Screen a polyester fibre-rope mooring for fatigue, creep and minimum-tension limits.
+      - Estimate service life and flag the governing failure mode.
+      - Apply the fibre-rope stiffness behaviour (upper/lower bound) to the check.
+    chips: ["API RP 2SM", "DNV-OS-E301", "Polyester rope", "Creep", "Minimum tension"]
+    faqs:
+      - q: Why are fibre-rope moorings checked differently?
+        a: Polyester rope has non-linear, time-dependent stiffness and creep, so service life is governed by fatigue, creep and minimum-tension limits rather than a single break-load check. Guidance such as API RP 2SM applies.
+      - q: What does Deckhand report?
+        a: A service-life screen with the governing mode — fatigue, creep or minimum tension — and the assumptions on rope stiffness bounds.
+
+  - slug: ocimf-meg4-mooring-loads
+    code: OCIMF MEG4
+    name: Wind and current mooring loads on a moored tanker
+    discipline: Mooring
+    pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
+    src_tag: src_web_std_ocimf-meg4-mooring-loads
+    intro: >-
+      Ask Deckhand to work out wind and current mooring loads on a moored tanker using the
+      OCIMF load coefficients.
+    does:
+      - Compute wind and current load on a moored tanker from the OCIMF coefficients.
+      - Resolve longitudinal, lateral and yaw load components for a heading and environment.
+      - Feed the loads into a mooring or berthing check.
+    chips: ["OCIMF MEG4", "Wind load", "Current load", "Moored tanker", "Berthing"]
+    faqs:
+      - q: What is OCIMF MEG4 used for?
+        a: The OCIMF Mooring Equipment Guidelines give standard wind and current load coefficients for tankers, used to work out environmental mooring loads at a berth or on a moored vessel.
+      - q: What does Deckhand return?
+        a: The longitudinal, lateral and yaw wind and current loads for the heading and environment, ready to feed a mooring or berthing assessment.
+
+  - slug: vessel-seakeeping
+    code: Vessel seakeeping
+    name: Vessel seakeeping — motions, natural periods, comfort
+    discipline: Hydrodynamics
+    pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
+    src_tag: src_web_std_vessel-seakeeping
+    intro: >-
+      Ask Deckhand to estimate a vessel's motions, natural periods and motion comfort in a
+      given sea state.
+    does:
+      - Estimate vessel motions and accelerations from its RAOs and a sea state.
+      - Report roll, pitch and heave natural periods.
+      - Screen motion comfort and operability for the operation.
+    chips: ["Seakeeping", "RAOs", "Natural periods", "Motion comfort", "Operability"]
+    faqs:
+      - q: What does a seakeeping screen tell me?
+        a: How a vessel moves in a sea state — motions, accelerations and natural periods — and whether motion comfort and operability limits are met for the operation.
+      - q: What inputs are needed?
+        a: The vessel's response amplitude operators (RAOs) and the sea state (wave height, period, spectrum). Deckhand can also prepare the hydrodynamic model that produces the RAOs.
+
+  - slug: intact-stability-imo
+    code: IMO intact stability
+    name: Intact stability — GM, righting arm, wind heel
+    discipline: Stability
+    pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
+    src_tag: src_web_std_intact-stability-imo
+    intro: >-
+      Ask Deckhand to check a floating platform's intact stability — metacentric height,
+      righting-arm curve and wind heel — against the IMO criteria.
+    does:
+      - Compute metacentric height (GM) and the righting-arm (GZ) curve.
+      - Check wind-heel and area-ratio criteria against the IMO intact-stability rules.
+      - Report the governing criterion and the margin.
+    chips: ["IMO IS Code", "GM", "Righting arm (GZ)", "Wind heel", "Intact stability"]
+    faqs:
+      - q: What governs intact stability?
+        a: The IMO Intact Stability (IS) Code criteria — minimum GM, righting-arm area ratios and a wind-heel check — adapted for offshore floaters and MODUs.
+      - q: What does Deckhand return?
+        a: GM, the GZ curve, the wind-heel and area-ratio checks, and the governing criterion with its margin.
+
+  - slug: hull-hydrodynamics-diffraction
+    code: Hull diffraction
+    name: Hull hydrodynamics — diffraction, radiation and RAOs
+    discipline: Hydrodynamics
+    pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
+    src_tag: src_web_std_hull-hydrodynamics-diffraction
+    intro: >-
+      Ask Deckhand to set up a diffraction and radiation model for a floating hull (OrcaWave or
+      AQWA) and check the coefficients and RAOs.
+    does:
+      - Prepare a diffraction and radiation model for a floating hull (OrcaWave / AQWA).
+      - Check added-mass and damping coefficients and their causality.
+      - Build the wave spectrum and tabulate the motion RAOs across frequency.
+    chips: ["Diffraction", "OrcaWave", "AQWA", "Added mass / damping", "Wave spectra"]
+    faqs:
+      - q: What is a diffraction analysis for?
+        a: It computes how a floating hull responds to waves — added mass, damping, wave loads and the motion RAOs — the foundation for mooring, seakeeping and operability work.
+      - q: Which tools does Deckhand prepare?
+        a: It sets up the input for boundary-element diffraction solvers (OrcaWave or AQWA) and checks the resulting coefficients and RAOs.
+
+  # ===== Batch 3 — Wells & Subsurface cluster (W8 batch 3) ====================
+
+  - slug: arps-decline-curve
+    code: Arps decline
+    name: Production forecasting and decline (Arps)
+    discipline: Production
+    pillar: { label: "Wells & Subsurface", href: "../solutions/wells-subsurface.html" }
+    calculator: { label: "Decline curve & EUR calculator", href: "../calculators/decline-curve.html" }
+    src_tag: src_web_std_arps-decline-curve
+    intro: >-
+      Ask Deckhand to forecast a well's decline and estimate ultimate recovery using the Arps
+      decline-curve models.
+    does:
+      - Fit a well's history to an Arps model — exponential, hyperbolic or harmonic.
+      - Forecast future rate and estimate ultimate recovery (EUR).
+      - Report the decline parameters and the forecast assumptions.
+    chips: ["Arps decline", "EUR", "Exponential / hyperbolic / harmonic", "Decline curve", "Production forecast"]
+    faqs:
+      - q: What is Arps decline-curve analysis?
+        a: The standard empirical method for forecasting oil and gas production decline — exponential, hyperbolic or harmonic — and estimating ultimate recovery from the rate history.
+      - q: What does Deckhand return?
+        a: The fitted decline parameters, a forward rate forecast, and the estimated ultimate recovery with the assumptions stated.
+
+  - slug: field-economics-npv
+    code: Field economics (NPV / IRR)
+    name: Field-development economics — NPV, IRR, payback
+    discipline: Economics
+    pillar: { label: "Wells & Subsurface", href: "../solutions/wells-subsurface.html" }
+    calculator: { label: "NPV field-development calculator", href: "../calculators/npv-field-development.html" }
+    src_tag: src_web_std_field-economics-npv
+    intro: >-
+      Ask Deckhand to run a field-development economics case — net present value, rate of return
+      and payback — and a price and production-rate sensitivity.
+    does:
+      - Run a field case for net present value, internal rate of return and payback.
+      - Apply a discount rate, CAPEX/OPEX profile and a production forecast.
+      - Run a price and production-rate sensitivity on the economics.
+    chips: ["NPV", "IRR", "MIRR", "Payback", "Field economics"]
+    faqs:
+      - q: What economics can Deckhand run?
+        a: A field-development case returning net present value, internal rate of return, MIRR and payback from a CAPEX/OPEX profile, a discount rate and a production forecast.
+      - q: Can it run sensitivities?
+        a: Yes — a price and production-rate sensitivity shows how the economics move with the key uncertainties.
+
+  - slug: well-nodal-analysis
+    code: Nodal analysis
+    name: Well nodal analysis — inflow and outflow operating point
+    discipline: Production
+    pillar: { label: "Wells & Subsurface", href: "../solutions/wells-subsurface.html" }
+    src_tag: src_web_std_well-nodal-analysis
+    intro: >-
+      Ask Deckhand to find a well's operating point from its inflow and outflow performance
+      (nodal analysis).
+    does:
+      - Build the inflow (IPR) and outflow (VLP) curves for a well.
+      - Find the operating point where they intersect.
+      - Screen how the operating point moves with a change in the design.
+    chips: ["Nodal analysis", "IPR", "VLP", "Operating point", "Well performance"]
+    faqs:
+      - q: What is nodal analysis?
+        a: A method that finds a well's producing rate by intersecting its inflow performance (reservoir into wellbore) with its outflow performance (wellbore to surface) at a chosen node.
+      - q: What does Deckhand return?
+        a: The IPR and VLP curves, the operating point, and how it shifts when a design parameter changes.
+
+  - slug: dynacard-diagnostics
+    code: Dynamometer card
+    name: Sucker-rod pump diagnostics from the dynamometer card
+    discipline: Production
+    pillar: { label: "Wells & Subsurface", href: "../solutions/wells-subsurface.html" }
+    src_tag: src_web_std_dynacard-diagnostics
+    intro: >-
+      Ask Deckhand to diagnose a sucker-rod pump from its dynamometer card and get a report.
+    does:
+      - Interpret a surface or downhole dynamometer card for a sucker-rod pump.
+      - Flag conditions such as gas interference, fluid pound or worn pump.
+      - Return a diagnosis report for the well.
+    chips: ["Dynamometer card", "Sucker-rod pump", "Fluid pound", "Gas interference", "Artificial lift"]
+    faqs:
+      - q: What does a dynacard show?
+        a: The load on the rod string through a pump stroke; its shape reveals pump conditions — gas interference, fluid pound, a worn or stuck pump — for a sucker-rod (beam) pumped well.
+      - q: What does Deckhand return?
+        a: A reading of the card with the likely pump condition flagged and a short diagnosis report.
+
+  - slug: bsee-gom-production-data
+    code: BSEE production data
+    name: Gulf of Mexico production data (BSEE)
+    discipline: Production
+    pillar: { label: "Wells & Subsurface", href: "../solutions/wells-subsurface.html" }
+    src_tag: src_web_std_bsee-gom-production-data
+    intro: >-
+      Ask Deckhand to summarise lease and well oil and gas production from the public BSEE
+      data, and compare wells across a field or block.
+    does:
+      - Summarise lease and well oil and gas production from the public BSEE data.
+      - Compare well production across a field or block.
+      - Pull the history into a forecast or economics case.
+    chips: ["BSEE", "Gulf of Mexico", "Production data", "Lease / well", "Public data"]
+    faqs:
+      - q: What is the BSEE data?
+        a: The US Bureau of Safety and Environmental Enforcement publishes Gulf of Mexico lease and well production data; Deckhand summarises and compares it without you wrangling the raw files.
+      - q: What can I do with it?
+        a: Summarise a lease or well, compare wells across a block, and feed the history into a decline forecast or a field-economics case.
+
+  # ===== Batch 4 — Subsea depth: riser + buckling (W8 batch 4) ================
+
+  - slug: riser-combined-loading
+    code: API RP 2RD / DNV-OS-F201
+    name: Riser combined-loading utilisation
+    discipline: Riser
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    src_tag: src_web_std_riser-combined-loading
+    intro: >-
+      Ask Deckhand to run a riser combined tension-and-bending utilisation check — the API RP 2RD
+      working-stress method or the DNV-OS-F201 LRFD method — the governing case traced.
+    does:
+      - Run a combined tension-and-bending utilisation check (API RP 2RD, working stress).
+      - Run the LRFD combined-loading utilisation check (DNV-OS-F201).
+      - Report the governing load case and the utilisation against the allowable.
+    chips: ["API RP 2RD", "DNV-OS-F201", "Riser", "Combined loading", "Utilisation"]
+    faqs:
+      - q: What is a riser combined-loading check?
+        a: A check that a riser's combined effective tension and bending stays within the allowable — by the API RP 2RD working-stress method or the DNV-OS-F201 load-and-resistance-factor (LRFD) method.
+      - q: Which method should I use?
+        a: API RP 2RD is the working-stress approach; DNV-OS-F201 is the LRFD approach. Deckhand runs either and reports the governing load case and the utilisation.
+
+  - slug: catenary-riser
+    code: Catenary riser
+    name: Catenary riser shape, layback and top tension
+    discipline: Riser
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    src_tag: src_web_std_catenary-riser
+    intro: >-
+      Ask Deckhand to work out the shape, layback and top tension of a catenary riser or line
+      from its weight and the water depth.
+    does:
+      - Work out the catenary shape, layback and touchdown point of a riser or line.
+      - Compute the top tension and the bottom tension.
+      - Screen how shape and top tension move with weight, depth or current.
+    chips: ["Catenary", "Steel catenary riser (SCR)", "Top tension", "Layback", "Touchdown"]
+    faqs:
+      - q: What does a catenary calculation give me?
+        a: The static shape of a riser or line hanging as a catenary — the layback, the touchdown point, and the top and bottom tensions — for a given submerged weight and water depth.
+      - q: What is it used for?
+        a: First-pass sizing of steel catenary risers and similar lines, and a sanity check before a full dynamic analysis.
+
+  - slug: pipeline-lateral-buckling
+    code: Lateral buckling
+    name: Pipeline lateral (snake) buckling — DNV-RP-F110
+    discipline: Pipelines
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    src_tag: src_web_std_pipeline-lateral-buckling
+    intro: >-
+      Ask Deckhand to check a line for lateral (snake) buckling under high pressure and
+      temperature, to DNV-RP-F110.
+    does:
+      - Screen a line's susceptibility to global lateral (snake) buckling under HP/HT.
+      - Estimate buckle spacing and the feed-in into a buckle.
+      - Flag where mitigation (sleepers, buoyancy, snaking) is needed.
+    chips: ["DNV-RP-F110", "Lateral buckling", "HP/HT", "Global buckling", "Feed-in"]
+    faqs:
+      - q: What is lateral buckling?
+        a: A high-pressure/high-temperature line wants to expand; where it is unrestrained on the seabed it relieves that load by snaking sideways into lateral buckles. DNV-RP-F110 governs the global-buckling design.
+      - q: What does Deckhand return?
+        a: A susceptibility screen, an estimate of buckle spacing and feed-in, and a flag where mitigation is needed.
+
+  - slug: pipeline-upheaval-buckling
+    code: Upheaval buckling
+    name: Pipeline upheaval buckling and required cover — DNV-RP-F110
+    discipline: Pipelines
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    src_tag: src_web_std_pipeline-upheaval-buckling
+    intro: >-
+      Ask Deckhand to check a buried line for upheaval buckling and work out the cover it needs,
+      to DNV-RP-F110.
+    does:
+      - Screen a buried line for upheaval buckling from an imperfection under temperature and pressure.
+      - Work out the download (cover/rock) needed to restrain it.
+      - Report the required cover height and where rock dump is needed.
+    chips: ["DNV-RP-F110", "Upheaval buckling", "Buried pipeline", "Cover height", "Rock dump"]
+    faqs:
+      - q: What is upheaval buckling?
+        a: A buried high-temperature line at a vertical imperfection (an overbend) can push up through its cover; the design provides enough download — soil cover or rock dump — to hold it down. DNV-RP-F110 governs it.
+      - q: What does Deckhand return?
+        a: An upheaval susceptibility screen and the required cover/download to restrain the line, flagging where rock dump is needed.

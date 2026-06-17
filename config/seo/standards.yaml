@@ -171,6 +171,7 @@ standards:
     name: Mooring line fatigue (API RP 2SK / DNV-OS-E301)
     discipline: Mooring
     pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
+    calculator: { label: "Mooring fatigue calculator", href: "../calculators/mooring-fatigue.html" }
     src_tag: src_web_std_mooring-line-fatigue
     intro: >-
       Ask Deckhand to estimate the fatigue life of a chain or wire mooring line from its
@@ -313,6 +314,7 @@ standards:
     name: Production forecasting and decline (Arps)
     discipline: Production
     pillar: { label: "Wells & Subsurface", href: "../solutions/wells-subsurface.html" }
+    calculator: { label: "Decline curve & EUR calculator", href: "../calculators/decline-curve.html" }
     src_tag: src_web_std_arps-decline-curve
     intro: >-
       Ask Deckhand to forecast a well's decline and estimate ultimate recovery using the Arps

@@ -407,3 +407,85 @@ standards:
         a: The US Bureau of Safety and Environmental Enforcement publishes Gulf of Mexico lease and well production data; Deckhand summarises and compares it without you wrangling the raw files.
       - q: What can I do with it?
         a: Summarise a lease or well, compare wells across a block, and feed the history into a decline forecast or a field-economics case.
+
+  # ===== Batch 4 — Subsea depth: riser + buckling (W8 batch 4) ================
+
+  - slug: riser-combined-loading
+    code: API RP 2RD / DNV-OS-F201
+    name: Riser combined-loading utilisation
+    discipline: Riser
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    src_tag: src_web_std_riser-combined-loading
+    intro: >-
+      Ask Deckhand to run a riser combined tension-and-bending utilisation check — the API RP 2RD
+      working-stress method or the DNV-OS-F201 LRFD method — the governing case traced.
+    does:
+      - Run a combined tension-and-bending utilisation check (API RP 2RD, working stress).
+      - Run the LRFD combined-loading utilisation check (DNV-OS-F201).
+      - Report the governing load case and the utilisation against the allowable.
+    chips: ["API RP 2RD", "DNV-OS-F201", "Riser", "Combined loading", "Utilisation"]
+    faqs:
+      - q: What is a riser combined-loading check?
+        a: A check that a riser's combined effective tension and bending stays within the allowable — by the API RP 2RD working-stress method or the DNV-OS-F201 load-and-resistance-factor (LRFD) method.
+      - q: Which method should I use?
+        a: API RP 2RD is the working-stress approach; DNV-OS-F201 is the LRFD approach. Deckhand runs either and reports the governing load case and the utilisation.
+
+  - slug: catenary-riser
+    code: Catenary riser
+    name: Catenary riser shape, layback and top tension
+    discipline: Riser
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    src_tag: src_web_std_catenary-riser
+    intro: >-
+      Ask Deckhand to work out the shape, layback and top tension of a catenary riser or line
+      from its weight and the water depth.
+    does:
+      - Work out the catenary shape, layback and touchdown point of a riser or line.
+      - Compute the top tension and the bottom tension.
+      - Screen how shape and top tension move with weight, depth or current.
+    chips: ["Catenary", "Steel catenary riser (SCR)", "Top tension", "Layback", "Touchdown"]
+    faqs:
+      - q: What does a catenary calculation give me?
+        a: The static shape of a riser or line hanging as a catenary — the layback, the touchdown point, and the top and bottom tensions — for a given submerged weight and water depth.
+      - q: What is it used for?
+        a: First-pass sizing of steel catenary risers and similar lines, and a sanity check before a full dynamic analysis.
+
+  - slug: pipeline-lateral-buckling
+    code: Lateral buckling
+    name: Pipeline lateral (snake) buckling — DNV-RP-F110
+    discipline: Pipelines
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    src_tag: src_web_std_pipeline-lateral-buckling
+    intro: >-
+      Ask Deckhand to check a line for lateral (snake) buckling under high pressure and
+      temperature, to DNV-RP-F110.
+    does:
+      - Screen a line's susceptibility to global lateral (snake) buckling under HP/HT.
+      - Estimate buckle spacing and the feed-in into a buckle.
+      - Flag where mitigation (sleepers, buoyancy, snaking) is needed.
+    chips: ["DNV-RP-F110", "Lateral buckling", "HP/HT", "Global buckling", "Feed-in"]
+    faqs:
+      - q: What is lateral buckling?
+        a: A high-pressure/high-temperature line wants to expand; where it is unrestrained on the seabed it relieves that load by snaking sideways into lateral buckles. DNV-RP-F110 governs the global-buckling design.
+      - q: What does Deckhand return?
+        a: A susceptibility screen, an estimate of buckle spacing and feed-in, and a flag where mitigation is needed.
+
+  - slug: pipeline-upheaval-buckling
+    code: Upheaval buckling
+    name: Pipeline upheaval buckling and required cover — DNV-RP-F110
+    discipline: Pipelines
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    src_tag: src_web_std_pipeline-upheaval-buckling
+    intro: >-
+      Ask Deckhand to check a buried line for upheaval buckling and work out the cover it needs,
+      to DNV-RP-F110.
+    does:
+      - Screen a buried line for upheaval buckling from an imperfection under temperature and pressure.
+      - Work out the download (cover/rock) needed to restrain it.
+      - Report the required cover height and where rock dump is needed.
+    chips: ["DNV-RP-F110", "Upheaval buckling", "Buried pipeline", "Cover height", "Rock dump"]
+    faqs:
+      - q: What is upheaval buckling?
+        a: A buried high-temperature line at a vertical imperfection (an overbend) can push up through its cover; the design provides enough download — soil cover or rock dump — to hold it down. DNV-RP-F110 governs it.
+      - q: What does Deckhand return?
+        a: An upheaval susceptibility screen and the required cover/download to restrain the line, flagging where rock dump is needed.

@@ -32,6 +32,14 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Vision -->
+  <url>
+    <loc>https://www.aceengineer.com/vision.html</loc>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Solutions hub + domain pages -->
   <url>
     <loc>https://www.aceengineer.com/solutions/</loc>

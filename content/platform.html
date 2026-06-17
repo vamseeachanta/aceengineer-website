@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The digitalmodel platform: 7,000+ standard-mapped engineering functions across ~30 disciplines, 42 standards implemented. Library-first, importable, deterministic — the engine behind Deckhand and our calculators.">
+    <meta name="keywords" content="digitalmodel, offshore engineering library, standards-traceable calculations, OrcaFlex automation, OrcaWave, fatigue analysis library, API 579, DNV calculations, Python engineering library">
+
+    <meta property="og:title" content="The Platform — digitalmodel | AceEngineer">
+    <meta property="og:description" content="7,000+ standard-mapped functions across ~30 engineering disciplines. Every result traces to a DNV / API / ISO / ASME clause. The deterministic engine behind Deckhand.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/platform.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Platform — digitalmodel | AceEngineer">
+    <meta name="twitter:description" content="The deterministic, standards-traceable engine behind Deckhand.">
+
+    <title>The Platform — digitalmodel Engineering Engine | AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <style>
+        .cap-card { background:#fff; border:1px solid #e6e8eb; border-radius:10px; padding:26px; margin-bottom:24px; height:100%; }
+        .cap-card h3 { margin-top:0; color:#2c3e50; }
+        .cap-card ul { padding-left:18px; margin-bottom:0; }
+        .tier-bar { background:#f8f9fa; padding:48px 0; }
+        .tier-step { text-align:center; padding:18px; }
+        .tier-step .tier-now { color:#1f8a4c; font-weight:700; }
+        .tier-step .tier-next { color:#6b7785; }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <section class="hero-section" style="padding-bottom:40px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h1 class="hero-title">The platform</h1>
+                    <p class="hero-subtitle">Deckhand and our free calculators run on <strong>digitalmodel</strong> &mdash; an open-source library of 7,000+ standard-mapped engineering functions across ~30 disciplines. Library-first, importable, deterministic.</p>
+                    <p class="hero-identity">42 standards implemented &middot; 221 S-N curves &middot; every function traces to a clause</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding:56px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">What it computes</h2>
+                    <div class="row">
+                        <div class="col-md-4"><div class="cap-card"><h3>Structural &amp; Fatigue</h3><ul><li>S-N fatigue (221 curves, 17 standards)</li><li>Spectral fatigue (Dirlik, Wirsching-Light)</li><li>Rainflow counting, SCF</li></ul></div></div>
+                        <div class="col-md-4"><div class="cap-card"><h3>Asset Integrity / FFS</h3><ul><li>API 579 Level 1/2 (GML, LML)</li><li>B31G remaining strength</li><li>Cathodic protection (DNV-RP-B401)</li></ul></div></div>
+                        <div class="col-md-4"><div class="cap-card"><h3>Subsea Pipeline</h3><ul><li>On-bottom stability (DNV-RP-F109)</li><li>Wall thickness (DNV-ST-F101)</li><li>Burst, collapse, combined loading</li></ul></div></div>
+                        <div class="col-md-4"><div class="cap-card"><h3>Hydrodynamics</h3><ul><li>Wave spectra (JONSWAP, Bretschneider&hellip;)</li><li>RAO processing, seakeeping</li><li>OrcaWave / AQWA bridges</li></ul></div></div>
+                        <div class="col-md-4"><div class="cap-card"><h3>Mooring, Riser &amp; OrcaFlex</h3><ul><li>Catenary &amp; lazy-wave risers</li><li>VIV and free-span screening</li><li>OrcaFlex model generation from YAML</li></ul></div></div>
+                        <div class="col-md-4"><div class="cap-card"><h3>Energy Data &amp; Economics</h3><ul><li>BSEE production data &amp; reporting</li><li>Arps decline curves, EUR</li><li>NPV / MIRR / IRR field economics</li></ul></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Honest tier framing -->
+    <section class="tier-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">Where it is &mdash; and where it's going</h2>
+                    <p class="section-subtitle text-center">We're specific about what's production-ready today versus on the roadmap.</p>
+                    <div class="row">
+                        <div class="col-md-4"><div class="tier-step"><p class="tier-now">Today</p><h3>Engineering engine</h3><p>Typed functions with worked examples and tests from real standard clauses. Same inputs, same outputs.</p></div></div>
+                        <div class="col-md-4"><div class="tier-step"><p class="tier-next">Next</p><h3>Agent routing</h3><p>Natural-language question &rarr; correct module, with gap detection. This is what Deckhand is growing into.</p></div></div>
+                        <div class="col-md-4"><div class="tier-step"><p class="tier-next">Later</p><h3>Design iteration</h3><p>Brief &rarr; calculation package &rarr; checks &rarr; refinement. On the roadmap, not claimed as shipped.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0; text-align:center;">
+        <div class="container">
+            <h2 class="section-title">Library-first, not locked in a UI</h2>
+            <p class="section-subtitle" style="max-width:720px; margin:0 auto 24px;">The calculations are functions, not a SaaS login. Agents and automation can import them directly &mdash; which is exactly why Deckhand can run them deterministically and trace every result to its source.</p>
+            <p>
+                <a href="https://github.com/vamseeachanta/digitalmodel" target="_blank" rel="noopener" class="btn btn-info">View digitalmodel on GitHub</a>
+                <a href="deckhand.html" class="btn btn-default">See Deckhand</a>
+            </p>
+        </div>
+    </section>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

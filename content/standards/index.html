@@ -1,0 +1,85 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Engineering standards you can run from chat — DNV, API, ASME and more. Each page explains the standard and lets you run the check on Open Deck, standards-traceable and deterministic.">
+    <meta name="keywords" content="engineering standards calculator, DNV API ASME calculators, offshore standards, fatigue wall thickness on-bottom stability cathodic protection">
+
+    <meta property="og:title" content="Engineering Standards, Run From Chat | AceEngineer">
+    <meta property="og:description" content="Run DNV / API / ASME checks from a chat message — traced to the clause, deterministic.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aceengineer.com/standards/">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Engineering Standards, Run From Chat | AceEngineer">
+    <meta name="twitter:description" content="Run DNV / API / ASME checks from chat, traced to the clause.">
+
+    <title>Engineering Standards, Run From Chat | AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <style>
+        .std-card{background:#fff;border:1px solid #e6e8eb;border-radius:10px;padding:22px;margin-bottom:24px;height:100%;}
+        .std-card h3{font-size:1.05em;color:#2c3e50;margin:6px 0 14px;}
+        .std-code{display:inline-block;background:#2c3e50;color:#fff;border-radius:6px;padding:3px 10px;font-size:.82em;font-weight:700;}
+        .sol-group-title{margin:34px 0 10px;}
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <section class="hero-section" style="padding-bottom:24px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h1 class="hero-title">Standards, run from chat</h1>
+                    <p class="hero-subtitle">Each standard below explains what it governs and lets you run the check on Open Deck &mdash; traced to the clause, deterministic, with the assumptions shown.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding:24px 0 56px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title sol-group-title">Fatigue</h2>
+                    <div class="row">
+                        <div class="col-md-4"><div class="std-card"><span class="std-code">DNV-RP-C203</span><h3>Fatigue design of offshore steel structures</h3><a href="dnv-rp-c203-fatigue.html" class="btn btn-sm btn-info">Open</a></div></div>
+                    </div>
+
+                    <h2 class="section-title sol-group-title">Pipelines</h2>
+                    <div class="row">
+                        <div class="col-md-4"><div class="std-card"><span class="std-code">DNV-ST-F101</span><h3>Submarine pipeline systems — pressure containment &amp; wall thickness</h3><a href="dnv-st-f101-wall-thickness.html" class="btn btn-sm btn-info">Open</a></div></div>
+                        <div class="col-md-4"><div class="std-card"><span class="std-code">DNV-RP-F109</span><h3>On-bottom stability design of submarine pipelines</h3><a href="dnv-rp-f109-on-bottom-stability.html" class="btn btn-sm btn-info">Open</a></div></div>
+                        <div class="col-md-4"><div class="std-card"><span class="std-code">DNV-RP-F105</span><h3>Free spanning pipelines — VIV and fatigue</h3><a href="dnv-rp-f105-free-span-viv.html" class="btn btn-sm btn-info">Open</a></div></div>
+                    </div>
+
+                    <h2 class="section-title sol-group-title">Asset integrity</h2>
+                    <div class="row">
+                        <div class="col-md-4"><div class="std-card"><span class="std-code">API 579-1 / ASME FFS-1</span><h3>Fitness-for-service assessment of in-service equipment</h3><a href="api-579-fitness-for-service.html" class="btn btn-sm btn-info">Open</a></div></div>
+                        <div class="col-md-4"><div class="std-card"><span class="std-code">DNV-RP-B401</span><h3>Cathodic protection design — sacrificial anodes</h3><a href="dnv-rp-b401-cathodic-protection.html" class="btn btn-sm btn-info">Open</a></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container"><div class="row"><div class="col-md-8 col-md-offset-2 text-center">
+            <h2>Bring a real check</h2>
+            <p>Join Open Deck and run any of these against your own inputs.</p>
+            <!-- OPEN_DECK_CTA -->
+            <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="src_web_standards_hub">Try Open Deck on Telegram</a>
+        </div></div></div>
+    </section>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

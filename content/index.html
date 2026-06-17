@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Offshore engineering calculations you can trust. Traceable to 17 international standards. Free interactive calculators, automation services, and consulting for subsea, fatigue, and structural analysis.">
-    <meta name="keywords" content="offshore engineering automation, OrcaFlex automation, AQWA automation, fatigue analysis, mooring design, riser analysis, subsea engineering, offshore wind engineering">
+    <meta name="description" content="The AI engineering firm for offshore energy. Deckhand drives real analysis, documentation, and pull requests from chat — under hard, auditable guardrails. Standards-traceable, deterministic deliverables.">
+    <meta name="keywords" content="AI engineering, offshore energy AI, OrcaFlex automation, fatigue analysis, mooring design, riser analysis, subsea engineering, deterministic engineering, standards-traceable calculations, engineering AI agent">
 
     <!-- Open Graph meta tags -->
-    <meta property="og:title" content="AceEngineer - Engineering Calculations Traceable to International Standards">
-    <meta property="og:description" content="Free offshore engineering calculators and automation services. Every calculation traces to its standard. DNV, API, ASME, BS compliance.">
+    <meta property="og:title" content="AceEngineer — The AI Engineering Firm for Offshore Energy">
+    <meta property="og:description" content="Deckhand drives real engineering work from a chat message — analysis, documentation, issues and pull requests — executed by an AI agent under hard, auditable guardrails. Standards-traceable. Deterministic.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aceengineer.com">
     <meta property="og:site_name" content="Analytical & Computational Engineering">
 
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AceEngineer - Engineering Calculations Traceable to International Standards">
-    <meta name="twitter:description" content="Free offshore engineering calculators and automation services. Every calculation traces to its standard.">
+    <meta name="twitter:title" content="AceEngineer — The AI Engineering Firm for Offshore Energy">
+    <meta name="twitter:description" content="An AI agent that does real offshore engineering — and shows its work. Standards-traceable, deterministic deliverables.">
 
-    <title>Offshore Engineering Calculations & Automation | AceEngineer</title>
+    <title>The AI Engineering Firm for Offshore Energy | AceEngineer</title>
 
     <include src="partials/head-common.html"></include>
 
@@ -32,7 +32,7 @@
         "alternateName": "AceEngineer",
         "url": "https://aceengineer.com",
         "logo": "https://aceengineer.com/assets/img/logo.png",
-        "description": "Engineering automation for offshore and energy industries. OrcaFlex automation, AQWA integration, fatigue analysis, and mooring design.",
+        "description": "The AI engineering firm for offshore energy. Deckhand, an AI engineering agent, runs standards-traceable, deterministic analysis for subsea, mooring, fatigue, hydrodynamics, and field development — built on the open-source digitalmodel library.",
         "foundingDate": "2010",
         "areaServed": ["United States", "United Kingdom", "Norway", "Brazil"],
         "sameAs": [
@@ -52,13 +52,15 @@
             "availableLanguage": "English"
         },
         "knowsAbout": [
+            "AI engineering agents",
             "OrcaFlex automation",
-            "AQWA hydrodynamic analysis",
+            "OrcaWave and AQWA hydrodynamic analysis",
             "Fatigue analysis",
             "Mooring system design",
             "Riser engineering",
-            "Offshore wind foundations",
-            "Subsea engineering"
+            "Fitness-for-service (API 579)",
+            "Subsea pipelines",
+            "Offshore field development economics"
         ]
     }
     </script>
@@ -68,37 +70,37 @@
     {
         "@context": "https://schema.org",
         "@type": "Service",
-        "serviceType": "Engineering Automation Services",
+        "serviceType": "AI Engineering Services for Offshore Energy",
         "provider": {
             "@id": "https://aceengineer.com/#organization"
         },
         "areaServed": "Worldwide",
         "hasOfferCatalog": {
             "@type": "OfferCatalog",
-            "name": "Engineering Automation Solutions",
+            "name": "AI Engineering Solutions",
             "itemListElement": [
                 {
                     "@type": "Offer",
                     "itemOffered": {
                         "@type": "Service",
-                        "name": "OrcaFlex Automation",
-                        "description": "Batch processing for riser, mooring, and dynamic analysis"
+                        "name": "Deckhand — AI Engineering Agent",
+                        "description": "Drive real engineering work — analysis, documentation, issues and pull requests — from a chat message, executed by an AI agent under hard, auditable guardrails."
                     }
                 },
                 {
                     "@type": "Offer",
                     "itemOffered": {
                         "@type": "Service",
-                        "name": "Fatigue Analysis Automation",
-                        "description": "221 S-N curves from DNV, API, BS standards with batch processing"
+                        "name": "Engineering Platform (digitalmodel)",
+                        "description": "7,000+ standard-mapped functions across ~30 engineering disciplines; every result traces to a DNV, API, ISO, or ASME clause."
                     }
                 },
                 {
                     "@type": "Offer",
                     "itemOffered": {
                         "@type": "Service",
-                        "name": "AQWA Automation",
-                        "description": "Hydrodynamic model generation and post-processing"
+                        "name": "Fatigue & Hydrodynamics Automation",
+                        "description": "221 S-N curves from 17 standards; OrcaFlex / OrcaWave / AQWA model generation and post-processing."
                     }
                 }
             ]
@@ -126,6 +128,26 @@
             margin-top: 0;
             color: #2c3e50;
         }
+        /* Deckhand intro */
+        .deckhand-section { padding: 72px 0; background: #fff; }
+        .chat-demo {
+            max-width: 520px; margin: 0 auto;
+            border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.08); background: #fbfcfd;
+        }
+        .chat-demo .chat-head {
+            background: #2c3e50; color: #fff; padding: 12px 16px; font-size: 0.95em; font-weight: 600;
+        }
+        .chat-demo .bubble { margin: 14px 16px; padding: 10px 14px; border-radius: 14px; line-height: 1.45; }
+        .chat-demo .from-user { background: #d9eafc; margin-left: 60px; }
+        .chat-demo .from-bot  { background: #eef1f4; margin-right: 40px; }
+        .chat-demo .bubble code { background: rgba(0,0,0,0.06); padding: 1px 5px; border-radius: 4px; }
+        .chat-demo .meta { font-size: 0.82em; color: #6b7785; }
+        .deterministic-strip { background: #2c3e50; color: #fff; padding: 56px 0; }
+        .deterministic-strip .pillar { text-align: center; padding: 12px; }
+        .deterministic-strip .pillar h3 { color: #fff; margin: 8px 0; }
+        .deterministic-strip .pillar p { color: rgba(255,255,255,0.78); }
+        .deterministic-strip .pill-emoji { font-size: 2em; }
     </style>
 </head>
 <body>
@@ -137,12 +159,73 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
-                    <h1 class="hero-title">Engineering Calculations You Can Trust.<br>Traceable to International Standards.</h1>
-                    <p class="hero-subtitle">Tethering timeless engineering to a single source of truth. Every calculation traces to its standard, every standard to its implementation. Powered by open-source digitalmodel.</p>
-                    <p class="hero-identity">Analytical &amp; Computational Engineering &mdash; 15+ years of offshore engineering, 17 international standards, 704+ production-tested Python modules</p>
+                    <h1 class="hero-title">The AI engineering firm<br>for offshore energy.</h1>
+                    <p class="hero-subtitle">Deckhand drives real engineering work &mdash; analysis, documentation, issues and pull requests &mdash; straight from a chat message, executed by an AI agent under hard, auditable guardrails. Standards-traceable. Deterministic. It shows its work.</p>
+                    <p class="hero-identity">Built on the open-source <strong>digitalmodel</strong> library &mdash; 7,000+ standard-mapped functions, 42 standards implemented, ~30 engineering disciplines.</p>
                     <div class="hero-cta">
-                        <a href="contact.html" class="btn btn-primary btn-lg">Get a Free Assessment</a>
-                        <a href="case-studies/" class="btn btn-default btn-lg">See Case Studies</a>
+                        <!-- OPEN_DECK_CTA: live group invite. Swap to https://t.me/the_deckhand_bot?start=src_web_home_hero once deckhand#432 handler is live. -->
+                        <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="src_web_home_hero">Try Open Deck &mdash; free</a>
+                        <a href="proof.html" class="btn btn-default btn-lg">See the proof</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet Deckhand -->
+    <section class="deckhand-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <h2 class="section-title">Meet Deckhand</h2>
+                    <p class="section-subtitle" style="text-align:left;">Ask an engineering question in plain language. Deckhand runs the real calculation &mdash; against the right standard &mdash; and returns a deliverable with every assumption traced. Changes to code or docs arrive as pull requests, never silent edits.</p>
+                    <ul>
+                        <li><strong>AI that shows its work</strong> &mdash; assumptions, standards, and scope limits on every result.</li>
+                        <li><strong>Deterministic</strong> &mdash; same input, same output, audit-ready.</li>
+                        <li><strong>Governed</strong> &mdash; PR-only, no force-push or deletes; everything out of scope returns 404.</li>
+                    </ul>
+                    <p>
+                        <a href="deckhand.html" class="btn btn-info">How Deckhand works</a>
+                        <!-- OPEN_DECK_CTA -->
+                        <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-default" data-cta="open-deck" data-src="src_web_home_meet">Try it on Telegram</a>
+                    </p>
+                </div>
+                <div class="col-md-6 col-md-offset-1">
+                    <div class="chat-demo" aria-label="Example Deckhand conversation">
+                        <div class="chat-head">Open Deck &middot; @the_deckhand_bot</div>
+                        <div class="bubble from-user">Wall thickness for a 12" pipeline, 10 MPa design pressure, X65 &mdash; DNV-ST-F101?</div>
+                        <div class="bubble from-bot">Minimum wall <strong>9.5 mm</strong> (incl. 1.0 mm corrosion allowance). Governing check: pressure containment, DNV-ST-F101 (2021) §5.4.2. Utilisation 0.81.<br><span class="meta">Assumptions: SMYS 450 MPa, t<sub>fab</sub> −12.5%, no buckling check requested. Full note &amp; PR ready on request.</span></div>
+                        <div class="bubble from-user">Add the local buckling check.</div>
+                        <div class="bubble from-bot">Done &mdash; combined loading per §5.4.4 passes (utilisation 0.88). Opened <code>PR #42</code> with the calculation note + inputs.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deterministic by design strip -->
+    <section class="deterministic-strip">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 text-center">
+                    <h2 class="section-title" style="color:#fff;">Deterministic by design</h2>
+                    <p class="section-subtitle" style="color:rgba(255,255,255,0.8);">The thing practising engineers actually need from AI: the same answer every time, traceable to a clause, defensible in review.</p>
+                    <div class="row" style="margin-top:24px;">
+                        <div class="col-md-4 pillar">
+                            <div class="pill-emoji">&#9878;</div>
+                            <h3>Standards-traceable</h3>
+                            <p>Every result maps to a DNV / API / ISO / ASME clause. 42 standards implemented.</p>
+                        </div>
+                        <div class="col-md-4 pillar">
+                            <div class="pill-emoji">&#128290;</div>
+                            <h3>680 byte-identical cases</h3>
+                            <p>Reproducible by construction &mdash; same input, same output, no model drift.</p>
+                        </div>
+                        <div class="col-md-4 pillar">
+                            <div class="pill-emoji">&#128221;</div>
+                            <h3>Assumption ledger</h3>
+                            <p>It states what it assumed and where the scope ends &mdash; AI that shows its work.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -155,7 +238,7 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <h2 class="section-title text-center">Try Our Engineering Calculators</h2>
-                    <p class="section-subtitle text-center">Free, browser-based tools built on international standards. No signup required.</p>
+                    <p class="section-subtitle text-center">Free, browser-based tools built on international standards &mdash; the same engine Deckhand runs. No signup required.</p>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="showcase-card text-center">
@@ -203,113 +286,16 @@
                         </div>
                         <div class="col-md-4">
                             <div class="pain-card">
-                                <div class="pain-icon">&#128203;</div>
-                                <h3>Standards Compliance Burden</h3>
-                                <p>Keeping up with DNV, API, and ABS requirements is a full-time job. S-N curve updates, SCF calculations, documentation&mdash;it never ends.</p>
+                                <div class="pain-icon">&#129302;</div>
+                                <h3>AI You Can't Defend</h3>
+                                <p>Generic chatbots give a different answer every time and cite nothing. You can't put that in a calculation note or hand it to a checker.</p>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="pain-card">
                                 <div class="pain-icon">&#128101;</div>
                                 <h3>Knowledge Concentration Risk</h3>
-                                <p>Your OrcaFlex expertise lives in the heads of 1-2 senior engineers. When they're unavailable, projects stall.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why AceEngineer Section -->
-    <section class="why-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <h2 class="section-title text-center">Why AceEngineer</h2>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="why-card text-center">
-                                <div class="why-number">704+</div>
-                                <h3>Production Modules</h3>
-                                <p>Validated, tested, production-grade Python code covering fatigue, mooring, riser analysis, and more. Not prototypes&mdash;battle-tested tools used on real projects.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="why-card text-center">
-                                <div class="why-number">15+</div>
-                                <h3>Years Offshore Experience</h3>
-                                <p>Deep expertise in DNV, API, ABS, and Norsok standards. Gulf of Mexico, North Sea, and global deepwater projects. We speak your engineering language.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="why-card text-center">
-                                <div class="why-number">60-80%</div>
-                                <h3>Automated Time Savings</h3>
-                                <p>We deliver automated workflows, not consulting hours. You send a design matrix, we return validated results&mdash;often overnight.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Solution Section -->
-    <section class="solution-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <h2 class="section-title text-center">Engineering Automation That Actually Works</h2>
-                    <p class="section-subtitle text-center">We don't sell consulting hours. We deliver automated engineering pipelines that run while you sleep.</p>
-
-                    <div class="row solution-features">
-                        <div class="col-md-6">
-                            <div class="solution-feature">
-                                <h3>OrcaFlex Automation</h3>
-                                <ul>
-                                    <li>Batch model generation from design matrices</li>
-                                    <li>Automated sensitivity studies (50+ cases overnight)</li>
-                                    <li>Results extraction to standardized reports</li>
-                                    <li>VIV analysis and fatigue post-processing</li>
-                                </ul>
-                                <p class="feature-result"><strong>Result:</strong> 50 riser configurations in 4 hours, not 50 hours</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="solution-feature">
-                                <h3>Fatigue Analysis Library</h3>
-                                <ul>
-                                    <li>221 S-N curves from 17 international standards</li>
-                                    <li>DNV-RP-C203, API RP 2A, BS 7608, ABS, Norsok</li>
-                                    <li>Automated SCF calculation and damage assessment</li>
-                                    <li>Batch processing for 200+ joint inventories</li>
-                                </ul>
-                                <p class="feature-result"><strong>Result:</strong> Platform fatigue assessment in days, not weeks</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="solution-feature">
-                                <h3>AQWA Integration</h3>
-                                <ul>
-                                    <li>Hydrodynamic model generation</li>
-                                    <li>RAO processing and response analysis</li>
-                                    <li>Vessel operability studies</li>
-                                    <li>Weather window analysis</li>
-                                </ul>
-                                <p class="feature-result"><strong>Result:</strong> 100+ sea state combinations analyzed automatically</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="solution-feature">
-                                <h3>Mooring & Riser Design</h3>
-                                <ul>
-                                    <li>Catenary and lazy wave riser analysis</li>
-                                    <li>SALM and taut mooring systems</li>
-                                    <li>Anchor design and verification</li>
-                                    <li>Installation engineering</li>
-                                </ul>
-                                <p class="feature-result"><strong>Result:</strong> Mooring sensitivity studies with full documentation</p>
+                                <p>Your OrcaFlex and standards expertise lives in the heads of 1-2 senior engineers. When they're unavailable, projects stall.</p>
                             </div>
                         </div>
                     </div>
@@ -325,24 +311,24 @@
                 <div class="col-md-10 col-md-offset-1">
                     <div class="metrics-row">
                         <div class="metric-box">
+                            <div class="metric-value">7,000+</div>
+                            <div class="metric-label">Standard-Mapped Functions</div>
+                            <div class="metric-detail">Across ~30 disciplines</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-value">42</div>
+                            <div class="metric-label">Standards</div>
+                            <div class="metric-detail">DNV, API, ISO, ASME, BS&hellip;</div>
+                        </div>
+                        <div class="metric-box">
                             <div class="metric-value">221</div>
                             <div class="metric-label">S-N Curves</div>
-                            <div class="metric-detail">From DNV, API, BS, ABS, Norsok</div>
+                            <div class="metric-detail">From 17 fatigue standards</div>
                         </div>
                         <div class="metric-box">
-                            <div class="metric-value">60-80%</div>
-                            <div class="metric-label">Time Savings</div>
-                            <div class="metric-detail">vs. manual analysis</div>
-                        </div>
-                        <div class="metric-box">
-                            <div class="metric-value">704+</div>
-                            <div class="metric-label">Python Modules</div>
-                            <div class="metric-detail">Production-tested code</div>
-                        </div>
-                        <div class="metric-box">
-                            <div class="metric-value">17</div>
-                            <div class="metric-label">Standards</div>
-                            <div class="metric-detail">International compliance</div>
+                            <div class="metric-value">680</div>
+                            <div class="metric-label">Byte-Identical Cases</div>
+                            <div class="metric-detail">Deterministic by construction</div>
                         </div>
                     </div>
                 </div>
@@ -350,39 +336,38 @@
         </div>
     </section>
 
-    <!-- Verticals Section -->
+    <!-- Solutions / Verticals Section -->
     <section class="verticals-section">
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <h2 class="section-title text-center">Who We Help</h2>
+                    <h2 class="section-title text-center">Solutions by domain</h2>
+                    <p class="section-subtitle text-center">Each maps to a live Deckhand channel you can try on Open Deck.</p>
 
                     <div class="row vertical-cards">
                         <div class="col-md-4">
                             <div class="vertical-card">
-                                <h3>Offshore Engineering Firms</h3>
-                                <p class="vertical-problem"><strong>Problem:</strong> Engineers drowning in repetitive OrcaFlex tasks</p>
-                                <p class="vertical-solution"><strong>Solution:</strong> Batch automation that runs 50+ cases overnight</p>
-                                <a href="engineering.html#offshore" class="btn btn-sm btn-info" aria-label="Learn more about offshore engineering automation">Learn More<span class="sr-only"> about offshore engineering automation</span></a>
+                                <h3>Subsea, Pipelines &amp; Integrity</h3>
+                                <p class="vertical-problem">Wall thickness, on-bottom stability, free-span / VIV, fitness-for-service, cathodic protection.</p>
+                                <a href="solutions/subsea-pipelines-integrity.html" class="btn btn-sm btn-info">Explore</a>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="vertical-card">
-                                <h3>Offshore Wind Developers</h3>
-                                <p class="vertical-problem"><strong>Problem:</strong> Monopile fatigue analysis bottleneck (200+ joints)</p>
-                                <p class="vertical-solution"><strong>Solution:</strong> Pre-validated DNV curves with batch processing</p>
-                                <a href="engineering.html#wind" class="btn btn-sm btn-info" aria-label="Learn more about offshore wind foundation analysis">Learn More<span class="sr-only"> about offshore wind analysis</span></a>
+                                <h3>Floating &amp; Marine Systems</h3>
+                                <p class="vertical-problem">Mooring fatigue, FPSO spread mooring, vessel motions &amp; stability, hydrodynamics.</p>
+                                <a href="solutions/floating-marine.html" class="btn btn-sm btn-info">Explore</a>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="vertical-card">
-                                <h3>EPC Contractors</h3>
-                                <p class="vertical-problem"><strong>Problem:</strong> Weather window analysis delays installation</p>
-                                <p class="vertical-solution"><strong>Solution:</strong> Automated operability studies in real-time</p>
-                                <a href="engineering.html#epc" class="btn btn-sm btn-info" aria-label="Learn more about EPC contractor automation">Learn More<span class="sr-only"> about EPC contractor solutions</span></a>
+                                <h3>Wells &amp; Subsurface</h3>
+                                <p class="vertical-problem">Production forecasting, field NPV / economics, nodal analysis, rod-pump diagnostics.</p>
+                                <a href="solutions/wells-subsurface.html" class="btn btn-sm btn-info">Explore</a>
                             </div>
                         </div>
                     </div>
+                    <p class="text-center" style="margin-top:8px;"><a href="solutions/" class="btn btn-default">View all 7 solution domains</a></p>
                 </div>
             </div>
         </div>
@@ -419,39 +404,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Integration Badges -->
-    <section class="badges-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1 text-center">
-                    <h2 class="section-title">Software & Standards Integration</h2>
-                    <div class="badges-row">
-                        <div class="badge-item">
-                            <div class="badge-icon">OrcaFlex</div>
-                            <div class="badge-label">Full API Integration</div>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon">AQWA</div>
-                            <div class="badge-label">Automation Ready</div>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon">DNV</div>
-                            <div class="badge-label">RP-C203 Validated</div>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon">API</div>
-                            <div class="badge-label">RP 2A Compliant</div>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon">Python</div>
-                            <div class="badge-label">Open Source Tools</div>
-                        </div>
-                    </div>
+                    <p class="text-center" style="margin-top: 24px;">
+                        <a href="proof.html" class="btn btn-default">See how we prove it</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -463,37 +418,18 @@
             <div class="row">
                 <div class="col-md-10 col-md-offset-1 text-center">
                     <h2 class="section-title">Standards Compliance You Can Trust</h2>
-                    <p class="section-subtitle">17 international standards codified into automated, auditable workflows</p>
+                    <p class="section-subtitle">International standards codified into automated, auditable workflows</p>
                     <div class="standards-badges">
                         <span class="standard-badge">DNV-RP-C203</span>
+                        <span class="standard-badge">DNV-ST-F101</span>
                         <span class="standard-badge">API RP 2A</span>
+                        <span class="standard-badge">API 579</span>
                         <span class="standard-badge">BS 7608</span>
-                        <span class="standard-badge">ABS</span>
-                        <span class="standard-badge">Norsok</span>
-                        <span class="standard-badge">IEC 61400-3</span>
+                        <span class="standard-badge">DNV-RP-F109</span>
                         <span class="standard-badge">ASME B31.8</span>
                         <span class="standard-badge">API RP 2RD</span>
                     </div>
-                    <div class="row" style="margin-top: 30px;">
-                        <div class="col-md-4">
-                            <div class="proof-item">
-                                <strong>221 S-N Curves</strong>
-                                <p>From 17 international fatigue standards</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="proof-item">
-                                <strong>8 Design Codes</strong>
-                                <p>Wall thickness, riser, and pressure vessel</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="proof-item">
-                                <strong>245 Curated Datasets</strong>
-                                <p>BSEE, metocean, production, and HSE data</p>
-                            </div>
-                        </div>
-                    </div>
+                    <p style="margin-top:20px;"><a href="standards/" class="btn btn-default">Explore standards you can run</a></p>
                 </div>
             </div>
         </div>
@@ -504,10 +440,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
-                    <h2>Stop Paying for Manual Work</h2>
-                    <p>Get a free assessment of how much time and cost automation could save your team.</p>
-                    <a href="contact.html" class="btn btn-primary btn-lg">Request Free Assessment</a>
-                    <p class="cta-note">We'll analyze your typical workflow and provide a custom automation proposal.</p>
+                    <h2>Put an AI engineer to work &mdash; free</h2>
+                    <p>Open Deck is the free tier: bring a real offshore / oil &amp; gas question and watch Deckhand run it, traced to the standard, on open repos.</p>
+                    <!-- OPEN_DECK_CTA -->
+                    <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="src_web_home_footer">Join Open Deck on Telegram</a>
+                    <p class="cta-note">For private, client-confidential work we run isolated scopes &mdash; <a href="contact.html">talk to us</a>.</p>
                 </div>
             </div>
         </div>

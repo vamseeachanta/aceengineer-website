@@ -167,7 +167,7 @@ async function bundleCSS() {
     const distCssDir = path.join(distDir, 'assets/css');
 
     // Read CSS files in correct order
-    const cssFiles = ['fonts.css', 'bootstrap-united.css', 'responsive.css', 'marketing.css'];
+    const cssFiles = ['fonts.css', 'bootstrap-united.css', 'responsive.css', 'marketing.css', 'components.css'];
     let combined = '';
     let totalOriginal = 0;
 

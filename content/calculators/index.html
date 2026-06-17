@@ -156,6 +156,52 @@ rootPath: "../"
                             "@id": "https://aceengineer.com/#organization"
                         }
                     }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 6,
+                    "item": {
+                        "@type": "WebApplication",
+                        "@id": "https://aceengineer.com/calculators/mooring-fatigue.html#calculator",
+                        "name": "Mooring Line Fatigue Calculator",
+                        "url": "https://aceengineer.com/calculators/mooring-fatigue.html",
+                        "description": "Screen mooring chain fatigue with the DNV-OS-E301 T-N curve for studless and studlink chain",
+                        "applicationCategory": "Engineering Calculator",
+                        "operatingSystem": "Any web browser",
+                        "offers": {
+                            "@type": "Offer",
+                            "price": "0",
+                            "priceCurrency": "USD",
+                            "availability": "https://schema.org/InStock"
+                        },
+                        "provider": {
+                            "@type": "Organization",
+                            "@id": "https://aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 7,
+                    "item": {
+                        "@type": "WebApplication",
+                        "@id": "https://aceengineer.com/calculators/decline-curve.html#calculator",
+                        "name": "Decline Curve & EUR Calculator (Arps)",
+                        "url": "https://aceengineer.com/calculators/decline-curve.html",
+                        "description": "Arps exponential, hyperbolic and harmonic decline with closed-form EUR and rate-vs-time forecast",
+                        "applicationCategory": "Engineering Calculator",
+                        "operatingSystem": "Any web browser",
+                        "offers": {
+                            "@type": "Offer",
+                            "price": "0",
+                            "priceCurrency": "USD",
+                            "availability": "https://schema.org/InStock"
+                        },
+                        "provider": {
+                            "@type": "Organization",
+                            "@id": "https://aceengineer.com/#organization"
+                        }
+                    }
                 }
             ]
         }
@@ -259,6 +305,53 @@ rootPath: "../"
             </div>
             <p style="margin-top: 15px;">
                 <a href="wall-thickness.html" class="btn btn-primary">Open Calculator</a>
+            </p>
+        </div>
+
+        <!-- Calculator: Mooring Line Fatigue (NEW) -->
+        <div class="calculator-card">
+            <h3><a href="mooring-fatigue.html">Mooring Line Fatigue Calculator</a> <span style="background: #5cb85c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.6em; vertical-align: middle;">NEW</span></h3>
+            <div class="calculator-meta">
+                <strong>Application:</strong> Offshore Mooring (FPSO, FOWT, Semi) |
+                <strong>Method:</strong> DNV-OS-E301 T-N Curve Screen
+            </div>
+            <p>
+                Single-stress-range fatigue screen for mooring chain using the DNV-OS-E301 T-N curve.
+                Converts a tension range to nominal stress, computes cycles to failure (N = a_D &middot; S^-m),
+                annual damage, and fatigue life for studless or studlink chain, with an interactive
+                tension-range sweep.
+            </p>
+            <div>
+                <span class="standard-tag">DNV-OS-E301</span>
+                <span class="standard-tag">T-N Curve</span>
+                <span class="standard-tag">Mooring Chain</span>
+            </div>
+            <p style="margin-top: 15px;">
+                <a href="mooring-fatigue.html" class="btn btn-primary">Open Calculator</a>
+                <a href="../demos/mooring.html" class="btn btn-default">View Mooring Demo</a>
+            </p>
+        </div>
+
+        <!-- Calculator: Decline Curve & EUR (NEW) -->
+        <div class="calculator-card">
+            <h3><a href="decline-curve.html">Decline Curve &amp; EUR Calculator</a> <span style="background: #5cb85c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.6em; vertical-align: middle;">NEW</span></h3>
+            <div class="calculator-meta">
+                <strong>Application:</strong> Production Forecasting, Reserves |
+                <strong>Method:</strong> Arps Decline (Exponential / Hyperbolic / Harmonic)
+            </div>
+            <p>
+                Forecast production and estimate ultimate recovery (EUR) with the Arps decline equations.
+                Closed-form cumulative production to an economic limit or fixed horizon, time-to-limit,
+                explicit per-day/per-year unit handling, and an interactive rate-vs-time forecast chart.
+            </p>
+            <div>
+                <span class="standard-tag">Arps Decline</span>
+                <span class="standard-tag">EUR</span>
+                <span class="standard-tag">Production Forecast</span>
+            </div>
+            <p style="margin-top: 15px;">
+                <a href="decline-curve.html" class="btn btn-primary">Open Calculator</a>
+                <a href="npv-field-development.html" class="btn btn-default">NPV Calculator</a>
             </p>
         </div>
 

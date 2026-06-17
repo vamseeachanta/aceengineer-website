@@ -304,6 +304,22 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Mooring Line Fatigue Calculator -->
+  <url>
+    <loc>https://www.aceengineer.com/calculators/mooring-fatigue.html</loc>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Decline Curve & EUR Calculator -->
+  <url>
+    <loc>https://www.aceengineer.com/calculators/decline-curve.html</loc>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Pricing Page -->
   <url>
     <loc>https://www.aceengineer.com/pricing.html</loc>

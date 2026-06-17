@@ -409,3 +409,24 @@ G-XXXXXXXXXX
 ---
 
 **Ready to implement?** Create your GA4 property first, then add the tracking script to all pages in the next commit.
+
+---
+
+## CTA / lead-source tracking (W10, #29)
+
+`assets/js/cta-tracking.js` (loaded on every page via `partials/head-common.html`) fires a GA4 event whenever a tagged call-to-action is clicked:
+
+```
+event:  cta_click
+params: cta_type    e.g. "open-deck"
+        cta_source  e.g. "src_web_std_dnv-st-f101-wall-thickness"
+        destination the link href (usually the Open Deck Telegram URL)
+        page_path   the originating page
+```
+
+Every Open Deck CTA carries `data-cta="open-deck"` and a `data-src="src_web_<domain>[_<workflow>]"` tag. The same `src_<domain>_<workflow>` convention is read on the Telegram side for lead attribution (deckhand#433) once the bot deep-link handler (deckhand#432) is live, so a click can be followed from page → bot.
+
+**To make leads visible in GA4:**
+1. **Admin → Events** — confirm `cta_click` appears after a few clicks.
+2. **Admin → Key events** — mark `cta_click` (or a filtered version where `cta_type = open-deck`) as a key event (conversion).
+3. Build an **Exploration** broken down by the `cta_source` custom dimension to see which page/domain drives Open Deck joins. Register `cta_source`, `cta_type`, `destination` under **Admin → Custom definitions** to use them as dimensions.

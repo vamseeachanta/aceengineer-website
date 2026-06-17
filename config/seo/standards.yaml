@@ -1,0 +1,165 @@
+# Programmatic-SEO manifest — standard landing pages (W8, aceengineer-website#27).
+#
+# Each entry generates content/standards/<slug>.html via
+#   uv run python scripts/seo/generate_standard_pages.py
+# The generator also rebuilds content/standards/index.html (the cluster hub) and
+# the marked <!-- BEGIN/END standards (generated) --> block in sitemap.xml.
+#
+# These pages are the SEO *cluster*; each points up to its Solutions *pillar*
+# page (W5) and, where one exists, the free calculator. Content here is sourced
+# from the digitalmodel engine + llm-wiki corpus — keep claims accurate and the
+# engineer's vocabulary (no software jargon, no "revolutionary AI").
+#
+# Field reference:
+#   slug         url slug under /standards/
+#   code         standard designation (engineer's vocabulary)
+#   name         full title of the standard / what it governs
+#   discipline   topic-cluster label
+#   pillar       {label, href}  -> Solutions page (href relative to /standards/)
+#   calculator   {label, href}  -> free calculator, or omit if none
+#   src_tag      Open Deck source tag (src_web_std_<slug>)
+#   intro        1-2 sentence lede
+#   does         bullet list — what you can ask / what it computes
+#   chips        related codes shown as chips
+#   faqs         list of {q, a} -> FAQPage schema + on-page accordion
+
+schema_version: 1
+
+standards:
+  - slug: dnv-rp-c203-fatigue
+    code: DNV-RP-C203
+    name: Fatigue design of offshore steel structures
+    discipline: Fatigue
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    calculator: { label: "S-N fatigue calculator", href: "../calculators/fatigue-sn-curve.html" }
+    src_tag: src_web_std_dnv-rp-c203-fatigue
+    intro: >-
+      DNV-RP-C203 gives the S-N curves and stress-concentration guidance for fatigue
+      design of welded and bolted offshore steel details. Ask Deckhand to run a check
+      against the right curve and it returns the damage, the life, and the assumptions.
+    does:
+      - Pick the correct S-N curve for a detail (in air, seawater with or without cathodic protection) and estimate fatigue damage from a stress history.
+      - Apply stress-concentration and thickness corrections and report the governing detail.
+      - Compare a detail against DNV-RP-C203, API RP 2A and BS 7608 side by side.
+    chips: ["DNV-RP-C203", "API RP 2A-WSD", "BS 7608", "S-N curves", "Miner's rule"]
+    faqs:
+      - q: What does DNV-RP-C203 cover?
+        a: It is the recommended practice for fatigue design of offshore steel structures — S-N curves for welded, base-material and bolted details, stress-concentration factors, thickness effect, and the environment classes (air, seawater with and without cathodic protection).
+      - q: Which S-N curve should I use?
+        a: The curve depends on the detail geometry, the loading direction, the environment, and whether the weld is ground or as-welded. Deckhand selects the curve from your detail description and states the choice so a checker can verify it.
+      - q: Can you compare fatigue across standards?
+        a: Yes — the same stress history can be assessed by DNV-RP-C203, API RP 2A-WSD or BS 7608 and the results shown together, so you can see how the governing curve changes.
+
+  - slug: dnv-st-f101-wall-thickness
+    code: DNV-ST-F101
+    name: Submarine pipeline systems — pressure containment & wall thickness
+    discipline: Pipelines
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    calculator: { label: "Wall-thickness calculator", href: "../calculators/wall-thickness.html" }
+    src_tag: src_web_std_dnv-st-f101-wall-thickness
+    intro: >-
+      DNV-ST-F101 is the offshore pipeline standard. Ask Deckhand to size a wall for
+      pressure containment and the collapse and combined-loading limits, with every
+      factor and assumption shown.
+    does:
+      - Size a pipeline wall for design pressure (pressure containment) with fabrication and corrosion allowances.
+      - Check system collapse and propagation buckling, and combined-loading utilisation.
+      - Screen the same line across DNV-ST-F101, ASME B31 and PD 8010 in one report.
+    chips: ["DNV-ST-F101", "ASME B31.4 / B31.8", "PD 8010", "Pressure containment", "Collapse"]
+    faqs:
+      - q: What does DNV-ST-F101 govern?
+        a: >-
+          It is the standard for submarine pipeline systems — design, materials, construction
+          and operation. The most-asked part is wall-thickness design — pressure containment,
+          local buckling/collapse, and combined loading.
+      - q: How is the minimum wall thickness determined?
+        a: From the design pressure and the pipe grade for pressure containment, plus fabrication tolerance and corrosion allowance, then verified against collapse and combined-loading limits. Deckhand reports the governing check and the utilisation.
+      - q: Can you compare design codes?
+        a: Yes — wall thickness can be screened across DNV-ST-F101, ASME B31 and PD 8010 together so the code difference is explicit.
+
+  - slug: dnv-rp-f109-on-bottom-stability
+    code: DNV-RP-F109
+    name: On-bottom stability design of submarine pipelines
+    discipline: Pipelines
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    calculator: { label: "On-bottom stability calculator", href: "../calculators/on-bottom-stability.html" }
+    src_tag: src_web_std_dnv-rp-f109-on-bottom-stability
+    intro: >-
+      DNV-RP-F109 covers the stability of a subsea line on the seabed under wave and
+      current loading. Ask Deckhand to check it and get the required submerged weight
+      and the utilisation.
+    does:
+      - Work out hydrodynamic loads on a pipeline from a sea state and current and the submerged weight it needs.
+      - Run the absolute-stability and the generalised (allowed-displacement) checks.
+      - Report the stability utilisation and the concrete-coating or weight needed to pass.
+    chips: ["DNV-RP-F109", "On-bottom stability", "Hydrodynamic loads", "Submerged weight"]
+    faqs:
+      - q: What is on-bottom stability?
+        a: Whether a subsea pipeline stays put on the seabed under wave and current loads, rather than being lifted or pushed sideways. DNV-RP-F109 is the recommended practice for designing it.
+      - q: What drives the result?
+        a: The sea state and current, the pipe's submerged weight (including any concrete coating), the seabed friction, and the allowed displacement. Deckhand reports which governs and the utilisation.
+      - q: Do you size the concrete coating?
+        a: Yes — Deckhand can report the submerged weight, and hence the coating, required to bring the stability utilisation within the criterion.
+
+  - slug: dnv-rp-f105-free-span-viv
+    code: DNV-RP-F105
+    name: Free spanning pipelines — VIV and fatigue
+    discipline: Pipelines
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    src_tag: src_web_std_dnv-rp-f105-free-span-viv
+    intro: >-
+      DNV-RP-F105 governs free-spanning subsea pipelines — the vortex-induced
+      vibration and the fatigue it drives. Ask Deckhand to screen a span for allowable
+      length.
+    does:
+      - Estimate a span's natural frequencies and screen it for cross-flow and in-line vortex-induced vibration.
+      - Work out the allowable free-span length for the seabed and flow conditions.
+      - Flag where a span needs intervention (rock dump, supports) to control fatigue.
+    chips: ["DNV-RP-F105", "Free span", "Vortex-induced vibration", "Span fatigue"]
+    faqs:
+      - q: Why are free spans a problem?
+        a: Where a pipeline crosses a depression it spans unsupported; current over the span sheds vortices that make it vibrate, and the cyclic stress accumulates fatigue. DNV-RP-F105 is the recommended practice for assessing it.
+      - q: What is the allowable span length?
+        a: The longest unsupported length that keeps vortex-induced vibration and the resulting fatigue within limits for the seabed and flow conditions. Deckhand estimates it and flags spans that need intervention.
+
+  - slug: api-579-fitness-for-service
+    code: API 579-1 / ASME FFS-1
+    name: Fitness-for-service assessment of in-service equipment
+    discipline: Asset integrity
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    src_tag: src_web_std_api-579-fitness-for-service
+    intro: >-
+      API 579 / ASME FFS-1 is the fitness-for-service standard for in-service damage.
+      Ask Deckhand to assess a corroded line or vessel from inspection readings and get
+      a remaining-strength verdict.
+    does:
+      - Run a Level 1 / Level 2 general and local metal-loss assessment from wall-thickness readings against the design pressure.
+      - Estimate remaining strength and the maximum allowable working pressure.
+      - State the assumptions and where a Level 3 (detailed) assessment would be needed.
+    chips: ["API 579-1", "ASME FFS-1", "Fitness-for-service", "Metal loss", "Remaining strength"]
+    faqs:
+      - q: What is fitness-for-service?
+        a: A quantitative check of whether equipment with damage — corrosion, cracks, dents — is still fit to operate. API 579-1/ASME FFS-1 gives the assessment levels and acceptance criteria.
+      - q: What can Deckhand assess?
+        a: General and local metal loss at Levels 1 and 2 from wall-thickness readings against the design pressure, returning the remaining strength and the allowable pressure, with the assumptions traced.
+
+  - slug: dnv-rp-b401-cathodic-protection
+    code: DNV-RP-B401
+    name: Cathodic protection design — sacrificial anodes
+    discipline: Asset integrity
+    pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
+    src_tag: src_web_std_dnv-rp-b401-cathodic-protection
+    intro: >-
+      DNV-RP-B401 is the recommended practice for sacrificial-anode cathodic-protection
+      design. Ask Deckhand to size the anodes for a structure and get the current
+      demand and anode mass.
+    does:
+      - Work out current demand from surface areas, coating breakdown and design life.
+      - Size the sacrificial-anode mass and number, and check the final-current capacity.
+      - Apply it to a jacket, manifold, monopile, FPSO hull or pipeline.
+    chips: ["DNV-RP-B401", "DNV-RP-F103", "Cathodic protection", "Sacrificial anodes", "Coating breakdown"]
+    faqs:
+      - q: What does DNV-RP-B401 cover?
+        a: The design of sacrificial-anode cathodic-protection systems for offshore structures — current-density demand, coating breakdown factors, anode mass and current-capacity checks over the design life.
+      - q: What structures can Deckhand size?
+        a: Jackets, subsea manifolds, offshore-wind monopiles, FPSO hulls and pipelines (the pipeline case uses DNV-RP-F103 for anode spacing and reach).

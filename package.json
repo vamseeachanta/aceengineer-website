@@ -42,11 +42,17 @@
         "displayName": "demo-links",
         "testEnvironment": "jsdom",
         "testMatch": ["<rootDir>/tests/js/demo-links.test.js"]
+      },
+      {
+        "displayName": "cta-tracking",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/cta-tracking.test.js"]
       }
     ],
     "collectCoverageFrom": [
       "build.js",
       "assets/js/navbar-toggle.js",
+      "assets/js/cta-tracking.js",
       "assets/js/npv-calculator-engine.js",
       "demos/hse-risk-dashboard-data.js"
     ]

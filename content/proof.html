@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Proof, not adjectives. How AceEngineer makes AI engineering defensible: 680 byte-identical cases, every result traced to a standard clause, and an assumption ledger on every deliverable.">
+    <meta name="keywords" content="deterministic engineering, standards traceability, auditable AI, defensible calculations, assumption ledger, reproducible engineering analysis, offshore engineering QA">
+
+    <meta property="og:title" content="Proof — Deterministic, Standards-Traceable AI Engineering | AceEngineer">
+    <meta property="og:description" content="680 byte-identical cases. Every result traced to a clause. An assumption ledger on every deliverable. The proof behind 'AI that shows its work'.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/proof.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Proof — Deterministic, Standards-Traceable AI Engineering">
+    <meta name="twitter:description" content="Proof, not adjectives — determinism, traceability, and an assumption ledger.">
+
+    <title>Proof — Deterministic, Standards-Traceable Engineering | AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <style>
+        .proof-pillar { background:#fff; border:1px solid #e6e8eb; border-radius:10px; padding:30px; margin-bottom:24px; height:100%; }
+        .proof-pillar .big { font-size:2.4em; font-weight:800; color:#2c3e50; }
+        .ledger { background:#fbfcfd; border:1px solid #e6e8eb; border-radius:10px; padding:24px; font-family:Menlo,Consolas,monospace; font-size:0.92em; }
+        .ledger .k { color:#6b7785; }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <section class="hero-section" style="padding-bottom:40px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h1 class="hero-title">Proof, not adjectives.</h1>
+                    <p class="hero-subtitle">Practising engineers can't sign off on an AI answer that changes every time and cites nothing. So we built the opposite: deterministic results, traceable to a clause, with every assumption on the table.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding:56px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="row">
+                        <div class="col-md-4"><div class="proof-pillar"><div class="big">680</div><h3>Byte-identical cases</h3><p>Determinism is verified, not asserted: a regression suite runs hundreds of cases and checks the outputs are byte-for-byte identical, every build. Same input, same output &mdash; no model drift.</p></div></div>
+                        <div class="col-md-4"><div class="proof-pillar"><div class="big">42</div><h3>Standards implemented</h3><p>Every result maps to a clause in DNV, API, ISO, ASME, BS and more. The standard reference travels with the number, so a checker can verify it against source.</p></div></div>
+                        <div class="col-md-4"><div class="proof-pillar"><div class="big">100%</div><h3>Shows its work</h3><p>Every deliverable carries an assumption ledger and explicit scope limits. If something wasn't checked, it says so.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assumption ledger example -->
+    <section style="padding:48px 0; background:#f8f9fa;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <h2 class="section-title" style="text-align:left;">The assumption ledger</h2>
+                    <p class="section-subtitle" style="text-align:left;">Every Deckhand deliverable ends with the inputs it used, the governing clause, and what it did <em>not</em> check. No silent defaults; no hidden scope.</p>
+                    <p>This is what makes a result defensible in review &mdash; and what generic chatbots can't give you.</p>
+                </div>
+                <div class="col-md-6 col-md-offset-1">
+                    <div class="ledger">
+                        <div><span class="k">result:</span> min wall = 9.5 mm (util 0.81)</div>
+                        <div><span class="k">standard:</span> DNV-ST-F101 (2021) &sect;5.4.2</div>
+                        <div><span class="k">inputs:</span> OD 12.75", P_d 10 MPa, X65</div>
+                        <div><span class="k">assumed:</span> SMYS 450 MPa; t_fab &minus;12.5%;</div>
+                        <div style="padding-left:64px;">corrosion allowance 1.0 mm</div>
+                        <div><span class="k">not checked:</span> local buckling, fatigue</div>
+                        <div><span class="k">reproducible:</span> yes &mdash; hash-stable</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case studies -->
+    <section style="padding:56px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">From real projects</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="case-highlight-card">
+                                <h3>Computational Fatigue Assessment</h3>
+                                <p>Gulf of Mexico platform life extension</p>
+                                <div class="case-metrics"><span class="case-metric"><strong>85%</strong> time reduction</span> <span class="case-metric"><strong>23%</strong> accuracy improvement</span></div>
+                                <a href="case-studies/offshore-platform-fatigue-optimization.html" class="btn btn-primary">Read Case Study</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="case-highlight-card">
+                                <h3>Automated FEA Post-Processing</h3>
+                                <p>Subsea equipment qualification pipeline</p>
+                                <div class="case-metrics"><span class="case-metric"><strong>90%</strong> time reduction</span> <span class="case-metric"><strong>50+</strong> reports/week</span></div>
+                                <a href="case-studies/subsea-fea-automation.html" class="btn btn-primary">Read Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-center" style="margin-top:24px;"><a href="case-studies/" class="btn btn-default">All case studies</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h2>See it on your own question</h2>
+                    <p>Bring something from your real work to Open Deck and check the result against your own methods.</p>
+                    <!-- OPEN_DECK_CTA -->
+                    <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="src_web_proof_footer">Try Open Deck &mdash; free</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

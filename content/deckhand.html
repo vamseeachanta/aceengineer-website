@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Deckhand is an AI engineering agent you drive from chat. Ask in plain language; it runs the real, standards-traceable calculation and returns deterministic deliverables and pull requests under hard, auditable guardrails.">
+    <meta name="keywords" content="AI engineering agent, engineering chatbot, OrcaFlex AI, fatigue analysis AI, offshore engineering automation, standards-traceable AI, deterministic engineering deliverables, Open Deck">
+
+    <meta property="og:title" content="Deckhand — An AI Engineering Agent You Drive From Chat">
+    <meta property="og:description" content="Real analysis, documentation, issues and pull requests from a chat message — executed by an AI agent under hard, auditable guardrails. Standards-traceable. Deterministic.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/deckhand.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Deckhand — An AI Engineering Agent You Drive From Chat">
+    <meta name="twitter:description" content="AI that does real offshore engineering — and shows its work.">
+
+    <title>Deckhand — AI Engineering Agent for Offshore Energy | AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- SoftwareApplication schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Deckhand",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Telegram, WhatsApp, Microsoft Teams",
+        "description": "An AI engineering agent you drive from chat. It runs standards-traceable, deterministic offshore-engineering calculations and returns deliverables and pull requests under hard, auditable guardrails.",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "name": "Open Deck — free tier"
+        },
+        "publisher": { "@id": "https://aceengineer.com/#organization" }
+    }
+    </script>
+
+    <!-- FAQ schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What can Deckhand do?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Run real offshore / oil & gas engineering calculations from a chat message — wall thickness, on-bottom stability, fatigue, fitness-for-service, vessel motions, mooring, field economics — and return a deliverable with assumptions traced and changes delivered as pull requests." }
+            },
+            {
+                "@type": "Question",
+                "name": "Is Deckhand deterministic?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Yes. Calculations run on the open-source digitalmodel engine, not free-form model output. The same input produces the same output every time — audit-ready, traceable to a DNV / API / ISO / ASME clause." }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I try it?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Join the free Open Deck tier on Telegram and ask a real engineering question on open, MIT-licensed repositories. For confidential client work we run isolated private scopes." }
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        .step-card { background:#fff; border:1px solid #e6e8eb; border-radius:10px; padding:28px; margin-bottom:24px; height:100%; }
+        .step-card .step-num { display:inline-block; width:34px; height:34px; line-height:34px; text-align:center; border-radius:50%; background:#2c3e50; color:#fff; font-weight:700; margin-bottom:10px; }
+        .tier-card { background:#fff; border:1px solid #e6e8eb; border-radius:10px; padding:32px; margin-bottom:24px; }
+        .tier-card.tier-open { border-top:4px solid #1f8a4c; }
+        .tier-card.tier-private { border-top:4px solid #2c3e50; }
+        .tier-card ul { padding-left:18px; }
+        .guardrail-row { background:#f8f9fa; padding:56px 0; }
+        .guardrail-item { padding:14px; }
+        .guardrail-item .g-icon { font-size:1.6em; margin-right:8px; }
+        .domain-chip { display:inline-block; background:#eef1f4; color:#2c3e50; border-radius:16px; padding:6px 14px; margin:5px; font-size:0.92em; }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <section class="hero-section" style="padding-bottom:40px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h1 class="hero-title">Deckhand</h1>
+                    <p class="hero-subtitle">An AI engineering agent you drive from chat. Ask a real offshore / oil &amp; gas question in plain language &mdash; Deckhand runs the actual calculation against the right standard and returns a deliverable that shows its work.</p>
+                    <div class="hero-cta">
+                        <!-- OPEN_DECK_CTA: live group invite. Swap to https://t.me/the_deckhand_bot?start=src_web_deckhand_hero once deckhand#432 handler is live. -->
+                        <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="src_web_deckhand_hero">Try Open Deck &mdash; free</a>
+                        <a href="proof.html" class="btn btn-default btn-lg">See the proof</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section style="padding:64px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">How it works</h2>
+                    <p class="section-subtitle text-center">Chat &rarr; action &rarr; result &mdash; with enforcement below the model.</p>
+                    <div class="row">
+                        <div class="col-md-3"><div class="step-card"><span class="step-num">1</span><h3>Ask</h3><p>Send an engineering question in plain language &mdash; no syntax, no software jargon required.</p></div></div>
+                        <div class="col-md-3"><div class="step-card"><span class="step-num">2</span><h3>Run</h3><p>Deckhand picks the right method and standard and runs the real calculation on the digitalmodel engine.</p></div></div>
+                        <div class="col-md-3"><div class="step-card"><span class="step-num">3</span><h3>Show its work</h3><p>You get the number, the governing clause, and the assumption ledger &mdash; nothing hidden.</p></div></div>
+                        <div class="col-md-3"><div class="step-card"><span class="step-num">4</span><h3>Deliver</h3><p>Calculation notes and code changes arrive as pull requests you can review and merge.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guardrails -->
+    <section class="guardrail-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">Hard, auditable guardrails</h2>
+                    <p class="section-subtitle text-center">The enforcement sits below the model, not in a prompt.</p>
+                    <div class="row">
+                        <div class="col-md-6"><div class="guardrail-item"><span class="g-icon">&#128274;</span><strong>Scoped access.</strong> Each channel is bound to specific repositories. Everything out of scope returns 404 &mdash; verified, not promised.</div></div>
+                        <div class="col-md-6"><div class="guardrail-item"><span class="g-icon">&#128221;</span><strong>PR-only changes.</strong> No force-push, no history rewrite, no deletes. Every change is a reviewable pull request.</div></div>
+                        <div class="col-md-6"><div class="guardrail-item"><span class="g-icon">&#9878;</span><strong>Standards-traceable.</strong> Every result maps to a DNV / API / ISO / ASME clause.</div></div>
+                        <div class="col-md-6"><div class="guardrail-item"><span class="g-icon">&#128202;</span><strong>Audit trail.</strong> Every action is logged; fine-grained credentials per scope; client data never mixes across scopes.</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tiers -->
+    <section style="padding:64px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">Two ways to run it</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="tier-card tier-open">
+                                <h3>Open Deck &mdash; free</h3>
+                                <p>A Telegram community for engineers trying Deckhand on open, MIT-licensed engineering work.</p>
+                                <ul>
+                                    <li>Reads, analyses, documentation drafts and reviews</li>
+                                    <li>Changes arrive as pull requests to a public sandbox</li>
+                                    <li>No force-push, history rewrite, or deletes</li>
+                                    <li>Scoped to open repos only &mdash; everything else returns 404</li>
+                                </ul>
+                                <!-- OPEN_DECK_CTA -->
+                                <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary" data-cta="open-deck" data-src="src_web_deckhand_tier">Join Open Deck</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="tier-card tier-private">
+                                <h3>Private scopes &mdash; for client work</h3>
+                                <p>Confidential, proprietary, and licensed-solver work runs on isolated scopes with their own data, servers, and credentials.</p>
+                                <ul>
+                                    <li>Dedicated repositories and fine-grained credentials</li>
+                                    <li>Full reply visibility within your channel</li>
+                                    <li>Domain-specific knowledge packs</li>
+                                    <li>Nothing client-specific touches the open tier</li>
+                                </ul>
+                                <a href="contact.html" class="btn btn-default">Talk to us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Domains -->
+    <section style="padding:48px 0; background:#f8f9fa;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 text-center">
+                    <h2 class="section-title">What it covers</h2>
+                    <p class="section-subtitle">Drawn from ~30 engineering disciplines in the digitalmodel platform.</p>
+                    <div>
+                        <span class="domain-chip">Wall thickness &amp; pipe capacity</span>
+                        <span class="domain-chip">On-bottom stability &amp; free-span / VIV</span>
+                        <span class="domain-chip">Fatigue (S-N, spectral)</span>
+                        <span class="domain-chip">Fitness-for-service (API 579)</span>
+                        <span class="domain-chip">Cathodic protection</span>
+                        <span class="domain-chip">Mooring &amp; riser design</span>
+                        <span class="domain-chip">Vessel motions &amp; seakeeping</span>
+                        <span class="domain-chip">Hydrodynamics (OrcaWave / AQWA)</span>
+                        <span class="domain-chip">OrcaFlex model generation</span>
+                        <span class="domain-chip">Field development economics</span>
+                    </div>
+                    <p style="margin-top:24px;"><a href="platform.html" class="btn btn-info">See the platform</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h2>Bring a real question</h2>
+                    <p>Open Deck is free for known industry contacts. Ask something from your actual work and watch the agent run it, traced to the standard.</p>
+                    <!-- OPEN_DECK_CTA -->
+                    <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="src_web_deckhand_footer">Try Open Deck on Telegram</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

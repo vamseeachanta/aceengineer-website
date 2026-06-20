@@ -3,11 +3,25 @@ const path = require('path');
 const posthtml = require('posthtml');
 const include = require('posthtml-include');
 const expressions = require('posthtml-expressions');
+const yaml = require('js-yaml');
 const { PurgeCSS } = require('purgecss');
 const CleanCSS = require('clean-css');
 
 const srcDir = './content';
 const distDir = './dist';
+
+// Load canonical firm-copy (brand/copy.yaml) — single source of truth (issue #9).
+// Exposed to every page as the `copy` template object, e.g. {{ copy.firm_lede }}.
+// Cached so each build only reads/parses once.
+let _copyCache;
+function loadCopy(copyFile = './brand/copy.yaml') {
+  if (_copyCache === undefined) {
+    _copyCache = fs.existsSync(copyFile)
+      ? (yaml.load(fs.readFileSync(copyFile, 'utf8')) || {})
+      : {};
+  }
+  return _copyCache;
+}
 
 // Parse YAML front matter
 function parseFrontMatter(content) {
@@ -59,6 +73,12 @@ async function processFile(filePath) {
   // Default rootPath to empty string if not specified
   if (!locals.rootPath) {
     locals.rootPath = '';
+  }
+
+  // Expose canonical firm-copy to every page as `copy` (issue #9). Page-level
+  // front matter still wins for any explicitly redefined key.
+  if (locals.copy === undefined) {
+    locals.copy = loadCopy();
   }
 
   // Process includes first, then expressions (so included content gets variables expanded)
@@ -211,4 +231,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt };
+module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt, loadCopy };

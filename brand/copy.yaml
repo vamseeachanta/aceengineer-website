@@ -1,0 +1,77 @@
+# brand/copy.yaml — Canonical firm-copy (single source of truth)
+#
+# Issue #9 (Option 2). This file is the ONE place to edit reusable firm-description
+# text. build.js loads it and exposes the values to pages as the `copy` template
+# object (e.g. {{ copy.firm_lede }}). `npm run lint:copy` fails if a target page's
+# firm-copy drifts from the canonical wording here, or if any forbidden phrase
+# reappears on a visible page (the negative constraints that triggered #6).
+#
+# Brand-name hierarchy is locked by brand/BRAND.md — keep names below in sync with it.
+#
+# Schema:
+#   names.*            scalar brand names (mirror brand/BRAND.md "Locked hierarchy")
+#   tagline            short positioning line (About hero <h1>)
+#   firm_lede          one-paragraph firm lede (About hero .lead)
+#   founding           founding sentence (About story, paragraph 1)
+#   service_model      "firm not consultancy" framing line (About "How We Work" lede)
+#   capabilities[]     CAP spans cap_01..cap_03 — each {id, heading, blurb}
+#   credentials[]      reusable proof points (free strings, asserted to appear on About)
+#   forbidden_phrases[] visible-surface negative constraints (lint fails if any appears)
+#   targets{}          which page each canonical string must appear in (drives the lint)
+
+names:
+  firm: AceEngineer
+  seo: Analytical & Computational Engineering
+  legal: Achanta AceEngineer Inc.
+  retired_acronym: A&CE
+
+tagline: Offshore Engineering Analytics at Scale
+
+firm_lede: >-
+  AceEngineer transforms weeks of manual offshore analysis into hours through
+  automated computational workflows&mdash;delivering team-scale throughput from a
+  focused engineering practice.
+
+founding: >-
+  Analytical &amp; Computational Engineering was founded in 2010 in Houston, Texas,
+  with a clear mission: eliminate the repetitive manual work that consumes offshore
+  engineering teams.
+
+service_model: "We deliver automated workflows, not consulting hours. The process is straightforward:"
+
+capabilities:
+  - id: cap_01
+    heading: Offshore Engineering Firms
+    blurb: >-
+      Mid-market firms (10-50 engineers) who run OrcaFlex and AQWA manually for every
+      project. We eliminate the repetitive analysis bottleneck so your senior engineers
+      focus on engineering judgment.
+  - id: cap_02
+    heading: EPC Contractors
+    blurb: >-
+      Installation and fabrication contractors who need rapid weather window analysis,
+      lift studies, and installation pre-engineering without dedicated in-house
+      scripting capability.
+  - id: cap_03
+    heading: Who We Serve
+    blurb: >-
+      The result: engineering firms send a design matrix and receive validated results
+      overnight. What used to take 3 weeks of manual iteration now takes 3 days. What
+      used to require pulling senior engineers from billable work now runs automatically
+      while the team sleeps.
+
+credentials:
+  - 15+ years
+  - 704+ modules
+  - founded in 2010 in Houston, Texas
+
+# Visible-surface negative constraints (#6). Lint fails if any of these appears in a
+# target page's body. Brand names retired for visible surfaces also live here.
+forbidden_phrases:
+  - consultancy
+  - consulting practice
+
+# Which page each canonical string must be present in (case-insensitive substring).
+# Keys map to copy fields above; the lint reads this to know what to assert where.
+targets:
+  about: content/about.html

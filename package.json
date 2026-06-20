@@ -4,6 +4,7 @@
   "scripts": {
     "build": "node build.js",
     "serve": "npx serve dist",
+    "lint:copy": "node scripts/lint-copy.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
@@ -12,6 +13,11 @@
       {
         "displayName": "node",
         "testMatch": ["<rootDir>/tests/js/build.test.js"]
+      },
+      {
+        "displayName": "copy-lint",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/copy-lint.test.js"]
       },
       {
         "displayName": "jsdom",

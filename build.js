@@ -11,16 +11,18 @@ const distDir = './dist';
 
 // Parse YAML front matter
 function parseFrontMatter(content) {
-  const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  // Tolerate CRLF line endings and a missing trailing newline after the closing ---
+  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n([\s\S]*))?$/);
   if (match) {
     const locals = {};
-    match[1].split('\n').forEach(line => {
+    const body = match[2] || '';
+    match[1].split(/\r?\n/).forEach(line => {
       const [key, ...valueParts] = line.split(':');
       if (key && valueParts.length) {
         locals[key.trim()] = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
       }
     });
-    return { locals, content: match[2] };
+    return { locals, content: body };
   }
   return { locals: {}, content };
 }

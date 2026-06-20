@@ -244,6 +244,11 @@
                             <input type="hidden" name="redirect" value="https://aceengineer.com/contact.html?success=true">
                             <input type="hidden" name="from_name" value="AceEngineer Contact Form">
 
+                            <!-- Anti-abuse honeypot: Web3Forms drops any submission where this
+                                 hidden "botcheck" field is filled. Hidden from humans and screen
+                                 readers; only bots that auto-fill every field will trip it. -->
+                            <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true">
+
                             <div class="form-group">
                                 <label for="name">Your Name *</label>
                                 <input type="text" id="name" name="name" class="form-control" placeholder="John Smith" required>
@@ -404,11 +409,20 @@
 
             // Handle success message
             if (urlParams.get('success') === 'true') {
-                document.getElementById('form-response').innerHTML =
-                    '<div class="alert-success">' +
-                    '<strong>Thank you!</strong> Your message has been sent successfully. ' +
-                    'We will respond within 24 hours with an initial assessment and clear next steps.' +
-                    '</div>';
+                // Build the success notice with safe DOM APIs (no innerHTML) so that
+                // no markup is ever assembled from a string. Static text uses textContent.
+                var responseEl = document.getElementById('form-response');
+                while (responseEl.firstChild) { responseEl.removeChild(responseEl.firstChild); }
+                var successBox = document.createElement('div');
+                successBox.className = 'alert-success';
+                var lead = document.createElement('strong');
+                lead.textContent = 'Thank you!';
+                successBox.appendChild(lead);
+                successBox.appendChild(document.createTextNode(
+                    ' Your message has been sent successfully. ' +
+                    'We will respond within 24 hours with an initial assessment and clear next steps.'
+                ));
+                responseEl.appendChild(successBox);
 
                 // Track successful submission
                 gtag('event', 'contact_form_success', {

@@ -322,6 +322,8 @@ rootPath: "../"
                 <input type="hidden" name="subject" value="New Newsletter Subscriber - AceEngineer Blog">
                 <input type="hidden" name="from_name" value="AceEngineer Newsletter">
                 <input type="hidden" name="redirect" value="https://aceengineer.com/blog/?subscribed=true">
+                <!-- Anti-abuse honeypot: Web3Forms drops submissions where this is filled. -->
+                <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true">
                 <div class="input-group">
                     <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
                     <span class="input-group-btn">
@@ -336,8 +338,13 @@ rootPath: "../"
                 // Show success message if redirected with subscribed parameter
                 const urlParams = new URLSearchParams(window.location.search);
                 if (urlParams.get('subscribed') === 'true') {
-                    document.getElementById('newsletter-form').innerHTML =
-                        '<div class="alert alert-success">Thanks for subscribing! You\'ll receive our next article in your inbox.</div>';
+                    // Replace the form with a success notice via safe DOM APIs (no innerHTML).
+                    var newsletterForm = document.getElementById('newsletter-form');
+                    while (newsletterForm.firstChild) { newsletterForm.removeChild(newsletterForm.firstChild); }
+                    var subBox = document.createElement('div');
+                    subBox.className = 'alert alert-success';
+                    subBox.textContent = "Thanks for subscribing! You'll receive our next article in your inbox.";
+                    newsletterForm.appendChild(subBox);
                 }
 
                 // GA4 event tracking for newsletter signup

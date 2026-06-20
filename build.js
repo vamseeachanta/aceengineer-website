@@ -3,24 +3,40 @@ const path = require('path');
 const posthtml = require('posthtml');
 const include = require('posthtml-include');
 const expressions = require('posthtml-expressions');
+const yaml = require('js-yaml');
 const { PurgeCSS } = require('purgecss');
 const CleanCSS = require('clean-css');
 
 const srcDir = './content';
 const distDir = './dist';
 
+// Load canonical firm-copy (brand/copy.yaml) — single source of truth (issue #9).
+// Exposed to every page as the `copy` template object, e.g. {{ copy.firm_lede }}.
+// Cached so each build only reads/parses once.
+let _copyCache;
+function loadCopy(copyFile = './brand/copy.yaml') {
+  if (_copyCache === undefined) {
+    _copyCache = fs.existsSync(copyFile)
+      ? (yaml.load(fs.readFileSync(copyFile, 'utf8')) || {})
+      : {};
+  }
+  return _copyCache;
+}
+
 // Parse YAML front matter
 function parseFrontMatter(content) {
-  const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  // Tolerate CRLF line endings and a missing trailing newline after the closing ---
+  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n([\s\S]*))?$/);
   if (match) {
     const locals = {};
-    match[1].split('\n').forEach(line => {
+    const body = match[2] || '';
+    match[1].split(/\r?\n/).forEach(line => {
       const [key, ...valueParts] = line.split(':');
       if (key && valueParts.length) {
         locals[key.trim()] = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
       }
     });
-    return { locals, content: match[2] };
+    return { locals, content: body };
   }
   return { locals: {}, content };
 }
@@ -57,6 +73,12 @@ async function processFile(filePath) {
   // Default rootPath to empty string if not specified
   if (!locals.rootPath) {
     locals.rootPath = '';
+  }
+
+  // Expose canonical firm-copy to every page as `copy` (issue #9). Page-level
+  // front matter still wins for any explicitly redefined key.
+  if (locals.copy === undefined) {
+    locals.copy = loadCopy();
   }
 
   // Process includes first, then expressions (so included content gets variables expanded)
@@ -209,4 +231,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt };
+module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt, loadCopy };

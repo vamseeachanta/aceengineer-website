@@ -28,9 +28,12 @@ names:
 tagline: Offshore Engineering Analytics at Scale
 
 firm_lede: >-
-  AceEngineer transforms weeks of manual offshore analysis into hours through
-  automated computational workflows&mdash;delivering team-scale throughput from a
-  focused engineering practice.
+  AceEngineer is an AI-native offshore engineering firm&mdash;not a contractor
+  with a laptop. Backed by an AI orchestration layer and 704+ production-tested
+  Python modules, we ship validated pipelines for <strong>computational fatigue
+  assessment, riser &amp; mooring analysis, and diffraction analysis</strong>.
+  Based in Houston. Every filing cites the applicable standard, clause, equation,
+  and parameter values&mdash;reproducible with the pipeline we hand back.
 
 founding: >-
   Analytical &amp; Computational Engineering was founded in 2010 in Houston, Texas,

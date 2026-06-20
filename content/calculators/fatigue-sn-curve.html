@@ -467,14 +467,37 @@ rootPath: "../"
             plotSNCurve();
         }
 
+        // Show a validation error without computing (textContent — no HTML injection)
+        function showFatigueError(message) {
+            const el = document.getElementById('result-content');
+            el.textContent = '';
+            const p = document.createElement('p');
+            p.className = 'danger-text';
+            p.textContent = message;
+            el.appendChild(p);
+            document.getElementById('results-card').style.display = 'block';
+        }
+
         // Calculate fatigue life
         function calculateFatigue() {
             const standard = document.getElementById('standard').value;
             const curveKey = document.getElementById('curve').value;
             const environment = document.getElementById('environment').value;
             const stressRange = parseFloat(document.getElementById('stress_range').value);
-            const cycles = document.getElementById('cycles').value ? parseFloat(document.getElementById('cycles').value) : null;
+            const cyclesRaw = document.getElementById('cycles').value;
+            const cycles = cyclesRaw ? parseFloat(cyclesRaw) : null;
             const scf = parseFloat(document.getElementById('scf').value);
+
+            // Validate numeric inputs before any computation (avoids NaN propagating into results)
+            if (!Number.isFinite(stressRange) || stressRange <= 0) {
+                return showFatigueError('Enter a positive numeric stress range (MPa).');
+            }
+            if (!Number.isFinite(scf) || scf <= 0) {
+                return showFatigueError('Enter a positive numeric stress concentration factor (SCF).');
+            }
+            if (cyclesRaw && !Number.isFinite(cycles)) {
+                return showFatigueError('Applied cycles must be numeric, or leave the field blank.');
+            }
 
             // Get curve parameters
             const curve = snCurves[standard].curves[curveKey];

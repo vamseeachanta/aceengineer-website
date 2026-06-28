@@ -1,8 +1,13 @@
 # AceEngineer Website
 
+> **Deckhand — the API for real-world work.** This site is the front door to the Deckhand API:
+> every engineering workflow is an **API path**; one call (`POST /api/run`) returns a
+> **standards-traceable HTML report URL** — deterministic, built on real code mapped to industry
+> codes and standards. Live API paths → https://aceengineer.com/api-catalog.html
+
 **Live Site:** https://aceengineer.com/
 
-A static marketing and technical showcase website for AceEngineer - an AI-native engineering consulting platform.
+A static marketing and technical showcase website for AceEngineer — the deterministic engineering-workflow firm for offshore energy (built on real code + industry codes and standards).
 
 ## Quick Links
 

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Deckhand is the API for real-world work. Every engineering workflow is an API path: POST /api/run returns a standards-traceable HTML report URL, deterministically. Chat is one client of the API.">
+    <meta name="keywords" content="engineering API, Deckhand API, /api/run, standards-traceable report URL, deterministic engineering, offshore engineering automation, digitalmodel, report_url">
+
+    <meta property="og:title" content="Deckhand — the API for real-world work | AceEngineer">
+    <meta property="og:description" content="Every engineering workflow is an API path. One call returns a standards-traceable HTML report URL — same input, same output. Chat is one client of the API.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/deckhand-api.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Deckhand — the API for real-world work | AceEngineer">
+    <meta name="twitter:description" content="One API call → a standards-traceable report URL. Deterministic, clause-traced. Chat is one client.">
+
+    <title>The API — Deckhand, the API for real-world work | AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- SoftwareApplication schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Deckhand API",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web, Telegram, WhatsApp",
+        "description": "The API for real-world engineering work. Every workflow is an API path; POST /api/run returns a standards-traceable HTML report URL, deterministically. Built on the open-source digitalmodel library.",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "name": "Open Deck — free tier"
+        },
+        "publisher": { "@id": "https://aceengineer.com/#organization" }
+    }
+    </script>
+
+    <style>
+        .api-codeblock {
+            background:#0f1722; color:#d7e2ef; border-radius:10px;
+            padding:22px 24px; overflow-x:auto; font-size:0.92em; line-height:1.55;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            margin:0 0 18px;
+        }
+        .api-codeblock .k { color:#7fb0ff; }
+        .api-codeblock .s { color:#a7e0a0; }
+        .api-codeblock .c { color:#6b7785; }
+        .api-codeblock .u { color:#ffd28a; }
+        .contract-card { background:#fff; border:1px solid #e6e8eb; border-radius:10px; padding:26px; margin-bottom:24px; height:100%; }
+        .contract-card h3 { margin-top:0; color:#2c3e50; }
+        .client-row { background:#f8f9fa; padding:56px 0; }
+        .client-item { padding:14px; }
+        .client-item .c-icon { font-size:1.5em; margin-right:8px; }
+        .field-table { width:100%; border-collapse:collapse; margin-top:8px; }
+        .field-table th, .field-table td { text-align:left; padding:8px 10px; border-bottom:1px solid #eceff2; vertical-align:top; }
+        .field-table th { color:#2c3e50; }
+        .field-table code { background:rgba(0,0,0,0.06); padding:1px 5px; border-radius:4px; }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <section class="hero-section" style="padding-bottom:40px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-md-offset-1 text-center">
+                    <h1 class="hero-title">The API for real-world work</h1>
+                    <p class="hero-subtitle">Every Deckhand workflow is an API path. You make <strong>one call</strong> and get back a <strong>standards-traceable HTML report URL</strong> &mdash; same input, same output, every time. Chat is one client of that call, not the product.</p>
+                    <p class="hero-identity">Built on the open-source <strong>digitalmodel</strong> library &mdash; 7,000+ standard-mapped functions, 42 standards implemented.</p>
+                    <div class="hero-cta">
+                        <a href="api-catalog.html" class="btn btn-primary btn-lg">Browse the API-path catalog</a>
+                        <a href="proof.html" class="btn btn-default btn-lg">See the proof</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The contract -->
+    <section style="padding:64px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">One contract, every workflow</h2>
+                    <p class="section-subtitle text-center">You don't learn a new interface per discipline. You learn one call. The <code>ref</code> selects the workflow; the report URL is the deliverable.</p>
+
+                    <div class="row" style="margin-top:24px;">
+                        <div class="col-md-6">
+                            <h3 style="color:#2c3e50;">Request</h3>
+                            <div class="api-codeblock"><span class="k">POST</span> /api/run
+{
+  <span class="k">"ref"</span>: <span class="s">"digitalmodel:mooring-fatigue@2"</span>,
+  <span class="k">"domain"</span>: <span class="s">"floating-marine"</span>,
+  <span class="k">"subdomain"</span>: <span class="s">"mooring"</span>,
+  <span class="k">"inputs"</span>: {
+    <span class="k">"objective"</span>: <span class="s">"screen mooring fatigue"</span>,
+    <span class="k">"configuration"</span>: <span class="s">"..."</span>,
+    <span class="k">"environment"</span>: <span class="s">"..."</span>,
+    <span class="k">"line_material"</span>: <span class="s">"chain"</span>
+  }
+}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 style="color:#2c3e50;">Response</h3>
+                            <div class="api-codeblock">{
+  <span class="k">"status"</span>: <span class="s">"PASS"</span>,
+  <span class="k">"report_url"</span>: <span class="u">"https://vamseeachanta.github.io/
+     deckhand-sandbox/.../report.html"</span>,
+  <span class="k">"artifacts"</span>: [<span class="s">"summary.json"</span>, <span class="s">"inputs.yml"</span>, <span class="s">"..."</span>],
+  <span class="k">"coordinate"</span>: {
+    <span class="k">"repo"</span>: <span class="s">"digitalmodel"</span>,
+    <span class="k">"domain"</span>: <span class="s">"floating-marine"</span>,
+    <span class="k">"subdomain"</span>: <span class="s">"mooring"</span>,
+    <span class="k">"resolved_version"</span>: <span class="s">"2"</span>
+  },
+  <span class="k">"duration_s"</span>: <span class="u">12.4</span>
+}</div>
+                        </div>
+                    </div>
+
+                    <p class="text-center" style="margin-top:8px; color:#6b7785;">
+                        The <code>report_url</code> is the work itself &mdash; a self-contained, standards-traceable HTML report you can open, archive, and hand to a checker. Browse real reports on the <a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">public deckhand-sandbox gallery</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What every response carries -->
+    <section style="padding:8px 0 56px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">What every response carries</h2>
+                    <div class="row">
+                        <div class="col-md-4"><div class="contract-card"><h3>A report URL</h3><p><code>report_url</code> &mdash; a standards-traceable HTML report with the number, the governing clause, and the assumption ledger. Not a chat blurb you have to trust.</p></div></div>
+                        <div class="col-md-4"><div class="contract-card"><h3>A coordinate</h3><p><code>coordinate</code> pins the exact repo, domain, subdomain, workflow, and resolved version that produced the result &mdash; so the same call is reproducible later.</p></div></div>
+                        <div class="col-md-4"><div class="contract-card"><h3>A status + artifacts</h3><p><code>status</code> (PASS / FAIL / escalate) and <code>artifacts</code> (inputs, summary, plots). Out-of-scope or unbuilt paths return an honest 404, never a fabricated answer.</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat is one client -->
+    <section class="client-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">Chat is one client of the API</h2>
+                    <p class="section-subtitle text-center">The same <code>/api/run</code> call is reachable from anywhere. The chat bot is a thin front-end &mdash; not a different product.</p>
+                    <div class="row">
+                        <div class="col-md-6"><div class="client-item"><span class="c-icon">&#128172;</span><strong>Chat (Telegram / WhatsApp).</strong> Ask in plain language; the front-end resolves your message to a <code>ref</code> + inputs and calls the path for you.</div></div>
+                        <div class="col-md-6"><div class="client-item"><span class="c-icon">&#128187;</span><strong>Web button.</strong> Our calculators and "try it" buttons are the same call from a webpage.</div></div>
+                        <div class="col-md-6"><div class="client-item"><span class="c-icon">&#9201;</span><strong>Cron / automation.</strong> Schedule a path to run on new data and post the report URL.</div></div>
+                        <div class="col-md-6"><div class="client-item"><span class="c-icon">&#128279;</span><strong>Partner systems.</strong> Any system that can POST JSON can fire a path and consume the report URL.</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deterministic -->
+    <section style="padding:64px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">Deterministic by contract</h2>
+                    <p class="section-subtitle text-center">The same call returns the same result &mdash; because the compute runs on the digitalmodel engine, not free-form model output.</p>
+                    <table class="field-table">
+                        <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>ref</code></td><td>The workflow path to run &mdash; a row in the API-path catalog (<code>domain-workflows.yaml</code>), optionally version-pinned.</td></tr>
+                            <tr><td><code>domain</code> / <code>subdomain</code></td><td>The knowledge-pack coordinate that scopes the run (e.g. <code>floating-marine</code> / <code>mooring</code>).</td></tr>
+                            <tr><td><code>inputs</code></td><td>The required clarification keys for that path. Missing branch-first inputs are asked, never guessed.</td></tr>
+                            <tr><td><code>status</code></td><td><code>PASS</code> / <code>FAIL</code> / escalate. A path with no runnable workflow escalates honestly rather than inventing a number.</td></tr>
+                            <tr><td><code>report_url</code></td><td>The standards-traceable HTML report &mdash; the deliverable.</td></tr>
+                            <tr><td><code>coordinate</code></td><td>The resolved repo / domain / subdomain / workflow / version &mdash; the reproducibility receipt.</td></tr>
+                            <tr><td><code>duration_s</code></td><td>Wall-clock run time of the call.</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top:18px; color:#6b7785;">Reproducibility is enforced below the model: 680 byte-identical golden cases, PR-only changes, fine-grained credentials per scope. See <a href="deckhand.html">how the guardrails work</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Honesty / scope strip -->
+    <section style="padding:48px 0; background:#f8f9fa;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 text-center">
+                    <h2 class="section-title">Live today &mdash; and what's onboarding</h2>
+                    <p class="section-subtitle">We only call a domain "live" when it has a firable workflow row and a published report URL.</p>
+                    <p style="max-width:760px; margin:0 auto;">
+                        <strong>Live:</strong> subsea-pipeline and floating-marine (mooring) screening &mdash; DNV-traceable, deterministic, with report URLs on the public gallery.<br>
+                        <strong>Onboarding (roadmap):</strong> CAD/CAM, manufacturing, electrical, wells &amp; subsurface and more are API paths being onboarded &mdash; not shipped capability yet.
+                    </p>
+                    <p style="margin-top:24px;"><a href="api-catalog.html" class="btn btn-info">See the full API-path catalog</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h2>Call a path &mdash; free</h2>
+                    <p>Open Deck is the free chat client of the API: bring a real offshore / oil &amp; gas question and watch a path run, traced to the standard, on open repos.</p>
+                    <!-- OPEN_DECK_CTA -->
+                    <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="src_web_api_footer">Try Open Deck on Telegram</a>
+                    <p class="cta-note">For private, client-confidential work we run isolated scopes &mdash; <a href="contact.html">talk to us</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

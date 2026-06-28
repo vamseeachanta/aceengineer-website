@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="The AI engineering firm for offshore energy. Deckhand drives real analysis, documentation, and pull requests from chat — under hard, auditable guardrails. Standards-traceable, deterministic deliverables.">
-    <meta name="keywords" content="AI engineering, offshore energy AI, OrcaFlex automation, fatigue analysis, mooring design, riser analysis, subsea engineering, deterministic engineering, standards-traceable calculations, engineering AI agent">
+    <meta name="description" content="Deckhand — the API for real-world work. Every engineering workflow is an API path: one call returns a standards-traceable HTML report URL, same input same output. Chat is one client. Offshore live; more domains onboarding.">
+    <meta name="keywords" content="engineering API, Deckhand API, standards-traceable report, deterministic engineering, OrcaFlex automation, fatigue analysis, mooring design, subsea engineering, offshore energy AI, digitalmodel">
 
     <!-- Open Graph meta tags -->
-    <meta property="og:title" content="AceEngineer — The AI Engineering Firm for Offshore Energy">
-    <meta property="og:description" content="Deckhand drives real engineering work from a chat message — analysis, documentation, issues and pull requests — executed by an AI agent under hard, auditable guardrails. Standards-traceable. Deterministic.">
+    <meta property="og:title" content="Deckhand — the API for real-world work | AceEngineer">
+    <meta property="og:description" content="Every engineering workflow is an API path. One call returns a standards-traceable HTML report URL — same input, same output, every time. Chat is one client of the API.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aceengineer.com">
     <meta property="og:site_name" content="Analytical & Computational Engineering">
 
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AceEngineer — The AI Engineering Firm for Offshore Energy">
-    <meta name="twitter:description" content="An AI agent that does real offshore engineering — and shows its work. Standards-traceable, deterministic deliverables.">
+    <meta name="twitter:title" content="Deckhand — the API for real-world work | AceEngineer">
+    <meta name="twitter:description" content="One API call → a standards-traceable report URL. Deterministic, clause-traced offshore engineering. Chat is one client.">
 
-    <title>The AI Engineering Firm for Offshore Energy | AceEngineer</title>
+    <title>Deckhand — the API for real-world work | AceEngineer</title>
 
     <include src="partials/head-common.html"></include>
 
@@ -159,13 +159,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
-                    <h1 class="hero-title">The AI engineering firm<br>for offshore energy.</h1>
-                    <p class="hero-subtitle">Deckhand drives real engineering work &mdash; analysis, documentation, issues and pull requests &mdash; straight from a chat message, executed by an AI agent under hard, auditable guardrails. Standards-traceable. Deterministic. It shows its work.</p>
+                    <h1 class="hero-title">Deckhand &mdash; the API<br>for real-world work.</h1>
+                    <p class="hero-subtitle">Every engineering workflow is an API path. One call returns a standards-traceable HTML report URL &mdash; same input, same output, every time. Chat (Telegram / WhatsApp) is one client of the API, not the headline. Offshore is live today; more domains are onboarding.</p>
                     <p class="hero-identity">Built on the open-source <strong>digitalmodel</strong> library &mdash; 7,000+ standard-mapped functions, 42 standards implemented, ~30 engineering disciplines.</p>
                     <div class="hero-cta">
+                        <a href="deckhand-api.html" class="btn btn-primary btn-lg">See the API</a>
+                        <a href="api-catalog.html" class="btn btn-default btn-lg">Browse API paths</a>
                         <!-- OPEN_DECK_CTA: live group invite. Swap to https://t.me/the_deckhand_bot?start=src_web_home_hero once deckhand#432 handler is live. -->
-                        <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="src_web_home_hero">Try Open Deck &mdash; free</a>
-                        <a href="proof.html" class="btn btn-default btn-lg">See the proof</a>
+                        <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-default btn-lg" data-cta="open-deck" data-src="src_web_home_hero">Try Open Deck &mdash; free</a>
                     </div>
                 </div>
             </div>
@@ -177,15 +178,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-5">
-                    <h2 class="section-title">Meet Deckhand</h2>
-                    <p class="section-subtitle" style="text-align:left;">Ask an engineering question in plain language. Deckhand runs the real calculation &mdash; against the right standard &mdash; and returns a deliverable with every assumption traced. Changes to code or docs arrive as pull requests, never silent edits.</p>
+                    <h2 class="section-title">Chat is one client of the API</h2>
+                    <p class="section-subtitle" style="text-align:left;">Under the hood, every Deckhand surface calls one API path: <code>POST /api/run</code> &rarr; a standards-traceable report URL. The chat below is just one client of that call &mdash; the same path runs from a webpage button or a cron job. Ask in plain language; Deckhand runs the real calculation against the right standard and returns a deliverable with every assumption traced. Changes to code or docs arrive as pull requests, never silent edits.</p>
                     <ul>
-                        <li><strong>AI that shows its work</strong> &mdash; assumptions, standards, and scope limits on every result.</li>
+                        <li><strong>One call, one report URL</strong> &mdash; every workflow is an API path that returns a standards-traceable HTML report.</li>
                         <li><strong>Deterministic</strong> &mdash; same input, same output, audit-ready.</li>
                         <li><strong>Governed</strong> &mdash; PR-only, no force-push or deletes; everything out of scope returns 404.</li>
                     </ul>
                     <p>
-                        <a href="deckhand.html" class="btn btn-info">How Deckhand works</a>
+                        <a href="deckhand-api.html" class="btn btn-info">See the API</a>
+                        <a href="deckhand.html" class="btn btn-default">How Deckhand works</a>
                         <!-- OPEN_DECK_CTA -->
                         <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-default" data-cta="open-deck" data-src="src_web_home_meet">Try it on Telegram</a>
                     </p>

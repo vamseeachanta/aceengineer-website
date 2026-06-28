@@ -146,6 +146,36 @@
         </div>
     </section>
 
+    <!-- Machine-readable -->
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-11 col-md-offset-1">
+                    <h2 class="section-title">Machine-readable</h2>
+                    <p class="section-subtitle" style="text-align:left;">The same catalog, for tooling. Both files are generated from the Deckhand workflow catalog (<code>domain-workflows.yaml</code>) &mdash; <strong>same input, same output</strong> as the tables above, so the reference can never drift from the routable paths.</p>
+
+                    <ul style="line-height:2; font-size:1.02em;">
+                        <li>
+                            <a href="https://vamseeachanta.github.io/deckhand-sandbox/api/api-catalog.json" target="_blank" rel="noopener"><strong>Catalog JSON</strong></a>
+                            &mdash; <code>api-catalog.json</code>: the public-safe path catalog (live + roadmap rows; private client paths reduced to a count).
+                        </li>
+                        <li>
+                            <a href="https://vamseeachanta.github.io/deckhand-sandbox/api/openapi.json" target="_blank" rel="noopener"><strong>OpenAPI spec</strong></a>
+                            &mdash; <code>openapi.json</code>: the API surface (<code>POST /api/run</code> and friends) as an OpenAPI 3.1 document.
+                        </li>
+                    </ul>
+
+                    <div class="catalog-note">
+                        These are the public read-tier copies of the catalog this page is reconciled against:
+                        <strong>2 live paths</strong>, <strong>5 onboarding domains</strong>, and isolated private-scope
+                        delivery paths held back from the public surface. The tables above and these files share one
+                        source of truth, so they stay in lockstep.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="cta-section">
         <div class="container">
             <div class="row">

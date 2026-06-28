@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The Deckhand API-path catalog: live engineering workflows you can call, with required inputs, deliverables, and example report URLs — plus the domains being onboarded. Every claim maps to a real workflow row.">
+    <meta name="keywords" content="Deckhand API catalog, engineering API paths, domain-workflows, mooring screening, wall thickness screening, standards-traceable report, deterministic engineering">
+
+    <meta property="og:title" content="API-path catalog — Deckhand | AceEngineer">
+    <meta property="og:description" content="Live engineering API paths you can call today — required inputs, deliverables, example report URLs — plus the roadmap of domains being onboarded.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/api-catalog.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="API-path catalog — Deckhand | AceEngineer">
+    <meta name="twitter:description" content="Live engineering API paths, required inputs, deliverables, and example report URLs.">
+
+    <title>API-path catalog — Deckhand | AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <style>
+        .catalog-table { width:100%; border-collapse:collapse; margin:8px 0 16px; background:#fff; }
+        .catalog-table th, .catalog-table td { text-align:left; padding:12px 12px; border-bottom:1px solid #eceff2; vertical-align:top; font-size:0.93em; }
+        .catalog-table th { color:#2c3e50; background:#f8f9fa; }
+        .catalog-table code { background:rgba(0,0,0,0.06); padding:1px 5px; border-radius:4px; font-size:0.92em; }
+        .catalog-table .inputs code { display:inline-block; margin:1px 2px; }
+        .table-wrap { overflow-x:auto; border:1px solid #e6e8eb; border-radius:10px; }
+        .status-badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.8em; font-weight:700; }
+        .status-live { background:#e3f4ea; color:#1f8a4c; }
+        .status-onboarding { background:#fdf3e0; color:#b3791a; }
+        .catalog-note { background:#f8f9fa; border-left:4px solid #2c3e50; padding:14px 18px; margin:18px 0; color:#52606d; }
+        .roadmap-row { background:#f8f9fa; padding:56px 0; }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <section class="hero-section" style="padding-bottom:36px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-md-offset-1 text-center">
+                    <h1 class="hero-title">The API-path catalog</h1>
+                    <p class="hero-subtitle">Every workflow is an API path you can call: <code>POST /api/run</code> &rarr; a standards-traceable report URL. Below are the paths that are <strong>live today</strong>, and the domains being <strong>onboarded</strong>. Nothing here is claimed before it has a firable workflow row.</p>
+                    <div class="hero-cta">
+                        <a href="deckhand-api.html" class="btn btn-default btn-lg">How the API works</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live paths -->
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-11 col-md-offset-1">
+                    <h2 class="section-title">Live paths <span class="status-badge status-live">LIVE</span></h2>
+                    <p class="section-subtitle" style="text-align:left;">Runnable today on the free Open Deck tier. DNV-traceable, deterministic, with report URLs published to the public gallery.</p>
+
+                    <div class="table-wrap">
+                        <table class="catalog-table">
+                            <thead>
+                                <tr>
+                                    <th>ref (workflow path)</th>
+                                    <th>domain / subdomain</th>
+                                    <th>required inputs</th>
+                                    <th>deliverable</th>
+                                    <th>example report URL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>subsea_pipeline_wall_thickness_screen</code><br><span style="color:#6b7785; font-size:0.9em;">engine: digitalmodel wall-thickness quickcheck</span></td>
+                                    <td><code>subsea-pipelines-integrity</code> / <code>pipeline</code></td>
+                                    <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>design_pressure_rating</code> <code>buckle_arrestors</code> <code>data_available</code> <code>deadline</code></td>
+                                    <td>Summary-first reply + standards-traceable HTML report package in a dated sandbox run dir (DNV-ST-F101).</td>
+                                    <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">deckhand-sandbox gallery</a> &rarr; <code>.../report.html</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>floating_marine_mooring_screen</code><br><span style="color:#6b7785; font-size:0.9em;">engine: digitalmodel mooring analysis</span></td>
+                                    <td><code>floating-marine</code> / <code>mooring</code></td>
+                                    <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>line_material</code> <code>data_available</code> <code>deadline</code></td>
+                                    <td>Summary-first reply + HTML report package in a dated sandbox run dir. Metallic-line screen; non-metallic escalates honestly.</td>
+                                    <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">deckhand-sandbox gallery</a> &rarr; <code>.../report.html</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="catalog-note">
+                        <code>ref</code> is the workflow-row key in the source-of-truth catalog
+                        <code>deckhand/config/deckhand/routing/domain-workflows.yaml</code>. The two live paths run on the
+                        open-source <strong>digitalmodel</strong> engine; required inputs are the path's clarification keys
+                        (branch-first inputs like <code>buckle_arrestors</code> / <code>line_material</code> are asked, never guessed).
+                        Each call returns a <code>report_url</code> on the
+                        <a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">public deckhand-sandbox gallery</a>.
+                    </div>
+
+                    <p style="color:#6b7785;">
+                        Two further utility paths back the same surface: an Open Deck <em>public router</em> that directs a
+                        question to the right domain channel, and isolated <em>private-scope delivery</em> paths for
+                        client-confidential work (reports promoted to a client wiki, never the public gallery).
+                        <a href="contact.html">Talk to us</a> about private scopes.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap / onboarding -->
+    <section class="roadmap-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-11 col-md-offset-1">
+                    <h2 class="section-title">Roadmap &mdash; API paths onboarding <span class="status-badge status-onboarding">ONBOARDING</span></h2>
+                    <p class="section-subtitle" style="text-align:left;">These domains are bound and routable but do <strong>not</strong> yet have a runnable public workflow row. They escalate to a human today &mdash; they are <strong>not</strong> shipped capability. Listed here for honesty, not as a claim.</p>
+
+                    <div class="table-wrap">
+                        <table class="catalog-table">
+                            <thead>
+                                <tr>
+                                    <th>domain</th>
+                                    <th>subdomains (planned)</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>wells-subsurface</code></td><td><code>wells</code>, <code>field-development</code></td><td>Onboarding &mdash; public workflow row owed</td></tr>
+                                <tr><td><code>electrical</code></td><td><code>electrical</code></td><td>Onboarding &mdash; bound, escalate-only</td></tr>
+                                <tr><td><code>cad</code></td><td><code>cad</code></td><td>Onboarding &mdash; bound, escalate-only</td></tr>
+                                <tr><td><code>manufacturing</code></td><td><code>manufacturing</code></td><td>Onboarding &mdash; bound, escalate-only</td></tr>
+                                <tr><td><code>codes-standards-maritime-law</code></td><td>&mdash;</td><td>Onboarding &mdash; bound, no workflow row yet</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="catalog-note">
+                        A domain graduates from <strong>onboarding</strong> to <strong>live</strong> only when it has a firable
+                        workflow row in <code>domain-workflows.yaml</code> <em>and</em> a published report URL. Until then,
+                        a call to one of these paths escalates to a human &mdash; it never fabricates an answer.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h2>Call a live path &mdash; free</h2>
+                    <p>Open Deck is the free chat client of the API. Bring a real subsea-pipeline or mooring question and watch a path run, traced to the standard, on open repos.</p>
+                    <!-- OPEN_DECK_CTA -->
+                    <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="src_web_catalog_footer">Try Open Deck on Telegram</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

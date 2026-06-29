@@ -124,6 +124,65 @@ rootPath: "../"
         </div>
     </section>
 
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">Why it matters</h2>
+                <p>Reservoir, production and asset engineers forecast estimated ultimate recovery (EUR) and remaining reserves one well at a time from rate history. Doing it consistently across a whole field &mdash; picking the decline exponent b, fitting the same way every time, and reconciling the forecast to an economic cut-off &mdash; is repetitive and easy to do subjectively. A standards-traceable Arps fit gives every well the same defensible treatment with the parameters and assumptions written down.</p>
+            </div></div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;background:#f8f9fa;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">The method &mdash; governing equations</h2>
+                <p>Arps decline-curve analysis fits the rate history to one of three empirical models and integrates to recovery at the economic rate:</p>
+                <div style="background:#fff;border:1px solid #e3e8ee;border-radius:8px;padding:18px 22px;margin:18px 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:.95em;line-height:2;color:#1f2933;overflow-x:auto;">
+                    <div>Rate&ndash;time (general / hyperbolic, 0 &lt; b &lt; 1):</div>
+                    <div>&nbsp;&nbsp;q(t) = q<sub>i</sub> / (1 + b &middot; D<sub>i</sub> &middot; t)<sup>1/b</sup></div>
+                    <div style="margin-top:10px;">&nbsp;&nbsp;Exponential (b = 0):&nbsp; q(t) = q<sub>i</sub> &middot; e<sup>&minus;D<sub>i</sub>t</sup></div>
+                    <div>&nbsp;&nbsp;Harmonic (b = 1):&nbsp; q(t) = q<sub>i</sub> / (1 + D<sub>i</sub> &middot; t)</div>
+                    <div style="margin-top:10px;">Cumulative to an economic rate q<sub>ab</sub>:</div>
+                    <div>&nbsp;&nbsp;Exponential:&nbsp; N<sub>p</sub> = (q<sub>i</sub> &minus; q<sub>ab</sub>) / D<sub>i</sub></div>
+                    <div>&nbsp;&nbsp;Hyperbolic:&nbsp; N<sub>p</sub> = q<sub>i</sub><sup>b</sup> / ((1&minus;b)D<sub>i</sub>) &middot; (q<sub>i</sub><sup>1&minus;b</sup> &minus; q<sub>ab</sub><sup>1&minus;b</sup>)</div>
+                    <div>&nbsp;&nbsp;Harmonic:&nbsp; N<sub>p</sub> = (q<sub>i</sub> / D<sub>i</sub>) &middot; ln(q<sub>i</sub> / q<sub>ab</sub>)</div>
+                </div>
+                <p style="font-size:.92em;color:#52606d;">where q<sub>i</sub> is the initial rate, D<sub>i</sub> the initial nominal decline rate, b the decline exponent and q<sub>ab</sub> the economic abandonment rate. The parameters q<sub>i</sub>, D<sub>i</sub> and b are fitted by regression to the history; EUR is the cumulative produced to date plus N<sub>p</sub> from the current rate to q<sub>ab</sub>.</p>
+                <p style="font-size:.9em;color:#6b7785;"><em>These are the standard Arps relationships. No numeric example is shown here on purpose &mdash; the calculator and Deckhand fit the parameters and compute the forecast and EUR deterministically from your rate history, so every figure is reproducible and traceable.</em></p>
+            </div></div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">What a screening check covers &mdash; and what it does not</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 style="font-size:1.05em;color:#1f7a3d;">Covers</h3>
+                        <ul class="ask-list">
+                            <li>Single-well, single-phase boundary-dominated (depletion) decline fits.</li>
+                            <li>Exponential, hyperbolic and harmonic models with fitted q<sub>i</sub>, D<sub>i</sub>, b.</li>
+                            <li>Forward rate forecast and EUR to a user-supplied economic rate.</li>
+                            <li>A parameter report with the fit assumptions stated.</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 style="font-size:1.05em;color:#9a3b2e;">Does not cover</h3>
+                        <ul class="ask-list">
+                            <li>Transient / early-time flow before boundary-dominated decline, where Arps over-forecasts.</li>
+                            <li>Modified-Arps terminal decline or multi-segment fits unless specified.</li>
+                            <li>Rate-transient, material-balance or numerical-simulation methods.</li>
+                            <li>Well interference, workovers, choke changes, commingled allocation, or economics and pricing.</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="font-size:.92em;color:#52606d;">The screening assumes the history reflects established decline under roughly constant operating conditions; wells in transient flow or with operational changes need a method-of-record review.</p>
+            </div></div>
+        </div>
+    </section>
+
     <section style="padding:48px 0;text-align:center;">
         <div class="container">
             <h2 class="section-title">Related standards</h2>

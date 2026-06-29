@@ -106,6 +106,63 @@ rootPath: "../"
         </div>
     </section>
 
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">Why it matters</h2>
+                <p>Every ROV or AUV survey of an in-service pipeline returns a list of free spans where the line crosses seabed depressions. Most are harmless, but each one is a potential vortex-induced-vibration (VIV) fatigue hotspot, and rectification — rock dump or supports — is expensive vessel time. The bottleneck for an integrity engineer is triage: deciding which spans are clearly acceptable, which are clearly not, and which need a full assessment. A standards-traceable screening check against DNV-RP-F105 turns a survey span list into a ranked action list.</p>
+            </div></div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;background:#f8f9fa;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">The method &mdash; governing relationships</h2>
+                <p>RP-F105 screens a span by comparing the current-driven vortex-shedding excitation against the span's natural frequencies, then accumulating fatigue from the resulting stress cycles. The screening forms are:</p>
+                <div style="background:#fff;border:1px solid #e3e8ee;border-radius:8px;padding:18px 22px;margin:18px 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:.95em;line-height:2;color:#1f2933;overflow-x:auto;">
+                    <div>Natural frequency (first mode):</div>
+                    <div>&nbsp;&nbsp;f<sub>1</sub> &asymp; C<sub>1</sub> &middot; &radic;[ (1 + CSF) &middot; EI / (m<sub>e</sub> &middot; L<sub>eff</sub><sup>4</sup>) &middot; (1 + S<sub>eff</sub>/P<sub>cr</sub> + C<sub>3</sub>(&delta;/D)<sup>2</sup>) ]</div>
+                    <div style="margin-top:10px;">Reduced velocity (VIV onset parameter):</div>
+                    <div>&nbsp;&nbsp;V<sub>R</sub> = U<sub>c</sub> / (f<sub>1</sub> &middot; D)</div>
+                    <div style="margin-top:10px;">Fatigue damage (Miner's rule against a DNV S-N curve):</div>
+                    <div>&nbsp;&nbsp;D<sub>fat</sub> = &Sigma;<sub>i</sub> n<sub>i</sub> / N<sub>i</sub>&nbsp;&nbsp;&middot;&nbsp;&nbsp;life = T<sub>design</sub> / D<sub>fat</sub></div>
+                </div>
+                <p style="font-size:.92em;color:#52606d;">where C<sub>1</sub>, C<sub>3</sub> are boundary-condition coefficients, EI the bending stiffness, m<sub>e</sub> the effective mass (including added mass), L<sub>eff</sub> the effective span length, CSF the concrete-coating stiffness factor, S<sub>eff</sub> the effective axial force, P<sub>cr</sub> the Euler buckling load, &delta; the static deflection and D the outer diameter. Cross-flow VIV is screened around V<sub>R</sub> &asymp; 3&ndash;4 and in-line VIV at lower V<sub>R</sub>; the stress range follows from the predicted amplitude (A/D) and a unit-stress factor.</p>
+                <p style="font-size:.9em;color:#6b7785;"><em>Symbols and notation follow DNV-RP-F105; the relationships above are the screening forms, not the full response models. No numeric example is shown here on purpose &mdash; the calculator and Deckhand compute every figure deterministically from your inputs, so each result is reproducible and traceable.</em></p>
+            </div></div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">What a screening check covers &mdash; and what it does not</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 style="font-size:1.05em;color:#1f7a3d;">Covers</h3>
+                        <ul class="ask-list">
+                            <li>Single, isolated free spans on a known seabed profile.</li>
+                            <li>First-mode cross-flow and in-line VIV screening from steady plus wave-induced current.</li>
+                            <li>An allowable free-span length estimate for the given flow and support conditions.</li>
+                            <li>A pass / detailed-assessment / intervention flag per span with the assumptions shown.</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 style="font-size:1.05em;color:#9a3b2e;">Does not cover</h3>
+                        <ul class="ask-list">
+                            <li>Multi-span interaction or modal coupling between adjacent spans.</li>
+                            <li>Calibrated soil&ndash;pipe dynamic stiffness, trenching or partial-burial effects beyond simple factors.</li>
+                            <li>Full time-domain VIV fatigue or large-wave (Morison) direct-force fatigue.</li>
+                            <li>Combined loading with pressure, temperature and third-party interaction.</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="font-size:.92em;color:#52606d;">Spans flagged near a limit should go to a full RP-F105 / finite-element assessment &mdash; the screening narrows where that effort is worth spending.</p>
+            </div></div>
+        </div>
+    </section>
+
     <section style="padding:48px 0;text-align:center;">
         <div class="container">
             <h2 class="section-title">Related standards</h2>

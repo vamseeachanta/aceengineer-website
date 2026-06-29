@@ -124,6 +124,63 @@ rootPath: "../"
         </div>
     </section>
 
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">Why it matters</h2>
+                <p>A station-keeping engineer on a floating system &mdash; FPSO, FPS or semi &mdash; has to show that every mooring line survives its design service life with the code safety factor. The tension histories come out of time-domain analysis across many sea states, and the fatigue bookkeeping then runs per component: chain, wire and connector each have their own T-N data, and the line that governs is rarely obvious by inspection. A standards-traceable screening check turns a pile of tension cycles into a damage number, an implied life and a clearly identified governing segment.</p>
+            </div></div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;background:#f8f9fa;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">The method &mdash; governing relationships</h2>
+                <p>API RP 2SK and DNV-OS-E301 accumulate fatigue from the tension-range spectrum of each line against component T-N (tension&ndash;cycles-to-failure) data using Miner's rule:</p>
+                <div style="background:#fff;border:1px solid #e3e8ee;border-radius:8px;padding:18px 22px;margin:18px 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:.95em;line-height:2;color:#1f2933;overflow-x:auto;">
+                    <div>Tension-range counting (rainflow, per sea state):</div>
+                    <div>&nbsp;&nbsp;n<sub>i</sub> at tension range &Delta;T<sub>i</sub>, weighted by sea-state probability p<sub>j</sub></div>
+                    <div style="margin-top:10px;">T-N curve (tension normalised by reference breaking strength):</div>
+                    <div>&nbsp;&nbsp;N<sub>i</sub> = a<sub>D</sub> &middot; (&Delta;T<sub>i</sub> / RBS)<sup>&minus;m</sup></div>
+                    <div style="margin-top:10px;">Miner's-rule damage, life and acceptance:</div>
+                    <div>&nbsp;&nbsp;D<sub>fat</sub> = &Sigma;<sub>i</sub> n<sub>i</sub> / N<sub>i</sub>&nbsp;&nbsp;&middot;&nbsp;&nbsp;life = T<sub>service</sub> / D<sub>fat</sub>&nbsp;&nbsp;&middot;&nbsp;&nbsp;accept if D<sub>fat</sub> &middot; FDF &le; 1</div>
+                </div>
+                <p style="font-size:.92em;color:#52606d;">where a<sub>D</sub> and m are the component-specific T-N intercept and slope (chain, wire rope or connector), RBS the reference breaking strength, T<sub>service</sub> the design service life and FDF the fatigue design factor set by the code according to component type and inspectability. The governing line or segment is the one with the highest accumulated damage.</p>
+                <p style="font-size:.9em;color:#6b7785;"><em>Symbols and notation follow API RP 2SK / DNV-OS-E301. No numeric example is shown here on purpose &mdash; the calculator and Deckhand compute the damage, life and safety factor deterministically from your tension input and T-N data, so every figure is reproducible and traceable.</em></p>
+            </div></div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">What a screening check covers &mdash; and what it does not</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 style="font-size:1.05em;color:#1f7a3d;">Covers</h3>
+                        <ul class="ask-list">
+                            <li>Damage and implied life per segment from a supplied tension-cycle histogram or time series.</li>
+                            <li>Component T-N data for chain, wire and connectors with Miner summation.</li>
+                            <li>Identification of the governing line and segment.</li>
+                            <li>Comparison against design service life &times; fatigue design factor, assumptions shown.</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 style="font-size:1.05em;color:#9a3b2e;">Does not cover</h3>
+                        <ul class="ask-list">
+                            <li>The global hydrodynamic / mooring time-domain analysis that produces the tensions (upstream).</li>
+                            <li>Out-of-plane bending of chain at fairleads and connectors unless an OPB model and contact data are supplied.</li>
+                            <li>Corrosion and wear knock-downs beyond a user-supplied factor.</li>
+                            <li>VIV of taut lines, installation transients and thermal effects.</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="font-size:.92em;color:#52606d;">The screening assumes the tension input represents the design environment; lines flagged near a limit warrant a full code fatigue analysis with the upstream model.</p>
+            </div></div>
+        </div>
+    </section>
+
     <section style="padding:48px 0;text-align:center;">
         <div class="container">
             <h2 class="section-title">Related standards</h2>

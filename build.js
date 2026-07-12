@@ -7,9 +7,14 @@ const yaml = require('js-yaml');
 const { PurgeCSS } = require('purgecss');
 const CleanCSS = require('clean-css');
 const hf = require('./scripts/hf-fetch');
+const { renderCards } = require('./scripts/render-capabilities');
 
 const srcDir = './content';
 const distDir = './dist';
+
+// Rendered capability cards (C3, #51), computed once at build start from the hydrated
+// registry and injected into every page as the `capabilitiesCards` template local.
+let _capabilitiesCards = '';
 
 // Load canonical firm-copy (brand/copy.yaml) — single source of truth (issue #9).
 // Exposed to every page as the `copy` template object, e.g. {{ copy.firm_lede }}.
@@ -115,6 +120,12 @@ async function processFile(filePath) {
     locals.copy = loadCopy();
   }
 
+  // Expose the rendered capability cards (C3) to any page that wants them
+  // (content/capabilities/index.html uses {{{ capabilitiesCards }}}).
+  if (locals.capabilitiesCards === undefined) {
+    locals.capabilitiesCards = _capabilitiesCards;
+  }
+
   // Process includes first, then expressions (so included content gets variables expanded)
   const result = await posthtml([
     include({ root: srcDir }),
@@ -170,6 +181,19 @@ async function build() {
   }
   fs.mkdirSync(distDir);
 
+  // Hydrate the capability registry (C2) and render its cards (C3) before processing
+  // pages, so content/capabilities/index.html can inject them. Never fails the build.
+  try {
+    const reg = await loadHydratedCapabilities();
+    _capabilitiesCards = renderCards(reg);
+    const tables = (reg.capabilities || []).flatMap(c => c.tables || []);
+    const bySource = tables.reduce((a, t) => { a[t.data_source] = (a[t.data_source] || 0) + 1; return a; }, {});
+    console.log(`Capabilities: ${(reg.capabilities || []).length} registered · ${tables.length} tables · sources ${JSON.stringify(bySource)}`);
+  } catch (err) {
+    _capabilitiesCards = '';
+    console.warn(`Capabilities render skipped: ${err.message}`);
+  }
+
   // Process all HTML files
   const files = getHtmlFiles(srcDir);
   for (const file of files) {
@@ -180,19 +204,6 @@ async function build() {
   copyAssets();
   copySitemap();
   copyRobotsTxt();
-
-  // Warm the capability registry data (C2, #50): hydrate each table from committed
-  // snapshots (or live if HF_FETCH=1) and report the data source so failures surface.
-  // Page rendering from this data is C3/C4; here we only validate + wire it in.
-  try {
-    const reg = await loadHydratedCapabilities();
-    const caps = reg.capabilities || [];
-    const tables = caps.flatMap(c => c.tables || []);
-    const bySource = tables.reduce((a, t) => { a[t.data_source] = (a[t.data_source] || 0) + 1; return a; }, {});
-    console.log(`Capabilities: ${caps.length} registered · ${tables.length} tables · sources ${JSON.stringify(bySource)}`);
-  } catch (err) {
-    console.warn(`Capabilities hydration skipped: ${err.message}`);
-  }
 
   console.log(`\nBuild complete! ${files.length} pages built.`);
 }

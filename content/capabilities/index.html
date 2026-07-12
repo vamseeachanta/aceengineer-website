@@ -1,0 +1,62 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Live engineering and energy-data capabilities from AceEngineer — each backed by a public Hugging Face dataset you can explore and download.">
+    <meta name="keywords" content="offshore engineering datasets, energy data, Hugging Face datasets, field development, digital model, world energy data, open data">
+
+    <meta property="og:title" content="Capabilities — Live, Data-Backed | AceEngineer">
+    <meta property="og:description" content="Every AceEngineer capability is backed by a public Hugging Face dataset — explore fields, wells, and engineering results directly.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aceengineer.com/capabilities/">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Capabilities — Live, Data-Backed | AceEngineer">
+    <meta name="twitter:description" content="Engineering and energy-data capabilities, each backed by a public Hugging Face dataset.">
+
+    <title>Capabilities — Live, Data-Backed | AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <section class="hero-section" style="padding-bottom:28px;">
+        <div class="container">
+            <h1 style="margin-bottom:10px;">Capabilities, backed by live data</h1>
+            <p style="font-size:1.15rem;color:#444;max-width:760px;">
+                Each capability below is powered by a public
+                <a href="https://huggingface.co/aceengineer" rel="noopener">Hugging Face dataset</a>
+                that we publish from our engineering and energy-data pipelines. The numbers are the
+                real published records — explore or download them directly. New algorithms are added
+                here automatically as we ship them.
+            </p>
+        </div>
+    </section>
+
+    <section style="padding:8px 0 56px;">
+        <div class="container">
+            {{{ capabilitiesCards }}}
+        </div>
+    </section>
+
+    <section style="padding:40px 0;background:#f8f9fa;">
+        <div class="container" style="max-width:820px;">
+            <h2 style="font-size:1.3rem;">How this works</h2>
+            <p style="color:#555;">
+                We publish analysis results as versioned datasets on Hugging Face, then this site
+                renders them at build time — so what you see is the same data our tools produce,
+                with provenance and honest coverage notes. Data is refreshed as pipelines run.
+            </p>
+        </div>
+    </section>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

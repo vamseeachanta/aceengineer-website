@@ -45,6 +45,11 @@
         "testMatch": ["<rootDir>/tests/js/render-capabilities.test.js"]
       },
       {
+        "displayName": "capabilities-refresh",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/capabilities-refresh.test.js"]
+      },
+      {
         "displayName": "jsdom",
         "testEnvironment": "jsdom",
         "testMatch": ["<rootDir>/tests/js/navbar-toggle.test.js"]
@@ -97,6 +102,7 @@
       "scripts/verify-capabilities-online.js",
       "assets/js/navbar-toggle.js",
       "assets/js/cta-tracking.js",
+      "assets/js/capabilities-refresh.js",
       "assets/js/npv-calculator-engine.js",
       "assets/js/mooring-fatigue-engine.js",
       "assets/js/decline-curve-engine.js",

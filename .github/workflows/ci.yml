@@ -28,6 +28,13 @@ jobs:
       - name: Build site
         run: npm run build
 
+      # C7 going-forward gate (#54): the registry must be structurally valid AND true
+      # against Hugging Face — every live capability's dataset/config/columns resolve, no
+      # withheld column is surfaced. Genuine "not found" fails here; a transient HF outage
+      # only warns (see scripts/verify-capabilities-online.js), so this never flakes a PR.
+      - name: Validate capabilities registry (schema + live HF resolution)
+        run: npm run validate:registry
+
       - name: Run Jest suite
         run: npm test -- --runInBand
 

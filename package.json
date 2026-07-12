@@ -6,6 +6,9 @@
     "serve": "npx serve dist",
     "lint:copy": "node scripts/lint-copy.js",
     "validate:capabilities": "node scripts/validate-capabilities.js",
+    "validate:capabilities:online": "node scripts/verify-capabilities-online.js",
+    "validate:registry": "npm run validate:capabilities && npm run validate:capabilities:online",
+    "scaffold:capability": "node scripts/scaffold-capability-entry.js",
     "refresh:hf": "node scripts/refresh-hf-data.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
@@ -30,6 +33,11 @@
         "displayName": "hf-fetch",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/hf-fetch.test.js"]
+      },
+      {
+        "displayName": "capabilities-online",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/capabilities-online.test.js"]
       },
       {
         "displayName": "render-capabilities",
@@ -86,6 +94,7 @@
       "build.js",
       "scripts/hf-fetch.js",
       "scripts/render-capabilities.js",
+      "scripts/verify-capabilities-online.js",
       "assets/js/navbar-toggle.js",
       "assets/js/cta-tracking.js",
       "assets/js/npv-calculator-engine.js",

@@ -7,7 +7,7 @@ const yaml = require('js-yaml');
 const { PurgeCSS } = require('purgecss');
 const CleanCSS = require('clean-css');
 const hf = require('./scripts/hf-fetch');
-const { renderCards } = require('./scripts/render-capabilities');
+const { renderCards, capabilityDetailDocument, detailFileName } = require('./scripts/render-capabilities');
 
 const srcDir = './content';
 const distDir = './dist';
@@ -15,6 +15,10 @@ const distDir = './dist';
 // Rendered capability cards (C3, #51), computed once at build start from the hydrated
 // registry and injected into every page as the `capabilitiesCards` template local.
 let _capabilitiesCards = '';
+
+// The hydrated registry (C2), captured at build start so the detail-page pass (C4)
+// can reuse it without re-fetching.
+let _hydratedRegistry = null;
 
 // Load canonical firm-copy (brand/copy.yaml) — single source of truth (issue #9).
 // Exposed to every page as the `copy` template object, e.g. {{ copy.firm_lede }}.
@@ -126,15 +130,38 @@ async function processFile(filePath) {
     locals.capabilitiesCards = _capabilitiesCards;
   }
 
+  const html = await renderHtml(content, locals);
+
+  ensureDir(path.dirname(outputPath));
+  fs.writeFileSync(outputPath, html);
+  console.log(`Built: ${relativePath}`);
+}
+
+// Run a raw HTML string through the same pipeline pages use: resolve <include>
+// partials, then expand {{ }} expressions with `locals`. Shared by processFile and
+// the generated capability detail pages (C4) so they get identical chrome.
+async function renderHtml(content, locals) {
   // Process includes first, then expressions (so included content gets variables expanded)
   const result = await posthtml([
     include({ root: srcDir }),
     expressions({ locals })
   ]).process(content);
+  return result.html;
+}
 
-  ensureDir(path.dirname(outputPath));
-  fs.writeFileSync(outputPath, result.html);
-  console.log(`Built: ${relativePath}`);
+// Generate one detail page per non-withheld capability at dist/capabilities/<id>.html
+// (C4, #52). Pages live one level deep, so rootPath is '../' for the shared partials.
+async function buildCapabilityDetailPages(registry) {
+  const caps = (registry && registry.capabilities || []).filter(c => c.status !== 'withheld');
+  const outDir = path.join(distDir, 'capabilities');
+  ensureDir(outDir);
+  for (const cap of caps) {
+    const doc = capabilityDetailDocument(cap);
+    const html = await renderHtml(doc, { rootPath: '../', copy: loadCopy() });
+    fs.writeFileSync(path.join(outDir, detailFileName(cap)), html);
+    console.log(`Built: capabilities/${detailFileName(cap)}`);
+  }
+  return caps.length;
 }
 
 // Copy assets directory
@@ -185,6 +212,7 @@ async function build() {
   // pages, so content/capabilities/index.html can inject them. Never fails the build.
   try {
     const reg = await loadHydratedCapabilities();
+    _hydratedRegistry = reg;
     _capabilitiesCards = renderCards(reg);
     const tables = (reg.capabilities || []).flatMap(c => c.tables || []);
     const bySource = tables.reduce((a, t) => { a[t.data_source] = (a[t.data_source] || 0) + 1; return a; }, {});
@@ -198,6 +226,16 @@ async function build() {
   const files = getHtmlFiles(srcDir);
   for (const file of files) {
     await processFile(file);
+  }
+
+  // Generate per-capability detail pages (C4) from the hydrated registry.
+  if (_hydratedRegistry) {
+    try {
+      const n = await buildCapabilityDetailPages(_hydratedRegistry);
+      console.log(`Capability detail pages: ${n}`);
+    } catch (err) {
+      console.warn(`Capability detail pages skipped: ${err.message}`);
+    }
   }
 
   // Copy assets

@@ -18,6 +18,9 @@ allowed_roots:
   - docs
   - config
   - scripts
+  # Committed Hugging Face snapshots (data/hf-cache/*.json) — the offline/outage-proof
+  # data source for the HF-backed capability pages (C2, #50; epic workspace-hub#3485).
+  - data
 
   # Agent/tooling and repo metadata roots intentionally tracked today
   - .claude

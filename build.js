@@ -23,6 +23,20 @@ function loadCopy(copyFile = './brand/copy.yaml') {
   return _copyCache;
 }
 
+// Load the capability registry (config/capabilities.yaml) — SSOT for the HF-backed
+// capability pages (docs/capabilities-registry.md, epic workspace-hub#3485). Returns
+// { version, capabilities: [...] } (or {} if absent). Cached like loadCopy. Consumed by
+// the build-time HF fetch + render layer (aceengineer-website#50/#51/#52).
+let _capabilitiesCache;
+function loadCapabilities(registryFile = './config/capabilities.yaml') {
+  if (_capabilitiesCache === undefined) {
+    _capabilitiesCache = fs.existsSync(registryFile)
+      ? (yaml.load(fs.readFileSync(registryFile, 'utf8')) || {})
+      : {};
+  }
+  return _capabilitiesCache;
+}
+
 // Parse YAML front matter
 function parseFrontMatter(content) {
   // Tolerate CRLF line endings and a missing trailing newline after the closing ---
@@ -231,4 +245,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt, loadCopy };
+module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt, loadCopy, loadCapabilities };

@@ -5,6 +5,7 @@
     "build": "node build.js",
     "serve": "npx serve dist",
     "lint:copy": "node scripts/lint-copy.js",
+    "validate:capabilities": "node scripts/validate-capabilities.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
@@ -18,6 +19,11 @@
         "displayName": "copy-lint",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/copy-lint.test.js"]
+      },
+      {
+        "displayName": "capabilities-registry",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/capabilities-registry.test.js"]
       },
       {
         "displayName": "jsdom",

@@ -1,0 +1,63 @@
+# capabilities.yaml — registry of algorithm/data capabilities surfaced on aceengineer.com
+#
+# Single source of truth (SSOT) for the HF-backed capability pages. build.js reads
+# this at build time, fetches each dataset from the Hugging Face datasets-server
+# /rows API, and renders one indexable page per capability. Adding a new algorithm
+# to the website = publish its HF dataset + add one entry here (CI enforces both).
+#
+# Epic: vamseeachanta/workspace-hub#3485 · C1: vamseeachanta/aceengineer-website#49
+# Schema + how-to: docs/capabilities-registry.md
+#
+# Entry fields:
+#   id             (required) stable kebab-case slug — becomes the page URL /capabilities/<id>.
+#   title          (required) human-readable capability name (unique <title> for SEO).
+#   domain         (required) one of: worldenergy | digitalmodel.
+#   summary        (required) one-sentence description shown on the card + detail page.
+#   hf_dataset     (required) Hugging Face dataset id, e.g. aceengineer/worldenergydata-explorer.
+#   provenance_url (required) link to the source repo/report that produced the data.
+#   status         (required) live | pending | withheld.
+#                    live     → rendered with real HF data.
+#                    pending  → renders a visible placeholder linking to provenance_url (no silent omission).
+#                    withheld → entry present but not surfaced (e.g. data-correctness hold).
+#   primary_config (required) the config (table) whose headline stat appears on the card.
+#   tables         (required) one or more HF configs to render, each:
+#       config           (required) HF dataset config (table) name.
+#       label            (required) tab/section label on the detail page.
+#       viz              (required) table | bar | line | map.
+#       highlight_columns(required) columns shown first / used by the chart. Must exist in the table.
+#   withheld_columns (optional) columns that must NEVER be surfaced (CI blocks them). See #971.
+#   data_limits      (required) honest disclosure of coverage + known limitations.
+
+version: 1
+
+capabilities:
+  - id: field-explorer
+    title: World Energy Field Explorer
+    domain: worldenergy
+    summary: >-
+      Global offshore field drill-down — fields, wells, and country rollups built
+      from BSEE and public regulatory filings.
+    hf_dataset: aceengineer/worldenergydata-explorer
+    provenance_url: https://github.com/vamseeachanta/worldenergydata
+    status: live
+    primary_config: fields
+    tables:
+      - config: fields
+        label: Fields
+        viz: table
+        highlight_columns: [name, operator, region, wells_count, api_gravity]
+      - config: wells
+        label: Wells
+        viz: table
+        highlight_columns: [api, field_id, cum_oil_mmbbl, uptime_pct, status]
+      - config: countries
+        label: Countries
+        viz: bar
+        highlight_columns: [country, fields, facilities]
+    # Economics columns are held out of the public dataset pending correctness
+    # re-verification (worldenergydata#971 fixed → re-enable tracked in #978 / epic C9).
+    withheld_columns: [npv_mm, breakeven_wti]
+    data_limits: >-
+      Coverage is primarily US Gulf of Mexico deepwater (BSEE) plus selected
+      international basins; not a complete global census. Economics (NPV, breakeven)
+      are withheld pending correctness re-verification (worldenergydata#978).

@@ -253,14 +253,31 @@ function capabilityDetailBody(cap) {
 
   const tables = (cap.tables || []).map(t => {
     const chart = renderChartFor(t);
+    // Data attributes let the optional client-side "Refresh to latest" (C6,
+    // assets/js/capabilities-refresh.js) re-fetch this exact table and re-render into
+    // [data-cap-render]. Inert without JS — the baked chart+table below is the default.
+    const attrs =
+      ` data-cap-table data-hf-dataset="${escapeHtml(cap.hf_dataset)}" data-hf-config="${escapeHtml(t.config)}"` +
+      ` data-hf-split="train" data-viz="${escapeHtml(t.viz)}"` +
+      ` data-highlight="${escapeHtml(JSON.stringify(t.highlight_columns || []))}"`;
     return (
-      `<section style="margin:28px 0;">` +
+      `<section style="margin:28px 0;"${attrs}>` +
       `<h2 style="font-size:1.3rem;color:#111;">${escapeHtml(t.label || t.config)}</h2>` +
-      chart +
-      renderTable(t) +
+      `<div data-cap-render>` + chart + renderTable(t) + `</div>` +
       `</section>`
     );
   }).join('\n');
+
+  // Progressive-enhancement affordance — only where there is live data to refresh.
+  const refresh = hasData(cap)
+    ? `<div style="margin:14px 0 4px;">` +
+      `<button type="button" data-refresh-capabilities ` +
+      `style="background:${domainColor};color:#fff;border:none;border-radius:6px;padding:8px 16px;` +
+      `font-size:.9rem;font-weight:600;letter-spacing:.02em;cursor:pointer;">Refresh to latest</button>` +
+      `<span data-refresh-status role="status" aria-live="polite" ` +
+      `style="margin-left:12px;font-size:.9rem;color:#777;"></span>` +
+      `</div>`
+    : '';
 
   const provenance =
     `<div style="margin-top:32px;padding:18px 20px;background:#f8f9fa;border-radius:8px;">` +
@@ -275,7 +292,8 @@ function capabilityDetailBody(cap) {
     `<div style="margin:10px 0 6px;">${badge}</div>` +
     `<h1 style="margin:4px 0 8px;">${escapeHtml(cap.title)}</h1>` +
     `<p style="font-size:1.12rem;color:#444;max-width:760px;">${escapeHtml(cap.summary)}</p>` +
-    tables +
+    refresh +
+    `<div data-capability-detail>` + tables + `</div>` +
     provenance
   );
 }
@@ -300,6 +318,7 @@ function capabilityDetailDocument(cap) {
     capabilityDetailBody(cap) +
     `\n</div></section>\n` +
     `<include src="partials/footer.html"></include>\n` +
+    `<script src="/assets/js/capabilities-refresh.js" defer></script>\n` +
     `</body>\n</html>\n`
   );
 }

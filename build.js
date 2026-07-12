@@ -6,6 +6,7 @@ const expressions = require('posthtml-expressions');
 const yaml = require('js-yaml');
 const { PurgeCSS } = require('purgecss');
 const CleanCSS = require('clean-css');
+const hf = require('./scripts/hf-fetch');
 
 const srcDir = './content';
 const distDir = './dist';
@@ -35,6 +36,25 @@ function loadCapabilities(registryFile = './config/capabilities.yaml') {
       : {};
   }
   return _capabilitiesCache;
+}
+
+// Directory of committed HF snapshots (data/hf-cache/*.json), refreshed by
+// `npm run refresh:hf`. Read by the build as the deterministic/offline data source.
+const SNAPSHOT_DIR = './data/hf-cache';
+
+// Load the registry and attach data to each capability's tables (C2, #50). Offline by
+// default — reads committed snapshots so CI/local builds are deterministic and need no
+// network. Set HF_FETCH=1 to fetch live at build time (Vercel production does this via
+// the C5 deploy hook), with the snapshot as the outage fallback. Never throws.
+async function loadHydratedCapabilities(opts = {}) {
+  const registry = loadCapabilities(opts.registryFile);
+  const live = opts.live !== undefined ? opts.live : process.env.HF_FETCH === '1';
+  await hf.hydrateRegistry(registry, {
+    snapshotDir: opts.snapshotDir || SNAPSHOT_DIR,
+    live,
+    logger: opts.logger || (msg => console.log(msg)),
+  });
+  return registry;
 }
 
 // Parse YAML front matter
@@ -161,6 +181,19 @@ async function build() {
   copySitemap();
   copyRobotsTxt();
 
+  // Warm the capability registry data (C2, #50): hydrate each table from committed
+  // snapshots (or live if HF_FETCH=1) and report the data source so failures surface.
+  // Page rendering from this data is C3/C4; here we only validate + wire it in.
+  try {
+    const reg = await loadHydratedCapabilities();
+    const caps = reg.capabilities || [];
+    const tables = caps.flatMap(c => c.tables || []);
+    const bySource = tables.reduce((a, t) => { a[t.data_source] = (a[t.data_source] || 0) + 1; return a; }, {});
+    console.log(`Capabilities: ${caps.length} registered · ${tables.length} tables · sources ${JSON.stringify(bySource)}`);
+  } catch (err) {
+    console.warn(`Capabilities hydration skipped: ${err.message}`);
+  }
+
   console.log(`\nBuild complete! ${files.length} pages built.`);
 }
 
@@ -245,4 +278,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt, loadCopy, loadCapabilities };
+module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities };

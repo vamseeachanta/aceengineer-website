@@ -71,6 +71,23 @@ npm run validate:capabilities
 datasets-server `/splits` API, and that no `withheld_columns` leak into rendered output —
 is enforced in CI by [C7](https://github.com/vamseeachanta/aceengineer-website/issues/54).
 
+## Data refresh (C2)
+
+Data flows through a **snapshot layer** so builds are deterministic and outage-proof:
+
+- **`npm run refresh:hf`** — live-fetches every non-withheld capability's tables from the
+  datasets-server `/rows` API and writes committed snapshots under `data/hf-cache/`
+  (`<owner>__<name>__<config>.json`, byte-stable, no timestamps). Run it locally or on a
+  schedule / from the C5 deploy hook, then commit the changed JSON. Exits non-zero if any
+  table fails, and leaves existing snapshots untouched on failure.
+- **`npm run build`** — hydrates each table from those snapshots **offline by default**
+  (deterministic, no network). Set **`HF_FETCH=1`** to fetch live at build time (Vercel
+  production does this via the deploy hook); the snapshot remains the fallback, so a build
+  never fails because Hugging Face is slow or down.
+
+Only `DEFAULT_MAX_ROWS` (100) rows are materialized per table for display; truncation is
+surfaced and the full dataset stays linkable on Hugging Face — never a silent cap.
+
 ## Adding a capability (checklist)
 
 1. Publish the dataset to `aceengineer/<repo>-<projection>` (public) via the skill.

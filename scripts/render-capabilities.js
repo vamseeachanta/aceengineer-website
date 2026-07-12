@@ -20,8 +20,8 @@ const DOMAIN_LABELS = {
   digitalmodel: 'Digital Model',
 };
 const DOMAIN_COLORS = {
-  worldenergy: '#0b6e4f',
-  digitalmodel: '#1d4e89',
+  worldenergy: '#0e7e88',   /* teal-deep (theme accent) */
+  digitalmodel: '#0b3d5c',  /* navy (theme structure) */
 };
 
 function escapeHtml(s) {
@@ -87,7 +87,7 @@ function renderCard(cap) {
       renderStatStrip(cap) +
       `<p style="color:#777;font-size:.82rem;margin:6px 0 0;">${escapeHtml(cap.data_limits || '')}</p>`;
     cta =
-      `<a href="${escapeHtml(detailFileName(cap))}" ` +
+      `<a href="${escapeHtml(detailHref(cap))}" ` +
       `style="font-weight:600;color:${domainColor};">View capability →</a>` +
       `<a href="${escapeHtml(hfDatasetUrl(cap.hf_dataset))}" rel="noopener" ` +
       `style="margin-left:18px;color:#666;font-size:.9rem;">Dataset on Hugging Face ↗</a>`;
@@ -115,6 +115,12 @@ const MAX_BARS = 15;
 
 function detailFileName(cap) {
   return `${cap.id}.html`;
+}
+
+// Absolute, root-relative link to a capability's detail page — works whether the card
+// is rendered on the homepage (root) or on /capabilities/.
+function detailHref(cap) {
+  return `/capabilities/${cap.id}.html`;
 }
 
 function isNumericDtype(dtype) {
@@ -265,7 +271,7 @@ function capabilityDetailBody(cap) {
     `</div>`;
 
   return (
-    `<a href="./" style="color:#666;text-decoration:none;">← All capabilities</a>` +
+    `<a href="/capabilities/" style="color:#666;text-decoration:none;">← All capabilities</a>` +
     `<div style="margin:10px 0 6px;">${badge}</div>` +
     `<h1 style="margin:4px 0 8px;">${escapeHtml(cap.title)}</h1>` +
     `<p style="font-size:1.12rem;color:#444;max-width:760px;">${escapeHtml(cap.summary)}</p>` +
@@ -288,7 +294,7 @@ function capabilityDetailDocument(cap) {
     `<meta property="og:url" content="https://aceengineer.com/capabilities/${escapeHtml(cap.id)}.html">\n` +
     `<title>${escapeHtml(title)}</title>\n` +
     `<include src="partials/head-common.html"></include>\n` +
-    `</head>\n<body>\n` +
+    `</head>\n<body class="theme-page">\n` +
     `<include src="partials/nav.html"></include>\n` +
     `<section style="padding:40px 0 56px;"><div class="container">\n` +
     capabilityDetailBody(cap) +
@@ -313,7 +319,7 @@ function renderCards(registry) {
 module.exports = {
   escapeHtml, hfDatasetUrl, tableStats, hasData,
   renderStatStrip, renderCard, renderCards,
-  detailFileName, formatCell, orderedColumns, pickChartKeys,
+  detailFileName, detailHref, formatCell, orderedColumns, pickChartKeys,
   renderTable, renderBarChart, renderLineChart, renderChartFor,
   capabilityDetailBody, capabilityDetailDocument,
   DOMAIN_LABELS, MAX_TABLE_ROWS,

@@ -34,7 +34,7 @@ describe('renderCard (live)', () => {
   test('links to the internal detail page and, secondarily, the HF dataset', () => {
     expect(html).toContain('World Energy Field Explorer');
     expect(html).toContain('World Energy');
-    expect(html).toContain('href="field-explorer.html"');
+    expect(html).toContain('href="/capabilities/field-explorer.html"');
     expect(html).toContain('View capability');
     expect(html).toContain(hfDatasetUrl('aceengineer/worldenergydata-explorer'));
   });

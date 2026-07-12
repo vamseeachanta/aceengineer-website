@@ -1,0 +1,104 @@
+/* theme.css — Subsea7 "deterministically simple" theme for aceengineer.com.
+ * Loaded last in the bundle so it overrides bootstrap/marketing where needed.
+ * Palette + type extracted from the FDG pre-read one-pager (deep petrol-navy
+ * structure + teal signature accent, serif body + uppercase-sans labels).
+ * No literal "AI" anywhere in copy — "deterministic engineering workflows". */
+
+:root {
+  --navy:      #0b3d5c;   /* primary / structure / links */
+  --navy-2:    #0B3D91;   /* brighter logo navy */
+  --teal:      #2BB2A6;   /* signature accent */
+  --teal-deep: #0e7e88;   /* accent rule / worldenergy domain */
+  --blue:      #2364aa;   /* emphasis */
+  --ink:       #26323a;   /* body text */
+  --muted:     #5a6b76;   /* captions / footer */
+  --tint:      #eef4f8;   /* anchor / callout bg */
+  --hairline:  #d0d7de;   /* dividers */
+  --underline: #b8c9d4;   /* link underline */
+  --bg:        #ffffff;
+
+  --font-body: Georgia, 'Times New Roman', serif;
+  --font-ui:   'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* ---- Capabilities-focused surfaces opt in via .theme-page on <body> ---- */
+.theme-page {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.55;
+}
+.theme-page h1, .theme-page h2, .theme-page h3 { font-family: var(--font-ui); color: var(--navy); }
+.theme-page b, .theme-page strong { color: var(--navy); }         /* emphasis = navy, not just bold */
+.theme-page .kicker {
+  font-family: var(--font-ui); text-transform: uppercase; letter-spacing: 1.5px;
+  font-weight: 700; color: var(--teal-deep); font-size: .8rem; margin: 0 0 6px;
+}
+.theme-page .section-label {
+  font-family: var(--font-ui); text-transform: uppercase; letter-spacing: .8px;
+  color: var(--navy); font-size: .95rem; border-bottom: 1px solid var(--hairline);
+  padding-bottom: 4px; margin: 0 0 18px;
+}
+.theme-page .mantra { font-style: italic; color: var(--navy); font-size: 1.25rem; }
+
+/* Anchor / callout box — the signature takeaway component */
+.callout {
+  background: var(--tint);
+  border-left: 5px solid var(--navy);
+  border-radius: 0 6px 6px 0;
+  padding: 14px 18px;
+  color: var(--ink);
+}
+
+/* Understated, non-buttony links */
+.theme-page .link-quiet {
+  color: var(--navy); font-weight: 600; text-decoration: underline;
+  text-decoration-color: var(--underline); text-underline-offset: 2px;
+}
+
+/* Primary CTA — "Use it for free" */
+.btn-free {
+  display: inline-block; background: var(--teal); color: #063b38;
+  font-family: var(--font-ui); font-weight: 700; letter-spacing: .2px;
+  padding: 12px 24px; border-radius: 8px; text-decoration: none;
+  border: 1px solid var(--teal-deep);
+}
+.btn-free:hover { background: var(--teal-deep); color: #fff; text-decoration: none; }
+.btn-ghost {
+  display: inline-block; background: transparent; color: var(--navy);
+  font-family: var(--font-ui); font-weight: 600; padding: 12px 22px;
+  border-radius: 8px; text-decoration: none; border: 1px solid var(--hairline);
+}
+.btn-ghost:hover { border-color: var(--navy); text-decoration: none; }
+
+/* Two-layer "lookup on top / rigorous underneath" panel (the iceberg motif) */
+.layers { max-width: 720px; margin: 0 auto; border-radius: 10px; overflow: hidden; border: 1px solid var(--hairline); }
+.layers .surface { background: #f4fbfa; padding: 20px 22px; }
+.layers .surface .row {
+  display: flex; align-items: center; gap: 12px; font-family: var(--font-mono);
+  font-size: 1rem; color: var(--navy);
+}
+.layers .surface .row .arrow { color: var(--teal-deep); font-weight: 700; }
+.layers .depth {
+  background: var(--navy); color: #dceaf2; padding: 18px 22px;
+  font-family: var(--font-mono); font-size: .9rem; line-height: 1.5;
+}
+.layers .depth .waterline-note { color: var(--teal); font-family: var(--font-ui); font-size: .78rem;
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+
+/* Deterministic pipeline strip (monospace flow) */
+.flow {
+  background: #eef5f2; border: 1px solid #cddfd8; border-radius: 6px;
+  padding: 16px 20px; font-family: var(--font-mono); font-size: .95rem;
+  line-height: 1.5; color: var(--navy); overflow-x: auto;
+}
+
+/* Themed nav (navy) */
+.navbar-inverse.theme-nav { background: var(--navy); border: none; }
+.navbar-inverse.theme-nav .navbar-nav > li > a { color: #dce7ef; font-family: var(--font-ui); }
+.navbar-inverse.theme-nav .navbar-nav > li > a:hover { color: #fff; }
+.navbar-inverse.theme-nav .btn-nav-cta {
+  background: var(--teal); color: #063b38; border-radius: 6px; font-weight: 700;
+}
+.navbar-inverse.theme-nav .btn-nav-cta:hover { background: #fff; color: var(--navy); }

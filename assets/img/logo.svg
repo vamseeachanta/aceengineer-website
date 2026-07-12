@@ -1,18 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" role="img" aria-labelledby="title desc">
-  <title id="title">AceEngineer logo</title>
-  <desc id="desc">AceEngineer wordmark with angular engineering mark in plum and copper.</desc>
-  <defs>
-    <linearGradient id="aceGradient" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#5E2B3D"/>
-      <stop offset="1" stop-color="#C25A2A"/>
-    </linearGradient>
-  </defs>
-  <rect width="640" height="160" rx="28" fill="#fff7f2"/>
-  <g transform="translate(34 30)">
-    <path d="M50 0 L100 100 H76 L64 74 H35 L23 100 H0 L50 0 Z M43 56 H56 L50 33 Z" fill="url(#aceGradient)"/>
-    <path d="M116 14 H184 V36 H141 V50 H178 V70 H141 V84 H186 V106 H116 Z" fill="#5E2B3D"/>
-    <path d="M202 14 H272 V38 H226 V82 H272 V106 H202 Z" fill="#C25A2A"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">AceEngineer</title>
+  <desc id="logoDesc">AceEngineer — Analytical &amp; Computational Engineering. Everyday complex engineering, made deterministically simple.</desc>
+  <!-- Mark: a simple lookup surface (teal) resting on the rigorous deterministic strata (navy).
+       "Simple at the point of use, rigorous underneath." Solid fills only for portability. -->
+  <g transform="translate(30 34)">
+    <!-- simple surface: one clean lookup cell (input -> answer) -->
+    <rect x="0" y="0" width="92" height="30" rx="6" fill="#2BB2A6"/>
+    <rect x="10" y="9" width="26" height="12" rx="2" fill="#ffffff" opacity="0.92"/>
+    <rect x="56" y="9" width="26" height="12" rx="2" fill="#0b3d5c"/>
+    <!-- waterline -->
+    <rect x="0" y="39" width="92" height="3" rx="1.5" fill="#0b3d5c"/>
+    <!-- rigorous strata beneath (deterministic layers, densifying) -->
+    <rect x="0" y="50" width="92" height="6" rx="3" fill="#0b3d5c"/>
+    <rect x="0" y="61" width="78" height="6" rx="3" fill="#0b3d5c" opacity="0.78"/>
+    <rect x="0" y="72" width="64" height="6" rx="3" fill="#0b3d5c" opacity="0.58"/>
+    <rect x="0" y="83" width="50" height="6" rx="3" fill="#0b3d5c" opacity="0.4"/>
   </g>
-  <text x="330" y="76" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="48" font-weight="700" fill="#3b1f2b">AceEngineer</text>
-  <text x="330" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" letter-spacing="1.8" fill="#7a4a3c">ANALYTICAL &amp; COMPUTATIONAL ENGINEERING</text>
+  <!-- Wordmark -->
+  <text x="150" y="74" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="46" font-weight="700" letter-spacing="-0.5" fill="#0b3d5c">AceEngineer</text>
+  <text x="152" y="104" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="2.4" fill="#2BB2A6">MADE DETERMINISTICALLY SIMPLE</text>
 </svg>

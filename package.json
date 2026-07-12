@@ -6,6 +6,7 @@
     "serve": "npx serve dist",
     "lint:copy": "node scripts/lint-copy.js",
     "validate:capabilities": "node scripts/validate-capabilities.js",
+    "refresh:hf": "node scripts/refresh-hf-data.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
@@ -24,6 +25,11 @@
         "displayName": "capabilities-registry",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/capabilities-registry.test.js"]
+      },
+      {
+        "displayName": "hf-fetch",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/hf-fetch.test.js"]
       },
       {
         "displayName": "jsdom",
@@ -73,6 +79,7 @@
     ],
     "collectCoverageFrom": [
       "build.js",
+      "scripts/hf-fetch.js",
       "assets/js/navbar-toggle.js",
       "assets/js/cta-tracking.js",
       "assets/js/npv-calculator-engine.js",

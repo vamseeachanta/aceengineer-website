@@ -37,8 +37,11 @@ describe('config/capabilities.yaml', () => {
     expect(explorer.hf_dataset).toBe('aceengineer/worldenergydata-explorer');
     expect(explorer.domain).toBe('worldenergy');
     expect(explorer.tables.map(t => t.config).sort()).toEqual(['countries', 'fields', 'wells']);
-    // economics stays withheld until worldenergydata#978 re-verifies it
-    expect(explorer.withheld_columns).toEqual(expect.arrayContaining(['npv_mm', 'breakeven_wti']));
+    // economics RE-SURFACED on the fields table after the #971 correctness fix (C9 / #978):
+    // npv_mm + breakeven_wti now shown (life-to-date basis), no longer withheld.
+    const fields = explorer.tables.find(t => t.config === 'fields');
+    expect(fields.highlight_columns).toEqual(expect.arrayContaining(['npv_mm', 'breakeven_wti']));
+    expect(explorer.withheld_columns || []).not.toContain('npv_mm');
   });
 
   test('CLI exits 0 with PASS on the real registry', () => {

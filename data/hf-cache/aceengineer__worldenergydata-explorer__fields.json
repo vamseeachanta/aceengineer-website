@@ -113,6 +113,34 @@
     {
       "name": "provenance",
       "dtype": "large_string"
+    },
+    {
+      "name": "npv_mm",
+      "dtype": "float64"
+    },
+    {
+      "name": "breakeven_wti",
+      "dtype": "float64"
+    },
+    {
+      "name": "sens_mm_per_dollar",
+      "dtype": "float64"
+    },
+    {
+      "name": "economics_status",
+      "dtype": "large_string"
+    },
+    {
+      "name": "economics_basis",
+      "dtype": "large_string"
+    },
+    {
+      "name": "eur_confidence",
+      "dtype": "large_string"
+    },
+    {
+      "name": "eur_source",
+      "dtype": "large_string"
     }
   ],
   "rows": [
@@ -128,14 +156,14 @@
       "api_gravity": null,
       "formation": "Paleocene Wilcox (Wilcox 1–4)",
       "hpht_class": "ultra-HPHT",
-      "pressure_psi": 25000,
-      "temp_f": 275,
-      "tvd_ft": 30000,
-      "equip_rating_psi": 20000,
+      "pressure_psi": 25000.0,
+      "temp_f": 275.0,
+      "tvd_ft": 30000.0,
+      "equip_rating_psi": 20000.0,
       "cum_oil_mmbbl": 18.6,
-      "eur_mmbbl": 998,
+      "eur_mmbbl": 440.0,
       "avg_uptime_pct": 88.1,
-      "avg_decline_pct_yr": 0,
+      "avg_decline_pct_yr": 0.0,
       "concept_type": "Semisub FPU",
       "play": "Lower Tertiary Wilcox",
       "host": "Semisubmersible FPU",
@@ -144,7 +172,14 @@
       "decommission_label": null,
       "n_leases": 2,
       "lease_operator": "Chevron",
-      "provenance": "Primary facts (operator, working interests, capex $5.6B, plateau 75 mbopd, GOR 1100 scf/bbl, opex $15/boe, first oil 2024-08, data through 2024-12-31) from in-repo anchor.yml. Life-cycle dates corroborated by public sources: discovery well Anchor-2 drilled 2014 (Green Canyon 807, ~5,180 ft), FID December 2019 (~$5.7B sanction), first oil August 2024 — world's first 20,000-psi HPHT deepwater development on a semisubmersible FPU, Lower Tertiary Wilcox play. Working interests (Chevron 62.5% / Equinor 25% / TotalEnergies 12.5%) per YAML; note older Offshore Technology page still lists pre-Equinor split (Chevron 62.86% / Total 37.14%). water depth ~5,180 (block-level estimate). projected end-of-production and lease year not confidently sourced; no notable incident."
+      "provenance": "Primary facts (operator, working interests, capex $5.6B, plateau 75 mbopd, GOR 1100 scf/bbl, opex $15/boe, first oil 2024-08, data through 2024-12-31) from in-repo anchor.yml. Life-cycle dates corroborated by public sources: discovery well Anchor-2 drilled 2014 (Green Canyon 807, ~5,180 ft), FID December 2019 (~$5.7B sanction), first oil August 2024 — world's first 20,000-psi HPHT deepwater development on a semisubmersible FPU, Lower Tertiary Wilcox play. Working interests (Chevron 62.5% / Equinor 25% / TotalEnergies 12.5%) per YAML; note older Offshore Technology page still lists pre-Equinor split (Chevron 62.86% / Total 37.14%). water depth ~5,180 (block-level estimate). projected end-of-production and lease year not confidently sourced; no notable incident.",
+      "npv_mm": null,
+      "breakeven_wti": null,
+      "sens_mm_per_dollar": null,
+      "economics_status": "early_life",
+      "economics_basis": "life_to_date_pretax_npv_at_10pct",
+      "eur_confidence": "high",
+      "eur_source": "440+ MMboe recoverable (Chevron sanction press release, 2019)"
     },
     {
       "id": "big_foot",
@@ -163,7 +198,7 @@
       "tvd_ft": null,
       "equip_rating_psi": null,
       "cum_oil_mmbbl": 78.7,
-      "eur_mmbbl": 1324,
+      "eur_mmbbl": 200.0,
       "avg_uptime_pct": 88.2,
       "avg_decline_pct_yr": 17.2,
       "concept_type": "eTLP",
@@ -174,7 +209,14 @@
       "decommission_label": "Decommission ~$43.2M",
       "n_leases": 1,
       "lease_operator": "Chevron",
-      "provenance": "Data: big_foot.yml + Chevron public disclosures + BSEE (dates to be reconciled in #375)"
+      "provenance": "Data: big_foot.yml + Chevron public disclosures + BSEE (dates to be reconciled in #375)",
+      "npv_mm": null,
+      "breakeven_wti": null,
+      "sens_mm_per_dollar": null,
+      "economics_status": "early_life",
+      "economics_basis": "life_to_date_pretax_npv_at_10pct",
+      "eur_confidence": "high",
+      "eur_source": "200+ MMboe recoverable (Chevron factsheet)"
     },
     {
       "id": "cascade_chinook",
@@ -188,12 +230,12 @@
       "api_gravity": null,
       "formation": "Wilcox 1 (Eocene) / Wilcox 2 (Paleocene)",
       "hpht_class": "HPHT",
-      "pressure_psi": 19500,
-      "temp_f": 260,
-      "tvd_ft": 25600,
+      "pressure_psi": 19500.0,
+      "temp_f": 260.0,
+      "tvd_ft": 25600.0,
       "equip_rating_psi": null,
       "cum_oil_mmbbl": 39.7,
-      "eur_mmbbl": 92,
+      "eur_mmbbl": null,
       "avg_uptime_pct": 94.6,
       "avg_decline_pct_yr": 35.9,
       "concept_type": "FPSO",
@@ -204,7 +246,14 @@
       "decommission_label": null,
       "n_leases": 2,
       "lease_operator": "MP Gulf of Mexico LLC (Murphy EXPRO)",
-      "provenance": "Life-cycle dates and ownership from public sources (Offshore Technology, Offshore Magazine, OGJ, Heerema, Rigzone); economics (capex $2.9B, plateau 75 mbopd, GOR 1400 scf/bbl, opex $18/boe) and data through from in-repo YAML. IMPORTANT: two YAML values were overridden as demonstrably wrong vs. well-documented public record — YAML first oil \"2021-08\" corrected to 2012-02 (Cascade first oil Feb 2012, Chinook Sep 2012; BW Pioneer was the first FPSO in the US GoM), and YAML operator/WI \"TotalEnergies 60% / Equinor 40%\" corrected to current MP Gulf of Mexico LLC (Murphy EXPRO 80% operator, Petrobras America 20%; originally Petrobras-operated with Total 33.33% in Chinook). LOW CONFIDENCE: FID year (sanction ~mid-2000s, no firm public citation — not available), lease year and projected end-of-production (not available); water depth 8,200 ft is the Cascade value (Chinook ~8,600 ft); capex is a YAML assumption not independently verified."
+      "provenance": "Life-cycle dates and ownership from public sources (Offshore Technology, Offshore Magazine, OGJ, Heerema, Rigzone); economics (capex $2.9B, plateau 75 mbopd, GOR 1400 scf/bbl, opex $18/boe) and data through from in-repo YAML. IMPORTANT: two YAML values were overridden as demonstrably wrong vs. well-documented public record — YAML first oil \"2021-08\" corrected to 2012-02 (Cascade first oil Feb 2012, Chinook Sep 2012; BW Pioneer was the first FPSO in the US GoM), and YAML operator/WI \"TotalEnergies 60% / Equinor 40%\" corrected to current MP Gulf of Mexico LLC (Murphy EXPRO 80% operator, Petrobras America 20%; originally Petrobras-operated with Total 33.33% in Chinook). LOW CONFIDENCE: FID year (sanction ~mid-2000s, no firm public citation — not available), lease year and projected end-of-production (not available); water depth 8,200 ft is the Cascade value (Chinook ~8,600 ft); capex is a YAML assumption not independently verified.",
+      "npv_mm": null,
+      "breakeven_wti": null,
+      "sens_mm_per_dollar": null,
+      "economics_status": "early_life",
+      "economics_basis": "life_to_date_pretax_npv_at_10pct",
+      "eur_confidence": "none",
+      "eur_source": "no field-specific published recoverable EUR; only play-wide figures"
     },
     {
       "id": "jack_st_malo",
@@ -218,12 +267,12 @@
       "api_gravity": null,
       "formation": "Wilcox (Lower Tertiary)",
       "hpht_class": "HPHT",
-      "pressure_psi": 19374,
-      "temp_f": 224,
-      "tvd_ft": 26500,
+      "pressure_psi": 19374.0,
+      "temp_f": 224.0,
+      "tvd_ft": 26500.0,
       "equip_rating_psi": null,
       "cum_oil_mmbbl": 438.8,
-      "eur_mmbbl": 1117,
+      "eur_mmbbl": 500.0,
       "avg_uptime_pct": 89.7,
       "avg_decline_pct_yr": 18.4,
       "concept_type": "Semisub FPU",
@@ -234,7 +283,14 @@
       "decommission_label": "Decommission ~$80M (FPSO base)",
       "n_leases": 6,
       "lease_operator": "Chevron",
-      "provenance": "Facts from in-repo YAML (operator, WI Chevron 51%/Equinor 24.5%/Suncor 24.5%, capex $7.5B, opex $15/boe, plateau 94 mbopd, GOR 1200, status producing, data through 2024-12-31). Life-cycle dates from public sources: St. Malo discovered Oct 2003 and Jack Jul 2004 (discovery year=2003, earliest of pair); FID/sanction Oct 2010; first oil per Chevron press release Dec 2014 (\"2014-12\") — this OVERRIDES the YAML's first oil \"2014-02-01\", which appears erroneous. Water depth ~7000 ft at the FPU (Jack WR758/759 ~7000 ft, St. Malo WR678). host = Semisubmersible FPU. projected end-of-production not confidently estimable. lease year not available; no schedule-driving incident."
+      "provenance": "Facts from in-repo YAML (operator, WI Chevron 51%/Equinor 24.5%/Suncor 24.5%, capex $7.5B, opex $15/boe, plateau 94 mbopd, GOR 1200, status producing, data through 2024-12-31). Life-cycle dates from public sources: St. Malo discovered Oct 2003 and Jack Jul 2004 (discovery year=2003, earliest of pair); FID/sanction Oct 2010; first oil per Chevron press release Dec 2014 (\"2014-12\") — this OVERRIDES the YAML's first oil \"2014-02-01\", which appears erroneous. Water depth ~7000 ft at the FPU (Jack WR758/759 ~7000 ft, St. Malo WR678). host = Semisubmersible FPU. projected end-of-production not confidently estimable. lease year not available; no schedule-driving incident.",
+      "npv_mm": -804.5,
+      "breakeven_wti": 79.0,
+      "sens_mm_per_dollar": 52.3,
+      "economics_status": "surfaced",
+      "economics_basis": "life_to_date_pretax_npv_at_10pct",
+      "eur_confidence": "high",
+      "eur_source": "500+ MMboe recoverable, combined development (original)"
     },
     {
       "id": "julia",
@@ -248,12 +304,12 @@
       "api_gravity": 24.7,
       "formation": "Wilcox (Lower Tertiary)",
       "hpht_class": "HPHT",
-      "pressure_psi": 13500,
+      "pressure_psi": 13500.0,
       "temp_f": null,
-      "tvd_ft": 30000,
-      "equip_rating_psi": 15000,
+      "tvd_ft": 30000.0,
+      "equip_rating_psi": 15000.0,
       "cum_oil_mmbbl": 77.5,
-      "eur_mmbbl": 256,
+      "eur_mmbbl": null,
       "avg_uptime_pct": 96.3,
       "avg_decline_pct_yr": 12.2,
       "concept_type": "Subsea tieback",
@@ -264,7 +320,14 @@
       "decommission_label": null,
       "n_leases": 1,
       "lease_operator": "ExxonMobil",
-      "provenance": "Primary facts (capex $4.7B, plateau 34 mbopd, GOR 1000, opex $18/boe, first oil, WI 50/50) from in-repo julia.yml; first oil = BSEE OGOR-A first production (2016-03) per YAML — note ExxonMobil press release states production start April 2016. Operator corrected to ExxonMobil (YAML flagged its \"Equinor\" operator field as disputed; public record = ExxonMobil-operated, Equinor/Statoil 50% partner). Discovery 2007, FID May 2013, water depth 7000+ ft, Walker Ridge blocks, and Jack/St. Malo tieback from Offshore Technology and operator/trade press. lease year and projected end-of-production not confidently sourced."
+      "provenance": "Primary facts (capex $4.7B, plateau 34 mbopd, GOR 1000, opex $18/boe, first oil, WI 50/50) from in-repo julia.yml; first oil = BSEE OGOR-A first production (2016-03) per YAML — note ExxonMobil press release states production start April 2016. Operator corrected to ExxonMobil (YAML flagged its \"Equinor\" operator field as disputed; public record = ExxonMobil-operated, Equinor/Statoil 50% partner). Discovery 2007, FID May 2013, water depth 7000+ ft, Walker Ridge blocks, and Jack/St. Malo tieback from Offshore Technology and operator/trade press. lease year and projected end-of-production not confidently sourced.",
+      "npv_mm": -482.8,
+      "breakeven_wti": 95.0,
+      "sens_mm_per_dollar": 17.2,
+      "economics_status": "surfaced",
+      "economics_basis": "life_to_date_pretax_npv_at_10pct",
+      "eur_confidence": "none",
+      "eur_source": "no published recoverable EUR (only ~6 Bbbl resource IN-PLACE, != EUR)"
     },
     {
       "id": "kaskida",
@@ -278,10 +341,10 @@
       "api_gravity": null,
       "formation": "Wilcox / Paleogene",
       "hpht_class": "ultra-HPHT",
-      "pressure_psi": 20000,
+      "pressure_psi": 20000.0,
       "temp_f": null,
       "tvd_ft": null,
-      "equip_rating_psi": 20000,
+      "equip_rating_psi": 20000.0,
       "cum_oil_mmbbl": null,
       "eur_mmbbl": null,
       "avg_uptime_pct": null,
@@ -294,7 +357,14 @@
       "decommission_label": null,
       "n_leases": 2,
       "lease_operator": "BP",
-      "provenance": "Discovery 2006 (Keathley Canyon 292, Lower Tertiary Wilcox), FID/sanction July 30 2024 (BP 100%, Devon's original 30% exited), first oil targeted 2029 but left blank as no oil has flowed and the Aug-2025 BOEM DPP rejection likely pushes it out. Public sanctioned figures used over YAML where they diverge: plateau/nameplate 80 mbopd (YAML said 120) and capex ~$5bn for Phase 1 (<$5B per BP; YAML total CAPEX 10000 = $10bn is a full-field/multi-phase estimate). GOR 1000 scf/bbl and data through 2024-12-31 from YAML. Water depth ~6,000 ft, 20,000-psi semisubmersible FPU. Low-confidence: capex (phase-1 vs full-field ambiguity), water depth (rounded), lease year unknown, opex unknown."
+      "provenance": "Discovery 2006 (Keathley Canyon 292, Lower Tertiary Wilcox), FID/sanction July 30 2024 (BP 100%, Devon's original 30% exited), first oil targeted 2029 but left blank as no oil has flowed and the Aug-2025 BOEM DPP rejection likely pushes it out. Public sanctioned figures used over YAML where they diverge: plateau/nameplate 80 mbopd (YAML said 120) and capex ~$5bn for Phase 1 (<$5B per BP; YAML total CAPEX 10000 = $10bn is a full-field/multi-phase estimate). GOR 1000 scf/bbl and data through 2024-12-31 from YAML. Water depth ~6,000 ft, 20,000-psi semisubmersible FPU. Low-confidence: capex (phase-1 vs full-field ambiguity), water depth (rounded), lease year unknown, opex unknown.",
+      "npv_mm": null,
+      "breakeven_wti": null,
+      "sens_mm_per_dollar": null,
+      "economics_status": null,
+      "economics_basis": null,
+      "eur_confidence": null,
+      "eur_source": null
     },
     {
       "id": "north_platte",
@@ -311,7 +381,7 @@
       "pressure_psi": null,
       "temp_f": null,
       "tvd_ft": null,
-      "equip_rating_psi": 20000,
+      "equip_rating_psi": 20000.0,
       "cum_oil_mmbbl": null,
       "eur_mmbbl": null,
       "avg_uptime_pct": null,
@@ -324,7 +394,14 @@
       "decommission_label": null,
       "n_leases": 2,
       "lease_operator": "Shell",
-      "provenance": "Basis: in-repo YAML (superseded TotalEnergies pre-FID case) reconciled against current public record. North Platte was discovered 2012 (Cobalt/Total, Garden Banks). TotalEnergies (then 60% op, Equinor 40%) withdrew Feb 2022; Shell bought 51% and took operatorship from Equinor (49%), redesigned and renamed the project \"Sparta.\" Shell took FID Dec 2023; first oil projected 2028 (left blank — not yet producing). Water depth ~4,265 ft, subsalt Wilcox, newbuild semisubmersible FPU (8 subsea wells) with ~90,000 boe/d peak (~75 mbopd oil plateau; GOR 1100 scf/bbl from YAML). LOW-CONFIDENCE: capex — YAML's $6B reflects the abandoned TotalEnergies ~$5-7B concept, not Shell's simplified Sparta scope (not publicly disclosed), so not available; opex and projected COP year not publicly defensible."
+      "provenance": "Basis: in-repo YAML (superseded TotalEnergies pre-FID case) reconciled against current public record. North Platte was discovered 2012 (Cobalt/Total, Garden Banks). TotalEnergies (then 60% op, Equinor 40%) withdrew Feb 2022; Shell bought 51% and took operatorship from Equinor (49%), redesigned and renamed the project \"Sparta.\" Shell took FID Dec 2023; first oil projected 2028 (left blank — not yet producing). Water depth ~4,265 ft, subsalt Wilcox, newbuild semisubmersible FPU (8 subsea wells) with ~90,000 boe/d peak (~75 mbopd oil plateau; GOR 1100 scf/bbl from YAML). LOW-CONFIDENCE: capex — YAML's $6B reflects the abandoned TotalEnergies ~$5-7B concept, not Shell's simplified Sparta scope (not publicly disclosed), so not available; opex and projected COP year not publicly defensible.",
+      "npv_mm": null,
+      "breakeven_wti": null,
+      "sens_mm_per_dollar": null,
+      "economics_status": null,
+      "economics_basis": null,
+      "eur_confidence": null,
+      "eur_source": null
     },
     {
       "id": "shenandoah",
@@ -338,12 +415,12 @@
       "api_gravity": null,
       "formation": "Inboard Wilcox (Lower Wilcox)",
       "hpht_class": "ultra-HPHT",
-      "pressure_psi": 22000,
-      "temp_f": 200,
-      "tvd_ft": 30000,
-      "equip_rating_psi": 20000,
+      "pressure_psi": 22000.0,
+      "temp_f": 200.0,
+      "tvd_ft": 30000.0,
+      "equip_rating_psi": 20000.0,
       "cum_oil_mmbbl": 21.2,
-      "eur_mmbbl": 1577,
+      "eur_mmbbl": 332.0,
       "avg_uptime_pct": 80.2,
       "avg_decline_pct_yr": 5.4,
       "concept_type": "Semisub FPU",
@@ -354,7 +431,14 @@
       "decommission_label": null,
       "n_leases": 2,
       "lease_operator": "Beacon Offshore Energy",
-      "provenance": "Base facts (operator, capex, plateau, GOR, data through) from in-repo YAML; discovery 2009 (Anadarko Shenandoah-1, WR52), FID/sanction Aug 2021 (Beacon+Navitas), and actual first oil (first of 4 wells online 25 Jul 2025; ramped to 100 kbopd plateau Oct 2025) from public sources — first oil corrected to 2025-07 vs YAML's placeholder 2025-10. Current WI (Beacon 31% op / Navitas 49% / HEQ 20%) post-2021 restructuring. CAPEX 1.8 is YAML-stated and largely reflects pre-development E&A spend (LOW CONFIDENCE for full development cost); OPEX and projected end-of-production, not available (not defensibly sourced); water depth ~5,800 ft."
+      "provenance": "Base facts (operator, capex, plateau, GOR, data through) from in-repo YAML; discovery 2009 (Anadarko Shenandoah-1, WR52), FID/sanction Aug 2021 (Beacon+Navitas), and actual first oil (first of 4 wells online 25 Jul 2025; ramped to 100 kbopd plateau Oct 2025) from public sources — first oil corrected to 2025-07 vs YAML's placeholder 2025-10. Current WI (Beacon 31% op / Navitas 49% / HEQ 20%) post-2021 restructuring. CAPEX 1.8 is YAML-stated and largely reflects pre-development E&A spend (LOW CONFIDENCE for full development cost); OPEX and projected end-of-production, not available (not defensibly sourced); water depth ~5,800 ft.",
+      "npv_mm": null,
+      "breakeven_wti": null,
+      "sens_mm_per_dollar": null,
+      "economics_status": "early_life",
+      "economics_basis": "life_to_date_pretax_npv_at_10pct",
+      "eur_confidence": "high",
+      "eur_source": "332 MMbbl oil 2P (Netherland Sewell independent report, YE2023)"
     },
     {
       "id": "stones",
@@ -370,10 +454,10 @@
       "hpht_class": "HPHT",
       "pressure_psi": null,
       "temp_f": null,
-      "tvd_ft": 26500,
+      "tvd_ft": 26500.0,
       "equip_rating_psi": null,
-      "cum_oil_mmbbl": 89,
-      "eur_mmbbl": 509,
+      "cum_oil_mmbbl": 89.0,
+      "eur_mmbbl": 250.0,
       "avg_uptime_pct": 76.9,
       "avg_decline_pct_yr": 21.4,
       "concept_type": "FPSO",
@@ -384,7 +468,14 @@
       "decommission_label": "Decommission ~$80M (FPSO base)",
       "n_leases": 1,
       "lease_operator": "Shell",
-      "provenance": "Capex ($3.8bn), plateau (50 mbopd), GOR (850 scf/bbl), opex ($15/boe), first oil (2016-09) and status from in-repo stones.yml (Shell FPSO development config). Discovery (2005), FID/sanction (May 2013, Shell 100% owner-operator), Walker Ridge Block 508, ~9,500 ft water depth, and Turritella/Stones FPSO host (world's deepest FPSO) confirmed via Offshore Technology, Offshore Magazine, and NS Energy public sources. lease year and projected end-of-production unknown; no notable schedule-driving incident identified."
+      "provenance": "Capex ($3.8bn), plateau (50 mbopd), GOR (850 scf/bbl), opex ($15/boe), first oil (2016-09) and status from in-repo stones.yml (Shell FPSO development config). Discovery (2005), FID/sanction (May 2013, Shell 100% owner-operator), Walker Ridge Block 508, ~9,500 ft water depth, and Turritella/Stones FPSO host (world's deepest FPSO) confirmed via Offshore Technology, Offshore Magazine, and NS Energy public sources. lease year and projected end-of-production unknown; no notable schedule-driving incident identified.",
+      "npv_mm": null,
+      "breakeven_wti": null,
+      "sens_mm_per_dollar": null,
+      "economics_status": "early_life",
+      "economics_basis": "life_to_date_pretax_npv_at_10pct",
+      "eur_confidence": "med_high",
+      "eur_source": "250+ MMboe recoverable, Phase 1 (NOT the >2 Bboe in-place)"
     },
     {
       "id": "tiber",
@@ -398,10 +489,10 @@
       "api_gravity": null,
       "formation": "Paleogene Wilcox",
       "hpht_class": "ultra-HPHT",
-      "pressure_psi": 20000,
+      "pressure_psi": 20000.0,
       "temp_f": null,
-      "tvd_ft": 28000,
-      "equip_rating_psi": 20000,
+      "tvd_ft": 28000.0,
+      "equip_rating_psi": 20000.0,
       "cum_oil_mmbbl": null,
       "eur_mmbbl": null,
       "avg_uptime_pct": null,
@@ -414,7 +505,14 @@
       "decommission_label": null,
       "n_leases": 1,
       "lease_operator": "BP",
-      "provenance": "Basis: in-repo tiber.yml (operator BP, plateau 80 mbopd, GOR 900 scf/bbl, data through 2024-12-31) plus public sources. BP discovered Tiber Sept 2009 in Keathley Canyon 102, 4,132 ft water. BP reached FID on the combined Tiber-Guadalupe hub 29 Sep 2025 (FID year=2025); Seatrium awarded FPU EPCC. Ownership is now 100% BP (original discovery split BP 62% / Petrobras 20% / ConocoPhillips 18% no longer reflects current WI). Status: execution (post-FID, construction underway). capex set to the sanctioned public figure of $5.0bn for the Tiber-Guadalupe project (YAML's $8bn was a pre-FID Tiber-only planning assumption); note $5bn covers both fields. first oil left blank — oil has not flowed; projected first production is 2030. OPEX, not available (not publicly disclosed; the \"$3/bbl below Kaskida\" figure is development cost, not opex). projected end-of-production and lease year (not confidently sourced)."
+      "provenance": "Basis: in-repo tiber.yml (operator BP, plateau 80 mbopd, GOR 900 scf/bbl, data through 2024-12-31) plus public sources. BP discovered Tiber Sept 2009 in Keathley Canyon 102, 4,132 ft water. BP reached FID on the combined Tiber-Guadalupe hub 29 Sep 2025 (FID year=2025); Seatrium awarded FPU EPCC. Ownership is now 100% BP (original discovery split BP 62% / Petrobras 20% / ConocoPhillips 18% no longer reflects current WI). Status: execution (post-FID, construction underway). capex set to the sanctioned public figure of $5.0bn for the Tiber-Guadalupe project (YAML's $8bn was a pre-FID Tiber-only planning assumption); note $5bn covers both fields. first oil left blank — oil has not flowed; projected first production is 2030. OPEX, not available (not publicly disclosed; the \"$3/bbl below Kaskida\" figure is development cost, not opex). projected end-of-production and lease year (not confidently sourced).",
+      "npv_mm": null,
+      "breakeven_wti": null,
+      "sens_mm_per_dollar": null,
+      "economics_status": null,
+      "economics_basis": null,
+      "eur_confidence": null,
+      "eur_source": null
     }
   ],
   "total_rows": 10,

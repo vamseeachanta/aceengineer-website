@@ -45,7 +45,7 @@ capabilities:
       - config: fields
         label: Fields
         viz: table
-        highlight_columns: [name, operator, region, wells_count, api_gravity]
+        highlight_columns: [name, operator, region, wells_count, api_gravity, npv_mm, breakeven_wti, economics_basis]
       - config: wells
         label: Wells
         viz: table
@@ -54,13 +54,14 @@ capabilities:
         label: Countries
         viz: bar
         highlight_columns: [country, fields, facilities]
-    # Economics columns are held out of the public dataset pending correctness
-    # re-verification (worldenergydata#971 fixed → re-enable tracked in #978 / epic C9).
-    withheld_columns: [npv_mm, breakeven_wti]
     data_limits: >-
       Coverage is primarily US Gulf of Mexico deepwater (BSEE) plus selected
-      international basins; not a complete global census. Economics (NPV, breakeven)
-      are withheld pending correctness re-verification (worldenergydata#978).
+      international basins; not a complete global census. Economics is life-to-date
+      pretax NPV @10% and breakeven WTI computed on public BSEE production — realized
+      to date, NOT full-cycle or forward projections — so mature fields can show a
+      negative life-to-date NPV; the basis travels with each value (economics_basis).
+      Shown only for fields with sufficient production history; early-life fields are
+      left blank rather than reported on a misleading basis (worldenergydata#971/#978).
 
   - id: atlas-explorer
     title: Digital Model Parametric Atlases

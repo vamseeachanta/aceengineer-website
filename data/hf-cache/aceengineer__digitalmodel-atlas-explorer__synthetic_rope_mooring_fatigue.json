@@ -1,0 +1,627 @@
+{
+  "dataset": "aceengineer/digitalmodel-atlas-explorer",
+  "config": "synthetic_rope_mooring_fatigue",
+  "columns": [
+    {
+      "name": "tension_range_kN",
+      "dtype": "float64"
+    },
+    {
+      "name": "n_cycles",
+      "dtype": "float64"
+    },
+    {
+      "name": "MBL_kN",
+      "dtype": "float64"
+    },
+    {
+      "name": "damage",
+      "dtype": "float64"
+    }
+  ],
+  "rows": [
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 10000,
+      "MBL_kN": 5000,
+      "damage": 5.894238694905509e-15
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 10000,
+      "MBL_kN": 10000,
+      "damage": 5.230750166576258e-19
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 10000,
+      "MBL_kN": 20000,
+      "damage": 4.641947624005439e-23
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 10000,
+      "MBL_kN": 35000,
+      "damage": 2.4854675682664397e-26
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 10000,
+      "MBL_kN": 50000,
+      "damage": 2.043749760886973e-28
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 100000,
+      "MBL_kN": 5000,
+      "damage": 5.894238694905509e-14
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 100000,
+      "MBL_kN": 10000,
+      "damage": 5.2307501665762575e-18
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 100000,
+      "MBL_kN": 20000,
+      "damage": 4.6419476240054385e-22
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 100000,
+      "MBL_kN": 35000,
+      "damage": 2.4854675682664396e-25
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 100000,
+      "MBL_kN": 50000,
+      "damage": 2.043749760886973e-27
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 1000000,
+      "MBL_kN": 5000,
+      "damage": 5.89423869490551e-13
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 1000000,
+      "MBL_kN": 10000,
+      "damage": 5.2307501665762576e-17
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 1000000,
+      "MBL_kN": 20000,
+      "damage": 4.641947624005439e-21
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 1000000,
+      "MBL_kN": 35000,
+      "damage": 2.4854675682664395e-24
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 1000000,
+      "MBL_kN": 50000,
+      "damage": 2.043749760886973e-26
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 10000000,
+      "MBL_kN": 5000,
+      "damage": 5.8942386949055095e-12
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 10000000,
+      "MBL_kN": 10000,
+      "damage": 5.2307501665762575e-16
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 10000000,
+      "MBL_kN": 20000,
+      "damage": 4.641947624005439e-20
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 10000000,
+      "MBL_kN": 35000,
+      "damage": 2.4854675682664397e-23
+    },
+    {
+      "tension_range_kN": 200,
+      "n_cycles": 10000000,
+      "MBL_kN": 50000,
+      "damage": 2.043749760886973e-25
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 10000,
+      "MBL_kN": 5000,
+      "damage": 6.641886667522015e-11
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 10000,
+      "MBL_kN": 10000,
+      "damage": 5.894238694905509e-15
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 10000,
+      "MBL_kN": 20000,
+      "damage": 5.230750166576258e-19
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 10000,
+      "MBL_kN": 35000,
+      "damage": 2.800733862117858e-22
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 10000,
+      "MBL_kN": 50000,
+      "damage": 2.3029868641592397e-24
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 100000,
+      "MBL_kN": 5000,
+      "damage": 6.641886667522015e-10
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 100000,
+      "MBL_kN": 10000,
+      "damage": 5.894238694905509e-14
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 100000,
+      "MBL_kN": 20000,
+      "damage": 5.2307501665762575e-18
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 100000,
+      "MBL_kN": 35000,
+      "damage": 2.800733862117858e-21
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 100000,
+      "MBL_kN": 50000,
+      "damage": 2.3029868641592398e-23
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 1000000,
+      "MBL_kN": 5000,
+      "damage": 6.641886667522015e-9
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 1000000,
+      "MBL_kN": 10000,
+      "damage": 5.89423869490551e-13
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 1000000,
+      "MBL_kN": 20000,
+      "damage": 5.2307501665762576e-17
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 1000000,
+      "MBL_kN": 35000,
+      "damage": 2.800733862117858e-20
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 1000000,
+      "MBL_kN": 50000,
+      "damage": 2.3029868641592396e-22
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 10000000,
+      "MBL_kN": 5000,
+      "damage": 6.641886667522015e-8
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 10000000,
+      "MBL_kN": 10000,
+      "damage": 5.8942386949055095e-12
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 10000000,
+      "MBL_kN": 20000,
+      "damage": 5.2307501665762575e-16
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 10000000,
+      "MBL_kN": 35000,
+      "damage": 2.800733862117858e-19
+    },
+    {
+      "tension_range_kN": 400,
+      "n_cycles": 10000000,
+      "MBL_kN": 50000,
+      "damage": 2.3029868641592397e-21
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 10000,
+      "MBL_kN": 5000,
+      "damage": 1.240462375323666e-7
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 10000,
+      "MBL_kN": 10000,
+      "damage": 1.1008289810122565e-11
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 10000,
+      "MBL_kN": 20000,
+      "damage": 9.769135038217419e-16
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 10000,
+      "MBL_kN": 35000,
+      "damage": 5.230750166576258e-19
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 10000,
+      "MBL_kN": 50000,
+      "damage": 4.301140171245928e-21
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 100000,
+      "MBL_kN": 5000,
+      "damage": 0.000001240462375323666
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 100000,
+      "MBL_kN": 10000,
+      "damage": 1.1008289810122566e-10
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 100000,
+      "MBL_kN": 20000,
+      "damage": 9.769135038217419e-15
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 100000,
+      "MBL_kN": 35000,
+      "damage": 5.2307501665762575e-18
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 100000,
+      "MBL_kN": 50000,
+      "damage": 4.3011401712459284e-20
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 1000000,
+      "MBL_kN": 5000,
+      "damage": 0.00001240462375323666
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 1000000,
+      "MBL_kN": 10000,
+      "damage": 1.1008289810122565e-9
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 1000000,
+      "MBL_kN": 20000,
+      "damage": 9.769135038217419e-14
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 1000000,
+      "MBL_kN": 35000,
+      "damage": 5.2307501665762576e-17
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 1000000,
+      "MBL_kN": 50000,
+      "damage": 4.3011401712459285e-19
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 10000000,
+      "MBL_kN": 5000,
+      "damage": 0.0001240462375323666
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 10000000,
+      "MBL_kN": 10000,
+      "damage": 1.1008289810122566e-8
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 10000000,
+      "MBL_kN": 20000,
+      "damage": 9.76913503821742e-13
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 10000000,
+      "MBL_kN": 35000,
+      "damage": 5.2307501665762575e-16
+    },
+    {
+      "tension_range_kN": 700,
+      "n_cycles": 10000000,
+      "MBL_kN": 50000,
+      "damage": 4.301140171245928e-18
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 10000,
+      "MBL_kN": 5000,
+      "damage": 0.00017552684607693623
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 10000,
+      "MBL_kN": 10000,
+      "damage": 1.55768560942247e-8
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 10000,
+      "MBL_kN": 20000,
+      "damage": 1.38234379072608e-12
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 10000,
+      "MBL_kN": 35000,
+      "damage": 7.401571362581454e-16
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 10000,
+      "MBL_kN": 50000,
+      "damage": 6.086162577858311e-18
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 100000,
+      "MBL_kN": 5000,
+      "damage": 0.0017552684607693623
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 100000,
+      "MBL_kN": 10000,
+      "damage": 1.5576856094224704e-7
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 100000,
+      "MBL_kN": 20000,
+      "damage": 1.3823437907260802e-11
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 100000,
+      "MBL_kN": 35000,
+      "damage": 7.401571362581454e-15
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 100000,
+      "MBL_kN": 50000,
+      "damage": 6.08616257785831e-17
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 1000000,
+      "MBL_kN": 5000,
+      "damage": 0.017552684607693624
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 1000000,
+      "MBL_kN": 10000,
+      "damage": 0.0000015576856094224703
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 1000000,
+      "MBL_kN": 20000,
+      "damage": 1.38234379072608e-10
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 1000000,
+      "MBL_kN": 35000,
+      "damage": 7.401571362581454e-14
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 1000000,
+      "MBL_kN": 50000,
+      "damage": 6.086162577858311e-16
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 10000000,
+      "MBL_kN": 5000,
+      "damage": 0.17552684607693622
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 10000000,
+      "MBL_kN": 10000,
+      "damage": 0.000015576856094224704
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 10000000,
+      "MBL_kN": 20000,
+      "damage": 1.38234379072608e-9
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 10000000,
+      "MBL_kN": 35000,
+      "damage": 7.401571362581453e-13
+    },
+    {
+      "tension_range_kN": 1200,
+      "n_cycles": 10000000,
+      "MBL_kN": 50000,
+      "damage": 6.086162577858311e-15
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 10000,
+      "MBL_kN": 5000,
+      "damage": 0.1699917008305538
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 10000,
+      "MBL_kN": 10000,
+      "damage": 0.000015085648265390706
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 10000,
+      "MBL_kN": 20000,
+      "damage": 1.3387523183495414e-9
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 10000,
+      "MBL_kN": 35000,
+      "damage": 7.1681667668799e-13
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 10000,
+      "MBL_kN": 50000,
+      "damage": 5.894238694905509e-15
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 100000,
+      "MBL_kN": 5000,
+      "damage": 1.699917008305538
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 100000,
+      "MBL_kN": 10000,
+      "damage": 0.00015085648265390704
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 100000,
+      "MBL_kN": 20000,
+      "damage": 1.3387523183495413e-8
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 100000,
+      "MBL_kN": 35000,
+      "damage": 7.168166766879901e-12
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 100000,
+      "MBL_kN": 50000,
+      "damage": 5.894238694905509e-14
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 1000000,
+      "MBL_kN": 5000,
+      "damage": 16.99917008305538
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 1000000,
+      "MBL_kN": 10000,
+      "damage": 0.0015085648265390705
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 1000000,
+      "MBL_kN": 20000,
+      "damage": 1.3387523183495414e-7
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 1000000,
+      "MBL_kN": 35000,
+      "damage": 7.1681667668799e-11
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 1000000,
+      "MBL_kN": 50000,
+      "damage": 5.89423869490551e-13
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 10000000,
+      "MBL_kN": 5000,
+      "damage": 169.9917008305538
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 10000000,
+      "MBL_kN": 10000,
+      "damage": 0.015085648265390706
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 10000000,
+      "MBL_kN": 20000,
+      "damage": 0.0000013387523183495413
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 10000000,
+      "MBL_kN": 35000,
+      "damage": 7.1681667668799e-10
+    },
+    {
+      "tension_range_kN": 2000,
+      "n_cycles": 10000000,
+      "MBL_kN": 50000,
+      "damage": 5.8942386949055095e-12
+    }
+  ],
+  "total_rows": 120,
+  "fetched": 100,
+  "truncated": true
+}

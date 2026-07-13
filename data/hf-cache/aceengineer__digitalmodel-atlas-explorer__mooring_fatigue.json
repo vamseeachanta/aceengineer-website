@@ -1,0 +1,627 @@
+{
+  "dataset": "aceengineer/digitalmodel-atlas-explorer",
+  "config": "mooring_fatigue",
+  "columns": [
+    {
+      "name": "stress_MPa",
+      "dtype": "float64"
+    },
+    {
+      "name": "n_cycles",
+      "dtype": "float64"
+    },
+    {
+      "name": "sn_curve",
+      "dtype": "string"
+    },
+    {
+      "name": "damage",
+      "dtype": "float64"
+    }
+  ],
+  "rows": [
+    {
+      "stress_MPa": 11,
+      "n_cycles": 10000,
+      "sn_curve": "B1",
+      "damage": 2.045094712124789e-8
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 10000,
+      "sn_curve": "B2",
+      "damage": 3.9876168804302464e-8
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 10000,
+      "sn_curve": "C",
+      "damage": 3.5779156061357486e-7
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 10000,
+      "sn_curve": "C1",
+      "damage": 6.193889109018637e-7
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 10000,
+      "sn_curve": "C2",
+      "damage": 0.00000109302499264874
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 10000,
+      "sn_curve": "D",
+      "damage": 0.000001849112888956947
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 10000,
+      "sn_curve": "E",
+      "damage": 0.000003339105127314875
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 10000,
+      "sn_curve": "F",
+      "damage": 0.000006052898979805815
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 100000,
+      "sn_curve": "B1",
+      "damage": 2.045094712124789e-7
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 100000,
+      "sn_curve": "B2",
+      "damage": 3.9876168804302466e-7
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 100000,
+      "sn_curve": "C",
+      "damage": 0.0000035779156061357486
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 100000,
+      "sn_curve": "C1",
+      "damage": 0.000006193889109018637
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 100000,
+      "sn_curve": "C2",
+      "damage": 0.000010930249926487399
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 100000,
+      "sn_curve": "D",
+      "damage": 0.00001849112888956947
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 100000,
+      "sn_curve": "E",
+      "damage": 0.00003339105127314875
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 100000,
+      "sn_curve": "F",
+      "damage": 0.00006052898979805815
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 1000000,
+      "sn_curve": "B1",
+      "damage": 0.000002045094712124789
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 1000000,
+      "sn_curve": "B2",
+      "damage": 0.000003987616880430247
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 1000000,
+      "sn_curve": "C",
+      "damage": 0.000035779156061357485
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 1000000,
+      "sn_curve": "C1",
+      "damage": 0.00006193889109018637
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 1000000,
+      "sn_curve": "C2",
+      "damage": 0.00010930249926487398
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 1000000,
+      "sn_curve": "D",
+      "damage": 0.0001849112888956947
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 1000000,
+      "sn_curve": "E",
+      "damage": 0.0003339105127314875
+    },
+    {
+      "stress_MPa": 11,
+      "n_cycles": 1000000,
+      "sn_curve": "F",
+      "damage": 0.0006052898979805816
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 10000,
+      "sn_curve": "B1",
+      "damage": 6.829519956124477e-8
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 10000,
+      "sn_curve": "B2",
+      "damage": 1.3316502605389086e-7
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 10000,
+      "sn_curve": "C",
+      "damage": 0.000001194831999152041
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 10000,
+      "sn_curve": "C1",
+      "damage": 0.0000020684269058676066
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 10000,
+      "sn_curve": "C2",
+      "damage": 0.000003650117500955076
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 10000,
+      "sn_curve": "D",
+      "damage": 0.000006175045733279406
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 10000,
+      "sn_curve": "E",
+      "damage": 0.000011150821019385138
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 10000,
+      "sn_curve": "F",
+      "damage": 0.00002021343761240279
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 100000,
+      "sn_curve": "B1",
+      "damage": 6.829519956124477e-7
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 100000,
+      "sn_curve": "B2",
+      "damage": 0.0000013316502605389087
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 100000,
+      "sn_curve": "C",
+      "damage": 0.000011948319991520411
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 100000,
+      "sn_curve": "C1",
+      "damage": 0.00002068426905867607
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 100000,
+      "sn_curve": "C2",
+      "damage": 0.000036501175009550764
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 100000,
+      "sn_curve": "D",
+      "damage": 0.00006175045733279405
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 100000,
+      "sn_curve": "E",
+      "damage": 0.00011150821019385138
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 100000,
+      "sn_curve": "F",
+      "damage": 0.0002021343761240279
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 1000000,
+      "sn_curve": "B1",
+      "damage": 0.000006829519956124478
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 1000000,
+      "sn_curve": "B2",
+      "damage": 0.000013316502605389087
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 1000000,
+      "sn_curve": "C",
+      "damage": 0.00011948319991520411
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 1000000,
+      "sn_curve": "C1",
+      "damage": 0.00020684269058676068
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 1000000,
+      "sn_curve": "C2",
+      "damage": 0.0003650117500955076
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 1000000,
+      "sn_curve": "D",
+      "damage": 0.0006175045733279406
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 1000000,
+      "sn_curve": "E",
+      "damage": 0.0011150821019385137
+    },
+    {
+      "stress_MPa": 14,
+      "n_cycles": 1000000,
+      "sn_curve": "F",
+      "damage": 0.0020213437612402792
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 10000,
+      "sn_curve": "B1",
+      "damage": 2.399454536140859e-7
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 10000,
+      "sn_curve": "B2",
+      "damage": 4.6785634696591915e-7
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 10000,
+      "sn_curve": "C",
+      "damage": 0.000004197872000828755
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 10000,
+      "sn_curve": "C1",
+      "damage": 0.000007267123244158758
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 10000,
+      "sn_curve": "C2",
+      "damage": 0.000012824167805908037
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 10000,
+      "sn_curve": "D",
+      "damage": 0.000021695143422646255
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 10000,
+      "sn_curve": "E",
+      "damage": 0.000039176820989687236
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 10000,
+      "sn_curve": "F",
+      "damage": 0.00007101703323465059
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 100000,
+      "sn_curve": "B1",
+      "damage": 0.000002399454536140859
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 100000,
+      "sn_curve": "B2",
+      "damage": 0.0000046785634696591915
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 100000,
+      "sn_curve": "C",
+      "damage": 0.000041978720008287546
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 100000,
+      "sn_curve": "C1",
+      "damage": 0.00007267123244158758
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 100000,
+      "sn_curve": "C2",
+      "damage": 0.00012824167805908037
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 100000,
+      "sn_curve": "D",
+      "damage": 0.00021695143422646254
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 100000,
+      "sn_curve": "E",
+      "damage": 0.00039176820989687236
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 100000,
+      "sn_curve": "F",
+      "damage": 0.0007101703323465059
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 1000000,
+      "sn_curve": "B1",
+      "damage": 0.00002399454536140859
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 1000000,
+      "sn_curve": "B2",
+      "damage": 0.000046785634696591915
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 1000000,
+      "sn_curve": "C",
+      "damage": 0.0004197872000828755
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 1000000,
+      "sn_curve": "C1",
+      "damage": 0.0007267123244158758
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 1000000,
+      "sn_curve": "C2",
+      "damage": 0.0012824167805908038
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 1000000,
+      "sn_curve": "D",
+      "damage": 0.0021695143422646255
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 1000000,
+      "sn_curve": "E",
+      "damage": 0.003917682098968723
+    },
+    {
+      "stress_MPa": 18,
+      "n_cycles": 1000000,
+      "sn_curve": "F",
+      "damage": 0.0071017033234650586
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 10000,
+      "sn_curve": "B1",
+      "damage": 6.544303078799325e-7
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 10000,
+      "sn_curve": "B2",
+      "damage": 0.0000012760374017376789
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 10000,
+      "sn_curve": "C",
+      "damage": 0.000011449329939634396
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 10000,
+      "sn_curve": "C1",
+      "damage": 0.000019820445148859638
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 10000,
+      "sn_curve": "C2",
+      "damage": 0.00003497679976475968
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 10000,
+      "sn_curve": "D",
+      "damage": 0.000059171612446622307
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 10000,
+      "sn_curve": "E",
+      "damage": 0.000106851364074076
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 10000,
+      "sn_curve": "F",
+      "damage": 0.0001936927673537861
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 100000,
+      "sn_curve": "B1",
+      "damage": 0.000006544303078799325
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 100000,
+      "sn_curve": "B2",
+      "damage": 0.000012760374017376789
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 100000,
+      "sn_curve": "C",
+      "damage": 0.00011449329939634396
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 100000,
+      "sn_curve": "C1",
+      "damage": 0.00019820445148859638
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 100000,
+      "sn_curve": "C2",
+      "damage": 0.00034976799764759676
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 100000,
+      "sn_curve": "D",
+      "damage": 0.0005917161244662231
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 100000,
+      "sn_curve": "E",
+      "damage": 0.00106851364074076
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 100000,
+      "sn_curve": "F",
+      "damage": 0.0019369276735378609
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 1000000,
+      "sn_curve": "B1",
+      "damage": 0.00006544303078799325
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 1000000,
+      "sn_curve": "B2",
+      "damage": 0.0001276037401737679
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 1000000,
+      "sn_curve": "C",
+      "damage": 0.0011449329939634395
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 1000000,
+      "sn_curve": "C1",
+      "damage": 0.001982044514885964
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 1000000,
+      "sn_curve": "C2",
+      "damage": 0.0034976799764759674
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 1000000,
+      "sn_curve": "D",
+      "damage": 0.00591716124466223
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 1000000,
+      "sn_curve": "E",
+      "damage": 0.0106851364074076
+    },
+    {
+      "stress_MPa": 22,
+      "n_cycles": 1000000,
+      "sn_curve": "F",
+      "damage": 0.01936927673537861
+    },
+    {
+      "stress_MPa": 27,
+      "n_cycles": 10000,
+      "sn_curve": "B1",
+      "damage": 0.0000018220857883819648
+    },
+    {
+      "stress_MPa": 27,
+      "n_cycles": 10000,
+      "sn_curve": "B2",
+      "damage": 0.0000035527841347724482
+    },
+    {
+      "stress_MPa": 27,
+      "n_cycles": 10000,
+      "sn_curve": "C",
+      "damage": 0.00003187759050629334
+    },
+    {
+      "stress_MPa": 27,
+      "n_cycles": 10000,
+      "sn_curve": "C1",
+      "damage": 0.00005518471713533058
+    }
+  ],
+  "total_rows": 312,
+  "fetched": 100,
+  "truncated": true
+}

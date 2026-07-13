@@ -61,3 +61,33 @@ capabilities:
       Coverage is primarily US Gulf of Mexico deepwater (BSEE) plus selected
       international basins; not a complete global census. Economics (NPV, breakeven)
       are withheld pending correctness re-verification (worldenergydata#978).
+
+  - id: atlas-explorer
+    title: Digital Model Parametric Atlases
+    domain: digitalmodel
+    summary: >-
+      Standard-traceable parametric result grids — mooring fatigue (S-N), synthetic-rope
+      fatigue (T-N), and riser code-check utilisation — from digitalmodel's validated
+      reduced-order atlases.
+    hf_dataset: aceengineer/digitalmodel-atlas-explorer
+    provenance_url: https://github.com/vamseeachanta/digitalmodel
+    status: live
+    primary_config: mooring_fatigue
+    tables:
+      - config: mooring_fatigue
+        label: Mooring Fatigue (DNV-RP-C203 S-N)
+        viz: table
+        highlight_columns: [sn_curve, stress_MPa, n_cycles, damage]
+      - config: synthetic_rope_mooring_fatigue
+        label: Synthetic Rope Fatigue (DNV-OS-E301 T-N)
+        viz: table
+        highlight_columns: [tension_range_kN, n_cycles, MBL_kN, damage]
+      - config: code_check
+        label: Riser Code Check (API-RP-2RD)
+        viz: table
+        highlight_columns: [outer_diameter, wall_thickness, effective_tension_kN, bending_moment_kNm, smys, utilisation]
+    data_limits: >-
+      Synthetic parametric sweeps generated from the cited standards (DNV-RP-C203,
+      DNV-OS-E301, API-RP-2RD) and validated to under 10% max relative error against
+      held-out samples. For screening and capability demonstration — not a substitute
+      for a project-specific engineering check.

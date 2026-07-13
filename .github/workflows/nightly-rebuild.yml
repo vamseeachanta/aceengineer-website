@@ -1,0 +1,27 @@
+name: Nightly rebuild
+
+# C5 backstop (epic workspace-hub#3485, #3488): a scheduled Vercel rebuild so the site
+# picks up HF datasets updated out-of-band (i.e. not through a publish that fired the
+# deploy hook itself). The publish-time trigger lives in workspace-hub's
+# save_results_to_hf.py; this is the safety net.
+on:
+  schedule:
+    - cron: '17 7 * * *'   # 07:17 UTC daily
+  workflow_dispatch:        # allow a manual "refresh now"
+
+jobs:
+  rebuild:
+    name: Trigger Vercel Deploy Hook
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST the deploy hook (if configured)
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "VERCEL_DEPLOY_HOOK_URL secret not set — skipping."
+            echo "Configure it (repo Settings → Secrets → Actions) to enable nightly rebuilds."
+            exit 0
+          fi
+          curl -fsS -X POST "$HOOK" -o /dev/null -w "deploy hook POST → HTTP %{http_code}\n"
+          echo "triggered nightly Vercel rebuild"

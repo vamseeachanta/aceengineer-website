@@ -56,6 +56,24 @@ describe('pure render helpers', () => {
     expect(html).toContain('Showing 2 of 312 rows');
   });
 
+  test('humanizeColumn matches the build-time helper (friendly headers)', () => {
+    expect(R.humanizeColumn('npv_mm')).toBe('NPV ($MM)');
+    expect(R.humanizeColumn('wells_count')).toBe('Wells');
+    expect(R.humanizeColumn('tvd_ft')).toBe('TVD ft');
+  });
+
+  test('tableHtml shows friendly labels in <th>, not raw column names', () => {
+    const data = {
+      columns: [{ name: 'npv_mm', dtype: 'float64' }, { name: 'field_id', dtype: 'string' }],
+      rows: [{ npv_mm: 1200, field_id: 'GC-825' }],
+      total_rows: 1,
+    };
+    const html = R.tableHtml(data, ['npv_mm', 'field_id']);
+    expect(html).toContain('NPV ($MM)');
+    expect(html).toContain('>Field<');
+    expect(html).not.toContain('>npv_mm<');
+  });
+
   test('pickKeys picks non-numeric label + numeric value', () => {
     const data = R.normalize(rowsPayload());
     const keys = R.pickKeys(data.columns, ['sn_curve', 'damage']);

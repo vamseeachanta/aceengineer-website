@@ -3,7 +3,7 @@ const path = require('path');
 const {
   escapeHtml, renderCard, renderCards, hfDatasetUrl,
   renderTable, pickChartKeys, renderChartFor, renderBarChart,
-  capabilityDetailDocument, detailFileName, orderedColumns,
+  capabilityDetailDocument, detailFileName, orderedColumns, humanizeColumn,
 } = require('../../scripts/render-capabilities');
 
 const repoRoot = path.resolve(__dirname, '..', '..');
@@ -103,6 +103,45 @@ describe('renderTable', () => {
     t.data.rows = [{ country: '<script>', fields: 1, facilities: 1, badge: '' }];
     expect(renderTable(t)).toContain('&lt;script&gt;');
     expect(renderTable(t)).not.toContain('<script>');
+  });
+  test('renders friendly display labels in the <th> headers, not raw column names', () => {
+    const t = tableFixture({
+      highlight_columns: ['npv_mm', 'breakeven_wti', 'wells_count'],
+      data: {
+        columns: [
+          { name: 'npv_mm', dtype: 'float64' },
+          { name: 'breakeven_wti', dtype: 'float64' },
+          { name: 'wells_count', dtype: 'int64' },
+        ],
+        rows: [{ npv_mm: 1200, breakeven_wti: 42, wells_count: 5 }],
+        total_rows: 1,
+      },
+    });
+    const html = renderTable(t);
+    expect(html).toContain('<th');
+    expect(html).toContain('NPV ($MM)');
+    expect(html).toContain('Breakeven WTI ($/bbl)');
+    expect(html).toContain('Wells');
+    // Raw snake_case names must not leak into the header text.
+    expect(html).not.toContain('>npv_mm<');
+    expect(html).not.toContain('>wells_count<');
+  });
+});
+
+describe('humanizeColumn', () => {
+  test('uses explicit overrides for known columns', () => {
+    expect(humanizeColumn('npv_mm')).toBe('NPV ($MM)');
+    expect(humanizeColumn('cum_oil_mmbbl')).toBe('Cum oil (MMbbl)');
+    expect(humanizeColumn('field_id')).toBe('Field');
+    expect(humanizeColumn('uptime_pct')).toBe('Uptime %');
+  });
+  test('falls back to Title-Case with acronym/unit tokens preserved', () => {
+    expect(humanizeColumn('tree_type')).toBe('Tree Type');
+    expect(humanizeColumn('tvd_ft')).toBe('TVD ft');
+    expect(humanizeColumn('effective_tension_kN')).toBe('Effective Tension kN');
+  });
+  test('handles nullish input', () => {
+    expect(humanizeColumn(null)).toBe('');
   });
 });
 

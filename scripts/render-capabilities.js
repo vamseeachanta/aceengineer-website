@@ -135,6 +135,44 @@ function formatCell(v) {
   return escapeHtml(v);
 }
 
+// Human-friendly display labels for raw dataset column names. Only the DISPLAYED header
+// text changes — the raw snake_case name is still used for data lookup everywhere.
+// COLUMN_LABELS holds explicit overrides; anything else falls back to Title-Case of the
+// snake_case name, with COLUMN_TOKENS keeping domain acronyms/units correctly cased.
+// Mirror any change here in assets/js/capabilities-refresh.js (humanizeColumn) so a live
+// "Refresh to latest" re-render matches the baked page.
+const COLUMN_LABELS = {
+  npv_mm: 'NPV ($MM)',
+  breakeven_wti: 'Breakeven WTI ($/bbl)',
+  economics_basis: 'Basis',
+  sens_mm_per_dollar: 'NPV sensitivity ($MM/$)',
+  wells_count: 'Wells',
+  api_gravity: 'API°',
+  cum_oil_mmbbl: 'Cum oil (MMbbl)',
+  eur_mmbbl: 'EUR (MMbbl)',
+  avg_uptime_pct: 'Uptime %',
+  uptime_pct: 'Uptime %',
+  field_id: 'Field',
+};
+
+const COLUMN_TOKENS = {
+  api: 'API', eur: 'EUR', wti: 'WTI', npv: 'NPV', id: 'ID', mbl: 'MBL',
+  smys: 'SMYS', sn: 'S-N', tvd: 'TVD', hpht: 'HPHT',
+  kn: 'kN', knm: 'kN·m', mpa: 'MPa', psi: 'psi', ppg: 'ppg', ft: 'ft', mm: 'MM',
+};
+
+function humanizeColumn(name) {
+  if (name == null) return '';
+  const key = String(name);
+  if (Object.prototype.hasOwnProperty.call(COLUMN_LABELS, key)) return COLUMN_LABELS[key];
+  return key.split('_').map(w => {
+    if (!w) return w;
+    const lower = w.toLowerCase();
+    if (Object.prototype.hasOwnProperty.call(COLUMN_TOKENS, lower)) return COLUMN_TOKENS[lower];
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
+  }).join(' ');
+}
+
 // Column display order: highlight_columns first (in declared order), then the rest.
 function orderedColumns(table) {
   const cols = (table.data && table.data.columns || []).map(c => c.name);
@@ -163,7 +201,7 @@ function renderTable(table) {
     return `<p style="color:#777;">No rows to display.</p>`;
   }
   const shown = rows.slice(0, MAX_TABLE_ROWS);
-  const head = cols.map(c => `<th style="text-align:left;padding:8px 12px;border-bottom:2px solid #dde1e5;white-space:nowrap;">${escapeHtml(c)}</th>`).join('');
+  const head = cols.map(c => `<th style="text-align:left;padding:8px 12px;border-bottom:2px solid #dde1e5;white-space:nowrap;">${escapeHtml(humanizeColumn(c))}</th>`).join('');
   const body = shown.map(r =>
     `<tr>` + cols.map(c => `<td style="padding:7px 12px;border-bottom:1px solid #eef1f3;">${formatCell(r[c])}</td>`).join('') + `</tr>`
   ).join('\n');
@@ -338,7 +376,7 @@ function renderCards(registry) {
 module.exports = {
   escapeHtml, hfDatasetUrl, tableStats, hasData,
   renderStatStrip, renderCard, renderCards,
-  detailFileName, detailHref, formatCell, orderedColumns, pickChartKeys,
+  detailFileName, detailHref, formatCell, humanizeColumn, orderedColumns, pickChartKeys,
   renderTable, renderBarChart, renderLineChart, renderChartFor,
   capabilityDetailBody, capabilityDetailDocument,
   DOMAIN_LABELS, MAX_TABLE_ROWS,

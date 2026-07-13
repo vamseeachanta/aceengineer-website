@@ -42,6 +42,41 @@
         return Number.isInteger(v) ? v.toLocaleString('en-US') : v.toLocaleString('en-US', { maximumFractionDigits: 2 });
     }
 
+    // Human-friendly column headers — mirror of humanizeColumn() in
+    // scripts/render-capabilities.js so a live refresh matches the baked page. Only the
+    // DISPLAYED header text changes; the raw name is still used for data lookup.
+    var COLUMN_LABELS = {
+        npv_mm: 'NPV ($MM)',
+        breakeven_wti: 'Breakeven WTI ($/bbl)',
+        economics_basis: 'Basis',
+        sens_mm_per_dollar: 'NPV sensitivity ($MM/$)',
+        wells_count: 'Wells',
+        api_gravity: 'API°',
+        cum_oil_mmbbl: 'Cum oil (MMbbl)',
+        eur_mmbbl: 'EUR (MMbbl)',
+        avg_uptime_pct: 'Uptime %',
+        uptime_pct: 'Uptime %',
+        field_id: 'Field',
+    };
+
+    var COLUMN_TOKENS = {
+        api: 'API', eur: 'EUR', wti: 'WTI', npv: 'NPV', id: 'ID', mbl: 'MBL',
+        smys: 'SMYS', sn: 'S-N', tvd: 'TVD', hpht: 'HPHT',
+        kn: 'kN', knm: 'kN·m', mpa: 'MPa', psi: 'psi', ppg: 'ppg', ft: 'ft', mm: 'MM',
+    };
+
+    function humanizeColumn(name) {
+        if (name == null) return '';
+        var key = String(name);
+        if (Object.prototype.hasOwnProperty.call(COLUMN_LABELS, key)) return COLUMN_LABELS[key];
+        return key.split('_').map(function (w) {
+            if (!w) return w;
+            var lower = w.toLowerCase();
+            if (Object.prototype.hasOwnProperty.call(COLUMN_TOKENS, lower)) return COLUMN_TOKENS[lower];
+            return lower.charAt(0).toUpperCase() + lower.slice(1);
+        }).join(' ');
+    }
+
     // Mirror of hf-fetch.js normalize(): datasets-server /rows JSON -> { columns, rows, total_rows }.
     function normalize(apiJson) {
         var features = (apiJson && apiJson.features) || [];
@@ -67,7 +102,7 @@
         if (!rows.length || !cols.length) return '<p style="color:#777;">No rows to display.</p>';
         var shown = rows.slice(0, TABLE_ROWS);
         var head = cols.map(function (c) {
-            return '<th style="text-align:left;padding:8px 12px;border-bottom:2px solid #dde1e5;white-space:nowrap;">' + esc(c) + '</th>';
+            return '<th style="text-align:left;padding:8px 12px;border-bottom:2px solid #dde1e5;white-space:nowrap;">' + esc(humanizeColumn(c)) + '</th>';
         }).join('');
         var body = shown.map(function (r) {
             return '<tr>' + cols.map(function (c) {
@@ -227,7 +262,7 @@
     // Exposed for unit testing (isomorphic pattern, cf. assets/js/cta-tracking.js).
     if (typeof module !== 'undefined' && module.exports) {
         module.exports = {
-            normalize: normalize, orderColumns: orderColumns, tableHtml: tableHtml,
+            normalize: normalize, orderColumns: orderColumns, humanizeColumn: humanizeColumn, tableHtml: tableHtml,
             pickKeys: pickKeys, chartHtml: chartHtml, rowsUrl: rowsUrl,
             refreshSection: refreshSection, onRefresh: onRefresh, init: init,
         };

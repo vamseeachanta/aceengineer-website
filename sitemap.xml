@@ -581,4 +581,9 @@
     <priority>0.7</priority>
   </url>
   <!-- END standards (generated) -->
+  <url>
+    <loc>https://www.aceengineer.com/calculators/drilling-rig-selector.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

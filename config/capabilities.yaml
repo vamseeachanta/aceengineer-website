@@ -92,3 +92,26 @@ capabilities:
       DNV-OS-E301, API-RP-2RD) and validated to under 10% max relative error against
       held-out samples. For screening and capability demonstration — not a substitute
       for a project-specific engineering check.
+
+  - id: field-economics-sensitivity
+    title: Field Economics Sensitivity
+    domain: worldenergy
+    summary: >-
+      Field-economics sensitivity sweep — how life-to-date pretax NPV moves with WTI
+      price and discount rate, on public BSEE production.
+    hf_dataset: aceengineer/worldenergydata-explorer
+    provenance_url: https://github.com/vamseeachanta/worldenergydata
+    status: live
+    primary_config: parametric_economics
+    tables:
+      - config: parametric_economics
+        label: Price × Discount-Rate Sweep
+        viz: table
+        highlight_columns: [field, wti_price_multiplier, discount_rate, npv_musd, breakeven_multiplier]
+    data_limits: >-
+      Life-to-date pretax NPV at various discount rates, computed on public BSEE
+      production — a sensitivity to WTI price (via wti_price_multiplier) and discount
+      rate, NOT full-cycle economics or forward projections. Because it reflects value
+      realized to date, mature fields can show a negative life-to-date NPV. The basis
+      travels with each value (economics_basis). A multi-dimensional field × price ×
+      rate grid, honestly shown as a table rather than a single headline number.

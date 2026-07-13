@@ -1,0 +1,275 @@
+{
+  "dataset": "aceengineer/worldenergydata-explorer",
+  "config": "parametric_economics",
+  "columns": [
+    {
+      "name": "field",
+      "dtype": "large_string"
+    },
+    {
+      "name": "wti_price_multiplier",
+      "dtype": "float64"
+    },
+    {
+      "name": "discount_rate",
+      "dtype": "float64"
+    },
+    {
+      "name": "npv_musd",
+      "dtype": "float64"
+    },
+    {
+      "name": "breakeven_multiplier",
+      "dtype": "float64"
+    },
+    {
+      "name": "economics_basis",
+      "dtype": "large_string"
+    }
+  ],
+  "rows": [
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 0.8,
+      "discount_rate": 0.08,
+      "npv_musd": -1485.2,
+      "breakeven_multiplier": 1.1108,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 0.9,
+      "discount_rate": 0.08,
+      "npv_musd": -1007.3,
+      "breakeven_multiplier": 1.1108,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 1.0,
+      "discount_rate": 0.08,
+      "npv_musd": -529.5,
+      "breakeven_multiplier": 1.1108,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 1.1,
+      "discount_rate": 0.08,
+      "npv_musd": -51.6,
+      "breakeven_multiplier": 1.1108,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 1.2,
+      "discount_rate": 0.08,
+      "npv_musd": 426.2,
+      "breakeven_multiplier": 1.1108,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 0.8,
+      "discount_rate": 0.1,
+      "npv_musd": -1469.0,
+      "breakeven_multiplier": 1.2421,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 0.9,
+      "discount_rate": 0.1,
+      "npv_musd": -1136.8,
+      "breakeven_multiplier": 1.2421,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 1.0,
+      "discount_rate": 0.1,
+      "npv_musd": -804.5,
+      "breakeven_multiplier": 1.2421,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 1.1,
+      "discount_rate": 0.1,
+      "npv_musd": -472.2,
+      "breakeven_multiplier": 1.2421,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 1.2,
+      "discount_rate": 0.1,
+      "npv_musd": -139.9,
+      "breakeven_multiplier": 1.2421,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 0.8,
+      "discount_rate": 0.125,
+      "npv_musd": -1350.9,
+      "breakeven_multiplier": 1.4318,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 0.9,
+      "discount_rate": 0.125,
+      "npv_musd": -1137.1,
+      "breakeven_multiplier": 1.4318,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 1.0,
+      "discount_rate": 0.125,
+      "npv_musd": -923.3,
+      "breakeven_multiplier": 1.4318,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 1.1,
+      "discount_rate": 0.125,
+      "npv_musd": -709.5,
+      "breakeven_multiplier": 1.4318,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "jack_st_malo",
+      "wti_price_multiplier": 1.2,
+      "discount_rate": 0.125,
+      "npv_musd": -495.7,
+      "breakeven_multiplier": 1.4318,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 0.8,
+      "discount_rate": 0.08,
+      "npv_musd": -747.8,
+      "breakeven_multiplier": 1.3094,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 0.9,
+      "discount_rate": 0.08,
+      "npv_musd": -601.0,
+      "breakeven_multiplier": 1.3094,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 1.0,
+      "discount_rate": 0.08,
+      "npv_musd": -454.2,
+      "breakeven_multiplier": 1.3094,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 1.1,
+      "discount_rate": 0.08,
+      "npv_musd": -307.4,
+      "breakeven_multiplier": 1.3094,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 1.2,
+      "discount_rate": 0.08,
+      "npv_musd": -160.6,
+      "breakeven_multiplier": 1.3094,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 0.8,
+      "discount_rate": 0.1,
+      "npv_musd": -712.7,
+      "breakeven_multiplier": 1.4201,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 0.9,
+      "discount_rate": 0.1,
+      "npv_musd": -597.8,
+      "breakeven_multiplier": 1.4201,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 1.0,
+      "discount_rate": 0.1,
+      "npv_musd": -482.8,
+      "breakeven_multiplier": 1.4201,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 1.1,
+      "discount_rate": 0.1,
+      "npv_musd": -367.9,
+      "breakeven_multiplier": 1.4201,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 1.2,
+      "discount_rate": 0.1,
+      "npv_musd": -252.9,
+      "breakeven_multiplier": 1.4201,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 0.8,
+      "discount_rate": 0.125,
+      "npv_musd": -658.0,
+      "breakeven_multiplier": 1.5702,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 0.9,
+      "discount_rate": 0.125,
+      "npv_musd": -572.5,
+      "breakeven_multiplier": 1.5702,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 1.0,
+      "discount_rate": 0.125,
+      "npv_musd": -487.1,
+      "breakeven_multiplier": 1.5702,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 1.1,
+      "discount_rate": 0.125,
+      "npv_musd": -401.7,
+      "breakeven_multiplier": 1.5702,
+      "economics_basis": "life_to_date_pretax_npv"
+    },
+    {
+      "field": "julia",
+      "wti_price_multiplier": 1.2,
+      "discount_rate": 0.125,
+      "npv_musd": -316.3,
+      "breakeven_multiplier": 1.5702,
+      "economics_basis": "life_to_date_pretax_npv"
+    }
+  ],
+  "total_rows": 30,
+  "fetched": 30,
+  "truncated": false
+}

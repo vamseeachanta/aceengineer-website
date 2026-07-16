@@ -43,6 +43,23 @@ For documentation-routing changes, also run:
 uv run pytest tests/docs -k routing_surfaces
 ```
 
+## Sloshing report data publication
+
+The browser never connects to the private Hugging Face dataset. Refresh the
+sanitized, content-addressed snapshot only from a controlled local environment:
+
+```bash
+HF_TOKEN=... npm run refresh:sloshing
+npm test -- --runInBand
+npm run build
+```
+
+Review the immutable directory under `assets/data/sloshing/`, its manifest, and
+the release-pointer diff before committing. Preview both `/reports/` routes with
+network access disabled, verify print and PNG/SVG export, then promote normally.
+Rollback by reverting the release pointer and report commit, or by promoting the
+prior Vercel deployment; never edit an existing content-addressed release.
+
 ## Domain Notes
 
 - `CNAME` contains the production domain value.

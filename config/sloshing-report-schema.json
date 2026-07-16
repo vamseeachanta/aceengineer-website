@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0.0",
+  "closed": true,
+  "limits": {
+    "max_public_rows": 10000,
+    "max_string_length": 160
+  },
+  "tables": {
+    "cases": {
+      "primary_key": ["case_id"],
+      "columns": ["case_id", "evidence_type", "status", "study_axis", "loading_condition", "mesh", "mesh_cells", "period_s", "frequency_hz", "timestep_s", "cycles", "configured_max_courant", "configured_max_alpha_courant", "excitation", "geometry_basis", "solver_class"],
+      "enums": {
+        "evidence_type": ["cfd_validation", "cfd_forced_roll"],
+        "status": ["accepted"],
+        "loading_condition": ["free_decay", "forced_roll"]
+      }
+    },
+    "metrics": {
+      "foreign_keys": { "case_id": "cases.case_id" },
+      "columns": ["case_id", "quantity", "value", "unit", "statistic", "qa_status", "source_class", "source_sha256", "source_revision", "transform_version"]
+    },
+    "studies": {
+      "primary_key": ["study_id"],
+      "columns": ["study_id", "study_type", "quantity", "unit", "case_count", "analytical_target", "target_unit", "qa_status"]
+    },
+    "inputs": {
+      "primary_key": ["case_id"],
+      "foreign_keys": { "case_id": "cases.case_id" },
+      "columns": ["case_id", "solver_family", "solver_version", "simulation_dimensionality", "forcing_period_s", "forcing_amplitude_deg", "simulated_cycles", "end_time_s", "initial_fill_fraction", "liquid_density_kg_m3", "liquid_kinematic_viscosity_m2_s", "gas_density_kg_m3", "gas_kinematic_viscosity_m2_s", "surface_tension_N_m", "gravity_m_s2", "mesh_cells", "time_integration", "configured_max_courant", "configured_max_interface_courant", "maximum_timestep_s", "pressure_probe_count", "pressure_and_load_output_interval_s", "qa_output_interval_s", "geometry_disclosure", "sectional_load_extraction"]
+    },
+    "mesh_quality": {
+      "primary_key": ["case_id"],
+      "foreign_keys": { "case_id": "cases.case_id" },
+      "columns": ["case_id", "mesh_cells", "mesh_points", "mesh_regions", "mesh_check", "evaluated_state", "max_aspect_ratio", "max_non_orthogonality_deg", "average_non_orthogonality_deg", "max_skewness", "minimum_cell_determinant", "minimum_face_interpolation_weight", "minimum_face_volume_ratio", "minimum_cell_volume_m3", "maximum_cell_volume_m3", "total_domain_volume_m3", "sectional_face_zones_available"],
+      "enums": { "mesh_check": ["passed"], "evaluated_state": ["final_deformed_mesh"] }
+    },
+    "qa_audit": {
+      "primary_key": ["case_id"],
+      "foreign_keys": { "case_id": "cases.case_id" },
+      "columns": ["case_id", "completion_marker", "end_time_s", "configured_max_courant", "observed_max_courant", "observed_max_courant_time_s", "courant_median", "courant_p95", "courant_target_exceeded", "courant_steps_above_target", "courant_step_count", "pressure_probe_count", "pressure_times_per_probe", "pressure_row_count", "aggregate_load_row_count", "output_interval_s", "all_reduced_values_finite", "exchange_cycle_change_pct", "moment_cycle_change_pct", "declared_exchange_limit_pct", "declared_moment_limit_pct", "cycle_converged", "exchange_change_from_prior_fine_pct", "roll_moment_change_from_prior_fine_pct", "max_courant_change_from_prior_fine_pct", "qa_status"],
+      "enums": { "qa_status": ["publish_with_courant_caveat"] }
+    },
+    "series": {
+      "primary_key": ["series_id"],
+      "foreign_keys": { "case_id": "cases.case_id" },
+      "columns": ["series_id", "case_id", "quantity", "unit", "x_quantity", "x_unit", "sample_count", "public_location", "z_over_height", "label", "line_dash", "qa_status", "source_class", "source_sha256"],
+      "enums": {
+        "x_quantity": ["time"],
+        "x_unit": ["s"],
+        "qa_status": ["pass", "configured_limit_exceeded"]
+      }
+    },
+    "samples": {
+      "foreign_keys": { "series_id": "series.series_id" },
+      "columns": ["series_id", "ordinal", "x", "y"],
+      "constraints": ["finite x/y", "strictly increasing x per series", "ordinal starts at zero", "count equals series.sample_count"]
+    },
+    "previews": {
+      "primary_key": ["preview_id"],
+      "foreign_keys": { "case_id": "cases.case_id" },
+      "columns": ["preview_id", "case_id", "media_type", "relative_path", "sha256", "bytes", "status", "alt_text"],
+      "enums": {
+        "media_type": ["image/png", "image/webp", "image/gif", "video/mp4"],
+        "status": ["published"]
+      },
+      "note": "Only reviewed source-neutral same-origin preview assets whose bytes are covered by the release digest may be listed."
+    },
+    "dispositions": {
+      "columns": ["family_class", "status", "count", "reason_code"],
+      "enums": {
+        "status": ["not_published", "verification_only"],
+        "reason_code": ["unsupported_model_claim", "incomplete_solver_run", "verification_scope_only"]
+      }
+    }
+  },
+  "forbidden_public_patterns": [
+    "upstream identifiers",
+    "private family names",
+    "raw paths or filenames",
+    "credentials or authorization headers",
+    "free-form upstream notes",
+    "unsupported numerical payloads"
+  ]
+}

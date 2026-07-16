@@ -1,0 +1,36 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive summary of published tank-sloshing CFD, analytical targets, and convergence evidence.">
+  <title>Tank Sloshing Evidence Summary — AceEngineer</title>
+  <include src="partials/head-common.html"></include>
+  <link rel="stylesheet" href="{{ rootPath }}assets/css/sloshing-reports.css">
+  <script src="{{ rootPath }}assets/js/plotly-2.32.0.min.js"></script>
+  <script defer src="{{ rootPath }}assets/js/sloshing-reports.js"></script>
+</head><body>
+  <include src="partials/nav.html"></include>
+  <main class="sloshing-report" data-sloshing-report data-report-kind="summary" data-manifest-url="../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
+    <header class="sloshing-header"><p>Published engineering evidence</p><h1>Tank Sloshing Evidence Summary</h1><p>CFD response, analytical targets, convergence, and methodology-only curves.</p></header>
+    <div class="sloshing-shell">
+      <noscript><p class="noscript-notice">Interactive curve controls require JavaScript. The methodology and publication boundaries remain available below.</p></noscript>
+      <p class="report-status" data-report-status role="status" aria-live="polite">Loading the reviewed public release…</p><div class="report-error" data-report-error role="alert" hidden></div>
+      <fieldset class="report-controls"><legend>Summary display and print controls</legend><div class="control-grid">
+        <label>Reference case<select data-state-field="case" aria-label="Published CFD case"><option>Loading…</option></select></label>
+        <label>Loading condition<select data-state-field="loading_condition" aria-label="Loading condition"><option>Loading…</option></select></label>
+        <label>Period<select data-state-field="period" aria-label="Roll period"><option>Loading…</option></select></label>
+        <label>Mesh<select data-state-field="mesh" aria-label="Mesh resolution"><option>Loading…</option></select></label>
+        <label>Theme<select data-state-field="theme"><option value="light">Light</option><option value="contrast">High contrast</option></select></label>
+        <label>Line weight<select data-state-field="lines"><option value="normal">Normal</option><option value="heavy">Heavy</option></select></label>
+        <label>Markers<select data-state-field="markers"><option value="on">Shown</option><option value="off">Hidden</option></select></label>
+        <label>Density<select data-state-field="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option></select></label>
+      </div><fieldset class="curve-choices"><legend>Select published curves</legend><div data-curve-controls class="curve-control-grid"><span>Loading curve controls…</span></div></fieldset><div class="report-actions" aria-label="Chart export"><button type="button" data-export="png">Export PNG</button><button type="button" data-export="svg">Export SVG</button><button type="button" data-reset>Reset report</button></div></fieldset>
+      <section class="report-panel" data-report-section="overview"><h2>Evidence classes</h2><p>Resolved CFD validation and forced-roll evidence are not combined with methodology-only reduced-order curves as a validation claim.</p><div class="evidence-key"><span>Accepted CFD</span><span class="methodology">Methodology only</span><span class="verification">Verification only</span></div></section>
+      <section class="report-panel" data-report-section="plots"><h2>Published comparison curves</h2><div class="plot" data-plot role="img" aria-label="Interactive comparison of published sloshing curves; equivalent values follow in a table"></div></section>
+      <section class="report-panel" data-report-section="data"><h2>Accessible chart data</h2><table class="accessible-data" data-accessible-table><caption>Values represented in the selected summary chart</caption><thead><tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">Unit</th></tr></thead><tbody></tbody></table></section>
+      <section class="report-panel"><h2>Methodology and limits</h2><p>The reduced-order curves describe methodology only. Pressure-tap and anti-roll benefit results are not published in this release.</p></section>
+    </div>
+  </main><include src="partials/footer.html"></include>
+</body></html>

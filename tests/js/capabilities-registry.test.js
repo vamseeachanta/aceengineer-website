@@ -37,11 +37,12 @@ describe('config/capabilities.yaml', () => {
     expect(explorer.hf_dataset).toBe('aceengineer/worldenergydata-explorer');
     expect(explorer.domain).toBe('worldenergy');
     expect(explorer.tables.map(t => t.config).sort()).toEqual(['countries', 'fields', 'wells']);
-    // economics RE-SURFACED on the fields table after the #971 correctness fix (C9 / #978):
-    // npv_mm + breakeven_wti now shown (life-to-date basis), no longer withheld.
+    // The live fields config currently publishes operational/production columns;
+    // economics stays off this table until its upstream config is republished.
     const fields = explorer.tables.find(t => t.config === 'fields');
-    expect(fields.highlight_columns).toEqual(expect.arrayContaining(['npv_mm', 'breakeven_wti']));
-    expect(explorer.withheld_columns || []).not.toContain('npv_mm');
+    expect(fields.highlight_columns).toEqual(expect.arrayContaining(['status', 'cum_oil_mmbbl', 'avg_uptime_pct']));
+    expect(fields.highlight_columns).not.toEqual(expect.arrayContaining(['npv_mm', 'breakeven_wti']));
+    expect(registry.capabilities.find(c => c.id === 'field-economics-sensitivity').status).toBe('pending');
   });
 
   test('CLI exits 0 with PASS on the real registry', () => {

@@ -589,19 +589,13 @@
   <!-- Diffraction live dataset reports -->
   <url>
     <loc>https://www.aceengineer.com/reports/diffraction/</loc>
-    <lastmod>2026-07-15</lastmod>
+    <lastmod>2026-07-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.aceengineer.com/reports/diffraction/aqwa-analysis.html</loc>
-    <lastmod>2026-07-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.aceengineer.com/reports/diffraction/orcawave-analysis.html</loc>
-    <lastmod>2026-07-15</lastmod>
+    <loc>https://www.aceengineer.com/reports/diffraction/analysis.html</loc>
+    <lastmod>2026-07-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

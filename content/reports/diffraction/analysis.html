@@ -1,0 +1,533 @@
+---
+rootPath: "../../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diffraction Analysis — Live Dataset Report | AceEngineer</title>
+<meta name="description" content="Vessel motion RAOs from potential-flow diffraction analysis (AQWA / OrcaWave) — select program, vessel and damping ratio; results render live from the de-identified aceengineer/digitalmodel-diffraction-rao Hugging Face dataset.">
+<include src="partials/head-common.html"></include>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+  .rpt * { box-sizing: border-box; }
+  .rpt { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    color: #333; background: #f8f9fa; font-size: 14px; line-height: 1.5; }
+  .rpt .container { max-width: 1400px; margin: 0 auto; padding: 1.5em 2em; }
+  .rpt .report-header { background: #2c3e50; color: #fff; padding: 1.2em 2em; margin-bottom: 1em; border-radius: 6px; }
+  .rpt .report-header h1 { margin: 0 0 0.3em; font-size: 1.6em; color: #fff; }
+  .rpt .report-header .meta { font-size: 0.9em; opacity: 0.85; }
+  .rpt .report-header .eyebrow { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.75em; opacity: 0.75; }
+  .rpt .chip { display: inline-block; padding: 3px 10px; border-radius: 3px; font-size: 0.8em; font-weight: 700; margin-left: 0.6em; vertical-align: middle; }
+  .rpt .chip.live { background: #27ae60; color: #fff; }
+  .rpt .chip.loading { background: #f39c12; color: #fff; }
+  .rpt .chip.error { background: #c0392b; color: #fff; }
+  .rpt .chip.pending { background: #7f8c8d; color: #fff; }
+  .rpt .selector-bar { background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    margin-bottom: 1.5em; padding: 0.9em 1.5em; display: flex; flex-wrap: wrap; gap: 1.2em; align-items: center;
+    position: sticky; top: 0; z-index: 20; border-bottom: 3px solid #3498db; }
+  .rpt .selector-bar label { font-weight: 600; color: #2c3e50; font-size: 0.9em; margin-right: 0.4em; }
+  .rpt .selector-bar select { padding: 5px 10px; font-size: 0.95em; border: 1px solid #bbb; border-radius: 4px;
+    font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace; }
+  .rpt .selector-bar .hint { color: #7f8c8d; font-size: 0.8em; }
+  .rpt .section { background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 1.5em; padding: 1.2em 1.5em; }
+  .rpt .section h2 { margin: 0 0 0.8em; font-size: 1.2em; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 0.3em; }
+  .rpt table { border-collapse: collapse; margin: 0.5em 0; font-size: 0.85em; width: 100%; }
+  .rpt th, .rpt td { border: 1px solid #ddd; padding: 0.45em 0.7em; text-align: left; }
+  .rpt th { background: #34495e; color: #fff; font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.3px; }
+  .rpt tbody tr:nth-child(even) { background: #f8f9fa; }
+  .rpt td.num, .rpt th.num { text-align: right; font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace; }
+  .rpt .mono { font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace; }
+  .rpt .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 0.5em 0; }
+  .rpt .metrics div { background: #edf5f3; padding: 14px 16px; border-radius: 4px; }
+  .rpt .metrics b { display: block; font-size: 1.3em; }
+  .rpt .metrics span { color: #586976; font-size: 0.85em; }
+  .rpt .banner { padding: 0.8em 1.2em; border-radius: 4px; margin-bottom: 1em; font-size: 0.9em; }
+  .rpt .banner.info { background: #eaf2f8; border-left: 4px solid #3498db; }
+  .rpt .banner.warn { background: #fef9e7; border-left: 4px solid #f0c674; }
+  .rpt .banner.error { background: #fde8e5; border-left: 4px solid #c0392b; }
+  .rpt .dof-section { border-top: 2px solid #ecf0f1; padding-top: 1em; margin-top: 1em; }
+  .rpt .dof-section:first-child { border-top: none; margin-top: 0; }
+  .rpt .dof-title { font-size: 1.1em; color: #2c3e50; margin: 0 0 0.6em; }
+  .rpt .dof-grid { display: grid; grid-template-columns: 38% 62%; gap: 1em; align-items: start; }
+  @media (max-width: 900px) { .rpt .dof-grid { grid-template-columns: 1fr; } }
+  .rpt .dof-plot { min-height: 340px; }
+  .rpt details { margin-top: 0.6em; }
+  .rpt details summary { cursor: pointer; color: #2980b9; font-size: 0.85em; }
+  .rpt .placeholder { background: #fef9e7; border: 1px dashed #f0c674; padding: 0.6em 0.9em; border-radius: 4px;
+    color: #7d6608; font-size: 0.9em; }
+  .rpt footer { color: #7f8c8d; font-size: 0.85em; padding: 0 0.5em 2em; }
+  .rpt a { color: #2980b9; }
+  @media print { .rpt { background: #fff; } .rpt .section { box-shadow: none; break-inside: avoid; } .rpt .selector-bar { position: static; } }
+</style>
+</head>
+<body class="rpt">
+<div class="container">
+  <div class="report-header">
+    <div class="eyebrow">AceEngineer · digitalmodel · live dataset report</div>
+    <h1 id="rpt-title">Diffraction Analysis</h1>
+    <div class="meta">
+      <a href="index.html" style="color:#aed6f1">diffraction reports</a> ·
+      dataset <a id="ds-link" href="#" style="color:#aed6f1">aceengineer/digitalmodel-diffraction-rao</a> ·
+      series <span class="mono" id="rpt-vessel">—</span>
+      <span id="load-chip" class="chip loading">LOADING</span>
+    </div>
+  </div>
+
+  <div class="selector-bar">
+    <span><label for="sel-solver">Program</label>
+      <select id="sel-solver" disabled><option>…</option></select></span>
+    <span><label for="sel-vessel">Vessel</label>
+      <select id="sel-vessel" disabled><option>…</option></select></span>
+    <span><label for="sel-damping">Damping ζ (%)</label>
+      <select id="sel-damping" disabled><option>…</option></select></span>
+    <span class="hint">Published series only — the list comes live from the dataset. The URL updates with your
+      selection, so it can be bookmarked/shared.</span>
+  </div>
+
+  <div id="banners"></div>
+
+  <div class="section">
+    <h2>How this report works</h2>
+    <p>This page renders <b>live</b> from the public, de-identified Hugging Face dataset
+    <a href="https://huggingface.co/datasets/aceengineer/digitalmodel-diffraction-rao">aceengineer/digitalmodel-diffraction-rao</a>
+    via the <span class="mono">datasets-server</span> API — no result values are baked into the page.
+    Vessels are referenced only by de-identified <span class="mono">vessel_db</span> IDs. Pick a program,
+    vessel and damping ratio above, or deep-link with
+    <span class="mono">?solver=&lt;AQWA|OrcaWave&gt;&amp;vessel=&lt;vessel_id&gt;&amp;damping=&lt;zeta_pct&gt;</span>.</p>
+  </div>
+
+  <div class="section">
+    <h2>Data contract &amp; provenance</h2>
+    <table id="contract-table">
+      <tbody>
+        <tr><td>Dataset</td><td id="c-dataset" class="mono">—</td></tr>
+        <tr><td>Tables used</td><td class="mono">rao · hydrostatics (also the series catalog)</td></tr>
+        <tr><td>Series filter (where)</td><td id="c-where" class="mono">—</td></tr>
+        <tr><td>Rows fetched</td><td id="c-rows" class="mono">—</td></tr>
+        <tr><td>Dataset last modified</td><td id="c-modified" class="mono">—</td></tr>
+        <tr><td>Dataset revision (sha)</td><td id="c-sha" class="mono">—</td></tr>
+        <tr><td>License</td><td id="c-license" class="mono">—</td></tr>
+        <tr><td>Fetched at</td><td id="c-fetched" class="mono">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>What this analysis is</h2>
+    <p id="analysis-desc">Potential-flow diffraction analysis: the vessel's six-degree-of-freedom motion
+    response amplitude operators (RAOs) across wave frequency and heading. Results are
+    <b>screening-grade</b> — faithful to the solver, de-identified, and not a class-approved design basis.
+    Key results below are computed in-browser from the fetched rows.</p>
+    <div class="metrics" id="key-metrics"></div>
+  </div>
+
+  <div class="section">
+    <h2>Model and analysis basis</h2>
+    <p>The basis below is auto-detected from the fetched rows; solver attribution and modelling notes
+    follow the dataset card.</p>
+    <div id="basis-auto"></div>
+  </div>
+
+  <div class="section">
+    <h2>Hydrostatics</h2>
+    <div id="hydro-content"><p>Loading…</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Data-quality &amp; reliability flags</h2>
+    <div id="reliability-content"><p>Loading…</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Six-DOF RAO summary</h2>
+    <div id="peaks-content"><p>Loading…</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Per-DOF response</h2>
+    <p style="font-size:0.85em;color:#7f8c8d">Amplitude vs wave period, one trace per heading. Headings
+    0/45/90/135/180° are shown by default — click legend entries to toggle others. Phase plots are collapsed
+    beneath each DOF.</p>
+    <div id="dof-content"><p>Loading…</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Interpretation notes</h2>
+    <ul>
+      <li><b>Damping treatment matters for roll:</b> a series with ζ = 0 % carries no external/viscous
+        roll damping — its roll-resonance peak is an undamped potential-flow upper bound, not an
+        operability prediction. Apply an external roll damping model before operational use.</li>
+      <li><b>Frequency-band scope:</b> some series are published on a focused band (e.g. refined around
+        the roll-response band); absence of rows outside the band is by scope, not omission.</li>
+      <li><b>Reliability flags travel with the data:</b> rows flagged non-<span class="mono">ok</span>
+        (e.g. <span class="mono">undamped_resonance</span>, <span class="mono">low_freq_artifact</span>)
+        should be excluded from downstream use; definitions are on the dataset card.</li>
+      <li><b>Phase conventions:</b> published phases use the Orcina lag convention (the export pipeline
+        normalizes) — verify before phase-level cross-tool comparison.</li>
+      <li>See the <a href="https://huggingface.co/datasets/aceengineer/digitalmodel-diffraction-rao">dataset
+        card</a> for per-vessel data-quality notes and withheld tables. Cross-solver benchmarking lives in
+        the <a href="orcawave-aqwa-comparison.html">comparison report</a>.</li>
+    </ul>
+  </div>
+
+  <footer>
+    AceEngineer · live dataset report · data fetched client-side from the Hugging Face datasets-server API ·
+    vessels de-identified via vessel_db IDs.
+  </footer>
+</div>
+
+<script>
+"use strict";
+/* ============ CONFIG — series is chosen via the selector bar / URL params ============ */
+const CONFIG = {
+  dataset: "aceengineer/digitalmodel-diffraction-rao",
+  defaultHeadings: [0, 45, 90, 135, 180],
+  dofOrder: ["surge", "sway", "heave", "roll", "pitch", "yaw"]
+};
+/* Fallback series catalog + solver attribution, used only if the hydrostatics
+   catalog fetch fails or the rao table has no solver column. Mirrors the card. */
+const FALLBACK_CATALOG = [
+  { vessel_id: "drill_samsung96k_1", analysis_tool: "AQWA", damping_zeta_pct: 0 },
+  { vessel_id: "drill_samsung96k_1", analysis_tool: "OrcaWave", damping_zeta_pct: 0 },
+  { vessel_id: "drill_samsung96k_1", analysis_tool: "OrcaWave", damping_zeta_pct: 5 },
+  { vessel_id: "install_bokalift_2", analysis_tool: "OrcaWave", damping_zeta_pct: 5 },
+  { vessel_id: "install_bokalift_2", analysis_tool: "OrcaWave", damping_zeta_pct: 10 }
+];
+const ASSUMED_SOLVER = { drill_samsung96k_1: "AQWA", install_bokalift_2: "OrcaWave" };
+/* ===================================================================================== */
+
+const API = "https://datasets-server.huggingface.co";
+const HF = "https://huggingface.co";
+const $ = id => document.getElementById(id);
+
+function banner(kind, html) {
+  const d = document.createElement("div");
+  d.className = "banner " + kind;
+  d.innerHTML = html;
+  $("banners").appendChild(d);
+}
+function clearBanners() { $("banners").innerHTML = ""; }
+function setChip(cls, txt) { const c = $("load-chip"); c.className = "chip " + cls; c.textContent = txt; }
+function fmt(x, digits) {
+  if (x === null || x === undefined || Number.isNaN(x)) return "—";
+  const d = digits === undefined ? 3 : digits;
+  return Math.abs(x) >= 1000 ? x.toLocaleString("en-US", { maximumFractionDigits: 0 })
+    : Number(x.toPrecision(d + 1)).toString();
+}
+async function jsonFetch(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(r.status + " " + r.statusText + " — " + url);
+  return r.json();
+}
+function whereClause(s, hasSolverCol) {
+  let w = `"vessel_id"='${s.vesselId}' AND "damping_zeta_pct"=${s.damping}`;
+  if (hasSolverCol) w += ` AND "solver"='${s.solver}'`;
+  return w;
+}
+async function fetchAllRows(configName, where, onProgress) {
+  const base = `${API}/filter?dataset=${encodeURIComponent(CONFIG.dataset)}&config=${configName}&split=train` +
+    `&where=${encodeURIComponent(where)}`;
+  const first = await jsonFetch(base + "&offset=0&length=100");
+  const total = first.num_rows_total;
+  const rows = first.rows.map(r => r.row);
+  const offsets = [];
+  for (let o = 100; o < total; o += 100) offsets.push(o);
+  const CONC = 6;
+  let next = 0, done = 1;
+  async function worker() {
+    while (next < offsets.length) {
+      const o = offsets[next++];
+      const j = await jsonFetch(base + `&offset=${o}&length=100`);
+      rows.push(...j.rows.map(r => r.row));
+      done++;
+      if (onProgress) onProgress(done, offsets.length + 1);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(CONC, offsets.length) }, worker));
+  return { rows, total };
+}
+function groupBy(rows, keyFn) {
+  const m = new Map();
+  for (const r of rows) {
+    const k = keyFn(r);
+    if (!m.has(k)) m.set(k, []);
+    m.get(k).push(r);
+  }
+  return m;
+}
+function peakOf(rows) {
+  let best = null;
+  for (const r of rows) if (r.magnitude !== null && (best === null || r.magnitude > best.magnitude)) best = r;
+  return best;
+}
+function nearestIn(list, target) {
+  let best = list[0];
+  for (const v of list) if (Math.abs(v - target) < Math.abs(best - target)) best = v;
+  return best;
+}
+
+const PLOT_LAYOUT = {
+  margin: { l: 60, r: 20, t: 30, b: 45 },
+  xaxis: { title: { text: "Wave period (s)" } },
+  legend: { orientation: "h", y: -0.22, font: { size: 10 } },
+  paper_bgcolor: "#fff", plot_bgcolor: "#fbfcfc",
+  font: { size: 11 }
+};
+
+function dofPlot(divId, rows, yField, yTitle) {
+  const byHeading = groupBy(rows, r => r.heading_deg);
+  const headings = [...byHeading.keys()].sort((a, b) => a - b);
+  const visible = new Set(CONFIG.defaultHeadings.map(h => nearestIn(headings, h)));
+  const traces = headings.map(h => {
+    const pts = byHeading.get(h).slice().sort((a, b) => a.period_s - b.period_s);
+    return {
+      x: pts.map(p => p.period_s), y: pts.map(p => p[yField]),
+      name: h + "°", mode: "lines+markers", marker: { size: 4 },
+      visible: visible.has(h) ? true : "legendonly"
+    };
+  });
+  const layout = JSON.parse(JSON.stringify(PLOT_LAYOUT));
+  layout.yaxis = { title: { text: yTitle } };
+  Plotly.newPlot(divId, traces, layout, { responsive: true, displaylogo: false });
+}
+
+/* ---------------- series catalog + selector cascade ---------------- */
+let catalog = FALLBACK_CATALOG;
+let hasSolverCol = false;
+let renderSeq = 0;
+
+async function loadCatalog() {
+  try {
+    const j = await jsonFetch(`${API}/rows?dataset=${encodeURIComponent(CONFIG.dataset)}&config=hydrostatics&split=train&offset=0&length=100`);
+    const rows = j.rows.map(r => r.row).filter(r => r.vessel_id && r.analysis_tool && r.damping_zeta_pct !== null);
+    if (rows.length) return rows;
+  } catch (e) {
+    banner("warn", "Series catalog (hydrostatics table) unavailable — using the built-in fallback list. " + e.message);
+  }
+  return FALLBACK_CATALOG;
+}
+const solversOf = () => [...new Set(catalog.map(r => r.analysis_tool))].sort();
+const vesselsOf = s => [...new Set(catalog.filter(r => r.analysis_tool === s).map(r => r.vessel_id))].sort();
+const dampingsOf = (s, v) => [...new Set(catalog.filter(r => r.analysis_tool === s && r.vessel_id === v).map(r => Number(r.damping_zeta_pct)))].sort((a, b) => a - b);
+
+function setOptions(sel, values, wanted) {
+  sel.innerHTML = values.map(v => `<option value="${v}">${v}</option>`).join("");
+  sel.value = values.map(String).includes(String(wanted)) ? String(wanted) : String(values[0]);
+  sel.disabled = values.length === 0;
+}
+function currentSeries() {
+  return {
+    solver: $("sel-solver").value,
+    vesselId: $("sel-vessel").value,
+    damping: Number($("sel-damping").value)
+  };
+}
+function cascade(level, wanted) {
+  // level: 0 = repopulate all, 1 = vessel+damping, 2 = damping only
+  wanted = wanted || {};
+  if (level <= 0) setOptions($("sel-solver"), solversOf(), wanted.solver);
+  const s = $("sel-solver").value;
+  if (level <= 1) setOptions($("sel-vessel"), vesselsOf(s), wanted.vesselId);
+  const v = $("sel-vessel").value;
+  if (level <= 2) setOptions($("sel-damping"), dampingsOf(s, v), wanted.damping);
+}
+function syncUrl(s) {
+  const p = new URLSearchParams({ solver: s.solver, vessel: s.vesselId, damping: String(s.damping) });
+  history.replaceState(null, "", location.pathname + "?" + p);
+}
+
+/* ---------------- per-series report rendering ---------------- */
+async function renderReport() {
+  const seq = ++renderSeq;
+  const s = currentSeries();
+  syncUrl(s);
+  clearBanners();
+  setChip("loading", "LOADING");
+  $("rpt-title").textContent = s.solver + " Diffraction Analysis";
+  $("rpt-vessel").textContent = s.solver + " · " + s.vesselId + " · ζ=" + s.damping + "%";
+  $("c-fetched").textContent = new Date().toISOString();
+  for (const id of ["hydro-content", "reliability-content", "peaks-content", "dof-content"])
+    $(id).innerHTML = "<p>Loading…</p>";
+  $("key-metrics").innerHTML = "";
+  $("basis-auto").innerHTML = "";
+
+  // Solver-identity gate for schema 1.0.0 datasets (no solver column).
+  if (!hasSolverCol) {
+    const assumed = ASSUMED_SOLVER[s.vesselId];
+    if (assumed !== undefined && assumed !== s.solver) {
+      setChip("pending", "SERIES NOT PUBLISHED");
+      banner("warn", `<b>No ${s.solver} rows are published for <span class="mono">${s.vesselId}</span>.</b>
+        The dataset has no <span class="mono">solver</span> column and attributes this vessel's rows to <b>${assumed}</b>.`);
+      $("c-where").textContent = whereClause(s, true) + "  (blocked: no solver column)";
+      for (const id of ["hydro-content", "reliability-content", "peaks-content", "dof-content"])
+        $(id).innerHTML = '<p class="placeholder">Awaiting publication of this series to the dataset.</p>';
+      return;
+    }
+  }
+
+  const where = whereClause(s, hasSolverCol);
+  $("c-where").textContent = where;
+
+  let rao;
+  try {
+    rao = await fetchAllRows("rao", where, (d, t) => { if (seq === renderSeq) setChip("loading", `LOADING ${d}/${t}`); });
+  } catch (e) {
+    if (seq !== renderSeq) return;
+    setChip("error", "FETCH FAILED");
+    banner("error", "RAO fetch failed: " + e.message);
+    return;
+  }
+  if (seq !== renderSeq) return; // a newer selection superseded this render
+  if (rao.rows.length === 0) {
+    setChip("pending", "0 ROWS");
+    banner("warn", `The filter <span class="mono">${where}</span> returned no rows — series not yet published.`);
+    return;
+  }
+  $("c-rows").textContent = rao.rows.length + " of " + rao.total + " (rao)";
+  setChip("live", "LIVE · " + rao.rows.length + " rows");
+
+  const rows = rao.rows;
+  const byDof = groupBy(rows, r => r.dof);
+  const dofs = CONFIG.dofOrder.filter(d => byDof.has(d)).concat([...byDof.keys()].filter(d => !CONFIG.dofOrder.includes(d)));
+  const freqs = [...new Set(rows.map(r => r.freq_rad_s))].sort((a, b) => a - b);
+  const headings = [...new Set(rows.map(r => r.heading_deg))].sort((a, b) => a - b);
+  const periods = [...new Set(rows.map(r => r.period_s))].sort((a, b) => a - b);
+
+  $("basis-auto").innerHTML = `<table><tbody>
+    <tr><td>Solver</td><td class="mono">${s.solver}${hasSolverCol ? " (from solver column)" : " (per dataset card — no solver column in rao)"}</td></tr>
+    <tr><td>Damping ζ</td><td class="mono">${s.damping} % ${s.damping === 0 ? "(radiation damping only)" : ""}</td></tr>
+    <tr><td>Frequencies</td><td class="mono">${freqs.length} (${fmt(freqs[0])} – ${fmt(freqs[freqs.length - 1])} rad/s · T ≈ ${fmt(periods[0], 3)} – ${fmt(periods[periods.length - 1], 3)} s)</td></tr>
+    <tr><td>Headings</td><td class="mono">${headings.length} (${headings[0]}° – ${headings[headings.length - 1]}°)</td></tr>
+    <tr><td>DOFs</td><td class="mono">${dofs.join(", ")}</td></tr>
+  </tbody></table>`;
+
+  const beamH = nearestIn(headings, 90), headH = nearestIn(headings, 0);
+  const rollBeam = byDof.has("roll") ? peakOf(byDof.get("roll").filter(r => r.heading_deg === beamH)) : null;
+  const longT = periods[periods.length - 1];
+  const heaveBeamLong = byDof.has("heave") ? byDof.get("heave").find(r => r.heading_deg === beamH && Math.abs(r.period_s - longT) < 1e-6) : null;
+  const surgeHeadLong = byDof.has("surge") ? byDof.get("surge").find(r => r.heading_deg === headH && Math.abs(r.period_s - longT) < 1e-6) : null;
+  const km = [];
+  if (rollBeam) km.push(`<div><b>${fmt(rollBeam.magnitude, 3)} ${rollBeam.unit}</b><span>roll peak · beam seas (${beamH}°) at T=${fmt(rollBeam.period_s, 3)} s${s.damping === 0 ? " · undamped upper bound" : ""}${rollBeam.reliability !== "ok" ? " · flagged " + rollBeam.reliability : ""}</span></div>`);
+  if (heaveBeamLong) km.push(`<div><b>${fmt(heaveBeamLong.magnitude, 3)} ${heaveBeamLong.unit}</b><span>heave · beam seas at T=${fmt(longT, 3)} s (long-period sanity → 1.0)</span></div>`);
+  if (surgeHeadLong) km.push(`<div><b>${fmt(surgeHeadLong.magnitude, 3)} ${surgeHeadLong.unit}</b><span>surge · head seas at T=${fmt(longT, 3)} s</span></div>`);
+  km.push(`<div><b>${freqs.length} × ${headings.length}</b><span>frequencies × headings per DOF</span></div>`);
+  $("key-metrics").innerHTML = km.join("");
+
+  // Hydrostatics for the selected series (catalog is already fetched; show vessel rows)
+  const hyd = catalog.filter(r => r.vessel_id === s.vesselId);
+  if (hyd.length === 0 || catalog === FALLBACK_CATALOG) {
+    $("hydro-content").innerHTML = `<p class="placeholder">No hydrostatics rows are published for
+      <span class="mono">${s.vesselId}</span> in this dataset yet.</p>`;
+  } else {
+    const cols = Object.keys(hyd[0]);
+    $("hydro-content").innerHTML = "<table><thead><tr>" + cols.map(c => `<th>${c}</th>`).join("") +
+      "</tr></thead><tbody>" + hyd.map(r => "<tr>" + cols.map(c =>
+        `<td class="${typeof r[c] === "number" ? "num" : "mono"}">${r[c] === null || r[c] === undefined ? "—" : (typeof r[c] === "number" ? fmt(r[c], 5) : r[c])}</td>`).join("") + "</tr>").join("") +
+      "</tbody></table>";
+  }
+
+  const relCounts = new Map();
+  for (const r of rows) relCounts.set(r.reliability, (relCounts.get(r.reliability) || 0) + 1);
+  const flagged = [...relCounts.entries()].filter(([k]) => k !== "ok");
+  $("reliability-content").innerHTML =
+    `<table><thead><tr><th>reliability</th><th class="num">rows</th></tr></thead><tbody>` +
+    [...relCounts.entries()].map(([k, v]) => `<tr><td class="mono">${k}</td><td class="num">${v}</td></tr>`).join("") +
+    "</tbody></table>" +
+    (flagged.length === 0
+      ? "<p>All fetched rows carry <span class='mono'>reliability = ok</span>. Screening-grade caveats on the dataset card still apply.</p>"
+      : `<div class="banner warn">${flagged.reduce((a, [, v]) => a + v, 0)} rows carry non-ok reliability flags — see the dataset card for the flag definitions before using those bands.</div>`);
+
+  $("peaks-content").innerHTML = `<table><thead><tr><th>DOF</th><th class="num">Max RAO</th><th>Unit</th>
+    <th class="num">Period (s)</th><th class="num">Freq (rad/s)</th><th class="num">Heading</th><th>Reliability</th></tr></thead><tbody>` +
+    dofs.map(d => {
+      const p = peakOf(byDof.get(d));
+      return `<tr><td style="text-transform:capitalize">${d}</td><td class="num">${fmt(p.magnitude, 3)}</td><td>${p.unit}</td>
+        <td class="num">${fmt(p.period_s, 4)}</td><td class="num">${fmt(p.freq_rad_s, 4)}</td>
+        <td class="num">${p.heading_deg}°</td><td class="mono">${p.reliability}</td></tr>`;
+    }).join("") + "</tbody></table>";
+
+  $("dof-content").innerHTML = dofs.map(d => {
+    const p = peakOf(byDof.get(d));
+    return `<div class="dof-section" id="dof-${d}">
+      <h3 class="dof-title" style="text-transform:capitalize">${d}</h3>
+      <div class="dof-grid">
+        <div>
+          <table><tbody>
+            <tr><td>Peak</td><td class="num">${fmt(p.magnitude, 3)} ${p.unit}</td></tr>
+            <tr><td>at period</td><td class="num">${fmt(p.period_s, 4)} s</td></tr>
+            <tr><td>at heading</td><td class="num">${p.heading_deg}°</td></tr>
+          </tbody></table>
+        </div>
+        <div>
+          <div id="plot-${d}" class="dof-plot"></div>
+          <details data-dof="${d}"><summary>Show phase plot</summary><div id="phase-${d}" class="dof-plot"></div></details>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+  for (const d of dofs) {
+    const unit = byDof.get(d)[0].unit;
+    dofPlot("plot-" + d, byDof.get(d), "magnitude", `${d} RAO (${unit})`);
+  }
+  document.querySelectorAll("details[data-dof]").forEach(el => {
+    el.addEventListener("toggle", () => {
+      if (el.open && !el.dataset.rendered) {
+        el.dataset.rendered = "1";
+        const d = el.dataset.dof;
+        dofPlot("phase-" + d, byDof.get(d), "phase", `${d} phase (deg)`);
+      }
+    });
+  });
+}
+
+/* ---------------- init ---------------- */
+async function main() {
+  const qs = new URLSearchParams(location.search);
+  $("ds-link").href = HF + "/datasets/" + CONFIG.dataset;
+  $("c-dataset").textContent = CONFIG.dataset;
+
+  try {
+    const info = await jsonFetch(HF + "/api/datasets/" + encodeURIComponent(CONFIG.dataset).replace("%2F", "/"));
+    $("c-modified").textContent = info.lastModified || "—";
+    $("c-sha").textContent = info.sha || "—";
+    $("c-license").textContent = (info.cardData && info.cardData.license) || "—";
+  } catch (e) { $("c-modified").textContent = "unavailable (" + e.message + ")"; }
+
+  try {
+    const probe = await jsonFetch(`${API}/rows?dataset=${encodeURIComponent(CONFIG.dataset)}&config=rao&split=train&offset=0&length=1`);
+    hasSolverCol = probe.features.some(f => f.name === "solver");
+  } catch (e) {
+    setChip("error", "API ERROR");
+    banner("error", "Could not reach the datasets-server API: " + e.message);
+    return;
+  }
+
+  catalog = await loadCatalog();
+  // Without an explicit solver param, infer it from the catalog: prefer the
+  // series that actually exists for the requested (vessel, damping).
+  let inferred;
+  if (!qs.get("solver") && qs.get("vessel")) {
+    const v = qs.get("vessel"), d = qs.has("damping") ? Number(qs.get("damping")) : undefined;
+    const hit = catalog.find(r => r.vessel_id === v && (d === undefined || Number(r.damping_zeta_pct) === d))
+      || catalog.find(r => r.vessel_id === v);
+    inferred = (hit && hit.analysis_tool) || ASSUMED_SOLVER[v];
+  }
+  const wanted = {
+    solver: qs.get("solver") || inferred || "AQWA",
+    vesselId: qs.get("vessel") || undefined,
+    damping: qs.has("damping") ? Number(qs.get("damping")) : undefined
+  };
+  cascade(0, wanted);
+  $("sel-solver").addEventListener("change", () => { cascade(1); renderReport(); });
+  $("sel-vessel").addEventListener("change", () => { cascade(2); renderReport(); });
+  $("sel-damping").addEventListener("change", () => renderReport());
+
+  await renderReport();
+}
+
+main().catch(e => { setChip("error", "ERROR"); banner("error", "Unexpected failure: " + e.message); });
+</script>
+</body>
+</html>

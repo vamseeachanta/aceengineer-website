@@ -42,19 +42,16 @@ rootPath: "../../"
   </div>
 
   <div class="card">
-    <h2><a href="aqwa-analysis.html">AQWA Diffraction Analysis</a></h2>
-    <p><span class="tag live">LIVE</span>Six-DOF RAOs for <span class="mono">drill_samsung96k_1</span>
-    (hull-class-level de-identified drillship, survival loading condition) — 2,700 rows across 18
-    frequencies × 25 headings, radiation-damping-only roll upper bound.</p>
-  </div>
-
-  <div class="card">
-    <h2><a href="orcawave-analysis.html">OrcaWave Diffraction Analysis</a></h2>
-    <p><span class="tag live">LIVE</span>Six-DOF RAOs for <span class="mono">install_bokalift_2</span>
-    (parametric heavy-lift vessel, ζ = 5 %). Also published: <span class="mono">drill_samsung96k_1</span>
-    OrcaWave series at <a href="orcawave-analysis.html?vessel=drill_samsung96k_1&amp;damping=0">ζ = 0
-    (radiation-only, resonance band flagged)</a> and
-    <a href="orcawave-analysis.html?vessel=drill_samsung96k_1&amp;damping=5">ζ = 5</a>.</p>
+    <h2><a href="analysis.html">Diffraction Analysis — select program, vessel &amp; damping</a></h2>
+    <p><span class="tag live">LIVE</span>One report for all published series: pick the program
+    (AQWA / OrcaWave), vessel and damping ratio from dropdowns — the series list itself comes live from
+    the dataset, so new publications appear automatically. Six-DOF RAO plots, peaks, hydrostatics and
+    reliability flags per series.</p>
+    <p>Presets:
+    <a href="analysis.html?solver=AQWA&amp;vessel=drill_samsung96k_1&amp;damping=0">AQWA · drillship · ζ=0</a> ·
+    <a href="analysis.html?solver=OrcaWave&amp;vessel=drill_samsung96k_1&amp;damping=0">OrcaWave · drillship · ζ=0</a> ·
+    <a href="analysis.html?solver=OrcaWave&amp;vessel=drill_samsung96k_1&amp;damping=5">OrcaWave · drillship · ζ=5</a> ·
+    <a href="analysis.html?solver=OrcaWave&amp;vessel=install_bokalift_2&amp;damping=5">OrcaWave · heavy-lift · ζ=5</a></p>
   </div>
 
   <div class="card">

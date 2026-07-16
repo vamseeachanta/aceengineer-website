@@ -1,0 +1,569 @@
+---
+rootPath: "../../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diffraction Comparison — Any Two Series | AceEngineer</title>
+<meta name="description" content="Compare any two published diffraction RAO series (across solver, vessel or damping ratio) with overlay plots and interpolated delta statistics, rendered live from the de-identified aceengineer/digitalmodel-diffraction-rao Hugging Face dataset.">
+<include src="partials/head-common.html"></include>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+  .rpt * { box-sizing: border-box; }
+  .rpt { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    color: #333; background: #f8f9fa; font-size: 14px; line-height: 1.5; }
+  .rpt .container { max-width: 1400px; margin: 0 auto; padding: 1.5em 2em; }
+  .rpt .report-header { background: #2c3e50; color: #fff; padding: 1.2em 2em; margin-bottom: 1em; border-radius: 6px; }
+  .rpt .report-header h1 { margin: 0 0 0.3em; font-size: 1.6em; color: #fff; }
+  .rpt .report-header .meta { font-size: 0.9em; opacity: 0.85; }
+  .rpt .report-header .eyebrow { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.75em; opacity: 0.75; }
+  .rpt .chip { display: inline-block; padding: 3px 10px; border-radius: 3px; font-size: 0.8em; font-weight: 700; margin-left: 0.6em; vertical-align: middle; }
+  .rpt .chip.live { background: #27ae60; color: #fff; }
+  .rpt .chip.loading { background: #f39c12; color: #fff; }
+  .rpt .chip.error { background: #c0392b; color: #fff; }
+  .rpt .chip.pending { background: #7f8c8d; color: #fff; }
+  .rpt .selector-bar { background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    margin-bottom: 1.5em; padding: 0.9em 1.5em; display: flex; flex-wrap: wrap; gap: 0.8em 2em; align-items: center;
+    position: sticky; top: 0; z-index: 20; border-bottom: 3px solid #8e44ad; }
+  .rpt .series-group { display: flex; flex-wrap: wrap; gap: 0.8em; align-items: center; padding: 0.3em 0.8em;
+    border-radius: 4px; }
+  .rpt .series-group.a { background: #eef6f5; border-left: 4px solid #137d7a; }
+  .rpt .series-group.b { background: #fdf2e9; border-left: 4px solid #e67e22; }
+  .rpt .series-group .series-tag { font-weight: 800; font-size: 0.9em; }
+  .rpt .series-group.a .series-tag { color: #137d7a; }
+  .rpt .series-group.b .series-tag { color: #e67e22; }
+  .rpt .selector-bar label { font-weight: 600; color: #2c3e50; font-size: 0.85em; margin-right: 0.3em; }
+  .rpt .selector-bar select { padding: 4px 8px; font-size: 0.9em; border: 1px solid #bbb; border-radius: 4px;
+    font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace; }
+  .rpt .selector-bar .hint { color: #7f8c8d; font-size: 0.8em; flex-basis: 100%; }
+  .rpt .section { background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 1.5em; padding: 1.2em 1.5em; }
+  .rpt .section h2 { margin: 0 0 0.8em; font-size: 1.2em; color: #2c3e50; border-bottom: 2px solid #8e44ad; padding-bottom: 0.3em; }
+  .rpt table { border-collapse: collapse; margin: 0.5em 0; font-size: 0.85em; width: 100%; }
+  .rpt th, .rpt td { border: 1px solid #ddd; padding: 0.45em 0.7em; text-align: left; }
+  .rpt th { background: #34495e; color: #fff; font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.3px; }
+  .rpt tbody tr:nth-child(even) { background: #f8f9fa; }
+  .rpt td.num, .rpt th.num { text-align: right; font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace; }
+  .rpt .mono { font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace; }
+  .rpt .banner { padding: 0.8em 1.2em; border-radius: 4px; margin-bottom: 1em; font-size: 0.9em; }
+  .rpt .banner.info { background: #eaf2f8; border-left: 4px solid #3498db; }
+  .rpt .banner.warn { background: #fef9e7; border-left: 4px solid #f0c674; }
+  .rpt .banner.error { background: #fde8e5; border-left: 4px solid #c0392b; }
+  .rpt .dof-section { border-top: 2px solid #ecf0f1; padding-top: 1em; margin-top: 1em; }
+  .rpt .dof-section:first-child { border-top: none; margin-top: 0; }
+  .rpt .dof-title { font-size: 1.1em; color: #2c3e50; margin: 0 0 0.6em; }
+  .rpt .dof-grid { display: grid; grid-template-columns: 38% 62%; gap: 1em; align-items: start; }
+  @media (max-width: 900px) { .rpt .dof-grid { grid-template-columns: 1fr; } }
+  .rpt .dof-plot { min-height: 340px; }
+  .rpt .placeholder { background: #fef9e7; border: 1px dashed #f0c674; padding: 0.6em 0.9em; border-radius: 4px;
+    color: #7d6608; font-size: 0.9em; }
+  .rpt .heading-bar { display: flex; align-items: center; gap: 0.7em; margin: 0.6em 0 0.2em; font-size: 0.9em; }
+  .rpt footer { color: #7f8c8d; font-size: 0.85em; padding: 0 0.5em 2em; }
+  .rpt a { color: #2980b9; }
+  @media print { .rpt { background: #fff; } .rpt .section { box-shadow: none; break-inside: avoid; } .rpt .selector-bar { position: static; } }
+</style>
+</head>
+<body class="rpt">
+<div class="container">
+  <div class="report-header">
+    <div class="eyebrow">AceEngineer · digitalmodel · live dataset report</div>
+    <h1>Diffraction Comparison</h1>
+    <div class="meta">
+      <a href="index.html" style="color:#aed6f1">diffraction reports</a> ·
+      dataset <a id="ds-link" href="#" style="color:#aed6f1">aceengineer/digitalmodel-diffraction-rao</a>
+      <span id="load-chip" class="chip loading">LOADING</span>
+    </div>
+  </div>
+
+  <div class="selector-bar">
+    <span class="series-group a">
+      <span class="series-tag">Series A</span>
+      <span><label for="sel-solver-A">Program</label>
+        <select id="sel-solver-A" disabled><option>…</option></select></span>
+      <span><label for="sel-vessel-A">Vessel</label>
+        <select id="sel-vessel-A" disabled><option>…</option></select></span>
+      <span><label for="sel-damping-A">ζ (%)</label>
+        <select id="sel-damping-A" disabled><option>…</option></select></span>
+    </span>
+    <span class="series-group b">
+      <span class="series-tag">Series B</span>
+      <span><label for="sel-solver-B">Program</label>
+        <select id="sel-solver-B" disabled><option>…</option></select></span>
+      <span><label for="sel-vessel-B">Vessel</label>
+        <select id="sel-vessel-B" disabled><option>…</option></select></span>
+      <span><label for="sel-damping-B">ζ (%)</label>
+        <select id="sel-damping-B" disabled><option>…</option></select></span>
+    </span>
+    <span class="hint">Compare any two published series — across program, vessel or damping ratio. The list comes
+      live from the dataset; the URL updates with your selection for bookmarking/sharing.</span>
+  </div>
+
+  <div id="banners"></div>
+
+  <div class="section">
+    <h2>Series &amp; availability</h2>
+    <table>
+      <thead><tr><th>Series</th><th>Program</th><th>Vessel (vessel_db ID)</th><th>ζ (%)</th><th>Filter (where)</th><th>Rows</th><th>Status</th></tr></thead>
+      <tbody id="series-tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Data contract &amp; provenance</h2>
+    <table>
+      <tbody>
+        <tr><td>Dataset</td><td id="c-dataset" class="mono">—</td></tr>
+        <tr><td>Tables used</td><td class="mono">rao · hydrostatics (series catalog)</td></tr>
+        <tr><td>Dataset last modified</td><td id="c-modified" class="mono">—</td></tr>
+        <tr><td>Dataset revision (sha)</td><td id="c-sha" class="mono">—</td></tr>
+        <tr><td>License</td><td id="c-license" class="mono">—</td></tr>
+        <tr><td>Fetched at</td><td id="c-fetched" class="mono">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Comparison method</h2>
+    <p><b>Magnitudes only by default.</b> Phase comparison requires an explicit convention alignment and is
+    out of scope for the automatic statistics below.</p>
+    <p>Delta statistics are computed on the <b>overlapping period band</b> of the two series: series B is
+    linearly interpolated in period onto series A's grid at each common heading. Peak deltas compare each
+    series' own peak within the overlap band. Percentage deltas are reported relative to series A and are
+    suppressed where |A| &lt; 5 % of A's peak (to avoid noise-dominated ratios near zero crossings).
+    Rows carrying a non-<span class="mono">ok</span> reliability flag (e.g. an undamped resonance band)
+    are plotted but <b>excluded from all automatic statistics</b>, including the peak table.</p>
+    <p><b>Compare like with like.</b> This page will compare any two series you select — it is up to you to
+    keep the comparison meaningful. Mismatched damping, different vessels, or non-overlapping frequency
+    bands are banner-flagged so a difference is attributed to the right cause (solver vs damping vs hull).</p>
+  </div>
+
+  <div class="section">
+    <h2>Peak comparison (all headings, reliability=ok rows)</h2>
+    <div id="peaks-content"><p>Loading…</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Per-DOF overlay &amp; deltas</h2>
+    <div class="heading-bar">
+      <label for="heading-select"><b>Heading:</b></label>
+      <select id="heading-select" disabled></select>
+      <span style="color:#7f8c8d">Overlay and delta statistics recompute for the selected heading.</span>
+    </div>
+    <div id="dof-content"><p>Loading…</p></div>
+  </div>
+
+  <div class="section">
+    <h2>Interpretation notes</h2>
+    <ul>
+      <li><b>Solver benchmark</b> (same vessel, same ζ, different program): differences are usually driven
+        by mesh, restoring/GM basis and moonpool handling — not the potential-flow formulations.</li>
+      <li><b>Damping sensitivity</b> (same vessel and program, different ζ): roll-resonance response scales
+        strongly with damping; off-resonance response barely moves.</li>
+      <li><b>Cross-vessel</b> comparisons reflect hull differences, not solver agreement.</li>
+      <li>Results are screening-grade and de-identified; see the
+        <a href="https://huggingface.co/datasets/aceengineer/digitalmodel-diffraction-rao">dataset card</a>
+        for per-vessel data-quality notes. Single-series detail lives in the
+        <a href="analysis.html">analysis report</a>.</li>
+    </ul>
+  </div>
+
+  <footer>
+    AceEngineer · live dataset report · data fetched client-side from the Hugging Face datasets-server API ·
+    vessels de-identified via vessel_db IDs.
+  </footer>
+</div>
+
+<script>
+"use strict";
+/* ============ CONFIG — both series are chosen via the selector bar / URL params ============ */
+const CONFIG = {
+  dataset: "aceengineer/digitalmodel-diffraction-rao",
+  defaultHeading: 90,
+  dofOrder: ["surge", "sway", "heave", "roll", "pitch", "yaw"],
+  defaults: {
+    A: { solver: "AQWA", vesselId: "drill_samsung96k_1", damping: 0 },
+    B: { solver: "OrcaWave", vesselId: "drill_samsung96k_1", damping: 0 }
+  },
+  colors: { A: "#137d7a", B: "#e67e22" }
+};
+const FALLBACK_CATALOG = [
+  { vessel_id: "drill_samsung96k_1", analysis_tool: "AQWA", damping_zeta_pct: 0 },
+  { vessel_id: "drill_samsung96k_1", analysis_tool: "OrcaWave", damping_zeta_pct: 0 },
+  { vessel_id: "drill_samsung96k_1", analysis_tool: "OrcaWave", damping_zeta_pct: 5 },
+  { vessel_id: "install_bokalift_2", analysis_tool: "OrcaWave", damping_zeta_pct: 5 },
+  { vessel_id: "install_bokalift_2", analysis_tool: "OrcaWave", damping_zeta_pct: 10 }
+];
+const ASSUMED_SOLVER = { drill_samsung96k_1: "AQWA", install_bokalift_2: "OrcaWave" };
+/* =========================================================================================== */
+
+const API = "https://datasets-server.huggingface.co";
+const HF = "https://huggingface.co";
+const $ = id => document.getElementById(id);
+
+function banner(kind, html) {
+  const d = document.createElement("div");
+  d.className = "banner " + kind;
+  d.innerHTML = html;
+  $("banners").appendChild(d);
+}
+function clearBanners() { $("banners").innerHTML = ""; }
+function setChip(cls, txt) { const c = $("load-chip"); c.className = "chip " + cls; c.textContent = txt; }
+function fmt(x, digits) {
+  if (x === null || x === undefined || Number.isNaN(x)) return "—";
+  const d = digits === undefined ? 3 : digits;
+  return Math.abs(x) >= 1000 ? x.toLocaleString("en-US", { maximumFractionDigits: 0 })
+    : Number(x.toPrecision(d + 1)).toString();
+}
+async function jsonFetch(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(r.status + " " + r.statusText + " — " + url);
+  return r.json();
+}
+function whereClause(s, hasSolverCol) {
+  let w = `"vessel_id"='${s.vesselId}' AND "damping_zeta_pct"=${s.damping}`;
+  if (hasSolverCol) w += ` AND "solver"='${s.solver}'`;
+  return w;
+}
+async function fetchAllRows(configName, where, onProgress) {
+  const base = `${API}/filter?dataset=${encodeURIComponent(CONFIG.dataset)}&config=${configName}&split=train` +
+    `&where=${encodeURIComponent(where)}`;
+  const first = await jsonFetch(base + "&offset=0&length=100");
+  const total = first.num_rows_total;
+  const rows = first.rows.map(r => r.row);
+  const offsets = [];
+  for (let o = 100; o < total; o += 100) offsets.push(o);
+  const CONC = 6;
+  let next = 0, done = 1;
+  async function worker() {
+    while (next < offsets.length) {
+      const o = offsets[next++];
+      const j = await jsonFetch(base + `&offset=${o}&length=100`);
+      rows.push(...j.rows.map(r => r.row));
+      done++;
+      if (onProgress) onProgress(done, offsets.length + 1);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(CONC, offsets.length) }, worker));
+  return { rows, total };
+}
+function groupBy(rows, keyFn) {
+  const m = new Map();
+  for (const r of rows) {
+    const k = keyFn(r);
+    if (!m.has(k)) m.set(k, []);
+    m.get(k).push(r);
+  }
+  return m;
+}
+function peakOf(rows) {
+  let best = null;
+  for (const r of rows) if (r.magnitude !== null && (best === null || r.magnitude > best.magnitude)) best = r;
+  return best;
+}
+function nearestIn(list, target) {
+  let best = list[0];
+  for (const v of list) if (Math.abs(v - target) < Math.abs(best - target)) best = v;
+  return best;
+}
+function interp(pts, x0) {
+  if (pts.length === 0 || x0 < pts[0].x || x0 > pts[pts.length - 1].x) return null;
+  for (let i = 1; i < pts.length; i++) {
+    if (x0 <= pts[i].x) {
+      const a = pts[i - 1], b = pts[i];
+      if (b.x === a.x) return a.y;
+      return a.y + (b.y - a.y) * (x0 - a.x) / (b.x - a.x);
+    }
+  }
+  return pts[pts.length - 1].y;
+}
+function seriesLabel(s) { return `${s.solver} · ${s.vesselId} · ζ=${s.damping}%`; }
+
+/* ---------------- series catalog + two selector cascades ---------------- */
+let catalog = FALLBACK_CATALOG;
+let hasSolverCol = false;
+let renderSeq = 0;
+const seriesCache = new Map(); // where-clause -> {rows, total}
+
+async function loadCatalog() {
+  try {
+    const j = await jsonFetch(`${API}/rows?dataset=${encodeURIComponent(CONFIG.dataset)}&config=hydrostatics&split=train&offset=0&length=100`);
+    const rows = j.rows.map(r => r.row).filter(r => r.vessel_id && r.analysis_tool && r.damping_zeta_pct !== null);
+    if (rows.length) return rows;
+  } catch (e) {
+    banner("warn", "Series catalog (hydrostatics table) unavailable — using the built-in fallback list. " + e.message);
+  }
+  return FALLBACK_CATALOG;
+}
+const solversOf = () => [...new Set(catalog.map(r => r.analysis_tool))].sort();
+const vesselsOf = s => [...new Set(catalog.filter(r => r.analysis_tool === s).map(r => r.vessel_id))].sort();
+const dampingsOf = (s, v) => [...new Set(catalog.filter(r => r.analysis_tool === s && r.vessel_id === v).map(r => Number(r.damping_zeta_pct)))].sort((a, b) => a - b);
+
+function setOptions(sel, values, wanted) {
+  sel.innerHTML = values.map(v => `<option value="${v}">${v}</option>`).join("");
+  sel.value = values.map(String).includes(String(wanted)) ? String(wanted) : String(values[0]);
+  sel.disabled = values.length === 0;
+}
+function currentSeries(g) {
+  return {
+    key: g,
+    solver: $("sel-solver-" + g).value,
+    vesselId: $("sel-vessel-" + g).value,
+    damping: Number($("sel-damping-" + g).value),
+    color: CONFIG.colors[g]
+  };
+}
+function cascade(g, level, wanted) {
+  wanted = wanted || {};
+  if (level <= 0) setOptions($("sel-solver-" + g), solversOf(), wanted.solver);
+  const s = $("sel-solver-" + g).value;
+  if (level <= 1) setOptions($("sel-vessel-" + g), vesselsOf(s), wanted.vesselId);
+  const v = $("sel-vessel-" + g).value;
+  if (level <= 2) setOptions($("sel-damping-" + g), dampingsOf(s, v), wanted.damping);
+}
+function syncUrl(a, b) {
+  const p = new URLSearchParams({
+    solverA: a.solver, vesselA: a.vesselId, dampingA: String(a.damping),
+    solverB: b.solver, vesselB: b.vesselId, dampingB: String(b.damping)
+  });
+  history.replaceState(null, "", location.pathname + "?" + p);
+}
+function inferSolver(vessel, damping) {
+  if (!vessel) return undefined;
+  const hit = catalog.find(r => r.vessel_id === vessel && (damping === undefined || Number(r.damping_zeta_pct) === damping))
+    || catalog.find(r => r.vessel_id === vessel);
+  return (hit && hit.analysis_tool) || ASSUMED_SOLVER[vessel];
+}
+
+/* ---------------- series resolution (cached) ---------------- */
+async function resolveSeries(s, onProgress) {
+  if (!hasSolverCol) {
+    const assumed = ASSUMED_SOLVER[s.vesselId];
+    if (assumed !== undefined && assumed !== s.solver) {
+      return { s, status: "not published (no solver column; dataset attributes this vessel's rows to " + assumed + ")", rows: [], where: whereClause(s, true) + " (blocked)" };
+    }
+  }
+  const where = whereClause(s, hasSolverCol);
+  if (seriesCache.has(where)) {
+    const c = seriesCache.get(where);
+    return { s, status: c.rows.length ? "live" : "0 rows — not published", rows: c.rows, where };
+  }
+  try {
+    const res = await fetchAllRows("rao", where, onProgress);
+    seriesCache.set(where, res);
+    return { s, status: res.rows.length ? "live" : "0 rows — not published", rows: res.rows, where };
+  } catch (e) {
+    return { s, status: "fetch failed: " + e.message, rows: [], where };
+  }
+}
+
+const PLOT_LAYOUT = {
+  margin: { l: 60, r: 20, t: 30, b: 45 },
+  xaxis: { title: { text: "Wave period (s)" } },
+  legend: { orientation: "h", y: -0.22, font: { size: 10 } },
+  paper_bgcolor: "#fff", plot_bgcolor: "#fbfcfc",
+  font: { size: 11 }
+};
+
+let A, B, dofs = [], byDofA = new Map(), byDofB = new Map();
+
+function ptsFor(byDof, d, heading, okOnly) {
+  const rows = (byDof.get(d) || []).filter(r => r.heading_deg === heading && r.magnitude !== null
+    && (!okOnly || r.reliability === "ok"));
+  return rows.map(r => ({ x: r.period_s, y: r.magnitude })).sort((a, b) => a.x - b.x);
+}
+
+function renderHeading(heading) {
+  for (const d of dofs) {
+    const pa = ptsFor(byDofA, d, heading);
+    const pb = ptsFor(byDofB, d, heading);
+    const unit = ((byDofA.get(d) || byDofB.get(d) || [{}])[0] || {}).unit || "";
+    const traces = [];
+    if (pa.length) traces.push({ x: pa.map(p => p.x), y: pa.map(p => p.y), name: "A: " + seriesLabel(A.s), mode: "lines+markers", marker: { size: 5 }, line: { color: A.s.color } });
+    if (pb.length) traces.push({ x: pb.map(p => p.x), y: pb.map(p => p.y), name: "B: " + seriesLabel(B.s), mode: "lines+markers", marker: { size: 5 }, line: { color: B.s.color } });
+    const layout = JSON.parse(JSON.stringify(PLOT_LAYOUT));
+    layout.yaxis = { title: { text: `${d} RAO (${unit})` } };
+    Plotly.react("plot-" + d, traces, layout, { responsive: true, displaylogo: false });
+
+    // Delta statistics on overlap band — reliability=ok rows only.
+    const paOk = ptsFor(byDofA, d, heading, true);
+    const pbOk = ptsFor(byDofB, d, heading, true);
+    const nFlagged = (pa.length - paOk.length) + (pb.length - pbOk.length);
+    const el = $("stats-" + d);
+    if (!paOk.length || !pbOk.length) {
+      el.innerHTML = `<p class="placeholder">Comparison statistics pending — ${!paOk.length ? "series A" : "series B"} has no reliability=ok rows at this heading.</p>`;
+      continue;
+    }
+    const lo = Math.max(paOk[0].x, pbOk[0].x), hi = Math.min(paOk[paOk.length - 1].x, pbOk[pbOk.length - 1].x);
+    const inBand = paOk.filter(p => p.x >= lo && p.x <= hi);
+    if (hi <= lo || inBand.length < 2) {
+      el.innerHTML = `<p class="placeholder">Period bands do not overlap (A: ${fmt(paOk[0].x)}–${fmt(paOk[paOk.length - 1].x)} s · B: ${fmt(pbOk[0].x)}–${fmt(pbOk[pbOk.length - 1].x)} s) — no automatic deltas.</p>`;
+      continue;
+    }
+    const peakA = inBand.reduce((m, p) => p.y > m.y ? p : m);
+    const pbBand = pbOk.filter(p => p.x >= lo && p.x <= hi);
+    const peakB = pbBand.reduce((m, p) => p.y > m.y ? p : m);
+    let maxAbs = 0, maxAbsT = null, sumSq = 0, n = 0, maxPct = null, maxPctT = null;
+    const floor = 0.05 * peakA.y;
+    for (const p of inBand) {
+      const yb = interp(pbOk, p.x);
+      if (yb === null) continue;
+      const dAbs = Math.abs(yb - p.y);
+      sumSq += dAbs * dAbs; n++;
+      if (dAbs > maxAbs) { maxAbs = dAbs; maxAbsT = p.x; }
+      if (Math.abs(p.y) >= floor) {
+        const pct = 100 * (yb - p.y) / p.y;
+        if (maxPct === null || Math.abs(pct) > Math.abs(maxPct)) { maxPct = pct; maxPctT = p.x; }
+      }
+    }
+    el.innerHTML = `<table><tbody>
+      <tr><td>Overlap band</td><td class="num">${fmt(lo, 4)} – ${fmt(hi, 4)} s (${n} pts)</td></tr>
+      <tr><td>Peak A</td><td class="num">${fmt(peakA.y, 3)} ${unit} @ ${fmt(peakA.x, 4)} s</td></tr>
+      <tr><td>Peak B</td><td class="num">${fmt(peakB.y, 3)} ${unit} @ ${fmt(peakB.x, 4)} s</td></tr>
+      <tr><td>Δ peak (B−A)</td><td class="num">${fmt(peakB.y - peakA.y, 3)} ${unit} (${peakA.y !== 0 ? fmt(100 * (peakB.y - peakA.y) / peakA.y, 3) + " %" : "—"})</td></tr>
+      <tr><td>Peak period shift</td><td class="num">${fmt(peakB.x - peakA.x, 3)} s</td></tr>
+      <tr><td>Max |Δ| on band</td><td class="num">${fmt(maxAbs, 3)} ${unit} @ ${fmt(maxAbsT, 4)} s</td></tr>
+      <tr><td>Max |Δ%| (|A| ≥ 5% peak)</td><td class="num">${maxPct === null ? "—" : fmt(maxPct, 3) + " % @ " + fmt(maxPctT, 4) + " s"}</td></tr>
+      <tr><td>RMS Δ on band</td><td class="num">${n ? fmt(Math.sqrt(sumSq / n), 3) : "—"} ${unit}</td></tr>
+      ${nFlagged ? `<tr><td>Flagged rows excluded</td><td class="num">${nFlagged} (plotted, not in stats)</td></tr>` : ""}
+    </tbody></table>`;
+  }
+}
+
+/* ---------------- full comparison render ---------------- */
+async function renderComparison() {
+  const seq = ++renderSeq;
+  const sa = currentSeries("A"), sb = currentSeries("B");
+  syncUrl(sa, sb);
+  clearBanners();
+  setChip("loading", "LOADING");
+  $("series-tbody").innerHTML = "";
+  $("peaks-content").innerHTML = $("dof-content").innerHTML = "<p>Loading…</p>";
+  $("heading-select").disabled = true;
+  $("c-fetched").textContent = new Date().toISOString();
+
+  [A, B] = await Promise.all([
+    resolveSeries(sa, (d, t) => { if (seq === renderSeq) setChip("loading", `A ${d}/${t}`); }),
+    resolveSeries(sb, (d, t) => { if (seq === renderSeq) setChip("loading", `B ${d}/${t}`); })
+  ]);
+  if (seq !== renderSeq) return;
+
+  $("series-tbody").innerHTML = [A, B].map(r =>
+    `<tr><td><b style="color:${r.s.color}">Series ${r.s.key}</b></td><td>${r.s.solver}</td>
+     <td class="mono">${r.s.vesselId}</td><td class="num">${r.s.damping}</td>
+     <td class="mono" style="font-size:0.9em">${r.where}</td>
+     <td class="num">${r.rows.length}</td><td>${r.status === "live" ? "✅ live" : "⏳ " + r.status}</td></tr>`).join("");
+
+  const liveCount = [A, B].filter(r => r.rows.length > 0).length;
+  if (liveCount === 0) {
+    setChip("pending", "NO SERIES PUBLISHED");
+    banner("warn", "Neither series returned rows — nothing to compare yet.");
+    $("peaks-content").innerHTML = $("dof-content").innerHTML = '<p class="placeholder">Awaiting publication of both series.</p>';
+    return;
+  }
+  if (liveCount === 1) {
+    const missing = A.rows.length ? B : A;
+    setChip("pending", "PARTIAL · 1 OF 2 SERIES");
+    banner("warn", `<b>Comparison pending:</b> series ${missing.s.key} (${seriesLabel(missing.s)}) is ${missing.status}.
+      The available series is plotted below; delta statistics need both series.`);
+  } else {
+    setChip("live", `LIVE · ${A.rows.length}+${B.rows.length} rows`);
+  }
+
+  // Like-with-like guidance banners
+  if (A.rows.length && B.rows.length) {
+    if (sa.solver === sb.solver && sa.vesselId === sb.vesselId && sa.damping === sb.damping) {
+      banner("info", "Series A and B are identical — all deltas will be zero. Change one selector to compare something.");
+    }
+    if (sa.vesselId !== sb.vesselId) {
+      banner("warn", `<b>Different vessels selected</b> (<span class="mono">${sa.vesselId}</span> vs
+        <span class="mono">${sb.vesselId}</span>) — deltas reflect hull differences, not solver agreement.`);
+    }
+    if (sa.damping !== sb.damping) {
+      banner("info", `Damping treatments differ (A: ζ=${sa.damping}% vs B: ζ=${sb.damping}%) — expect roll-resonance
+        magnitude differences to be damping-driven${sa.solver !== sb.solver ? ", not solver-driven" : " (damping-sensitivity view)"}.`);
+    }
+  }
+
+  byDofA = groupBy(A.rows, r => r.dof);
+  byDofB = groupBy(B.rows, r => r.dof);
+  const allDofs = new Set([...byDofA.keys(), ...byDofB.keys()]);
+  dofs = CONFIG.dofOrder.filter(d => allDofs.has(d)).concat([...allDofs].filter(d => !CONFIG.dofOrder.includes(d)));
+
+  const okRows = rows => rows.filter(r => r.reliability === "ok");
+  $("peaks-content").innerHTML = `<table><thead><tr><th>DOF</th>
+    <th class="num">Peak A</th><th class="num">@T (s)</th><th class="num">@hdg</th>
+    <th class="num">Peak B</th><th class="num">@T (s)</th><th class="num">@hdg</th>
+    <th class="num">Δ peak (B−A)</th><th>Unit</th></tr></thead><tbody>` +
+    dofs.map(d => {
+      const pa = byDofA.has(d) ? peakOf(okRows(byDofA.get(d))) : null;
+      const pb = byDofB.has(d) ? peakOf(okRows(byDofB.get(d))) : null;
+      const unit = ((pa || pb) || {}).unit || "";
+      const delta = (pa && pb) ? fmt(pb.magnitude - pa.magnitude, 3) + (pa.magnitude ? ` (${fmt(100 * (pb.magnitude - pa.magnitude) / pa.magnitude, 3)} %)` : "") : "—";
+      return `<tr><td style="text-transform:capitalize">${d}</td>
+        <td class="num">${pa ? fmt(pa.magnitude, 3) : "—"}</td><td class="num">${pa ? fmt(pa.period_s, 4) : "—"}</td><td class="num">${pa ? pa.heading_deg + "°" : "—"}</td>
+        <td class="num">${pb ? fmt(pb.magnitude, 3) : "—"}</td><td class="num">${pb ? fmt(pb.period_s, 4) : "—"}</td><td class="num">${pb ? pb.heading_deg + "°" : "—"}</td>
+        <td class="num">${delta}</td><td>${unit}</td></tr>`;
+    }).join("") + "</tbody></table>" +
+    (liveCount === 1 ? '<p class="placeholder">The missing series’ columns will populate once it is published.</p>' : "");
+
+  const headings = [...new Set([...A.rows, ...B.rows].map(r => r.heading_deg))].sort((a, b) => a - b);
+  const sel = $("heading-select");
+  const prev = sel.value;
+  sel.innerHTML = headings.map(h => `<option value="${h}">${h}°</option>`).join("");
+  sel.value = headings.map(String).includes(prev) ? prev : String(nearestIn(headings, CONFIG.defaultHeading));
+  sel.disabled = false;
+
+  $("dof-content").innerHTML = dofs.map(d => `
+    <div class="dof-section" id="dof-${d}">
+      <h3 class="dof-title" style="text-transform:capitalize">${d}</h3>
+      <div class="dof-grid">
+        <div id="stats-${d}"></div>
+        <div id="plot-${d}" class="dof-plot"></div>
+      </div>
+    </div>`).join("");
+
+  renderHeading(Number(sel.value));
+}
+
+/* ---------------- init ---------------- */
+async function main() {
+  const qs = new URLSearchParams(location.search);
+  $("ds-link").href = HF + "/datasets/" + CONFIG.dataset;
+  $("c-dataset").textContent = CONFIG.dataset;
+
+  try {
+    const info = await jsonFetch(HF + "/api/datasets/" + encodeURIComponent(CONFIG.dataset).replace("%2F", "/"));
+    $("c-modified").textContent = info.lastModified || "—";
+    $("c-sha").textContent = info.sha || "—";
+    $("c-license").textContent = (info.cardData && info.cardData.license) || "—";
+  } catch (e) { $("c-modified").textContent = "unavailable (" + e.message + ")"; }
+
+  try {
+    const probe = await jsonFetch(`${API}/rows?dataset=${encodeURIComponent(CONFIG.dataset)}&config=rao&split=train&offset=0&length=1`);
+    hasSolverCol = probe.features.some(f => f.name === "solver");
+  } catch (e) {
+    setChip("error", "API ERROR");
+    banner("error", "Could not reach the datasets-server API: " + e.message);
+    return;
+  }
+
+  catalog = await loadCatalog();
+  for (const g of ["A", "B"]) {
+    const vessel = qs.get("vessel" + g) || CONFIG.defaults[g].vesselId;
+    const damping = qs.has("damping" + g) ? Number(qs.get("damping" + g)) : CONFIG.defaults[g].damping;
+    const solver = qs.get("solver" + g) || (qs.get("vessel" + g) ? inferSolver(vessel, damping) : CONFIG.defaults[g].solver);
+    cascade(g, 0, { solver, vesselId: vessel, damping });
+    $("sel-solver-" + g).addEventListener("change", () => { cascade(g, 1); renderComparison(); });
+    $("sel-vessel-" + g).addEventListener("change", () => { cascade(g, 2); renderComparison(); });
+    $("sel-damping-" + g).addEventListener("change", () => renderComparison());
+  }
+  $("heading-select").addEventListener("change", () => renderHeading(Number($("heading-select").value)));
+
+  await renderComparison();
+}
+
+main().catch(e => { setChip("error", "ERROR"); banner("error", "Unexpected failure: " + e.message); });
+</script>
+</body>
+</html>

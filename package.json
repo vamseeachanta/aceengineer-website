@@ -11,6 +11,7 @@
     "scaffold:capability": "node scripts/scaffold-capability-entry.js",
     "refresh:hf": "node scripts/refresh-hf-data.js",
     "refresh:sloshing": "node scripts/refresh-sloshing-data.js",
+    "publish:sloshing-enrichment": "node scripts/publish-sloshing-enrichment.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },

@@ -101,6 +101,13 @@ mesh/quality evidence, convergence/conservation results, and a reviewed
 same-origin animation preview or snapshot. Missing visual evidence must render as
 not published, never as a synthetic substitute.
 
+The subsequent reviewed enrichment adds pressure envelopes, normalized response
+per degree of roll, convergence cost/period metrics, and four representative
+1920×1080 final-window videos (T16, T22, T26 and fine T24). Each combines actual
+resolved alpha fields with synchronized complete-run response graphs. The six
+saved fields span only the final 2.5 seconds at 0.5-second intervals; metadata and
+report copy must preserve that boundary and prohibit temporal interpolation.
+
 ## Design
 
 ```text

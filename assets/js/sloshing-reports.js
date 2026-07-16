@@ -143,7 +143,7 @@
   function tableRows(root, selected, data) {
     var body = root.querySelector('[data-accessible-table] tbody');
     if (!body) return;
-    var metrics = (data.metrics || []).filter(function (m) { return m.case_id === selected.case_id; });
+    var metrics = (data.metrics || []).concat(data.derived_metrics || []).filter(function (m) { return m.case_id === selected.case_id; });
     body.textContent = '';
     var values = metrics.length ? metrics : [{ quantity: 'Published case', value: selected.case_id, unit: '—' }];
     values.forEach(function (metric) {
@@ -174,12 +174,24 @@
     return groups;
   }
 
+  function pressureEnvelopeTraces(selected, data) {
+    var rows = (data.pressure_envelopes || []).filter(function (row) { return row.case_id === selected.case_id && row.window === 'last_cycle'; });
+    var traces = [];
+    unique(rows.map(function (row) { return row.wall_location; })).sort().forEach(function (location) {
+      var points = rows.filter(function (row) { return row.wall_location === location; }).sort(function (a, b) { return Number(a.z_over_height) - Number(b.z_over_height); });
+      [['maximum_Pa', 'maximum', 'solid'], ['p99_Pa', 'p99', 'dash'], ['harmonic_amplitude_Pa', 'harmonic amplitude', 'dot']].forEach(function (spec) {
+        traces.push({ x: points.map(function (row) { return Number(row[spec[0]]); }), y: points.map(function (row) { return Number(row.z_over_height); }), name: location + ' ' + spec[1], mode: 'lines+markers', line: { dash: spec[2] } });
+      });
+    });
+    return traces;
+  }
+
   function qaViewModel(selected, data) {
     function item(label, value, unit) { return { label: label, value: value == null || value === '' ? 'Not published' : String(value), unit: unit || '' }; }
     var input = (data.inputs || []).filter(function (r) { return r.case_id === selected.case_id; })[0] || {};
     var mesh = (data.mesh_quality || []).filter(function (r) { return r.case_id === selected.case_id; })[0] || {};
     var audit = (data.qa_audit || []).filter(function (r) { return r.case_id === selected.case_id; })[0] || {};
-    var results = (data.metrics || []).filter(function (m) { return m.case_id === selected.case_id; }).map(function (m) { return { quantity: m.quantity, value: m.value, unit: m.unit, statistic: m.statistic, status: m.qa_status }; });
+    var results = (data.metrics || []).concat(data.derived_metrics || []).filter(function (m) { return m.case_id === selected.case_id; }).map(function (m) { return { quantity: m.quantity, value: m.value, unit: m.unit, statistic: m.statistic, status: m.qa_status }; });
     Object.keys(audit).filter(function (key) { return key !== 'case_id'; }).forEach(function (key) { results.push({ quantity: key, value: audit[key], unit: '', statistic: 'independent_audit', status: key === 'qa_status' ? audit[key] : (key === 'observed_max_courant' && audit.courant_target_exceeded === 'true' ? 'configured_limit_exceeded' : 'audited') }); });
     var previews = (data.previews || []).filter(function (p) { return p.case_id === selected.case_id && p.status === 'published' && /^(image\/(png|webp|gif)|video\/mp4)$/.test(p.media_type || '') && p.relative_path && !/(^|\/)\.\.(\/|$)|^[a-z]+:|^\//i.test(p.relative_path); });
     return {
@@ -210,6 +222,12 @@
       if (!allowed) return; var id = c.loading_condition + ':' + m.quantity + ':' + m.unit;
       if (!groups[id]) groups[id] = { id: id, quantity: m.quantity, unit: m.unit, points: [] };
       groups[id].points.push({ x: c.loading_condition === 'forced_roll' ? Number(c.period_s) : Number(c.mesh_cells || c.timestep_s), y: Number(m.value), case_id: c.case_id });
+    });
+    (data.derived_metrics || []).forEach(function (m) {
+      var c = byId[m.case_id]; if (!c || c.loading_condition !== 'forced_roll' || !/_per_roll_degree$/.test(m.quantity)) return;
+      var id = 'normalized:' + m.quantity + ':' + m.unit;
+      if (!groups[id]) groups[id] = { id: id, quantity: m.quantity, unit: m.unit, points: [] };
+      groups[id].points.push({ x: Number(c.period_s), y: Number(m.value), case_id: c.case_id });
     });
     var enabled = state.curves && state.curves.length ? state.curves : Object.keys(groups);
     return Object.keys(groups).sort().filter(function (id) { return enabled.indexOf(id) >= 0; }).map(function (id) { var g = groups[id]; g.points.sort(function (a, b) { return a.x - b.x; }); return { x: g.points.map(function (p) { return p.x; }), y: g.points.map(function (p) { return p.y; }), text: g.points.map(function (p) { return p.case_id; }), name: g.quantity.replace(/_/g, ' ') + ' (' + g.unit + ')', mode: state.markers === 'on' ? 'lines+markers' : 'lines', line: { width: state.lines === 'heavy' ? 4 : 2, dash: g.quantity === 'analytical_frequency' ? 'dash' : 'solid' }, meta: { curveId: id } }; });
@@ -245,6 +263,9 @@
     if (kind === 'case' && root.querySelector('[data-plot-group]') && Plotly && Plotly.react) {
       var groups = detailedTraceGroups(selected, data, state); var configs = { pressure: ['Pressure histories', 'Pressure (Pa)'], force: ['Aggregate force histories', 'Force (N)'], moment: ['Aggregate moment histories', 'Moment (N·m)'] };
       Object.keys(configs).forEach(function (group) { var target = root.querySelector('[data-plot-group="' + group + '"]'); var empty = root.querySelector('[data-series-empty="' + group + '"]'); if (!target) return; target.hidden = !groups[group].length; if (empty) empty.hidden = !!groups[group].length; if (groups[group].length) Plotly.react(target, groups[group], { uirevision: state.uirevision, template: state.theme === 'contrast' ? 'plotly_dark' : 'plotly_white', title: configs[group][0], xaxis: { title: 'Time (s)' }, yaxis: { title: configs[group][1] } }, { responsive: true, displaylogo: false, modeBarButtonsToAdd: ['toImage'] }); });
+      var envelope = pressureEnvelopeTraces(selected, data); var envelopeTarget = root.querySelector('[data-plot-envelope]'); var envelopeEmpty = root.querySelector('[data-envelope-empty]');
+      if (envelopeTarget) { envelopeTarget.hidden = !envelope.length; if (envelope.length) Plotly.react(envelopeTarget, envelope, { uirevision: state.uirevision, template: state.theme === 'contrast' ? 'plotly_dark' : 'plotly_white', title: 'Last-cycle wall-pressure envelope', xaxis: { title: 'Pressure (Pa)' }, yaxis: { title: 'Normalized height, z/H', range: [0, 1] } }, { responsive: true, displaylogo: false, modeBarButtonsToAdd: ['toImage'] }); }
+      if (envelopeEmpty) envelopeEmpty.hidden = !!envelope.length;
     } else if (plot && Plotly && Plotly.react) Plotly.react(plot, traces, { uirevision: state.uirevision, template: state.theme === 'contrast' ? 'plotly_dark' : 'plotly_white', title: isSummary ? 'Published CFD and analytical comparison' : 'Published sloshing response' }, { responsive: true, displaylogo: false, modeBarButtonsToAdd: ['toImage'] });
     if (kind === 'analysis') renderQa(root, selected, data);
     var status = root.querySelector('[data-report-status]');
@@ -252,7 +273,7 @@
   }
 
   function bindPrintLifecycle(root, Plotly, win) {
-    function resize() { if (!Plotly || !Plotly.Plots || !Plotly.Plots.resize) return; root.querySelectorAll('[data-plot],[data-plot-group]').forEach(function (plot) { if (!plot.hidden) Plotly.Plots.resize(plot); }); }
+    function resize() { if (!Plotly || !Plotly.Plots || !Plotly.Plots.resize) return; root.querySelectorAll('[data-plot],[data-plot-group],[data-plot-envelope]').forEach(function (plot) { if (!plot.hidden) Plotly.Plots.resize(plot); }); }
     win.addEventListener('beforeprint', resize); win.addEventListener('afterprint', resize);
     return function () { win.removeEventListener('beforeprint', resize); win.removeEventListener('afterprint', resize); };
   }
@@ -300,5 +321,5 @@
   function boot() { document.querySelectorAll('[data-sloshing-report]').forEach(function (report) { load(report).catch(function () {}); }); }
   if (typeof document !== 'undefined') { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else setTimeout(boot, 0); }
 
-  return { selectableCases: selectableCases, defaultState: defaultState, optionsFor: optionsFor, reduceState: reduceState, serializeState: serializeState, parseState: parseState, parseCsv: parseCsv, createLoadGate: createLoadGate, createLegendSync: createLegendSync, bindPrintLifecycle: bindPrintLifecycle, detailedTraceGroups: detailedTraceGroups, qaViewModel: qaViewModel, summaryTraces: summaryTraces, mount: mount, load: load, render: render };
+  return { selectableCases: selectableCases, defaultState: defaultState, optionsFor: optionsFor, reduceState: reduceState, serializeState: serializeState, parseState: parseState, parseCsv: parseCsv, createLoadGate: createLoadGate, createLegendSync: createLegendSync, bindPrintLifecycle: bindPrintLifecycle, detailedTraceGroups: detailedTraceGroups, pressureEnvelopeTraces: pressureEnvelopeTraces, qaViewModel: qaViewModel, summaryTraces: summaryTraces, mount: mount, load: load, render: render };
 }));

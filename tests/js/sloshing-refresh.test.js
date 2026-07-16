@@ -291,7 +291,7 @@ describe('committed pressure release', () => {
 
   test('pins the uploaded pressure artifacts at the exact immutable revision', () => {
     const pointer = JSON.parse(fs.readFileSync(path.join(repoRoot, 'config', 'sloshing-data-release.json')));
-    expect(pointer.source.revision).toBe('e9b17fa28206dedbeca5d36b4eb822ab780a0fd2');
+    expect(pointer.source.revision).toBe('d9ff6967021755156c3daa35f93e6385f672b257');
     expect(pointer.source.files.filter(f => f.path.startsWith('review/fine_T24_Co035_pressure/')))
       .toHaveLength(9);
     expect(pointer.source.files.every(f => /^[0-9a-f]{64}$/.test(f.sha256) && f.bytes > 0)).toBe(true);
@@ -300,9 +300,31 @@ describe('committed pressure release', () => {
   test('passes the complete pointer/manifest/table trust loop and retains Courant warning', () => {
     const validated = refresh.validateCommittedRelease(repoRoot);
     expect(validated.manifest.counts).toMatchObject({ cases: 15, inputs: 1, mesh_quality: 1,
-      qa_audit: 1, series: 26, samples: 7826, previews: 2 });
-    expect(validated.manifest.assets).toHaveLength(2);
+      qa_audit: 1, series: 26, samples: 7826, previews: 10 });
+    expect(validated.manifest.assets).toHaveLength(10);
     const metrics = fs.readFileSync(path.join(repoRoot, validated.pointer.release.directory, 'metrics.csv'), 'utf8');
     expect(metrics).toContain('forced-fine-co035-pressure-t24,max_courant,0.47841479,dimensionless,maximum,configured_limit_exceeded');
+  });
+});
+
+describe('committed report enrichment release', () => {
+  const repoRoot = path.resolve(__dirname, '..', '..');
+
+  test('pins representative videos and derived tables at the reviewed HF revision', () => {
+    const pointer = JSON.parse(fs.readFileSync(path.join(repoRoot, 'config', 'sloshing-data-release.json')));
+    expect(pointer.source.revision).toBe('d9ff6967021755156c3daa35f93e6385f672b257');
+    expect(pointer.source.files.filter(f => f.path.startsWith('review/representative_videos/'))).toHaveLength(9);
+    expect(pointer.source.files.filter(f => f.path.startsWith('review/report_enrichment/'))).toHaveLength(3);
+  });
+
+  test('publishes bounded envelopes, derived metrics, and ten hash-covered media assets', () => {
+    const validated = refresh.validateCommittedRelease(repoRoot);
+    expect(validated.manifest.counts).toMatchObject({ derived_metrics: 77, pressure_envelopes: 60, previews: 10 });
+    expect(validated.manifest.assets).toHaveLength(10);
+    const directory = path.join(repoRoot, validated.pointer.release.directory);
+    const envelopes = fs.readFileSync(path.join(directory, 'pressure_envelopes.csv'), 'utf8');
+    expect(envelopes).toContain('harmonic_amplitude_Pa');
+    expect(envelopes).toContain('pressure-left-inner-h10');
+    expect(validated.manifest.assets.filter(a => a.file.endsWith('.mp4'))).toHaveLength(4);
   });
 });

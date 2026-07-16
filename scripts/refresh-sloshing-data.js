@@ -6,20 +6,22 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const SCHEMA_VERSION = '1.0.0';
-const TRANSFORMER_VERSION = '1.0.0';
+const SCHEMA_VERSION = '1.1.0';
+const TRANSFORMER_VERSION = '1.1.0';
 const DATASET = 'aceengineer/digitalmodel-sloshing';
 const SOURCE_HASHES = Object.freeze({
   forced: '34f678a045a211986405b3a28dd8b4216231bfb5ee282dfb15e13c42e427a6af',
   fine: '38eec090aca469b00f6d8615ad5e7157acdf92637baf05781ce8e4ff2636aade',
   decay: 'e093a0609d25aa207c55d64cbc06f897d2d085f3ca71c3a83d193c08e5e231ea',
 });
-const TABLE_ORDER = ['cases', 'metrics', 'studies', 'inputs', 'mesh_quality', 'qa_audit', 'series', 'samples', 'previews', 'dispositions'];
+const TABLE_ORDER = ['cases', 'metrics', 'derived_metrics', 'pressure_envelopes', 'studies', 'inputs', 'mesh_quality', 'qa_audit', 'series', 'samples', 'previews', 'dispositions'];
 const FORBIDDEN = /anti[\s_-]*roll|withheld|source[\s_-]*(?:record[\s_-]*)?id|client|project|(?:^|[\\/])[a-z]:[\\/]|\/home\/|<script|authorization|bearer\s/i;
 
 const COLUMNS = Object.freeze({
   cases: ['case_id', 'evidence_type', 'status', 'study_axis', 'loading_condition', 'mesh', 'mesh_cells', 'period_s', 'frequency_hz', 'timestep_s', 'cycles', 'configured_max_courant', 'configured_max_alpha_courant', 'excitation', 'geometry_basis', 'solver_class'],
   metrics: ['case_id', 'quantity', 'value', 'unit', 'statistic', 'qa_status', 'source_class', 'source_sha256', 'source_revision', 'transform_version'],
+  derived_metrics: ['case_id', 'quantity', 'value', 'unit', 'window', 'statistic', 'qa_status'],
+  pressure_envelopes: ['case_id', 'probe_id', 'wall_location', 'z_over_height', 'window', 'minimum_Pa', 'maximum_Pa', 'mean_Pa', 'rms_Pa', 'p95_Pa', 'p99_Pa', 'peak_to_peak_Pa', 'harmonic_amplitude_Pa', 'qa_status'],
   studies: ['study_id', 'study_type', 'quantity', 'unit', 'case_count', 'analytical_target', 'target_unit', 'qa_status'],
   inputs: ['case_id', 'solver_family', 'solver_version', 'simulation_dimensionality', 'forcing_period_s', 'forcing_amplitude_deg', 'simulated_cycles', 'end_time_s', 'initial_fill_fraction', 'liquid_density_kg_m3', 'liquid_kinematic_viscosity_m2_s', 'gas_density_kg_m3', 'gas_kinematic_viscosity_m2_s', 'surface_tension_N_m', 'gravity_m_s2', 'mesh_cells', 'time_integration', 'configured_max_courant', 'configured_max_interface_courant', 'maximum_timestep_s', 'pressure_probe_count', 'pressure_and_load_output_interval_s', 'qa_output_interval_s', 'geometry_disclosure', 'sectional_load_extraction'],
   mesh_quality: ['case_id', 'mesh_cells', 'mesh_points', 'mesh_regions', 'mesh_check', 'evaluated_state', 'max_aspect_ratio', 'max_non_orthogonality_deg', 'average_non_orthogonality_deg', 'max_skewness', 'minimum_cell_determinant', 'minimum_face_interpolation_weight', 'minimum_face_volume_ratio', 'minimum_cell_volume_m3', 'maximum_cell_volume_m3', 'total_domain_volume_m3', 'sectional_face_zones_available'],
@@ -144,7 +146,7 @@ function transformReviewed(source, { revision }) {
     { family_class: 'incomplete_run_family', status: 'not_published', count: 10, reason_code: 'incomplete_solver_run' },
     { family_class: 'verification_family', status: 'verification_only', count: 1, reason_code: 'verification_scope_only' },
   ];
-  const output = { cases, metrics, studies, inputs: [], mesh_quality: [], qa_audit: [], series: [], samples: [], previews: [], dispositions };
+  const output = { cases, metrics, derived_metrics: [], pressure_envelopes: [], studies, inputs: [], mesh_quality: [], qa_audit: [], series: [], samples: [], previews: [], dispositions };
   const serialized = stableJson(output);
   if (FORBIDDEN.test(serialized)) throw new Error('forbidden public value');
   return output;

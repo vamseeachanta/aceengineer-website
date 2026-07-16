@@ -19,6 +19,13 @@ const detailedData = {
     { case_id: 'pressure-1', quantity: 'max_courant', value: '0.478', unit: 'dimensionless', statistic: 'maximum', qa_status: 'configured_limit_exceeded' },
     { case_id: 'pressure-1', quantity: 'volume_drift', value: '-0.0017', unit: 'percent', statistic: 'full_run', qa_status: 'pass' },
   ],
+  derived_metrics: [
+    { case_id: 'pressure-1', quantity: 'roll_moment_amplitude_per_roll_degree', value: '200', unit: 'N_m_per_deg', window: 'final_three_cycles', statistic: 'harmonic_normalized_by_roll_amplitude', qa_status: 'configured_limit_exceeded' },
+  ],
+  pressure_envelopes: [
+    { case_id: 'pressure-1', probe_id: 'p-left-10', wall_location: 'left-inner', z_over_height: '0.1', window: 'last_cycle', maximum_Pa: '20', p99_Pa: '19', harmonic_amplitude_Pa: '5', qa_status: 'configured_limit_exceeded' },
+    { case_id: 'pressure-1', probe_id: 'p-left-30', wall_location: 'left-inner', z_over_height: '0.3', window: 'last_cycle', maximum_Pa: '15', p99_Pa: '14', harmonic_amplitude_Pa: '4', qa_status: 'configured_limit_exceeded' },
+  ],
   series: [
     { series_id: 'p-left-10', case_id: 'pressure-1', quantity: 'wall_pressure', unit: 'Pa', public_location: 'left-inner', z_over_height: '0.1', label: 'Left pressure 10%', qa_status: 'configured_limit_exceeded' },
     { series_id: 'force-x', case_id: 'pressure-1', quantity: 'aggregate_force_x', unit: 'N', public_location: 'aggregate_wall', label: 'Force X', qa_status: 'configured_limit_exceeded' },
@@ -90,6 +97,14 @@ describe('data and rendering safety', () => {
     expect(groups.pressure[0].y).toEqual([10, 20]);
   });
 
+  test('pressure envelopes plot peak and harmonic pressure against normalized height', () => {
+    const selected = detailedData.cases.find(c => c.case_id === 'pressure-1');
+    const traces = R.pressureEnvelopeTraces(selected, detailedData);
+    expect(traces.map(t => t.name)).toEqual(['left-inner maximum', 'left-inner p99', 'left-inner harmonic amplitude']);
+    expect(traces[0].y).toEqual([0.1, 0.3]);
+    expect(traces[0].x).toEqual([20, 15]);
+  });
+
   test('QA view model exposes source-neutral inputs and flags configured-limit exceedance', () => {
     const selected = detailedData.cases.find(c => c.case_id === 'pressure-1');
     const qa = R.qaViewModel(selected, detailedData);
@@ -141,12 +156,12 @@ describe('DOM accessibility and lifecycle', () => {
   });
 
   test('individual report renders detailed histories into distinct Plotly regions', () => {
-    document.body.innerHTML = `<main data-sloshing-report data-report-kind="case"><p data-report-status></p><select data-state-field="case"></select><div data-plot-group="pressure"></div><div data-plot-group="force"></div><div data-plot-group="moment"></div><table data-accessible-table><caption>Data</caption><tbody></tbody></table></main>`;
+    document.body.innerHTML = `<main data-sloshing-report data-report-kind="case"><p data-report-status></p><select data-state-field="case"></select><div data-plot-group="pressure"></div><div data-plot-group="force"></div><div data-plot-group="moment"></div><div data-plot-envelope></div><table data-accessible-table><caption>Data</caption><tbody></tbody></table></main>`;
     history.replaceState(null, '', '?v=1&case=pressure-1&curves=&theme=light&lines=normal&markers=on&density=comfortable&sections=overview%2Cplots%2Cdata');
     const plotly = { react: jest.fn(), Plots: { resize: jest.fn() } };
     R.mount(document.querySelector('main'), detailedData, { Plotly: plotly, history });
-    expect(plotly.react).toHaveBeenCalledTimes(3);
-    expect(plotly.react.mock.calls.map(call => call[2].yaxis.title)).toEqual(['Pressure (Pa)', 'Force (N)', 'Moment (N·m)']);
+    expect(plotly.react).toHaveBeenCalledTimes(4);
+    expect(plotly.react.mock.calls.slice(0, 3).map(call => call[2].yaxis.title)).toEqual(['Pressure (Pa)', 'Force (N)', 'Moment (N·m)']);
   });
 });
 
@@ -174,6 +189,7 @@ describe('report templates and standalone styles', () => {
     expect(html).toContain('data-plot-group="pressure"');
     expect(html).toContain('data-plot-group="force"');
     expect(html).toContain('data-plot-group="moment"');
+    expect(html).toContain('data-plot-envelope');
     expect(html).not.toContain('Pressure-tap and sectional series are not published');
   });
 

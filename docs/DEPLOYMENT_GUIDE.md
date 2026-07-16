@@ -50,6 +50,7 @@ sanitized, content-addressed snapshot only from a controlled local environment:
 
 ```bash
 HF_TOKEN=... npm run refresh:sloshing
+SLOSHING_REVIEW_ROOT=/path/to/review_output npm run publish:sloshing-enrichment
 npm test -- --runInBand
 npm run build
 ```
@@ -59,6 +60,13 @@ the release-pointer diff before committing. Preview both `/reports/` routes with
 network access disabled, verify print and PNG/SVG export, then promote normally.
 Rollback by reverting the release pointer and report commit, or by promoting the
 prior Vercel deployment; never edit an existing content-addressed release.
+
+Representative CFD media must be rendered from retained OpenFOAM fields. Each
+published video records its true field-window start/end, frame interval and a
+`temporal_interpolation: none` declaration. Do not describe a final-window
+preview as a full-cycle field animation. MP4/PNG bytes, pressure envelopes and
+derived metrics are pinned to the same immutable HF revision and covered by the
+public release digest.
 
 ## Domain Notes
 

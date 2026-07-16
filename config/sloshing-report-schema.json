@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "closed": true,
   "limits": {
     "max_public_rows": 10000,
@@ -18,6 +18,15 @@
     "metrics": {
       "foreign_keys": { "case_id": "cases.case_id" },
       "columns": ["case_id", "quantity", "value", "unit", "statistic", "qa_status", "source_class", "source_sha256", "source_revision", "transform_version"]
+    },
+    "derived_metrics": {
+      "foreign_keys": { "case_id": "cases.case_id" },
+      "columns": ["case_id", "quantity", "value", "unit", "window", "statistic", "qa_status"]
+    },
+    "pressure_envelopes": {
+      "foreign_keys": { "case_id": "cases.case_id" },
+      "columns": ["case_id", "probe_id", "wall_location", "z_over_height", "window", "minimum_Pa", "maximum_Pa", "mean_Pa", "rms_Pa", "p95_Pa", "p99_Pa", "peak_to_peak_Pa", "harmonic_amplitude_Pa", "qa_status"],
+      "enums": { "window": ["full_run", "last_cycle", "final_three_cycles"] }
     },
     "studies": {
       "primary_key": ["study_id"],

@@ -1,0 +1,79 @@
+---
+rootPath: "../../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diffraction Analysis Reports — Live Dataset Reports | AceEngineer</title>
+<meta name="description" content="Live hydrodynamic diffraction analysis reports — OrcaWave and AQWA vessel motion RAOs and cross-solver comparison, rendered from the de-identified aceengineer/digitalmodel-diffraction-rao Hugging Face dataset.">
+<include src="partials/head-common.html"></include>
+<style>
+  .rpt * { box-sizing: border-box; }
+  .rpt { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    color: #333; background: #f8f9fa; font-size: 15px; line-height: 1.6; }
+  .rpt .container { max-width: 980px; margin: 0 auto; padding: 1.5em 2em 3em; }
+  .rpt .report-header { background: #2c3e50; color: #fff; padding: 1.4em 2em; margin-bottom: 1.5em; border-radius: 6px; }
+  .rpt .report-header h1 { margin: 0 0 0.3em; font-size: 1.7em; color: #fff; }
+  .rpt .report-header .eyebrow { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.75em; opacity: 0.75; }
+  .rpt .card { background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 1.2em; padding: 1.2em 1.5em; }
+  .rpt .card h2 { margin: 0 0 0.4em; font-size: 1.15em; }
+  .rpt .card h2 a { color: #2c3e50; text-decoration: none; }
+  .rpt .card h2 a:hover { color: #2980b9; }
+  .rpt .card p { margin: 0.3em 0; color: #555; font-size: 0.95em; }
+  .rpt .tag { display: inline-block; padding: 2px 9px; border-radius: 3px; font-size: 0.75em; font-weight: 700; color: #fff; margin-right: 0.5em; }
+  .rpt .tag.live { background: #27ae60; }
+  .rpt .tag.pending { background: #7f8c8d; }
+  .rpt .mono { font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace; }
+  .rpt a { color: #2980b9; }
+  .rpt footer { color: #7f8c8d; font-size: 0.85em; padding-top: 1em; }
+</style>
+</head>
+<body class="rpt">
+<div class="container">
+  <div class="report-header">
+    <div class="eyebrow">AceEngineer · digitalmodel · live dataset reports</div>
+    <h1>Hydrodynamic Diffraction Analysis Reports</h1>
+    <p style="margin:0;opacity:0.85">Vessel motion RAOs from potential-flow diffraction analysis, rendered
+    live in your browser from the de-identified Hugging Face dataset
+    <a href="https://huggingface.co/datasets/aceengineer/digitalmodel-diffraction-rao" style="color:#aed6f1">aceengineer/digitalmodel-diffraction-rao</a>.
+    No result values are baked into these pages.</p>
+  </div>
+
+  <div class="card">
+    <h2><a href="aqwa-analysis.html">AQWA Diffraction Analysis</a></h2>
+    <p><span class="tag live">LIVE</span>Six-DOF RAOs for <span class="mono">drill_samsung96k_1</span>
+    (hull-class-level de-identified drillship, survival loading condition) — 2,700 rows across 18
+    frequencies × 25 headings, radiation-damping-only roll upper bound.</p>
+  </div>
+
+  <div class="card">
+    <h2><a href="orcawave-analysis.html">OrcaWave Diffraction Analysis</a></h2>
+    <p><span class="tag live">LIVE</span>Six-DOF RAOs for <span class="mono">install_bokalift_2</span>
+    (parametric heavy-lift vessel from public particulars) at ζ = 5 % — switch series via URL parameters
+    as more vessels are published.</p>
+  </div>
+
+  <div class="card">
+    <h2><a href="orcawave-aqwa-comparison.html">OrcaWave vs AQWA — Cross-Solver Comparison</a></h2>
+    <p><span class="tag pending">PARTIAL</span>Same-vessel, same-damping solver benchmark with overlay
+    plots and interpolated delta statistics per DOF and heading. The AQWA series is live; the matching
+    OrcaWave series populates automatically when published to the dataset.</p>
+  </div>
+
+  <div class="card">
+    <h2>How these reports work</h2>
+    <p>Each page queries the Hugging Face <span class="mono">datasets-server</span> API at load time,
+    computes summary statistics in-browser, and states its exact data contract (filter clause, row counts,
+    dataset revision sha). Results are screening-grade and de-identified — vessels are referenced only by
+    <span class="mono">vessel_db</span> IDs, and reliability flags travel with every row.</p>
+    <p>Related: <a href="{{ rootPath }}standards/hull-hydrodynamics-diffraction.html">hull hydrodynamics
+    &amp; diffraction standards page</a> · <a href="{{ rootPath }}capabilities/index.html">data-backed
+    capabilities</a>.</p>
+  </div>
+
+  <footer>AceEngineer · live dataset reports · CC-BY-4.0 dataset · client-side rendering.</footer>
+</div>
+</body>
+</html>

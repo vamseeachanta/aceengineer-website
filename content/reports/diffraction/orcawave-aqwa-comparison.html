@@ -106,7 +106,9 @@ rootPath: "../../"
     <p>Delta statistics are computed on the <b>overlapping period band</b> of the two series: series B is
     linearly interpolated in period onto series A's grid at each common heading. Peak deltas compare each
     series' own peak within the overlap band. Percentage deltas are reported relative to series A and are
-    suppressed where |A| &lt; 5 % of A's peak (to avoid noise-dominated ratios near zero crossings).</p>
+    suppressed where |A| &lt; 5 % of A's peak (to avoid noise-dominated ratios near zero crossings).
+    Rows carrying a non-<span class="mono">ok</span> reliability flag (e.g. an undamped resonance band)
+    are plotted but <b>excluded from all automatic statistics</b>, including the peak table.</p>
     <p>A physically meaningful roll comparison also requires <b>matching damping treatment</b> — ζ values
     for each series are shown in the availability table above; a mismatch is banner-flagged.</p>
   </div>
@@ -278,8 +280,9 @@ const PLOT_LAYOUT = {
 
 let A, B, dofs = [], byDofA = new Map(), byDofB = new Map();
 
-function ptsFor(byDof, d, heading) {
-  const rows = (byDof.get(d) || []).filter(r => r.heading_deg === heading && r.magnitude !== null);
+function ptsFor(byDof, d, heading, okOnly) {
+  const rows = (byDof.get(d) || []).filter(r => r.heading_deg === heading && r.magnitude !== null
+    && (!okOnly || r.reliability === "ok"));
   return rows.map(r => ({ x: r.period_s, y: r.magnitude })).sort((a, b) => a.x - b.x);
 }
 
@@ -295,25 +298,29 @@ function renderHeading(heading) {
     layout.yaxis = { title: { text: `${d} RAO (${unit})` } };
     Plotly.react("plot-" + d, traces, layout, { responsive: true, displaylogo: false });
 
-    // Delta statistics on overlap band
+    // Delta statistics on overlap band — reliability=ok rows only (flagged
+    // artifact bands are plotted but must not drive the agreement numbers).
+    const paOk = ptsFor(byDofA, d, heading, true);
+    const pbOk = ptsFor(byDofB, d, heading, true);
+    const nFlagged = (pa.length - paOk.length) + (pb.length - pbOk.length);
     const el = $("stats-" + d);
-    if (!pa.length || !pb.length) {
-      el.innerHTML = `<p class="placeholder">Comparison statistics pending — ${!pa.length ? "series A" : "series B"} has no rows at this heading.</p>`;
+    if (!paOk.length || !pbOk.length) {
+      el.innerHTML = `<p class="placeholder">Comparison statistics pending — ${!paOk.length ? "series A" : "series B"} has no reliability=ok rows at this heading.</p>`;
       continue;
     }
-    const lo = Math.max(pa[0].x, pb[0].x), hi = Math.min(pa[pa.length - 1].x, pb[pb.length - 1].x);
-    const inBand = pa.filter(p => p.x >= lo && p.x <= hi);
+    const lo = Math.max(paOk[0].x, pbOk[0].x), hi = Math.min(paOk[paOk.length - 1].x, pbOk[pbOk.length - 1].x);
+    const inBand = paOk.filter(p => p.x >= lo && p.x <= hi);
     if (hi <= lo || inBand.length < 2) {
-      el.innerHTML = `<p class="placeholder">Period bands do not overlap (A: ${fmt(pa[0].x)}–${fmt(pa[pa.length - 1].x)} s · B: ${fmt(pb[0].x)}–${fmt(pb[pb.length - 1].x)} s) — no automatic deltas.</p>`;
+      el.innerHTML = `<p class="placeholder">Period bands do not overlap (A: ${fmt(paOk[0].x)}–${fmt(paOk[paOk.length - 1].x)} s · B: ${fmt(pbOk[0].x)}–${fmt(pbOk[pbOk.length - 1].x)} s) — no automatic deltas.</p>`;
       continue;
     }
     const peakA = inBand.reduce((m, p) => p.y > m.y ? p : m);
-    const pbBand = pb.filter(p => p.x >= lo && p.x <= hi);
+    const pbBand = pbOk.filter(p => p.x >= lo && p.x <= hi);
     const peakB = pbBand.reduce((m, p) => p.y > m.y ? p : m);
     let maxAbs = 0, maxAbsT = null, sumSq = 0, n = 0, maxPct = null, maxPctT = null;
     const floor = 0.05 * peakA.y;
     for (const p of inBand) {
-      const yb = interp(pb, p.x);
+      const yb = interp(pbOk, p.x);
       if (yb === null) continue;
       const dAbs = Math.abs(yb - p.y);
       sumSq += dAbs * dAbs; n++;
@@ -332,6 +339,7 @@ function renderHeading(heading) {
       <tr><td>Max |Δ| on band</td><td class="num">${fmt(maxAbs, 3)} ${unit} @ ${fmt(maxAbsT, 4)} s</td></tr>
       <tr><td>Max |Δ%| (|A| ≥ 5% peak)</td><td class="num">${maxPct === null ? "—" : fmt(maxPct, 3) + " % @ " + fmt(maxPctT, 4) + " s"}</td></tr>
       <tr><td>RMS Δ on band</td><td class="num">${n ? fmt(Math.sqrt(sumSq / n), 3) : "—"} ${unit}</td></tr>
+      ${nFlagged ? `<tr><td>Flagged rows excluded</td><td class="num">${nFlagged} (plotted, not in stats)</td></tr>` : ""}
     </tbody></table>`;
   }
 }
@@ -400,8 +408,9 @@ async function main() {
     <th class="num">Peak B</th><th class="num">@T (s)</th><th class="num">@hdg</th>
     <th class="num">Δ peak (B−A)</th><th>Unit</th></tr></thead><tbody>` +
     dofs.map(d => {
-      const pa = byDofA.has(d) ? peakOf(byDofA.get(d)) : null;
-      const pb = byDofB.has(d) ? peakOf(byDofB.get(d)) : null;
+      const okRows = rows => rows.filter(r => r.reliability === "ok");
+      const pa = byDofA.has(d) ? peakOf(okRows(byDofA.get(d))) : null;
+      const pb = byDofB.has(d) ? peakOf(okRows(byDofB.get(d))) : null;
       const unit = (pa || pb).unit;
       const delta = (pa && pb) ? fmt(pb.magnitude - pa.magnitude, 3) + (pa.magnitude ? ` (${fmt(100 * (pb.magnitude - pa.magnitude) / pa.magnitude, 3)} %)` : "") : "—";
       return `<tr><td style="text-transform:capitalize">${d}</td>

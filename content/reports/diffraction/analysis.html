@@ -52,6 +52,9 @@ rootPath: "../../"
   .rpt .dof-title { font-size: 1.1em; color: #2c3e50; margin: 0 0 0.6em; }
   .rpt .dof-grid { display: grid; grid-template-columns: 38% 62%; gap: 1em; align-items: start; }
   @media (max-width: 900px) { .rpt .dof-grid { grid-template-columns: 1fr; } }
+  .rpt .dof-grid h4 { margin: 0.9em 0 0.3em; font-size: 0.88em; color: #2c3e50;
+    border-bottom: 1px solid #ddd; padding-bottom: 2px; }
+  .rpt .sim-note { font-size: 0.75em; color: #7f8c8d; margin: 0.3em 0 0; }
   .rpt .dof-plot { min-height: 340px; }
   .rpt details { margin-top: 0.6em; }
   .rpt details summary { cursor: pointer; color: #2980b9; font-size: 0.85em; }
@@ -268,6 +271,34 @@ function nearestIn(list, target) {
   return best;
 }
 
+/* Long-period (deep-water) asymptote check for one DOF at its reference heading.
+   Translations approach wave-following limits; rotations approach wave-slope
+   limits (57.3·k), which converge slowly — reported as informational. */
+const G_ACCEL = 9.80665, RAD2DEG = 180 / Math.PI;
+function longPeriodCheck(dofRows, dof, headings) {
+  const REF = { surge: 0, sway: 90, heave: 90, roll: 90, pitch: 0, yaw: 45 };
+  const h = nearestIn(headings, REF[dof] !== undefined ? REF[dof] : 90);
+  const pts = dofRows.filter(r => r.heading_deg === h && r.magnitude !== null)
+    .sort((a, b) => a.period_s - b.period_s);
+  const last = pts[pts.length - 1];
+  if (!last) return null;
+  const beta = h * Math.PI / 180;
+  const k = last.freq_rad_s * last.freq_rad_s / G_ACCEL;
+  let expected, formula;
+  if (dof === "surge") { expected = Math.abs(Math.cos(beta)); formula = "|cos β| — wave-following"; }
+  else if (dof === "sway") { expected = Math.abs(Math.sin(beta)); formula = "|sin β| — wave-following"; }
+  else if (dof === "heave") { expected = 1.0; formula = "1.0 — contour-following"; }
+  else if (dof === "roll") { expected = RAD2DEG * k * Math.abs(Math.sin(beta)); formula = "57.3·k·|sin β| — wave-slope"; }
+  else if (dof === "pitch") { expected = RAD2DEG * k * Math.abs(Math.cos(beta)); formula = "57.3·k·|cos β| — wave-slope"; }
+  else { expected = 0; formula = "→ 0"; }
+  const translational = dof === "surge" || dof === "sway" || dof === "heave";
+  const verdict = translational
+    ? (Math.abs(last.magnitude - expected) <= 0.2 * Math.max(expected, 1e-9)
+      ? "✅ within 20 % of limit" : "⚠️ deviates > 20 % from limit")
+    : "ℹ️ informational — wave-slope asymptote converges slowly";
+  return { T: last.period_s, heading: h, value: last.magnitude, unit: last.unit, expected, formula, verdict };
+}
+
 const PLOT_LAYOUT = {
   margin: { l: 60, r: 20, t: 30, b: 45 },
   xaxis: { title: { text: "Wave period (s)" } },
@@ -336,6 +367,60 @@ function cascade(level, wanted) {
 function syncUrl(s) {
   const p = new URLSearchParams({ solver: s.solver, vessel: s.vesselId, damping: String(s.damping) });
   history.replaceState(null, "", location.pathname + "?" + p);
+}
+
+/* ---------------- similar-vessel context (other published series) ---------------- */
+const simCache = new Map();
+function seriesEq(e, s) {
+  return e.vessel_id === s.vesselId && e.analysis_tool === s.solver && Number(e.damping_zeta_pct) === s.damping;
+}
+function seriesLink(e) {
+  const label = `${e.analysis_tool} · ${e.vessel_id} · ζ=${e.damping_zeta_pct}%`;
+  const href = `analysis.html?solver=${encodeURIComponent(e.analysis_tool)}&vessel=${encodeURIComponent(e.vessel_id)}&damping=${e.damping_zeta_pct}`;
+  return `<a href="${href}">${label}</a>`;
+}
+/* Peak reliability=ok RAO of one series for one DOF — a single ordered request. */
+async function seriesDofPeak(e, dof) {
+  const key = [e.analysis_tool, e.vessel_id, e.damping_zeta_pct, dof].join("|");
+  if (simCache.has(key)) return simCache.get(key);
+  const s = { solver: e.analysis_tool, vesselId: e.vessel_id, damping: Number(e.damping_zeta_pct) };
+  const where = whereClause(s, hasSolverCol) + ` AND "dof"='${dof}' AND "reliability"='ok'`;
+  const url = `${API}/filter?dataset=${encodeURIComponent(CONFIG.dataset)}&config=rao&split=train` +
+    `&where=${encodeURIComponent(where)}&orderby=${encodeURIComponent('"magnitude" DESC')}&offset=0&length=1`;
+  let out = null;
+  try {
+    const j = await jsonFetch(url);
+    if (j.rows.length) out = { row: j.rows[0].row, e };
+  } catch (err) { /* leave null — series skipped from context */ }
+  simCache.set(key, out);
+  return out;
+}
+/* Fill the per-DOF "similar vessels" blocks in the background after main render. */
+async function fillSimilar(dofsList, sel, seq) {
+  const others = catalog.filter(e => !seriesEq(e, sel));
+  for (const d of dofsList) {
+    if (seq !== renderSeq) return;
+    const peaks = (await Promise.all(others.map(e => seriesDofPeak(e, d)))).filter(Boolean)
+      .sort((a, b) => a.row.magnitude - b.row.magnitude);
+    if (seq !== renderSeq) return;
+    const div = $("sim-" + d);
+    if (!div) continue;
+    if (!peaks.length) {
+      div.innerHTML = '<p class="sim-note">No other published series to compare against yet.</p>';
+      continue;
+    }
+    const pick = [
+      ["Max", peaks[peaks.length - 1]],
+      ["Median", peaks[Math.floor((peaks.length - 1) / 2)]],
+      ["Min", peaks[0]]
+    ];
+    div.innerHTML = "<table><tbody>" + pick.map(([kName, p]) =>
+      `<tr><td>${kName}</td><td class="num">${fmt(p.row.magnitude, 3)} ${p.row.unit} @ ${fmt(p.row.period_s, 4)} s</td>
+       <td>${seriesLink(p.e)}</td></tr>`).join("") + "</tbody></table>" +
+      `<p class="sim-note">Peak RAO (reliability=ok rows) of each other published series (${peaks.length}) —
+       screening context across different hulls/damping treatments, not a like-for-like benchmark.
+       Links open that series in this report.</p>`;
+  }
 }
 
 /* ---------------- per-series report rendering ---------------- */
@@ -450,6 +535,7 @@ async function renderReport() {
 
   $("dof-content").innerHTML = dofs.map(d => {
     const p = peakOf(byDof.get(d));
+    const lp = longPeriodCheck(byDof.get(d), d, headings);
     return `<div class="dof-section" id="dof-${d}">
       <h3 class="dof-title" style="text-transform:capitalize">${d}</h3>
       <div class="dof-grid">
@@ -459,6 +545,15 @@ async function renderReport() {
             <tr><td>at period</td><td class="num">${fmt(p.period_s, 4)} s</td></tr>
             <tr><td>at heading</td><td class="num">${p.heading_deg}°</td></tr>
           </tbody></table>
+          <h4>Long-period check</h4>
+          ${lp ? `<table><tbody>
+            <tr><td>At period / heading</td><td class="num">${fmt(lp.T, 4)} s · ${lp.heading}°</td></tr>
+            <tr><td>Amplitude</td><td class="num">${fmt(lp.value, 3)} ${lp.unit}</td></tr>
+            <tr><td>Theoretical limit</td><td class="num">${fmt(lp.expected, 3)} ${lp.unit}<br><span class="sim-note">${lp.formula}</span></td></tr>
+            <tr><td>Check</td><td>${lp.verdict}</td></tr>
+          </tbody></table>` : '<p class="sim-note">Not computable for this series.</p>'}
+          <h4>Similar vessels (other published series)</h4>
+          <div id="sim-${d}"><p class="sim-note">Loading similar-vessel context…</p></div>
         </div>
         <div>
           <div id="plot-${d}" class="dof-plot"></div>
@@ -480,6 +575,9 @@ async function renderReport() {
       }
     });
   });
+
+  // Background: similar-vessel context fills per DOF as ordered peak queries return.
+  fillSimilar(dofs, s, seq);
 }
 
 /* ---------------- init ---------------- */

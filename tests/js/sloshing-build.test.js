@@ -65,4 +65,16 @@ describe('sloshing report build contract', () => {
     expect(nav).toContain('reports/sloshing/comparison.html');
     expect(nav).toContain('Data &amp; provenance');
   });
+
+  test('primary sloshing page is a substantive no-JavaScript engineering summary', () => {
+    const summary = fs.readFileSync(path.join(root, 'content/reports/sloshing/index.html'), 'utf8');
+    expect(summary).toContain('Tank Sloshing CFD Analysis');
+    expect(summary).toContain('0.2964–0.3264%');
+    expect(summary).toContain('broad 22–24 second maximum');
+    expect(summary).toContain('Published period sweep');
+    expect(summary).toContain('Case-specific CFD evidence');
+    expect(summary).toContain('Conclusions and limits');
+    expect(summary).toContain('Data provenance');
+    expect(summary).not.toContain('data-sloshing-browser');
+  });
 });

@@ -208,6 +208,51 @@
     items.forEach(function (item) { var wrapper = document.createElement('div'); var dt = document.createElement('dt'); var dd = document.createElement('dd'); dt.textContent = item.label; dd.textContent = item.value + (item.unit ? ' ' + item.unit : ''); wrapper.appendChild(dt); wrapper.appendChild(dd); host.appendChild(wrapper); });
   }
 
+  function metricFor(data, caseId, quantity) {
+    return (data.metrics || []).concat(data.derived_metrics || []).filter(function (metric) { return metric.case_id === caseId && metric.quantity === quantity; })[0] || null;
+  }
+
+  function studyViewModel(data, selected) {
+    var cases = selectableCases(data.cases); var forced = cases.filter(function (c) { return c.loading_condition === 'forced_roll'; }); var decay = cases.filter(function (c) { return c.loading_condition === 'free_decay'; });
+    var errors = (data.metrics || []).filter(function (m) { return m.quantity === 'relative_frequency_error'; }).map(function (m) { return Number(m.value); }).filter(Number.isFinite);
+    var response = (data.derived_metrics || []).filter(function (m) { return m.quantity === 'level_amplitude_per_roll_degree'; }).map(function (m) { var c = cases.filter(function (row) { return row.case_id === m.case_id; })[0]; return { value: Number(m.value), period: c && Number(c.period_s), caseId: m.case_id }; }).filter(function (row) { return Number.isFinite(row.value); }).sort(function (a, b) { return b.value - a.value; });
+    var peak = response[0] || {}; var audit = (data.qa_audit || []).filter(function (row) { return row.case_id === selected.case_id; })[0] || {}; var selectedMetric = metricFor(data, selected.case_id, 'level_amplitude_per_roll_degree');
+    var maximumError = errors.length ? Math.max.apply(null, errors) : null; var minimumError = errors.length ? Math.min.apply(null, errors) : null;
+    return {
+      kpis: [
+        { value: String(cases.length), label: 'accepted CFD cases' },
+        { value: forced.length + ' / ' + decay.length, label: 'forced-roll / free-decay cases' },
+        { value: minimumError == null ? '—' : minimumError.toFixed(3) + '%', label: 'best frequency error vs theory' },
+        { value: peak.period ? peak.period.toFixed(0) + ' s' : '—', label: 'peak normalized level-response period' }
+      ],
+      verdict: peak.period && maximumError != null ? 'The free-decay series remains within ' + maximumError.toFixed(3) + '% of the analytical frequency target. In the forced-roll sweep, normalized liquid-level response rises toward a broad maximum at approximately ' + peak.period.toFixed(0) + ' s, then reduces; this identifies the strongest published loading region, not a vessel-level anti-roll benefit.' : 'The selected release does not contain enough evidence for a combined verification and peak-period conclusion.',
+      findings: [
+        { title: 'Verification', text: minimumError == null ? 'No analytical comparison is published.' : 'Measured first-mode frequency differs from the analytical target by ' + minimumError.toFixed(3) + '–' + maximumError.toFixed(3) + '% across the published mesh and timestep cases.' },
+        { title: 'Response', text: peak.period ? 'The largest published level response per roll degree is ' + peak.value.toFixed(3) + ' m/deg at ' + peak.period.toFixed(0) + ' s (' + peak.caseId + ').' : 'No normalized forced-roll curve is published.' },
+        { title: 'Numerical caution', text: audit.courant_target_exceeded === 'true' ? 'The selected case exceeded its configured Courant target; completion and cycle convergence do not erase that QA exception.' : 'No configured Courant-target exceedance is recorded for the selected case.' }
+      ],
+      selectedKpis: [
+        { value: selected.period_s ? selected.period_s + ' s' : (selected.frequency_hz ? selected.frequency_hz + ' Hz' : 'Free decay'), label: 'forcing period / measured frequency' },
+        { value: selected.mesh_cells || '—', label: 'published mesh cells' },
+        { value: selected.cycles || '—', label: 'simulated cycles' },
+        { value: selectedMetric ? Number(selectedMetric.value).toFixed(3) + ' m/deg' : '—', label: 'level response per roll degree' }
+      ],
+      selectedVerdict: selected.loading_condition === 'forced_roll' ? 'This accepted forced-roll case supports comparison of aggregate response and published histories at ' + selected.period_s + ' s. ' + (audit.courant_target_exceeded === 'true' ? 'Use with a visible numerical caveat: observed Courant number exceeded the configured target.' : 'No configured Courant-target exception is published for this case.') : 'This accepted free-decay case supports numerical verification of the first-mode frequency against the analytical target; it is not a forced-roll load case.'
+    };
+  }
+
+  function fillKpis(host, items) {
+    if (!host) return; host.textContent = '';
+    items.forEach(function (item) { var box = document.createElement('div'); var value = document.createElement('strong'); var label = document.createElement('span'); value.textContent = item.value; label.textContent = item.label; box.appendChild(value); box.appendChild(label); host.appendChild(box); });
+  }
+
+  function renderEngineeringNarrative(root, data, selected) {
+    var vm = studyViewModel(data, selected); fillKpis(root.querySelector('[data-study-kpis]'), vm.kpis); fillKpis(root.querySelector('[data-case-kpis]'), vm.selectedKpis);
+    var verdict = root.querySelector('[data-study-verdict]'); if (verdict) { verdict.textContent = ''; var lead = document.createElement('strong'); lead.textContent = 'Engineering verdict. '; verdict.appendChild(lead); verdict.appendChild(document.createTextNode(vm.verdict)); }
+    var caseVerdict = root.querySelector('[data-case-verdict]'); if (caseVerdict) { caseVerdict.textContent = ''; var caseLead = document.createElement('strong'); caseLead.textContent = root.getAttribute('data-report-kind') === 'analysis' ? 'QA verdict. ' : 'Case verdict. '; caseVerdict.appendChild(caseLead); caseVerdict.appendChild(document.createTextNode(vm.selectedVerdict)); }
+    var findings = root.querySelector('[data-study-findings]'); if (findings) { findings.textContent = ''; vm.findings.forEach(function (finding) { var box = document.createElement('div'); var title = document.createElement('h3'); var copy = document.createElement('p'); title.textContent = finding.title; copy.textContent = finding.text; box.appendChild(title); box.appendChild(copy); findings.appendChild(box); }); }
+  }
+
   function renderQa(root, selected, data) {
     var qa = qaViewModel(selected, data); fillDefinitionList(root.querySelector('[data-qa-inputs]'), qa.inputs); fillDefinitionList(root.querySelector('[data-qa-mesh]'), qa.mesh);
     var body = root.querySelector('[data-qa-results] tbody'); if (body) { body.textContent = ''; qa.results.forEach(function (result) { var tr = document.createElement('tr'); [result.quantity, result.value, result.unit, result.statistic, result.status].forEach(function (value) { var td = document.createElement('td'); td.textContent = value || '—'; tr.appendChild(td); }); if (result.status === 'configured_limit_exceeded') tr.className = 'qa-warning'; body.appendChild(tr); }); }
@@ -268,6 +313,7 @@
       if (envelopeEmpty) envelopeEmpty.hidden = !!envelope.length;
     } else if (plot && Plotly && Plotly.react) Plotly.react(plot, traces, { uirevision: state.uirevision, template: state.theme === 'contrast' ? 'plotly_dark' : 'plotly_white', title: isSummary ? 'Published CFD and analytical comparison' : 'Published sloshing response' }, { responsive: true, displaylogo: false, modeBarButtonsToAdd: ['toImage'] });
     if (kind === 'analysis') renderQa(root, selected, data);
+    renderEngineeringNarrative(root, data, selected);
     var status = root.querySelector('[data-report-status]');
     if (status) status.textContent = 'Showing published case ' + selected.case_id + '.';
   }
@@ -321,5 +367,5 @@
   function boot() { document.querySelectorAll('[data-sloshing-report]').forEach(function (report) { load(report).catch(function () {}); }); }
   if (typeof document !== 'undefined') { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else setTimeout(boot, 0); }
 
-  return { selectableCases: selectableCases, defaultState: defaultState, optionsFor: optionsFor, reduceState: reduceState, serializeState: serializeState, parseState: parseState, parseCsv: parseCsv, createLoadGate: createLoadGate, createLegendSync: createLegendSync, bindPrintLifecycle: bindPrintLifecycle, detailedTraceGroups: detailedTraceGroups, pressureEnvelopeTraces: pressureEnvelopeTraces, qaViewModel: qaViewModel, summaryTraces: summaryTraces, mount: mount, load: load, render: render };
+  return { selectableCases: selectableCases, defaultState: defaultState, optionsFor: optionsFor, reduceState: reduceState, serializeState: serializeState, parseState: parseState, parseCsv: parseCsv, createLoadGate: createLoadGate, createLegendSync: createLegendSync, bindPrintLifecycle: bindPrintLifecycle, detailedTraceGroups: detailedTraceGroups, pressureEnvelopeTraces: pressureEnvelopeTraces, qaViewModel: qaViewModel, studyViewModel: studyViewModel, summaryTraces: summaryTraces, mount: mount, load: load, render: render };
 }));

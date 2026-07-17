@@ -3,6 +3,11 @@
 .sloshing-report[data-theme="contrast"] { --sr-ink:#fff; --sr-muted:#e6edf2; --sr-bg:#08141d; --sr-panel:#102634; --sr-accent:#ffb36b; --sr-focus:#7dccff; --sr-border:#8da7b7; }
 .sloshing-header { background:#173d57; color:#fff; padding:2.5rem max(1.5rem,calc((100% - 1180px)/2)); }
 .sloshing-header h1 { margin:.2rem 0; }
+.report-kicker,.section-number { text-transform:uppercase; letter-spacing:.12em; font-size:.74rem; font-weight:800; }
+.report-kicker { color:#ffbd86; }
+.section-number { color:var(--sr-accent); margin:0 0 .25rem; }
+.report-verdict { display:flex; flex-wrap:wrap; gap:.4rem 1rem; margin-top:1.25rem; padding:.8rem 1rem; max-width:760px; background:rgba(255,255,255,.1); border-left:4px solid #ffbd86; }
+.report-verdict strong { text-transform:uppercase; letter-spacing:.05em; }
 .sloshing-shell { max-width:1180px; margin:auto; padding:2rem 1.5rem 4rem; }
 .report-controls,.report-panel { background:var(--sr-panel); border:1px solid var(--sr-border); border-radius:.5rem; padding:1.25rem; margin-bottom:1.5rem; }
 .control-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; }
@@ -20,6 +25,17 @@
 .evidence-key span::before { content:""; display:inline-block; width:2rem; border-top:3px solid currentColor; margin-right:.4rem; vertical-align:middle; }
 .evidence-key .methodology::before { border-top-style:dashed; }
 .evidence-key .verification::before { border-top-style:dotted; }
+.report-lead { border-top:4px solid var(--sr-accent); }
+.study-kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:.75rem; margin:1rem 0; }
+.study-kpis>div { padding:1rem; background:var(--sr-bg); border:1px solid var(--sr-border); border-radius:.35rem; }
+.study-kpis strong { display:block; color:var(--sr-accent); font-size:1.45rem; line-height:1.15; font-variant-numeric:tabular-nums; }
+.study-kpis span { display:block; margin-top:.3rem; color:var(--sr-muted); font-size:.86rem; }
+.engineering-verdict { margin:1rem 0; padding:1rem 1.15rem; background:#edf8f0; border:1px solid #b8ddc1; border-left:5px solid #287a3e; border-radius:.35rem; }
+[data-theme="contrast"] .engineering-verdict { background:#143c2a; border-color:#4b9a62; }
+.finding-grid,.method-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:1.25rem; }
+.finding-grid>div,.method-grid>div { padding:1rem; background:var(--sr-bg); border-top:3px solid var(--sr-accent); }
+.finding-grid h3,.method-grid h3 { margin:.05rem 0 .4rem; font-size:1rem; }
+.finding-grid p,.method-grid p { margin:0; color:var(--sr-muted); }
 .noscript-notice { padding:1rem; border:1px solid var(--sr-border); }
 .export-note { color:var(--sr-muted); font-size:.9em; }
 .qa-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:.75rem; margin:0; }

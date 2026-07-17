@@ -13,7 +13,7 @@ rootPath: "../"
 </head><body>
   <include src="partials/nav.html"></include>
   <main class="sloshing-report" data-sloshing-report data-report-kind="case" data-manifest-url="../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
-    <header class="sloshing-header"><p>Published engineering evidence</p><h1>Tank Sloshing CFD Case Report</h1><p>Case-level response histories, QA disposition, and traceable methodology.</p></header>
+    <header class="sloshing-header"><p class="report-kicker">Individual loading condition · reviewed CFD evidence</p><h1>Tank Sloshing CFD Case Report</h1><p>A case-level engineering record: setup, response histories, load envelopes, QA disposition, and traceable limitations.</p></header>
     <div class="sloshing-shell">
       <noscript><p class="noscript-notice">Interactive case selection requires JavaScript. The methodology and publication boundaries remain available below.</p></noscript>
       <p class="report-status" data-report-status role="status" aria-live="polite">Loading the reviewed public release…</p>
@@ -27,15 +27,15 @@ rootPath: "../"
         <label>Line weight<select data-state-field="lines"><option value="normal">Normal</option><option value="heavy">Heavy</option></select></label>
         <label>Markers<select data-state-field="markers"><option value="on">Shown</option><option value="off">Hidden</option></select></label>
       </div><div class="report-actions" aria-label="Chart export"><button type="button" data-export="png">Export PNG</button><button type="button" data-export="svg">Export SVG</button><button type="button" data-reset>Reset report</button></div></fieldset>
-      <section class="report-panel" data-report-section="overview"><h2>Evidence and provenance</h2><p>Only accepted, de-identified CFD evidence from the pinned public release is selectable. Verification-only records remain outside accepted-result controls.</p><div class="evidence-key"><span>Accepted CFD</span><span class="methodology">Methodology only</span><span class="verification">Verification only</span></div></section>
-      <section class="report-panel" data-report-section="plots"><h2>Detailed response histories</h2>
+      <section class="report-panel report-lead" data-report-section="overview"><p class="section-number">01 · Case reading</p><h2>Engineering disposition</h2><div class="study-kpis" data-case-kpis><div><strong>Loading…</strong><span>Selected case</span></div></div><div class="engineering-verdict" data-case-verdict><strong>Case verdict.</strong> Loading the reviewed evidence…</div><p>Only accepted, de-identified CFD evidence from the pinned public release is selectable. Verification-only records remain outside accepted-result controls.</p></section>
+      <section class="report-panel" data-report-section="plots"><p class="section-number">02 · Resolved response</p><h2>Detailed response histories</h2>
         <h3>Pressure probes</h3><p data-series-empty="pressure">No reviewed pressure-probe series is published for this case.</p><div class="plot" data-plot-group="pressure" role="img" aria-label="Interactive wall-pressure probe histories; metadata and QA values follow in a table"></div>
         <h3>Aggregate wall forces</h3><p data-series-empty="force">No reviewed aggregate-force series is published for this case.</p><div class="plot" data-plot-group="force" role="img" aria-label="Interactive aggregate wall-force histories"></div>
         <h3>Aggregate wall moments</h3><p data-series-empty="moment">No reviewed aggregate-moment series is published for this case.</p><div class="plot" data-plot-group="moment" role="img" aria-label="Interactive aggregate wall-moment histories"></div>
         <h3>Wall-pressure envelope by height</h3><p data-envelope-empty>No reviewed pressure envelope is published for this case.</p><div class="plot" data-plot-envelope role="img" aria-label="Maximum, percentile, and harmonic wall pressure versus normalized height"></div>
       </section>
       <section class="report-panel" data-report-section="data"><h2>Accessible chart data</h2><table class="accessible-data" data-accessible-table><caption>Values represented in the selected chart</caption><thead><tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">Unit</th></tr></thead><tbody></tbody></table></section>
-      <section class="report-panel"><h2>Publication boundary</h2><p>Detailed histories appear only for cases with reviewed public series. No synthetic placeholder, private geometry, or anti-roll benefit claim is presented.</p><p><a href="sloshing-cfd-analysis.html">Open the CFD QA analysis report</a></p></section>
+      <section class="report-panel"><p class="section-number">04 · Interpretation</p><h2>How to use this case</h2><div class="method-grid"><div><h3>Decision use</h3><p>Compare time histories, extrema, harmonic response, and pressure envelopes within the published loading condition.</p></div><div><h3>QA use</h3><p>Confirm the forcing definition, mesh state, solver audit, and synchronized field evidence in the analysis report.</p></div><div><h3>Boundary</h3><p>No synthetic placeholder, private geometry, sectional-load inference, or vessel-level anti-roll benefit claim is presented.</p></div></div><p><a href="sloshing-cfd-analysis.html">Open the CFD QA analysis report</a></p></section>
     </div>
   </main><include src="partials/footer.html"></include>
 </body></html>

@@ -9,6 +9,10 @@
 .report-verdict { display:flex; flex-wrap:wrap; gap:.4rem 1rem; margin-top:1.25rem; padding:.8rem 1rem; max-width:760px; background:rgba(255,255,255,.1); border-left:4px solid #ffbd86; }
 .report-verdict strong { text-transform:uppercase; letter-spacing:.05em; }
 .sloshing-shell { max-width:1180px; margin:auto; padding:2rem 1.5rem 4rem; }
+.sloshing-nav-wrap { padding:.7rem max(1.5rem,calc((100% - 1180px)/2)); background:#102f45; }
+.sloshing-nav-wrap .capability-report-nav { display:flex; flex-wrap:wrap; gap:.25rem; padding:0; }
+.sloshing-nav-wrap .capability-report-nav a { color:#e8f4fb; padding:.45rem .7rem; text-decoration:none; border:0; border-radius:.25rem; background:transparent; font-size:.9rem; }
+.sloshing-nav-wrap .capability-report-nav a:hover,.sloshing-nav-wrap .capability-report-nav a:focus-visible { color:#fff; background:#b54a18; }
 .report-controls,.report-panel { background:var(--sr-panel); border:1px solid var(--sr-border); border-radius:.5rem; padding:1.25rem; margin-bottom:1.5rem; }
 .control-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; }
 .control-grid label { display:block; font-weight:700; }
@@ -36,6 +40,12 @@
 .finding-grid>div,.method-grid>div { padding:1rem; background:var(--sr-bg); border-top:3px solid var(--sr-accent); }
 .finding-grid h3,.method-grid h3 { margin:.05rem 0 .4rem; font-size:1rem; }
 .finding-grid p,.method-grid p { margin:0; color:var(--sr-muted); }
+.comparison-selectors { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+.comparison-selectors label { font-weight:700; }
+.comparison-selectors select { display:block; width:100%; margin-top:.35rem; padding:.6rem; color:var(--sr-ink); background:var(--sr-panel); border:1px solid var(--sr-border); }
+.comparison-warning,.comparison-ok { padding:.75rem 1rem; border-left:5px solid #b26a00; background:#fff1c7; }
+.comparison-ok { border-left-color:#287a3e; background:#edf8f0; }
+[data-theme="contrast"] .comparison-warning { background:#5c3d00; color:#fff; }
 .noscript-notice { padding:1rem; border:1px solid var(--sr-border); }
 .export-note { color:var(--sr-muted); font-size:.9em; }
 .qa-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:.75rem; margin:0; }

@@ -87,6 +87,11 @@
     if (!raw || raw.length > 2048) return { state: fallback, normalized: !!raw };
     var params = new URLSearchParams(raw);
     var candidate = Object.assign({}, fallback);
+    var compactCase = params.get('case');
+    if (!params.has('v') && compactCase && selectableCases(cases).some(function (c) { return c.case_id === compactCase; })) {
+      candidate.case = compactCase; candidate.uirevision = 'case:' + compactCase;
+      return { state: candidate, normalized: true };
+    }
     var valid = params.get('v') === '1';
     var caseId = params.get('case');
     valid = valid && selectableCases(cases).some(function (c) { return c.case_id === caseId; });

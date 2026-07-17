@@ -1,0 +1,72 @@
+---
+rootPath: "../../"
+---
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Stable validation fixture for the published tank-sloshing CFD study: analytical frequency agreement, timestep and mesh evidence, and numerical QA boundaries.">
+  <link rel="canonical" href="https://www.aceengineer.com/reports/sloshing/validation.html">
+  <title>Tank Sloshing CFD Validation Fixture — AceEngineer</title>
+  <include src="partials/head-common.html"></include>
+  <style>
+    .validation-fixture{--ink:#233342;--muted:#5e6c78;--line:#dce3e8;--blue:#176b87;--teal:#087f73;--amber:#a35b00;background:#f5f8fa;color:var(--ink);line-height:1.58;padding-bottom:4rem}.validation-fixture *{box-sizing:border-box}.validation-fixture .wrap{max-width:1080px;margin:auto;padding:0 1.25rem}.validation-fixture header{background:linear-gradient(125deg,#193747,#176b87);color:#fff;padding:3rem 0 2.4rem}.validation-fixture header h1{color:#fff;font-size:clamp(2rem,5vw,3.25rem);margin:.2rem 0 .6rem}.validation-fixture header p{max-width:760px;margin:.4rem 0}.validation-fixture .eyebrow{text-transform:uppercase;letter-spacing:.12em;font-weight:700;font-size:.78rem}.capability-report-nav{display:flex;gap:.5rem;flex-wrap:wrap;padding:1rem 0}.capability-report-nav a{background:#fff;border:1px solid #cdd9df;border-radius:999px;color:#174e65;padding:.45rem .8rem;text-decoration:none}.capability-report-nav a[aria-current="page"]{background:#174e65;color:#fff}.validation-fixture main{padding-top:1.4rem}.validation-fixture section{background:#fff;border:1px solid var(--line);border-radius:10px;margin:1rem 0;padding:1.35rem 1.5rem}.validation-fixture h2{margin-top:0}.validation-fixture h3{font-size:1rem}.validation-fixture .verdict{border-left:5px solid var(--teal)}.validation-fixture .caution{border-left:5px solid #d88b19;background:#fffbf3}.validation-fixture .metrics,.validation-fixture .checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.9rem}.validation-fixture .metric,.validation-fixture .check{border:1px solid var(--line);border-radius:8px;padding:1rem}.validation-fixture .metric strong{display:block;color:var(--blue);font-size:1.55rem}.validation-fixture .metric span,.validation-fixture .source-note{color:var(--muted);font-size:.9rem}.validation-fixture table{border-collapse:collapse;width:100%}.validation-fixture th,.validation-fixture td{border-bottom:1px solid var(--line);padding:.7rem;text-align:left;vertical-align:top}.validation-fixture th{background:#edf4f6}.validation-fixture code{overflow-wrap:anywhere}.validation-fixture a{color:#0c6685}@media(max-width:650px){.validation-fixture section{padding:1rem}.validation-fixture table{font-size:.85rem}}
+  </style>
+</head><body>
+  <include src="partials/nav.html"></include>
+  <article class="validation-fixture">
+    <header><div class="wrap">
+      <p class="eyebrow">Stable engineering fixture · VOF CFD · source-neutral benchmark</p>
+      <h1>Tank Sloshing CFD Validation</h1>
+      <p>A fixed review point for subject-matter experts. Every number below comes from the pinned public release; report pages should link here when they claim analytical agreement, convergence evidence, or numerical qualification.</p>
+    </div></header>
+    <div class="wrap"><include src="partials/sloshing-capability-nav.html"></include></div>
+    <main class="wrap">
+      <section class="verdict">
+        <h2>Engineering disposition</h2>
+        <p><strong>The published solver reproduces the rectangular-tank first-mode frequency within 0.2964–0.3264% across seven accepted free-decay cases.</strong> The forced-roll cases are suitable for comparative screening within the published model and loading envelope. This is verification evidence, not full vessel validation.</p>
+      </section>
+      <section aria-labelledby="fixture-scope">
+        <h2 id="fixture-scope">Validation fixture at a glance</h2>
+        <div class="metrics">
+          <div class="metric"><strong>0.758054 Hz</strong><span>Analytical first-mode target</span></div>
+          <div class="metric"><strong>0.2964–0.3264%</strong><span>Published frequency-error range</span></div>
+          <div class="metric"><strong>7 cases</strong><span>Free-decay mesh and timestep fixture</span></div>
+          <div class="metric"><strong>0.783862%</strong><span>Two-case forced-roll exchange-amplitude mesh change</span></div>
+        </div>
+      </section>
+      <section>
+        <h2>Review checks and acceptance meaning</h2>
+        <div class="checks">
+          <div class="check"><h3>Analytical agreement</h3><p>Measured free-decay frequencies span 0.755580–0.755807 Hz against the 0.758054 Hz linear-wave target. All seven metric records are marked <code>pass</code>.</p></div>
+          <div class="check"><h3>Timestep sensitivity</h3><p>The 0.001 s and 0.004 s cases return 0.755717 Hz and 0.755702 Hz. This supports timestep stability for the measured frequency in this benchmark.</p></div>
+          <div class="check"><h3>Mesh evidence</h3><p>Five free-decay meshes from 1,600 to 25,600 cells remain close to the analytical target. The release deliberately classifies the convergence study as <code>non_asymptotic_caution</code>.</p></div>
+          <div class="check"><h3>Forced-roll confirmation</h3><p>The 20,480-cell and 69,120-cell T = 24 s cases provide a two-level mesh comparison. The published exchange-amplitude change is 0.783862%.</p></div>
+        </div>
+      </section>
+      <section class="caution">
+        <h2>Numerical caveat retained</h2>
+        <p>The pressure follow-on configured a maximum Courant number of 0.35 but observed 0.47841479. It completed, produced finite reduced values, and met its declared cycle-change limits (0.137055% exchange and 0.0405694% moment), but its release disposition remains <code>publish_with_courant_caveat</code>. A reviewer should not reinterpret that case as an unqualified numerical pass.</p>
+      </section>
+      <section>
+        <h2>Evidence matrix</h2>
+        <table><thead><tr><th scope="col">Question</th><th scope="col">Published fixture</th><th scope="col">Use</th><th scope="col">Boundary</th></tr></thead><tbody>
+          <tr><td>Is the natural frequency reproduced?</td><td>Seven free-decay cases vs. 0.758054 Hz analytical target</td><td>First-mode frequency verification</td><td>Linear rectangular-tank theory only</td></tr>
+          <tr><td>Is the result stable with timestep?</td><td>0.001 s and 0.004 s free-decay cases</td><td>Frequency sensitivity check</td><td>Two timestep levels</td></tr>
+          <tr><td>Is mesh dependence quantified?</td><td>Five free-decay meshes; two forced-roll meshes at 24 s</td><td>Screening-grade mesh evidence</td><td>No demonstrated asymptotic convergence order</td></tr>
+          <tr><td>Is the pressure follow-on numerically qualified?</td><td>Completion, finite-value, cycle-change, and Courant audit</td><td>Qualified comparative use</td><td>Courant target exceeded; aggregate wall patch only</td></tr>
+        </tbody></table>
+      </section>
+      <section>
+        <h2>What this fixture does not validate</h2>
+        <p>It does not establish full-scale vessel behavior, structural stress, sectional wall loads, air-entrainment fidelity, impact-pressure convergence, or anti-roll performance. Those require purpose-specific experimental or field benchmarks and additional numerical qualification.</p>
+      </section>
+      <section>
+        <h2>Traceability</h2>
+        <p>Dataset: <a href="https://huggingface.co/datasets/aceengineer/digitalmodel-sloshing/tree/d9ff6967021755156c3daa35f93e6385f672b257"><code>aceengineer/digitalmodel-sloshing</code> at revision <code>d9ff6967021755156c3daa35f93e6385f672b257</code></a>.</p>
+        <p>Website release digest: <code>1d0b2a0b85c9e0c6013e71e3df1a548a1a31b09407552c14971ab10a6a1cf8e1</code>. Primary fixture tables: <code>cases.csv</code>, <code>metrics.csv</code>, <code>studies.csv</code>, and <code>qa_audit.csv</code>.</p>
+        <p class="source-note">This page is intentionally static and revision-pinned so its URL remains a consistent review fixture while interactive browsers and case selectors evolve.</p>
+      </section>
+    </main>
+  </article>
+  <include src="partials/footer.html"></include>
+</body></html>

@@ -1,0 +1,34 @@
+---
+rootPath: "../../"
+---
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tank sloshing CFD capability, reviewed study evidence, validation, and a browser covering every published case.">
+  <title>Tank Sloshing CFD Capability — AceEngineer</title>
+  <include src="partials/head-common.html"></include>
+  <link rel="stylesheet" href="{{ rootPath }}assets/css/sloshing-browser.css">
+</head><body>
+  <include src="partials/nav.html"></include>
+  <main class="slosh-capability">
+    <header class="cap-hero">
+      <p class="cap-kicker">AceEngineer · OpenFOAM VOF · reviewed public evidence</p>
+      <h1>Tank Sloshing CFD</h1>
+      <p class="cap-lede">A connected evidence system for natural-period verification, forced-roll response, numerical QA, and visual review across every published loading case.</p>
+      <div class="cap-actions"><a class="button primary" href="browse.html">Browse all CFD cases</a><a class="button" href="study.html">Read the engineering study</a></div>
+    </header>
+    <include src="partials/sloshing-capability-nav.html"></include>
+    <section class="cap-section intro-grid">
+      <div><p class="section-label">Engineering question</p><h2>Where does tank response become significant, and how reliable is the numerical evidence?</h2><p>The campaign separates analytical natural-period verification from forced-roll response. It then qualifies the results with mesh, timestep, convergence, pressure, aggregate-load, and retained-field evidence where those artifacts are available.</p></div>
+      <aside class="decision-card"><strong>Start with the study</strong><p>Use the evidence summary for the engineering verdict. Use the visual browser when auditing coverage or opening an individual run.</p></aside>
+    </section>
+    <section class="cap-section"><p class="section-label">Published coverage</p><h2>One release, three review paths</h2><div class="surface-grid">
+      <article><span>01</span><h3>Engineering study</h3><p>Natural-period agreement, forced-roll trends, mesh evidence, conclusions, and limitations.</p><a href="study.html">Open study →</a></article>
+      <article><span>02</span><h3>All-case browser</h3><p>All 15 cases with evidence depth, loading, mesh, media, and QA filters.</p><a href="browse.html">Browse results →</a></article>
+      <article><span>03</span><h3>Case and QA detail</h3><p>Input basis, response histories, pressure envelopes, retained visuals, and provenance where published.</p><a href="analysis.html">Open case analysis →</a></article>
+    </div></section>
+    <section class="cap-section evidence-note"><div><p class="section-label">Evidence maturity</p><h2>Media depth and engineering depth are reported separately</h2></div><p>A video makes a run easier to inspect; it does not by itself make the engineering record complete. Every browser card therefore shows both the artifact-based evidence tier and the available visual media. Representative and generic visuals are never presented as selected-case CFD evidence.</p></section>
+    <section class="cap-section provenance"><h2>Reviewed publication boundary</h2><p>Reports render from the immutable, content-addressed website release derived from <a href="https://huggingface.co/datasets/aceengineer/digitalmodel-sloshing">aceengineer/digitalmodel-sloshing</a>. Public records are source-neutral and geometry disclosure remains bounded.</p></section>
+  </main>
+  <include src="partials/footer.html"></include>
+</body></html>

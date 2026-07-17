@@ -13,7 +13,7 @@ rootPath: "../"
 </head><body>
   <include src="partials/nav.html"></include>
   <main class="sloshing-report" data-sloshing-report data-report-kind="analysis" data-manifest-url="../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
-    <header class="sloshing-header"><p class="report-kicker">Numerical assurance · model inputs · field evidence</p><h1>Tank Sloshing CFD QA Analysis</h1><p>Can the selected result be trusted for its stated purpose? This report connects setup, mesh, solver behavior, visual evidence, and an explicit disposition.</p></header>
+    <header class="sloshing-header"><p class="report-kicker">Numerical assurance · model inputs · field evidence</p><h1>Tank Sloshing CFD QA Analysis</h1><p>Can the selected result be trusted for its stated purpose? This report connects setup, mesh, solver behavior, visual evidence, and an explicit disposition.</p></header><div class="sloshing-nav-wrap"><include src="partials/sloshing-capability-nav.html"></include></div>
     <div class="sloshing-shell">
       <noscript><p class="noscript-notice">Case-specific QA values require JavaScript. No private geometry or unpublished solver artifact is embedded in this page.</p></noscript>
       <p class="report-status" data-report-status role="status" aria-live="polite">Loading the reviewed public release…</p><div class="report-error" data-report-error role="alert" hidden></div>

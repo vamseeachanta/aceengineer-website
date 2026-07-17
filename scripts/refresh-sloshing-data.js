@@ -6,19 +6,20 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
-const SCHEMA_VERSION = '1.1.0';
-const TRANSFORMER_VERSION = '1.1.0';
+const SCHEMA_VERSION = '1.2.0';
+const TRANSFORMER_VERSION = '1.2.0';
 const DATASET = 'aceengineer/digitalmodel-sloshing';
 const SOURCE_HASHES = Object.freeze({
   forced: '34f678a045a211986405b3a28dd8b4216231bfb5ee282dfb15e13c42e427a6af',
   fine: '38eec090aca469b00f6d8615ad5e7157acdf92637baf05781ce8e4ff2636aade',
   decay: 'e093a0609d25aa207c55d64cbc06f897d2d085f3ca71c3a83d193c08e5e231ea',
 });
-const TABLE_ORDER = ['cases', 'metrics', 'derived_metrics', 'pressure_envelopes', 'studies', 'inputs', 'mesh_quality', 'qa_audit', 'series', 'samples', 'previews', 'dispositions'];
+const TABLE_ORDER = ['cases', 'case_catalog', 'metrics', 'derived_metrics', 'pressure_envelopes', 'studies', 'inputs', 'mesh_quality', 'qa_audit', 'series', 'samples', 'previews', 'media_metadata', 'dispositions'];
 const FORBIDDEN = /anti[\s_-]*roll|withheld|source[\s_-]*(?:record[\s_-]*)?id|client|project|(?:^|[\\/])[a-z]:[\\/]|\/home\/|<script|authorization|bearer\s/i;
 
 const COLUMNS = Object.freeze({
   cases: ['case_id', 'evidence_type', 'status', 'study_axis', 'loading_condition', 'mesh', 'mesh_cells', 'period_s', 'frequency_hz', 'timestep_s', 'cycles', 'configured_max_courant', 'configured_max_alpha_courant', 'excitation', 'geometry_basis', 'solver_class'],
+  case_catalog: ['case_id', 'title', 'summary', 'study_family', 'evidence_depth', 'media_truth', 'representative_case_id', 'has_case_image', 'has_case_video', 'qa_summary', 'analysis_path', 'validation_fixture_path'],
   metrics: ['case_id', 'quantity', 'value', 'unit', 'statistic', 'qa_status', 'source_class', 'source_sha256', 'source_revision', 'transform_version'],
   derived_metrics: ['case_id', 'quantity', 'value', 'unit', 'window', 'statistic', 'qa_status'],
   pressure_envelopes: ['case_id', 'probe_id', 'wall_location', 'z_over_height', 'window', 'minimum_Pa', 'maximum_Pa', 'mean_Pa', 'rms_Pa', 'p95_Pa', 'p99_Pa', 'peak_to_peak_Pa', 'harmonic_amplitude_Pa', 'qa_status'],
@@ -29,6 +30,7 @@ const COLUMNS = Object.freeze({
   series: ['series_id', 'case_id', 'quantity', 'unit', 'x_quantity', 'x_unit', 'sample_count', 'public_location', 'z_over_height', 'label', 'line_dash', 'qa_status', 'source_class', 'source_sha256'],
   samples: ['series_id', 'ordinal', 'x', 'y'],
   previews: ['preview_id', 'case_id', 'media_type', 'relative_path', 'sha256', 'bytes', 'status', 'alt_text'],
+  media_metadata: ['preview_id', 'evidence_relation', 'width_px', 'height_px', 'duration_s', 'frame_count', 'field_window_start_s', 'field_window_end_s', 'temporal_interpolation', 'review_scope'],
   dispositions: ['family_class', 'status', 'count', 'reason_code'],
 });
 
@@ -146,7 +148,7 @@ function transformReviewed(source, { revision }) {
     { family_class: 'incomplete_run_family', status: 'not_published', count: 10, reason_code: 'incomplete_solver_run' },
     { family_class: 'verification_family', status: 'verification_only', count: 1, reason_code: 'verification_scope_only' },
   ];
-  const output = { cases, metrics, derived_metrics: [], pressure_envelopes: [], studies, inputs: [], mesh_quality: [], qa_audit: [], series: [], samples: [], previews: [], dispositions };
+  const output = { cases, case_catalog: [], metrics, derived_metrics: [], pressure_envelopes: [], studies, inputs: [], mesh_quality: [], qa_audit: [], series: [], samples: [], previews: [], media_metadata: [], dispositions };
   const serialized = stableJson(output);
   if (FORBIDDEN.test(serialized)) throw new Error('forbidden public value');
   return output;

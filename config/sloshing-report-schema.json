@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "closed": true,
   "limits": {
     "max_public_rows": 10000,
@@ -14,6 +14,16 @@
         "status": ["accepted"],
         "loading_condition": ["free_decay", "forced_roll"]
       }
+    },
+    "case_catalog": {
+      "primary_key": ["case_id"],
+      "foreign_keys": { "case_id": "cases.case_id", "representative_case_id": "cases.case_id" },
+      "columns": ["case_id", "title", "summary", "study_family", "evidence_depth", "media_truth", "representative_case_id", "has_case_image", "has_case_video", "qa_summary", "analysis_path", "validation_fixture_path"],
+      "enums": {
+        "evidence_depth": ["detailed", "standard", "simple"],
+        "media_truth": ["case_specific", "representative", "explanatory", "none"]
+      },
+      "note": "Evidence depth is conservative: media availability alone never promotes a case. Empty representative_case_id is permitted when no reviewed representative exists."
     },
     "metrics": {
       "foreign_keys": { "case_id": "cases.case_id" },
@@ -73,6 +83,16 @@
         "status": ["published"]
       },
       "note": "Only reviewed source-neutral same-origin preview assets whose bytes are covered by the release digest may be listed."
+    },
+    "media_metadata": {
+      "primary_key": ["preview_id"],
+      "foreign_keys": { "preview_id": "previews.preview_id" },
+      "columns": ["preview_id", "evidence_relation", "width_px", "height_px", "duration_s", "frame_count", "field_window_start_s", "field_window_end_s", "temporal_interpolation", "review_scope"],
+      "enums": {
+        "evidence_relation": ["case_specific", "representative", "explanatory"],
+        "temporal_interpolation": ["none", "not_applicable"]
+      },
+      "note": "Video and animated-image metadata describes only retained reviewed frames and must not imply a full-run field animation."
     },
     "dispositions": {
       "columns": ["family_class", "status", "count", "reason_code"],

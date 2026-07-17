@@ -64,6 +64,12 @@ describe('state model', () => {
     expect(bad.normalized).toBe(true);
     expect(bad.state).toEqual(R.defaultState(cases));
   });
+
+  test('accepts a compact catalog case deep link and normalizes it to full state', () => {
+    const parsed = R.parseState('case=fr-2', cases);
+    expect(parsed.state.case).toBe('fr-2');
+    expect(parsed.normalized).toBe(true);
+  });
 });
 
 describe('data and rendering safety', () => {

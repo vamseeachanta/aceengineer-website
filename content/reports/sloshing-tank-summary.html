@@ -1,0 +1,36 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive summary of published tank-sloshing CFD, analytical targets, and convergence evidence.">
+  <title>Tank Sloshing Evidence Summary — AceEngineer</title>
+  <include src="partials/head-common.html"></include>
+  <link rel="stylesheet" href="{{ rootPath }}assets/css/sloshing-reports.css">
+  <script src="{{ rootPath }}assets/js/plotly-2.32.0.min.js"></script>
+  <script defer src="{{ rootPath }}assets/js/sloshing-reports.js"></script>
+</head><body>
+  <include src="partials/nav.html"></include>
+  <main class="sloshing-report" data-sloshing-report data-report-kind="summary" data-manifest-url="../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
+    <header class="sloshing-header"><p class="report-kicker">CFD study · OpenFOAM · free surface + forced roll</p><h1>Tank Sloshing — Engineering Evidence Report</h1><p>What the completed runs establish, where the response is strongest, and which conclusions remain bounded by the published evidence.</p><div class="report-verdict"><strong>Reviewed public release</strong><span>15 accepted cases · analytical verification · forced-roll response · mesh QA</span></div></header><div class="sloshing-nav-wrap"><include src="partials/sloshing-capability-nav.html"></include></div>
+    <div class="sloshing-shell">
+      <noscript><p class="noscript-notice">Interactive curve controls require JavaScript. The methodology and publication boundaries remain available below.</p></noscript>
+      <p class="report-status" data-report-status role="status" aria-live="polite">Loading the reviewed public release…</p><div class="report-error" data-report-error role="alert" hidden></div>
+      <fieldset class="report-controls"><legend>Summary display and print controls</legend><div class="control-grid">
+        <label>Reference case<select data-state-field="case" aria-label="Published CFD case"><option>Loading…</option></select></label>
+        <label>Loading condition<select data-state-field="loading_condition" aria-label="Loading condition"><option>Loading…</option></select></label>
+        <label>Period<select data-state-field="period" aria-label="Roll period"><option>Loading…</option></select></label>
+        <label>Mesh<select data-state-field="mesh" aria-label="Mesh resolution"><option>Loading…</option></select></label>
+        <label>Theme<select data-state-field="theme"><option value="light">Light</option><option value="contrast">High contrast</option></select></label>
+        <label>Line weight<select data-state-field="lines"><option value="normal">Normal</option><option value="heavy">Heavy</option></select></label>
+        <label>Markers<select data-state-field="markers"><option value="on">Shown</option><option value="off">Hidden</option></select></label>
+        <label>Density<select data-state-field="density"><option value="comfortable">Comfortable</option><option value="compact">Compact</option></select></label>
+      </div><fieldset class="curve-choices"><legend>Select published curves</legend><div data-curve-controls class="curve-control-grid"><span>Loading curve controls…</span></div></fieldset><div class="report-actions" aria-label="Chart export"><button type="button" data-export="png">Export PNG</button><button type="button" data-export="svg">Export SVG</button><button type="button" data-reset>Reset report</button></div></fieldset>
+      <section class="report-panel report-lead" data-report-section="overview"><p class="section-number">01 · Executive reading</p><h2>What this study establishes</h2><p>The free-decay cases test the numerical model against the analytical first-mode frequency. The forced-roll sweep then measures the response across loading periods; mesh comparison and solver audit qualify how strongly those results may be used.</p><div class="study-kpis" data-study-kpis><div><strong>Loading…</strong><span>Study evidence</span></div></div><div class="engineering-verdict" data-study-verdict><strong>Engineering verdict.</strong> Loading the reviewed evidence…</div></section>
+      <section class="report-panel" data-report-section="plots"><p class="section-number">02 · Response evidence</p><h2>Where the forced-roll response peaks</h2><p>Use the curve controls to compare absolute response, response normalized per degree of roll, and the free-decay analytical target. Curves retain their evidence class and are not blended into a single validation claim.</p><div class="evidence-key"><span>Accepted CFD</span><span class="methodology">Methodology only</span><span class="verification">Verification only</span></div><div class="plot" data-plot role="img" aria-label="Interactive comparison of published sloshing curves; equivalent values follow in a table"></div><div class="finding-grid" data-study-findings></div></section>
+      <section class="report-panel" data-report-section="data"><h2>Accessible chart data</h2><table class="accessible-data" data-accessible-table><caption>Values represented in the selected summary chart</caption><thead><tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">Unit</th></tr></thead><tbody></tbody></table></section>
+      <section class="report-panel"><p class="section-number">04 · Interpretation boundary</p><h2>What the evidence does—and does not—support</h2><div class="method-grid"><div><h3>Supported</h3><p>Frequency agreement, period-dependent forced-roll response, normalized response comparisons, aggregate loads, and the published numerical QA disposition.</p></div><div><h3>Not yet supported</h3><p>Full-cycle field animation, sectional tank-wall loads, private geometry reconstruction, or a vessel-level anti-roll benefit claim.</p></div><div><h3>Next decision-grade step</h3><p>Retain a full forcing cycle at the response peak, repeat the critical case with a sectional wall-patch model, and close the observed Courant-limit exceedance.</p></div></div></section>
+    </div>
+  </main><include src="partials/footer.html"></include>
+</body></html>

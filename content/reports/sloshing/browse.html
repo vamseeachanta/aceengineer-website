@@ -1,0 +1,36 @@
+---
+rootPath: "../../"
+---
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Browse every published tank sloshing CFD case by evidence depth, loading, mesh, media, and QA status.">
+  <title>Browse Tank Sloshing CFD Results — AceEngineer</title>
+  <include src="partials/head-common.html"></include>
+  <link rel="stylesheet" href="{{ rootPath }}assets/css/sloshing-browser.css">
+  <script defer src="{{ rootPath }}assets/js/sloshing-browser.js"></script>
+</head><body>
+  <include src="partials/nav.html"></include>
+  <main class="slosh-capability browser-page" data-sloshing-browser data-manifest-url="../../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
+    <header class="cap-hero compact"><p class="cap-kicker">Tank sloshing · complete public catalog</p><h1>Browse all CFD cases</h1><p class="cap-lede">Filter the reviewed release, inspect evidence maturity, and open a stable case or media link for subject-matter review.</p></header>
+    <include src="partials/sloshing-capability-nav.html"></include>
+    <div class="browser-shell">
+      <noscript><p class="browser-alert">JavaScript is required to load the pinned case catalog.</p></noscript>
+      <p class="browser-status" data-browser-status role="status" aria-live="polite">Loading the reviewed catalog…</p><div class="browser-alert" data-browser-error role="alert" hidden></div>
+      <form class="browser-filters" data-browser-filters>
+        <label>Evidence depth<select name="depth"><option value="all">All tiers</option><option value="detailed">Detailed</option><option value="standard">Standard</option><option value="simple">Simple</option></select></label>
+        <label>Loading<select name="loading"><option value="all">All loading</option></select></label>
+        <label>Mesh<select name="mesh"><option value="all">All meshes</option></select></label>
+        <label>Media<select name="media"><option value="all">Any media</option><option value="video">Video available</option><option value="image">Image available</option><option value="none">No case media</option></select></label>
+        <label>QA status<select name="qa"><option value="all">All QA states</option></select></label>
+        <label class="search-filter">Find a case<input name="q" type="search" placeholder="Case ID, period, family…" autocomplete="off"></label>
+        <button type="reset">Reset filters</button>
+      </form>
+      <div class="browser-summary"><strong data-result-count>0 cases</strong><span data-release-identity></span></div>
+      <section class="case-grid" data-case-grid aria-label="Published CFD cases"></section>
+      <section class="browser-empty" data-browser-empty hidden><h2>No cases match this view</h2><p>Reset the filters or broaden the evidence, media, and QA selections.</p></section>
+      <section class="browser-method"><h2>How evidence depth is assigned</h2><div class="tier-grid"><div><strong>Detailed</strong><p>Inputs, mesh QA, histories, derived metrics, selected-case visual, and detailed field sequence.</p></div><div><strong>Standard</strong><p>Inputs, numerical results, derived metrics, and a selected-case snapshot.</p></div><div><strong>Simple</strong><p>Reviewed summary metrics without a complete selected-case field record.</p></div></div><p>Video availability is displayed independently. A retained final-window video is not a full-cycle animation and does not upgrade an incomplete engineering record.</p></section>
+    </div>
+  </main>
+  <include src="partials/footer.html"></include>
+</body></html>

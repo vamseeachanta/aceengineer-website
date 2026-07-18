@@ -1,0 +1,37 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Source-neutral CFD input, mesh-quality, visual-evidence, and QA analysis for published tank-sloshing cases.">
+  <title>Tank Sloshing CFD QA Analysis — AceEngineer</title>
+  <include src="partials/head-common.html"></include>
+  <link rel="stylesheet" href="{{ rootPath }}assets/css/sloshing-reports.css">
+  <script src="{{ rootPath }}assets/js/plotly-2.32.0.min.js"></script>
+  <script defer src="{{ rootPath }}assets/js/sloshing-reports.js"></script>
+</head><body>
+  <include src="partials/nav.html"></include>
+  <main class="sloshing-report" data-sloshing-report data-report-kind="analysis" data-manifest-url="../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
+    <header class="sloshing-header"><p class="report-kicker">Numerical assurance · model inputs · field evidence</p><h1>Tank Sloshing CFD QA Analysis</h1><p>Can the selected result be trusted for its stated purpose? This report connects setup, mesh, solver behavior, visual evidence, and an explicit disposition.</p></header><div class="sloshing-nav-wrap"><include src="partials/sloshing-capability-nav.html"></include></div>
+    <div class="sloshing-shell">
+      <noscript><p class="noscript-notice">Case-specific QA values require JavaScript. No private geometry or unpublished solver artifact is embedded in this page.</p></noscript>
+      <p class="report-status" data-report-status role="status" aria-live="polite">Loading the reviewed public release…</p><div class="report-error" data-report-error role="alert" hidden></div>
+      <fieldset class="report-controls"><legend>Published CFD case</legend><div class="control-grid">
+        <label>CFD case<select data-state-field="case" aria-label="Published CFD case"><option>Loading…</option></select></label>
+        <label>Loading condition<select data-state-field="loading_condition" aria-label="Loading condition"><option>Loading…</option></select></label>
+        <label>Period<select data-state-field="period" aria-label="Roll period"><option>Loading…</option></select></label>
+        <label>Mesh<select data-state-field="mesh" aria-label="Mesh resolution"><option>Loading…</option></select></label>
+        <label>Theme<select data-state-field="theme"><option value="light">Light</option><option value="contrast">High contrast</option></select></label>
+        <label>Line weight<select data-state-field="lines"><option value="normal">Normal</option><option value="heavy">Heavy</option></select></label>
+        <label>Markers<select data-state-field="markers"><option value="on">Shown</option><option value="off">Hidden</option></select></label>
+      </div><div class="report-actions"><button type="button" data-reset>Reset report</button></div></fieldset>
+      <section class="report-panel report-lead" data-report-section="overview"><p class="section-number">01 · QA verdict</p><h2>Numerical assurance at a glance</h2><div class="study-kpis" data-case-kpis><div><strong>Loading…</strong><span>Selected case</span></div></div><div class="engineering-verdict" data-case-verdict><strong>QA verdict.</strong> Loading the independent audit…</div></section>
+      <section class="report-panel" data-report-section="overview"><p class="section-number">02 · Model definition</p><h2>Input data</h2><dl class="qa-grid" data-qa-inputs><div><dt>Status</dt><dd>Loading…</dd></div></dl><p>Values are bounded public metadata, not raw case files or private tank dimensions.</p></section>
+      <section class="report-panel" data-report-section="overview"><p class="section-number">03 · Discretization</p><h2>Mesh and numerical-quality inputs</h2><dl class="qa-grid" data-qa-mesh><div><dt>Status</dt><dd>Loading…</dd></div></dl></section>
+      <section class="report-panel" data-report-section="plots"><p class="section-number">04 · Field evidence</p><h2>Reviewed animation or snapshot</h2><div class="qa-preview" data-qa-preview><p>No reviewed animation preview is published for this case.</p></div><p>Representative 1080p videos are available for T16, T22, T26, and fine T24. They show the actual final 2.5-second saved-field window beside synchronized complete-run response graphs; no temporal interpolation is used. Visual media appears only when a committed, source-neutral asset and SHA-256 provenance record exist in the public release.</p></section>
+      <section class="report-panel" data-report-section="data"><h2>Detailed CFD QA results</h2><table class="accessible-data" data-accessible-table data-qa-results><caption>Published QA metrics and dispositions for the selected case</caption><thead><tr><th scope="col">Quantity</th><th scope="col">Value</th><th scope="col">Unit</th><th scope="col">Statistic</th><th scope="col">QA status</th></tr></thead><tbody></tbody></table><p class="qa-legend"><strong>Configured limit exceeded</strong> is retained visibly; it is not silently converted to a passing result.</p></section>
+      <section class="report-panel"><h2>Scope boundary</h2><p>This report does not publish private geometry, raw solver paths, or unpublished animation frames.</p><p><a href="sloshing-cfd-case.html">Open detailed response histories</a> · <a href="sloshing-tank-summary.html">Open normalized cross-case summary</a></p></section>
+    </div>
+  </main><include src="partials/footer.html"></include>
+</body></html>

@@ -1,0 +1,19 @@
+---
+rootPath: "../../"
+---
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Compare any two published tank-sloshing CFD cases with compatibility warnings, common metrics, normalized deltas and traceable provenance.">
+  <title>Tank Sloshing CFD Comparison — AceEngineer</title><include src="partials/head-common.html"></include>
+  <link rel="stylesheet" href="{{ rootPath }}assets/css/sloshing-reports.css"><script src="{{ rootPath }}assets/js/plotly-2.32.0.min.js"></script><script src="{{ rootPath }}assets/js/sloshing-reports.js"></script><script defer src="{{ rootPath }}assets/js/sloshing-comparison.js"></script>
+</head><body><include src="partials/nav.html"></include>
+<main class="sloshing-report" data-sloshing-comparison data-manifest-url="../../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
+  <header class="sloshing-header"><p class="report-kicker">Case comparison · compatibility-aware · pinned evidence</p><h1>Tank Sloshing CFD Comparison</h1><p>Compare two published cases without confusing period, mesh, timestep, loading, or evidence-depth differences with solver validation.</p></header>
+  <div class="sloshing-nav-wrap"><include src="partials/sloshing-capability-nav.html"></include></div>
+  <div class="sloshing-shell"><p class="report-status" data-comparison-status role="status">Loading the reviewed release…</p><div class="report-error" data-comparison-error hidden role="alert"></div>
+    <fieldset class="report-controls"><legend>Select two accepted cases</legend><div class="comparison-selectors"><label>Case A<select data-case-select="A"><option>Loading…</option></select></label><label>Case B<select data-case-select="B"><option>Loading…</option></select></label></div><p class="export-note">The selected case IDs are stored in the URL for review and sharing.</p></fieldset>
+    <section class="report-panel report-lead"><p class="section-number">01 · Comparison qualification</p><h2>Are these cases comparable?</h2><div data-comparison-banners></div><table class="accessible-data"><caption>Selected case basis</caption><thead><tr><th>Basis</th><th>Case A</th><th>Case B</th></tr></thead><tbody data-basis-table></tbody></table></section>
+    <section class="report-panel"><p class="section-number">02 · Common evidence</p><h2>Published metric comparison</h2><p>Only quantities published for both cases with matching units are compared. Percentage deltas are suppressed where the Case A value is effectively zero.</p><div class="plot" data-comparison-plot role="img" aria-label="Common published metrics for selected sloshing cases"></div><table class="accessible-data"><caption>Common metrics and Case B minus Case A deltas</caption><thead><tr><th>Quantity</th><th>Unit</th><th>Case A</th><th>Case B</th><th>Δ</th><th>Δ%</th></tr></thead><tbody data-metric-table></tbody></table></section>
+    <section class="report-panel"><p class="section-number">03 · Interpretation</p><h2>How to describe the difference</h2><div class="engineering-verdict" data-comparison-verdict>Loading comparison type…</div><div class="method-grid"><div><h3>Mesh sensitivity</h3><p>Same loading and period with a different mesh supports a discretization comparison.</p></div><div><h3>Period response</h3><p>Same family and mesh with a different forcing period supports a response-curve comparison.</p></div><div><h3>Validation</h3><p>Free-decay cases compare measured frequency with the analytical fixture; completion alone is not validation.</p></div></div></section>
+    <section class="report-panel"><p class="section-number">04 · Provenance</p><h2>Data contract</h2><dl class="qa-grid" data-comparison-provenance></dl><p><a href="validation.html">Open the stable validation fixture</a> · <a href="browse.html">Browse all cases</a></p></section>
+  </div>
+</main><include src="partials/footer.html"></include></body></html>

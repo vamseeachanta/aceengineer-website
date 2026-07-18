@@ -1,0 +1,4 @@
+family_class,status,count,reason_code
+unsupported_claim_family,not_published,1,unsupported_model_claim
+incomplete_run_family,not_published,10,incomplete_solver_run
+verification_family,verification_only,1,verification_scope_only

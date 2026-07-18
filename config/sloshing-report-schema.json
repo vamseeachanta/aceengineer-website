@@ -10,9 +10,9 @@
       "primary_key": ["case_id"],
       "columns": ["case_id", "evidence_type", "status", "study_axis", "loading_condition", "mesh", "mesh_cells", "period_s", "frequency_hz", "timestep_s", "cycles", "configured_max_courant", "configured_max_alpha_courant", "excitation", "geometry_basis", "solver_class"],
       "enums": {
-        "evidence_type": ["cfd_validation", "cfd_forced_roll"],
+        "evidence_type": ["cfd_validation", "cfd_forced_roll", "cfd_static"],
         "status": ["accepted"],
-        "loading_condition": ["free_decay", "forced_roll"]
+        "loading_condition": ["free_decay", "forced_roll", "stationary"]
       }
     },
     "case_catalog": {
@@ -51,13 +51,13 @@
       "primary_key": ["case_id"],
       "foreign_keys": { "case_id": "cases.case_id" },
       "columns": ["case_id", "mesh_cells", "mesh_points", "mesh_regions", "mesh_check", "evaluated_state", "max_aspect_ratio", "max_non_orthogonality_deg", "average_non_orthogonality_deg", "max_skewness", "minimum_cell_determinant", "minimum_face_interpolation_weight", "minimum_face_volume_ratio", "minimum_cell_volume_m3", "maximum_cell_volume_m3", "total_domain_volume_m3", "sectional_face_zones_available"],
-      "enums": { "mesh_check": ["passed"], "evaluated_state": ["final_deformed_mesh"] }
+      "enums": { "mesh_check": ["passed"], "evaluated_state": ["final_deformed_mesh", "initial_mesh"] }
     },
     "qa_audit": {
       "primary_key": ["case_id"],
       "foreign_keys": { "case_id": "cases.case_id" },
       "columns": ["case_id", "completion_marker", "end_time_s", "configured_max_courant", "observed_max_courant", "observed_max_courant_time_s", "courant_median", "courant_p95", "courant_target_exceeded", "courant_steps_above_target", "courant_step_count", "pressure_probe_count", "pressure_times_per_probe", "pressure_row_count", "aggregate_load_row_count", "output_interval_s", "all_reduced_values_finite", "exchange_cycle_change_pct", "moment_cycle_change_pct", "declared_exchange_limit_pct", "declared_moment_limit_pct", "cycle_converged", "exchange_change_from_prior_fine_pct", "roll_moment_change_from_prior_fine_pct", "max_courant_change_from_prior_fine_pct", "qa_status"],
-      "enums": { "qa_status": ["publish_with_courant_caveat"] }
+      "enums": { "qa_status": ["publish_with_courant_caveat", "accepted_cycle_converged", "accepted_static_baseline"] }
     },
     "series": {
       "primary_key": ["series_id"],

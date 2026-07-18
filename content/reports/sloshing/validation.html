@@ -23,7 +23,7 @@ rootPath: "../../"
     <main class="wrap">
       <section class="verdict">
         <h2>Engineering disposition</h2>
-        <p><strong>The published solver reproduces the rectangular-tank first-mode frequency within 0.2964–0.3264% across seven accepted free-decay cases.</strong> The forced-roll cases are suitable for comparative screening within the published model and loading envelope. This is verification evidence, not full vessel validation.</p>
+        <p><strong>The published solver reproduces the rectangular-tank first-mode frequency within 0.2964–0.3264% across seven accepted free-decay cases.</strong> The stationary baseline, refined forced-roll sweep, complete-cycle fields, and sectional reconstruction support comparative screening within the published model and loading envelope. This is verification evidence, not full vessel validation.</p>
       </section>
       <section aria-labelledby="fixture-scope">
         <h2 id="fixture-scope">Validation fixture at a glance</h2>
@@ -44,8 +44,8 @@ rootPath: "../../"
         </div>
       </section>
       <section class="caution">
-        <h2>Numerical caveat retained</h2>
-        <p>The pressure follow-on configured a maximum Courant number of 0.35 but observed 0.47841479. It completed, produced finite reduced values, and met its declared cycle-change limits (0.137055% exchange and 0.0405694% moment), but its release disposition remains <code>publish_with_courant_caveat</code>. A reviewer should not reinterpret that case as an unqualified numerical pass.</p>
+        <h2>Numerical caveat retained and reduced</h2>
+        <p>The original pressure follow-on configured a maximum Courant number of 0.35 but observed 0.47841479. The new fine rerun tightened the target to 0.25 and reduced the observed maximum to <strong>0.32648391</strong>, with 0.00280% volume drift and final-cycle changes below 0.08%. It completed and converged, but still exceeded its configured target; both records therefore retain <code>publish_with_courant_caveat</code>.</p>
       </section>
       <section>
         <h2>Evidence matrix</h2>
@@ -53,17 +53,18 @@ rootPath: "../../"
           <tr><td>Is the natural frequency reproduced?</td><td>Seven free-decay cases vs. 0.758054 Hz analytical target</td><td>First-mode frequency verification</td><td>Linear rectangular-tank theory only</td></tr>
           <tr><td>Is the result stable with timestep?</td><td>0.001 s and 0.004 s free-decay cases</td><td>Frequency sensitivity check</td><td>Two timestep levels</td></tr>
           <tr><td>Is mesh dependence quantified?</td><td>Five free-decay meshes; two forced-roll meshes at 24 s</td><td>Screening-grade mesh evidence</td><td>No demonstrated asymptotic convergence order</td></tr>
-          <tr><td>Is the pressure follow-on numerically qualified?</td><td>Completion, finite-value, cycle-change, and Courant audit</td><td>Qualified comparative use</td><td>Courant target exceeded; aggregate wall patch only</td></tr>
+          <tr><td>Is the pressure follow-on numerically qualified?</td><td>Original and tighter-Courant completion, conservation, cycle-change, and Courant audits</td><td>Qualified comparative use</td><td>Configured Courant target remains exceeded</td></tr>
+          <tr><td>Are sectional loads internally consistent?</td><td>24 s left/right wall-patch histories reconstruct the 9.677 MN·m aggregate harmonic amplitude</td><td>Sectional load review within the disclosed patch split</td><td>Not a structural stress or local impact-pressure validation</td></tr>
         </tbody></table>
       </section>
       <section>
         <h2>What this fixture does not validate</h2>
-        <p>It does not establish full-scale vessel behavior, structural stress, sectional wall loads, air-entrainment fidelity, impact-pressure convergence, or anti-roll performance. Those require purpose-specific experimental or field benchmarks and additional numerical qualification.</p>
+        <p>It does not establish full-scale vessel behavior, structural stress, air-entrainment fidelity, local impact-pressure convergence, response at other fill levels or amplitudes, or anti-roll performance. Those require purpose-specific experimental or field benchmarks and additional numerical qualification.</p>
       </section>
       <section>
         <h2>Traceability</h2>
         <p>Dataset: <a href="https://huggingface.co/datasets/aceengineer/digitalmodel-sloshing/tree/d9ff6967021755156c3daa35f93e6385f672b257"><code>aceengineer/digitalmodel-sloshing</code> at revision <code>d9ff6967021755156c3daa35f93e6385f672b257</code></a>.</p>
-        <p>Website release digest: <code>1d0b2a0b85c9e0c6013e71e3df1a548a1a31b09407552c14971ab10a6a1cf8e1</code>. Primary fixture tables: <code>cases.csv</code>, <code>metrics.csv</code>, <code>studies.csv</code>, and <code>qa_audit.csv</code>.</p>
+        <p>Website release digest: <code>2beb29f9f5cf783dbd1cc1ef6b2b9389c8e69392954d3080d032b9942924e23b</code>. Primary fixture tables: <code>cases.csv</code>, <code>metrics.csv</code>, <code>derived_metrics.csv</code>, <code>studies.csv</code>, and <code>qa_audit.csv</code>.</p>
         <p class="source-note">This page is intentionally static and revision-pinned so its URL remains a consistent review fixture while interactive browsers and case selectors evolve.</p>
       </section>
     </main>

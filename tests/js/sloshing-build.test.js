@@ -70,7 +70,7 @@ describe('sloshing report build contract', () => {
     const summary = fs.readFileSync(path.join(root, 'content/reports/sloshing/index.html'), 'utf8');
     expect(summary).toContain('Tank Sloshing CFD Analysis');
     expect(summary).toContain('0.2964–0.3264%');
-    expect(summary).toContain('broad 22–24 second maximum');
+    expect(summary).toContain('local medium-mesh peak at 23 seconds');
     expect(summary).toContain('Published period sweep');
     expect(summary).toContain('Case-specific CFD evidence');
     expect(summary).toContain('Conclusions and limits');

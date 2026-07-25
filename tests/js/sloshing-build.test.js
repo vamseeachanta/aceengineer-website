@@ -77,4 +77,44 @@ describe('sloshing report build contract', () => {
     expect(summary).toContain('Data provenance');
     expect(summary).not.toContain('data-sloshing-browser');
   });
+
+  test('capability nav reaches both the interactive set and the standalone report layer', () => {
+    const nav = fs.readFileSync(path.join(root, 'content/partials/sloshing-capability-nav.html'), 'utf8');
+    for (const href of ['reports/sloshing/', 'reports/sloshing/study.html', 'reports/sloshing/validation.html', 'reports/sloshing/browse.html', 'reports/sloshing/analysis.html', 'reports/sloshing/comparison.html', 'reports/sloshing/dual-connected-tanks.html']) {
+      expect(nav).toContain(href);
+    }
+    for (const href of ['reports/sloshing-cfd-case.html', 'reports/sloshing-cfd-analysis.html', 'reports/sloshing-tank-summary.html']) {
+      expect(nav).toContain(href);
+    }
+    // Per-page "you are here" is data-driven via activeNav, not hard-coded.
+    expect(nav).toContain("activeNav === 'capability'");
+    expect(nav).toContain('Data &amp; provenance');
+  });
+
+  test('every page including the capability nav declares its activeNav slug', () => {
+    const pages = {
+      'reports/sloshing/index.html': 'capability',
+      'reports/sloshing/study.html': 'study',
+      'reports/sloshing/validation.html': 'validation',
+      'reports/sloshing/browse.html': 'browse',
+      'reports/sloshing/analysis.html': 'analysis',
+      'reports/sloshing/comparison.html': 'comparison',
+      'reports/sloshing/dual-connected-tanks.html': 'dual-tank',
+      'reports/sloshing-cfd-case.html': 'report-case',
+      'reports/sloshing-cfd-analysis.html': 'report-qa',
+      'reports/sloshing-tank-summary.html': 'report-summary',
+    };
+    for (const [rel, slug] of Object.entries(pages)) {
+      const html = fs.readFileSync(path.join(root, 'content', rel), 'utf8');
+      expect(html).toContain('<include src="partials/sloshing-capability-nav.html"');
+      expect(html).toContain(`activeNav: "${slug}"`);
+    }
+  });
+
+  test('the hub cross-links the standalone report layer', () => {
+    const hub = fs.readFileSync(path.join(root, 'content/reports/sloshing/index.html'), 'utf8');
+    expect(hub).toContain('../sloshing-cfd-case.html');
+    expect(hub).toContain('../sloshing-cfd-analysis.html');
+    expect(hub).toContain('../sloshing-tank-summary.html');
+  });
 });

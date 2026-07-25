@@ -131,6 +131,13 @@ async function processFile(filePath) {
     locals.rootPath = '';
   }
 
+  // Default the active-nav marker so shared navs can reference it safely on any
+  // page (strict expressions throw on undefined). Pages opt into highlighting by
+  // setting `activeNav: <slug>` in front matter; others render no current item.
+  if (locals.activeNav === undefined) {
+    locals.activeNav = '';
+  }
+
   // Expose canonical firm-copy to every page as `copy` (issue #9). Page-level
   // front matter still wins for any explicitly redefined key.
   if (locals.copy === undefined) {

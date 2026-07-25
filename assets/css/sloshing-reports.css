@@ -13,6 +13,10 @@
 .sloshing-nav-wrap .capability-report-nav { display:flex; flex-wrap:wrap; gap:.25rem; padding:0; }
 .sloshing-nav-wrap .capability-report-nav a { color:#e8f4fb; padding:.45rem .7rem; text-decoration:none; border:0; border-radius:.25rem; background:transparent; font-size:.9rem; }
 .sloshing-nav-wrap .capability-report-nav a:hover,.sloshing-nav-wrap .capability-report-nav a:focus-visible { color:#fff; background:#b54a18; }
+.sloshing-nav-wrap .capability-report-nav a[aria-current="page"] { color:#fff; background:#1d6f86; }
+.sloshing-nav-wrap .capability-report-nav .nav-group-label { align-self:center; padding:0 .3rem; color:#9db6c4; font-size:.66rem; font-weight:800; text-transform:uppercase; letter-spacing:.09em; }
+.sloshing-nav-wrap .capability-report-nav .nav-sep { align-self:center; flex:none; width:1px; height:1.3rem; background:rgba(255,255,255,.25); margin:0 .3rem; }
+.sloshing-nav-wrap .capability-report-nav .nav-ext { margin-left:auto; }
 .report-controls,.report-panel { background:var(--sr-panel); border:1px solid var(--sr-border); border-radius:.5rem; padding:1.25rem; margin-bottom:1.5rem; }
 .control-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; }
 .control-grid label { display:block; font-weight:700; }

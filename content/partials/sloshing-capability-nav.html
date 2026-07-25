@@ -1,9 +1,16 @@
 <nav class="capability-report-nav" aria-label="Tank sloshing report navigation">
-  <a href="{{ rootPath }}reports/sloshing/">Capability</a>
-  <a href="{{ rootPath }}reports/sloshing/study.html">Study</a>
-  <a href="{{ rootPath }}reports/sloshing/validation.html">Validation</a>
-  <a href="{{ rootPath }}reports/sloshing/browse.html">Browse results</a>
-  <a href="{{ rootPath }}reports/sloshing/analysis.html">Case report</a>
-  <a href="{{ rootPath }}reports/sloshing/comparison.html">Compare cases</a>
-  <a href="https://huggingface.co/datasets/aceengineer/digitalmodel-sloshing/tree/d9ff6967021755156c3daa35f93e6385f672b257" rel="noopener">Data &amp; provenance</a>
+  <span class="nav-group-label" aria-hidden="true">Explore</span>
+  <a href="{{ rootPath }}reports/sloshing/" aria-current="{{ activeNav === 'capability' ? 'page' : 'false' }}">Capability</a>
+  <a href="{{ rootPath }}reports/sloshing/study.html" aria-current="{{ activeNav === 'study' ? 'page' : 'false' }}">Study</a>
+  <a href="{{ rootPath }}reports/sloshing/validation.html" aria-current="{{ activeNav === 'validation' ? 'page' : 'false' }}">Validation</a>
+  <a href="{{ rootPath }}reports/sloshing/browse.html" aria-current="{{ activeNav === 'browse' ? 'page' : 'false' }}">Browse results</a>
+  <a href="{{ rootPath }}reports/sloshing/analysis.html" aria-current="{{ activeNav === 'analysis' ? 'page' : 'false' }}">Case report</a>
+  <a href="{{ rootPath }}reports/sloshing/comparison.html" aria-current="{{ activeNav === 'comparison' ? 'page' : 'false' }}">Compare cases</a>
+  <a href="{{ rootPath }}reports/sloshing/dual-connected-tanks.html" aria-current="{{ activeNav === 'dual-tank' ? 'page' : 'false' }}">Dual tanks</a>
+  <span class="nav-sep" aria-hidden="true"></span>
+  <span class="nav-group-label" aria-hidden="true">Reports</span>
+  <a href="{{ rootPath }}reports/sloshing-cfd-case.html" aria-current="{{ activeNav === 'report-case' ? 'page' : 'false' }}">Individual report</a>
+  <a href="{{ rootPath }}reports/sloshing-cfd-analysis.html" aria-current="{{ activeNav === 'report-qa' ? 'page' : 'false' }}">QA analysis</a>
+  <a href="{{ rootPath }}reports/sloshing-tank-summary.html" aria-current="{{ activeNav === 'report-summary' ? 'page' : 'false' }}">Summary report</a>
+  <a class="nav-ext" href="https://huggingface.co/datasets/aceengineer/digitalmodel-sloshing/tree/d9ff6967021755156c3daa35f93e6385f672b257" rel="noopener">Data &amp; provenance</a>
 </nav>

@@ -4,7 +4,6 @@
 Reads config/seo/standards.yaml and emits:
   - content/standards/<slug>.html      one cluster page per standard
   - content/standards/index.html       the cluster hub
-  - sitemap.xml                         refreshes the marked generated block
 
 The generated pages are committed (the repo builds content/ -> dist/). Re-run
 after editing the manifest:
@@ -28,11 +27,8 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = ROOT / "config" / "seo" / "standards.yaml"
 OUT_DIR = ROOT / "content" / "standards"
-SITEMAP = ROOT / "sitemap.xml"
 BASE = "https://www.aceengineer.com"
 
-SITE_BEGIN = "  <!-- BEGIN standards (generated) -->"
-SITE_END = "  <!-- END standards (generated) -->"
 
 
 def esc(text: str) -> str:
@@ -293,35 +289,6 @@ rootPath: "../"
 """
 
 
-def sitemap_block(standards: list[dict]) -> str:
-    rows = [SITE_BEGIN]
-    rows.append("  <url>")
-    rows.append(f"    <loc>{BASE}/standards/</loc>")
-    rows.append("    <lastmod>2026-06-17</lastmod>")
-    rows.append("    <changefreq>weekly</changefreq>")
-    rows.append("    <priority>0.8</priority>")
-    rows.append("  </url>")
-    for s in standards:
-        rows.append("  <url>")
-        rows.append(f"    <loc>{BASE}/standards/{s['slug']}.html</loc>")
-        rows.append("    <lastmod>2026-06-17</lastmod>")
-        rows.append("    <changefreq>monthly</changefreq>")
-        rows.append("    <priority>0.7</priority>")
-        rows.append("  </url>")
-    rows.append(SITE_END)
-    return "\n".join(rows)
-
-
-def update_sitemap(standards: list[dict]) -> None:
-    text = SITEMAP.read_text()
-    block = sitemap_block(standards)
-    if SITE_BEGIN in text and SITE_END in text:
-        pre = text.split(SITE_BEGIN)[0]
-        post = text.split(SITE_END, 1)[1]
-        text = pre + block + post
-    else:
-        text = text.replace("</urlset>", block + "\n</urlset>")
-    SITEMAP.write_text(text)
 
 
 def main() -> None:
@@ -332,10 +299,8 @@ def main() -> None:
     for s in standards:
         (OUT_DIR / f"{s['slug']}.html").write_text(render_page(s))
     (OUT_DIR / "index.html").write_text(render_index(standards))
-    update_sitemap(standards)
 
     print(f"generated {len(standards)} standard pages + index into {OUT_DIR.relative_to(ROOT)}")
-    print("sitemap.xml updated")
 
 
 if __name__ == "__main__":

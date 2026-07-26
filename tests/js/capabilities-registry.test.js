@@ -165,7 +165,10 @@ describe('release-backed capabilities', () => {
 // 200 while being wholly absent from sitemap.xml, so search engines never saw them; this
 // ties the sitemap to the registry rather than to anyone remembering to edit both.
 describe('capability discoverability', () => {
-  const sitemap = fs.readFileSync(path.join(repoRoot, 'sitemap.xml'), 'utf8');
+  // Reads the GENERATED sitemap (dist/sitemap.xml, #85), not a hand-maintained file —
+  // this asserts against the artifact actually served. `npm run build` runs before
+  // `npm test` in CI.
+  const sitemap = fs.readFileSync(path.join(repoRoot, 'dist', 'sitemap.xml'), 'utf8');
   const surfaced = loadRegistry(DEFAULT_REGISTRY).capabilities.filter(c => c.status !== 'withheld');
   const generated = surfaced.filter(c => c.backing !== 'release');
   const released = surfaced.filter(c => c.backing === 'release');
@@ -186,7 +189,13 @@ describe('capability discoverability', () => {
 
   test('no sitemap entry points at a capability that is withheld, absent, or release-backed', () => {
     const listed = [...sitemap.matchAll(/capabilities\/([a-z0-9-]+)\.html/g)].map(m => m[1]);
-    const allowed = new Set(generated.map(c => c.id));
+    // Interactive surfaces declared by a capability (`experiences`) are real pages under
+    // /capabilities/ without being registry ids of their own, so they are allowed too.
+    const experiencePages = surfaced
+      .flatMap(c => c.experiences || [])
+      .map(x => (x.url.match(/capabilities\/([a-z0-9-]+)\.html/) || [])[1])
+      .filter(Boolean);
+    const allowed = new Set([...generated.map(c => c.id), ...experiencePages]);
     expect(listed.filter(id => !allowed.has(id))).toEqual([]);
   });
 });

@@ -12,6 +12,31 @@ const { renderCards, capabilityDetailDocument, detailFileName, isReleaseBacked }
 const srcDir = './content';
 const distDir = './dist';
 
+// Canonical origin (#85). vercel.json 301s the apex to www, so every self-referencing
+// URL the site emits — canonical, og:url, sitemap — must already be on www or the
+// crawler takes a redirect hop to reach it.
+const SITE_ORIGIN = 'https://www.aceengineer.com';
+
+// Pages excluded from the sitemap, with the reason. These are `noindex` redirect
+// stubs for reports that were consolidated: they canonicalise to their replacement,
+// so listing them would advertise URLs we are actively telling crawlers to ignore.
+// Shared with the reachability allowlist when #81 lands — one list, two consumers.
+const SITEMAP_EXCLUDE = {
+  '404.html': 'error page — not a destination',
+  'reports/diffraction/aqwa-analysis.html': 'noindex redirect stub -> analysis.html',
+  'reports/diffraction/orcawave-analysis.html': 'noindex redirect stub -> analysis.html',
+  'reports/diffraction/orcawave-aqwa-comparison.html': 'noindex redirect stub -> comparison.html',
+};
+
+// Turn a dist-relative path into the canonical absolute URL. Directory index pages
+// canonicalise to the directory ("/blog/", not "/blog/index.html") so the site has
+// one URL per page rather than two that serve identical bytes.
+function canonicalUrlFor(relPath) {
+  let p = String(relPath).split(path.sep).join('/');
+  if (p.endsWith('index.html')) p = p.slice(0, -'index.html'.length);
+  return `${SITE_ORIGIN}/${p}`;
+}
+
 // Rendered capability cards (C3, #51), computed once at build start from the hydrated
 // registry and injected into every page as the `capabilitiesCards` template local.
 let _capabilitiesCards = '';
@@ -149,6 +174,13 @@ async function processFile(filePath) {
   if (locals.capabilitiesCards === undefined) {
     locals.capabilitiesCards = _capabilitiesCards;
   }
+
+  // Canonical URL (#85). Derived from the output path so it can't drift from where
+  // the page actually lands. Pages that are duplicates of another URL (the report
+  // redirect stubs) override it with `canonicalPath` in front matter.
+  if (locals.canonicalUrl === undefined) {
+    locals.canonicalUrl = canonicalUrlFor(locals.canonicalPath || relativePath);
+  }
   if (locals.sloshingAssetPath === undefined && _sloshingRelease) {
     locals.sloshingAssetPath = _sloshingRelease.assetPath;
   }
@@ -184,7 +216,11 @@ async function buildCapabilityDetailPages(registry) {
   const renderedAt = new Date().toISOString().slice(0, 10);
   for (const cap of generated) {
     const doc = capabilityDetailDocument(cap, caps, { renderedAt });
-    const html = await renderHtml(doc, { rootPath: '../', copy: loadCopy() });
+    const html = await renderHtml(doc, {
+      rootPath: '../',
+      copy: loadCopy(),
+      canonicalUrl: canonicalUrlFor(`capabilities/${detailFileName(cap)}`),
+    });
     fs.writeFileSync(path.join(outDir, detailFileName(cap)), html);
     console.log(`Built: capabilities/${detailFileName(cap)}`);
   }
@@ -202,15 +238,71 @@ function copyAssets() {
   }
 }
 
-// Copy sitemap.xml from repo root into dist/ so Vercel serves it
-function copySitemap(srcFile = './sitemap.xml', destDirArg = distDir) {
-  const dest = path.join(destDirArg, 'sitemap.xml');
-  if (fs.existsSync(srcFile)) {
-    fs.copyFileSync(srcFile, dest);
-    console.log('Copied: sitemap.xml');
-  } else {
-    console.warn('sitemap.xml not found at repo root; skipping');
+// Last commit date for a source file, as YYYY-MM-DD. Used for sitemap <lastmod> so the
+// date reflects when the page actually changed rather than when the site was rebuilt —
+// a build-time stamp would tell crawlers every page changed on every deploy. Returns
+// null outside a git checkout (shallow CI clones, tarball builds), in which case the
+// entry ships without a lastmod, which is valid and honest.
+function gitLastModified(sourceFile) {
+  try {
+    const { execFileSync } = require('child_process');
+    const out = execFileSync('git', ['log', '-1', '--format=%cs', '--', sourceFile],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    return /^\d{4}-\d{2}-\d{2}$/.test(out) ? out : null;
+  } catch {
+    return null;
   }
+}
+
+// Every built page, dist-relative, sorted — the input to the sitemap.
+function builtPages(dir = distDir, base = dir, out = []) {
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) builtPages(p, base, out);
+    else if (e.name.endsWith('.html')) out.push(path.relative(base, p).split(path.sep).join('/'));
+  }
+  return out.sort();
+}
+
+// Which source file produced a built page — for the lastmod lookup. Generated pages
+// (capability details, the drill-down) have no 1:1 source, so they fall back to the
+// generator that produces them.
+function sourceFileFor(relPath) {
+  const direct = path.join(srcDir, relPath);
+  if (fs.existsSync(direct)) return direct;
+  if (relPath.startsWith('capabilities/')) return './config/capabilities.yaml';
+  return null;
+}
+
+// Generate sitemap.xml from the build output (#85).
+//
+// Replaces the hand-maintained file, which had drifted badly: it listed /samples/
+// (not built) and omitted 13 built pages including every capability page, so
+// everything shipped since the capability work was invisible to search. Deriving it
+// from dist/ means a new page is listed the moment it builds.
+function writeSitemap(destDirArg = distDir) {
+  const pages = builtPages(destDirArg).filter(p => !(p in SITEMAP_EXCLUDE));
+  const entries = pages.map(p => {
+    const lastmod = gitLastModified(sourceFileFor(p));
+    return [
+      '  <url>',
+      `    <loc>${canonicalUrlFor(p)}</loc>`,
+      ...(lastmod ? [`    <lastmod>${lastmod}</lastmod>`] : []),
+      '  </url>',
+    ].join('\n');
+  });
+  const xml = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<!-- Generated by build.js from dist/ — do not edit by hand (#85). -->',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...entries,
+    '</urlset>',
+    '',
+  ].join('\n');
+  fs.writeFileSync(path.join(destDirArg, 'sitemap.xml'), xml);
+  const skipped = Object.keys(SITEMAP_EXCLUDE).length;
+  console.log(`Generated: sitemap.xml — ${pages.length} URLs (${skipped} excluded)`);
+  return pages;
 }
 
 // Copy robots.txt from repo root into dist/ so Vercel serves it
@@ -284,7 +376,7 @@ async function build() {
 
   // Copy assets
   copyAssets();
-  copySitemap();
+  writeSitemap();
   copyRobotsTxt();
 
   console.log(`\nBuild complete! ${files.length} pages built.`);
@@ -371,4 +463,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease };
+module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, canonicalUrlFor, gitLastModified, SITE_ORIGIN, SITEMAP_EXCLUDE };

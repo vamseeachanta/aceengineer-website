@@ -4,8 +4,8 @@
  *
  * The drill-down (Field ▸ Block ▸ Bore) is an *interactive* surface, so it is not a
  * uniform capability table: it gets its own page at dist/capabilities/dc-drilldown.html.
- * Design comes from templates/dc-drilldown.html (the approved, self-contained page —
- * identical chrome to the worldenergydata copy); DATA comes from the committed HF
+ * Design comes from the committed template under scripts/templates/ (the approved,
+ * self-contained page, identical chrome to the worldenergydata copy); DATA comes from HF
  * snapshot of `dc_bores`, so the site keeps its offline, deterministic build and
  * Hugging Face remains the data home.
  *
@@ -16,7 +16,7 @@ const fs = require('fs');
 const path = require('path');
 
 const repoRoot = path.resolve(__dirname, '..');
-const TEMPLATE = path.join(repoRoot, 'templates', 'dc-drilldown.html');
+const TEMPLATE = path.join(__dirname, 'templates', 'dc-drilldown.html');
 const SNAPSHOT = path.join(
   repoRoot, 'data', 'hf-cache',
   'aceengineer__worldenergydata-explorer__dc_bores.json'

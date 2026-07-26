@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="description" content="Interactive drill-down through 253 Gulf of Mexico wellbores — field to block to bore, with drilling and completion days at every level.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>D&amp;C Drill-Down — Field ▸ Block ▸ Bore</title>
 <style>
+.skip-link{position:absolute;left:-9999px;top:0;z-index:1100;padding:10px 18px;background:#fff;color:#0e2733;border:2px solid #0e2733;border-radius:0 0 8px 0;font-weight:600;text-decoration:none}
+.skip-link:focus{left:0;outline:3px solid #0e7c8b;outline-offset:2px}
 :root{--bg:#eaeff2;--surface:#fff;--surface-2:#f3f7f9;--ink:#0e2733;--ink-soft:#48606b;
 --ink-faint:#7c929c;--line:#d8e3e8;--line-strong:#c3d3da;--accent:#0e7c8b;--accent-strong:#0a5f6c;
 --accent-wash:#e2f0f2;--ok:#2e8b6f;--ok-wash:#e2f1ec;--warn:#b3781a;--warn-wash:#f6ecdb;
@@ -136,6 +139,7 @@ footer.site a{color:var(--accent);text-decoration:none}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="wrap site-inner">
     <span class="wordmark">
@@ -158,6 +162,7 @@ footer.site a{color:var(--accent);text-decoration:none}
     </nav>
   </div>
 </header>
+<main id="main">
 
 <div class="wrap">
   <div class="crumb" id="crumb"></div>
@@ -207,6 +212,7 @@ footer.site a{color:var(--accent);text-decoration:none}
     <span class="item"><span class="sw" style="background:var(--ok)"></span>Reconciled / producer</span>
     <span class="item"><span class="sw" style="background:var(--warn)"></span>Open accounting question</span>
   </div>
+</main>
 
   <footer class="site">
     <div class="row">

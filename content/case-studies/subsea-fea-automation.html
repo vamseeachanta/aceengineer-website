@@ -192,6 +192,8 @@ rootPath: "../"
 
     <include src="partials/nav.html"></include>
 
+    <main id="main">
+
     <!-- Case Study Header -->
     <div class="case-study-header">
         <div class="container">
@@ -245,28 +247,28 @@ rootPath: "../"
         <h2 class="section-title">The Challenge</h2>
 
         <div class="challenge-box">
-            <h4>Manual Processing Bottleneck</h4>
+            <h3 class="h-size-h4">Manual Processing Bottleneck</h3>
             <p>
                 Engineers spent 3-5 days manually extracting stress results from NASTRAN output files for each equipment qualification. With 15-20 components requiring qualification per project, post-processing consumed 60-100 engineering days per project.
             </p>
         </div>
 
         <div class="challenge-box">
-            <h4>Error-Prone Workflow</h4>
+            <h3 class="h-size-h4">Error-Prone Workflow</h3>
             <p>
                 Manual data extraction and transcription led to an average of 2-3 errors per report, requiring extensive review cycles and occasional re-work after client submission. Quality assurance consumed an additional 20% of engineering time.
             </p>
         </div>
 
         <div class="challenge-box">
-            <h4>Inconsistent Documentation</h4>
+            <h3 class="h-size-h4">Inconsistent Documentation</h3>
             <p>
                 Different engineers produced reports with varying formats, making it difficult to compare results across projects and maintain consistent quality standards for regulatory submissions.
             </p>
         </div>
 
         <div class="challenge-box">
-            <h4>Scaling Constraints</h4>
+            <h3 class="h-size-h4">Scaling Constraints</h3>
             <p>
                 The company was winning more contracts but could not scale engineering capacity proportionally. Hiring additional FEA engineers was costly and the learning curve extended project timelines.
             </p>
@@ -278,7 +280,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">1</div>
             <div class="step-content">
-                <h4>Workflow Analysis & Requirements Gathering</h4>
+                <h3 class="h-size-h4">Workflow Analysis & Requirements Gathering</h3>
                 <p>
                     Shadowed senior engineers through their post-processing workflow to understand data extraction patterns, code check calculations, and reporting requirements. Documented 47 distinct data extraction patterns across 8 equipment types.
                 </p>
@@ -288,7 +290,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">2</div>
             <div class="step-content">
-                <h4>NASTRAN Parser Development</h4>
+                <h3 class="h-size-h4">NASTRAN Parser Development</h3>
                 <p>
                     Built a robust Python parser for NASTRAN .f06 and .op2 output files. The parser handles multiple solution sequences (SOL 101, 103, 106), extracts element stresses, nodal displacements, and reaction forces with automatic unit handling.
                 </p>
@@ -298,7 +300,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">3</div>
             <div class="step-content">
-                <h4>Code Check Engine Implementation</h4>
+                <h3 class="h-size-h4">Code Check Engine Implementation</h3>
                 <p>
                     Implemented automated code checks for API 17D and DNV-OS-F101 requirements, including von Mises stress allowables, linearized stress calculations for pressure vessels, and fatigue screening assessments. All calculations are fully traceable with intermediate results documented.
                 </p>
@@ -308,7 +310,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">4</div>
             <div class="step-content">
-                <h4>Interactive Report Generation</h4>
+                <h3 class="h-size-h4">Interactive Report Generation</h3>
                 <p>
                     Developed HTML report templates with Plotly-based interactive stress contour plots, tabular results with conditional formatting, and executive summaries with pass/fail indicators. Reports include all calculation backup for regulatory review.
                 </p>
@@ -318,7 +320,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">5</div>
             <div class="step-content">
-                <h4>Integration & Deployment</h4>
+                <h3 class="h-size-h4">Integration & Deployment</h3>
                 <p>
                     Deployed the pipeline as a command-line tool integrated with the company's project folder structure. Engineers simply point the tool at a NASTRAN output folder and receive complete qualification reports within minutes.
                 </p>
@@ -414,28 +416,28 @@ subsea-fea-pipeline/<br>
         <h2 class="section-title">Results</h2>
 
         <div class="result-box">
-            <h4>90% Time Reduction</h4>
+            <h3 class="h-size-h4">90% Time Reduction</h3>
             <p>
                 Post-processing time dropped from 3-5 days per component to 15-30 minutes. A complete qualification package for a subsea tree (12 components, 8 load cases) now takes 4 hours instead of 6 weeks.
             </p>
         </div>
 
         <div class="result-box">
-            <h4>Zero Manual Errors</h4>
+            <h3 class="h-size-h4">Zero Manual Errors</h3>
             <p>
                 Automated data extraction eliminated transcription errors entirely. In the first 6 months of deployment, zero errors were found in stress values or code check calculations across 180 generated reports.
             </p>
         </div>
 
         <div class="result-box">
-            <h4>Improved Throughput</h4>
+            <h3 class="h-size-h4">Improved Throughput</h3>
             <p>
                 Engineering team capacity increased from 8-10 qualification packages per month to 50+ per week. The same team now handles 20x the previous workload without overtime.
             </p>
         </div>
 
         <div class="result-box">
-            <h4>Consistent Quality</h4>
+            <h3 class="h-size-h4">Consistent Quality</h3>
             <p>
                 Standardized report format improved client satisfaction and reduced review comments by 75%. Regulatory submissions are now accepted on first submission in 95% of cases.
             </p>
@@ -565,6 +567,8 @@ subsea-fea-pipeline/<br>
         </p>
 
     </div>
+
+    </main>
 
     <include src="partials/footer.html"></include>
 

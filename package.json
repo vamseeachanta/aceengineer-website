@@ -87,6 +87,11 @@
         "testMatch": ["<rootDir>/tests/js/obs-calculator.test.js"]
       },
       {
+        "displayName": "a11y-baseline",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/a11y-baseline.test.js"]
+      },
+      {
         "displayName": "wall-thickness",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/wall-thickness.test.js"]

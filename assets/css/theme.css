@@ -7,7 +7,8 @@
 :root {
   --navy:      #0b3d5c;   /* primary / structure / links */
   --navy-2:    #0B3D91;   /* brighter logo navy */
-  --teal:      #2BB2A6;   /* signature accent */
+  --teal:      #2BB2A6;   /* signature accent (on light backgrounds) */
+  --teal-lift: #3FC4B8;   /* accent for TEXT on navy — #2BB2A6 is only 4.37:1 there (#87) */
   --teal-deep: #0e7e88;   /* accent rule / worldenergy domain */
   --blue:      #2364aa;   /* emphasis */
   --ink:       #26323a;   /* body text */
@@ -84,7 +85,7 @@
   background: var(--navy); color: #dceaf2; padding: 18px 22px;
   font-family: var(--font-mono); font-size: .9rem; line-height: 1.5;
 }
-.layers .depth .waterline-note { color: var(--teal); font-family: var(--font-ui); font-size: .78rem;
+.layers .depth .waterline-note { color: var(--teal-lift); font-family: var(--font-ui); font-size: .78rem;
   text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
 
 /* Deterministic pipeline strip (monospace flow) */

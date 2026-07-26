@@ -126,6 +126,8 @@ rootPath: "../"
 
     <include src="partials/nav.html"></include>
 
+    <main id="main">
+
     <!-- Hero Section -->
     <section class="case-study-hero">
         <div class="container">
@@ -216,31 +218,31 @@ rootPath: "../"
                     <h2>The Challenge: Manual Iteration Hell</h2>
 
                     <div class="challenge-item">
-                        <h4>Time-Consuming Setup</h4>
+                        <h3 class="h-size-h4">Time-Consuming Setup</h3>
                         <p>Each OrcaFlex model required 30 minutes of manual setup to modify geometry, buoyancy,
                         and environmental parameters. With 50 variations, setup alone would consume 25 engineer-hours.</p>
                     </div>
 
                     <div class="challenge-item">
-                        <h4>Results Extraction Bottleneck</h4>
+                        <h3 class="h-size-h4">Results Extraction Bottleneck</h3>
                         <p>Post-processing each simulation required 30 minutes to extract maximum stress, fatigue damage,
                         dynamic amplification factors, and create comparison plots. Another 25 engineer-hours for extraction.</p>
                     </div>
 
                     <div class="challenge-item">
-                        <h4>Knowledge Concentration Risk</h4>
+                        <h3 class="h-size-h4">Knowledge Concentration Risk</h3>
                         <p>Only two senior engineers had OrcaFlex expertise. Running sensitivity studies meant pulling
                         them from other billable projects, creating opportunity cost beyond direct labor.</p>
                     </div>
 
                     <div class="challenge-item">
-                        <h4>Client Timeline Pressure</h4>
+                        <h3 class="h-size-h4">Client Timeline Pressure</h3>
                         <p>The operator needed results within 2 weeks to meet their FEED milestone. Traditional
                         approach would barely fit the schedule with no margin for error or iteration.</p>
                     </div>
 
                     <div class="section-box" style="margin-top: 30px;">
-                        <h4>Traditional Cost Estimate</h4>
+                        <h3 class="h-size-h4">Traditional Cost Estimate</h3>
                         <table class="table">
                             <tr><td>Model Setup (50 configs x 30 min)</td><td style="text-align: right;">25 hours</td></tr>
                             <tr><td>Simulation Runtime</td><td style="text-align: right;">40 hours</td></tr>
@@ -267,31 +269,31 @@ rootPath: "../"
                     <h2>Our Solution: OrcaFlex Batch Automation</h2>
 
                     <div class="solution-item">
-                        <h4>Parametric Model Generation</h4>
+                        <h3 class="h-size-h4">Parametric Model Generation</h3>
                         <p>Python scripts read the design matrix Excel file and automatically generated all 50 OrcaFlex
                         model files with correct geometry, buoyancy distribution, and environmental loading combinations.</p>
                     </div>
 
                     <div class="solution-item">
-                        <h4>Overnight Batch Processing</h4>
+                        <h3 class="h-size-h4">Overnight Batch Processing</h3>
                         <p>All 50 simulations queued and executed overnight. Engineers submitted jobs at 6 PM; results
                         were waiting at 8 AM the next morning.</p>
                     </div>
 
                     <div class="solution-item">
-                        <h4>Automated Results Extraction</h4>
+                        <h3 class="h-size-h4">Automated Results Extraction</h3>
                         <p>Post-processing scripts extracted all required outputs (max stress, fatigue damage, effective
                         tension, curvature) and populated standardized comparison tables automatically.</p>
                     </div>
 
                     <div class="solution-item">
-                        <h4>Report Generation</h4>
+                        <h3 class="h-size-h4">Report Generation</h3>
                         <p>Final deliverable compiled automatically with sensitivity plots, optimization recommendations,
                         and configuration comparison matrix ready for client review.</p>
                     </div>
 
                     <!-- Code Example -->
-                    <h4 style="margin-top: 40px;">Automation Workflow</h4>
+                    <h3 class="h-size-h4" style="margin-top: 40px;">Automation Workflow</h3>
                     <div class="code-block">
 <pre># Batch OrcaFlex Sensitivity Analysis
 import orcaflex_batch as ofx
@@ -379,7 +381,7 @@ ofx.generate_sensitivity_report(results)</pre>
                     </table>
 
                     <div class="section-box" style="margin-top: 30px;">
-                        <h4>Additional Benefits</h4>
+                        <h3 class="h-size-h4">Additional Benefits</h3>
                         <ul>
                             <li><strong>Repeatability:</strong> Automation scripts now available for future projects with minimal modification</li>
                             <li><strong>Consistency:</strong> All 50 configurations analyzed with identical methodology--no human variation</li>
@@ -401,21 +403,21 @@ ofx.generate_sensitivity_report(results)</pre>
 
                     <div class="timeline-item">
                         <span class="timeline-week">Day 1</span>
-                        <h4>Requirements & Setup</h4>
+                        <h3 class="h-size-h4">Requirements & Setup</h3>
                         <p>Received design matrix with 50 configuration variations. Adapted existing automation framework
                         to client's baseline OrcaFlex model. Validated single-run results against manual analysis.</p>
                     </div>
 
                     <div class="timeline-item">
                         <span class="timeline-week">Day 2</span>
-                        <h4>Batch Execution</h4>
+                        <h3 class="h-size-h4">Batch Execution</h3>
                         <p>Submitted all 50 simulations at 5 PM. Jobs ran overnight on 8 parallel cores. All simulations
                         completed by 6 AM with no failures.</p>
                     </div>
 
                     <div class="timeline-item">
                         <span class="timeline-week">Day 3</span>
-                        <h4>Results & Delivery</h4>
+                        <h3 class="h-size-h4">Results & Delivery</h3>
                         <p>Automated post-processing extracted all results. Generated sensitivity plots and comparison tables.
                         Delivered final report by 2 PM--10 days ahead of traditional schedule.</p>
                     </div>
@@ -439,7 +441,7 @@ ofx.generate_sensitivity_report(results)</pre>
                     </blockquote>
 
                     <div class="section-box">
-                        <h4>Ongoing Partnership</h4>
+                        <h3 class="h-size-h4">Ongoing Partnership</h3>
                         <p>Following this project, the client has engaged AceEngineer for:</p>
                         <ul>
                             <li>Annual retainer for unlimited OrcaFlex automation runs</li>
@@ -461,7 +463,7 @@ ofx.generate_sensitivity_report(results)</pre>
                 <div class="col-md-8 col-md-offset-2">
                     <h2>Technical Details</h2>
 
-                    <h4>Analysis Scope</h4>
+                    <h3 class="h-size-h4">Analysis Scope</h3>
                     <table class="table">
                         <tr><td><strong>Riser Type:</strong></td><td>Steel Catenary Riser (SCR)</td></tr>
                         <tr><td><strong>Water Depth:</strong></td><td>5,500 ft (1,680 m)</td></tr>
@@ -470,7 +472,7 @@ ofx.generate_sensitivity_report(results)</pre>
                         <tr><td><strong>Load Combinations:</strong></td><td>Operating, extreme, survival</td></tr>
                     </table>
 
-                    <h4 style="margin-top: 30px;">Output Parameters Extracted</h4>
+                    <h3 class="h-size-h4" style="margin-top: 30px;">Output Parameters Extracted</h3>
                     <ul>
                         <li>Maximum von Mises stress at critical locations</li>
                         <li>Effective tension envelope along riser length</li>
@@ -481,7 +483,7 @@ ofx.generate_sensitivity_report(results)</pre>
                         <li>Fatigue damage at welds (per DNV-RP-C203)</li>
                     </ul>
 
-                    <h4 style="margin-top: 30px;">Standards Compliance</h4>
+                    <h3 class="h-size-h4" style="margin-top: 30px;">Standards Compliance</h3>
                     <div style="margin-top: 15px;">
                         <span class="compliance-tag" style="background: #28a745; color: white; padding: 5px 15px; border-radius: 15px; margin-right: 10px;">API RP 2RD</span>
                         <span class="compliance-tag" style="background: #28a745; color: white; padding: 5px 15px; border-radius: 15px; margin-right: 10px;">DNV-OS-F201</span>
@@ -540,6 +542,8 @@ ofx.generate_sensitivity_report(results)</pre>
             </div>
         </div>
     </section>
+
+    </main>
 
     <include src="partials/footer.html"></include>
 

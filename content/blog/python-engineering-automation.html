@@ -86,7 +86,7 @@ rootPath: "../"
 
     <style>
         .article-meta {
-            color: #777;
+            color: #5a6b76;
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 1px solid #eee;
@@ -151,6 +151,8 @@ rootPath: "../"
 <body>
 
     <include src="partials/nav.html"></include>
+
+    <main id="main">
 
     <div class="container">
         <article>
@@ -582,7 +584,7 @@ def run_stress_check(load_case: str, config: dict):
                 <hr>
 
                 <div class="author-box">
-                    <h4>About the Author</h4>
+                    <h3 class="h-size-h4">About the Author</h3>
                     <p>
                         <strong>Vamsee Achanta</strong> is the founder of Analytical & Computational Engineering (AceEngineer),
                         specializing in computational engineering solutions for the energy industry. With 15+ years of experience
@@ -610,6 +612,8 @@ def run_stress_check(load_case: str, config: dict):
             </div>
         </article>
     </div>
+
+    </main>
 
     <include src="partials/footer.html"></include>
 

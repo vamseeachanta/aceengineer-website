@@ -115,7 +115,7 @@ function renderCard(cap) {
     body =
       `<p style="color:#555;margin:12px 0 4px;">${escapeHtml(cap.summary)}</p>` +
       renderStatStrip(cap) +
-      `<p style="color:#777;font-size:.82rem;margin:6px 0 0;">${escapeHtml(cap.data_limits || '')}</p>`;
+      `<p style="color:#5a6b76;font-size:.82rem;margin:6px 0 0;">${escapeHtml(cap.data_limits || '')}</p>`;
     // Optional interactive surfaces (e.g. a drill-down or report hub) are listed
     // ahead of the table view — they are the richer way into the same data.
     const experiences = (cap.experiences || [])
@@ -293,7 +293,7 @@ function renderTable(table) {
   const rows = (table.data && table.data.rows) || [];
   const cols = orderedColumns(table);
   if (!rows.length || !cols.length) {
-    return `<p style="color:#777;">No rows to display.</p>`;
+    return `<p style="color:#5a6b76;">No rows to display.</p>`;
   }
   const shown = rows.slice(0, MAX_TABLE_ROWS);
   const head = cols.map(c => `<th style="text-align:left;padding:8px 12px;border-bottom:2px solid #dde1e5;white-space:nowrap;">${escapeHtml(humanizeColumn(c))}</th>`).join('');
@@ -302,7 +302,7 @@ function renderTable(table) {
   ).join('\n');
   const total = table.data.total_rows != null ? table.data.total_rows : rows.length;
   const note = shown.length < total
-    ? `<p style="color:#777;font-size:.85rem;margin:8px 0 0;">Showing ${shown.length} of ${total.toLocaleString('en-US')} rows — full table on Hugging Face.</p>`
+    ? `<p style="color:#5a6b76;font-size:.85rem;margin:8px 0 0;">Showing ${shown.length} of ${total.toLocaleString('en-US')} rows — full table on Hugging Face.</p>`
     : '';
   return (
     `<div style="overflow-x:auto;">` +
@@ -370,10 +370,10 @@ function renderChartFor(table) {
   if (viz === 'bar') {
     data = data.sort((a, b) => b.value - a.value);
     return `<div style="margin:10px 0 6px;">${renderBarChart(data)}</div>` +
-      `<p style="color:#777;font-size:.82rem;margin:0 0 4px;">${escapeHtml(valueKey)} by ${escapeHtml(labelKey)} (top ${Math.min(MAX_BARS, data.length)})</p>`;
+      `<p style="color:#5a6b76;font-size:.82rem;margin:0 0 4px;">${escapeHtml(valueKey)} by ${escapeHtml(labelKey)} (top ${Math.min(MAX_BARS, data.length)})</p>`;
   }
   return `<div style="margin:10px 0 6px;">${renderLineChart(data)}</div>` +
-    `<p style="color:#777;font-size:.82rem;margin:0 0 4px;">${escapeHtml(valueKey)} across ${escapeHtml(labelKey)}</p>`;
+    `<p style="color:#5a6b76;font-size:.82rem;margin:0 0 4px;">${escapeHtml(valueKey)} across ${escapeHtml(labelKey)}</p>`;
 }
 
 // The inner body of a capability detail page (no chrome).
@@ -408,7 +408,7 @@ function capabilityDetailBody(cap, siblings = [], options = {}) {
       `style="background:${domainColor};color:#fff;border:none;border-radius:6px;padding:8px 16px;` +
       `font-size:.9rem;font-weight:600;letter-spacing:.02em;cursor:pointer;">Refresh to latest</button>` +
       `<span data-refresh-status role="status" aria-live="polite" ` +
-      `style="margin-left:12px;font-size:.9rem;color:#777;"></span>` +
+      `style="margin-left:12px;font-size:.9rem;color:#5a6b76;"></span>` +
       `</div>`
     : '';
 
@@ -448,9 +448,11 @@ function capabilityDetailDocument(cap, siblings = [], options = {}) {
     `<include src="partials/head-common.html"></include>\n` +
     `</head>\n<body class="theme-page">\n` +
     `<include src="partials/nav.html"></include>\n` +
+    `<main id="main">\n` +
     `<section style="padding:40px 0 56px;"><div class="container">\n` +
     capabilityDetailBody(cap, siblings, options) +
     `\n</div></section>\n` +
+    `</main>\n` +
     `<include src="partials/footer.html"></include>\n` +
     `<script src="/assets/js/capabilities-refresh.js" defer></script>\n` +
     `</body>\n</html>\n`
@@ -461,7 +463,7 @@ function capabilityDetailDocument(cap, siblings = [], options = {}) {
 function renderCards(registry) {
   const caps = (registry && registry.capabilities || []).filter(c => c.status !== 'withheld');
   if (!caps.length) {
-    return `<p style="color:#777;">No capabilities published yet.</p>`;
+    return `<p style="color:#5a6b76;">No capabilities published yet.</p>`;
   }
   const cards = caps.map(cap =>
     `<div style="flex:1 1 340px;max-width:520px;">${renderCard(cap)}</div>`

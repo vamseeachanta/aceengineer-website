@@ -82,6 +82,8 @@ rootPath: "../"
 </head>
 <body>
 <include src="partials/nav.html"></include>
+
+<main id="main">
 <div class="container rig-root" style="max-width:1280px; padding:2rem 15px;">
 <h1>Drilling Rig Selector</h1>
 <p class="sub">Shortlist drilling rigs — offshore floaters and jackups, and onshore super-spec rig classes — by the numbers that decide rig selection:
@@ -240,5 +242,7 @@ function chart(rows) {
   document.getElementById(id).addEventListener("input", render));
 render();
 </script>
+</main>
+
 </body>
 </html>

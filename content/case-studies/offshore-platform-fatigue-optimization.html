@@ -179,6 +179,8 @@ rootPath: "../"
 
     <include src="partials/nav.html"></include>
 
+    <main id="main">
+
     <!-- Case Study Header -->
     <div class="case-study-header">
         <div class="container">
@@ -241,21 +243,21 @@ rootPath: "../"
         <h2 class="section-title">The Challenge</h2>
 
         <div class="challenge-box">
-            <h4>Time Pressure</h4>
+            <h3 class="h-size-h4">Time Pressure</h3>
             <p>
                 BSEE required a complete fatigue life assessment within 8 weeks to approve continued operations. Traditional methods would take 16+ weeks, creating regulatory risk.
             </p>
         </div>
 
         <div class="challenge-box">
-            <h4>Data Integration</h4>
+            <h3 class="h-size-h4">Data Integration</h3>
             <p>
                 The platform had 15 years of strain gauge data from 48 monitoring locations, but no established methodology existed to incorporate this operational data into fatigue predictions.
             </p>
         </div>
 
         <div class="challenge-box">
-            <h4>Conservative Estimates</h4>
+            <h3 class="h-size-h4">Conservative Estimates</h3>
             <p>
                 Preliminary assessments using standard S-N curves indicated several critical joints would exceed allowable fatigue damage factors, potentially requiring expensive underwater repairs or platform abandonment.
             </p>
@@ -267,7 +269,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">1</div>
             <div class="step-content">
-                <h4>Data Collection & Preprocessing</h4>
+                <h3 class="h-size-h4">Data Collection & Preprocessing</h3>
                 <p>
                     Ingested 15 years of strain gauge data (2.3 billion data points), metocean records, and operational logs. Automated quality control identified and corrected sensor drift, data gaps, and anomalous readings.
                 </p>
@@ -277,7 +279,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">2</div>
             <div class="step-content">
-                <h4>Hybrid FEA-ML Model Development</h4>
+                <h3 class="h-size-h4">Hybrid FEA-ML Model Development</h3>
                 <p>
                     Trained gradient boosting models on validated FEA results for 120 representative load cases. The ML models learned the relationship between global platform response and local hot spot stresses at critical joints.
                 </p>
@@ -287,7 +289,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">3</div>
             <div class="step-content">
-                <h4>Operational Load Reconstruction</h4>
+                <h3 class="h-size-h4">Operational Load Reconstruction</h3>
                 <p>
                     Used the trained models to reconstruct stress histories at all 847 fatigue-critical joints from operational monitoring data--something that would be computationally impossible with FEA alone.
                 </p>
@@ -297,7 +299,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">4</div>
             <div class="step-content">
-                <h4>Validated Fatigue Assessment</h4>
+                <h3 class="h-size-h4">Validated Fatigue Assessment</h3>
                 <p>
                     Applied rainflow counting and Miner's rule to the reconstructed stress histories. Validated results against physical inspection findings and compared to conventional S-N predictions.
                 </p>
@@ -363,21 +365,21 @@ rootPath: "../"
         <h2 class="section-title">Results</h2>
 
         <div class="result-box">
-            <h4>Accuracy Improvement</h4>
+            <h3 class="h-size-h4">Accuracy Improvement</h3>
             <p>
                 ML-enhanced predictions showed 23% better correlation with actual inspection findings compared to conventional S-N curve predictions. The improvement was most significant for joints experiencing variable amplitude loading.
             </p>
         </div>
 
         <div class="result-box">
-            <h4>Revised Fatigue Life Estimates</h4>
+            <h3 class="h-size-h4">Revised Fatigue Life Estimates</h3>
             <p>
                 Incorporating operational data revealed that actual loading was less severe than design assumptions for most joints. 12 joints previously flagged as critical (damage factor > 0.8) were reclassified as acceptable (damage factor < 0.5) based on actual operational history.
             </p>
         </div>
 
         <div class="result-box">
-            <h4>Cost Avoidance</h4>
+            <h3 class="h-size-h4">Cost Avoidance</h3>
             <p>
                 By demonstrating that underwater repairs were not required for the 12 reclassified joints, the operator avoided approximately $2.1M in inspection and repair costs. The platform was approved for 10 additional years of operation.
             </p>
@@ -463,6 +465,8 @@ rootPath: "../"
         </p>
 
     </div>
+
+    </main>
 
     <include src="partials/footer.html"></include>
 

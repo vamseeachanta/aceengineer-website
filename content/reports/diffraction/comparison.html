@@ -65,6 +65,8 @@ rootPath: "../../"
 </style>
 </head>
 <body class="rpt">
+<a class="skip-link" href="#main">Skip to main content</a>
+<main id="main">
 <div class="container">
   <div class="report-header">
     <div class="eyebrow">AceEngineer · digitalmodel · live dataset report</div>
@@ -565,5 +567,6 @@ async function main() {
 
 main().catch(e => { setChip("error", "ERROR"); banner("error", "Unexpected failure: " + e.message); });
 </script>
+</main>
 </body>
 </html>

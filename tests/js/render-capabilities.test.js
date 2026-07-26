@@ -190,6 +190,98 @@ describe('capabilityDetailDocument', () => {
   test('detailFileName is <id>.html', () => {
     expect(detailFileName(cap)).toBe('field-explorer.html');
   });
+
+  // Cross-nav: siblings reachable without going back to the index, and exactly one
+  // "you are here" marker. Degrades to the plain back-link when no siblings are passed.
+  const siblings = [
+    cap,
+    { id: 'atlas-explorer', title: 'Atlas Explorer' },
+    { id: 'dc-days-qaqc', title: 'Field D&C Days QA/QC' },
+  ];
+  const navDoc = capabilityDetailDocument(cap, siblings);
+
+  test('reaches every sibling capability', () => {
+    for (const s of siblings) expect(navDoc).toContain(`href="/capabilities/${s.id}.html"`);
+    expect(navDoc).toContain('href="/capabilities/"');
+  });
+
+  test('marks exactly one page as current, and it is this page', () => {
+    expect(navDoc.match(/aria-current="page"/g)).toHaveLength(1);
+    expect(navDoc).toContain(`href="/capabilities/${cap.id}.html" aria-current="page"`);
+  });
+
+  test('escapes sibling titles rather than emitting raw markup', () => {
+    const hostile = capabilityDetailDocument(cap, [cap, { id: 'x', title: '<script>bad()</script>' }]);
+    expect(hostile).not.toContain('<script>bad()');
+    expect(hostile).toContain('&lt;script&gt;');
+  });
+
+  test('falls back to the back-link when no siblings are supplied', () => {
+    expect(doc).toContain('← All capabilities');
+    expect(doc).not.toContain('aria-current="page"');
+  });
+});
+
+describe('release-backed capability rendering', () => {
+  const cap = {
+    id: 'tank-sloshing-cfd', title: 'Tank Sloshing CFD', domain: 'digitalmodel',
+    summary: 'VOF sloshing analysis.', hf_dataset: 'aceengineer/digitalmodel-sloshing',
+    provenance_url: 'https://www.aceengineer.com/reports/sloshing/validation.html',
+    status: 'live', data_limits: 'Source-neutral geometry only.', backing: 'release',
+    release: {
+      hub_url: '/reports/sloshing/', digest: 'a'.repeat(64), revision: 'b'.repeat(40),
+      stats: [{ count: 24, label: 'accepted cases' }],
+    },
+  };
+  const html = renderCard(cap);
+
+  test('is not mistaken for pending data despite having no tables', () => {
+    expect(html).not.toContain('data pending publication');
+    expect(html).toContain('View capability →');
+  });
+
+  test('points at its hub, not a generated detail page', () => {
+    expect(html).toContain('href="/reports/sloshing/"');
+    expect(html).not.toContain('/capabilities/tank-sloshing-cfd.html');
+  });
+
+  test('cites the pinned digest instead of linking a private dataset', () => {
+    expect(html).toContain('Immutable release');
+    expect(html).toContain('a'.repeat(12));
+    expect(html).not.toContain('huggingface.co');
+  });
+
+  test('renders registry-declared stats', () => {
+    expect(html).toContain('24');
+    expect(html).toContain('accepted cases');
+  });
+});
+
+describe('snapshot stamp', () => {
+  const withSource = source => ({
+    id: 'x', title: 'X', domain: 'worldenergy', summary: 's', hf_dataset: 'a/b',
+    provenance_url: 'u', status: 'live', data_limits: 'd',
+    tables: [{ ...tableFixture(), data_source: source }],
+  });
+
+  test('states a live build fetch', () => {
+    expect(capabilityDetailDocument(withSource('live'), [], { renderedAt: '2026-07-26' }))
+      .toContain('Rendered from a live datasets-server fetch on 2026-07-26');
+  });
+
+  test('warns that a cached snapshot may have moved', () => {
+    expect(capabilityDetailDocument(withSource('snapshot'), [], { renderedAt: '2026-07-26' }))
+      .toContain('cached snapshot on 2026-07-26');
+  });
+
+  test('flags an unreachable dataset rather than implying fresh data', () => {
+    const doc = capabilityDetailDocument(withSource('unavailable'), [], { renderedAt: '2026-07-26' });
+    expect(doc).toContain('could not be reached at build time');
+  });
+
+  test('is omitted when no table declares a source', () => {
+    expect(capabilityDetailDocument(withSource(undefined))).not.toContain('<strong>Snapshot:</strong>');
+  });
 });
 
 describe('page wiring', () => {

@@ -29,6 +29,14 @@ const DOMAINS = ['worldenergy', 'digitalmodel'];
 const STATUSES = ['live', 'pending', 'withheld'];
 const VIZ = ['table', 'bar', 'line', 'map'];
 const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+// How a capability is backed. 'dataset' (default) = live datasets-server configs.
+// 'release' = an immutable, content-addressed release published by this site, for work
+// whose upstream dataset is private or whose evidence is not datasets-server shaped
+// (e.g. CFD review artifacts). Release-backed entries declare a pinned digest+revision
+// instead of tables, and are skipped by the online datasets-server gate.
+const BACKINGS = ['dataset', 'release'];
+const SHA256 = /^[0-9a-f]{64}$/;
+const GITSHA = /^[0-9a-f]{40}$/;
 
 // Load + parse the registry. Returns the parsed object (throws on unreadable/invalid YAML).
 function loadRegistry(registryFile = DEFAULT_REGISTRY) {
@@ -80,6 +88,34 @@ function validateRegistry(registry) {
     }
     if (req('status') && !STATUSES.includes(cap.status)) {
       errors.push(`${where}: status must be one of ${STATUSES.join('|')} (got '${cap.status}')`);
+    }
+
+    const backing = cap.backing === undefined ? 'dataset' : cap.backing;
+    if (!BACKINGS.includes(backing)) {
+      errors.push(`${where}: backing must be one of ${BACKINGS.join('|')} (got '${cap.backing}')`);
+    }
+
+    // Release-backed: the evidence is a pinned release on this site, so `tables` /
+    // `primary_config` do not apply. Require the chain a reader can actually check.
+    if (backing === 'release') {
+      const rel = cap.release;
+      if (!rel || typeof rel !== 'object' || Array.isArray(rel)) {
+        errors.push(`${where}: backing 'release' requires a 'release' block`);
+      } else {
+        if (!rel.hub_url || !String(rel.hub_url).startsWith('/')) {
+          errors.push(`${where}.release: hub_url must be a site-root path (got '${rel.hub_url}')`);
+        }
+        if (!SHA256.test(String(rel.digest || ''))) {
+          errors.push(`${where}.release: digest must be a 64-hex content digest`);
+        }
+        if (!GITSHA.test(String(rel.revision || ''))) {
+          errors.push(`${where}.release: revision must be a 40-hex source revision`);
+        }
+      }
+      if (cap.tables !== undefined) {
+        errors.push(`${where}: release-backed capabilities declare 'release', not 'tables'`);
+      }
+      return;
     }
 
     const withheld = new Set(Array.isArray(cap.withheld_columns) ? cap.withheld_columns : []);
@@ -135,4 +171,13 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { loadRegistry, validateRegistry, DEFAULT_REGISTRY, DOMAINS, STATUSES, VIZ };
+// A capability the online datasets-server gate should resolve: live, and dataset-backed.
+// Release-backed entries carry their own pinned digest and have no datasets-server config.
+function isDatasetBacked(cap) {
+  return (cap.backing === undefined ? 'dataset' : cap.backing) === 'dataset';
+}
+
+module.exports = {
+  loadRegistry, validateRegistry, DEFAULT_REGISTRY,
+  DOMAINS, STATUSES, VIZ, BACKINGS, isDatasetBacked,
+};

@@ -5,6 +5,7 @@ const {
   loadRegistry,
   validateRegistry,
   DEFAULT_REGISTRY,
+  isDatasetBacked,
 } = require('../../scripts/validate-capabilities');
 
 const repoRoot = path.resolve(__dirname, '..', '..');
@@ -99,5 +100,93 @@ describe('validateRegistry catches malformed entries', () => {
     } finally {
       fs.unlinkSync(tmp);
     }
+  });
+});
+
+// Release-backed capabilities: pinned to an immutable release published by this site,
+// for work whose upstream dataset is private (e.g. CFD review artifacts) and therefore
+// cannot resolve on the public datasets-server.
+describe('release-backed capabilities', () => {
+  const releaseCap = () => ({
+    version: 1,
+    capabilities: [{
+      id: 'x-cfd', title: 'X', domain: 'digitalmodel', summary: 's',
+      hf_dataset: 'org/private-ds', provenance_url: 'https://example.com/p',
+      status: 'live', data_limits: 'limits', backing: 'release',
+      release: { hub_url: '/reports/x/', digest: 'a'.repeat(64), revision: 'b'.repeat(40) },
+    }],
+  });
+
+  test('a well-formed release-backed entry validates without tables', () => {
+    expect(validateRegistry(releaseCap())).toEqual([]);
+  });
+
+  test('rejects an unknown backing', () => {
+    const r = releaseCap(); r.capabilities[0].backing = 'magic';
+    expect(validateRegistry(r).some(e => /backing must be one of/.test(e))).toBe(true);
+  });
+
+  test('requires a release block', () => {
+    const r = releaseCap(); delete r.capabilities[0].release;
+    expect(validateRegistry(r).some(e => /requires a 'release' block/.test(e))).toBe(true);
+  });
+
+  test.each([
+    ['digest', 'digest', 'not-a-digest', /digest must be a 64-hex/],
+    ['revision', 'revision', 'nope', /revision must be a 40-hex/],
+    ['hub_url', 'hub_url', 'https://elsewhere.example/x', /hub_url must be a site-root path/],
+  ])('rejects a malformed %s', (_label, field, value, pattern) => {
+    const r = releaseCap(); r.capabilities[0].release[field] = value;
+    expect(validateRegistry(r).some(e => pattern.test(e))).toBe(true);
+  });
+
+  test('rejects declaring both release and tables', () => {
+    const r = releaseCap();
+    r.capabilities[0].tables = [{ config: 'c', label: 'l', viz: 'table', highlight_columns: ['a'] }];
+    expect(validateRegistry(r).some(e => /declare 'release', not 'tables'/.test(e))).toBe(true);
+  });
+
+  test('isDatasetBacked excludes release-backed and defaults to dataset', () => {
+    expect(isDatasetBacked(releaseCap().capabilities[0])).toBe(false);
+    expect(isDatasetBacked({ id: 'y' })).toBe(true);
+    expect(isDatasetBacked({ id: 'y', backing: 'dataset' })).toBe(true);
+  });
+
+  test('the committed sloshing entry is release-backed and pins the live release', () => {
+    const cap = loadRegistry(DEFAULT_REGISTRY).capabilities.find(c => c.id === 'tank-sloshing-cfd');
+    expect(cap).toBeDefined();
+    const pointer = JSON.parse(fs.readFileSync(path.join(repoRoot, 'config', 'sloshing-data-release.json'), 'utf8'));
+    expect(cap.release.digest).toBe(pointer.release.digest);
+    expect(cap.release.revision).toBe(pointer.source.revision);
+  });
+});
+
+// Every surfaced capability must be discoverable. Five live capability pages once served
+// 200 while being wholly absent from sitemap.xml, so search engines never saw them; this
+// ties the sitemap to the registry rather than to anyone remembering to edit both.
+describe('capability discoverability', () => {
+  const sitemap = fs.readFileSync(path.join(repoRoot, 'sitemap.xml'), 'utf8');
+  const surfaced = loadRegistry(DEFAULT_REGISTRY).capabilities.filter(c => c.status !== 'withheld');
+  const generated = surfaced.filter(c => c.backing !== 'release');
+  const released = surfaced.filter(c => c.backing === 'release');
+
+  test('the capabilities index is in the sitemap', () => {
+    expect(sitemap).toContain('<loc>https://www.aceengineer.com/capabilities/</loc>');
+  });
+
+  test.each(generated.map(c => [c.id]))('capability %s has a sitemap entry', id => {
+    expect(sitemap).toContain(`<loc>https://www.aceengineer.com/capabilities/${id}.html</loc>`);
+  });
+
+  // Release-backed capabilities generate no detail page; their hub is the destination,
+  // so it is the hub that has to be discoverable.
+  test.each(released.map(c => [c.id, c.release.hub_url]))('release-backed %s has its hub %s in the sitemap', (id, hub) => {
+    expect(sitemap).toContain(`<loc>https://www.aceengineer.com${hub}</loc>`);
+  });
+
+  test('no sitemap entry points at a capability that is withheld, absent, or release-backed', () => {
+    const listed = [...sitemap.matchAll(/capabilities\/([a-z0-9-]+)\.html/g)].map(m => m[1]);
+    const allowed = new Set(generated.map(c => c.id));
+    expect(listed.filter(id => !allowed.has(id))).toEqual([]);
   });
 });

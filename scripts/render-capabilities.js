@@ -50,8 +50,21 @@ function hasData(cap) {
   return (cap.tables || []).some(t => t.data && Array.isArray(t.data.rows) && t.data.rows.length);
 }
 
-function renderStatStrip(cap) {
-  const stats = tableStats(cap).filter(s => s.count != null);
+// Release-backed capabilities are pinned to an immutable release published by this site
+// instead of live datasets-server tables (see validate-capabilities.js). They have no
+// `tables`, so they must not be mistaken for "data pending publication".
+function isReleaseBacked(cap) {
+  return cap && cap.backing === 'release' && !!cap.release;
+}
+
+// Stat strip figures for a release-backed capability, declared in the registry.
+function releaseStats(cap) {
+  return ((cap.release && cap.release.stats) || [])
+    .filter(s => s && typeof s.count === 'number')
+    .map(s => ({ count: s.count, label: s.label, truncated: false }));
+}
+
+function renderStats(stats) {
   if (!stats.length) return '';
   const items = stats.map(s =>
     `<span style="display:inline-block;margin-right:18px;">` +
@@ -61,10 +74,15 @@ function renderStatStrip(cap) {
   return `<div style="margin:14px 0 10px;">${items}</div>`;
 }
 
+function renderStatStrip(cap) {
+  return renderStats(tableStats(cap).filter(s => s.count != null));
+}
+
 function renderCard(cap) {
   const domainLabel = DOMAIN_LABELS[cap.domain] || cap.domain;
   const domainColor = DOMAIN_COLORS[cap.domain] || '#444';
-  const pending = cap.status === 'pending' || !hasData(cap);
+  const released = isReleaseBacked(cap);
+  const pending = !released && (cap.status === 'pending' || !hasData(cap));
 
   const badge =
     `<span style="display:inline-block;background:${domainColor};color:#fff;font-size:.72rem;` +
@@ -81,6 +99,18 @@ function renderCard(cap) {
     cta =
       `<a href="${escapeHtml(cap.provenance_url)}" style="font-weight:600;color:${domainColor};">` +
       `Follow progress →</a>`;
+  } else if (released) {
+    // The pinned digest is the checkable claim here — not a Hugging Face link, whose
+    // upstream dataset is private and would 401 for a visitor.
+    body =
+      `<p style="color:#555;margin:12px 0 4px;">${escapeHtml(cap.summary)}</p>` +
+      renderStats(releaseStats(cap)) +
+      `<p style="color:#777;font-size:.82rem;margin:6px 0 0;">${escapeHtml(cap.data_limits || '')}</p>`;
+    cta =
+      `<a href="${escapeHtml(detailHref(cap))}" ` +
+      `style="font-weight:600;color:${domainColor};">View capability →</a>` +
+      `<span style="margin-left:18px;color:#666;font-size:.9rem;">Immutable release ` +
+      `<code>${escapeHtml(String(cap.release.digest).slice(0, 12))}</code></span>`;
   } else {
     body =
       `<p style="color:#555;margin:12px 0 4px;">${escapeHtml(cap.summary)}</p>` +
@@ -121,13 +151,70 @@ function renderCard(cap) {
 const MAX_TABLE_ROWS = 50;
 const MAX_BARS = 15;
 
+// Cross-navigation between capability pages. A detail page previously offered only a
+// "← All capabilities" back-link, so the sibling capabilities were reachable exclusively
+// by going back to the index — and nothing marked which page you were on. `siblings` is
+// the surfaced (non-withheld) capability list; passing none degrades to the back-link.
+function renderCapabilityNav(cap, siblings = []) {
+  const link = (href, label, current) =>
+    `<a href="${escapeHtml(href)}"` +
+    (current ? ' aria-current="page"' : '') +
+    ` style="text-decoration:none;color:${current ? '#111' : '#666'};` +
+    `font-weight:${current ? '600' : '400'};` +
+    (current ? 'border-bottom:2px solid #111;padding-bottom:2px;' : '') +
+    `">${escapeHtml(label)}</a>`;
+
+  const others = siblings.filter(s => s && s.id);
+  if (!others.length) return link('/capabilities/', '← All capabilities', false);
+
+  const items = others.map(s => link(detailHref(s), s.title || s.id, s.id === cap.id));
+  return (
+    `<nav aria-label="Capabilities" style="display:flex;flex-wrap:wrap;gap:6px 18px;` +
+    `align-items:baseline;font-size:.92rem;margin-bottom:14px;padding-bottom:12px;` +
+    `border-bottom:1px solid #e6e8eb;">` +
+    link('/capabilities/', 'All capabilities', false) +
+    `<span aria-hidden="true" style="color:#c7ccd1;">|</span>` +
+    items.join(`<span aria-hidden="true" style="color:#c7ccd1;">·</span>`) +
+    `</nav>`
+  );
+}
+
+// What the reader is actually looking at. These pages are baked at build time and then
+// optionally re-fetched client-side via "Refresh to latest", so — unlike the immutable
+// sloshing release — the honest claim is a dated snapshot, not a pinned digest. Says
+// which mode the build got its rows from, so a stale or degraded render is visible
+// rather than silently indistinguishable from a live one.
+function dataSourceMode(cap) {
+  const sources = (cap.tables || []).map(t => t.data_source).filter(Boolean);
+  if (!sources.length) return null;
+  if (sources.some(s => s === 'unavailable')) return 'unavailable';
+  if (sources.every(s => s === 'live')) return 'live';
+  return 'snapshot';
+}
+
+function renderSnapshotStamp(cap, renderedAt) {
+  const mode = dataSourceMode(cap);
+  if (!mode) return '';
+  const when = renderedAt ? ` on ${escapeHtml(renderedAt)}` : '';
+  const text = {
+    live: `Rendered from a live datasets-server fetch${when}. Use “Refresh to latest” for current data.`,
+    snapshot: `Rendered from a cached snapshot${when}; the upstream dataset may have moved since. Use “Refresh to latest” for current data.`,
+    unavailable: `The dataset could not be reached at build time${when}; figures below may be incomplete. Use “Refresh to latest” to retry.`,
+  }[mode];
+  const color = mode === 'unavailable' ? '#a15c00' : '#555';
+  return `<p style="margin:0 0 6px;color:${color};font-size:.9rem;">` +
+    `<strong>Snapshot:</strong> ${text}</p>`;
+}
+
 function detailFileName(cap) {
   return `${cap.id}.html`;
 }
 
 // Absolute, root-relative link to a capability's detail page — works whether the card
-// is rendered on the homepage (root) or on /capabilities/.
+// is rendered on the homepage (root) or on /capabilities/. Release-backed capabilities
+// have no generated detail page; their hub on this site is the canonical destination.
 function detailHref(cap) {
+  if (isReleaseBacked(cap)) return cap.release.hub_url;
   return `/capabilities/${cap.id}.html`;
 }
 
@@ -290,7 +377,7 @@ function renderChartFor(table) {
 }
 
 // The inner body of a capability detail page (no chrome).
-function capabilityDetailBody(cap) {
+function capabilityDetailBody(cap, siblings = [], options = {}) {
   const domainLabel = DOMAIN_LABELS[cap.domain] || cap.domain;
   const domainColor = DOMAIN_COLORS[cap.domain] || '#444';
   const badge =
@@ -330,11 +417,12 @@ function capabilityDetailBody(cap) {
     `<p style="margin:0 0 6px;"><strong>Source:</strong> ` +
     `<a href="${escapeHtml(hfDatasetUrl(cap.hf_dataset))}" rel="noopener">${escapeHtml(cap.hf_dataset)}</a> on Hugging Face` +
     (cap.provenance_url ? ` · <a href="${escapeHtml(cap.provenance_url)}" rel="noopener">pipeline</a>` : '') + `</p>` +
+    renderSnapshotStamp(cap, options.renderedAt) +
     (cap.data_limits ? `<p style="margin:0;color:#555;font-size:.9rem;"><strong>Data limits:</strong> ${escapeHtml(cap.data_limits)}</p>` : '') +
     `</div>`;
 
   return (
-    `<a href="/capabilities/" style="color:#666;text-decoration:none;">← All capabilities</a>` +
+    renderCapabilityNav(cap, siblings) +
     `<div style="margin:10px 0 6px;">${badge}</div>` +
     `<h1 style="margin:4px 0 8px;">${escapeHtml(cap.title)}</h1>` +
     `<p style="font-size:1.12rem;color:#444;max-width:760px;">${escapeHtml(cap.summary)}</p>` +
@@ -346,7 +434,7 @@ function capabilityDetailBody(cap) {
 
 // A full detail-page HTML document (with <include> chrome; rootPath resolved by build.js
 // via posthtml expressions). One page per capability, written to dist/capabilities/<id>.html.
-function capabilityDetailDocument(cap) {
+function capabilityDetailDocument(cap, siblings = [], options = {}) {
   const title = `${cap.title} — AceEngineer Capabilities`;
   return (
     `<!DOCTYPE html>\n<html lang="en">\n<head>\n` +
@@ -361,7 +449,7 @@ function capabilityDetailDocument(cap) {
     `</head>\n<body class="theme-page">\n` +
     `<include src="partials/nav.html"></include>\n` +
     `<section style="padding:40px 0 56px;"><div class="container">\n` +
-    capabilityDetailBody(cap) +
+    capabilityDetailBody(cap, siblings, options) +
     `\n</div></section>\n` +
     `<include src="partials/footer.html"></include>\n` +
     `<script src="/assets/js/capabilities-refresh.js" defer></script>\n` +
@@ -386,6 +474,7 @@ module.exports = {
   renderStatStrip, renderCard, renderCards,
   detailFileName, detailHref, formatCell, humanizeColumn, orderedColumns, pickChartKeys,
   renderTable, renderBarChart, renderLineChart, renderChartFor,
-  capabilityDetailBody, capabilityDetailDocument,
+  capabilityDetailBody, capabilityDetailDocument, renderCapabilityNav,
+  isReleaseBacked, releaseStats, dataSourceMode, renderSnapshotStamp,
   DOMAIN_LABELS, MAX_TABLE_ROWS,
 };

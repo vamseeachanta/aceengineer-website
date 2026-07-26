@@ -26,7 +26,7 @@
  * Exit 0 = no blocking errors, exit 1 = one or more resolution errors printed.
  */
 const path = require('path');
-const { loadRegistry, validateRegistry, DEFAULT_REGISTRY } = require('./validate-capabilities');
+const { loadRegistry, validateRegistry, DEFAULT_REGISTRY, isDatasetBacked } = require('./validate-capabilities');
 const { datasetConfigs, fetchTable } = require('./hf-fetch');
 
 // Classify an hf-fetch error: a 404 means the dataset/config is genuinely absent
@@ -69,6 +69,10 @@ async function checkResolution(registry, resolvers) {
 
   for (const cap of caps) {
     if (cap.status !== 'live') continue; // pending/withheld don't render live data
+    // Release-backed capabilities are pinned to an immutable release published by this
+    // site; their upstream dataset may be private and has no datasets-server config to
+    // resolve. The offline gate checks their digest/revision chain instead.
+    if (!isDatasetBacked(cap)) continue;
     const ds = cap.hf_dataset;
 
     let configs;
@@ -155,7 +159,7 @@ async function main() {
     process.exit(1);
   }
 
-  const live = registry.capabilities.filter(c => c.status === 'live').length;
+  const live = registry.capabilities.filter(c => c.status === 'live' && isDatasetBacked(c)).length;
   const note = warnings.length ? ` (${warnings.length} transient warning${warnings.length === 1 ? '' : 's'})` : '';
   console.log(`validate:capabilities:online PASS — ${live} live capabilit${live === 1 ? 'y' : 'ies'} resolve${live === 1 ? 's' : ''} against Hugging Face${note}`);
 }

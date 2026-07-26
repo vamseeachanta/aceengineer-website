@@ -125,6 +125,13 @@ capabilities:
     hf_dataset: aceengineer/worldenergydata-explorer
     provenance_url: https://vamseeachanta.github.io/worldenergydata/wo-april-2026-qaqc-hub.html
     status: live
+    # Interactive surfaces built from these same tables — listed on the card ahead
+    # of the table view because they are the richer way into the data.
+    experiences:
+      - label: Drill-down (field ▸ block ▸ bore)
+        url: /capabilities/dc-drilldown.html
+      - label: QA/QC report hub
+        url: /capabilities/dc-qaqc-hub.html
     primary_config: dc_development_summary
     tables:
       - config: dc_development_summary

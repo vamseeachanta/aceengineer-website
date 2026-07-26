@@ -140,7 +140,17 @@ function buildDrilldown(distDir) {
   return { fields: payload.fields.length, blocks: payload.blocks.length, bores: payload.bores.length };
 }
 
-module.exports = { buildDrilldown, toPayload, SNAPSHOT, TEMPLATE };
+/** Copy the static QA/QC hub page (no data payload) into distDir. */
+function buildHub(distDir) {
+  const tpl = path.join(__dirname, 'templates', 'dc-qaqc-hub.html');
+  if (!fs.existsSync(tpl)) return null;
+  const outDir = path.join(distDir, 'capabilities');
+  fs.mkdirSync(outDir, { recursive: true });
+  fs.copyFileSync(tpl, path.join(outDir, 'dc-qaqc-hub.html'));
+  return 'capabilities/dc-qaqc-hub.html';
+}
+
+module.exports = { buildDrilldown, buildHub, toPayload, SNAPSHOT, TEMPLATE };
 
 if (require.main === module) {
   const res = buildDrilldown(path.join(repoRoot, 'dist'));

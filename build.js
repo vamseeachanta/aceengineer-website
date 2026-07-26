@@ -268,10 +268,12 @@ async function build() {
 
   // Interactive drill-down page (Field ▸ Block ▸ Bore) from the HF snapshot.
   try {
-    const { buildDrilldown } = require('./scripts/build-drilldown');
+    const { buildDrilldown, buildHub } = require('./scripts/build-drilldown');
     const res = buildDrilldown(distDir);
     if (res) console.log(`Built: capabilities/dc-drilldown.html · ${res.bores} bores`);
     else console.warn('Drill-down skipped: template or snapshot missing');
+    const hub = buildHub(distDir);
+    if (hub) console.log(`Built: ${hub}`);
   } catch (err) {
     console.warn(`Drill-down skipped: ${err.message}`);
   }

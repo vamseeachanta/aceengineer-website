@@ -86,7 +86,15 @@ function renderCard(cap) {
       `<p style="color:#555;margin:12px 0 4px;">${escapeHtml(cap.summary)}</p>` +
       renderStatStrip(cap) +
       `<p style="color:#777;font-size:.82rem;margin:6px 0 0;">${escapeHtml(cap.data_limits || '')}</p>`;
+    // Optional interactive surfaces (e.g. a drill-down or report hub) are listed
+    // ahead of the table view — they are the richer way into the same data.
+    const experiences = (cap.experiences || [])
+      .map(x => `<a href="${escapeHtml(x.url)}" ` +
+        `style="font-weight:600;color:${domainColor};margin-right:18px;">` +
+        `${escapeHtml(x.label)} →</a>`)
+      .join('');
     cta =
+      experiences +
       `<a href="${escapeHtml(detailHref(cap))}" ` +
       `style="font-weight:600;color:${domainColor};">View capability →</a>` +
       `<a href="${escapeHtml(hfDatasetUrl(cap.hf_dataset))}" rel="noopener" ` +

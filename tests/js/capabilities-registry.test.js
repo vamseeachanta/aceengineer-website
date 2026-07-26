@@ -101,3 +101,25 @@ describe('validateRegistry catches malformed entries', () => {
     }
   });
 });
+
+// Every surfaced capability must be discoverable. Five live capability pages once served
+// 200 while being wholly absent from sitemap.xml, so search engines never saw them; this
+// ties the sitemap to the registry rather than to anyone remembering to edit both.
+describe('capability discoverability', () => {
+  const sitemap = fs.readFileSync(path.join(repoRoot, 'sitemap.xml'), 'utf8');
+  const surfaced = loadRegistry(DEFAULT_REGISTRY).capabilities.filter(c => c.status !== 'withheld');
+
+  test('the capabilities index is in the sitemap', () => {
+    expect(sitemap).toContain('<loc>https://www.aceengineer.com/capabilities/</loc>');
+  });
+
+  test.each(surfaced.map(c => [c.id]))('capability %s has a sitemap entry', id => {
+    expect(sitemap).toContain(`<loc>https://www.aceengineer.com/capabilities/${id}.html</loc>`);
+  });
+
+  test('no sitemap entry points at a capability that is withheld or absent from the registry', () => {
+    const listed = [...sitemap.matchAll(/capabilities\/([a-z0-9-]+)\.html/g)].map(m => m[1]);
+    const allowed = new Set(surfaced.map(c => c.id));
+    expect(listed.filter(id => !allowed.has(id))).toEqual([]);
+  });
+});

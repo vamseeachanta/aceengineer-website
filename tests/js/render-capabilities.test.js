@@ -190,6 +190,36 @@ describe('capabilityDetailDocument', () => {
   test('detailFileName is <id>.html', () => {
     expect(detailFileName(cap)).toBe('field-explorer.html');
   });
+
+  // Cross-nav: siblings reachable without going back to the index, and exactly one
+  // "you are here" marker. Degrades to the plain back-link when no siblings are passed.
+  const siblings = [
+    cap,
+    { id: 'atlas-explorer', title: 'Atlas Explorer' },
+    { id: 'dc-days-qaqc', title: 'Field D&C Days QA/QC' },
+  ];
+  const navDoc = capabilityDetailDocument(cap, siblings);
+
+  test('reaches every sibling capability', () => {
+    for (const s of siblings) expect(navDoc).toContain(`href="/capabilities/${s.id}.html"`);
+    expect(navDoc).toContain('href="/capabilities/"');
+  });
+
+  test('marks exactly one page as current, and it is this page', () => {
+    expect(navDoc.match(/aria-current="page"/g)).toHaveLength(1);
+    expect(navDoc).toContain(`href="/capabilities/${cap.id}.html" aria-current="page"`);
+  });
+
+  test('escapes sibling titles rather than emitting raw markup', () => {
+    const hostile = capabilityDetailDocument(cap, [cap, { id: 'x', title: '<script>bad()</script>' }]);
+    expect(hostile).not.toContain('<script>bad()');
+    expect(hostile).toContain('&lt;script&gt;');
+  });
+
+  test('falls back to the back-link when no siblings are supplied', () => {
+    expect(doc).toContain('← All capabilities');
+    expect(doc).not.toContain('aria-current="page"');
+  });
 });
 
 describe('page wiring', () => {

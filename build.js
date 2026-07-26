@@ -179,7 +179,7 @@ async function buildCapabilityDetailPages(registry) {
   const outDir = path.join(distDir, 'capabilities');
   ensureDir(outDir);
   for (const cap of caps) {
-    const doc = capabilityDetailDocument(cap);
+    const doc = capabilityDetailDocument(cap, caps);
     const html = await renderHtml(doc, { rootPath: '../', copy: loadCopy() });
     fs.writeFileSync(path.join(outDir, detailFileName(cap)), html);
     console.log(`Built: capabilities/${detailFileName(cap)}`);

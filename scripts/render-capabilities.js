@@ -113,6 +113,34 @@ function renderCard(cap) {
 const MAX_TABLE_ROWS = 50;
 const MAX_BARS = 15;
 
+// Cross-navigation between capability pages. A detail page previously offered only a
+// "← All capabilities" back-link, so the sibling capabilities were reachable exclusively
+// by going back to the index — and nothing marked which page you were on. `siblings` is
+// the surfaced (non-withheld) capability list; passing none degrades to the back-link.
+function renderCapabilityNav(cap, siblings = []) {
+  const link = (href, label, current) =>
+    `<a href="${escapeHtml(href)}"` +
+    (current ? ' aria-current="page"' : '') +
+    ` style="text-decoration:none;color:${current ? '#111' : '#666'};` +
+    `font-weight:${current ? '600' : '400'};` +
+    (current ? 'border-bottom:2px solid #111;padding-bottom:2px;' : '') +
+    `">${escapeHtml(label)}</a>`;
+
+  const others = siblings.filter(s => s && s.id);
+  if (!others.length) return link('/capabilities/', '← All capabilities', false);
+
+  const items = others.map(s => link(detailHref(s), s.title || s.id, s.id === cap.id));
+  return (
+    `<nav aria-label="Capabilities" style="display:flex;flex-wrap:wrap;gap:6px 18px;` +
+    `align-items:baseline;font-size:.92rem;margin-bottom:14px;padding-bottom:12px;` +
+    `border-bottom:1px solid #e6e8eb;">` +
+    link('/capabilities/', 'All capabilities', false) +
+    `<span aria-hidden="true" style="color:#c7ccd1;">|</span>` +
+    items.join(`<span aria-hidden="true" style="color:#c7ccd1;">·</span>`) +
+    `</nav>`
+  );
+}
+
 function detailFileName(cap) {
   return `${cap.id}.html`;
 }
@@ -282,7 +310,7 @@ function renderChartFor(table) {
 }
 
 // The inner body of a capability detail page (no chrome).
-function capabilityDetailBody(cap) {
+function capabilityDetailBody(cap, siblings = []) {
   const domainLabel = DOMAIN_LABELS[cap.domain] || cap.domain;
   const domainColor = DOMAIN_COLORS[cap.domain] || '#444';
   const badge =
@@ -326,7 +354,7 @@ function capabilityDetailBody(cap) {
     `</div>`;
 
   return (
-    `<a href="/capabilities/" style="color:#666;text-decoration:none;">← All capabilities</a>` +
+    renderCapabilityNav(cap, siblings) +
     `<div style="margin:10px 0 6px;">${badge}</div>` +
     `<h1 style="margin:4px 0 8px;">${escapeHtml(cap.title)}</h1>` +
     `<p style="font-size:1.12rem;color:#444;max-width:760px;">${escapeHtml(cap.summary)}</p>` +
@@ -338,7 +366,7 @@ function capabilityDetailBody(cap) {
 
 // A full detail-page HTML document (with <include> chrome; rootPath resolved by build.js
 // via posthtml expressions). One page per capability, written to dist/capabilities/<id>.html.
-function capabilityDetailDocument(cap) {
+function capabilityDetailDocument(cap, siblings = []) {
   const title = `${cap.title} — AceEngineer Capabilities`;
   return (
     `<!DOCTYPE html>\n<html lang="en">\n<head>\n` +
@@ -353,7 +381,7 @@ function capabilityDetailDocument(cap) {
     `</head>\n<body class="theme-page">\n` +
     `<include src="partials/nav.html"></include>\n` +
     `<section style="padding:40px 0 56px;"><div class="container">\n` +
-    capabilityDetailBody(cap) +
+    capabilityDetailBody(cap, siblings) +
     `\n</div></section>\n` +
     `<include src="partials/footer.html"></include>\n` +
     `<script src="/assets/js/capabilities-refresh.js" defer></script>\n` +
@@ -378,6 +406,6 @@ module.exports = {
   renderStatStrip, renderCard, renderCards,
   detailFileName, detailHref, formatCell, humanizeColumn, orderedColumns, pickChartKeys,
   renderTable, renderBarChart, renderLineChart, renderChartFor,
-  capabilityDetailBody, capabilityDetailDocument,
+  capabilityDetailBody, capabilityDetailDocument, renderCapabilityNav,
   DOMAIN_LABELS, MAX_TABLE_ROWS,
 };

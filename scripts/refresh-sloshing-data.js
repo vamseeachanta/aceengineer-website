@@ -17,6 +17,22 @@ const SOURCE_HASHES = Object.freeze({
 const TABLE_ORDER = ['cases', 'case_catalog', 'metrics', 'derived_metrics', 'pressure_envelopes', 'studies', 'inputs', 'mesh_quality', 'qa_audit', 'series', 'samples', 'previews', 'media_metadata', 'dispositions'];
 const FORBIDDEN = /anti[\s_-]*roll|withheld|source[\s_-]*(?:record[\s_-]*)?id|client|project|(?:^|[\\/])[a-z]:[\\/]|\/home\/|<script|authorization|bearer\s/i;
 
+/**
+ * Publication limits copied verbatim into the committed pointer — and enforced here, so a
+ * reader who trusts the pointer is trusting something the publisher actually checks.
+ *
+ * max_source_bytes bounds the total size of the pinned private-source files one release may
+ * draw from. The committed release pins 7,871,176 bytes across 39 files, dominated by the
+ * 4.3 MB reviewed pressure-probe history; 12,000,000 leaves roughly 1.5x headroom, which is
+ * enough for one further pressure-scale follow-on without a code change, and tight enough
+ * that an accidental bulk upload trips the check instead of shipping quietly. Raising it is
+ * a reviewed decision: change this number and the justification together.
+ *
+ * max_public_rows bounds the largest published table (samples, 9,933 rows today, is the only
+ * one near it) and max_string_length bounds a single CSV cell; both are checked below.
+ */
+const LIMITS = Object.freeze({ max_public_rows: 10000, max_source_bytes: 12000000, max_string_length: 160 });
+
 const COLUMNS = Object.freeze({
   cases: ['case_id', 'evidence_type', 'status', 'study_axis', 'loading_condition', 'mesh', 'mesh_cells', 'period_s', 'frequency_hz', 'timestep_s', 'cycles', 'configured_max_courant', 'configured_max_alpha_courant', 'excitation', 'geometry_basis', 'solver_class'],
   case_catalog: ['case_id', 'title', 'summary', 'study_family', 'evidence_depth', 'media_truth', 'representative_case_id', 'has_case_image', 'has_case_video', 'qa_summary', 'analysis_path', 'validation_fixture_path'],
@@ -276,7 +292,7 @@ function csvCell(value) {
     return Number.isInteger(value) ? String(value) : String(Number(value.toPrecision(15)));
   }
   const s = String(value);
-  if (s.length > 160 || FORBIDDEN.test(s)) throw new Error('forbidden or oversized CSV value');
+  if (s.length > LIMITS.max_string_length || FORBIDDEN.test(s)) throw new Error('forbidden or oversized CSV value');
   return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 function tableCsv(name, rows) {
@@ -343,8 +359,30 @@ function verifyRelease(release) {
 }
 
 function fsyncFile(file) { const fd = fs.openSync(file, 'r'); try { fs.fsyncSync(fd); } finally { fs.closeSync(fd); } }
+
+/**
+ * Checks the release and its pinned sources against the limits the pointer declares.
+ *
+ * Called before publishRelease touches the filesystem: a release that would need a false
+ * limits block must not reach staging, the digest directory, or the pointer at all.
+ */
+function assertDeclaredLimits(release, source) {
+  let sourceBytes = 0;
+  for (const file of (source && source.files) || []) sourceBytes += assertFinite(file.bytes, `source file ${file.path} bytes`);
+  if (sourceBytes > LIMITS.max_source_bytes) {
+    throw new Error(`pinned source bytes ${sourceBytes} exceed declared max_source_bytes ${LIMITS.max_source_bytes}`);
+  }
+  for (const table of release.manifest.tables || []) {
+    if (table.rows > LIMITS.max_public_rows) {
+      throw new Error(`${table.file} has ${table.rows} rows, exceeding declared max_public_rows ${LIMITS.max_public_rows}`);
+    }
+  }
+  return sourceBytes;
+}
+
 function publishRelease(release, options) {
   verifyRelease(release);
+  assertDeclaredLimits(release, options.source);
   const root = path.resolve(options.root);
   const dataRoot = path.join(root, 'assets', 'data', 'sloshing');
   const finalDir = path.join(dataRoot, release.digest);
@@ -365,7 +403,7 @@ function publishRelease(release, options) {
   const old = fs.existsSync(pointerPath) ? fs.readFileSync(pointerPath) : null;
   const pointer = {
     schema_version: SCHEMA_VERSION, transformer_version: TRANSFORMER_VERSION,
-    source: options.source, limits: { max_source_bytes: 6000000, max_public_rows: 10000, max_string_length: 160 },
+    source: options.source, limits: { ...LIMITS },
     release: {
       digest: release.digest,
       directory: path.posix.join('assets/data/sloshing', release.digest),
@@ -463,7 +501,7 @@ function validateCommittedRelease(repoRoot) {
 }
 
 module.exports = {
-  COLUMNS, SCHEMA_VERSION, TRANSFORMER_VERSION, sha256, stableJson, parseCsv,
+  COLUMNS, LIMITS, SCHEMA_VERSION, TRANSFORMER_VERSION, sha256, stableJson, parseCsv,
   fetchPinnedFile, transformReviewed, transformPressureArtifacts, transformPressureEvidence, mergePressureRelease, mergePressureEvidence, buildRelease, verifyRelease,
   publishRelease, validateCommittedRelease,
 };

@@ -272,6 +272,51 @@ describe('transactional publication', () => {
     expect(published.digest).toBe(release.digest);
   });
 
+  // The pointer's `limits` block is a claim made to every reader of the release. Before this
+  // guard existed the declared 6,000,000-byte source ceiling was written unconditionally and
+  // read by nothing, and the committed release had already pinned 7,871,176 bytes past it.
+  test('refuses to publish — and writes nothing — when pinned source bytes exceed the ceiling', () => {
+    const release = refresh.buildRelease(refresh.transformReviewed(sourceFixture(), { revision: REVISION }));
+    const pointerPath = path.join(root, 'config', 'release.json');
+    const oversized = [
+      { path: 'review/fine_T24_Co035_pressure/pressure_probes.csv', sha256: '0'.repeat(64), bytes: refresh.LIMITS.max_source_bytes },
+      { path: 'review/fine_T24.json', sha256: '1'.repeat(64), bytes: 1 },
+    ];
+    expect(() => refresh.publishRelease(release, {
+      root, pointerPath, source: { dataset: 'aceengineer/digitalmodel-sloshing', revision: REVISION, files: oversized },
+    })).toThrow(/max_source_bytes/);
+    expect(fs.existsSync(pointerPath)).toBe(false);
+    expect(fs.existsSync(path.join(root, 'assets', 'data', 'sloshing', release.digest))).toBe(false);
+  });
+
+  test('publishes a release whose pinned source bytes sit under the ceiling', () => {
+    const release = refresh.buildRelease(refresh.transformReviewed(sourceFixture(), { revision: REVISION }));
+    const pointerPath = path.join(root, 'config', 'release.json');
+    const files = [
+      { path: 'review/fine_T24_Co035_pressure/pressure_probes.csv', sha256: '0'.repeat(64), bytes: refresh.LIMITS.max_source_bytes - 1 },
+      { path: 'review/fine_T24.json', sha256: '1'.repeat(64), bytes: 1 },
+    ];
+    refresh.publishRelease(release, {
+      root, pointerPath, source: { dataset: 'aceengineer/digitalmodel-sloshing', revision: REVISION, files },
+    });
+    const pointer = JSON.parse(fs.readFileSync(pointerPath, 'utf8'));
+    expect(pointer.limits.max_source_bytes).toBe(refresh.LIMITS.max_source_bytes);
+    expect(pointer.source.files.reduce((total, file) => total + file.bytes, 0))
+      .toBeLessThanOrEqual(pointer.limits.max_source_bytes);
+  });
+
+  test('refuses to publish a table wider than the declared public row ceiling', () => {
+    const base = refresh.transformReviewed(sourceFixture(), { revision: REVISION });
+    base.samples = Array.from({ length: refresh.LIMITS.max_public_rows + 1 }, (_, ordinal) => ({
+      series_id: 'aggregate-force-x', ordinal, x: ordinal * 0.05, y: ordinal,
+    }));
+    const release = refresh.buildRelease(base);
+    expect(() => refresh.publishRelease(release, {
+      root, pointerPath: path.join(root, 'config', 'release.json'),
+      source: { dataset: 'aceengineer/digitalmodel-sloshing', revision: REVISION, files: [] },
+    })).toThrow(/max_public_rows/);
+  });
+
   test('failed pointer replacement preserves prior pointer bytes', () => {
     const pointerPath = path.join(root, 'config', 'release.json');
     fs.mkdirSync(path.dirname(pointerPath), { recursive: true });
@@ -295,6 +340,16 @@ describe('committed pressure release', () => {
     expect(pointer.source.files.filter(f => f.path.startsWith('review/fine_T24_Co035_pressure/')))
       .toHaveLength(9);
     expect(pointer.source.files.every(f => /^[0-9a-f]{64}$/.test(f.sha256) && f.bytes > 0)).toBe(true);
+  });
+
+  // Regression guard for a declared-but-unenforced limit: the committed pointer used to
+  // claim a 6,000,000-byte source ceiling while pinning 7,871,176 bytes across 39 files.
+  test('stays inside every limit the committed pointer declares', () => {
+    const pointer = JSON.parse(fs.readFileSync(path.join(repoRoot, 'config', 'sloshing-data-release.json')));
+    expect(pointer.limits).toEqual(refresh.LIMITS);
+    const sourceBytes = pointer.source.files.reduce((total, file) => total + file.bytes, 0);
+    expect(sourceBytes).toBeLessThanOrEqual(pointer.limits.max_source_bytes);
+    expect(Math.max(...Object.values(pointer.release.counts))).toBeLessThanOrEqual(pointer.limits.max_public_rows);
   });
 
   test('passes the complete pointer/manifest/table trust loop and retains Courant warning', () => {

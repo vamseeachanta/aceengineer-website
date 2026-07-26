@@ -33,7 +33,8 @@ async function main() {
     for (const table of cap.tables || []) {
       const ref = `${cap.hf_dataset}/${table.config}`;
       try {
-        const data = await fetchTable(cap.hf_dataset, table.config);
+        const data = await fetchTable(cap.hf_dataset, table.config,
+          table.max_rows ? { maxRows: table.max_rows } : {});
         const p = writeSnapshot(SNAPSHOT_DIR, data);
         const flag = data.truncated ? ` (capped ${data.fetched}/${data.total_rows})` : '';
         console.log(`✓ ${ref} → ${path.relative(repoRoot, p)} · ${data.fetched} rows${flag}`);

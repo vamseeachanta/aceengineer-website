@@ -461,7 +461,6 @@ function datasetJsonLd(cap) {
     description,
     url,
     isAccessibleForFree: true,
-    license: 'https://huggingface.co/datasets/' + cap.hf_dataset,
     creator: { '@id': `${SITE_ORIGIN}/#organization` },
     distribution: {
       '@type': 'DataDownload',

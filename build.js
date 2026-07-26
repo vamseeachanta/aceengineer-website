@@ -238,12 +238,31 @@ function copyAssets() {
   }
 }
 
+// Can this checkout answer "when did this file last change?" — i.e. is it a git repo
+// with full history? On a shallow clone `git log -- <path>` only sees the commits in
+// the shallow window, so files touched by the tip get a date and everything else gets
+// nothing. That yields a sitemap where a handful of pages carry a lastmod and the rest
+// don't, which reads to a crawler as "only these changed" — worse than omitting the
+// field entirely. CI checks out with fetch-depth: 0; Vercel's clone depth is not ours
+// to control, so this is detected rather than assumed.
+function gitHistoryAvailable() {
+  try {
+    const { execFileSync } = require('child_process');
+    const run = args => execFileSync('git', args,
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    run(['rev-parse', '--git-dir']);
+    return run(['rev-parse', '--is-shallow-repository']) !== 'true';
+  } catch {
+    return false;
+  }
+}
+
 // Last commit date for a source file, as YYYY-MM-DD. Used for sitemap <lastmod> so the
 // date reflects when the page actually changed rather than when the site was rebuilt —
 // a build-time stamp would tell crawlers every page changed on every deploy. Returns
-// null outside a git checkout (shallow CI clones, tarball builds), in which case the
-// entry ships without a lastmod, which is valid and honest.
+// null when the file has no history reachable from this checkout.
 function gitLastModified(sourceFile) {
+  if (!sourceFile) return null;
   try {
     const { execFileSync } = require('child_process');
     const out = execFileSync('git', ['log', '-1', '--format=%cs', '--', sourceFile],
@@ -282,8 +301,15 @@ function sourceFileFor(relPath) {
 // from dist/ means a new page is listed the moment it builds.
 function writeSitemap(destDirArg = distDir) {
   const pages = builtPages(destDirArg).filter(p => !(p in SITEMAP_EXCLUDE));
+  // All-or-nothing on lastmod: a partial set is a misleading signal (see
+  // gitHistoryAvailable). <lastmod> is optional in the sitemap protocol, so omitting it
+  // everywhere is valid; emitting it for an arbitrary subset is not honest.
+  const datesAvailable = gitHistoryAvailable();
+  if (!datesAvailable) {
+    console.warn('sitemap: shallow or non-git checkout — omitting <lastmod> (all-or-nothing)');
+  }
   const entries = pages.map(p => {
-    const lastmod = gitLastModified(sourceFileFor(p));
+    const lastmod = datesAvailable ? gitLastModified(sourceFileFor(p)) : null;
     return [
       '  <url>',
       `    <loc>${canonicalUrlFor(p)}</loc>`,
@@ -301,7 +327,8 @@ function writeSitemap(destDirArg = distDir) {
   ].join('\n');
   fs.writeFileSync(path.join(destDirArg, 'sitemap.xml'), xml);
   const skipped = Object.keys(SITEMAP_EXCLUDE).length;
-  console.log(`Generated: sitemap.xml — ${pages.length} URLs (${skipped} excluded)`);
+  const dated = datesAvailable ? ' with lastmod' : ' without lastmod';
+  console.log(`Generated: sitemap.xml — ${pages.length} URLs (${skipped} excluded)${dated}`);
   return pages;
 }
 
@@ -463,4 +490,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, canonicalUrlFor, gitLastModified, SITE_ORIGIN, SITEMAP_EXCLUDE };
+module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };

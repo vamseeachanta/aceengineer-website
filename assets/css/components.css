@@ -45,6 +45,15 @@
   outline-offset: 2px;
 }
 
+/* --- contrast overrides on Bootstrap defaults (a11y, #87) -----------------
+   Bootswatch United ships .text-muted as #aea79f — 2.379:1 on white, well under
+   the 4.5:1 AA floor for body text, and it is used for real prose on the
+   calculator pages. Overridden to the palette's muted grey (5.53:1). Loaded after
+   bootstrap-united.css in the bundle, so this wins without !important. */
+.text-muted {
+  color: #5a6b76;
+}
+
 /* --- heading size utilities (a11y, #87) -----------------------------------
    The heading OUTLINE (h1..h6) must not skip levels — screen readers use it to
    navigate. Where a heading's level was corrected, these classes hold the visual

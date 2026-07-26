@@ -1,0 +1,16 @@
+case_id,evidence_type,status,study_axis,loading_condition,mesh,mesh_cells,period_s,frequency_hz,timestep_s,cycles,configured_max_courant,configured_max_alpha_courant,excitation,geometry_basis,solver_class
+decay-dt-0p001,cfd_validation,accepted,dt,free_decay,structured_2d,6400,,0.755717,0.001,,,,initial_free_surface_perturbation,rectangular_free_surface_benchmark,vof_cfd
+decay-dt-0p004,cfd_validation,accepted,dt,free_decay,structured_2d,6400,,0.755702,0.004,,,,initial_free_surface_perturbation,rectangular_free_surface_benchmark,vof_cfd
+decay-mesh-cpb120,cfd_validation,accepted,mesh,free_decay,structured_2d,14400,,0.755763,0.002,,,,initial_free_surface_perturbation,rectangular_free_surface_benchmark,vof_cfd
+decay-mesh-cpb160,cfd_validation,accepted,mesh,free_decay,structured_2d,25600,,0.755807,0.002,,,,initial_free_surface_perturbation,rectangular_free_surface_benchmark,vof_cfd
+decay-mesh-cpb40,cfd_validation,accepted,mesh,free_decay,structured_2d,1600,,0.75558,0.002,,,,initial_free_surface_perturbation,rectangular_free_surface_benchmark,vof_cfd
+decay-mesh-cpb60,cfd_validation,accepted,mesh,free_decay,structured_2d,3600,,0.755651,0.002,,,,initial_free_surface_perturbation,rectangular_free_surface_benchmark,vof_cfd
+decay-mesh-cpb80,cfd_validation,accepted,mesh,free_decay,structured_2d,6400,,0.755701,0.002,,,,initial_free_surface_perturbation,rectangular_free_surface_benchmark,vof_cfd
+forced-fine-co035-pressure-t24,cfd_forced_roll,accepted,pressure_load_follow_on,forced_roll,fine,69120,24,0.0416666666666667,,10,0.35,0.35,sinusoidal_roll_period,source_neutral_twin_tank,vof_cfd
+forced-fine-t24,cfd_forced_roll,accepted,mesh_confirmation,forced_roll,fine,69120,24,0.0416666666666667,,10,,,sinusoidal_roll_period,source_neutral_twin_tank,vof_cfd
+forced-medium-t16,cfd_forced_roll,accepted,period,forced_roll,medium,20480,16,0.0625,,10,,,sinusoidal_roll_period,source_neutral_twin_tank,vof_cfd
+forced-medium-t18,cfd_forced_roll,accepted,period,forced_roll,medium,20480,18,0.0555555555555556,,10,,,sinusoidal_roll_period,source_neutral_twin_tank,vof_cfd
+forced-medium-t20,cfd_forced_roll,accepted,period,forced_roll,medium,20480,20,0.05,,10,,,sinusoidal_roll_period,source_neutral_twin_tank,vof_cfd
+forced-medium-t22,cfd_forced_roll,accepted,period,forced_roll,medium,20480,22,0.0454545454545455,,10,,,sinusoidal_roll_period,source_neutral_twin_tank,vof_cfd
+forced-medium-t24,cfd_forced_roll,accepted,period,forced_roll,medium,20480,24,0.0416666666666667,,10,,,sinusoidal_roll_period,source_neutral_twin_tank,vof_cfd
+forced-medium-t26,cfd_forced_roll,accepted,period,forced_roll,medium,20480,26,0.0384615384615385,,10,,,sinusoidal_roll_period,source_neutral_twin_tank,vof_cfd

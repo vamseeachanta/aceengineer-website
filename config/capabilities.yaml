@@ -45,7 +45,7 @@ capabilities:
       - config: fields
         label: Fields
         viz: table
-        highlight_columns: [name, operator, region, wells_count, api_gravity, npv_mm, breakeven_wti, economics_basis]
+        highlight_columns: [name, operator, region, status, wells_count, api_gravity, cum_oil_mmbbl, avg_uptime_pct]
       - config: wells
         label: Wells
         viz: table
@@ -56,12 +56,10 @@ capabilities:
         highlight_columns: [country, fields, facilities]
     data_limits: >-
       Coverage is primarily US Gulf of Mexico deepwater (BSEE) plus selected
-      international basins; not a complete global census. Economics is life-to-date
-      pretax NPV @10% and breakeven WTI computed on public BSEE production — realized
-      to date, NOT full-cycle or forward projections — so mature fields can show a
-      negative life-to-date NPV; the basis travels with each value (economics_basis).
-      Shown only for fields with sufficient production history; early-life fields are
-      left blank rather than reported on a misleading basis (worldenergydata#971/#978).
+      international basins; not a complete global census. Published fields emphasize
+      operational, geological, production, and provenance attributes. Economics are
+      intentionally absent from this table while the upstream economics configuration
+      is being republished and reviewed.
 
   - id: atlas-explorer
     title: Digital Model Parametric Atlases
@@ -101,7 +99,7 @@ capabilities:
       price and discount rate, on public BSEE production.
     hf_dataset: aceengineer/worldenergydata-explorer
     provenance_url: https://github.com/vamseeachanta/worldenergydata
-    status: live
+    status: pending
     primary_config: parametric_economics
     tables:
       - config: parametric_economics

@@ -10,6 +10,8 @@
     "validate:registry": "npm run validate:capabilities && npm run validate:capabilities:online",
     "scaffold:capability": "node scripts/scaffold-capability-entry.js",
     "refresh:hf": "node scripts/refresh-hf-data.js",
+    "refresh:sloshing": "node scripts/refresh-sloshing-data.js",
+    "publish:sloshing-enrichment": "node scripts/publish-sloshing-enrichment.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
@@ -33,6 +35,21 @@
         "displayName": "hf-fetch",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/hf-fetch.test.js"]
+      },
+      {
+        "displayName": "sloshing-build",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/sloshing-build.test.js"]
+      },
+      {
+        "displayName": "sloshing-refresh",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/sloshing-refresh.test.js"]
+      },
+      {
+        "displayName": "sloshing-reports",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/sloshing-reports.test.js"]
       },
       {
         "displayName": "capabilities-online",
@@ -100,6 +117,8 @@
       "scripts/hf-fetch.js",
       "scripts/render-capabilities.js",
       "scripts/verify-capabilities-online.js",
+      "scripts/refresh-sloshing-data.js",
+      "assets/js/sloshing-reports.js",
       "assets/js/navbar-toggle.js",
       "assets/js/cta-tracking.js",
       "assets/js/capabilities-refresh.js",

@@ -19,6 +19,19 @@ let _capabilitiesCards = '';
 // The hydrated registry (C2), captured at build start so the detail-page pass (C4)
 // can reuse it without re-fetching.
 let _hydratedRegistry = null;
+let _sloshingRelease = null;
+
+// Validate the committed content-addressed sloshing release before rendering any
+// report. This reuses the publication trust loop and never performs network I/O.
+function validateSloshingRelease(repoRoot = path.resolve('.')) {
+  const { validateCommittedRelease } = require('./scripts/refresh-sloshing-data');
+  const result = validateCommittedRelease(repoRoot);
+  return {
+    digest: result.digest,
+    assetPath: `assets/data/sloshing/${result.digest}`,
+    files: ['manifest.json', ...result.manifest.tables.map(table => table.file)],
+  };
+}
 
 // Load canonical firm-copy (brand/copy.yaml) — single source of truth (issue #9).
 // Exposed to every page as the `copy` template object, e.g. {{ copy.firm_lede }}.
@@ -118,6 +131,13 @@ async function processFile(filePath) {
     locals.rootPath = '';
   }
 
+  // Default the active-nav marker so shared navs can reference it safely on any
+  // page (strict expressions throw on undefined). Pages opt into highlighting by
+  // setting `activeNav: <slug>` in front matter; others render no current item.
+  if (locals.activeNav === undefined) {
+    locals.activeNav = '';
+  }
+
   // Expose canonical firm-copy to every page as `copy` (issue #9). Page-level
   // front matter still wins for any explicitly redefined key.
   if (locals.copy === undefined) {
@@ -128,6 +148,9 @@ async function processFile(filePath) {
   // (content/capabilities/index.html uses {{{ capabilitiesCards }}}).
   if (locals.capabilitiesCards === undefined) {
     locals.capabilitiesCards = _capabilitiesCards;
+  }
+  if (locals.sloshingAssetPath === undefined && _sloshingRelease) {
+    locals.sloshingAssetPath = _sloshingRelease.assetPath;
   }
 
   const html = await renderHtml(content, locals);
@@ -207,6 +230,11 @@ async function build() {
     fs.rmSync(distDir, { recursive: true });
   }
   fs.mkdirSync(distDir);
+
+  // The two report pages must never build against an absent, partial, or mixed
+  // release. Read and validate the pointer once so every page receives the same
+  // immutable path.
+  _sloshingRelease = validateSloshingRelease(path.resolve('.'));
 
   // Hydrate the capability registry (C2) and render its cards (C3) before processing
   // pages, so content/capabilities/index.html can inject them. Never fails the build.
@@ -327,4 +355,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities };
+module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease };

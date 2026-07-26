@@ -145,3 +145,37 @@ capabilities:
       under ~250 d) with WAR-union rig-days (longer spans), so batch-drilled wells
       undercount drilling days — disclosed rather than corrected pending resolution.
       Producer markers cover the seven core Lower-Tertiary fields only.
+
+  # Release-backed: the upstream dataset is private (CFD review artifacts), so this
+  # capability is pinned to the immutable, content-addressed release this site publishes
+  # rather than to live datasets-server configs. The digest/revision chain below is the
+  # same one cited on the report pages and is checkable end to end.
+  - id: tank-sloshing-cfd
+    title: Tank Sloshing CFD
+    domain: digitalmodel
+    summary: >-
+      OpenFOAM VOF sloshing analysis for partially filled tanks — free-decay validation
+      against closed-form theory, a forced-roll period sweep, and the connected twin-tank
+      U-tube exchange mode with its inter-tank mass shift and roll moment.
+    backing: release
+    hf_dataset: aceengineer/digitalmodel-sloshing
+    provenance_url: https://www.aceengineer.com/reports/sloshing/validation.html
+    status: live
+    release:
+      hub_url: /reports/sloshing/
+      digest: a0da3df2d32f03e5dd7014dc81af6aeb6f332a8570738eecca4a3c62c6f9af97
+      revision: aa37e6d365f3059674a49dc4bafbe4d64d12e5fd
+      stats:
+        - count: 24
+          label: accepted cases
+        - count: 89
+          label: metrics
+        - count: 9933
+          label: response samples
+    data_limits: >-
+      Source-neutral reference geometry only — no vessel-specific dimensions are
+      published here. Free-decay frequency matches closed-form theory to 0.30%; the
+      conduit-area scaling law matches CFD to ~1-2%. Absolute forced magnitudes carry a
+      single dynamic-amplification factor (x1.34 to x1.45) measured near resonance, and
+      the connected-tank mass shift and roll moment are derived from the CFD-measured
+      level difference rather than predicted independently.

@@ -7,7 +7,7 @@ const yaml = require('js-yaml');
 const { PurgeCSS } = require('purgecss');
 const CleanCSS = require('clean-css');
 const hf = require('./scripts/hf-fetch');
-const { renderCards, capabilityDetailDocument, detailFileName } = require('./scripts/render-capabilities');
+const { renderCards, capabilityDetailDocument, detailFileName, isReleaseBacked } = require('./scripts/render-capabilities');
 
 const srcDir = './content';
 const distDir = './dist';
@@ -176,15 +176,19 @@ async function renderHtml(content, locals) {
 // (C4, #52). Pages live one level deep, so rootPath is '../' for the shared partials.
 async function buildCapabilityDetailPages(registry) {
   const caps = (registry && registry.capabilities || []).filter(c => c.status !== 'withheld');
+  // Release-backed capabilities have no generated detail page — their canonical
+  // destination is an existing hub on this site (see render-capabilities detailHref).
+  const generated = caps.filter(c => !isReleaseBacked(c));
   const outDir = path.join(distDir, 'capabilities');
   ensureDir(outDir);
-  for (const cap of caps) {
-    const doc = capabilityDetailDocument(cap, caps);
+  const renderedAt = new Date().toISOString().slice(0, 10);
+  for (const cap of generated) {
+    const doc = capabilityDetailDocument(cap, caps, { renderedAt });
     const html = await renderHtml(doc, { rootPath: '../', copy: loadCopy() });
     fs.writeFileSync(path.join(outDir, detailFileName(cap)), html);
     console.log(`Built: capabilities/${detailFileName(cap)}`);
   }
-  return caps.length;
+  return generated.length;
 }
 
 // Copy assets directory

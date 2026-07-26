@@ -186,6 +186,8 @@ rootPath: "../"
 
     <include src="partials/nav.html"></include>
 
+    <main id="main">
+
     <!-- Hero Section -->
     <section class="hero-section" style="padding: 50px 0;">
         <div class="container">
@@ -214,7 +216,7 @@ rootPath: "../"
                 <!-- Input Panel -->
                 <div class="col-md-5">
                     <div class="calculator-card">
-                        <h3>Input Parameters</h3>
+                        <h2 class="h-size-h3">Input Parameters</h2>
 
                         <div class="form-group">
                             <label for="standard">S-N Curve Standard</label>
@@ -269,7 +271,7 @@ rootPath: "../"
 
                     <!-- Results Card -->
                     <div id="results-card" class="result-card" style="display: none;">
-                        <h4>Calculation Results</h4>
+                        <h3 class="h-size-h4">Calculation Results</h3>
                         <div id="result-content"></div>
                     </div>
                 </div>
@@ -277,12 +279,12 @@ rootPath: "../"
                 <!-- Chart Panel -->
                 <div class="col-md-7">
                     <div class="calculator-card">
-                        <h3>S-N Curve Visualization</h3>
+                        <h2 class="h-size-h3">S-N Curve Visualization</h2>
                         <div id="sn-chart" class="chart-container" style="height: 400px;"></div>
                     </div>
 
                     <div class="sn-info" id="curve-info">
-                        <h5>About DNV-RP-C203 S-N Curves</h5>
+                        <h3 class="h-size-h5">About DNV-RP-C203 S-N Curves</h3>
                         <p>
                             DNV-RP-C203 provides S-N curves for fatigue analysis of offshore steel structures.
                             The curves account for different weld details, environments, and thickness effects.
@@ -296,7 +298,7 @@ rootPath: "../"
             <div class="row" style="margin-top: 30px;">
                 <div class="col-md-12">
                     <div class="calculator-card">
-                        <h3>S-N Curve Equation</h3>
+                        <h2 class="h-size-h3">S-N Curve Equation</h2>
                         <div class="row">
                             <div class="col-md-6">
                                 <p><strong>Basic S-N Relationship:</strong></p>
@@ -340,7 +342,7 @@ rootPath: "../"
 
             <!-- CTA -->
             <div class="text-center" style="margin-top: 40px;">
-                <h3>Need Comprehensive Fatigue Analysis?</h3>
+                <h2 class="h-size-h3">Need Comprehensive Fatigue Analysis?</h2>
                 <p style="color: #666; margin-bottom: 20px;">
                     Our automated fatigue assessment system includes 221+ S-N curves from 17 international standards,
                     multi-stress state analysis, and automated reporting.
@@ -354,6 +356,8 @@ rootPath: "../"
             </div>
         </div>
     </section>
+
+    </main>
 
     <include src="partials/footer.html"></include>
 

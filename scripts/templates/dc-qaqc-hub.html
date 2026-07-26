@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="description" content="QA/QC hub for the World Oil April 2026 drilling and completion days reconciliation across 11 Gulf of Mexico developments.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>D&C Days QA/QC — Report Hub</title>
 <style>
+.h-as-h3{font-size:1.05rem;font-weight:600;margin:0 0 4px}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:1100;padding:10px 18px;background:#fff;color:#0e2733;border:2px solid #0e2733;border-radius:0 0 8px 0;font-weight:600;text-decoration:none}
+.skip-link:focus{left:0;outline:3px solid #0e7c8b;outline-offset:2px}
   :root {
     --bg: #eaeff2;
     --surface: #ffffff;
@@ -218,6 +222,7 @@
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="wrap site-inner">
     <span class="wordmark">
@@ -240,6 +245,7 @@
     </nav>
   </div>
 </header>
+<main id="main">
 
 <div class="wrap">
   <div class="crumb"><a href="/capabilities/">Capabilities</a><span class="sep">▸</span><span>D&amp;C Days QA/QC</span></div>
@@ -282,7 +288,7 @@
     </div>
 
     <div class="chartcard">
-      <h3>Δ vs the article, by development</h3>
+      <h2 class="h-as-h3">Δ vs the article, by development</h2>
       <p class="cap">Total D&amp;C days, wed minus World Oil Table 1 — seven exact, three explained.</p>
       <svg viewBox="0 0 600 230" role="img" aria-label="Delta bars: Jack St Malo +119 days, Buckskin +52, Shenandoah +24; Anchor, Cascade Chinook, Stones, Julia, Kaskida, North Platte and Tiber all zero.">
         <g stroke="var(--line-strong)" stroke-width="1">
@@ -426,6 +432,7 @@
     <span class="item"><span class="sw" style="background:var(--accent)"></span>Bore-level index</span>
     <span class="item"><span class="sw" style="background:var(--hold)"></span>Pending / provenance</span>
   </div>
+</main>
 
   <footer class="site">
     <div class="row">

@@ -6,7 +6,7 @@ activeNav: "analysis"
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Individual tank-sloshing CFD case analysis with published histories, envelopes, metrics, QA and provenance.">
   <title>Tank Sloshing CFD Case Analysis — AceEngineer</title><include src="partials/head-common.html"></include><link rel="stylesheet" href="{{ rootPath }}assets/css/sloshing-reports.css"><script src="{{ rootPath }}assets/js/plotly-2.32.0.min.js"></script><script defer src="{{ rootPath }}assets/js/sloshing-reports.js"></script>
 </head><body><include src="partials/nav.html"></include>
-<main class="sloshing-report" data-sloshing-report data-report-kind="case" data-manifest-url="../../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
+<main id="main" class="sloshing-report" data-sloshing-report data-report-kind="case" data-manifest-url="../../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
   <header class="sloshing-header"><p class="report-kicker">Individual loading condition · reviewed CFD evidence</p><h1>Tank Sloshing CFD Case Analysis</h1><p>A bookmarkable case record: published basis, response histories, load envelopes, engineering disposition, and evidence boundary.</p></header>
   <div class="sloshing-nav-wrap"><include src="partials/sloshing-capability-nav.html"></include></div>
   <div class="sloshing-shell"><noscript><p class="noscript-notice">Interactive case selection requires JavaScript.</p></noscript><p class="report-status" data-report-status role="status" aria-live="polite">Loading the reviewed public release…</p><div class="report-error" data-report-error role="alert" hidden></div>

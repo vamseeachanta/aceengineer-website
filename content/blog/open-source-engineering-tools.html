@@ -86,7 +86,7 @@ rootPath: "../"
 
     <style>
         .article-meta {
-            color: #777;
+            color: #5a6b76;
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 1px solid #eee;
@@ -173,6 +173,8 @@ rootPath: "../"
 
     <include src="partials/nav.html"></include>
 
+    <main id="main">
+
     <div class="container">
         <article>
             <h1>Open-Source Engineering Tools: Building Transparent Computational Methods</h1>
@@ -248,7 +250,7 @@ rootPath: "../"
                 </p>
 
                 <div class="repo-card">
-                    <h4>fatigue-analysis</h4>
+                    <h3 class="h-size-h4">fatigue-analysis</h3>
                     <p>
                         A Python library for fatigue life assessment of welded structures. Implements S-N curve methods per DNV-RP-C203, rainflow cycle counting, stress concentration factors for common joint types, and cumulative damage calculations using Miner's rule.
                     </p>
@@ -263,7 +265,7 @@ rootPath: "../"
                 </div>
 
                 <div class="repo-card">
-                    <h4>fea-postprocessing</h4>
+                    <h3 class="h-size-h4">fea-postprocessing</h3>
                     <p>
                         Tools for automating FEA post-processing workflows. Reads results from common formats (CSV exports from ANSYS, Abaqus, etc.), performs code checks, and generates structured output for reporting.
                     </p>
@@ -278,7 +280,7 @@ rootPath: "../"
                 </div>
 
                 <div class="repo-card">
-                    <h4>engineering-calcs</h4>
+                    <h3 class="h-size-h4">engineering-calcs</h3>
                     <p>
                         A collection of validated engineering calculations for common structural problems. Each calculation includes derivation references, validation against hand calculations or published examples, and unit tests.
                     </p>
@@ -497,7 +499,7 @@ git push origin feature/your-feature-name
                 <hr>
 
                 <div class="author-box">
-                    <h4>About the Author</h4>
+                    <h3 class="h-size-h4">About the Author</h3>
                     <p>
                         <strong>Vamsee Achanta</strong> is the founder of Analytical & Computational Engineering (AceEngineer),
                         specializing in computational engineering solutions for the energy industry. With 15+ years of experience
@@ -525,6 +527,8 @@ git push origin feature/your-feature-name
             </div>
         </article>
     </div>
+
+    </main>
 
     <include src="partials/footer.html"></include>
 

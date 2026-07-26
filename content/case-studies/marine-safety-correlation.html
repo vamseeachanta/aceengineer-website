@@ -186,6 +186,8 @@ rootPath: "../"
 
     <include src="partials/nav.html"></include>
 
+    <main id="main">
+
     <!-- Case Study Header -->
     <div class="case-study-header">
         <div class="container">
@@ -243,21 +245,21 @@ rootPath: "../"
         <h2 class="section-title">The Challenge</h2>
 
         <div class="challenge-box">
-            <h4>Fragmented International Databases</h4>
+            <h3 class="h-size-h4">Fragmented International Databases</h3>
             <p>
                 Maritime incidents are investigated by local authorities, creating data silos across MAIB (UK), TSB (Canada), USCG (USA), NTSB (USA), ATSB (Australia), IMO (global), and EMSA (EU). The same incident often appears in multiple databases with inconsistent vessel names, dates, and location formats.
             </p>
         </div>
 
         <div class="challenge-box">
-            <h4>Manual Correlation Bottlenecks</h4>
+            <h3 class="h-size-h4">Manual Correlation Bottlenecks</h3>
             <p>
                 Risk analysts spent 40+ hours per week manually cross-referencing incidents across databases. Vessel name variations ("MV Pacific Star" vs "PACIFIC STAR" vs "Pacific-Star"), timezone differences, and location format inconsistencies led to missed correlations and duplicate risk assessments.
             </p>
         </div>
 
         <div class="challenge-box">
-            <h4>Inconsistent Data Quality</h4>
+            <h3 class="h-size-h4">Inconsistent Data Quality</h3>
             <p>
                 Each authority uses different reporting schemas, severity classifications, and investigation timelines. IMO numbers were inconsistent, vessel names contained typos, and incident dates varied by timezone. No single identifier existed to reliably link cross-border incidents.
             </p>
@@ -269,7 +271,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">1</div>
             <div class="step-content">
-                <h4>Multi-Source Data Integration</h4>
+                <h3 class="h-size-h4">Multi-Source Data Integration</h3>
                 <p>
                     Built 7 custom importers to normalize incident data from MAIB (5,876 incidents), TSB (47,385 incidents), USCG, NTSB, ATSB, IMO, and EMSA databases. Each importer handles authority-specific schemas, date formats, and severity classifications while mapping to a unified data model.
                 </p>
@@ -279,7 +281,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">2</div>
             <div class="step-content">
-                <h4>Fuzzy Matching Engine Implementation</h4>
+                <h3 class="h-size-h4">Fuzzy Matching Engine Implementation</h3>
                 <p>
                     Implemented multi-stage correlation using IMO number exact matching (primary), Levenshtein distance for vessel name similarity (secondary), geographic haversine proximity (tertiary), and temporal proximity within configurable windows. Combined confidence scoring weighted by match quality.
                 </p>
@@ -289,7 +291,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">3</div>
             <div class="step-content">
-                <h4>Intelligent Deduplication Workflow</h4>
+                <h3 class="h-size-h4">Intelligent Deduplication Workflow</h3>
                 <p>
                     Created batch deduplication pipeline with confidence thresholds (0.7-1.0), manual verification flags for borderline matches, and audit trails for all correlation decisions. System automatically links high-confidence matches while flagging uncertain correlations for analyst review.
                 </p>
@@ -299,7 +301,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">4</div>
             <div class="step-content">
-                <h4>Unified Incident Dashboard</h4>
+                <h3 class="h-size-h4">Unified Incident Dashboard</h3>
                 <p>
                     Deployed SQLite-based correlation database with CLI tools for match discovery, manual linking, and statistics reporting. Analysts can query incidents by vessel IMO, name pattern, date range, or location with automatic cross-reference to related incidents across all 7 authorities.
                 </p>
@@ -390,21 +392,21 @@ rootPath: "../"
         <h2 class="section-title">Results</h2>
 
         <div class="result-box">
-            <h4>Unified Incident Intelligence</h4>
+            <h3 class="h-size-h4">Unified Incident Intelligence</h3>
             <p>
                 Successfully integrated 53,261 incidents across 7 maritime authorities spanning 50 years (1975-2025). Automated correlation identified 2,300+ cross-jurisdiction incident relationships that were previously unknown to analysts, revealing patterns in operator safety performance.
             </p>
         </div>
 
         <div class="result-box">
-            <h4>92% Reduction in Manual Effort</h4>
+            <h3 class="h-size-h4">92% Reduction in Manual Effort</h3>
             <p>
                 Automated fuzzy matching reduced weekly analyst correlation time from 40 hours to 3 hours (verification only). High-confidence matches (confidence greater than 0.9) require no manual review. Medium-confidence matches (0.7-0.9) flagged for quick analyst verification.
             </p>
         </div>
 
         <div class="result-box">
-            <h4>Improved Risk Assessment Accuracy</h4>
+            <h3 class="h-size-h4">Improved Risk Assessment Accuracy</h3>
             <p>
                 Cross-database correlation revealed that 18% of high-severity incidents appeared in multiple authority databases but were previously counted as separate events. Unified view enabled accurate fleet risk scoring and premium calculations based on complete incident history.
             </p>
@@ -507,6 +509,8 @@ python3 scripts/generate_marine_safety_data.py
         </p>
 
     </div>
+
+    </main>
 
     <include src="partials/footer.html"></include>
 

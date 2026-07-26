@@ -9,7 +9,7 @@ activeNav: "dual-tank"
   <title>Dual Connected Tanks — Tank Sloshing CFD — AceEngineer</title>
   <include src="partials/head-common.html"></include><link rel="stylesheet" href="{{ rootPath }}assets/css/sloshing-browser.css">
 </head><body><include src="partials/nav.html"></include>
-<main class="slosh-capability summary-report">
+<main id="main" class="slosh-capability summary-report">
   <header class="cap-hero summary-hero"><p class="cap-kicker">Connected-tank study · U-tube exchange · analytical + CFD</p><h1>Dual Connected Tanks</h1><p class="cap-lede">Two tanks joined by a bottom conduit behave as one coupled system. This page resolves the connected <strong>exchange (U-tube) mode</strong>, the inter-tank <strong>mass shift</strong>, and the <strong>roll moment</strong> it produces — from a closed-form model checked against the resolved twin-tank CFD. Geometry is the source-neutral dm1528 reference; no client data appears here.</p><div class="summary-verdict"><strong>Disposition</strong><span>Validation-grade for the connected-exchange mechanism: the analytical model matches CFD independently on single-tank frequency, exchange period, and the conduit-area scaling law. The mass shift and roll moment follow from the CFD-measured level difference (a derivation cross-check, plus a ×1.45 dynamic-amplification residual).</span></div><div class="cap-actions"><a class="button primary" href="#exchange">See the exchange mode</a><a class="button" href="#massshift">Mass shift &amp; roll</a><a class="button" href="index.html">Back to capability</a></div></header>
   <include src="partials/sloshing-capability-nav.html"></include>
 

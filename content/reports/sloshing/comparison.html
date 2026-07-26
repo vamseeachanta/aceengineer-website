@@ -7,7 +7,7 @@ activeNav: "comparison"
   <title>Tank Sloshing CFD Comparison — AceEngineer</title><include src="partials/head-common.html"></include>
   <link rel="stylesheet" href="{{ rootPath }}assets/css/sloshing-reports.css"><script src="{{ rootPath }}assets/js/plotly-2.32.0.min.js"></script><script src="{{ rootPath }}assets/js/sloshing-reports.js"></script><script defer src="{{ rootPath }}assets/js/sloshing-comparison.js"></script>
 </head><body><include src="partials/nav.html"></include>
-<main class="sloshing-report" data-sloshing-comparison data-manifest-url="../../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
+<main id="main" class="sloshing-report" data-sloshing-comparison data-manifest-url="../../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
   <header class="sloshing-header"><p class="report-kicker">Case comparison · compatibility-aware · pinned evidence</p><h1>Tank Sloshing CFD Comparison</h1><p>Compare two published cases without confusing period, mesh, timestep, loading, or evidence-depth differences with solver validation.</p></header>
   <div class="sloshing-nav-wrap"><include src="partials/sloshing-capability-nav.html"></include></div>
   <div class="sloshing-shell"><p class="report-status" data-comparison-status role="status">Loading the reviewed release…</p><div class="report-error" data-comparison-error hidden role="alert"></div>

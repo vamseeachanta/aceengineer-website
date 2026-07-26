@@ -22,6 +22,40 @@
   --ace-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
+/* --- skip link (a11y, #87) -----------------------------------------------
+   First focusable element on every page (emitted by partials/nav.html). Off-screen
+   until focused, then pinned top-left so keyboard users can jump past the nav.
+   Not `display:none` / `visibility:hidden` — those remove it from the tab order. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1100;
+  padding: 10px 18px;
+  background: var(--ace-surface);
+  color: var(--ace-ink);
+  border: 2px solid var(--ace-ink);
+  border-radius: 0 0 var(--ace-radius-sm) 0;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0;
+  outline: 3px solid #2BB2A6;
+  outline-offset: 2px;
+}
+
+/* --- heading size utilities (a11y, #87) -----------------------------------
+   The heading OUTLINE (h1..h6) must not skip levels — screen readers use it to
+   navigate. Where a heading's level was corrected, these classes hold the visual
+   size it had before, so the outline fix is not also a redesign. Values are the
+   Bootstrap 3 heading scale currently in use. Prefer fixing the outline over
+   reaching for these on new markup. */
+.h-size-h2 { font-size: 30px; }
+.h-size-h3 { font-size: 24px; }
+.h-size-h4 { font-size: 18px; }
+.h-size-h5 { font-size: 14px; }
+
 /* --- eyebrow (breadcrumb-style kicker above a page H1) --------------------- */
 .section-eyebrow {
   text-transform: uppercase;

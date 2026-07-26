@@ -186,6 +186,8 @@ rootPath: "../"
 
     <include src="partials/nav.html"></include>
 
+    <main id="main">
+
     <!-- Case Study Header -->
     <div class="case-study-header">
         <div class="container">
@@ -243,21 +245,21 @@ rootPath: "../"
         <h2 class="section-title">The Challenge</h2>
 
         <div class="challenge-box">
-            <h4>Investment Decision Timeline</h4>
+            <h3 class="h-size-h4">Investment Decision Timeline</h3>
             <p>
                 Partners required comprehensive economics within 3 weeks to meet board meeting deadlines. Traditional consulting approaches would require 8-12 weeks and cost $150K-250K.
             </p>
         </div>
 
         <div class="challenge-box">
-            <h4>Data Integration Complexity</h4>
+            <h3 class="h-size-h4">Data Integration Complexity</h3>
             <p>
                 BSEE production data required normalization and aggregation across multiple leases. Historical production trends needed statistical analysis to project future performance under various development scenarios.
             </p>
         </div>
 
         <div class="challenge-box">
-            <h4>Sensitivity Analysis Requirements</h4>
+            <h3 class="h-size-h4">Sensitivity Analysis Requirements</h3>
             <p>
                 Investors demanded NPV analysis across oil price scenarios ($55-95/bbl), discount rates (8%-12%), and development cost variations (+/- 25%). Manual calculations would be error-prone and time-consuming.
             </p>
@@ -269,7 +271,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">1</div>
             <div class="step-content">
-                <h4>BSEE Data Collection and Validation</h4>
+                <h3 class="h-size-h4">BSEE Data Collection and Validation</h3>
                 <p>
                     Extracted 15 years of production history from BSEE public datasets covering analogous Gulf of Mexico deepwater fields. Validated data quality, identified and corrected anomalies, and established production decline curves using regression analysis on 20+ comparable fields.
                 </p>
@@ -279,7 +281,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">2</div>
             <div class="step-content">
-                <h4>Production Profile Development</h4>
+                <h3 class="h-size-h4">Production Profile Development</h3>
                 <p>
                     Built type curves for deepwater development incorporating 12-month ramp-up, 24-month plateau at 100,000 bopd, and exponential decline at 8% annually. Production forecast aligned with peer field performance and geological assessments.
                 </p>
@@ -289,7 +291,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">3</div>
             <div class="step-content">
-                <h4>Financial Modeling and NPV/IRR Calculation</h4>
+                <h3 class="h-size-h4">Financial Modeling and NPV/IRR Calculation</h3>
                 <p>
                     Implemented monthly cash flow model with industry-standard assumptions: $3.5B CAPEX, $18/bbl OPEX, 18.75% federal royalty, and 10% discount rate. Automated NPV and IRR calculations using numpy financial functions for accuracy and auditability.
                 </p>
@@ -299,7 +301,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">4</div>
             <div class="step-content">
-                <h4>Sensitivity Analysis and Risk Assessment</h4>
+                <h3 class="h-size-h4">Sensitivity Analysis and Risk Assessment</h3>
                 <p>
                     Generated tornado diagrams showing NPV sensitivity to key variables. Performed Monte Carlo simulation with 10,000 iterations to quantify P10/P50/P90 outcomes. Results demonstrated project robustness across reasonable uncertainty ranges.
                 </p>
@@ -376,21 +378,21 @@ rootPath: "../"
         <h2 class="section-title">Results</h2>
 
         <div class="result-box">
-            <h4>Strong Project Economics</h4>
+            <h3 class="h-size-h4">Strong Project Economics</h3>
             <p>
                 Base case analysis delivered $6.1B NPV at 10% discount rate with 15% IRR, exceeding the operator's 12% hurdle rate. Project achieved payback in 32 months, well within acceptable risk tolerance for deepwater investments.
             </p>
         </div>
 
         <div class="result-box">
-            <h4>Robust to Price Volatility</h4>
+            <h3 class="h-size-h4">Robust to Price Volatility</h3>
             <p>
                 Sensitivity analysis showed project remained economic across oil price range of $60-90/bbl. NPV ranged from $3.8B (at $60/bbl) to $8.4B (at $90/bbl), demonstrating acceptable downside protection.
             </p>
         </div>
 
         <div class="result-box">
-            <h4>Decision Support Delivered on Schedule</h4>
+            <h3 class="h-size-h4">Decision Support Delivered on Schedule</h3>
             <p>
                 Complete analysis package delivered in 18 days, including executive summary, detailed financial model, sensitivity analyses, and risk assessment. Partners approved project advancement to FEED based on analysis.
             </p>
@@ -492,6 +494,8 @@ python3 scripts/generate_field_economics_data.py
         </p>
 
     </div>
+
+    </main>
 
     <include src="partials/footer.html"></include>
 

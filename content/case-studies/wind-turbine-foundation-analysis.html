@@ -199,6 +199,8 @@ rootPath: "../"
 
     <include src="partials/nav.html"></include>
 
+    <main id="main">
+
     <!-- Case Study Header -->
     <div class="case-study-header">
         <div class="container">
@@ -252,28 +254,28 @@ rootPath: "../"
         <h2 class="section-title">The Challenge</h2>
 
         <div class="challenge-box">
-            <h4>Complex Cyclic Loading Environment</h4>
+            <h3 class="h-size-h4">Complex Cyclic Loading Environment</h3>
             <p>
                 Offshore wind turbine foundations experience multi-directional cyclic loading from combined wind, wave, and current forces. The 15 MW turbine rotor diameter of 236 meters creates significant aerodynamic loads, while the 30-meter water depth exposes foundations to substantial wave loading. Traditional analysis using discrete load cases cannot capture the full spectrum of load combinations over 25 years of operation.
             </p>
         </div>
 
         <div class="challenge-box">
-            <h4>Site-Specific Variability</h4>
+            <h3 class="h-size-h4">Site-Specific Variability</h3>
             <p>
                 Soil conditions varied significantly across the 92-turbine array, with penetration depths ranging from 28 to 45 meters depending on local geology. Each foundation required individual assessment accounting for soil-structure interaction effects on natural frequency and fatigue response. Standard template-based approaches would either over-design conservative foundations or require excessive engineering hours.
             </p>
         </div>
 
         <div class="challenge-box">
-            <h4>Regulatory Timeline Pressure</h4>
+            <h3 class="h-size-h4">Regulatory Timeline Pressure</h3>
             <p>
                 The developer required certified foundation designs within 12 weeks to maintain project schedule. Traditional methodology would require 24+ weeks to complete site-specific assessments for 92 locations, creating unacceptable schedule risk for the 1.4 GW project with total investment exceeding EUR 3 billion.
             </p>
         </div>
 
         <div class="challenge-box">
-            <h4>Fatigue Damage Accumulation Uncertainty</h4>
+            <h3 class="h-size-h4">Fatigue Damage Accumulation Uncertainty</h3>
             <p>
                 DNV-ST-0126 requires consideration of fatigue damage from both operational loads and transient events including emergency shutdowns, grid faults, and extreme sea states. Quantifying damage contribution from millions of load cycles across multiple damage equivalent load (DEL) bins requires computational approaches beyond conventional analysis.
             </p>
@@ -283,7 +285,7 @@ rootPath: "../"
         <h2 class="section-title">Environmental Load Characterization</h2>
 
         <div class="technical-diagram">
-            <h4>Load Categories for Offshore Wind Foundations</h4>
+            <h3 class="h-size-h4">Load Categories for Offshore Wind Foundations</h3>
             <span class="load-category">Aerodynamic (Rotor)</span>
             <span class="load-category">Hydrodynamic (Waves)</span>
             <span class="load-category">Current Forces</span>
@@ -338,7 +340,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">1</div>
             <div class="step-content">
-                <h4>Integrated Aero-Hydro-Servo-Elastic Simulation</h4>
+                <h3 class="h-size-h4">Integrated Aero-Hydro-Servo-Elastic Simulation</h3>
                 <p>
                     Established baseline load database using OpenFAST simulations for the 15 MW reference turbine across 2,400 design load cases (DLCs) per DNV-ST-0126. Each simulation captured coupled dynamics including blade pitch control, generator torque response, and foundation flexibility. Generated over 180,000 hours of time-domain load histories at the mudline interface.
                 </p>
@@ -348,7 +350,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">2</div>
             <div class="step-content">
-                <h4>Machine Learning Load Surrogate Development</h4>
+                <h3 class="h-size-h4">Machine Learning Load Surrogate Development</h3>
                 <p>
                     Trained gradient boosting ensemble models to predict damage equivalent loads (DELs) at critical foundation sections from environmental parameters. Input features included wind speed, turbulence intensity, wave height, spectral period, wave-wind misalignment, and current velocity. Models achieved R<sup>2</sup> > 0.96 with mean absolute percentage error below 4.2% on held-out validation data.
                 </p>
@@ -358,7 +360,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">3</div>
             <div class="step-content">
-                <h4>Site-Specific FEA with Soil-Structure Interaction</h4>
+                <h3 class="h-size-h4">Site-Specific FEA with Soil-Structure Interaction</h3>
                 <p>
                     Developed parametric finite element models for monopile foundations incorporating p-y curve soil springs calibrated to cone penetration test (CPT) data at each location. Performed eigenfrequency analysis ensuring the foundation natural frequency remained within the soft-stiff design window (0.22-0.31 Hz) between 1P and 3P rotor excitation frequencies.
                 </p>
@@ -368,7 +370,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">4</div>
             <div class="step-content">
-                <h4>Probabilistic Fatigue Damage Assessment</h4>
+                <h3 class="h-size-h4">Probabilistic Fatigue Damage Assessment</h3>
                 <p>
                     Applied the trained ML models to 20 years of hindcast environmental data, generating stress range histograms at 12 critical sections per foundation. Calculated fatigue damage using rainflow counting and Miner's cumulative damage rule with T-class S-N curves per DNVGL-RP-C203. Incorporated design fatigue factors (DFF) of 3.0 for accessible locations and 10.0 for non-inspectable welds.
                 </p>
@@ -378,7 +380,7 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">5</div>
             <div class="step-content">
-                <h4>Optimization and Validation</h4>
+                <h3 class="h-size-h4">Optimization and Validation</h3>
                 <p>
                     Implemented iterative wall thickness optimization to minimize foundation steel weight while maintaining fatigue utilization ratios below 0.8 and ultimate limit state (ULS) utilization below 0.9. Validated optimized designs through independent full-scope time-domain simulations at 6 representative locations, confirming ML predictions within 5% of detailed analysis results.
                 </p>
@@ -460,21 +462,21 @@ rootPath: "../"
         <h2 class="section-title">Results</h2>
 
         <div class="result-box">
-            <h4>Foundation Weight Optimization</h4>
+            <h3 class="h-size-h4">Foundation Weight Optimization</h3>
             <p>
                 The computational approach achieved average steel weight reduction of 25% compared to initial designs using conventional safety factors. For a typical 10-meter diameter monopile with 40-meter embedment, optimized weight was 1,420 tonnes versus 1,890 tonnes for the conservative baseline--representing 470 tonnes of steel savings per foundation.
             </p>
         </div>
 
         <div class="result-box">
-            <h4>Project-Wide Material Savings</h4>
+            <h3 class="h-size-h4">Project-Wide Material Savings</h3>
             <p>
                 Across all 92 foundations, the optimization yielded total steel reduction of approximately 43,200 tonnes. At current steel prices of EUR 1,100 per tonne including fabrication, this represents direct cost savings of EUR 47.5 million. Additional savings from reduced installation vessel time and smaller transition pieces contributed EUR 12 million in project cost reduction.
             </p>
         </div>
 
         <div class="result-box">
-            <h4>Fatigue Life Improvement</h4>
+            <h3 class="h-size-h4">Fatigue Life Improvement</h3>
             <p>
                 Probabilistic fatigue assessment using site-specific environmental data revealed that conventional binned approaches overestimated fatigue damage by 15-40% depending on location. Foundations in the northern sector with favorable wind-wave alignment showed particularly significant reductions in predicted damage accumulation.
             </p>
@@ -584,7 +586,7 @@ rootPath: "../"
         </ul>
 
         <div class="solution-box">
-            <h4>Third-Party Validation</h4>
+            <h3 class="h-size-h4">Third-Party Validation</h3>
             <p>
                 Independent review by DNV confirmed the ML-based methodology met requirements for Type Certification of the foundation designs. The certification statement specifically acknowledged the validated surrogate model approach as compliant with DNV-ST-0126 Section 4.5.3 provisions for alternative analysis methods when adequately documented and verified.
             </p>
@@ -645,6 +647,8 @@ rootPath: "../"
         </p>
 
     </div>
+
+    </main>
 
     <include src="partials/footer.html"></include>
 

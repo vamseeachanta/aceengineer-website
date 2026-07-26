@@ -13,7 +13,7 @@ activeNav: "study"
   <script defer src="{{ rootPath }}assets/js/sloshing-reports.js"></script>
 </head><body>
   <include src="partials/nav.html"></include>
-  <main class="sloshing-report" data-sloshing-report data-report-kind="summary" data-manifest-url="../../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
+  <main id="main" class="sloshing-report" data-sloshing-report data-report-kind="summary" data-manifest-url="../../{{ sloshingAssetPath }}/manifest.json" aria-busy="true">
     <header class="sloshing-header"><p class="report-kicker">CFD study · OpenFOAM · free surface + forced roll</p><h1>Tank Sloshing — the Published CFD Study</h1><p>From analytical first-mode verification to period-dependent forced-roll response: what the completed cases establish, where the evidence is strongest, and what remains outside the present model.</p><div class="report-verdict"><strong>Reviewed public release</strong><span>24 accepted cases · immutable dataset revision · source-neutral evidence</span></div></header>
     <div class="sloshing-nav-wrap"><include src="partials/sloshing-capability-nav.html"></include></div>
     <div class="sloshing-shell">

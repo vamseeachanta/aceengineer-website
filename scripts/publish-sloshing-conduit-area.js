@@ -18,29 +18,7 @@ const revision = (process.env.SLOSHING_SOURCE_REVISION || '').trim();
 if (!fs.existsSync(bundlePath)) throw new Error('reviewed conduit-area bundle is required');
 if (!/^[0-9a-f]{40}$/.test(revision)) throw new Error('SLOSHING_SOURCE_REVISION must be the 40-hex dataset revision holding the bundle');
 
-// RFC4180 reader: published summaries contain quoted commas, so a naive split
-// silently shreds those rows into extra columns and breaks the closed schema.
-function parseCsv(text) {
-  const rows = [];
-  let row = [], field = '', quoted = false;
-  for (let i = 0; i < text.length; i += 1) {
-    const ch = text[i];
-    if (quoted) {
-      if (ch !== '"') { field += ch; continue; }
-      if (text[i + 1] === '"') { field += '"'; i += 1; continue; }
-      quoted = false;
-    } else if (ch === '"' && field === '') { quoted = true; }
-    else if (ch === ',') { row.push(field); field = ''; }
-    else if (ch === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
-    else if (ch !== '\r') { field += ch; }
-  }
-  if (field !== '' || row.length) { row.push(field); rows.push(row); }
-  const headers = rows.shift();
-  return rows.map(cells => {
-    if (cells.length !== headers.length) throw new Error(`malformed CSV row: ${cells[0]}`);
-    return Object.fromEntries(headers.map((header, index) => [header, cells[index]]));
-  });
-}
+const parseCsv = R.parseCsv;   // RFC4180: released summaries/labels contain quoted commas
 function upsert(base, rows, key) {
   const id = row => key.map(column => row[column]).join('\0');
   const result = new Map(base.map(row => [id(row), row]));

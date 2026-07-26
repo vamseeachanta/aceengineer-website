@@ -330,3 +330,78 @@ describe('committed report enrichment release', () => {
     expect(envelopes).toContain('forced-fine-co025-pressure-t24');
   });
 });
+
+// Released summaries and series labels contain commas, which the writer quotes. A naive
+// `line.split(',')` shreds exactly those rows — fields shift by one, the trailing value
+// lands under an `undefined` key, and the closed-schema check then rejects the row. Every
+// job that reads a committed release and writes it back depends on this reader.
+describe('parseCsv (RFC4180)', () => {
+  const { parseCsv } = refresh;
+
+  test('keeps a quoted comma inside one field', () => {
+    const rows = parseCsv('a,b,c\n1,"x, y",3\n');
+    expect(rows).toEqual([{ a: '1', b: 'x, y', c: '3' }]);
+  });
+
+  test('unescapes a doubled quote', () => {
+    expect(parseCsv('a\n"say ""hi"""\n')).toEqual([{ a: 'say "hi"' }]);
+  });
+
+  test('preserves empty trailing fields and tolerates CRLF', () => {
+    expect(parseCsv('a,b,c\r\n1,,\r\n')).toEqual([{ a: '1', b: '', c: '' }]);
+  });
+
+  test('never produces an undefined key on a comma-bearing row', () => {
+    const rows = parseCsv('id,label,tail\nx,"one, two",end\n');
+    expect(Object.keys(rows[0])).toEqual(['id', 'label', 'tail']);
+    expect(rows[0].tail).toBe('end');
+  });
+
+  test('throws on a row whose field count disagrees with the header', () => {
+    expect(() => parseCsv('a,b\n1,2,3\n')).toThrow(/malformed CSV row/);
+  });
+
+  test('every committed release table round-trips byte-exact through read and write', () => {
+    const repoRoot = path.resolve(__dirname, '..', '..');
+    const validated = refresh.validateCommittedRelease(repoRoot);
+    const dir = path.join(repoRoot, validated.pointer.release.directory);
+    const cell = value => {
+      const s = String(value == null ? '' : value);
+      return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+    for (const table of validated.manifest.tables) {
+      const original = fs.readFileSync(path.join(dir, table.file), 'utf8');
+      const columns = refresh.COLUMNS[table.name];
+      const rows = parseCsv(original);
+      const rebuilt = `${columns.join(',')}\n${rows.map(r => columns.map(c => cell(r[c])).join(',')).join('\n')}\n`;
+      expect(rebuilt).toBe(original);
+    }
+  });
+
+  test('the release really does contain comma-bearing rows this guards', () => {
+    const repoRoot = path.resolve(__dirname, '..', '..');
+    const validated = refresh.validateCommittedRelease(repoRoot);
+    const dir = path.join(repoRoot, validated.pointer.release.directory);
+    const withCommas = validated.manifest.tables.filter(t => {
+      const rows = parseCsv(fs.readFileSync(path.join(dir, t.file), 'utf8'));
+      return rows.some(r => Object.values(r).some(v => String(v).includes(',')));
+    });
+    expect(withCommas.map(t => t.name).sort()).toEqual(['case_catalog', 'series']);
+  });
+});
+
+describe('parseCsv edge cases the release writer actually emits', () => {
+  const { parseCsv } = refresh;
+
+  test('an empty table (header plus trailing blank line) reads as zero rows', () => {
+    expect(parseCsv('a,b,c\n\n')).toEqual([]);
+  });
+
+  test('a blank line between rows is skipped, not read as a short row', () => {
+    expect(parseCsv('a,b\n1,2\n\n3,4\n')).toEqual([{ a: '1', b: '2' }, { a: '3', b: '4' }]);
+  });
+
+  test('a quoted field containing a newline stays one field', () => {
+    expect(parseCsv('a,b\n"line1\nline2",x\n')).toEqual([{ a: 'line1\nline2', b: 'x' }]);
+  });
+});

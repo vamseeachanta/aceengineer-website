@@ -4,16 +4,13 @@
 const fs = require('fs');
 const path = require('path');
 const R = require('./refresh-sloshing-data');
+const parseCsv = R.parseCsv;   // RFC4180: released summaries/labels contain quoted commas
 
 const REVISION = 'd9ff6967021755156c3daa35f93e6385f672b257';
 const repoRoot = path.resolve(__dirname, '..');
 const reviewRoot = process.env.SLOSHING_REVIEW_ROOT && path.resolve(process.env.SLOSHING_REVIEW_ROOT);
 if (!reviewRoot || !fs.existsSync(reviewRoot)) throw new Error('SLOSHING_REVIEW_ROOT must point to the reviewed dm1528 output directory');
 
-function parseCsv(text) {
-  const lines = text.trim().split(/\r?\n/); const headers = lines.shift().split(',');
-  return lines.map(line => Object.fromEntries(line.split(',').map((value, i) => [headers[i], value])));
-}
 function sourceEntry(localPath, remotePath) {
   const body = fs.readFileSync(localPath);
   return { path: remotePath, sha256: R.sha256(body), bytes: body.length };

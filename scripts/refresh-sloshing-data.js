@@ -331,7 +331,7 @@ function verifyRelease(release) {
   const previews = manifest.tables.find(t => t.name === 'previews');
   if ((manifest.assets || []).length && (!previews || previews.rows !== manifest.assets.length)) throw new Error('preview/asset count mismatch');
   if (previews) {
-    const rows = parseCsvSimple(release.files[previews.file]);
+    const rows = parseCsv(release.files[previews.file]);
     const byPath = new Map((manifest.assets || []).map(asset => [asset.file, asset]));
     for (const row of rows) {
       const asset = byPath.get(row.relative_path);
@@ -372,7 +372,7 @@ function publishRelease(release, options) {
       manifest: path.posix.join('assets/data/sloshing', release.digest, 'manifest.json'),
       tables: release.manifest.tables, counts: release.manifest.counts,
       assets: release.manifest.assets || [],
-      public_case_ids: parseCsvSimple(release.files['cases.csv']).map(r => r.case_id),
+      public_case_ids: parseCsv(release.files['cases.csv']).map(r => r.case_id),
     },
   };
   const tmp = `${pointerPath}.tmp-${process.pid}`;
@@ -389,10 +389,44 @@ function publishRelease(release, options) {
   return { digest: release.digest, directory: finalDir, pointer };
 }
 
-function parseCsvSimple(text) {
-  const lines = text.trim().split(/\r?\n/);
-  const headers = lines.shift().split(',');
-  return lines.map(line => Object.fromEntries(line.split(',').map((v, i) => [headers[i], v])));
+/**
+ * RFC4180 CSV reader for released tables.
+ *
+ * Published summaries and series labels contain commas, which tableCsv correctly quotes
+ * on write. A naive `line.split(',')` therefore shreds those rows on read: fields shift
+ * by one, the trailing value lands under an `undefined` key, and the closed-schema check
+ * in tableCsv then rejects the row outright. Any job that reads a committed release and
+ * writes it back must use this, not a split.
+ *
+ * Throws on a row whose field count disagrees with the header — for generated releases
+ * that is corruption, not input to tolerate.
+ */
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let field = '';
+  let quoted = false;
+  for (let i = 0; i < text.length; i += 1) {
+    const ch = text[i];
+    if (quoted) {
+      if (ch !== '"') { field += ch; continue; }
+      if (text[i + 1] === '"') { field += '"'; i += 1; continue; }
+      quoted = false;
+    } else if (ch === '"' && field === '') { quoted = true; }
+    else if (ch === ',') { row.push(field); field = ''; }
+    else if (ch === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+    else if (ch !== '\r') { field += ch; }
+  }
+  if (field !== '' || row.length) { row.push(field); rows.push(row); }
+  const headers = rows.shift() || [];
+  // A blank line is not a row. An empty table serialises as "<header>\n" + "\n", so the
+  // trailing newline would otherwise read as a single empty field and trip the width check.
+  return rows.filter(cells => !(cells.length === 1 && cells[0] === '')).map(cells => {
+    if (cells.length !== headers.length) {
+      throw new Error(`malformed CSV row (${cells.length} fields, expected ${headers.length}): ${cells[0]}`);
+    }
+    return Object.fromEntries(headers.map((header, index) => [header, cells[index]]));
+  });
 }
 
 async function fetchPinnedFile({ dataset, revision, file, token, fetchImpl = fetch }) {
@@ -429,7 +463,7 @@ function validateCommittedRelease(repoRoot) {
 }
 
 module.exports = {
-  COLUMNS, SCHEMA_VERSION, TRANSFORMER_VERSION, sha256, stableJson,
+  COLUMNS, SCHEMA_VERSION, TRANSFORMER_VERSION, sha256, stableJson, parseCsv,
   fetchPinnedFile, transformReviewed, transformPressureArtifacts, transformPressureEvidence, mergePressureRelease, mergePressureEvidence, buildRelease, verifyRelease,
   publishRelease, validateCommittedRelease,
 };

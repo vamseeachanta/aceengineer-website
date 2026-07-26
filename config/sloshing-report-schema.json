@@ -3,6 +3,7 @@
   "closed": true,
   "limits": {
     "max_public_rows": 10000,
+    "max_source_bytes": 12000000,
     "max_string_length": 160
   },
   "tables": {

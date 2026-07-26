@@ -115,3 +115,35 @@ capabilities:
       realized to date, mature fields can show a negative life-to-date NPV. The basis
       travels with each value (economics_basis). A multi-dimensional field × price ×
       rate grid, honestly shown as a table rather than a single headline number.
+
+  - id: dc-days-qaqc
+    title: Field D&C Days QA/QC
+    domain: worldenergy
+    summary: >-
+      Bore-by-bore drilling & completion days behind the World Oil April 2026
+      reconciliation — 253 wellbores across 11 Gulf of Mexico developments,
+      with drilling-day stability proven across data vintages.
+    hf_dataset: aceengineer/worldenergydata-explorer
+    provenance_url: https://vamseeachanta.github.io/worldenergydata/wo-april-2026-qaqc-hub.html
+    status: live
+    primary_config: dc_development_summary
+    tables:
+      - config: dc_development_summary
+        label: Reconciliation Matrix
+        viz: table
+        highlight_columns: [development, bores_wed, drilling_days, completion_days, dc_days_wed, dc_days_article, delta_days, status]
+      - config: dc_bores
+        label: Per-Well Listing
+        viz: table
+        highlight_columns: [development, api12, spud, td_date, drilling_days, completion_days, dc_days, sidetrack, producer]
+      - config: dc_vintage_diff
+        label: Vintage Diff (Drilling Stability)
+        viz: table
+        highlight_columns: [dev, api12, category, drill_v30, drill_wed, d_drill, d_compl]
+    data_limits: >-
+      Drilling days = spud to total depth; completion days = ALL post-TD rig time
+      including later recompletion and servicing (the open worldenergydata#846
+      boundary question). Known caveat: the extractor mixes calendar days (spans
+      under ~250 d) with WAR-union rig-days (longer spans), so batch-drilled wells
+      undercount drilling days — disclosed rather than corrected pending resolution.
+      Producer markers cover the seven core Lower-Tertiary fields only.

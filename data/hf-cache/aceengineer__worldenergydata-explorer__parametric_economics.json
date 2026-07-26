@@ -46,7 +46,7 @@
     },
     {
       "field": "jack_st_malo",
-      "wti_price_multiplier": 1.0,
+      "wti_price_multiplier": 1,
       "discount_rate": 0.08,
       "npv_musd": -529.5,
       "breakeven_multiplier": 1.1108,
@@ -72,7 +72,7 @@
       "field": "jack_st_malo",
       "wti_price_multiplier": 0.8,
       "discount_rate": 0.1,
-      "npv_musd": -1469.0,
+      "npv_musd": -1469,
       "breakeven_multiplier": 1.2421,
       "economics_basis": "life_to_date_pretax_npv"
     },
@@ -86,7 +86,7 @@
     },
     {
       "field": "jack_st_malo",
-      "wti_price_multiplier": 1.0,
+      "wti_price_multiplier": 1,
       "discount_rate": 0.1,
       "npv_musd": -804.5,
       "breakeven_multiplier": 1.2421,
@@ -126,7 +126,7 @@
     },
     {
       "field": "jack_st_malo",
-      "wti_price_multiplier": 1.0,
+      "wti_price_multiplier": 1,
       "discount_rate": 0.125,
       "npv_musd": -923.3,
       "breakeven_multiplier": 1.4318,
@@ -160,13 +160,13 @@
       "field": "julia",
       "wti_price_multiplier": 0.9,
       "discount_rate": 0.08,
-      "npv_musd": -601.0,
+      "npv_musd": -601,
       "breakeven_multiplier": 1.3094,
       "economics_basis": "life_to_date_pretax_npv"
     },
     {
       "field": "julia",
-      "wti_price_multiplier": 1.0,
+      "wti_price_multiplier": 1,
       "discount_rate": 0.08,
       "npv_musd": -454.2,
       "breakeven_multiplier": 1.3094,
@@ -206,7 +206,7 @@
     },
     {
       "field": "julia",
-      "wti_price_multiplier": 1.0,
+      "wti_price_multiplier": 1,
       "discount_rate": 0.1,
       "npv_musd": -482.8,
       "breakeven_multiplier": 1.4201,
@@ -232,7 +232,7 @@
       "field": "julia",
       "wti_price_multiplier": 0.8,
       "discount_rate": 0.125,
-      "npv_musd": -658.0,
+      "npv_musd": -658,
       "breakeven_multiplier": 1.5702,
       "economics_basis": "life_to_date_pretax_npv"
     },
@@ -246,7 +246,7 @@
     },
     {
       "field": "julia",
-      "wti_price_multiplier": 1.0,
+      "wti_price_multiplier": 1,
       "discount_rate": 0.125,
       "npv_musd": -487.1,
       "breakeven_multiplier": 1.5702,

@@ -1,0 +1,198 @@
+{
+  "dataset": "aceengineer/worldenergydata-explorer",
+  "config": "dc_development_summary",
+  "columns": [
+    {
+      "name": "development",
+      "dtype": "large_string"
+    },
+    {
+      "name": "bores_wed",
+      "dtype": "int64"
+    },
+    {
+      "name": "bores_article",
+      "dtype": "int64"
+    },
+    {
+      "name": "producers_wed",
+      "dtype": "int64"
+    },
+    {
+      "name": "producers_article",
+      "dtype": "int64"
+    },
+    {
+      "name": "drilling_days",
+      "dtype": "int64"
+    },
+    {
+      "name": "completion_days",
+      "dtype": "int64"
+    },
+    {
+      "name": "dc_days_wed",
+      "dtype": "int64"
+    },
+    {
+      "name": "dc_days_article",
+      "dtype": "int64"
+    },
+    {
+      "name": "delta_days",
+      "dtype": "int64"
+    },
+    {
+      "name": "status",
+      "dtype": "large_string"
+    }
+  ],
+  "rows": [
+    {
+      "development": "Anchor",
+      "bores_wed": 17,
+      "bores_article": 17,
+      "producers_wed": 3,
+      "producers_article": 3,
+      "drilling_days": 821,
+      "completion_days": 1004,
+      "dc_days_wed": 1825,
+      "dc_days_article": 1825,
+      "delta_days": 0,
+      "status": "exact"
+    },
+    {
+      "development": "Buckskin",
+      "bores_wed": 25,
+      "bores_article": 24,
+      "producers_wed": null,
+      "producers_article": 4,
+      "drilling_days": 1043,
+      "completion_days": 1013,
+      "dc_days_wed": 2056,
+      "dc_days_article": 2004,
+      "delta_days": 52,
+      "status": "recovered — +1 bore / +52 days vs article (was missing entirely)"
+    },
+    {
+      "development": "Cascade Chinook",
+      "bores_wed": 14,
+      "bores_article": 14,
+      "producers_wed": 3,
+      "producers_article": 3,
+      "drilling_days": 1205,
+      "completion_days": 1262,
+      "dc_days_wed": 2467,
+      "dc_days_article": 2467,
+      "delta_days": 0,
+      "status": "exact"
+    },
+    {
+      "development": "Jack St Malo",
+      "bores_wed": 73,
+      "bores_article": 73,
+      "producers_wed": 24,
+      "producers_article": 24,
+      "drilling_days": 3065,
+      "completion_days": 3982,
+      "dc_days_wed": 7047,
+      "dc_days_article": 6928,
+      "delta_days": 119,
+      "status": "open — +119 days, suspect post-TD completion over-count (#846)"
+    },
+    {
+      "development": "Julia",
+      "bores_wed": 9,
+      "bores_article": 9,
+      "producers_wed": 4,
+      "producers_article": 4,
+      "drilling_days": 802,
+      "completion_days": 885,
+      "dc_days_wed": 1687,
+      "dc_days_article": 1687,
+      "delta_days": 0,
+      "status": "exact"
+    },
+    {
+      "development": "Kaskida",
+      "bores_wed": 7,
+      "bores_article": 7,
+      "producers_wed": null,
+      "producers_article": 0,
+      "drilling_days": 556,
+      "completion_days": 285,
+      "dc_days_wed": 841,
+      "dc_days_article": 841,
+      "delta_days": 0,
+      "status": "exact"
+    },
+    {
+      "development": "North Platte",
+      "bores_wed": 23,
+      "bores_article": 20,
+      "producers_wed": null,
+      "producers_article": 0,
+      "drilling_days": 675,
+      "completion_days": 296,
+      "dc_days_wed": 971,
+      "dc_days_article": 971,
+      "delta_days": 0,
+      "status": "days exact; +3 zero-day sidetracks"
+    },
+    {
+      "development": "Shenandoah",
+      "bores_wed": 23,
+      "bores_article": 23,
+      "producers_wed": 4,
+      "producers_article": 4,
+      "drilling_days": 1363,
+      "completion_days": 1007,
+      "dc_days_wed": 2370,
+      "dc_days_article": 2346,
+      "delta_days": 24,
+      "status": "resolved — +24 recompletion-accounting days (frozen V30 was −357)"
+    },
+    {
+      "development": "Stones",
+      "bores_wed": 22,
+      "bores_article": 22,
+      "producers_wed": 10,
+      "producers_article": 10,
+      "drilling_days": 1457,
+      "completion_days": 1168,
+      "dc_days_wed": 2625,
+      "dc_days_article": 2625,
+      "delta_days": 0,
+      "status": "exact vs article; +20 post-cutoff well-servicing days"
+    },
+    {
+      "development": "Tiber",
+      "bores_wed": 2,
+      "bores_article": 2,
+      "producers_wed": null,
+      "producers_article": 0,
+      "drilling_days": 214,
+      "completion_days": 36,
+      "dc_days_wed": 250,
+      "dc_days_article": 250,
+      "delta_days": 0,
+      "status": "exact"
+    },
+    {
+      "development": "Big Foot",
+      "bores_wed": 38,
+      "bores_article": null,
+      "producers_wed": 8,
+      "producers_article": null,
+      "drilling_days": 1235,
+      "completion_days": 2030,
+      "dc_days_wed": 3265,
+      "dc_days_article": null,
+      "delta_days": null,
+      "status": "WED-only — excluded from the article's Table 1"
+    }
+  ],
+  "total_rows": 11,
+  "fetched": 11,
+  "truncated": false
+}

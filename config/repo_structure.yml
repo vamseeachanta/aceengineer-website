@@ -55,7 +55,6 @@ allowed_roots:
   - pyproject.toml
   - README.md
   - robots.txt
-  - sitemap.xml
   - VERCEL_DEPLOY.md
   - vercel.json
   - .pre-commit-config.yaml

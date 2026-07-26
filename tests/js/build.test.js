@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const { parseFrontMatter, getHtmlFiles, ensureDir, copySitemap, copyRobotsTxt } = require('../../build');
+const { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeSitemap, canonicalUrlFor, SITEMAP_EXCLUDE } = require('../../build');
 
 describe('parseFrontMatter', () => {
   test('parses valid front matter with multiple fields', () => {
@@ -170,14 +170,28 @@ describe('ensureDir', () => {
   });
 });
 
-describe('copySitemap', () => {
+describe('canonicalUrlFor', () => {
+  test('always emits the www origin — the apex 301s (vercel.json)', () => {
+    expect(canonicalUrlFor('about.html')).toBe('https://www.aceengineer.com/about.html');
+  });
+
+  test('directory index pages canonicalise to the directory, not to index.html', () => {
+    expect(canonicalUrlFor('blog/index.html')).toBe('https://www.aceengineer.com/blog/');
+    expect(canonicalUrlFor('index.html')).toBe('https://www.aceengineer.com/');
+  });
+
+  test('nested pages keep their path', () => {
+    expect(canonicalUrlFor('capabilities/field-explorer.html'))
+      .toBe('https://www.aceengineer.com/capabilities/field-explorer.html');
+  });
+});
+
+describe('writeSitemap', () => {
   let tmpDir;
-  let warnSpy;
   let logSpy;
 
   beforeEach(() => {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'copysitemap-test-'));
-    warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'sitemap-test-'));
     logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
   });
 
@@ -186,29 +200,58 @@ describe('copySitemap', () => {
     jest.restoreAllMocks();
   });
 
-  test('copies sitemap.xml to destDir byte-identically to source', () => {
-    const srcFile = path.join(tmpDir, 'sitemap.xml');
-    const destDir = path.join(tmpDir, 'dist');
-    fs.mkdirSync(destDir);
-    const body = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://www.aceengineer.com/</loc></url></urlset>\n';
-    fs.writeFileSync(srcFile, body);
+  function seed(files) {
+    for (const f of files) {
+      const p = path.join(tmpDir, f);
+      fs.mkdirSync(path.dirname(p), { recursive: true });
+      fs.writeFileSync(p, '<html></html>');
+    }
+  }
 
-    copySitemap(srcFile, destDir);
-
-    const destFile = path.join(destDir, 'sitemap.xml');
-    expect(fs.existsSync(destFile)).toBe(true);
-    expect(fs.readFileSync(destFile, 'utf8')).toBe(body);
-    expect(logSpy).toHaveBeenCalledWith('Copied: sitemap.xml');
+  test('lists every built page, recursively, as a canonical www URL', () => {
+    seed(['index.html', 'about.html', 'blog/index.html', 'blog/a-post.html']);
+    writeSitemap(tmpDir);
+    const xml = fs.readFileSync(path.join(tmpDir, 'sitemap.xml'), 'utf8');
+    expect(xml).toContain('<loc>https://www.aceengineer.com/</loc>');
+    expect(xml).toContain('<loc>https://www.aceengineer.com/about.html</loc>');
+    expect(xml).toContain('<loc>https://www.aceengineer.com/blog/</loc>');
+    expect(xml).toContain('<loc>https://www.aceengineer.com/blog/a-post.html</loc>');
   });
 
-  test('warns and skips (does not throw) when source file is missing', () => {
-    const srcFile = path.join(tmpDir, 'does-not-exist.xml');
-    const destDir = path.join(tmpDir, 'dist');
-    fs.mkdirSync(destDir);
+  test('excludes 404 and the noindex redirect stubs', () => {
+    seed(['index.html', '404.html', 'reports/diffraction/aqwa-analysis.html']);
+    const listed = writeSitemap(tmpDir);
+    expect(listed).toEqual(['index.html']);
+    const xml = fs.readFileSync(path.join(tmpDir, 'sitemap.xml'), 'utf8');
+    expect(xml).not.toContain('404.html');
+    expect(xml).not.toContain('aqwa-analysis');
+  });
 
-    expect(() => copySitemap(srcFile, destDir)).not.toThrow();
-    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('sitemap.xml not found'));
-    expect(fs.existsSync(path.join(destDir, 'sitemap.xml'))).toBe(false);
+  test('ignores non-HTML files in the output tree', () => {
+    seed(['index.html']);
+    fs.writeFileSync(path.join(tmpDir, 'robots.txt'), 'User-agent: *');
+    const listed = writeSitemap(tmpDir);
+    expect(listed).toEqual(['index.html']);
+  });
+
+  test('emits well-formed, sorted XML with a do-not-edit marker', () => {
+    seed(['index.html', 'about.html']);
+    writeSitemap(tmpDir);
+    const xml = fs.readFileSync(path.join(tmpDir, 'sitemap.xml'), 'utf8');
+    expect(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>')).toBe(true);
+    expect(xml).toContain('do not edit by hand');
+    expect(xml.trimEnd().endsWith('</urlset>')).toBe(true);
+    expect(xml.indexOf('/about.html')).toBeLessThan(xml.indexOf('aceengineer.com/</loc>'));
+  });
+});
+
+describe('SITEMAP_EXCLUDE', () => {
+  test('every exclusion carries a stated reason', () => {
+    for (const [page, reason] of Object.entries(SITEMAP_EXCLUDE)) {
+      expect(typeof reason).toBe('string');
+      expect(reason.length).toBeGreaterThan(10);
+      expect(page).toMatch(/\.html$/);
+    }
   });
 });
 

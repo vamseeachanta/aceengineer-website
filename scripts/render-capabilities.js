@@ -15,6 +15,10 @@
  * total_rows) + `data_source` ('live' | 'snapshot' | 'unavailable').
  */
 
+// Canonical origin — vercel.json 301s the apex to www, so self-referencing URLs
+// (og:url, JSON-LD) must already be on www. Kept in sync with build.js SITE_ORIGIN.
+const SITE_ORIGIN = 'https://www.aceengineer.com';
+
 const DOMAIN_LABELS = {
   worldenergy: 'World Energy',
   digitalmodel: 'Digital Model',
@@ -434,6 +438,48 @@ function capabilityDetailBody(cap, siblings = [], options = {}) {
 
 // A full detail-page HTML document (with <include> chrome; rootPath resolved by build.js
 // via posthtml expressions). One page per capability, written to dist/capabilities/<id>.html.
+// schema.org Dataset markup for a capability (#85).
+//
+// These pages exist to say "this result is backed by a public dataset you can go and
+// check", which is exactly what Dataset expresses — so it is the highest-value
+// structured data available here. Every field comes from the registry; nothing is
+// invented. `data_limits` is carried into the description rather than dropped, because
+// the coverage caveat is part of the claim, not a footnote to it.
+function datasetJsonLd(cap) {
+  const url = `${SITE_ORIGIN}/capabilities/${cap.id}.html`;
+  const description = cap.data_limits
+    ? `${collapse(cap.summary)} Coverage and limitations: ${collapse(cap.data_limits)}`
+    : collapse(cap.summary);
+
+  const variables = [...new Set((cap.tables || []).flatMap(t => t.highlight_columns || []))]
+    .map(humanizeColumn);
+
+  const doc = {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: cap.title,
+    description,
+    url,
+    isAccessibleForFree: true,
+    license: 'https://huggingface.co/datasets/' + cap.hf_dataset,
+    creator: { '@id': `${SITE_ORIGIN}/#organization` },
+    distribution: {
+      '@type': 'DataDownload',
+      encodingFormat: 'application/json',
+      contentUrl: hfDatasetUrl(cap.hf_dataset),
+    },
+  };
+  if (variables.length) doc.variableMeasured = variables;
+  if (cap.provenance_url) doc.isBasedOn = cap.provenance_url;
+
+  return `<script type="application/ld+json">\n${JSON.stringify(doc, null, 2)}\n</script>\n`;
+}
+
+// Collapse whitespace so YAML block scalars don't put newlines inside JSON-LD strings.
+function collapse(s) {
+  return String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
+}
+
 function capabilityDetailDocument(cap, siblings = [], options = {}) {
   const title = `${cap.title} — AceEngineer Capabilities`;
   return (
@@ -443,8 +489,9 @@ function capabilityDetailDocument(cap, siblings = [], options = {}) {
     `<meta property="og:title" content="${escapeHtml(title)}">\n` +
     `<meta property="og:description" content="${escapeHtml(cap.summary)}">\n` +
     `<meta property="og:type" content="website">\n` +
-    `<meta property="og:url" content="https://aceengineer.com/capabilities/${escapeHtml(cap.id)}.html">\n` +
+    `<meta property="og:url" content="${SITE_ORIGIN}/capabilities/${escapeHtml(cap.id)}.html">\n` +
     `<title>${escapeHtml(title)}</title>\n` +
+    datasetJsonLd(cap) +
     `<include src="partials/head-common.html"></include>\n` +
     `</head>\n<body class="theme-page">\n` +
     `<include src="partials/nav.html"></include>\n` +
@@ -478,5 +525,6 @@ module.exports = {
   renderTable, renderBarChart, renderLineChart, renderChartFor,
   capabilityDetailBody, capabilityDetailDocument, renderCapabilityNav,
   isReleaseBacked, releaseStats, dataSourceMode, renderSnapshotStamp,
-  DOMAIN_LABELS, MAX_TABLE_ROWS,
+  datasetJsonLd,
+  DOMAIN_LABELS, MAX_TABLE_ROWS, SITE_ORIGIN,
 };

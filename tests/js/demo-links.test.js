@@ -17,7 +17,9 @@ const { execSync } = require('child_process');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
 const DIST_DEMOS = path.join(REPO_ROOT, 'dist', 'demos');
-const SITEMAP = path.join(REPO_ROOT, 'sitemap.xml');
+// The sitemap is generated into dist/ by build.js (#85) — assert against the
+// artifact that is actually served, not a hand-maintained source file.
+const SITEMAP = path.join(REPO_ROOT, 'dist', 'sitemap.xml');
 
 const DETAIL_SLUGS = ['freespan', 'wall-thickness', 'mudmat', 'pipelay', 'jumper-installation', 'mooring'];
 const CHART_SLUGS = ['freespan', 'wall-thickness', 'mudmat', 'pipelay'];

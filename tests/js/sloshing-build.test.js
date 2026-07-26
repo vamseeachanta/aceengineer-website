@@ -25,7 +25,7 @@ describe('sloshing report build contract', () => {
 
   test('discovery and sitemap expose the capability, browser, validation fixture, and reports', () => {
     const cases = fs.readFileSync(path.join(root, 'content/case-studies/index.html'), 'utf8');
-    const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
+    const sitemap = fs.readFileSync(path.join(root, 'dist', 'sitemap.xml'), 'utf8');
     expect(cases).toContain('../reports/sloshing-cfd-case.html');
     expect(cases).toContain('../reports/sloshing-tank-summary.html');
     expect(cases).toContain('../reports/sloshing-cfd-analysis.html');

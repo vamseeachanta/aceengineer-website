@@ -130,6 +130,38 @@ describe('a11y baseline (dist/)', () => {
     }
   });
 
+  // --- canonical URLs (#85) -----------------------------------------------
+  // 109/115 pages had no canonical, and several emitted og:url on the apex host,
+  // which vercel.json 301s to www — so crawlers saw a redirect hop and no signal.
+
+  test('every page emits exactly one canonical', () => {
+    const bad = pages
+      .map(p => [rel(p), (read(p).match(/rel="canonical"/g) || []).length])
+      .filter(([, n]) => n !== 1);
+    expect(bad).toEqual([]);
+  });
+
+  test('no self-referencing URL uses the apex host (it 301s to www)', () => {
+    const bad = pages
+      .filter(p => /https:\/\/aceengineer\.com(?!\w)/.test(read(p)))
+      .map(rel);
+    expect(bad).toEqual([]);
+  });
+
+  test('every live capability page carries Dataset JSON-LD', () => {
+    const capPages = pages.filter(p => /^capabilities\/(?!index\.html|dc-)/.test(rel(p)));
+    expect(capPages.length).toBeGreaterThan(0);
+    for (const p of capPages) {
+      const blocks = [...read(p).matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+      const parsed = blocks.map(b => JSON.parse(b[1]));
+      const dataset = parsed.find(d => d['@type'] === 'Dataset');
+      expect(`${rel(p)} has Dataset JSON-LD`).toBe(dataset ? `${rel(p)} has Dataset JSON-LD` : 'missing');
+      expect(dataset.url.startsWith('https://www.aceengineer.com/')).toBe(true);
+      expect(dataset.description.length).toBeGreaterThan(20);
+      expect(dataset.distribution.contentUrl).toMatch(/^https:\/\/huggingface\.co\/datasets\//);
+    }
+  });
+
   test('<main> tags are balanced', () => {
     const bad = chromePages
       .map(p => {

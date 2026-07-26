@@ -120,7 +120,8 @@ capabilities:
     summary: >-
       Bore-by-bore drilling & completion days behind the World Oil April 2026
       reconciliation — 253 wellbores across 11 Gulf of Mexico developments,
-      with drilling-day stability proven across data vintages.
+      with drilling-day stability proven across data vintages. Browse the
+      interactive drill-down: /capabilities/dc-drilldown.html
     hf_dataset: aceengineer/worldenergydata-explorer
     provenance_url: https://vamseeachanta.github.io/worldenergydata/wo-april-2026-qaqc-hub.html
     status: live
@@ -133,10 +134,12 @@ capabilities:
       - config: dc_bores
         label: Per-Well Listing
         viz: table
+        max_rows: 300
         highlight_columns: [development, api12, spud, td_date, drilling_days, completion_days, dc_days, sidetrack, producer]
       - config: dc_vintage_diff
         label: Vintage Diff (Drilling Stability)
         viz: table
+        max_rows: 300
         highlight_columns: [dev, api12, category, drill_v30, drill_wed, d_drill, d_compl]
     data_limits: >-
       Drilling days = spud to total depth; completion days = ALL post-TD rig time

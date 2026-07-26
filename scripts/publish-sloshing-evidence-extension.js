@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const R = require('./refresh-sloshing-data');
+const parseCsv = R.parseCsv;   // RFC4180: released summaries/labels contain quoted commas
 
 const repoRoot = path.resolve(__dirname, '..');
 const reviewRoot = path.resolve(process.env.SLOSHING_REVIEW_ROOT || '/home/undi/cfd_work/dm1528');
@@ -12,10 +13,6 @@ const mediaRoot = path.join(reviewRoot, 'review_output/evidence_extension/media'
 const mediaManifestPath = path.join(mediaRoot, 'media_manifest.json');
 if (!fs.existsSync(bundlePath) || !fs.existsSync(mediaManifestPath)) throw new Error('reviewed evidence-extension bundle and media manifest are required');
 
-function parseCsv(text) {
-  const lines = text.trim().split(/\r?\n/); const headers = lines.shift().split(',');
-  return lines.map(line => Object.fromEntries(line.split(',').map((value, index) => [headers[index], value])));
-}
 function upsert(base, rows, key) {
   const id = row => key.map(column => row[column]).join('\0');
   const result = new Map(base.map(row => [id(row), row]));

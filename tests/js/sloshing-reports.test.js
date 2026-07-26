@@ -78,6 +78,25 @@ describe('data and rendering safety', () => {
     expect(() => R.parseCsv('a,b\n1\n')).toThrow(/column/i);
   });
 
+  // The published case_catalog and series tables contain quoted commas. The Node
+  // publication scripts once shredded exactly those rows; this asserts the browser path
+  // that actually renders them to visitors does not.
+  test('browser parser keeps quoted commas in the committed release intact', () => {
+    const repoRoot = path.resolve(__dirname, '..', '..');
+    const pointer = JSON.parse(fs.readFileSync(path.join(repoRoot, 'config', 'sloshing-data-release.json'), 'utf8'));
+    const dir = path.join(repoRoot, pointer.release.directory);
+    let withCommas = 0;
+    for (const table of pointer.release.tables) {
+      const rows = R.parseCsv(fs.readFileSync(path.join(dir, table.file), 'utf8'));
+      expect(rows).toHaveLength(table.rows);
+      for (const row of rows) {
+        expect(Object.keys(row)).toEqual(table.columns);
+        if (Object.values(row).some(v => String(v).includes(','))) withCommas += 1;
+      }
+    }
+    expect(withCommas).toBeGreaterThan(0);
+  });
+
   test('stale load cannot replace a newer committed release', async () => {
     const commits = [];
     const gate = R.createLoadGate(value => commits.push(value));

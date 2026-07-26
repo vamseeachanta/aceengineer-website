@@ -12,6 +12,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { JSDOM } = require('jsdom');
 
 const DIST = path.join(__dirname, '..', '..', 'dist');
 
@@ -38,16 +39,19 @@ function walk(dir, out = []) {
   return out;
 }
 
-function stripNonContent(html) {
-  const at = html.indexOf('<body');
-  const body = at < 0 ? html : html.slice(at);
-  return body
-    .replace(/<script\b[\s\S]*?<\/script>/g, '')
-    .replace(/<style\b[\s\S]*?<\/style>/g, '');
+// One parse per page, reused by every assertion below. Real DOM, not regexes: the
+// script that repaired the heading outlines used regex detection, so a regex-based gate
+// would share its blind spots (raised in the codex review of #80).
+const domCache = new Map();
+function docFor(p) {
+  if (!domCache.has(p)) {
+    domCache.set(p, new JSDOM(fs.readFileSync(p, 'utf8')).window.document);
+  }
+  return domCache.get(p);
 }
 
-function headingLevels(html) {
-  return [...stripNonContent(html).matchAll(/<h([1-6])[\s>]/g)].map(m => Number(m[1]));
+function headingLevels(p) {
+  return [...docFor(p).querySelectorAll('h1,h2,h3,h4,h5,h6')].map(h => Number(h.tagName[1]));
 }
 
 const pages = fs.existsSync(DIST) ? walk(DIST) : [];
@@ -76,7 +80,7 @@ describe('a11y baseline (dist/)', () => {
 
   test('every page has exactly one <h1>', () => {
     const bad = chromePages
-      .map(p => [rel(p), headingLevels(read(p)).filter(l => l === 1).length])
+      .map(p => [rel(p), headingLevels(p).filter(l => l === 1).length])
       .filter(([, n]) => n !== 1);
     expect(bad).toEqual([]);
   });
@@ -84,7 +88,7 @@ describe('a11y baseline (dist/)', () => {
   test('no page skips a heading level', () => {
     const bad = [];
     for (const p of chromePages) {
-      const levels = headingLevels(read(p));
+      const levels = headingLevels(p);
       let prev = 0;
       const skips = [];
       for (const l of levels) {
@@ -97,24 +101,42 @@ describe('a11y baseline (dist/)', () => {
   });
 
   test('every page has a <main id="main"> landmark', () => {
-    const missing = chromePages.filter(p => !/<main\s+id="main"/.test(read(p))).map(rel);
+    const missing = chromePages.filter(p => !docFor(p).querySelector('main#main')).map(rel);
     expect(missing).toEqual([]);
   });
 
   test('every page has a skip link targeting #main', () => {
     const missing = chromePages
-      .filter(p => !/class="skip-link"[^>]*href="#main"|href="#main"[^>]*class="skip-link"/.test(read(p)))
+      .filter(p => !docFor(p).querySelector('a.skip-link[href="#main"]'))
       .map(rel);
     expect(missing).toEqual([]);
   });
 
-  test('the skip link is the first focusable element in the body', () => {
+  test('the skip link is the first focusable element, and targets a real element', () => {
     const bad = [];
     for (const p of chromePages) {
-      const body = stripNonContent(read(p));
-      const firstAnchor = body.search(/<a\b|<button\b|<input\b|<select\b|<textarea\b/);
-      if (firstAnchor < 0) continue;
-      if (!/^<a\b[^>]*class="skip-link"/.test(body.slice(firstAnchor))) bad.push(rel(p));
+      const doc = docFor(p);
+      const focusable = doc.querySelector('a[href], button, input:not([type="hidden"]), select, textarea');
+      if (focusable && !focusable.classList.contains('skip-link')) bad.push([rel(p), 'not first']);
+      // A skip link that points at nothing is worse than none — it silently does nothing.
+      if (!doc.getElementById('main')) bad.push([rel(p), '#main target missing']);
+    }
+    expect(bad).toEqual([]);
+  });
+
+  test('every form control has an accessible name', () => {
+    const bad = [];
+    for (const p of pages) {
+      const doc = docFor(p);
+      for (const el of doc.querySelectorAll('input:not([type="hidden"]), select, textarea')) {
+        if (el.type === 'checkbox' && el.getAttribute('aria-hidden') === 'true') continue;  // honeypot
+        const labelled = (el.id && doc.querySelector(`label[for="${el.id}"]`))
+          || el.closest('label')
+          || el.getAttribute('aria-label')
+          || el.getAttribute('aria-labelledby')
+          || el.getAttribute('title');
+        if (!labelled) bad.push([rel(p), el.tagName.toLowerCase(), el.name || el.type]);
+      }
     }
     expect(bad).toEqual([]);
   });
@@ -162,13 +184,10 @@ describe('a11y baseline (dist/)', () => {
     }
   });
 
-  test('<main> tags are balanced', () => {
+  test('there is exactly one <main> per page', () => {
     const bad = chromePages
-      .map(p => {
-        const html = read(p);
-        return [rel(p), (html.match(/<main\b/g) || []).length, (html.match(/<\/main>/g) || []).length];
-      })
-      .filter(([, o, c]) => o !== 1 || c !== 1);
+      .map(p => [rel(p), docFor(p).querySelectorAll('main').length])
+      .filter(([, n]) => n !== 1);
     expect(bad).toEqual([]);
   });
 });

@@ -15,6 +15,11 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          # Full history so the generated sitemap's <lastmod> reflects when each page
+          # actually changed. On a shallow clone build.js omits lastmod entirely
+          # rather than emitting a misleading partial set (#85).
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -45,6 +50,11 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          # Full history so the generated sitemap's <lastmod> reflects when each page
+          # actually changed. On a shallow clone build.js omits lastmod entirely
+          # rather than emitting a misleading partial set (#85).
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5

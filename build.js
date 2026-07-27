@@ -28,6 +28,44 @@ const SITEMAP_EXCLUDE = {
   'reports/diffraction/orcawave-aqwa-comparison.html': 'noindex redirect stub -> comparison.html',
 };
 
+// Classes that only ever appear because JavaScript adds them at runtime, so PurgeCSS
+// cannot see them in the markup it scans. Derived from the actual `classList` calls in
+// assets/js — not guessed. Keep this list minimal: every entry is CSS that ships
+// whether or not it is needed.
+//
+//   navbar-toggle.js toggles: collapse, collapsing, in
+//   Bootstrap state classes applied by our own inline handlers: active, open, disabled
+//
+// The previous safelist matched essentially all of Bootstrap (/^nav/, /^btn/, /^col-/,
+// /^text-/, deep: /navbar/ …), which is why the step logged "0% reduction" on every
+// build while appearing to succeed (#86).
+const PURGE_SAFELIST = [
+  /^col-(xs|sm|md|lg)-\d+$/, /^col-(xs|sm|md|lg)-offset-\d+$/,
+  /^collapse$/, /^collapsing$/, /^in$/,
+  /^active$/, /^open$/, /^disabled$/,
+  /^has-(error|warning|success|feedback)$/,
+  /^sr-only(-focusable)?$/,
+];
+
+// Selectors the site cannot render without. A byte-size floor alone is not a
+// correctness check — a purge can strip something essential and still hit its
+// target — so the build asserts these survived.
+const PURGE_REQUIRED = [
+  '.container', '.row', '.navbar', '.navbar-toggle', '.collapse', '.btn',
+  '.form-control', '.table', '.col-md-6', '.sr-only',
+];
+
+// Minimum reduction we expect from purging Bootstrap. Below this, something has
+// re-broadened the safelist and dead CSS is shipping again.
+const PURGE_MIN_REDUCTION = 0.30;
+
+// CSS concatenated into styles.min.css, in cascade order. These are bundle INPUTS —
+// they are never copied to dist/ individually (see copyAssets).
+const BUNDLE_INPUTS = [
+  'fonts.css', 'bootstrap-united.css', 'responsive.css',
+  'marketing.css', 'components.css', 'theme.css',
+];
+
 // Turn a dist-relative path into the canonical absolute URL. Directory index pages
 // canonicalise to the directory ("/blog/", not "/blog/index.html") so the site has
 // one URL per page rather than two that serve identical bytes.
@@ -227,15 +265,39 @@ async function buildCapabilityDetailPages(registry) {
   return generated.length;
 }
 
-// Copy assets directory
+// Copy assets/ into dist/, minus the CSS that buildCSS() produces or consumes (#86).
+//
+// Skipped:
+//   - BUNDLE_INPUTS — they are concatenated into styles.min.css; shipping them too was
+//     ~124KB of dead weight no page references.
+//   - styles.min.css — a stale committed build artifact (predates theme.css). It was
+//     copied in and then overwritten by the bundle step, so the copy was pointless and
+//     the stale file could ship if the bundle ever failed. Untracking it belongs with
+//     the legacy-root cleanup (#88), which still needs it.
+//
+// Directly-referenced stylesheets (sloshing-browser.css, sloshing-reports.css) are NOT
+// bundle inputs and must keep shipping — hence a skip list rather than "copy only the
+// bundle".
+const CSS_NOT_COPIED = new Set([...BUNDLE_INPUTS, 'styles.min.css']);
+
 function copyAssets() {
   const assetsDir = './assets';
   const destDir = path.join(distDir, 'assets');
+  if (!fs.existsSync(assetsDir)) return;
 
-  if (fs.existsSync(assetsDir)) {
-    fs.cpSync(assetsDir, destDir, { recursive: true });
-    console.log('Copied: assets/');
-  }
+  let skipped = 0;
+  fs.cpSync(assetsDir, destDir, {
+    recursive: true,
+    filter: (src) => {
+      const rel = path.relative(assetsDir, src).split(path.sep).join('/');
+      if (rel.startsWith('css/') && CSS_NOT_COPIED.has(path.basename(src))) {
+        skipped++;
+        return false;
+      }
+      return true;
+    },
+  });
+  console.log(`Copied: assets/ (${skipped} bundled/stale CSS files not copied)`);
 }
 
 // Can this checkout answer "when did this file last change?" — i.e. is it a git repo
@@ -410,84 +472,77 @@ async function build() {
 }
 
 // PurgeCSS - strip unused Bootstrap CSS
-async function purgeBootstrapCSS() {
-  const cssSource = './assets/css/bootstrap-united.css';
-  if (!fs.existsSync(cssSource)) {
-    console.log('PurgeCSS: bootstrap-united.css not found, skipping.');
-    return;
+// Build dist/assets/css/styles.min.css: purge Bootstrap against the built HTML, then
+// concatenate and minify — all reading from ./assets/css (source), never from dist/.
+//
+// The previous order was copy → purge-in-place → bundle-from-dist, which meant the
+// bundle silently depended on the copy step having run and on files existing in dist/;
+// a missing input produced a smaller bundle and a successful exit.
+async function buildCSS() {
+  const srcCssDir = './assets/css';
+  const distCssDir = path.join(distDir, 'assets/css');
+  ensureDir(distCssDir);
+
+  console.log('\nBuilding CSS...');
+
+  const pieces = [];
+  let totalOriginal = 0;
+
+  for (const file of BUNDLE_INPUTS) {
+    const srcPath = path.join(srcCssDir, file);
+    if (!fs.existsSync(srcPath)) {
+      throw new Error(`CSS bundle input missing: ${srcPath}`);
+    }
+    let css = fs.readFileSync(srcPath, 'utf8');
+    totalOriginal += Buffer.byteLength(css, 'utf8');
+
+    if (file === 'bootstrap-united.css') {
+      const before = Buffer.byteLength(css, 'utf8');
+      const [result] = await new PurgeCSS().purge({
+        // Scan the built HTML plus the JS that ships with it — dist/assets/js is where
+        // runtime class names live.
+        content: [`${distDir}/**/*.html`, `${distDir}/assets/js/*.js`],
+        css: [{ raw: css, extension: 'css' }],
+        safelist: { standard: PURGE_SAFELIST },
+      });
+      css = result.css;
+      const after = Buffer.byteLength(css, 'utf8');
+      const reduction = 1 - after / before;
+      console.log(`  PurgeCSS: ${(before / 1024).toFixed(1)}KB → ${(after / 1024).toFixed(1)}KB (${(reduction * 100).toFixed(0)}% reduction)`);
+
+      if (reduction < PURGE_MIN_REDUCTION) {
+        throw new Error(
+          `PurgeCSS reduction ${(reduction * 100).toFixed(0)}% is below the ${(PURGE_MIN_REDUCTION * 100)}% floor — ` +
+          `the safelist has probably re-broadened and dead CSS is shipping again (#86).`
+        );
+      }
+      const stripped = PURGE_REQUIRED.filter(sel => !css.includes(sel));
+      if (stripped.length) {
+        throw new Error(`PurgeCSS stripped required selectors: ${stripped.join(', ')}`);
+      }
+    }
+
+    pieces.push(css);
   }
 
-  console.log('\nRunning PurgeCSS...');
-  const purgeCSSResults = await new PurgeCSS().purge({
-    content: ['./dist/**/*.html'],
-    css: [cssSource],
-    safelist: {
-      standard: [
-        /^navbar/, /^collapse/, /^collapsing/, /^nav/, /^in$/,
-        /^container/, /^row/, /^col-/, /^btn/, /^form/,
-        /^sr-only/, /^text-/, /^table/, /^input-group/,
-        /^well/, /^lead/, /^breadcrumb/, /^list-/,
-        /^page-header/, /^alert/, /^label/
-      ],
-      deep: [/navbar/, /collapse/]
-    }
-  });
-
-  if (purgeCSSResults.length > 0) {
-    const outputPath = path.join('./dist/assets/css/bootstrap-united.css');
-    fs.writeFileSync(outputPath, purgeCSSResults[0].css);
-    const originalSize = fs.statSync(cssSource).size;
-    const purgedSize = Buffer.byteLength(purgeCSSResults[0].css, 'utf8');
-    console.log(`PurgeCSS: ${(originalSize / 1024).toFixed(1)}KB → ${(purgedSize / 1024).toFixed(1)}KB (${((1 - purgedSize / originalSize) * 100).toFixed(0)}% reduction)`);
+  const output = new CleanCSS({ level: 2, compatibility: 'ie9' }).minify(pieces.join('\n'));
+  if (output.errors.length) {
+    throw new Error(`CSS minification failed: ${output.errors.join('; ')}`);
   }
-}
 
-// Concatenate and minify all CSS into a single file
-async function bundleCSS() {
-    console.log('\nBundling CSS...');
-    const distCssDir = path.join(distDir, 'assets/css');
-
-    // Read CSS files in correct order
-    const cssFiles = ['fonts.css', 'bootstrap-united.css', 'responsive.css', 'marketing.css', 'components.css', 'theme.css'];
-    let combined = '';
-    let totalOriginal = 0;
-
-    for (const file of cssFiles) {
-        const filePath = path.join(distCssDir, file);
-        if (fs.existsSync(filePath)) {
-            const content = fs.readFileSync(filePath, 'utf8');
-            combined += content + '\n';
-            totalOriginal += Buffer.byteLength(content, 'utf8');
-        }
-    }
-
-    // Minify
-    const output = new CleanCSS({
-        level: 2,
-        compatibility: 'ie9'
-    }).minify(combined);
-
-    if (output.errors.length > 0) {
-        console.error('CSS minification errors:', output.errors);
-        return;
-    }
-
-    const outputPath = path.join(distCssDir, 'styles.min.css');
-    fs.writeFileSync(outputPath, output.styles);
-
-    const minifiedSize = Buffer.byteLength(output.styles, 'utf8');
-    console.log(`CSS Bundle: ${(totalOriginal / 1024).toFixed(1)}KB → ${(minifiedSize / 1024).toFixed(1)}KB (${((1 - minifiedSize / totalOriginal) * 100).toFixed(0)}% reduction)`);
+  fs.writeFileSync(path.join(distCssDir, 'styles.min.css'), output.styles);
+  const minified = Buffer.byteLength(output.styles, 'utf8');
+  console.log(`  Bundle: ${(totalOriginal / 1024).toFixed(1)}KB → ${(minified / 1024).toFixed(1)}KB (${((1 - minified / totalOriginal) * 100).toFixed(0)}% reduction)`);
 }
 
 // Only run build when executed directly (not when required for testing)
 if (require.main === module) {
   build()
-    .then(() => purgeBootstrapCSS())
-    .then(() => bundleCSS())
+    .then(() => buildCSS())
     .catch(err => {
       console.error('Build failed:', err);
       process.exit(1);
     });
 }
 
-module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };
+module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };

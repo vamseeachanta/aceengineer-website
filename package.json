@@ -7,6 +7,7 @@
     "lint:copy": "node scripts/lint-copy.js",
     "validate:capabilities": "node scripts/validate-capabilities.js",
     "validate:capabilities:online": "node scripts/verify-capabilities-online.js",
+    "build:wordmark": "node scripts/build-wordmark.js",
     "validate:registry": "npm run validate:capabilities && npm run validate:capabilities:online",
     "scaffold:capability": "node scripts/scaffold-capability-entry.js",
     "refresh:hf": "node scripts/refresh-hf-data.js",
@@ -95,6 +96,11 @@
         "displayName": "vendored-assets",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/vendored-assets.test.js"]
+      },
+      {
+        "displayName": "brand-assets",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/brand-assets.test.js"]
       },
       {
         "displayName": "wall-thickness",

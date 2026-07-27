@@ -57,7 +57,9 @@ def _context_violations(root: Path, paths: list[Path] | None = None) -> list[str
 
 def test_logo_assets_exist_and_are_nonempty():
     """Canonical SVG and PNG logo assets must exist for site/schema consumers."""
-    for logo_name in ["logo.svg", "logo.png"]:
+    # logo-inverse.svg is the same wordmark with a white lead for the dark navbar
+    # (aceengineer-website#100); the navy variant is invisible on --navy #0b3d5c.
+    for logo_name in ["logo.svg", "logo-inverse.svg", "logo.png"]:
         logo_path = ASSETS_ROOT / logo_name
         assert logo_path.exists(), f"missing logo asset: {logo_path.relative_to(SITE_ROOT)}"
         assert logo_path.stat().st_size > 100, f"logo asset is unexpectedly small: {logo_path}"
@@ -68,7 +70,11 @@ def test_nav_footer_visible_brand_uses_aceengineer():
     nav = (CONTENT_ROOT / "partials" / "nav.html").read_text(encoding="utf-8")
     footer = (CONTENT_ROOT / "partials" / "footer.html").read_text(encoding="utf-8")
 
-    assert "assets/img/logo.svg" in nav or "assets/img/logo.png" in nav
+    # Any of the wordmark variants satisfies this — the nav uses the inverse one because
+    # its background is dark. The point of the assertion is that the chrome shows the
+    # AceEngineer mark at all, not which file it comes from.
+    assert any(f"assets/img/{name}" in nav
+               for name in ("logo.svg", "logo-inverse.svg", "logo.png"))
     assert "alt=\"AceEngineer" in nav or "aria-label=\"AceEngineer" in nav
     assert "A&CE" not in nav and "A&amp;CE" not in nav
     assert "<h3>AceEngineer</h3>" in footer

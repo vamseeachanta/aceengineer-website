@@ -280,6 +280,51 @@ async function buildCapabilityDetailPages(registry) {
 // bundle".
 const CSS_NOT_COPIED = new Set([...BUNDLE_INPUTS, 'styles.min.css']);
 
+// Verify every vendored third-party blob that ships a `<file>.sha256` sidecar (#86).
+//
+// `assets/js/plotly-2.32.0.min.js` is 3.6MB of third-party code served from our own
+// origin, and its `.sha256` sidecar existed for months with nothing reading it —
+// integrity theatre. Now that the CSP no longer allows cdn.plot.ly, this copy is the
+// only Plotly the site can load, so a corrupted or swapped file breaks every chart on
+// 18 pages with no external fallback. Fail the build rather than ship it.
+//
+// Format is `sha256sum` output: "<hex>  <path>". Throws on mismatch, missing target,
+// or a malformed sidecar — a check that silently passes when it can't run is worse
+// than no check.
+function verifyVendoredAssets(assetsDir = './assets') {
+  if (!fs.existsSync(assetsDir)) return [];
+  const crypto = require('crypto');
+  const verified = [];
+
+  const walk = (dir) => {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const p = path.join(dir, e.name);
+      if (e.isDirectory()) { walk(p); continue; }
+      if (!e.name.endsWith('.sha256')) continue;
+
+      const target = p.slice(0, -'.sha256'.length);
+      const rel = path.relative(assetsDir, target).split(path.sep).join('/');
+      if (!fs.existsSync(target)) {
+        throw new Error(`vendored-asset integrity: ${rel}.sha256 exists but ${rel} does not`);
+      }
+      const expected = (fs.readFileSync(p, 'utf8').trim().split(/\s+/)[0] || '').toLowerCase();
+      if (!/^[0-9a-f]{64}$/.test(expected)) {
+        throw new Error(`vendored-asset integrity: ${rel}.sha256 is not a sha256 digest`);
+      }
+      const actual = crypto.createHash('sha256').update(fs.readFileSync(target)).digest('hex');
+      if (actual !== expected) {
+        throw new Error(
+          `vendored-asset integrity: ${rel} does not match its .sha256\n` +
+          `  expected ${expected}\n  actual   ${actual}`);
+      }
+      verified.push(rel);
+    }
+  };
+
+  walk(assetsDir);
+  return verified;
+}
+
 function copyAssets() {
   const assetsDir = './assets';
   const destDir = path.join(distDir, 'assets');
@@ -463,7 +508,9 @@ async function build() {
     console.warn(`Drill-down skipped: ${err.message}`);
   }
 
-  // Copy assets
+  // Copy assets — integrity-check vendored blobs before they reach dist/
+  const verified = verifyVendoredAssets();
+  console.log(`Verified: ${verified.length} vendored asset(s) against .sha256 — ${verified.join(', ') || 'none'}`);
   copyAssets();
   writeSitemap();
   copyRobotsTxt();
@@ -545,4 +592,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };
+module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, verifyVendoredAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };

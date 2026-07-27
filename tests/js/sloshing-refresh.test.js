@@ -460,3 +460,49 @@ describe('parseCsv edge cases the release writer actually emits', () => {
     expect(parseCsv('a,b\n"line1\nline2",x\n')).toEqual([{ a: 'line1\nline2', b: 'x' }]);
   });
 });
+
+// config/sloshing-report-schema.json is the human-readable declaration of the release
+// contract. No code reads it, so nothing stopped it drifting from the constants it
+// describes — the same defect class as a declared-but-unenforced limit. It duplicates the
+// schema version, the limits, and the column list of all 14 tables; today they agree, and
+// these tests are what keep that true.
+describe('published schema document matches the code it describes', () => {
+  const repoRoot = path.resolve(__dirname, '..', '..');
+  const schema = JSON.parse(fs.readFileSync(path.join(repoRoot, 'config', 'sloshing-report-schema.json'), 'utf8'));
+
+  test('declares the same schema version', () => {
+    expect(schema.schema_version).toBe(refresh.SCHEMA_VERSION);
+  });
+
+  test('declares exactly the enforced limits, none missing or extra', () => {
+    expect(schema.limits).toEqual(refresh.LIMITS);
+  });
+
+  test('declares every table, and no table the code does not define', () => {
+    expect(Object.keys(schema.tables).sort()).toEqual(Object.keys(refresh.COLUMNS).sort());
+  });
+
+  test.each(Object.keys(refresh.COLUMNS))('table %s declares the code column list in order', name => {
+    expect(schema.tables[name].columns).toEqual(refresh.COLUMNS[name]);
+  });
+
+  // Key declarations vary by table on purpose: detail tables carry foreign_keys rather than
+  // a primary_key, and `dispositions` is a standalone rollup with neither. So presence is not
+  // asserted — only that whatever a table does declare names a column that really exists.
+  test('every declared key names a column that exists', () => {
+    for (const [name, table] of Object.entries(schema.tables)) {
+      const keys = [...(table.primary_key || []), ...Object.keys(table.foreign_keys || {})];
+      for (const key of keys) expect(refresh.COLUMNS[name]).toContain(key);
+    }
+  });
+
+  test('every foreign key points at a table and column that exist', () => {
+    for (const table of Object.values(schema.tables)) {
+      for (const target of Object.values(table.foreign_keys || {})) {
+        const [targetTable, targetColumn] = String(target).split('.');
+        expect(refresh.COLUMNS[targetTable]).toBeDefined();
+        expect(refresh.COLUMNS[targetTable]).toContain(targetColumn);
+      }
+    }
+  });
+});

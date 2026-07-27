@@ -92,6 +92,11 @@
         "testMatch": ["<rootDir>/tests/js/a11y-baseline.test.js"]
       },
       {
+        "displayName": "vendored-assets",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/vendored-assets.test.js"]
+      },
+      {
         "displayName": "wall-thickness",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/wall-thickness.test.js"]

@@ -35,7 +35,9 @@ const PAGES = [
     elements: [
       NAV,
       FOOTER,
-      { name: 'hero', selector: 'main section.hero-section' },
+      // Was `main section.hero-section` until #109 replaced the dark marketing hero
+      // with a light theme hero matching the homepage. Positional now, like `home`.
+      { name: 'hero', selector: 'main section:first-of-type' },
       // The capability card grid is an inline-styled flex container with no stable
       // class, so it is addressed by position. If #99 restructures this section the
       // shot changes — which is the point.

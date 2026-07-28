@@ -2,7 +2,12 @@
  * Loaded last in the bundle so it overrides bootstrap/marketing where needed.
  * Palette + type extracted from the FDG pre-read one-pager (deep petrol-navy
  * structure + teal signature accent, serif body + uppercase-sans labels).
- * No literal "AI" anywhere in copy — "deterministic engineering workflows". */
+ *
+ * Copy rules do NOT live here — see brand/copy.yaml, which `npm run lint:copy`
+ * enforces. A no-"AI" rule previously sat in this comment and contradicted
+ * copy.yaml's own firm_lede for weeks, unenforced, while being cited as
+ * authority (#89). Owner decision 2026-07-28: "AI" is permitted in visible
+ * copy; "revolutionary"/"cutting-edge AI" are not. */
 
 :root {
   --navy:      #0b3d5c;   /* primary / structure / links */
@@ -51,6 +56,21 @@
   padding: 14px 18px;
   color: var(--ink);
 }
+
+/* Prose links inside a theme surface. Without this they fall through to the Bootstrap
+ * theme's `a { color: #aea79f }` — a warm tan that lands around 2.3:1 on white, well
+ * under WCAG AA's 4.5:1 for body text. Found via the #101 baselines while fixing #109.
+ *
+ * Scoped to `p a` on purpose. A broader `main a:not([class])` also caught the capability
+ * cards' action links ("View capability →"), which carry an inline style but no class —
+ * underlining them added noise the card design never had. The baselines caught that too.
+ * `:not([class])` still exempts .btn / .link-quiet / anything with its own treatment. */
+.theme-page main p a:not([class]) {
+  color: var(--navy); text-decoration: underline;
+  text-decoration-color: var(--underline); text-underline-offset: 2px;
+}
+.theme-page main p a:not([class]):hover,
+.theme-page main p a:not([class]):focus { color: var(--teal-deep); }
 
 /* Understated, non-buttony links */
 .theme-page .link-quiet {

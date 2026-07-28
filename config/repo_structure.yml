@@ -51,6 +51,9 @@ allowed_roots:
   - package-lock.json
   - PHASE_4_AND_6_PLAN.md
   - PHASE_6_EXECUTION_CHECKLIST.md
+  # Visual-regression suite config (#101). Playwright resolves this from the repo
+  # root by convention, alongside posthtml.config.js and vercel.json.
+  - playwright.config.js
   - posthtml.config.js
   - pyproject.toml
   - README.md

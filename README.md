@@ -128,12 +128,17 @@ Seven pages × two viewports (375×812 and 1280×900), viewport-height page shot
 targeted element shots of the nav, footer, hero and capability grid. Baselines live in
 `tests/visual/__screenshots__/<viewport>/` and are committed — they are the contract.
 
-**Baselines are generated in CI, never locally.** Font rendering differs between a dev
-machine and the CI runner, so a locally-captured baseline fails in CI for reasons that
-have nothing to do with your change. The `visual` job in `.github/workflows/ci.yml` runs
-inside `mcr.microsoft.com/playwright:v1.62.0-noble`, and that container is the only
-sanctioned source of a baseline. Running the suite locally is still useful — you get real
-diffs against the committed baselines — but do not commit what it writes.
+**Baselines are generated in CI, never locally, and CI is the only authority on a
+diff.** Font metrics differ between a dev machine and the container, so text wraps at
+different points and pages you never touched report differences. Verified 2026-07-28:
+`capabilities/dc-drilldown.html` failed locally with byte-identical content and only a
+changed line-break position.
+
+So a local `npm run test:visual` run tells you *something moved*, not *what you broke* —
+treat a local failure as a prompt to check CI, never as evidence on its own, and never as
+grounds for updating a baseline. The `visual` job in `.github/workflows/ci.yml` runs
+inside `mcr.microsoft.com/playwright:v1.62.0-noble`; that container is the only
+sanctioned source of both baselines and verdicts.
 
 **To update a baseline when a change is intended** (this is the step people get wrong):
 

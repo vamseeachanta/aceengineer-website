@@ -57,17 +57,20 @@
   color: var(--ink);
 }
 
-/* Plain content links inside a theme surface. Without this they fall through to the
- * Bootstrap theme's `a { color: #aea79f }` — a warm tan that lands around 2.3:1 on
- * white, well under WCAG AA's 4.5:1 for body text. `:not([class])` deliberately
- * targets only unstyled links, so .btn / .link-quiet / nav / footer keep their own
- * treatment. Found via the #101 baselines while fixing #109. */
-.theme-page main a:not([class]) {
+/* Prose links inside a theme surface. Without this they fall through to the Bootstrap
+ * theme's `a { color: #aea79f }` — a warm tan that lands around 2.3:1 on white, well
+ * under WCAG AA's 4.5:1 for body text. Found via the #101 baselines while fixing #109.
+ *
+ * Scoped to `p a` on purpose. A broader `main a:not([class])` also caught the capability
+ * cards' action links ("View capability →"), which carry an inline style but no class —
+ * underlining them added noise the card design never had. The baselines caught that too.
+ * `:not([class])` still exempts .btn / .link-quiet / anything with its own treatment. */
+.theme-page main p a:not([class]) {
   color: var(--navy); text-decoration: underline;
   text-decoration-color: var(--underline); text-underline-offset: 2px;
 }
-.theme-page main a:not([class]):hover,
-.theme-page main a:not([class]):focus { color: var(--teal-deep); }
+.theme-page main p a:not([class]):hover,
+.theme-page main p a:not([class]):focus { color: var(--teal-deep); }
 
 /* Understated, non-buttony links */
 .theme-page .link-quiet {

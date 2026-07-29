@@ -189,3 +189,59 @@ capabilities:
       single dynamic-amplification factor (x1.34 to x1.45) measured near resonance, and
       the connected-tank mass shift and roll moment are derived from the CFD-measured
       level difference rather than predicted independently.
+
+  # ---- C1 wave 1 (aceengineer-website#97, digitalmodel#1646), published 2026-07-28 ----
+  # Both datasets are tidy by construction: digitalmodel/scripts/hf/build_capability_datasets.py
+  # unpivots the explorer sidecars (facet trees, square matrices) into one row per
+  # observation. The explorer pages keep their own shape; these are the queryable form.
+
+  - id: pipeline-wall-thickness
+    title: Pipeline Wall Thickness — Six Codes Compared
+    domain: digitalmodel
+    summary: >-
+      Wall-thickness screening for a reference pipe across six design codes — utilisation
+      and the governing check at each thickness, so the codes are directly comparable.
+    hf_dataset: aceengineer/digitalmodel-integrity
+    provenance_url: https://vamseeachanta.github.io/digitalmodel/capabilities/api/wall-thickness-explorer.html
+    status: live
+    primary_config: wall_thickness
+    tables:
+      - config: wall_thickness
+        label: Utilisation by code
+        viz: line
+        highlight_columns: [standard, wall_thickness_mm, utilisation, governing_check, safe]
+    data_limits: >-
+      Reference pipe geometry only (323.9 mm OD) — no client or project-specific data.
+      One row per (code, wall thickness). Utilisation above 1.0 means the check is not
+      satisfied at that thickness; those rows are retained deliberately, because the
+      sweep exists to show where each code turns. The per-check columns are sparse by
+      design — codes do not share a check set, so a null means the code defines no such
+      check, not a missing value. Screening only, not a project design check.
+
+  - id: corrosion-control
+    title: Corrosion Control — Anode Sizing and Galvanic Compatibility
+    domain: digitalmodel
+    summary: >-
+      Cathodic-protection anode sizing across structures, climates and coating conditions,
+      plus galvanic compatibility for every metal pair in three exposure environments.
+    hf_dataset: aceengineer/digitalmodel-corrosion
+    provenance_url: https://vamseeachanta.github.io/digitalmodel/capabilities/api/cathodic-protection-explorer.html
+    status: live
+    primary_config: cathodic_protection
+    tables:
+      - config: cathodic_protection
+        label: Anode sizing
+        viz: table
+        highlight_columns: [structure, climate, coating, design_life_years, anode_mass_kg, anode_count]
+      - config: galvanic_compatibility
+        label: Galvanic compatibility
+        viz: table
+        highlight_columns: [environment, metal_a, metal_b, verdict, delta_v, allowable_delta_v]
+    data_limits: >-
+      Reference geometries only (a 4-leg jacket and an XL monopile) — no client or
+      vessel-specific data. Anode sizing follows DNV-RP-B401 across 2 structures x 2
+      climates x 4 coating conditions x 7 design lives. Galvanic verdicts are anodic-index
+      screening categories for all 16x16 metal pairs, including a metal against itself;
+      they indicate where to look, and are not a substitute for a project-specific CP
+      design. Environment allowable dV spans 0.15 V (harsh marine) to 0.5 V (controlled
+      indoor).

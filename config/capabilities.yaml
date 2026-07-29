@@ -252,3 +252,34 @@ capabilities:
       they indicate where to look, and are not a substitute for a project-specific CP
       design. Environment allowable dV spans 0.15 V (harsh marine) to 0.5 V (controlled
       indoor).
+
+  # ---- #1915: tension x bending moment as axes ----------------------------------------
+  # The pressure-only sweep above left the API-STD-2RD combined check at 0.0 on every row,
+  # because it passed zero tension and zero moment. Over these three axes that check spans
+  # 0 to 3.88 and GOVERNS at 30,855 of 354,609 grid points — a controlling limit state the
+  # 2D study could not represent at all.
+  - id: wall-thickness-tension-moment
+    title: Wall Thickness under Tension and Bending — Nine Codes
+    domain: digitalmodel
+    summary: >-
+      Wall-thickness utilisation swept over three axes — thickness, effective tension and
+      bending moment — across nine design codes, showing where combined loading rather
+      than pressure becomes the governing limit state.
+    hf_dataset: aceengineer/digitalmodel-integrity
+    provenance_url: https://vamseeachanta.github.io/digitalmodel/structural/wall-thickness-3d-explorer.html
+    status: live
+    primary_config: wall_thickness_tension_moment
+    tables:
+      - config: wall_thickness_tension_moment
+        label: Utilisation over tension and moment
+        viz: table
+        highlight_columns: [code, wall_thickness_mm, effective_tension_n, bending_moment_nm, utilisation, governing_check, is_safe]
+    data_limits: >-
+      Reference pipe only — 323.9 mm OD, X65, internal 20 MPa / external 10 MPa. Tension
+      and moment are swept from zero to 60% of capacity at the 18 mm reference wall
+      (T_max 4.65 MN, M_max 355.6 kN·m), a range chosen from first-yield capacity rather
+      than for appearance. Utilisation above 1.0 is retained deliberately: the sweep
+      exists to show where each code turns, so filtering the failures would hide the
+      answer. Per-check columns are sparse by design — the nine codes do not share a check
+      set, so a null means that code defines no such check, not a missing value. Screening
+      only; not a substitute for a project-specific design check.

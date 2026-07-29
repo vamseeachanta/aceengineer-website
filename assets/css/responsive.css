@@ -13,7 +13,7 @@
 }
 
 .navbar-logo {
-    width: 100px;
+    width: 130px;
     height: auto;
     display: block;
 }
@@ -271,7 +271,7 @@ img {
    ============================================ */
 @media (min-width: 768px) {
     .navbar-logo {
-        width: 120px;
+        width: 150px;
     }
 
     /* Metrics row - 2 columns */
@@ -366,7 +366,7 @@ img {
    ============================================ */
 @media (min-width: 992px) {
     .navbar-logo {
-        width: 140px;
+        width: 170px;
     }
 
     /* Metrics row - all in one row */
@@ -423,7 +423,7 @@ img {
    ============================================ */
 @media (min-width: 1200px) {
     .navbar-logo {
-        width: 160px;
+        width: 190px;
     }
 }
 

@@ -1,10 +1,13 @@
 /* CTA tracking (W10, aceengineer-website#29)
  *
  * Turns the data-cta / data-src tags on call-to-action links into Google
- * Analytics events, so web -> Open Deck (Telegram) hand-offs are attributable
- * by source tag (src_web_<domain>[_<workflow>]). Pairs with the deckhand-side
- * lead attribution (deckhand#433) that reads the same src_<domain>_<workflow>
- * tag once the bot deep-link handler (deckhand#432) is live.
+ * Analytics events, so hand-offs into the capability surface are attributable
+ * by source tag (src_web_<domain>[_<workflow>]).
+ *
+ * The tags were originally minted for web -> Telegram hand-offs. Those CTAs were
+ * removed site-wide on 2026-07-28 (#89: /capabilities/ is the sole destination),
+ * and the src_ tags were carried over onto the replacement links so the existing
+ * attribution history stays continuous rather than resetting.
  *
  * Emits gtag('event', 'cta_click', { cta_type, cta_source, destination,
  * page_path }). Falls back to dataLayer.push when gtag isn't ready, and is a

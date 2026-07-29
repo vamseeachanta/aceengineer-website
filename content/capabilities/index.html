@@ -28,10 +28,18 @@ rootPath: "../"
 
     <main id="main">
 
-    <section class="hero-section" style="padding-bottom:28px;">
-        <div class="container">
-            <h1 style="margin-bottom:10px;">Capabilities, backed by live data</h1>
-            <p style="font-size:1.15rem;color:#444;max-width:760px;">
+    <!-- Light theme hero, matching the homepage. This deliberately does NOT use
+         marketing.css's .hero-section: that class supplies a dark gradient and sets
+         color:white on the container, but this is a .theme-page, so theme.css's
+         `.theme-page h1,h2,h3 { color: var(--navy) }` targets the heading directly and
+         beats inheritance — navy on near-black (#109). The capabilities index is the
+         site's primary destination and should read like the homepage, not like a
+         marketing splash. Caught by the #101 visual baselines. -->
+    <section style="padding:64px 0 28px;">
+        <div class="container" style="max-width:860px;">
+            <p class="kicker">Live &amp; data-backed</p>
+            <h1 style="font-size:2.6rem;line-height:1.15;margin:0 0 14px;">Capabilities, backed by live data</h1>
+            <p style="font-size:1.15rem;color:var(--ink);max-width:760px;">
                 Each capability below is powered by a public
                 <a href="https://huggingface.co/aceengineer" rel="noopener">Hugging Face dataset</a>
                 that we publish from our engineering and energy-data pipelines. The numbers are the

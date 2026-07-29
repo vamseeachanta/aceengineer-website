@@ -38,3 +38,10 @@ coverage.xml
 # Package manager
 uv.lock
 specs/
+
+# Playwright visual-regression (#101) — run output only; the committed baselines
+# under tests/visual/__screenshots__/ are NOT ignored, they are the contract.
+test-results/
+playwright-report/
+blob-report/
+.playwright/

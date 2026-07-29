@@ -113,6 +113,49 @@ aceengineer-website/
 3. Run `npm run build`
 4. Test locally from `dist/**` with `npm run serve` or equivalent
 
+### Visual regression testing
+
+`npm test` (Jest) proves the site *builds and validates*. It cannot tell you the site
+still *looks* right — 384 passing tests noticed nothing when PurgeCSS went from a 0%
+no-op to stripping 49% of selectors. `npm run test:visual` closes that gap.
+
+```bash
+npm run build          # the suite screenshots dist/, so build first
+npm run test:visual    # compare against committed baselines
+```
+
+Seven pages × two viewports (375×812 and 1280×900), viewport-height page shots plus
+targeted element shots of the nav, footer, hero and capability grid. Baselines live in
+`tests/visual/__screenshots__/<viewport>/` and are committed — they are the contract.
+
+**Baselines are generated in CI, never locally, and CI is the only authority on a
+diff.** Font metrics differ between a dev machine and the container, so text wraps at
+different points and pages you never touched report differences. Verified 2026-07-28:
+`capabilities/dc-drilldown.html` failed locally with byte-identical content and only a
+changed line-break position.
+
+So a local `npm run test:visual` run tells you *something moved*, not *what you broke* —
+treat a local failure as a prompt to check CI, never as evidence on its own, and never as
+grounds for updating a baseline. The `visual` job in `.github/workflows/ci.yml` runs
+inside `mcr.microsoft.com/playwright:v1.62.0-noble`; that container is the only
+sanctioned source of both baselines and verdicts.
+
+**To update a baseline when a change is intended** (this is the step people get wrong):
+
+1. Push your branch. The `visual` job fails and uploads a `visual-regression-report`
+   artifact containing the diff images and the newly-rendered screenshots.
+2. Look at the diffs. Confirm every change is one you meant to make — this is the whole
+   point of the gate, and skipping it turns the suite into a rubber stamp.
+3. Download the artifact and copy the new PNGs over `tests/visual/__screenshots__/`,
+   then commit them with a message saying *why* the appearance changed.
+
+Never run `npm run test:visual:update` and commit the result: it regenerates from your
+local browser, so it will not match CI. It exists for iterating on the spec itself.
+
+The job is **non-blocking** (`continue-on-error: true`) while the suite earns trust. A
+flaky screenshot must not gate a green build. Remove that line to promote it once it has
+run clean for a while.
+
 ### Deployment
 
 - Push changes to `main` branch

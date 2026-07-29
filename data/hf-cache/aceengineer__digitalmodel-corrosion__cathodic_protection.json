@@ -1,0 +1,1043 @@
+{
+  "dataset": "aceengineer/digitalmodel-corrosion",
+  "config": "cathodic_protection",
+  "columns": [
+    {
+      "name": "structure",
+      "dtype": "large_string"
+    },
+    {
+      "name": "climate",
+      "dtype": "large_string"
+    },
+    {
+      "name": "coating",
+      "dtype": "large_string"
+    },
+    {
+      "name": "design_life_years",
+      "dtype": "float64"
+    },
+    {
+      "name": "anode_mass_kg",
+      "dtype": "float64"
+    },
+    {
+      "name": "anode_count",
+      "dtype": "int64"
+    },
+    {
+      "name": "current_mean_a",
+      "dtype": "float64"
+    },
+    {
+      "name": "current_final_a",
+      "dtype": "float64"
+    }
+  ],
+  "rows": [
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 10,
+      "anode_mass_kg": 12692.3,
+      "anode_count": 64,
+      "current_mean_a": 260.8,
+      "current_final_a": 312.4
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 15,
+      "anode_mass_kg": 19038.4,
+      "anode_count": 96,
+      "current_mean_a": 260.8,
+      "current_final_a": 312.4
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 20,
+      "anode_mass_kg": 25384.5,
+      "anode_count": 127,
+      "current_mean_a": 260.8,
+      "current_final_a": 312.4
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 25,
+      "anode_mass_kg": 31730.7,
+      "anode_count": 159,
+      "current_mean_a": 260.8,
+      "current_final_a": 312.4
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 30,
+      "anode_mass_kg": 38076.8,
+      "anode_count": 191,
+      "current_mean_a": 260.8,
+      "current_final_a": 312.4
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 35,
+      "anode_mass_kg": 44422.9,
+      "anode_count": 223,
+      "current_mean_a": 260.8,
+      "current_final_a": 312.4
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 40,
+      "anode_mass_kg": 50769.1,
+      "anode_count": 254,
+      "current_mean_a": 260.8,
+      "current_final_a": 312.4
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 10,
+      "anode_mass_kg": 11898,
+      "anode_count": 60,
+      "current_mean_a": 244.48,
+      "current_final_a": 292.6
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 15,
+      "anode_mass_kg": 17847,
+      "anode_count": 90,
+      "current_mean_a": 244.48,
+      "current_final_a": 292.6
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 20,
+      "anode_mass_kg": 23796,
+      "anode_count": 119,
+      "current_mean_a": 244.48,
+      "current_final_a": 292.6
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 25,
+      "anode_mass_kg": 29745.1,
+      "anode_count": 149,
+      "current_mean_a": 244.48,
+      "current_final_a": 292.6
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 30,
+      "anode_mass_kg": 35694.1,
+      "anode_count": 179,
+      "current_mean_a": 244.48,
+      "current_final_a": 292.6
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 35,
+      "anode_mass_kg": 41643.1,
+      "anode_count": 209,
+      "current_mean_a": 244.48,
+      "current_final_a": 292.6
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 40,
+      "anode_mass_kg": 47592.1,
+      "anode_count": 238,
+      "current_mean_a": 244.48,
+      "current_final_a": 292.6
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 10,
+      "anode_mass_kg": 11103.8,
+      "anode_count": 56,
+      "current_mean_a": 228.16,
+      "current_final_a": 272.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 15,
+      "anode_mass_kg": 16655.7,
+      "anode_count": 84,
+      "current_mean_a": 228.16,
+      "current_final_a": 272.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 20,
+      "anode_mass_kg": 22207.6,
+      "anode_count": 112,
+      "current_mean_a": 228.16,
+      "current_final_a": 272.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 25,
+      "anode_mass_kg": 27759.5,
+      "anode_count": 139,
+      "current_mean_a": 228.16,
+      "current_final_a": 272.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 30,
+      "anode_mass_kg": 33311.4,
+      "anode_count": 167,
+      "current_mean_a": 228.16,
+      "current_final_a": 272.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 35,
+      "anode_mass_kg": 38863.2,
+      "anode_count": 195,
+      "current_mean_a": 228.16,
+      "current_final_a": 272.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 40,
+      "anode_mass_kg": 44415.2,
+      "anode_count": 223,
+      "current_mean_a": 228.16,
+      "current_final_a": 272.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 10,
+      "anode_mass_kg": 7424.6,
+      "anode_count": 38,
+      "current_mean_a": 152.56,
+      "current_final_a": 181.9
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 15,
+      "anode_mass_kg": 11136.9,
+      "anode_count": 56,
+      "current_mean_a": 152.56,
+      "current_final_a": 181.9
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 20,
+      "anode_mass_kg": 14849.2,
+      "anode_count": 75,
+      "current_mean_a": 152.56,
+      "current_final_a": 181.9
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 25,
+      "anode_mass_kg": 18561.5,
+      "anode_count": 93,
+      "current_mean_a": 152.56,
+      "current_final_a": 181.9
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 30,
+      "anode_mass_kg": 22273.8,
+      "anode_count": 112,
+      "current_mean_a": 152.56,
+      "current_final_a": 181.9
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 35,
+      "anode_mass_kg": 25986,
+      "anode_count": 130,
+      "current_mean_a": 152.56,
+      "current_final_a": 181.9
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 40,
+      "anode_mass_kg": 29698.3,
+      "anode_count": 149,
+      "current_mean_a": 152.56,
+      "current_final_a": 181.9
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 10,
+      "anode_mass_kg": 9013.1,
+      "anode_count": 46,
+      "current_mean_a": 185.2,
+      "current_final_a": 236.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 15,
+      "anode_mass_kg": 13519.6,
+      "anode_count": 68,
+      "current_mean_a": 185.2,
+      "current_final_a": 236.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 20,
+      "anode_mass_kg": 18026.1,
+      "anode_count": 91,
+      "current_mean_a": 185.2,
+      "current_final_a": 236.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 25,
+      "anode_mass_kg": 22532.7,
+      "anode_count": 113,
+      "current_mean_a": 185.2,
+      "current_final_a": 236.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 30,
+      "anode_mass_kg": 27039.2,
+      "anode_count": 136,
+      "current_mean_a": 185.2,
+      "current_final_a": 236.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 35,
+      "anode_mass_kg": 31545.7,
+      "anode_count": 158,
+      "current_mean_a": 185.2,
+      "current_final_a": 236.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 40,
+      "anode_mass_kg": 36052.3,
+      "anode_count": 181,
+      "current_mean_a": 185.2,
+      "current_final_a": 236.8
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 10,
+      "anode_mass_kg": 8446.6,
+      "anode_count": 43,
+      "current_mean_a": 173.56,
+      "current_final_a": 221.68
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 15,
+      "anode_mass_kg": 12669.9,
+      "anode_count": 64,
+      "current_mean_a": 173.56,
+      "current_final_a": 221.68
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 20,
+      "anode_mass_kg": 16893.2,
+      "anode_count": 85,
+      "current_mean_a": 173.56,
+      "current_final_a": 221.68
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 25,
+      "anode_mass_kg": 21116.5,
+      "anode_count": 106,
+      "current_mean_a": 173.56,
+      "current_final_a": 221.68
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 30,
+      "anode_mass_kg": 25339.8,
+      "anode_count": 127,
+      "current_mean_a": 173.56,
+      "current_final_a": 221.68
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 35,
+      "anode_mass_kg": 29563,
+      "anode_count": 148,
+      "current_mean_a": 173.56,
+      "current_final_a": 221.68
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 40,
+      "anode_mass_kg": 33786.3,
+      "anode_count": 169,
+      "current_mean_a": 173.56,
+      "current_final_a": 221.68
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "good-coating",
+      "design_life_years": 10,
+      "anode_mass_kg": 7880.1,
+      "anode_count": 40,
+      "current_mean_a": 161.92,
+      "current_final_a": 206.56
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "good-coating",
+      "design_life_years": 15,
+      "anode_mass_kg": 11820.2,
+      "anode_count": 60,
+      "current_mean_a": 161.92,
+      "current_final_a": 206.56
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "good-coating",
+      "design_life_years": 20,
+      "anode_mass_kg": 15760.2,
+      "anode_count": 79,
+      "current_mean_a": 161.92,
+      "current_final_a": 206.56
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "good-coating",
+      "design_life_years": 25,
+      "anode_mass_kg": 19700.3,
+      "anode_count": 99,
+      "current_mean_a": 161.92,
+      "current_final_a": 206.56
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "good-coating",
+      "design_life_years": 30,
+      "anode_mass_kg": 23640.3,
+      "anode_count": 119,
+      "current_mean_a": 161.92,
+      "current_final_a": 206.56
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "good-coating",
+      "design_life_years": 35,
+      "anode_mass_kg": 27580.4,
+      "anode_count": 138,
+      "current_mean_a": 161.92,
+      "current_final_a": 206.56
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "good-coating",
+      "design_life_years": 40,
+      "anode_mass_kg": 31520.4,
+      "anode_count": 158,
+      "current_mean_a": 161.92,
+      "current_final_a": 206.56
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "premium-coating",
+      "design_life_years": 10,
+      "anode_mass_kg": 5295.9,
+      "anode_count": 27,
+      "current_mean_a": 108.82,
+      "current_final_a": 138.16
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "premium-coating",
+      "design_life_years": 15,
+      "anode_mass_kg": 7943.9,
+      "anode_count": 40,
+      "current_mean_a": 108.82,
+      "current_final_a": 138.16
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "premium-coating",
+      "design_life_years": 20,
+      "anode_mass_kg": 10591.8,
+      "anode_count": 53,
+      "current_mean_a": 108.82,
+      "current_final_a": 138.16
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "premium-coating",
+      "design_life_years": 25,
+      "anode_mass_kg": 13239.8,
+      "anode_count": 67,
+      "current_mean_a": 108.82,
+      "current_final_a": 138.16
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "premium-coating",
+      "design_life_years": 30,
+      "anode_mass_kg": 15887.7,
+      "anode_count": 80,
+      "current_mean_a": 108.82,
+      "current_final_a": 138.16
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "premium-coating",
+      "design_life_years": 35,
+      "anode_mass_kg": 18535.7,
+      "anode_count": 93,
+      "current_mean_a": 108.82,
+      "current_final_a": 138.16
+    },
+    {
+      "structure": "4-leg jacket",
+      "climate": "tropical",
+      "coating": "premium-coating",
+      "design_life_years": 40,
+      "anode_mass_kg": 21183.6,
+      "anode_count": 106,
+      "current_mean_a": 108.82,
+      "current_final_a": 138.16
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 10,
+      "anode_mass_kg": 4594.1,
+      "anode_count": 23,
+      "current_mean_a": 94.4,
+      "current_final_a": 111.5
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 15,
+      "anode_mass_kg": 6891.2,
+      "anode_count": 35,
+      "current_mean_a": 94.4,
+      "current_final_a": 111.5
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 20,
+      "anode_mass_kg": 9188.3,
+      "anode_count": 46,
+      "current_mean_a": 94.4,
+      "current_final_a": 111.5
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 25,
+      "anode_mass_kg": 11485.3,
+      "anode_count": 58,
+      "current_mean_a": 94.4,
+      "current_final_a": 111.5
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 30,
+      "anode_mass_kg": 13782.4,
+      "anode_count": 69,
+      "current_mean_a": 94.4,
+      "current_final_a": 111.5
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 35,
+      "anode_mass_kg": 16079.5,
+      "anode_count": 81,
+      "current_mean_a": 94.4,
+      "current_final_a": 111.5
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "bare",
+      "design_life_years": 40,
+      "anode_mass_kg": 18376.5,
+      "anode_count": 92,
+      "current_mean_a": 94.4,
+      "current_final_a": 111.5
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 10,
+      "anode_mass_kg": 4298.2,
+      "anode_count": 22,
+      "current_mean_a": 88.32,
+      "current_final_a": 104.09
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 15,
+      "anode_mass_kg": 6447.4,
+      "anode_count": 33,
+      "current_mean_a": 88.32,
+      "current_final_a": 104.09
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 20,
+      "anode_mass_kg": 8596.5,
+      "anode_count": 43,
+      "current_mean_a": 88.32,
+      "current_final_a": 104.09
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 25,
+      "anode_mass_kg": 10745.6,
+      "anode_count": 54,
+      "current_mean_a": 88.32,
+      "current_final_a": 104.09
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 30,
+      "anode_mass_kg": 12894.7,
+      "anode_count": 65,
+      "current_mean_a": 88.32,
+      "current_final_a": 104.09
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 35,
+      "anode_mass_kg": 15043.8,
+      "anode_count": 76,
+      "current_mean_a": 88.32,
+      "current_final_a": 104.09
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "aged-coating",
+      "design_life_years": 40,
+      "anode_mass_kg": 17193,
+      "anode_count": 86,
+      "current_mean_a": 88.32,
+      "current_final_a": 104.09
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 10,
+      "anode_mass_kg": 4002.3,
+      "anode_count": 21,
+      "current_mean_a": 82.24,
+      "current_final_a": 96.68
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 15,
+      "anode_mass_kg": 6003.5,
+      "anode_count": 31,
+      "current_mean_a": 82.24,
+      "current_final_a": 96.68
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 20,
+      "anode_mass_kg": 8004.7,
+      "anode_count": 41,
+      "current_mean_a": 82.24,
+      "current_final_a": 96.68
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 25,
+      "anode_mass_kg": 10005.9,
+      "anode_count": 51,
+      "current_mean_a": 82.24,
+      "current_final_a": 96.68
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 30,
+      "anode_mass_kg": 12007,
+      "anode_count": 61,
+      "current_mean_a": 82.24,
+      "current_final_a": 96.68
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 35,
+      "anode_mass_kg": 14008.2,
+      "anode_count": 71,
+      "current_mean_a": 82.24,
+      "current_final_a": 96.68
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "good-coating",
+      "design_life_years": 40,
+      "anode_mass_kg": 16009.4,
+      "anode_count": 81,
+      "current_mean_a": 82.24,
+      "current_final_a": 96.68
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 10,
+      "anode_mass_kg": 2800.3,
+      "anode_count": 15,
+      "current_mean_a": 57.54,
+      "current_final_a": 66.94
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 15,
+      "anode_mass_kg": 4200.4,
+      "anode_count": 22,
+      "current_mean_a": 57.54,
+      "current_final_a": 66.94
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 20,
+      "anode_mass_kg": 5600.6,
+      "anode_count": 29,
+      "current_mean_a": 57.54,
+      "current_final_a": 66.94
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 25,
+      "anode_mass_kg": 7000.7,
+      "anode_count": 36,
+      "current_mean_a": 57.54,
+      "current_final_a": 66.94
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 30,
+      "anode_mass_kg": 8400.8,
+      "anode_count": 43,
+      "current_mean_a": 57.54,
+      "current_final_a": 66.94
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 35,
+      "anode_mass_kg": 9801,
+      "anode_count": 50,
+      "current_mean_a": 57.54,
+      "current_final_a": 66.94
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "temperate",
+      "coating": "premium-coating",
+      "design_life_years": 40,
+      "anode_mass_kg": 11201.1,
+      "anode_count": 57,
+      "current_mean_a": 57.54,
+      "current_final_a": 66.94
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 10,
+      "anode_mass_kg": 3392.1,
+      "anode_count": 17,
+      "current_mean_a": 69.7,
+      "current_final_a": 86.8
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 15,
+      "anode_mass_kg": 5088.1,
+      "anode_count": 26,
+      "current_mean_a": 69.7,
+      "current_final_a": 86.8
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 20,
+      "anode_mass_kg": 6784.1,
+      "anode_count": 34,
+      "current_mean_a": 69.7,
+      "current_final_a": 86.8
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 25,
+      "anode_mass_kg": 8480.2,
+      "anode_count": 43,
+      "current_mean_a": 69.7,
+      "current_final_a": 86.8
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 30,
+      "anode_mass_kg": 10176.2,
+      "anode_count": 51,
+      "current_mean_a": 69.7,
+      "current_final_a": 86.8
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 35,
+      "anode_mass_kg": 11872.2,
+      "anode_count": 60,
+      "current_mean_a": 69.7,
+      "current_final_a": 86.8
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "bare",
+      "design_life_years": 40,
+      "anode_mass_kg": 13568.3,
+      "anode_count": 68,
+      "current_mean_a": 69.7,
+      "current_final_a": 86.8
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 10,
+      "anode_mass_kg": 3179.4,
+      "anode_count": 16,
+      "current_mean_a": 65.33,
+      "current_final_a": 81.1
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 15,
+      "anode_mass_kg": 4769.1,
+      "anode_count": 24,
+      "current_mean_a": 65.33,
+      "current_final_a": 81.1
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 20,
+      "anode_mass_kg": 6358.8,
+      "anode_count": 32,
+      "current_mean_a": 65.33,
+      "current_final_a": 81.1
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 25,
+      "anode_mass_kg": 7948.5,
+      "anode_count": 40,
+      "current_mean_a": 65.33,
+      "current_final_a": 81.1
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 30,
+      "anode_mass_kg": 9538.2,
+      "anode_count": 48,
+      "current_mean_a": 65.33,
+      "current_final_a": 81.1
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 35,
+      "anode_mass_kg": 11127.9,
+      "anode_count": 56,
+      "current_mean_a": 65.33,
+      "current_final_a": 81.1
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "aged-coating",
+      "design_life_years": 40,
+      "anode_mass_kg": 12717.6,
+      "anode_count": 64,
+      "current_mean_a": 65.33,
+      "current_final_a": 81.1
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "good-coating",
+      "design_life_years": 10,
+      "anode_mass_kg": 2966.7,
+      "anode_count": 15,
+      "current_mean_a": 60.96,
+      "current_final_a": 75.4
+    },
+    {
+      "structure": "XL monopile",
+      "climate": "tropical",
+      "coating": "good-coating",
+      "design_life_years": 15,
+      "anode_mass_kg": 4450.1,
+      "anode_count": 23,
+      "current_mean_a": 60.96,
+      "current_final_a": 75.4
+    }
+  ],
+  "total_rows": 112,
+  "fetched": 100,
+  "truncated": true
+}

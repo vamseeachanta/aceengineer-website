@@ -18,9 +18,15 @@
 /* ============================================
    Navigation Enhancements
    ============================================ */
+/* The `!important` here was beating theme.css's
+   `.navbar-inverse.theme-nav .btn-nav-cta { background: var(--teal) }`, so the primary
+   CTA rendered in the retired Bootswatch orange on every page — beside a navy-and-teal
+   wordmark. Dropped to a plain declaration so the theme layer wins on themed pages and
+   this stays the fallback elsewhere. The wider `--primary-color` cleanup across this
+   file is aceengineer-website#82; only the nav CTA is in scope here (#100). */
 .btn-nav-cta {
-    background-color: #b84315 !important;
-    color: white !important;
+    background-color: var(--teal, #2BB2A6);
+    color: #063b38;
     border-radius: 4px;
     margin-top: 8px;
     padding: 8px 16px !important;
@@ -28,7 +34,7 @@
 }
 
 .btn-nav-cta:hover {
-    background-color: #a03b12 !important;
+    background-color: #1f9e93;
 }
 
 /* ============================================

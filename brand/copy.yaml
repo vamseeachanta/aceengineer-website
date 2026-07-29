@@ -73,6 +73,21 @@ credentials:
 forbidden_phrases:
   - consultancy
   - consulting practice
+  # Owner decisions, 2026-07-28 (#89). These are the load-bearing half of that
+  # decision: without them the drift simply returns, which is how it got here.
+  #
+  # Open Deck / Telegram was removed from the site entirely — /capabilities/ is the
+  # sole destination. 67 CTAs across 36 pages were replaced or removed.
+  - Open Deck
+  - t.me/
+  # The homepage claimed custom work was unavailable while contact.html,
+  # pricing.html and engineering.html all sold it. Custom work IS available.
+  - custom work is currently unavailable
+  # "AI" itself is permitted (the theme.css comment banning it was deleted; this
+  # file's firm_lede says "AI-native" and is asserted on About). What #21 actually
+  # rules out is the breathless register.
+  - revolutionary
+  - cutting-edge AI
 
 # Which page each canonical string must be present in (case-insensitive substring).
 # Keys map to copy fields above; the lint reads this to know what to assert where.

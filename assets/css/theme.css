@@ -16,6 +16,10 @@
   --teal-lift: #3FC4B8;   /* accent for TEXT on navy — #2BB2A6 is only 4.37:1 there (#87) */
   --teal-deep: #0e7e88;   /* accent rule / worldenergy domain */
   --blue:      #2364aa;   /* emphasis */
+  --success-deep: #278537; /* legacy success ground; 4.67:1 with white */
+  --neutral-deep: #79736c; /* legacy neutral ground; 4.69:1 with white */
+  --orange-deep:  #c94a1b; /* legacy brand-orange ground; 4.69:1 with white */
+  --warning-deep: #b15b13; /* legacy warning ground; 4.80:1 with white */
   --ink:       #26323a;   /* body text */
   --muted:     #5a6b76;   /* captions / footer */
   --tint:      #eef4f8;   /* anchor / callout bg */
@@ -116,6 +120,47 @@ main .cap-hero a:not([class*="btn"]):hover,
 main .report-header a:not([class*="btn"]):hover,
 main .sloshing-header a:not([class*="btn"]):hover,
 main .std-code a:not([class*="btn"]):hover { color: var(--teal-lift); }
+
+/* WCAG AA repairs for legacy link and button palettes.
+ *
+ * `!important` is limited to Bootstrap buttons because two calculator CTAs carry
+ * retired-orange inline declarations. The attribute exception keeps the five blog
+ * button-links on their intentional white ground and replaces only their retired
+ * orange text. Page-local demo/404/rig styles load after the bundle, so those
+ * selectors add specificity rather than relying on source order. */
+.btn-success {
+  color: #fff !important;
+  background-color: var(--success-deep) !important;
+  border-color: var(--success-deep) !important;
+}
+.btn-default:not([style*="#e95420" i]) {
+  color: #fff !important;
+  background-color: var(--neutral-deep) !important;
+  border-color: var(--neutral-deep) !important;
+}
+.btn-default[style*="#e95420" i] { color: var(--navy) !important; }
+.btn-primary {
+  color: #fff !important;
+  background-color: var(--orange-deep) !important;
+  border-color: var(--orange-deep) !important;
+}
+main .btn-home {
+  color: #fff;
+  background-color: var(--orange-deep);
+}
+main .live-mode-teaser .cta {
+  color: #fff;
+  background-color: var(--warning-deep);
+}
+main .rig-root td a { color: var(--navy); }
+
+/* .button.primary has a white ground in sloshing-browser.css. The general dark-hero
+ * rule above is more specific than that component rule and otherwise makes it
+ * white-on-white. Restore the component's intended navy text. */
+main .cap-hero a.button.primary {
+  color: var(--navy);
+  text-decoration: none;
+}
 
 /* Understated, non-buttony links */
 .theme-page .link-quiet {

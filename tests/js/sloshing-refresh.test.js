@@ -336,7 +336,7 @@ describe('committed pressure release', () => {
 
   test('pins the uploaded pressure artifacts at the exact immutable revision', () => {
     const pointer = JSON.parse(fs.readFileSync(path.join(repoRoot, 'config', 'sloshing-data-release.json')));
-    expect(pointer.source.revision).toBe('aa37e6d365f3059674a49dc4bafbe4d64d12e5fd');
+    expect(pointer.source.revision).toBe('51ba5ddbca8dcfa8faeb6de5c592f342f32cfe2d');
     expect(pointer.source.files.filter(f => f.path.startsWith('review/fine_T24_Co035_pressure/')))
       .toHaveLength(9);
     expect(pointer.source.files.every(f => /^[0-9a-f]{64}$/.test(f.sha256) && f.bytes > 0)).toBe(true);
@@ -354,8 +354,8 @@ describe('committed pressure release', () => {
 
   test('passes the complete pointer/manifest/table trust loop and retains Courant warning', () => {
     const validated = refresh.validateCommittedRelease(repoRoot);
-    expect(validated.manifest.counts).toMatchObject({ cases: 24, inputs: 12, mesh_quality: 9,
-      qa_audit: 12, series: 47, samples: 9933, previews: 16 });
+    expect(validated.manifest.counts).toMatchObject({ cases: 57, inputs: 45, mesh_quality: 9,
+      qa_audit: 45, series: 47, samples: 9933, previews: 16 });
     expect(validated.manifest.counts.samples).toBeLessThanOrEqual(10000);
     expect(validated.manifest.assets).toHaveLength(16);
     const metrics = fs.readFileSync(path.join(repoRoot, validated.pointer.release.directory, 'metrics.csv'), 'utf8');
@@ -368,14 +368,14 @@ describe('committed report enrichment release', () => {
 
   test('pins representative videos and derived tables at the reviewed HF revision', () => {
     const pointer = JSON.parse(fs.readFileSync(path.join(repoRoot, 'config', 'sloshing-data-release.json')));
-    expect(pointer.source.revision).toBe('aa37e6d365f3059674a49dc4bafbe4d64d12e5fd');
+    expect(pointer.source.revision).toBe('51ba5ddbca8dcfa8faeb6de5c592f342f32cfe2d');
     expect(pointer.source.files.filter(f => f.path.startsWith('review/representative_videos/'))).toHaveLength(9);
     expect(pointer.source.files.filter(f => f.path.startsWith('review/report_enrichment/'))).toHaveLength(3);
   });
 
   test('publishes bounded envelopes, derived metrics, and hash-covered extension media', () => {
     const validated = refresh.validateCommittedRelease(repoRoot);
-    expect(validated.manifest.counts).toMatchObject({ derived_metrics: 133, pressure_envelopes: 120, previews: 16 });
+    expect(validated.manifest.counts).toMatchObject({ derived_metrics: 441, pressure_envelopes: 120, previews: 16 });
     expect(validated.manifest.assets).toHaveLength(16);
     const directory = path.join(repoRoot, validated.pointer.release.directory);
     const envelopes = fs.readFileSync(path.join(directory, 'pressure_envelopes.csv'), 'utf8');

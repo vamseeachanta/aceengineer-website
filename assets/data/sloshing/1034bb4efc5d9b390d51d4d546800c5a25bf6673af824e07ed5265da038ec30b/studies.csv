@@ -1,0 +1,9 @@
+study_id,study_type,quantity,unit,case_count,analytical_target,target_unit,qa_status
+closed-form-tank-moment,model_validation,roll_moment_amplitude,N.m,23,,,pass
+conduit-area-prediction,prediction_check,exchange_natural_period,s,6,19.73,s,pass
+conduit-area-scaling,conduit_area_sensitivity,exchange_volume_amplitude_ratio,dimensionless,3,4.322,dimensionless,cycle_converged
+damping-surface,period_amplitude_grid,equivalent_damping_ratio,dimensionless,21,,,pass
+fill-prediction,prediction_check,exchange_natural_period,s,8,13.95,s,pass
+forced-mesh-confirmation,mesh_confirmation,exchange_amplitude,percent_change,2,0.783862187169793,percent,cycle_converged
+forced-period-refinement,period_sweep,level_difference_amplitude,m,6,,,cycle_converged
+free-decay-convergence,mesh_and_timestep,measured_frequency,Hz,7,0.758054,Hz,non_asymptotic_caution

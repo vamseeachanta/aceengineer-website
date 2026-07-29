@@ -38,7 +38,10 @@ test('content links meet WCAG AA on every built page', async ({ page }) => {
     const results = await page.evaluate(() => {
       const out = [];
       document.querySelectorAll('main a').forEach((a) => {
-        if (!a.textContent.trim()) return;
+        // innerText, not textContent: textContent includes <style> content from
+        // inline SVGs, which surfaced CSS source as though it were link text.
+        const label = (a.innerText || '').trim();
+        if (!label) return;
         const cs = getComputedStyle(a);
         // walk up for the effective background
         let el = a, bg = 'rgba(0, 0, 0, 0)', gradient = false;
@@ -52,7 +55,7 @@ test('content links meet WCAG AA on every built page', async ({ page }) => {
           if (b && b !== 'rgba(0, 0, 0, 0)' && b !== 'transparent') { bg = b; break; }
           el = el.parentElement;
         }
-        out.push({ color: cs.color, bg, gradient, text: a.textContent.trim().slice(0, 30),
+        out.push({ color: cs.color, bg, gradient, text: label.slice(0, 30),
                    size: parseFloat(cs.fontSize), weight: cs.fontWeight });
       });
       return out;

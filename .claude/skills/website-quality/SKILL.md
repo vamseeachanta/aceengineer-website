@@ -45,8 +45,10 @@ decoration, credibility wins.
   through to Bootstrap United's `a { background-color:transparent; color:#e95420 }` —
   about **3.65:1 on white, so it fails AA for normal text** — on 66 pages.
   That orange is the *retired* brand colour. PR #105 removed it from the CTAs but not from
-  the base link rule, so it is still the default link colour across the site. Any page
-  whose links look orange is inheriting a colour the brand abandoned.
+  the base link rule, so it was still the default link colour across the site.
+  **Both are now fixed, and `tests/visual/contrast-check.spec.js` measures every link on
+  all 117 pages in a real browser. `contrast-baseline.json` is EMPTY — there is no
+  tolerated debt left, so any new contrast failure fails the build. Keep it empty.**
 - **A visible focus state on every interactive element.** Keyboard operation is not
   optional on a site whose audience includes procurement and accessibility reviewers.
 - Every page keeps its `<main>`, its skip link, and its canonical — already asserted by

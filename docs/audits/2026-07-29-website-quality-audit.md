@@ -12,17 +12,17 @@ The five highest-impact themes are:
 
 1. **Contrast / legibility — 82 pages.** This includes legacy Bootstrap button/tag pairs, muted text on dark heroes, and page-local status colours.
 2. **Raw hex values duplicating or closely shadowing live tokens — 104 pages.** The live token values are at `assets/css/theme.css:13-24`.
-3. **Numeric columns without tabular numerals — 52 pages.**
-4. **Prose measure materially wider than the approximately 65-character bar — 47 confirmed pages.** Another 14 pages are listed under human judgement because their exact rendered measure depends on viewport and font metrics.
+3. **Prose measure materially wider than the approximately 65-character bar — 61 pages.**
+4. **Numeric columns without tabular numerals — 45 pages.**
 5. **Horizontal-overflow risk — 33 pages with uncontained tables.** Three of those pages also embed fixed-width 700–1100px Plotly elements.
 
-Global clean checks: all 117 pages have a canonical URL; every actual `<img>` has an `alt` attribute; no literal empty-text link or button was found. The exceptions for `<main>`, skip links, heading order, accessible control names, and shared shell markup are reported below.
+Global clean checks: all 117 pages have a canonical URL; every actual `<img>` has an `alt` attribute; no anchor or button without discernible text or an accessible label was found. The exceptions for `<main>`, skip links, heading order, accessible control names, and shared shell markup are reported below.
 
 ## Findings by severity
 
 ### High
 
-#### H02
+#### H01
 
 **HIGH | contrast / legibility | 19 pages listed below | Small or normal white text is placed on legacy `#428bca` or `#e95420` grounds, yielding only about 3.63–3.65:1. The affected content includes table headers, standard tags, maturity labels, and CTA prose. | Use a darker tokenized accent behind white text, or dark token text on a light accent wash.**
 
@@ -46,7 +46,7 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/calculators/on-bottom-stability.html:132,188`
 - `dist/calculators/wall-thickness.html:132,188`
 
-#### H03
+#### H02
 
 **HIGH | contrast / legibility | 7 pages listed below | A page-level `.cta-section a { color:white }` rule overrides `.btn-default` text while retaining the Bootstrap `#aea79f` background, producing about 2.38:1. | Use one shared compliant button variant; do not override every CTA anchor foreground.**
 
@@ -58,22 +58,23 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/blog/npv-analysis-deepwater-field-development.html:148,750`
 - `dist/blog/offshore-engineering-standards.html:183,432`
 
-#### H04
+#### H03
 
 **HIGH | contrast / legibility | `dist/404.html:83-90,141,157-163` | The home button uses white on `#DD4814` (about 4.19:1), while custom footer links use `#DD4814` on `#222` (about 3.80:1); both miss 4.5:1 at 16px. The helpful links inside `<main>` are protected by the later shared rule and are not included. | Use compliant shared button and footer-link colours.**
 
-#### H05
+#### H04
 
 **HIGH | contrast / legibility | `dist/about.html:246,453` | Small `0.9em` standards tags use white text on `#28a745`, about 3.13:1. | Use a darker success ground or dark text on a light success wash.**
 
-#### H06
+#### H05
 
 **HIGH | contrast / legibility | `dist/blog/cfd-offshore-engineering.html:204,394` | Green workflow headings use `#28a745` on `#f8f9fa`, about 2.97:1 and below even the 3:1 large-text threshold. | Use `--navy`, `--teal-deep`, or another verified token.**
 
-#### H07
+#### H06
 
-**HIGH | contrast / legibility | 8 pages listed below | Built `.btn-success` controls render white on `#38b44a`, about 2.69:1. The `btn-lg` text is 18px regular and still requires 4.5:1. | Use an accessible success token pair or dark foreground.**
+**HIGH | contrast / legibility | 10 pages listed below | Built `.btn-success` controls render white on `#38b44a`, about 2.69:1. The `btn-lg` text is 18px regular and still requires 4.5:1. | Use an accessible success token pair or dark foreground.**
 
+- `dist/calculators/decline-curve.html:327`
 - `dist/calculators/fatigue-life-calculator.html:410`
 - `dist/calculators/index.html:538`
 - `dist/calculators/mooring-fatigue.html:347`
@@ -82,8 +83,9 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/case-studies/index.html:497`
 - `dist/case-studies/multi-code-wall-thickness-comparison.html:462`
 - `dist/case-studies/pipeline-on-bottom-stability-assessment.html:469`
+- `dist/pricing.html:274`
 
-#### H08
+#### H07
 
 **HIGH | contrast / legibility | 4 pages listed below | Large result values use `#5cb85c` on white, about 2.48:1, missing the 3:1 large-text threshold. | Use a darker success token while retaining textual status cues.**
 
@@ -92,29 +94,38 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/calculators/on-bottom-stability.html:103,130`
 - `dist/calculators/wall-thickness.html:103,130`
 
-#### H09
+#### H08
 
-**HIGH | contrast / legibility | 5 pages listed below | Bootstrap alert pairs (`#3a87ad` on `#d9edf7`; `#c09853` on `#fcf8e3`) do not reach 4.5:1 for normal alert text. | Override the alert foregrounds with accessible semantic tokens.**
+**HIGH | contrast / legibility | 6 pages listed below | Bootstrap alert pairs (`#3a87ad` on `#d9edf7`; `#c09853` on `#fcf8e3`) do not reach 4.5:1 for normal alert text. | Override the alert foregrounds with accessible semantic tokens.**
 
+- `dist/calculators/decline-curve.html:270,276`
 - `dist/calculators/fatigue-life-calculator.html:314,396`
 - `dist/calculators/index.html:526`
 - `dist/calculators/mooring-fatigue.html:281,287`
 - `dist/calculators/on-bottom-stability.html:320`
 - `dist/calculators/wall-thickness.html:304`
 
+#### H09
+
+**HIGH | contrast / legibility | 7 pages listed below | Legacy orange/white button pairs render at about 3.65:1. Five blog CTA buttons set `#e95420` text on white inline; two calculators use page-level CSS for white-on-orange form buttons and inline rules for matching bottom CTAs. | Replace both rule types with one compliant shared button pair.**
+
+- `dist/blog/energy-data-automation-pipelines.html:765`
+- `dist/blog/gulf-of-mexico-production-data-access.html:710`
+- `dist/blog/machine-learning-fatigue-prediction.html:614`
+- `dist/blog/marine-safety-incident-analysis.html:767`
+- `dist/blog/npv-analysis-deepwater-field-development.html:749`
+- `dist/calculators/fatigue-sn-curve.html:103-108,313,396`
+- `dist/calculators/npv-field-development.html:103-108,333,443`
+
 #### H10
 
-**HIGH | contrast / legibility | `dist/calculators/fatigue-sn-curve.html:103-108,396` and `dist/calculators/npv-field-development.html:103-108,443` | Inline orange button rules force white on `#e95420`, about 3.65:1 at 1.1em. | Remove the inline override and use a compliant shared button pair.**
+**HIGH | contrast / legibility | `dist/calculators/fatigue-sn-curve.html:118-119,151-158,568,638` and `dist/calculators/npv-field-development.html:118-119,136-140,156-163,646,656,662,666-669` | Dynamic normal-size success, warning, and danger text fails across part or all of the result-card gradient. From `#2d3436` to `#4a5568`, `#5cb85c` falls from about 5.11:1 to 3.03:1, `#f0ad4e` from 6.52:1 to 3.87:1, and `#d9534f` from 3.20:1 to 1.90:1. | Use status colours tested to 4.5:1 against both gradient endpoints.**
 
 #### H11
 
-**HIGH | contrast / legibility | `dist/calculators/fatigue-sn-curve.html:119,154-155,568,638` and `dist/calculators/npv-field-development.html:119,159-160,646,656,662,666-669` | Dynamic red result/status text `#d9534f` is only about 3.2:1 even at the darkest endpoint of the result-card gradient, and worse toward `#4a5568`. | Use a status colour tested to 4.5:1 across the whole gradient.**
-
-#### H12
-
 **HIGH | contrast / legibility | `dist/calculators/index.html:338,352,375,398,422,445,469` | “NEW” badges use white 0.6em text on `#5cb85c`, about 2.48:1. | Use dark text on a light success wash or a darker success ground.**
 
-#### H13
+#### H12
 
 **HIGH | contrast / legibility | 9 pages listed below | Case-study compliance badges use small white text on `#28a745`, about 3.13:1. | Use an accessible success token pair.**
 
@@ -128,17 +139,17 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/case-studies/subsea-fea-automation.html:159-165,254`
 - `dist/case-studies/wind-turbine-foundation-analysis.html:159-165,261`
 
-#### H14
+#### H13
 
 **HIGH | contrast / legibility | `dist/case-studies/wind-turbine-foundation-analysis.html:100,108-112,146,149-152` | Large green metrics use `#27ae60` on `#f8f9fa`, about 2.73:1 and below 3:1. | Use a darker green token.**
 
-#### H15
+#### H14
 
 **HIGH | contrast / legibility | `dist/capabilities/dc-drilldown.html:13-30,36-37,60-62,68,82,90,97-103,111-112,120-121,128-137` and `dist/capabilities/dc-qaqc-hub.html:19-65,80-86,108,120-125,138,170,180-190,203-215` | The custom D&C faint/status palettes fail repeatedly: light-theme `#7c929c` is about 2.8–3.3:1, several warning/success/hold pairs are about 3.2–4.1:1, and dark-theme `#6b8290` on `#0e2732` is about 3.85:1. | Replace the foreground/background pairs with values verified to 4.5:1 in both themes.**
 
-#### H16
+#### H15
 
-**HIGH | contrast / legibility | 7 pages listed below | Small orange badge/callout text uses `#ed8936`, only about 2.55:1 on white and about 2.43:1 on the pale report ground. | Use a darker foreground or darker tokenized badge ground.**
+**HIGH | contrast / legibility | 7 pages listed below | Small white-on-`#ed8936` case badges and CTA controls are about 2.55:1. Orange emphasis placed on translucent orange washes composited over white or `#f7fafc` is only about 2.24–2.27:1. | Use a darker tokenized orange pair for both solid controls and tinted emphasis.**
 
 - `dist/demos/freespan.html:40,93-100,245,306,445`
 - `dist/demos/mooring.html:39,88-95,159,225,261`
@@ -148,9 +159,9 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/outreach/fowt-mooring-screening.html:38,49,100`
 - `dist/outreach/index.html:39,110-118,204`
 
-#### H17
+#### H16
 
-**HIGH | contrast / legibility | 5 pages listed below | Demo status text uses `#38a169`, `#e53e3e`, or `#d69e2e` on white/light grounds, yielding about 3.25:1, 4.13:1, and 2.39:1 respectively. | Use darker semantic status tokens; keep the existing text labels so colour is not the sole cue.**
+**HIGH | contrast / legibility | 5 pages listed below | Demo status text uses `#38a169`, `#e53e3e`, or `#d69e2e` on the actual `#f7fafc` report ground, yielding about 3.10:1, 3.94:1, and 2.28:1 respectively. | Use darker semantic status tokens; keep the existing text labels so colour is not the sole cue.**
 
 - `dist/demos/freespan.html:182-184,356-361`
 - `dist/demos/mooring.html:148-150,285-314`
@@ -158,7 +169,7 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/demos/pipelay.html:182-184,405,419,755`
 - `dist/demos/wall-thickness.html:182-184,386`
 
-#### H18
+#### H17
 
 **HIGH | contrast / legibility | 11 pages listed below | Small muted text uses page-local colours that fall below 4.5:1 on their actual grounds: `#718096`, `#1f8a4c`, `#6b7785`, or `#777`. | Use the live `--muted` value or a darker role-specific token verified on the actual ground.**
 
@@ -172,21 +183,21 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/outreach/index.html:42,95-96,126,206`
 - `dist/platform.html:51,53-54,125-127`
 - `dist/proof.html:50-51,120-126`
-- `dist/index.html:139`
+- `dist/vision.html:55,140`
+
+#### H18
+
+**HIGH | contrast / legibility | `dist/contact.html:143-149,157-175,186-195,368,375,379,384,390,395` | The submit button is white on `#e95420` (about 3.65:1); orange headings are `#e95420` on `#2d3436` (about 3.47:1); and the green response heading is about 3.75:1 on its translucent-white/dark composite. | Use a compliant shared button pair and verified light semantic tokens for headings on the dark card.**
 
 #### H19
 
-**HIGH | contrast / legibility | `dist/contact.html:143-149,157-175,353,364,369,375` | The submit button is white on `#e95420` (about 3.65:1), while orange headings are `#e95420` on `#2d3436` (about 3.47:1). | Use a compliant shared button pair and a light theme token for headings on the dark card.**
+**HIGH | contrast / legibility | `dist/demos/jumper-installation.html:44,114-115,150-153` | Small status badges use `#2e7d32` on `#c8e6c9`, about 3.81:1. | Darken the badge foreground to an AA-compliant semantic token.**
 
 #### H20
 
-**HIGH | contrast / legibility | `dist/demos/jumper-installation.html:44,114-115,150-153` | Small status badges use `#2e7d32` on `#c8e6c9`, about 3.81:1. | Darken the badge foreground to an AA-compliant semantic token.**
+**HIGH | contrast / legibility | `dist/case-studies/orcaflex-riser-sensitivity-automation.html:109-123,394-424,451,458,465` | Normal-size savings text uses `#28a745` on white at about 3.13:1, while timeline labels use `#e95420` on white at about 3.65:1. | Use darker semantic foreground tokens for savings and timeline labels.**
 
 #### H21
-
-**HIGH | contrast / legibility | `dist/pricing.html:274` | The bottom Bootstrap success button renders white on `#38b44a`, about 2.69:1. | Use dark text or a darker success ground.**
-
-#### H22
 
 **HIGH | contrast / legibility | 3 pages listed below | The page-level `.rpt a { color:#2980b9 }` rule overrides the standard skip-link foreground outside `<main>`. On focus, the skip link is `#2980b9` on white, about 4.30:1. Links inside `<main>` are protected by the more-specific site-wide rule at `assets/css/theme.css:86-93`. | Exempt `.skip-link` from the report-wide anchor rule or set its foreground explicitly to `--ink`/`--navy`.**
 
@@ -194,7 +205,7 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/reports/diffraction/comparison.html:85,90`
 - `dist/reports/diffraction/index.html:51,56`
 
-#### H23
+#### H22
 
 **HIGH | contrast / legibility | 3 pages listed below | Diffraction live/loading/pending labels use white on `#27ae60`, `#f39c12`, or `#7f8c8d`, yielding about 2.87:1, 2.19:1, and 3.48:1 for normal text. | Use darker status grounds or dark text on light status washes.**
 
@@ -202,19 +213,19 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/reports/diffraction/comparison.html:45-48,99`
 - `dist/reports/diffraction/index.html:47-48,70`
 
-#### H24
+#### H23
 
-**HIGH | contrast / legibility | 3 pages listed below | Small hint/footer text uses `#7f8c8d` on white, about 3.48:1. | Use `--muted` or a darker token.**
+**HIGH | contrast / legibility | 3 pages listed below | Small hint and simulation-note text uses `#7f8c8d` on white at about 3.48:1; report footers use the same foreground on `#f8f9fa` at about 3.30:1. | Use `--muted` or a darker token verified on both grounds.**
 
 - `dist/reports/diffraction/analysis.html:55,79,85`
 - `dist/reports/diffraction/comparison.html:62,84`
 - `dist/reports/diffraction/index.html:52,103`
 
-#### H25
+#### H24
 
 **HIGH | contrast / legibility | `dist/reports/diffraction/comparison.html:55,58` | The small series-B tag uses `#e67e22` on `#fdf2e9`, about 2.58:1. | Use a darker text token or darker status ground.**
 
-#### H26
+#### H25
 
 **HIGH | contrast / legibility | 7 solution-detail pages listed below | The `.85em` breadcrumb and its link are inline `#6b7785` on the dark hero gradient (`#2d3436` to `#4a5568`), varying from about 2.78:1 down to 1.65:1. | Use a light hero metadata token tested against both gradient endpoints.**
 
@@ -226,7 +237,7 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/solutions/subsea-pipelines-integrity.html:109`
 - `dist/solutions/wells-subsurface.html:109`
 
-#### H27
+#### H26
 
 **HIGH | contrast / legibility | 22 standards-detail pages listed below | Hero breadcrumbs use `#6b7785` (about 2.78:1 to 1.65:1), and the 1.05em summary uses `#52606d` (about 1.96:1 to 1.17:1) on the dark gradient. | Use light hero metadata tokens verified against both endpoints.**
 
@@ -253,20 +264,16 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/standards/vessel-seakeeping.html:128,130`
 - `dist/standards/well-nodal-analysis.html:128,130`
 
-#### H28
+#### H27
 
 **HIGH | contrast / legibility | `dist/vision.html:48,90,95` | The hero lede uses `#3a4654` on the dark gradient, only about 1.3:1. The same class is acceptable on the later light section, so the defect is the hero context. | Add a hero-scoped light lede colour.**
 
-#### H29
-
-**HIGH | structure / a11y | `dist/reports/diffraction/aqwa-analysis.html:21-24`, `dist/reports/diffraction/orcawave-analysis.html:21-24`, and `dist/reports/diffraction/orcawave-aqwa-comparison.html:25-28` | The three redirect/fallback pages have neither `<main>` nor a skip link. Their canonical links are present, so this is specifically the missing landmark/skip structure. | Put the fallback link in `<main id="main">` and add the standard skip link.**
-
-#### H30
+#### H28
 
 **HIGH | horizontal overflow | 33 pages listed below | Each cited `<table>` lacks a local ancestor with `overflow-x:auto`; several have four or five columns, and the shared `.comparison-table` has a 500px minimum. `body{overflow-x:hidden}` clips content instead of making it accessible. | Wrap each table in the established responsive/overflow container.**
 
 <details>
-<summary>H30 affected pages (33)</summary>
+<summary>H28 affected pages (33)</summary>
 
 - `dist/blog/cfd-offshore-engineering.html:336`
 - `dist/blog/energy-data-automation-pipelines.html:229`
@@ -304,15 +311,11 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 
 </details>
 
-#### H31
+#### H29
 
 **HIGH | horizontal overflow | `dist/demos/mudmat.html:713,719,725,731,737`, `dist/demos/pipelay.html:1157,1163,1169,1175,1181`, and `dist/demos/wall-thickness.html:576,588` | Generated Plotly elements carry literal widths from 700px to 1100px. The global body clipping rule hides overflow rather than preserving access. | Make graph containers `width:100%` with a suitable `max-width`, or place each chart in its own scrollable wrapper.**
 
-#### H32
-
-**HIGH | structure / a11y | `dist/contact.html:399,405,411` | Three project selectors are click-only `<div onclick>` controls with no keyboard focus, role, or key activation. | Use native buttons/radio controls, or add correct semantics, focusability, and keyboard activation.**
-
-#### H33
+#### H30
 
 **HIGH | structure / a11y | `dist/capabilities/dc-drilldown.html:196-201` | The search input has no durable accessible name: its `<label>` contains only an `aria-hidden` icon, and a placeholder is not a label. | Add visible or visually hidden label text, or an explicit `aria-label`.**
 
@@ -324,7 +327,10 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 
 #### M02
 
-**MEDIUM | contrast / legibility | `dist/capabilities/index.html:106` | Tiny limitations text uses inline `#777` on white, about 4.48:1 at 0.82rem. | Use `var(--muted)` (`#5a6b76`).**
+**MEDIUM | contrast / legibility | 2 pages listed below | Tiny limitations text uses inline `#777` on white, about 4.48:1 at 0.82rem. | Use `var(--muted)` (`#5a6b76`).**
+
+- `dist/capabilities/index.html:106`
+- `dist/index.html:139`
 
 #### M03
 
@@ -442,10 +448,10 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 
 #### M04
 
-**MEDIUM | typography / measure | 47 pages listed below | The cited prose containers permit lines materially wider than the approximately 65-character quality bar: uncapped Bootstrap columns, 800px article bodies, 980–1400px report shells, or 1120–1180px sloshing shells. | Cap prose at about `65ch` independently of tables, plots, cards, and grids.**
+**MEDIUM | typography / measure | 61 pages listed below | The cited prose containers permit lines materially wider than the approximately 65-character quality bar: uncapped Bootstrap columns, 800px article bodies, 980–1400px report shells, or 1120–1180px sloshing shells. | Cap prose at about `65ch` independently of tables, plots, cards, and grids.**
 
 <details>
-<summary>M04 affected pages (47)</summary>
+<summary>M04 affected pages (61)</summary>
 
 - `dist/about.html:334,336`
 - `dist/api-catalog.html:117,119`
@@ -457,6 +463,20 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/blog/python-engineering-automation.html:126,214`
 - `dist/calculators/decline-curve.html:171,282`
 - `dist/calculators/drilling-rig-selector.html:133,135`
+- `dist/calculators/fatigue-life-calculator.html:323`
+- `dist/calculators/index.html:343`
+- `dist/calculators/mooring-fatigue.html:297`
+- `dist/calculators/on-bottom-stability.html:332`
+- `dist/calculators/wall-thickness.html:316`
+- `dist/case-studies/bsee-field-economics.html:279`
+- `dist/case-studies/index.html:170`
+- `dist/case-studies/marine-safety-correlation.html:279`
+- `dist/case-studies/multi-code-wall-thickness-comparison.html:274`
+- `dist/case-studies/offshore-platform-fatigue-optimization.html:272`
+- `dist/case-studies/orcaflex-riser-sensitivity-automation.html:213-215`
+- `dist/case-studies/pipeline-on-bottom-stability-assessment.html:274`
+- `dist/case-studies/subsea-fea-automation.html:285`
+- `dist/case-studies/wind-turbine-foundation-analysis.html:292`
 - `dist/blog/cfd-offshore-engineering.html:112`
 - `dist/blog/energy-data-automation-pipelines.html:92`
 - `dist/blog/gulf-of-mexico-production-data-access.html:92`
@@ -499,10 +519,10 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 
 #### M05
 
-**MEDIUM | typography / numeric alignment | 52 pages listed below | Engineering tables, KPI grids, and other aligned digit columns have no applicable `font-variant-numeric:tabular-nums`. The narrow declarations in `dist/assets/css/sloshing-reports.css:39,58` do not cover these cited columns. | Apply tabular numerals to numeric table cells and aligned metric values.**
+**MEDIUM | typography / numeric alignment | 45 pages listed below | Engineering-table digit columns have no applicable `font-variant-numeric:tabular-nums`. The narrow declarations in `dist/assets/css/sloshing-reports.css:39,58` do not cover these cited columns. Monospace presentation is not treated as an exemption from the explicit quality-bar requirement. | Apply tabular numerals to numeric table cells.**
 
 <details>
-<summary>M05 affected pages (52)</summary>
+<summary>M05 affected pages (45)</summary>
 
 - `dist/blog/ai-native-structural-analysis.html:324`
 - `dist/blog/cfd-offshore-engineering.html:350`
@@ -524,14 +544,10 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/capabilities/pipeline-wall-thickness.html:93`
 - `dist/case-studies/bsee-field-economics.html:373`
 - `dist/case-studies/marine-safety-correlation.html:362`
-- `dist/case-studies/multi-code-wall-thickness-comparison.html:308`
 - `dist/case-studies/offshore-platform-fatigue-optimization.html:371`
 - `dist/case-studies/orcaflex-riser-sensitivity-automation.html:292`
 - `dist/case-studies/pipeline-on-bottom-stability-assessment.html:310`
-- `dist/case-studies/subsea-fea-automation.html:414`
 - `dist/case-studies/wind-turbine-foundation-analysis.html:349`
-- `dist/contact.html:425-435`
-- `dist/demos/index.html:306-320`
 - `dist/demos/freespan.html:372`
 - `dist/demos/mooring.html:248,269,327`
 - `dist/demos/mudmat.html:373`
@@ -539,14 +555,12 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/demos/wall-thickness.html:368`
 - `dist/demos/jumper-installation.html:98,112,118,148`
 - `dist/engineering.html:351-386`
-- `dist/index.html:135-141`
 - `dist/methodology/compound-engineering/index.html:114-120`
 - `dist/methodology/enforcement/index.html:129-134`
 - `dist/methodology/orchestrator-worker/index.html:96-102,178-184`
 - `dist/outreach/fowt-mooring-screening.html:116-140`
-- `dist/proof.html:100-102,120-126`
-- `dist/reports/diffraction/analysis.html:130`
-- `dist/reports/diffraction/comparison.html:130`
+- `dist/reports/diffraction/analysis.html:442-443,551-557`
+- `dist/reports/diffraction/comparison.html:477-530`
 - `dist/reports/sloshing-cfd-analysis.html:95`
 - `dist/reports/sloshing-cfd-case.html:99`
 - `dist/reports/sloshing-tank-summary.html:94`
@@ -555,7 +569,6 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/reports/sloshing/dual-connected-tanks.html:79`
 - `dist/reports/sloshing/index.html:83`
 - `dist/reports/sloshing/study.html:89`
-- `dist/reports/sloshing/validation.html:113`
 
 </details>
 
@@ -619,11 +632,54 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 
 #### M13
 
-**MEDIUM | structure / a11y | `dist/calculators/drilling-rig-selector.html:194,270,277` | The scatter plot differentiates rig type only by circle fill colour, while point details are exposed through mouse-only tooltip events. | Pair colour with marker shape and expose each point to keyboard/focus users.**
+**MEDIUM | structure / a11y | `dist/calculators/drilling-rig-selector.html:173,194,269-284` | The scatter plot itself differentiates rig type only by circle fill colour, while point details are exposed through mouse-only tooltip events. The adjacent table exposes the same records textually, which reduces impact but does not make the chart interaction accessible. | Pair colour with marker shape and expose each point to keyboard/focus users.**
 
 #### M14
 
 **MEDIUM | consistency / layout | `dist/demos/jumper-installation.html:33,48,158` | A page-wide `body{max-width:900px;margin:0 auto;padding:2rem}` constrains the shared nav and footer along with the report. | Scope the report width and padding to `main` or a report wrapper.**
+
+#### M15
+
+**MEDIUM | consistency / typography | `assets/css/components.css:69-75` plus the 29 affected page citations below | Solution and standards templates repeat an inline `.85em` breadcrumb treatment already represented by the shared `.section-eyebrow` component; the standards template also repeats an inline `1.05em` summary treatment. These are duplicated component styles, not one-off scale values. | Render the existing eyebrow class, add the light hero-context override required by H25/H26, and add/reuse one shared summary class instead of emitting template-local typography.**
+
+<details>
+<summary>M15 affected pages (29)</summary>
+
+- `dist/solutions/codes-standards-maritime-law.html:89`
+- `dist/solutions/design-cad.html:89`
+- `dist/solutions/floating-marine.html:109`
+- `dist/solutions/manufacturing-fabrication.html:89`
+- `dist/solutions/power-electrical-controls.html:89`
+- `dist/solutions/subsea-pipelines-integrity.html:109`
+- `dist/solutions/wells-subsurface.html:109`
+- `dist/standards/api-579-fitness-for-service.html:128,130`
+- `dist/standards/arps-decline-curve.html:146,148`
+- `dist/standards/bsee-gom-production-data.html:128,130`
+- `dist/standards/catenary-riser.html:128,130`
+- `dist/standards/dnv-rp-b401-cathodic-protection.html:128,130`
+- `dist/standards/dnv-rp-c203-fatigue.html:154,156`
+- `dist/standards/dnv-rp-f105-free-span-viv.html:128,130`
+- `dist/standards/dnv-rp-f109-on-bottom-stability.html:154,156`
+- `dist/standards/dnv-st-f101-wall-thickness.html:154,156`
+- `dist/standards/dynacard-diagnostics.html:128,130`
+- `dist/standards/field-economics-npv.html:146,148`
+- `dist/standards/fpso-spread-mooring-api-rp-2sk.html:128,130`
+- `dist/standards/hull-hydrodynamics-diffraction.html:128,130`
+- `dist/standards/intact-stability-imo.html:128,130`
+- `dist/standards/mooring-line-fatigue.html:146,148`
+- `dist/standards/ocimf-meg4-mooring-loads.html:128,130`
+- `dist/standards/pipeline-lateral-buckling.html:128,130`
+- `dist/standards/pipeline-upheaval-buckling.html:128,130`
+- `dist/standards/riser-combined-loading.html:128,130`
+- `dist/standards/synthetic-rope-mooring.html:128,130`
+- `dist/standards/vessel-seakeeping.html:128,130`
+- `dist/standards/well-nodal-analysis.html:128,130`
+
+</details>
+
+#### M16
+
+**MEDIUM | structure / a11y | `dist/reports/diffraction/aqwa-analysis.html:7,21-24`, `dist/reports/diffraction/orcawave-analysis.html:7,21-24`, and `dist/reports/diffraction/orcawave-aqwa-comparison.html:7,25-28` | The three `noindex` redirect/fallback pages have neither `<main>` nor a skip link. Their canonical links are present; the reduced severity reflects that they immediately redirect when scripting works. | Put each fallback link in `<main id="main">` and add the standard skip link.**
 
 ### Low
 
@@ -673,7 +729,7 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/case-studies/pipeline-on-bottom-stability-assessment.html:491`
 - `dist/case-studies/subsea-fea-automation.html:625`
 - `dist/case-studies/wind-turbine-foundation-analysis.html:705`
-- `dist/contact.html:453`
+- `dist/contact.html:468`
 - `dist/deckhand-api.html:281`
 - `dist/deckhand.html:268`
 - `dist/demos/freespan.html:512`
@@ -744,10 +800,10 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 
 #### L02
 
-**LOW | typography / one-off sizes | 62 pages listed below | Additional inline or page-local one-off sizes (`12px`, `.8em`, `.85em`, `1.02em`, `1.05em`, and similar values) bypass the shared scale. | Replace them with existing type-scale/component classes.**
+**LOW | typography / one-off sizes | 33 pages listed below | Additional inline or page-local one-off sizes (`12px`, `.8em`, `.85em`, `1.02em`, and similar values) bypass the shared scale. Repeated solution/standards template values are classified separately in M15. | Replace them with existing type-scale/component classes.**
 
 <details>
-<summary>L02 affected pages (62)</summary>
+<summary>L02 affected pages (33)</summary>
 
 - `dist/about.html:359,420`
 - `dist/api-catalog.html:344`
@@ -770,7 +826,7 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/case-studies/offshore-platform-fatigue-optimization.html:272`
 - `dist/case-studies/orcaflex-riser-sensitivity-automation.html:215`
 - `dist/case-studies/pipeline-on-bottom-stability-assessment.html:239`
-- `dist/contact.html:371`
+- `dist/contact.html:386`
 - `dist/demos/index.html:531`
 - `dist/demos/jumper-installation.html:75,87,156`
 - `dist/engineering.html:365,377,537-562`
@@ -782,36 +838,6 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/demos/wall-thickness.html:315,320`
 - `dist/reports/diffraction/analysis.html:177`
 - `dist/reports/diffraction/comparison.html:478`
-- `dist/solutions/codes-standards-maritime-law.html:89`
-- `dist/solutions/design-cad.html:89`
-- `dist/solutions/floating-marine.html:109`
-- `dist/solutions/manufacturing-fabrication.html:89`
-- `dist/solutions/power-electrical-controls.html:89`
-- `dist/solutions/subsea-pipelines-integrity.html:109`
-- `dist/solutions/wells-subsurface.html:109`
-- `dist/standards/api-579-fitness-for-service.html:128,130`
-- `dist/standards/arps-decline-curve.html:146,148`
-- `dist/standards/bsee-gom-production-data.html:128,130`
-- `dist/standards/catenary-riser.html:128,130`
-- `dist/standards/dnv-rp-b401-cathodic-protection.html:128,130`
-- `dist/standards/dnv-rp-c203-fatigue.html:154,156`
-- `dist/standards/dnv-rp-f105-free-span-viv.html:128,130`
-- `dist/standards/dnv-rp-f109-on-bottom-stability.html:154,156`
-- `dist/standards/dnv-st-f101-wall-thickness.html:154,156`
-- `dist/standards/dynacard-diagnostics.html:128,130`
-- `dist/standards/field-economics-npv.html:146,148`
-- `dist/standards/fpso-spread-mooring-api-rp-2sk.html:128,130`
-- `dist/standards/hull-hydrodynamics-diffraction.html:128,130`
-- `dist/standards/intact-stability-imo.html:128,130`
-- `dist/standards/mooring-line-fatigue.html:146,148`
-- `dist/standards/ocimf-meg4-mooring-loads.html:128,130`
-- `dist/standards/pipeline-lateral-buckling.html:128,130`
-- `dist/standards/pipeline-upheaval-buckling.html:128,130`
-- `dist/standards/riser-combined-loading.html:128,130`
-- `dist/standards/synthetic-rope-mooring.html:128,130`
-- `dist/standards/vessel-seakeeping.html:128,130`
-- `dist/standards/well-nodal-analysis.html:128,130`
-
 </details>
 
 ## NEEDS HUMAN JUDGEMENT
@@ -828,28 +854,9 @@ Global clean checks: all 117 pages have a canonical URL; every actual `<img>` ha
 - `dist/case-studies/subsea-fea-automation.html:81,247`
 - `dist/case-studies/wind-turbine-foundation-analysis.html:81,254`
 
-### J02 — rendered paragraph measure
+### J02 — generated Plotly label contrast and clipping
 
-**NEEDS HUMAN JUDGEMENT | typography / measure | 14 pages listed below | These long paragraphs have no local `ch`-based cap and appear to sit in 780–1170px desktop columns. Exact line length depends on the rendered font and viewport. | Measure the rendered desktop line length; add a shared `max-width:65ch` prose wrapper if confirmed.**
-
-- `dist/calculators/fatigue-life-calculator.html:323`
-- `dist/calculators/index.html:343`
-- `dist/calculators/mooring-fatigue.html:297`
-- `dist/calculators/on-bottom-stability.html:332`
-- `dist/calculators/wall-thickness.html:316`
-- `dist/case-studies/bsee-field-economics.html:279`
-- `dist/case-studies/index.html:170`
-- `dist/case-studies/marine-safety-correlation.html:279`
-- `dist/case-studies/multi-code-wall-thickness-comparison.html:274`
-- `dist/case-studies/offshore-platform-fatigue-optimization.html:272`
-- `dist/case-studies/orcaflex-riser-sensitivity-automation.html:213-215`
-- `dist/case-studies/pipeline-on-bottom-stability-assessment.html:274`
-- `dist/case-studies/subsea-fea-automation.html:285`
-- `dist/case-studies/wind-turbine-foundation-analysis.html:292`
-
-### J03 — generated Plotly label contrast and clipping
-
-**NEEDS HUMAN JUDGEMENT | contrast / horizontal clipping | `dist/demos/freespan.html:466`, `dist/demos/mudmat.html:713`, `dist/demos/pipelay.html:1157`, and `dist/demos/wall-thickness.html:576` | Generated Plotly payloads contain chart-specific palettes and small labels. The fixed-width defects are asserted in H31, but text-on-mark contrast and label clipping require a rendered viewport. | Inspect the plots at 375px and 1280px with a contrast sampler before changing chart colours or margins.**
+**NEEDS HUMAN JUDGEMENT | contrast / horizontal clipping | `dist/demos/freespan.html:466`, `dist/demos/mudmat.html:713`, `dist/demos/pipelay.html:1157`, and `dist/demos/wall-thickness.html:576` | Generated Plotly payloads contain chart-specific palettes and small labels. Mudmat, pipelay, and wall-thickness also have the fixed-width defects asserted in H29; freespan uses `width:100%` with responsive Plotly configuration, so only its rendered label/mark contrast needs checking. | Inspect the plots at 375px and 1280px with a contrast sampler before changing chart colours or margins.**
 
 ## Pages that are clean
 

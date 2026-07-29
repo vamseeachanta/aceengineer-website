@@ -72,6 +72,51 @@
 .theme-page main p a:not([class]):hover,
 .theme-page main p a:not([class]):focus { color: var(--teal-deep); }
 
+/* Content links, site-wide.
+ *
+ * Bootstrap United paints every unscoped link with
+ *   a { background-color: transparent; color: #e95420; text-decoration: none }
+ * which is two problems at once: #e95420 is the RETIRED brand orange (PR #105 removed it
+ * from the CTAs and left it here), and it measures ~3.65:1 on white — below WCAG AA's
+ * 4.5:1 for normal text. It was the default link colour on 66 pages.
+ *
+ * Scoped to `main` so the nav, the footer and their own colour rules are untouched.
+ * `.btn*` wins on class specificity and inline styles win outright, so buttons and the
+ * capability cards keep their treatment without needing an exception here. */
+main a:not([class*="btn"]) {
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-color: var(--underline);
+  text-underline-offset: 2px;
+}
+main a:not([class*="btn"]):hover,
+main a:not([class*="btn"]):focus { color: var(--teal-deep); }
+
+/* ...except on a dark surface, where navy would recreate exactly the #109 defect in
+ * reverse. Every class below was verified to set a dark background AND light text.
+ *
+ * THIS LIST WILL DRIFT. Adding a dark surface without adding it here reintroduces the
+ * bug — my first attempt at this rule did precisely that on .contact-info-card, and
+ * tests/visual/contrast-check.spec.js caught it at 1.11:1 before it shipped. That test
+ * is the real guard; this list is just the current answer. */
+main .hero-section a:not([class*="btn"]),
+main .cta-section a:not([class*="btn"]),
+main .contact-info-card a:not([class*="btn"]),
+main .cap-hero a:not([class*="btn"]),
+main .report-header a:not([class*="btn"]),
+main .sloshing-header a:not([class*="btn"]),
+main .std-code a:not([class*="btn"]) {
+  color: #fff;
+  text-decoration-color: rgba(255, 255, 255, .5);
+}
+main .hero-section a:not([class*="btn"]):hover,
+main .cta-section a:not([class*="btn"]):hover,
+main .contact-info-card a:not([class*="btn"]):hover,
+main .cap-hero a:not([class*="btn"]):hover,
+main .report-header a:not([class*="btn"]):hover,
+main .sloshing-header a:not([class*="btn"]):hover,
+main .std-code a:not([class*="btn"]):hover { color: var(--teal-lift); }
+
 /* Understated, non-buttony links */
 .theme-page .link-quiet {
   color: var(--navy); font-weight: 600; text-decoration: underline;

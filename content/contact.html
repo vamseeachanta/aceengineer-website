@@ -178,16 +178,31 @@
             margin-top: 40px;
         }
         .vertical-option {
+            /* A real <button>: these were click-only <div onclick> until 2026-07-29, so a
+               keyboard or screen-reader user could not select a project type at all — on
+               the page where enquiries are made. The rules below strip the browser's
+               default button chrome so it still reads as a card. */
+            display: block;
+            width: 100%;
+            text-align: left;
+            font: inherit;
+            color: inherit;
+            border: none;
             background: white;
             border-radius: 8px;
             padding: 25px;
             margin-bottom: 20px;
-            border-left: 4px solid #e95420;
+            border-left: 4px solid var(--teal-deep);
             cursor: pointer;
             transition: box-shadow 0.3s ease;
         }
         .vertical-option:hover {
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .vertical-option:focus-visible {
+            /* The reason this is a button at all — keyboard users must see where they are. */
+            outline: 3px solid var(--teal-deep);
+            outline-offset: 2px;
         }
         .vertical-option h4 {
             margin: 0 0 10px 0;
@@ -348,22 +363,22 @@
                 <h3 class="text-center" style="margin-bottom: 30px;">Or Choose Your Project Type</h3>
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="vertical-option" onclick="selectVertical('OrcaFlex Automation')">
+                        <button type="button" class="vertical-option" onclick="selectVertical('OrcaFlex Automation')">
                             <h4>OrcaFlex Automation</h4>
                             <p>Batch processing for riser analysis, mooring studies, and sensitivity studies with overnight execution.</p>
-                        </div>
+                        </button>
                     </div>
                     <div class="col-md-4">
-                        <div class="vertical-option" onclick="selectVertical('FEA Post-Processing')">
+                        <button type="button" class="vertical-option" onclick="selectVertical('FEA Post-Processing')">
                             <h4>FEA Post-Processing</h4>
                             <p>Automated extraction and reporting from NASTRAN, ANSYS, or ABAQUS analysis results.</p>
-                        </div>
+                        </button>
                     </div>
                     <div class="col-md-4">
-                        <div class="vertical-option" onclick="selectVertical('Fatigue Analysis')">
+                        <button type="button" class="vertical-option" onclick="selectVertical('Fatigue Analysis')">
                             <h4>Fatigue Analysis</h4>
                             <p>Multi-standard fatigue assessment with 221+ S-N curves from DNV, API, BS 7608, and more.</p>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>

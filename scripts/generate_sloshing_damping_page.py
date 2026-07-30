@@ -367,7 +367,7 @@ activeNav: "damping"
     <div class="table-wrap"><table class="summary-table"><caption>Tank roll moment, closed form against CFD (5° roll, validated band)</caption>
       <thead><tr><th scope="col">period</th><th scope="col">measured</th><th scope="col">closed form</th><th scope="col">error</th></tr></thead>
       <tbody>{mom_rows}</tbody></table></div>
-    <p class="source-note">The moment adds two static terms the redistribution estimate omits — the weight moment of the whole fluid mass about the roll axis, and the within-leg free surface. Below about 20&#8239;s the closed form degrades, because the legs&#8217; own sloshing modes begin to participate.</p>
+    <p class="source-note">The moment adds two static terms the redistribution estimate omits — the weight moment of the whole fluid mass about the roll axis, and the within-leg free surface. Below about 20&#8239;s the closed form degrades, and the cause is <strong>not established</strong>. An earlier note here attributed it to the legs&#8217; own sloshing modes; that is withdrawn. Roll tilts the surface across the leg width, so the roll-coupled mode is the 2.79&#8239;s transverse one, whose undamped magnification at 10&#8239;s forcing is 1.08 against the 1.72 the residual requires &#8212; far too remote. The 6.25&#8239;s longitudinal mode would give 1.64, close enough to have looked explanatory, but it is orthogonal to uniform roll forcing and is not excited. Deriving the properly coupled correction moves all-case rms 16.74&#8239;% &#8594; 16.68&#8239;%, i.e. not at all. The band is empirical.</p>
   </section>
 
   <section class="cap-section" id="sizing"><p class="section-label">05 · Conduit sizing</p>

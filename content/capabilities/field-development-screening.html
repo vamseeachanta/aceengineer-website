@@ -1,0 +1,133 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Deterministic field-development screening: layout over terrain and bathymetry, engineering screening behind the visuals, ranked historical analogs, and a small API that makes an iteration cheap.">
+    <meta name="keywords" content="field development screening, concept selection, subsea layout, bathymetry, flowline sizing, cable sizing, API RP 14E, floating wind, deterministic engineering">
+
+    <meta property="og:title" content="Field-Development Screening &amp; Layout | AceEngineer">
+    <meta property="og:description" content="Layout over terrain and bathymetry, deterministic engineering screening behind the visuals, and ranked historical analogs — with an API that makes iteration cheap.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aceengineer.com/capabilities/field-development-screening/">
+    <meta property="og:site_name" content="Analytical &amp; Computational Engineering">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Field-Development Screening &amp; Layout | AceEngineer">
+    <meta name="twitter:description" content="Deterministic screening for concept selection — the step before the high-end tools.">
+
+    <title>Field-Development Screening &amp; Layout | AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+</head>
+<body class="theme-page">
+
+    <include src="partials/nav.html"></include>
+
+    <main id="main">
+
+    <!-- Light hero, matching capabilities/index.html. Deliberately NOT .hero-section:
+         that class sets color:white on the container, but theme.css's
+         `.theme-page h1,h2,h3 { color: var(--navy) }` beats inheritance and renders
+         navy on near-black (#109). Same trap documented on the capabilities index. -->
+    <section style="padding:64px 0 28px;">
+        <div class="container" style="max-width:860px;">
+            <p class="kicker">Concept selection &amp; screening</p>
+            <h1 style="font-size:2.6rem;line-height:1.15;margin:0 0 14px;">Field-development screening and layout</h1>
+            <p style="font-size:1.15rem;color:var(--ink);max-width:760px;">
+                A client brings well locations and what they expect from the prospect. We return a laid-out
+                field over the real terrain or bathymetry, engineering-screened, rendered as visuals, with
+                the engineering exposed through a small API. Onshore first, then offshore.
+            </p>
+            <p style="font-size:1.05rem;color:var(--ink);max-width:760px;">
+                It is built to sit <em>before</em> the high-end tools, not instead of them &mdash; the
+                deterministic screening pass that tells you which concepts are worth the expensive analysis.
+            </p>
+        </div>
+    </section>
+
+    <section style="padding:8px 0 40px;">
+        <div class="container" style="max-width:860px;">
+            <h2 class="section-label">What it does</h2>
+
+            <h3 style="font-size:1.15rem;margin-top:26px;">Layout over real ground</h3>
+            <p style="color:#555;">
+                Assets are placed over terrain or bathymetry from verified public sources, with routing that
+                respects the surface. Wells, manifolds, trees, jumpers, flowlines, pipelines, umbilicals and
+                the host all live in one declarative model &mdash; so the picture and the engineering read
+                from the same file rather than drifting apart.
+            </p>
+
+            <h3 style="font-size:1.15rem;margin-top:26px;">Engineering behind the visuals</h3>
+            <p style="color:#555;">
+                The screening pass runs deterministic checks, not decoration: cable sizing to IEC, erosional
+                velocity limits per API RP 14E, and pipe-size sweeps, each emitting a one-page summary per
+                layout iteration. Every figure traces back to the same layout model the visuals are drawn from.
+            </p>
+
+            <h3 style="font-size:1.15rem;margin-top:26px;">Historical analogs, ranked</h3>
+            <p style="color:#555;">
+                Past field developments are queryable as a ranked analog set &mdash; by region, water depth
+                and asset type &mdash; so a concept can be positioned against what has actually been built
+                rather than against an assumption.
+            </p>
+
+            <h3 style="font-size:1.15rem;margin-top:26px;">Iteration that stays cheap</h3>
+            <p style="color:#555;">
+                Four entry points &mdash; <code>layout</code>, <code>screen</code>, <code>visualize</code>,
+                <code>analogs</code> &mdash; over a YAML model with overrides. Change the configuration,
+                re-screen, re-render. Concept selection typically runs five or six models per prospect with
+                ten to twenty iterations shown; the cost of one more iteration is what decides whether that
+                is comfortable or painful.
+            </p>
+
+            <h3 style="font-size:1.15rem;margin-top:26px;">Renewables in the same model</h3>
+            <p style="color:#555;">
+                Wind turbines, offshore substations, and array and export cables use the same schema as the
+                oil-and-gas assets, so a mixed or converted development is one model rather than two.
+            </p>
+        </div>
+    </section>
+
+    <section style="padding:36px 0;background:#f8f9fa;">
+        <div class="container" style="max-width:860px;">
+            <h2 style="font-size:1.3rem;">What has actually been built</h2>
+            <p style="color:#555;">
+                Onshore, deepwater-FPSO and floating-wind demonstration fields all run end to end &mdash;
+                layout, screening, scene export and animation &mdash; and are render-verified on a headless
+                pipeline, so they regenerate reproducibly rather than existing as saved pictures.
+            </p>
+            <p style="color:#555;">
+                The engine is open source and MIT licensed. The terrain, bathymetry and past-project sources
+                are public and catalogued with provenance, so the inputs can be checked as readily as the
+                outputs.
+            </p>
+        </div>
+    </section>
+
+    <section style="padding:36px 0 56px;">
+        <div class="container" style="max-width:860px;">
+            <h2 class="section-label">Honest limits</h2>
+            <p style="color:#555;">
+                This is a <strong>screening tier</strong>. It is designed to narrow a field of concepts
+                quickly and defensibly, and it is not a substitute for detailed flow assurance, dynamic
+                analysis or certified design. A screening estimate is not a certified deliverable, and
+                nothing here is presented as one.
+            </p>
+            <p style="color:#555;">
+                The historical analog set currently covers the Gulf of Mexico with provenance enforced on
+                every record; other regions are being added, and the coverage is stated rather than implied.
+                Where the public data cannot support a conclusion, the output says so &mdash; that admission
+                is the point, not a caveat bolted on afterwards.
+            </p>
+        </div>
+    </section>
+
+    </main>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

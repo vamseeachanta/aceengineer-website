@@ -21,8 +21,11 @@ const DIST_DEMOS = path.join(REPO_ROOT, 'dist', 'demos');
 // artifact that is actually served, not a hand-maintained source file.
 const SITEMAP = path.join(REPO_ROOT, 'dist', 'sitemap.xml');
 
-const DETAIL_SLUGS = ['freespan', 'wall-thickness', 'mudmat', 'pipelay', 'jumper-installation', 'mooring'];
+const DETAIL_SLUGS = ['freespan', 'wall-thickness', 'mudmat', 'pipelay', 'jumper-installation', 'mooring', 'dynacard'];
 const CHART_SLUGS = ['freespan', 'wall-thickness', 'mudmat', 'pipelay'];
+// dynacard draws its cards as inline SVG built by assets/js/dynacard-engine.js —
+// no Plotly, like jumper-installation.
+const PLOTLY_FREE_SLUGS = ['jumper-installation', 'dynacard'];
 
 function readSitemap() {
   return fs.readFileSync(SITEMAP, 'utf8');
@@ -73,13 +76,13 @@ beforeAll(() => {
 }, 120000);
 
 describe('demo gallery CTAs', () => {
-  test('gallery has exactly 6 "View detailed report" anchors linking to /demos/*.html', () => {
+  test('gallery has one "View detailed report" anchor per demo, linking to /demos/*.html', () => {
     const html = readDist('index.html');
     const anchors = collectAnchors(html);
     const reportAnchors = anchors.filter(
       (a) => /view detailed report/i.test(a.text) && /\/?demos\/[a-z-]+\.html$/i.test(a.href),
     );
-    expect(reportAnchors.length).toBe(6);
+    expect(reportAnchors.length).toBe(DETAIL_SLUGS.length);
 
     // Each slug appears at least once in a "View detailed report" anchor href
     for (const slug of DETAIL_SLUGS) {
@@ -156,8 +159,10 @@ describe('vendored Plotly reference', () => {
     });
   }
 
-  test('dist/demos/jumper-installation.html does NOT reference Plotly', () => {
-    const html = readDist('jumper-installation.html');
-    expect(html).not.toMatch(/plotly/i);
-  });
+  for (const slug of PLOTLY_FREE_SLUGS) {
+    test(`dist/demos/${slug}.html does NOT reference Plotly`, () => {
+      const html = readDist(`${slug}.html`);
+      expect(html).not.toMatch(/plotly/i);
+    });
+  }
 });

@@ -1,0 +1,612 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Free dynamometer card signature screen for sucker-rod pumps. Select a reference pump card or paste your own, and see pump fillage, corner clearances, branch slopes and a ranked shortlist of the twenty named failure-mode signatures with the measurements behind each match.">
+    <meta name="keywords" content="dynamometer card calculator, dynacard analysis, sucker-rod pump diagnostics, pump fillage calculator, fluid pound, gas interference, rod lift, beam pump, artificial lift tool">
+
+    <meta property="og:title" content="Dynamometer Card Signature Screen — Sucker-Rod Pump | AceEngineer">
+    <meta property="og:description" content="Select or paste a pump card and read fillage, corner clearances and a ranked shortlist of the twenty named failure-mode signatures — every measurement shown.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aceengineer.com/calculators/dynacard-diagnostics.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Dynamometer Card Signature Screen — Sucker-Rod Pump">
+    <meta name="twitter:description" content="Select or paste a pump card and read fillage, corner clearances and a ranked shortlist of the twenty named failure-mode signatures.">
+
+    <title>Dynamometer Card Signature Screen (Sucker-Rod Pump) - AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "@id": "https://www.aceengineer.com/calculators/dynacard-diagnostics.html#calculator",
+        "name": "Dynamometer Card Signature Screen (Sucker-Rod Pump)",
+        "description": "Reads a downhole (pump) dynamometer card: pump fillage on the plunger stroke, card fill ratio, corner clearances, branch slopes and trace texture, then ranks the card against twenty named failure-mode signatures and shows the measurements behind each match.",
+        "url": "https://www.aceengineer.com/calculators/dynacard-diagnostics.html",
+        "applicationCategory": "Engineering Calculator",
+        "applicationSubCategory": "Artificial Lift / Rod Pump Diagnostics",
+        "operatingSystem": "Any web browser",
+        "browserRequirements": "Requires JavaScript",
+        "softwareVersion": "1.0",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+        },
+        "featureList": [
+            "Twenty reference pump-card signatures",
+            "Pump fillage from net and gross plunger travel",
+            "Bounding-box corner clearances and branch slopes",
+            "Downstroke fluid-load transfer width",
+            "Trace roughness and periodicity",
+            "Ranked signature shortlist with per-measurement evidence",
+            "Paste your own position and load pairs"
+        ],
+        "provider": {
+            "@type": "Organization",
+            "@id": "https://www.aceengineer.com/#organization",
+            "name": "Analytical & Computational Engineering",
+            "url": "https://www.aceengineer.com"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "@id": "https://www.aceengineer.com/#organization"
+        },
+        "isPartOf": {
+            "@type": "CollectionPage",
+            "@id": "https://www.aceengineer.com/calculators/#collection",
+            "name": "AceEngineer Engineering Calculators",
+            "url": "https://www.aceengineer.com/calculators/"
+        }
+    }
+    </script>
+
+    <style>
+        .calculator-container {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .standard-tag {
+            display: inline-block;
+            background: #428bca;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .page-header {
+            margin-bottom: 24px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #428bca;
+        }
+        .info-section {
+            margin-top: 36px;
+            padding-top: 26px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .card-plot {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .match-row {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-left: 5px solid #d0d7de;
+            border-radius: 0 6px 6px 0;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+        }
+        .match-row.match-top { border-left-color: #428bca; }
+        .match-name {
+            font-weight: bold;
+            font-size: 1.05em;
+        }
+        .match-meta {
+            font-size: .88em;
+            color: #666;
+        }
+        .evidence {
+            font-size: .86em;
+            color: #52606d;
+            margin: 6px 0 0;
+        }
+        .feature-table td { font-size: .9em; }
+        .feature-table td.num {
+            text-align: right;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+        .limits-box {
+            background: #fdf6e3;
+            border: 1px solid #e8dcc0;
+            border-radius: 8px;
+            padding: 16px 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <main id="main">
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Dynamometer Card Signature Screen</h1>
+            <p class="lead">Read a sucker-rod pump card: fillage on the plunger stroke, card geometry, and a ranked shortlist of the twenty named failure-mode signatures</p>
+            <div>
+                <span class="standard-tag">Dynamometer Card</span>
+                <span class="standard-tag">Sucker-Rod Pump</span>
+                <span class="standard-tag">Pump Fillage</span>
+                <span class="standard-tag">Rod Lift</span>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>This screen reads a pump (downhole) card, not a surface card.</strong>
+            Every failure-mode name below describes a condition <em>at the pump</em>, and the shape it
+            names is the shape it makes on the pump card. A surface (polished-rod) card must first be
+            converted by solving the rod-string wave equation &mdash; see
+            <a href="../standards/dynacard-diagnostics.html">the method page</a>. Feeding a raw surface
+            card in here reads the rod string, not the pump.
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <div class="calculator-container">
+                    <h2 class="h-size-h3">Card Input</h2>
+
+                    <div class="form-group">
+                        <label for="cardSource">Card source</label>
+                        <select class="form-control" id="cardSource">
+                            <option value="reference" selected>Reference signature</option>
+                            <option value="paste">Paste my own card</option>
+                        </select>
+                        <p class="help-block">Reference signatures are synthetic cards drawn at the centre of each condition's parameter range.</p>
+                    </div>
+
+                    <div class="form-group" id="referenceGroup">
+                        <label for="modeSelect">Reference signature</label>
+                        <select class="form-control" id="modeSelect"></select>
+                        <p class="help-block">Twenty named pump conditions.</p>
+                    </div>
+
+                    <div class="form-group" id="seedGroup">
+                        <label for="seedInput">Draw</label>
+                        <input type="number" class="form-control" id="seedInput" value="0" step="1" min="0" max="9999">
+                        <p class="help-block">0 draws the canonical card for that condition. Any other whole number draws a different card from the same condition's parameter range &mdash; useful for seeing how much a signature moves.</p>
+                    </div>
+
+                    <div class="form-group" id="pasteGroup" style="display:none;">
+                        <label for="cardData">Pump card data</label>
+                        <textarea class="form-control" id="cardData" rows="8" placeholder="position, load&#10;0.0, 5120&#10;2.1, 5340&#10;..."></textarea>
+                        <p class="help-block">One <code>position, load</code> pair per line, in the card's own units (inches and pounds, or anything consistent). At least twelve points, traversing the complete loop once. Comma, tab or whitespace separated; a header line is ignored.</p>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-lg btn-block" id="screenBtn">Screen this card</button>
+                    <p class="help-block" id="inputError" style="color:#a94442;margin-top:10px;"></p>
+                </div>
+
+                <div class="calculator-container">
+                    <h2 class="h-size-h3">Card Measurements</h2>
+                    <table class="table table-condensed feature-table" id="featureTable">
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="card-plot">
+                    <svg id="cardSvg" viewBox="0 0 520 400" width="100%" height="400"
+                         role="img" aria-labelledby="cardSvgTitle cardSvgDesc">
+                        <title id="cardSvgTitle">Dynamometer card plot</title>
+                        <desc id="cardSvgDesc">Load on the vertical axis against plunger position on the horizontal axis, over one complete pump stroke.</desc>
+                    </svg>
+                </div>
+
+                <div style="margin-top:20px;">
+                    <h2 class="h-size-h3">Signature shortlist</h2>
+                    <p class="match-meta" id="shortlistNote">
+                        Ranked by distance to each reference signature over the published measurement set.
+                        Shorter distance means a closer geometric match &mdash; it is not a probability and
+                        it is not a diagnosis.
+                    </p>
+                    <div id="shortlist"></div>
+                    <p style="margin-top:10px;">
+                        <a href="#" id="toggleFull">Show all twenty signatures &rarr;</a>
+                    </p>
+                    <div id="fullRanking" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="limits-box" style="margin-top:10px;">
+            <h2 class="h-size-h4" style="margin-top:0;">What this screen does not do</h2>
+            <ul style="margin-bottom:0;">
+                <li><strong>It does not diagnose a pump.</strong> It ranks a card's geometry against reference signatures. A card can sit closest to a signature and the pump still be doing something else.</li>
+                <li><strong>It carries no accuracy figure, deliberately.</strong> The reference library is synthetic. Checking generated cards against their own generators measures self-consistency, not field performance, and there is no benchmark against labelled real cards behind this tool to quote.</li>
+                <li><strong>It assumes one fault at a time.</strong> A gassy well that is also pounding does not match any single reference signature.</li>
+                <li><strong>It cannot separate every mode.</strong> A paraffin restriction with shallow dents, and a travelling-valve closure delayed over only the very bottom of the upstroke, both sit on an otherwise normal card body and can read as normal. Absence of a signature is not evidence of a healthy pump.</li>
+                <li><strong>Stroke-length conditions need real units.</strong> Normal, tubing movement and plunger undertravel differ only in absolute plunger travel. A card pasted in normalised (0&ndash;1) units cannot be screened for them.</li>
+                <li><strong>Confirmation is field work.</strong> A fluid shot, an intake-pressure reading, the runtime recorded with the card and a valve check are what turn a shortlist into a diagnosis.</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h2>About This Screen</h2>
+            <p>
+                A dynamometer card is a closed loop of load against position over one pump stroke. On the
+                <strong>pump card</strong> its four corners correspond to the four events of the pump cycle:
+                the standing valve closing and the fluid load transferring onto the travelling valve at the
+                bottom of the stroke, the plunger lifting the column, the travelling valve opening and the
+                load transferring back at the top, and the plunger falling through the fluid to the bottom
+                again. Pump conditions distort that loop in characteristic ways, and this screen measures
+                the distortion.
+            </p>
+
+            <h3>Pump fillage &mdash; on the plunger stroke</h3>
+            <p>
+                Fillage is <strong>net plunger travel divided by gross plunger travel</strong>, both taken
+                from the pump card. Net travel is the position of the bottom-right corner above the bottom
+                of the stroke; that corner marks where the travelling valve finishes opening, and on a
+                poorly filled pump it sits well below maximum position. It is located as the point on the
+                downstroke branch that maximises (retained stroke &minus; remaining load) in normalised
+                coordinates.
+            </p>
+            <p>
+                Fillage is <strong>never</strong> computed on the surface stroke. Rod stretch under the
+                fluid load and rod-string overtravel put the polished rod and the plunger feet apart on a
+                deep well, so a surface-stroke fillage is wrong by the rod-string deflection &mdash; and it
+                is wrong in the unhelpful direction, flattering a starved pump.
+            </p>
+
+            <h3>The measurements the ranking uses</h3>
+            <ul>
+                <li><strong>Corner clearances</strong> &mdash; distance from each bounding-box corner to the nearest point on the card, as a fraction of the normalised diagonal. A healthy card clears its corners slightly because fluid-load transfer is not instantaneous; a corner that is <em>gone</em> or one the card actually <em>reaches</em> is the signal.</li>
+                <li><strong>Fill ratio</strong> &mdash; enclosed card area over its bounding box. A collapsed or gutted card does not fill its box.</li>
+                <li><strong>Branch slopes</strong> &mdash; least-squares slope of normalised load against normalised position over the middle of the upstroke and the downstroke, with the turnarounds excluded so the slope measures the branch rather than the corner rounding.</li>
+                <li><strong>Downstroke transfer width</strong> &mdash; the fraction of stroke over which the downstroke sheds its fluid load. This is the one measurement that separates fluid pound (abrupt) from gas interference (gradual).</li>
+                <li><strong>Load range against mean load</strong> &mdash; absolute scale. A parted rod string draws an ordinary-looking loop at a small fraction of working load.</li>
+                <li><strong>Plunger stroke length</strong> &mdash; in the card's own units, because tubing movement and plunger undertravel are otherwise identical to a normal card.</li>
+                <li><strong>Peak and minimum load prominence, and where on the stroke they fall</strong> &mdash; an impact spike is a distinct peak at one end of the stroke, not a raised plateau.</li>
+                <li><strong>Trace roughness and periodicity</strong> &mdash; roughness alone cannot separate sand abrasion from unit vibration. Vibration is a wave and autocorrelates; sand is grain-by-grain scatter and does not.</li>
+            </ul>
+            <p>
+                Each measurement is standardised across the reference set, weighted, and the card is ranked
+                by weighted Euclidean distance to each signature. A mode carrying more than one reference
+                variant &mdash; a bent barrel binds at either end of the stroke and so draws two mirror-image
+                cards &mdash; is ranked by its closest variant. The shortlist names, for every signature, the
+                three measurements that pulled the card towards it and the three that pushed it away, so the
+                match can be checked by eye rather than taken on faith.
+            </p>
+
+            <h3>Reference signatures</h3>
+            <p>
+                The reference cards are synthetic and drawn from published signature descriptions, not from
+                any client's wells. They exist so the geometry a screen looks for is written down and
+                inspectable. See the <a href="../demos/dynacard.html">worked examples</a> for all twenty
+                drawn side by side with the measurements that identify each one, and
+                <a href="../standards/dynacard-diagnostics.html">the method page</a> for the wave equation,
+                the fillage and pressure relationships, and the full limits.
+            </p>
+        </div>
+
+        <div class="info-section">
+            <h2>Need Rod-Lift Optimisation Support?</h2>
+            <p>
+                For fleet-scale card screening, surface-to-pump conversion against your own rod-string data,
+                and pump-off controller review, we work from your recorded cards and hand back the pipeline.
+            </p>
+            <p>
+                <a href="../contact.html?vertical=energy" class="btn btn-success btn-lg" onclick="if(typeof gtag!=='undefined'){gtag('event','cta_click',{'event_category':'conversion','cta_text':'Discuss Your Project','cta_location':'calculator_bottom','page_type':'calculator','calculator_name':'dynacard_diagnostics'})}">Discuss Your Project</a>
+                <a href="decline-curve.html" class="btn btn-default btn-lg">Decline Curve &amp; EUR Calculator</a>
+            </p>
+        </div>
+    </div>
+
+    </main>
+
+    <include src="partials/footer.html"></include>
+
+    <script src="{{ rootPath }}assets/js/dynacard-engine.js"></script>
+    <script>
+    (function () {
+        var LABELS = {
+            NORMAL: 'Normal',
+            GAS_INTERFERENCE: 'Gas interference',
+            FLUID_POUND: 'Fluid pound',
+            PUMP_TAGGING_UP: 'Pump tagging up',
+            PUMP_TAGGING_DOWN: 'Pump tagging down',
+            PLUNGER_OUT_OF_BARREL: 'Plunger out of barrel',
+            TUBING_MOVEMENT: 'Tubing movement',
+            VALVE_LEAK_TV: 'Travelling-valve leak',
+            VALVE_LEAK_SV: 'Standing-valve leak',
+            ROD_PARTING: 'Rod parting',
+            STUCK_PUMP: 'Stuck pump',
+            WORN_BARREL: 'Worn barrel',
+            GAS_LOCK: 'Gas lock',
+            DELAYED_TV_CLOSURE: 'Delayed travelling-valve closure',
+            EXCESSIVE_FRICTION: 'Excessive friction',
+            PLUNGER_UNDERTRAVEL: 'Plunger undertravel',
+            PARAFFIN_RESTRICTION: 'Paraffin restriction',
+            BENT_BARREL: 'Bent barrel',
+            SAND_ABRASION: 'Sand abrasion',
+            EXCESSIVE_VIBRATION: 'Excessive vibration'
+        };
+
+        var SVG_NS = 'http://www.w3.org/2000/svg';
+        var sourceEl = document.getElementById('cardSource');
+        var modeEl = document.getElementById('modeSelect');
+        var seedEl = document.getElementById('seedInput');
+        var pasteEl = document.getElementById('cardData');
+        var errEl = document.getElementById('inputError');
+        var screened = 0;
+
+        Dynacard.MODES.forEach(function (mode) {
+            var opt = document.createElement('option');
+            opt.value = mode;
+            opt.textContent = LABELS[mode] || mode;
+            modeEl.appendChild(opt);
+        });
+
+        function toggleSource() {
+            var paste = sourceEl.value === 'paste';
+            document.getElementById('referenceGroup').style.display = paste ? 'none' : 'block';
+            document.getElementById('seedGroup').style.display = paste ? 'none' : 'block';
+            document.getElementById('pasteGroup').style.display = paste ? 'block' : 'none';
+        }
+        sourceEl.addEventListener('change', toggleSource);
+
+        function parseCard(text) {
+            var position = [];
+            var load = [];
+            var lines = String(text).split(/\r?\n/);
+            for (var i = 0; i < lines.length; i += 1) {
+                var line = lines[i].trim();
+                if (!line) continue;
+                var parts = line.split(/[,\t;\s]+/);
+                if (parts.length < 2) continue;
+                var p = parseFloat(parts[0]);
+                var l = parseFloat(parts[1]);
+                if (!isFinite(p) || !isFinite(l)) continue;   // header lines land here
+                position.push(p);
+                load.push(l);
+            }
+            if (position.length < 12) {
+                throw new Error('Need at least twelve position, load pairs — found ' + position.length + '.');
+            }
+            var spanP = Math.max.apply(null, position) - Math.min.apply(null, position);
+            var spanL = Math.max.apply(null, load) - Math.min.apply(null, load);
+            if (spanP <= 0 || spanL <= 0) {
+                throw new Error('The card has no extent: position and load must both vary over the stroke.');
+            }
+            return { position: position, load: load };
+        }
+
+        function fmt(v, dp) {
+            if (!isFinite(v)) return '--';
+            return v.toFixed(dp === undefined ? 3 : dp);
+        }
+
+        function drawCard(card) {
+            var svg = document.getElementById('cardSvg');
+            // Clear the previous plot but keep <title>/<desc> — they are the
+            // accessible name of the figure, not part of the drawing.
+            Array.prototype.slice.call(svg.childNodes).forEach(function (node) {
+                var name = (node.nodeName || '').toLowerCase();
+                if (name !== 'title' && name !== 'desc') svg.removeChild(node);
+            });
+
+            var W = 520, H = 400, m = { l: 62, r: 18, t: 18, b: 48 };
+            var pMin = Math.min.apply(null, card.position);
+            var pMax = Math.max.apply(null, card.position);
+            var lMin = Math.min.apply(null, card.load);
+            var lMax = Math.max.apply(null, card.load);
+            var px = function (p) { return m.l + ((p - pMin) / (pMax - pMin || 1)) * (W - m.l - m.r); };
+            var py = function (l) { return H - m.b - ((l - lMin) / (lMax - lMin || 1)) * (H - m.t - m.b); };
+
+            function add(tag, attrs, text) {
+                var el = document.createElementNS(SVG_NS, tag);
+                Object.keys(attrs).forEach(function (k) { el.setAttribute(k, attrs[k]); });
+                if (text !== undefined) el.textContent = text;
+                svg.appendChild(el);
+                return el;
+            }
+
+            // Bounding box — the reference the corner clearances are measured against.
+            add('rect', {
+                x: px(pMin), y: py(lMax), width: px(pMax) - px(pMin), height: py(lMin) - py(lMax),
+                fill: 'none', stroke: '#d0d7de', 'stroke-dasharray': '4 4'
+            });
+            add('line', { x1: m.l, y1: H - m.b, x2: W - m.r, y2: H - m.b, stroke: '#8a949e' });
+            add('line', { x1: m.l, y1: m.t, x2: m.l, y2: H - m.b, stroke: '#8a949e' });
+            add('text', { x: (m.l + W - m.r) / 2, y: H - 12, 'text-anchor': 'middle', 'font-size': '12', fill: '#52606d' },
+                'Plunger position (units of the card)');
+            add('text', {
+                x: 16, y: (m.t + H - m.b) / 2, 'text-anchor': 'middle', 'font-size': '12', fill: '#52606d',
+                transform: 'rotate(-90 16 ' + ((m.t + H - m.b) / 2) + ')'
+            }, 'Load (units of the card)');
+            add('text', { x: m.l, y: H - m.b + 16, 'font-size': '11', fill: '#6b7785' }, fmt(pMin, 1));
+            add('text', { x: W - m.r, y: H - m.b + 16, 'text-anchor': 'end', 'font-size': '11', fill: '#6b7785' }, fmt(pMax, 1));
+            add('text', { x: m.l - 6, y: H - m.b, 'text-anchor': 'end', 'font-size': '11', fill: '#6b7785' }, fmt(lMin, 0));
+            add('text', { x: m.l - 6, y: m.t + 10, 'text-anchor': 'end', 'font-size': '11', fill: '#6b7785' }, fmt(lMax, 0));
+
+            var d = '';
+            for (var i = 0; i < card.position.length; i += 1) {
+                d += (i === 0 ? 'M' : 'L') + px(card.position[i]).toFixed(2) + ' ' + py(card.load[i]).toFixed(2) + ' ';
+            }
+            d += 'Z';
+            add('path', { d: d, fill: 'rgba(66,139,202,0.10)', stroke: '#0b3d5c', 'stroke-width': '2' });
+
+            // The bottom-right corner is the fillage corner: net plunger travel is
+            // measured to it, not to maximum position.
+            var fill = Dynacard.pumpFillage(card.position, card.load);
+            var bi = fill.brIndex;
+            add('circle', { cx: px(card.position[bi]), cy: py(card.load[bi]), r: '5', fill: '#c94a1b' });
+            add('line', {
+                x1: px(pMin), y1: py(lMin) + 8, x2: px(card.position[bi]), y2: py(lMin) + 8,
+                stroke: '#c94a1b', 'stroke-width': '2'
+            });
+            add('text', {
+                x: (px(pMin) + px(card.position[bi])) / 2, y: py(lMin) + 24,
+                'text-anchor': 'middle', 'font-size': '11', fill: '#c94a1b'
+            }, 'net plunger travel — fillage ' + fmt(fill.fillage, 1) + '%');
+        }
+
+        var FEATURE_ROWS = [
+            ['fillage', 'Pump fillage (plunger stroke)', 1, '%'],
+            ['grossStroke', 'Gross plunger travel', 2, ''],
+            ['netStroke', 'Net plunger travel', 2, ''],
+            ['loadRange', 'Load range', 0, ''],
+            ['meanLoad', 'Mean load', 0, ''],
+            ['loadRangeRatio', 'Load range / mean load', 3, ''],
+            ['fillRatio', 'Card fill ratio', 3, ''],
+            ['clearTL', 'Top-left corner clearance', 3, ''],
+            ['clearTR', 'Top-right corner clearance', 3, ''],
+            ['clearBL', 'Bottom-left corner clearance', 3, ''],
+            ['clearBR', 'Bottom-right corner clearance', 3, ''],
+            ['upperSlope', 'Upstroke branch slope', 3, ''],
+            ['lowerSlope', 'Downstroke branch slope', 3, ''],
+            ['transferWidth', 'Downstroke transfer width', 3, ''],
+            ['posAtMaxLoad', 'Stroke position of peak load', 3, ''],
+            ['posAtMinLoad', 'Stroke position of minimum load', 3, ''],
+            ['peakiness', 'Peak load prominence', 3, ''],
+            ['dipness', 'Minimum load prominence', 3, ''],
+            ['roughness', 'Trace roughness', 4, ''],
+            ['periodicity', 'Trace periodicity', 3, '']
+        ];
+
+        function renderFeatures(features) {
+            var body = document.querySelector('#featureTable tbody');
+            body.innerHTML = '';
+            FEATURE_ROWS.forEach(function (row) {
+                var tr = document.createElement('tr');
+                var td1 = document.createElement('td');
+                td1.textContent = row[1];
+                var td2 = document.createElement('td');
+                td2.className = 'num';
+                td2.textContent = fmt(features[row[0]], row[2]) + row[3];
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                body.appendChild(tr);
+            });
+        }
+
+        function evidenceLine(prefix, items) {
+            return prefix + ': ' + items.map(function (d) {
+                return d.label.toLowerCase() + ' (' + fmt(d.value, 3) + ' vs ' + fmt(d.reference, 3) + ')';
+            }).join('; ') + '.';
+        }
+
+        function matchNode(row, isTop) {
+            var div = document.createElement('div');
+            div.className = 'match-row' + (isTop ? ' match-top' : '');
+            var name = document.createElement('div');
+            name.className = 'match-name';
+            name.textContent = (LABELS[row.mode] || row.mode);
+            var meta = document.createElement('div');
+            meta.className = 'match-meta';
+            meta.textContent = 'distance ' + fmt(row.distance, 2);
+            div.appendChild(name);
+            div.appendChild(meta);
+            var agrees = document.createElement('p');
+            agrees.className = 'evidence';
+            agrees.textContent = evidenceLine('Closest measurements', row.agrees);
+            var disagrees = document.createElement('p');
+            disagrees.className = 'evidence';
+            disagrees.textContent = evidenceLine('Furthest measurements', row.disagrees);
+            div.appendChild(agrees);
+            div.appendChild(disagrees);
+            return div;
+        }
+
+        function renderRanking(ranking) {
+            var shortEl = document.getElementById('shortlist');
+            var fullEl = document.getElementById('fullRanking');
+            shortEl.innerHTML = '';
+            fullEl.innerHTML = '';
+            ranking.slice(0, 3).forEach(function (row, i) {
+                shortEl.appendChild(matchNode(row, i === 0));
+            });
+            var table = document.createElement('table');
+            table.className = 'table table-condensed feature-table';
+            var head = document.createElement('thead');
+            head.innerHTML = '<tr><th>Rank</th><th>Signature</th><th class="num">Distance</th></tr>';
+            table.appendChild(head);
+            var body = document.createElement('tbody');
+            ranking.forEach(function (row, i) {
+                var tr = document.createElement('tr');
+                var a = document.createElement('td');
+                a.textContent = String(i + 1);
+                var b = document.createElement('td');
+                b.textContent = LABELS[row.mode] || row.mode;
+                var c = document.createElement('td');
+                c.className = 'num';
+                c.textContent = fmt(row.distance, 2);
+                tr.appendChild(a); tr.appendChild(b); tr.appendChild(c);
+                body.appendChild(tr);
+            });
+            table.appendChild(body);
+            fullEl.appendChild(table);
+        }
+
+        document.getElementById('toggleFull').addEventListener('click', function (ev) {
+            ev.preventDefault();
+            var el = document.getElementById('fullRanking');
+            var open = el.style.display !== 'none';
+            el.style.display = open ? 'none' : 'block';
+            this.textContent = open ? 'Show all twenty signatures →' : 'Hide the full ranking';
+        });
+
+        function run() {
+            errEl.textContent = '';
+            var card;
+            try {
+                if (sourceEl.value === 'paste') {
+                    card = parseCard(pasteEl.value);
+                } else {
+                    var seed = parseInt(seedEl.value, 10);
+                    card = Dynacard.generateCard(modeEl.value, (!seed || seed <= 0) ? null : seed);
+                }
+            } catch (e) {
+                errEl.textContent = e.message;
+                return;
+            }
+            var result = Dynacard.screenCard(card.position, card.load);
+            drawCard(card);
+            renderFeatures(result.features);
+            renderRanking(result.ranking);
+
+            screened += 1;
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'calculator_use', {
+                    event_category: 'engagement',
+                    event_label: 'dynacard_diagnostics',
+                    card_source: sourceEl.value,
+                    top_signature: result.ranking[0].mode,
+                    input_count: screened
+                });
+            }
+        }
+
+        document.getElementById('screenBtn').addEventListener('click', run);
+        toggleSource();
+        run();
+    }());
+    </script>
+
+</body>
+</html>

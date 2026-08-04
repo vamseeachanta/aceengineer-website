@@ -2,6 +2,8 @@
 (function() {
     'use strict';
 
+    var COLLAPSE_TRANSITION_MS = 350; // matches .collapsing transition-duration: 0.35s
+
     document.addEventListener('DOMContentLoaded', function() {
         var toggleBtn = document.querySelector('[data-toggle="collapse"]');
         if (!toggleBtn) return;
@@ -26,7 +28,7 @@
                     target.classList.add('collapse');
                     target.style.height = '';
                     toggleBtn.setAttribute('aria-expanded', 'false');
-                }, 350);
+                }, COLLAPSE_TRANSITION_MS);
             } else {
                 // Expand: animate height from 0 to scrollHeight
                 target.classList.remove('collapse');
@@ -40,7 +42,7 @@
                     target.classList.add('collapse', 'in');
                     target.style.height = '';
                     toggleBtn.setAttribute('aria-expanded', 'true');
-                }, 350);
+                }, COLLAPSE_TRANSITION_MS);
             }
         });
     });

@@ -434,6 +434,20 @@ rootPath: "../"
             const taxRate = parseFloat(document.getElementById('tax_rate').value) / 100;
             const royaltyRate = parseFloat(document.getElementById('royalty_rate').value) / 100;
 
+            const inputs = [
+                initialRate, declineRate, projectYears, oilPrice, priceEscalation,
+                capex, opex, opexEscalation, discountRate, taxRate, royaltyRate
+            ];
+            if (!inputs.every(Number.isFinite) || projectYears < 1) {
+                const resultContent = document.getElementById('result-content');
+                const errorMessage = document.createElement('p');
+                errorMessage.className = 'danger-text';
+                errorMessage.textContent = 'Please enter a valid number in every field.';
+                resultContent.replaceChildren(errorMessage);
+                document.getElementById('results-card').style.display = 'block';
+                return;
+            }
+
             // Calculate year-by-year cashflows
             const years = [];
             const production = [];
@@ -556,36 +570,63 @@ rootPath: "../"
             const npvStatus = npv >= 0 ? 'VIABLE' : 'NOT VIABLE';
             const npvStatusClass = npv >= 0 ? 'success-text' : 'danger-text';
 
-            let resultHTML = `
-                <div class="result-value ${npvClass}">$${formatMoney(npv)} M</div>
-                <div class="result-label">Net Present Value (NPV)</div>
-                <div class="result-detail">
-                    <p><strong>Project Status:</strong> <span class="${npvStatusClass}">${npvStatus}</span></p>
-            `;
+            const resultContent = document.getElementById('result-content');
+            const resultValue = document.createElement('div');
+            resultValue.className = 'result-value ' + npvClass;
+            resultValue.textContent = '$' + formatMoney(npv) + ' M';
+
+            const resultLabel = document.createElement('div');
+            resultLabel.className = 'result-label';
+            resultLabel.textContent = 'Net Present Value (NPV)';
+
+            const resultDetail = document.createElement('div');
+            resultDetail.className = 'result-detail';
+
+            function addResultLine(label, value, valueClass) {
+                const paragraph = document.createElement('p');
+                const strong = document.createElement('strong');
+                strong.textContent = label;
+                paragraph.appendChild(strong);
+                paragraph.appendChild(document.createTextNode(' '));
+
+                if (valueClass) {
+                    const span = document.createElement('span');
+                    span.className = valueClass;
+                    span.textContent = value;
+                    paragraph.appendChild(span);
+                } else {
+                    paragraph.appendChild(document.createTextNode(value));
+                }
+
+                resultDetail.appendChild(paragraph);
+            }
+
+            addResultLine('Project Status:', npvStatus, npvStatusClass);
 
             if (irr !== null) {
                 const irrClass = irr > discountRate * 100 ? 'success-text' : 'danger-text';
-                resultHTML += `
-                    <p><strong>Internal Rate of Return:</strong> <span class="${irrClass}">${irr.toFixed(2)}%</span></p>
-                    <p><small>Discount rate: ${(discountRate * 100).toFixed(1)}% | IRR ${irr > discountRate * 100 ? '>' : '<'} discount rate</small></p>
-                `;
+                addResultLine('Internal Rate of Return:', irr.toFixed(2) + '%', irrClass);
+
+                const discountParagraph = document.createElement('p');
+                const discountDetail = document.createElement('small');
+                discountDetail.textContent = 'Discount rate: ' + (discountRate * 100).toFixed(1) +
+                    '% | IRR ' + (irr > discountRate * 100 ? '>' : '<') + ' discount rate';
+                discountParagraph.appendChild(discountDetail);
+                resultDetail.appendChild(discountParagraph);
             } else {
-                resultHTML += `<p><strong>Internal Rate of Return:</strong> <span class="danger-text">Not calculable</span></p>`;
+                addResultLine('Internal Rate of Return:', 'Not calculable', 'danger-text');
             }
 
             if (payback !== null) {
                 const paybackClass = payback < 10 ? 'success-text' : (payback < 15 ? 'warning-text' : 'danger-text');
-                resultHTML += `<p><strong>Payback Period:</strong> <span class="${paybackClass}">${payback.toFixed(1)} years</span></p>`;
+                addResultLine('Payback Period:', payback.toFixed(1) + ' years', paybackClass);
             } else {
-                resultHTML += `<p><strong>Payback Period:</strong> <span class="danger-text">No payback within project life</span></p>`;
+                addResultLine('Payback Period:', 'No payback within project life', 'danger-text');
             }
 
-            resultHTML += `
-                    <p><strong>Profit-to-Investment Ratio:</strong> ${profitRatio.toFixed(2)}x</p>
-                </div>
-            `;
+            addResultLine('Profit-to-Investment Ratio:', profitRatio.toFixed(2) + 'x');
 
-            document.getElementById('result-content').innerHTML = resultHTML;
+            resultContent.replaceChildren(resultValue, resultLabel, resultDetail);
             document.getElementById('results-card').style.display = 'block';
         }
 

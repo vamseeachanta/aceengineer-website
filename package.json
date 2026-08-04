@@ -120,6 +120,11 @@
         "testMatch": ["<rootDir>/tests/js/decline-curve.test.js"]
       },
       {
+        "displayName": "dynacard",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/dynacard.test.js"]
+      },
+      {
         "displayName": "demo-links",
         "testEnvironment": "jsdom",
         "testMatch": ["<rootDir>/tests/js/demo-links.test.js"]
@@ -143,6 +148,7 @@
       "assets/js/npv-calculator-engine.js",
       "assets/js/mooring-fatigue-engine.js",
       "assets/js/decline-curve-engine.js",
+      "assets/js/dynacard-engine.js",
       "demos/hse-risk-dashboard-data.js"
     ]
   },

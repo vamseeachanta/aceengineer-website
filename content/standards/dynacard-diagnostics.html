@@ -6,19 +6,19 @@ rootPath: "../"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Dynamometer card: Sucker-rod pump diagnostics from the dynamometer card. Run it from chat with Deckhand — standards-traceable, deterministic, with every assumption shown.">
-    <meta name="keywords" content="Dynamometer card, Sucker-rod pump, Fluid pound, Gas interference, Artificial lift, Dynamometer card calculator, offshore engineering AI">
+    <meta name="description" content="Dynamometer card diagnostics for sucker-rod (beam) pumped wells: what a dynacard is, how the surface card becomes a pump card, how card signatures map to twenty named failure modes, and where the method stops being valid.">
+    <meta name="keywords" content="dynamometer card, dynacard, sucker-rod pump, beam pump, rod lift, fluid pound, gas interference, gas lock, pump tagging, valve leak, pump fillage, artificial lift, Gibbs wave equation, API RP 11L">
 
-    <meta property="og:title" content="Dynamometer card — Sucker-rod pump diagnostics from the dynamometer card | AceEngineer">
-    <meta property="og:description" content="Dynamometer card: Sucker-rod pump diagnostics from the dynamometer card. Run it from chat with Deckhand — standards-traceable, deterministic, with every assumption shown.">
+    <meta property="og:title" content="Dynamometer card — sucker-rod pump diagnostics | AceEngineer">
+    <meta property="og:description" content="What a dynamometer card is, how the surface card becomes a pump card, how card signatures map to twenty named failure modes, and where the method stops being valid.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.aceengineer.com/standards/dynacard-diagnostics.html">
     <meta property="og:site_name" content="Analytical & Computational Engineering">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Dynamometer card — Sucker-rod pump diagnostics from the dynamometer card">
-    <meta name="twitter:description" content="Dynamometer card: Sucker-rod pump diagnostics from the dynamometer card. Run it from chat with Deckhand — standards-traceable, deterministic, with every assumption shown.">
+    <meta name="twitter:title" content="Dynamometer card — sucker-rod pump diagnostics">
+    <meta name="twitter:description" content="What a dynamometer card is, how the surface card becomes a pump card, how card signatures map to twenty named failure modes, and where the method stops being valid.">
 
-    <title>Dynamometer card — Sucker-rod pump diagnostics from the dynamometer card | AceEngineer</title>
+    <title>Dynamometer card — sucker-rod pump diagnostics | AceEngineer</title>
 
     <include src="partials/head-common.html"></include>
 
@@ -49,18 +49,34 @@ rootPath: "../"
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What does a dynacard show?",
+      "name": "What does a dynamometer card show?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The load on the rod string through a pump stroke; its shape reveals pump conditions \u2014 gas interference, fluid pound, a worn or stuck pump \u2014 for a sucker-rod (beam) pumped well."
+        "text": "Load against position over one complete pump stroke. A surface card is measured at the polished rod and is dominated by the rod string. A pump (downhole) card is what the plunger sees, and it is the card pump conditions actually draw shapes on."
       }
     },
     {
       "@type": "Question",
-      "name": "What does Deckhand return?",
+      "name": "Why does the surface card have to be converted before it is read?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A reading of the card with the likely pump condition flagged and a short diagnosis report."
+        "text": "The rod string is an elastic member thousands of feet long. Its stretch, inertia and damping are superimposed on whatever the pump is doing. Converting the surface card to a pump card by solving the rod-string wave equation removes the rod string so the remaining shape is the pump's."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is pump fillage calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Fillage is net plunger travel divided by gross plunger travel, both taken from the pump card. It is never computed on the surface stroke: rod stretch and overtravel make the polished-rod stroke a different length from the plunger stroke, and using it flatters a starved pump."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can a card signature identify a fault on its own?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. A signature narrows the candidates; it does not confirm a fault. Different faults leave the same mark — a gutted lower-right corner is drawn by gas interference, fluid pound and a standing-valve leak alike — and confirmation needs pump context such as fluid level, intake pressure, runtime and a valve check."
       }
     }
   ]
@@ -82,10 +98,10 @@ rootPath: "../"
                     <p style="text-transform:uppercase;letter-spacing:.08em;color:#6b7785;font-size:.85em;"><a href="index.html" style="color:#6b7785;">Standards</a> &rsaquo; Production</p>
                     <h1 class="hero-title" style="text-align:left;">Dynamometer card</h1>
                     <p style="font-size:1.05em;color:#52606d;margin:-6px 0 14px;">Sucker-rod pump diagnostics from the dynamometer card</p>
-                    <p class="hero-subtitle" style="text-align:left;margin-left:0;">Ask Deckhand to diagnose a sucker-rod pump from its dynamometer card and get a report.</p>
+                    <p class="hero-subtitle" style="text-align:left;margin-left:0;">Load against plunger position over one stroke &mdash; and the twenty pump conditions that draw distinguishable shapes on it.</p>
                     <div class="hero-cta" style="text-align:left;">
-                        <a href="/capabilities/" class="btn btn-primary btn-lg" data-cta="capabilities" data-src="src_web_std_dynacard-diagnostics">Explore capabilities &rarr;</a>
-                        
+                        <a href="../calculators/dynacard-diagnostics.html" class="btn btn-primary btn-lg">Open the signature screen</a>
+                        <a href="../demos/dynacard.html" class="btn btn-info btn-lg">See the twenty signatures</a>
                     </div>
                 </div>
             </div>
@@ -98,12 +114,239 @@ rootPath: "../"
                 <div class="col-md-10 col-md-offset-1">
                     <h2 class="section-title text-center">What you can ask it to do</h2>
                     <ul class="ask-list">
-                        <li>Interpret a surface or downhole dynamometer card for a sucker-rod pump.</li>
-                        <li>Flag conditions such as gas interference, fluid pound or worn pump.</li>
-                        <li>Return a diagnosis report for the well.</li>
+                        <li>Convert a measured surface (polished-rod) card to a pump card by solving the rod-string wave equation.</li>
+                        <li>Read pump fillage, fluid load, net and gross plunger travel off the pump card.</li>
+                        <li>Rank the pump card against the twenty named failure-mode signatures and show which measurements drove the match.</li>
+                        <li>Compute pump intake and discharge pressure, and inferred production from displacement, fillage and the runtime recorded with the card.</li>
+                        <li>Flag rod compression, which is where a buckling check belongs rather than a card reading.</li>
                     </ul>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">Why it matters</h2>
+                <p>Rod lift runs the long tail of onshore production &mdash; the stripper and mature wells that individually make little and collectively make a great deal. Each one carries a pumping unit whose card is recorded routinely and read rarely, because reading it well is a specialist skill and there are thousands of wells per specialist. The cost of not reading it is not subtle: a pump that has been tagging for a month is wearing a barrel out, a rod string that parted last week is producing nothing while the motor keeps turning, and a well pumped off against a starved inflow is pounding fluid into its own rods.</p>
+                <p>What makes the card worth automating is that the physics is well posed. The rod string is a known elastic member with known geometry; the wave equation that governs it has been the standard treatment since Gibbs published it in 1963. Given the surface card, the rod string and the stroke rate, the pump card is computable rather than a matter of opinion &mdash; and the pump card is where the shapes live.</p>
+                <p style="background:#fff8e6;border-left:3px solid #d9820a;padding:12px 16px;margin:18px 0;"><strong>Method, not this page's tool.</strong> The wave-equation treatment above is how a surface card is converted to a pump card. The <a href="../calculators/dynacard-diagnostics/">signature screen</a> on this site does <em>not</em> run it: it works on a pump card you supply or select, and compares its geometry against reference signatures. Where this page describes the method and where it describes the browser tool are different things, and the tool is the narrower of the two.</p>
+            </div></div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;background:#f8f9fa;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">What a dynamometer card is</h2>
+                <p>A dynamometer card is a closed loop of <strong>load against position</strong> over one complete pump stroke. Position runs from the bottom of the stroke to the top and back; load is the tension carried at the point of measurement. One stroke, one loop, and the loop's enclosed area is the work done on that stroke.</p>
+                <p>There are two of them, and conflating them is the most common way to read a card wrong:</p>
+                <ul class="ask-list">
+                    <li><strong>The surface card</strong> is measured at the polished rod, between the carrier bar and the stuffing box. It is what a field dynamometer records. Its shape is dominated by the rod string &mdash; several thousand feet of steel that stretches under the fluid load, carries its own weight, has inertia, and rubs on the tubing all the way down. The pump's own behaviour is in there, superimposed on all of that.</li>
+                    <li><strong>The pump card</strong>, or downhole card, is load against plunger position at the pump itself. It is not measured; it is computed. Its four corners correspond to the four events of a pump cycle: the standing valve closing and the fluid load transferring onto the travelling valve at the bottom, the plunger lifting the column to the top, the travelling valve opening and the load transferring back at the top, and the plunger falling through the fluid to the bottom again.</li>
+                </ul>
+                <p>Every failure-mode name in this method &mdash; fluid pound, gas lock, a parted rod string &mdash; describes a condition <strong>at the pump</strong>, and the shape it names is the shape it makes on the <strong>pump card</strong>. Handing a pump card to a surface-to-downhole solver is a category error: the rod string has already been taken out of it.</p>
+                <div class="callout" style="margin-top:18px;">
+                    <p style="margin:0;"><strong>An ideal pump card is a rectangle, and no real one is.</strong> Fluid-load transfer is not instantaneous, and it straddles the stroke turnaround &mdash; rod stretch has to be taken up while the polished rod is still decelerating. That is why a healthy card's corners are visibly cut away rather than square. A card with genuinely square corners is a modelling artefact, not a well.</p>
+                </div>
+            </div></div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">The method &mdash; governing equations</h2>
+
+                <h3 style="font-size:1.05em;">1. Surface card to pump card</h3>
+                <p>The rod string is treated as a damped elastic bar. The one-dimensional wave equation with viscous damping governs axial displacement <em>u</em>(<em>x</em>,&nbsp;<em>t</em>) along the string:</p>
+                <div style="background:#fff;border:1px solid #e3e8ee;border-radius:8px;padding:18px 22px;margin:18px 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:.95em;line-height:2;color:#1f2933;overflow-x:auto;">
+                    <div>&rho;A &middot; &part;&sup2;u/&part;t&sup2; = EA &middot; &part;&sup2;u/&part;x&sup2; &minus; c &middot; &part;u/&part;t + F<sub>gravity</sub> + F<sub>friction</sub></div>
+                    <div style="margin-top:10px;">Wave speed:&nbsp; a = &radic;(E/&rho;) &asymp; 16,300 ft/s for steel rods</div>
+                    <div style="margin-top:10px;">Gibbs frequency-domain solution, surface (x&nbsp;=&nbsp;0) to pump (x&nbsp;=&nbsp;L):</div>
+                    <div>&nbsp;&nbsp;&gamma;(&omega;) = &radic;(&minus;&omega;&sup2; + i&omega;c) / a</div>
+                    <div>&nbsp;&nbsp;U<sub>pump</sub>(&omega;) = U<sub>surf</sub>(&omega;) &middot; cosh(&gamma;L) &minus; F<sub>surf</sub>(&omega;) / (EA&gamma;) &middot; sinh(&gamma;L)</div>
+                </div>
+                <p style="font-size:.92em;color:#52606d;">The surface position and load traces are decomposed by FFT, each frequency component is propagated down the string by the expression above, and the result is transformed back to the time domain. The alternative treatment solves the same PDE directly on a spatial grid by explicit finite difference, marching from the surface to the pump at each time step; it costs more and handles tapered strings and transients better. Both are implementations of the same physics and should be run against each other on any card whose reading matters.</p>
+
+                <h3 style="font-size:1.05em;margin-top:26px;">2. Fluid load and pump fillage</h3>
+                <div style="background:#fff;border:1px solid #e3e8ee;border-radius:8px;padding:18px 22px;margin:18px 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:.95em;line-height:2;color:#1f2933;overflow-x:auto;">
+                    <div>Fluid load:&nbsp; F<sub>0</sub> = (mean load, upstroke branch) &minus; (mean load, downstroke branch)</div>
+                    <div style="margin-top:10px;">Gross plunger travel:&nbsp; S<sub>gross</sub> = max(position) &minus; min(position)&nbsp;&nbsp;<em>&mdash; on the pump card</em></div>
+                    <div>Net plunger travel:&nbsp; S<sub>net</sub> = position at the bottom-right corner &minus; min(position)</div>
+                    <div>Pump fillage:&nbsp; &Phi; = 100 &middot; S<sub>net</sub> / S<sub>gross</sub></div>
+                </div>
+                <div class="callout" style="margin:18px 0;">
+                    <p style="margin:0;"><strong>Fillage is computed on the plunger stroke, never on the surface stroke.</strong> The polished rod and the plunger do not travel the same distance: rod stretch under the fluid load and rod-string overtravel put them apart by feet, not inches, on a deep well. A fillage taken against the surface stroke is wrong by the rod-string deflection, and it is wrong in the unhelpful direction &mdash; it makes a starved pump look better filled than it is, which is exactly the well you did not want to miss.</p>
+                </div>
+                <p style="font-size:.92em;color:#52606d;">The bottom-right corner is the one that matters and the one that moves. It marks where the travelling valve finishes opening on the downstroke, and on a poorly filled pump it sits well below maximum position. It is located as the point on the downstroke branch that maximises (retained stroke &minus; remaining load) in normalised coordinates &mdash; the knee where the plunger has covered ground but the load has already gone.</p>
+
+                <p style="background:#fff8e6;border-left:3px solid #d9820a;padding:12px 16px;margin:18px 0;"><strong>Read this before the next two formula blocks.</strong> Everything below depends on F<sub>0</sub>, the fluid load, which is an <em>absolute downhole load</em>. In a typical implementation &mdash; including the one behind this method &mdash; downhole load is scaled from surface load by a calibration factor rather than propagated through the wave equation the way position is. So pressures and inferred production inherit that calibration: on a well far from the calibration set, treat them as indicative and trust the card&rsquo;s <em>shape</em> before its absolute load. This is restated under Named limits; it is repeated here because it qualifies the equations that follow.</p>
+                <h3 style="font-size:1.05em;margin-top:26px;">3. Pump pressures</h3>
+                <div style="background:#fff;border:1px solid #e3e8ee;border-radius:8px;padding:18px 22px;margin:18px 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:.95em;line-height:2;color:#1f2933;overflow-x:auto;">
+                    <div>Oil specific gravity:&nbsp; SG<sub>o</sub> = 141.5 / (&deg;API + 131.5)</div>
+                    <div>Tubing gradient:&nbsp; TG = 0.433 &middot; [SG<sub>w</sub> &middot; WC + SG<sub>o</sub> &middot; (1 &minus; WC)]&nbsp;&nbsp;psi/ft</div>
+                    <div style="margin-top:10px;">Pump discharge pressure:&nbsp; PDP = THP + TG &middot; h<sub>pump</sub></div>
+                    <div>Pump intake pressure:&nbsp; PIP = PDP &minus; F<sub>0</sub> / A<sub>plunger</sub></div>
+                </div>
+
+                <h3 style="font-size:1.05em;margin-top:26px;">4. Inferred production</h3>
+                <div style="background:#fff;border:1px solid #e3e8ee;border-radius:8px;padding:18px 22px;margin:18px 0;font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:.95em;line-height:2;color:#1f2933;overflow-x:auto;">
+                    <div>Gross displacement:&nbsp; q<sub>gross</sub> = (&pi;/4) &middot; D&sup2; &middot; S<sub>gross</sub> &middot; N &middot; 1440 / 9702&nbsp;&nbsp;bbl/d</div>
+                    <div>Net displacement:&nbsp; q<sub>net</sub> = q<sub>gross</sub> &middot; &Phi;/100</div>
+                    <div>Inferred production:&nbsp; q = q<sub>net</sub> &middot; (runtime hours / 24)</div>
+                </div>
+                <p style="font-size:.92em;color:#52606d;">D is the plunger diameter in inches, S<sub>gross</sub> the gross plunger travel in inches, N the stroke rate in strokes per minute; 9,702 cubic inches make a barrel. The runtime term is not a detail: <strong>a well that cycles but is assumed to run twenty-four hours is overstated by exactly its duty factor</strong>. Runtime must come from the record taken <em>with the card</em>, not from a well test that may predate it by months, and where it has been assumed rather than measured that assumption belongs on the result.</p>
+                <p style="font-size:.9em;color:#6b7785;"><em>No worked numeric example is shown here on purpose. The <a href="../calculators/dynacard-diagnostics.html">signature screen</a> computes the card measurements from a card you choose or paste, and the <a href="../demos/dynacard.html">worked examples</a> draw each signature with the measurements that identify it, so every figure on this site is reproducible rather than asserted.</em></p>
+            </div></div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;background:#f8f9fa;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">How signatures map to failure modes</h2>
+                <p>Twenty pump conditions are named in this method. They are grouped below by <em>which measurement on the card separates them</em>, because that grouping is the honest one: modes inside a family look alike and are told apart by one number, while modes in different families are rarely confused.</p>
+
+                <h3 style="font-size:1.05em;margin-top:24px;">Family 1 &mdash; fluid load shed late on the downstroke</h3>
+                <p style="font-size:.94em;color:#52606d;">All four gouge the card's lower-right corner: the rods keep carrying fluid load past the top of the stroke and only shed it lower down. <strong>The width of that transfer window is what separates them.</strong></p>
+                <div style="overflow-x:auto;"><table class="table table-bordered" style="background:#fff;">
+                    <thead><tr><th style="width:22%;">Mode</th><th style="width:39%;">What the card does</th><th>Mechanism, and what separates it</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>Fluid pound</strong></td><td>Full fluid load held into the downstroke, then collapsing almost vertically. The upstroke also droops slightly as the stroke proceeds.</td><td>The barrel is only part filled, so the plunger falls through empty space carrying the full load until it slaps the fluid surface. The collapse is <em>abrupt</em> &mdash; under about a fifth of the stroke.</td></tr>
+                    <tr><td><strong>Gas interference</strong></td><td>Load bleeds off over a long slanted lower branch; the lower-right corner is rounded away and the lower branch slopes upward with position.</td><td>Free gas in the barrel must be compressed back to discharge pressure before the travelling valve can open, and compression is <em>gradual</em> &mdash; better than 0.4 of the stroke.</td></tr>
+                    <tr><td><strong>Standing-valve leak</strong></td><td>Load sheds slowly down the downstroke while the top of the card stays square.</td><td>Fluid bypasses the standing valve, so it cannot take the column back off the rods at the top; the rods carry part of it until the plunger out-runs the leak.</td></tr>
+                    <tr><td><strong>Pump tagging up</strong></td><td>Same late transfer, plus a distinct impact spike at maximum position standing clear of the upstroke plateau.</td><td>While the plunger is jammed against the barrel top the load cannot transfer at all; it comes off as the plunger backs away.</td></tr>
+                    </tbody>
+                </table></div>
+
+                <h3 style="font-size:1.05em;margin-top:24px;">Family 2 &mdash; load picked up late on the upstroke</h3>
+                <p style="font-size:.94em;color:#52606d;">Both round away the card's <em>top-left</em> corner while the lower-right stays square &mdash; the mirror image of family 1.</p>
+                <div style="overflow-x:auto;"><table class="table table-bordered" style="background:#fff;">
+                    <thead><tr><th style="width:22%;">Mode</th><th style="width:39%;">What the card does</th><th>Mechanism, and what separates it</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>Travelling-valve leak</strong></td><td>Load builds slowly up the first third of the upstroke instead of arriving at the turnaround.</td><td>Fluid bypasses the travelling valve at a rate set by the pressure across it, while the plunger displaces fluid at a rate set by its velocity &mdash; which is zero at the turnaround, so the leak wins outright there.</td></tr>
+                    <tr><td><strong>Delayed travelling-valve closure</strong></td><td>An exponential pickup confined to the very start of the upstroke, then a normal card.</td><td>A weak or fouled valve spring closes late. The affected window can be short enough that the card is otherwise indistinguishable from a healthy one &mdash; see the limits below.</td></tr>
+                    </tbody>
+                </table></div>
+
+                <h3 style="font-size:1.05em;margin-top:24px;">Family 3 &mdash; fluid load lost part-way up the upstroke</h3>
+                <div style="overflow-x:auto;"><table class="table table-bordered" style="background:#fff;">
+                    <thead><tr><th style="width:22%;">Mode</th><th style="width:39%;">What the card does</th><th>Mechanism, and what separates it</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>Plunger out of barrel</strong></td><td>The upstroke falls off a cliff mid-stroke and runs flat and low to the top. The top-right corner is missing entirely.</td><td>The pump is spaced so long that the plunger leaves the top of the barrel before the upstroke ends, dumping the fluid load the moment it clears.</td></tr>
+                    <tr><td><strong>Worn barrel</strong></td><td>Upstroke load decays progressively away from the plateau; card area is lost gradually rather than at a step.</td><td>A worn plunger-to-barrel fit slips more as the fluid column builds. Gradual decay, not a cliff, is what separates it from the mode above.</td></tr>
+                    </tbody>
+                </table></div>
+
+                <h3 style="font-size:1.05em;margin-top:24px;">Family 4 &mdash; mechanical contact at one end of the stroke</h3>
+                <p style="font-size:.94em;color:#52606d;">These two were one label until it was noticed that they are opposite mechanisms with <strong>opposite repairs</strong>. Collapsing them loses the only thing the diagnosis is for.</p>
+                <div style="overflow-x:auto;"><table class="table table-bordered" style="background:#fff;">
+                    <thead><tr><th style="width:22%;">Mode</th><th style="width:39%;">What the card does</th><th>Mechanism, and the repair</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>Pump tagging up</strong></td><td>Load spike at <em>maximum</em> position, standing clear of the upstroke plateau.</td><td>The plunger strikes the top of the barrel or the pull tube. Space the pump <em>down</em>.</td></tr>
+                    <tr><td><strong>Pump tagging down</strong></td><td>Load dips sharply <em>below</em> the downstroke line at <em>minimum</em> position &mdash; the card reaches its own bottom-left corner, which a healthy card never does.</td><td>The plunger strikes the standing valve or the bottom of the barrel and the rods go into compression. Space the pump <em>up</em>.</td></tr>
+                    </tbody>
+                </table></div>
+
+                <h3 style="font-size:1.05em;margin-top:24px;">Family 5 &mdash; the card's scale, not its shape</h3>
+                <p style="font-size:.94em;color:#52606d;">A normalised card shape cannot see these at all. They are read off absolute load and absolute travel, which is why a card must arrive in real units to be screened for them.</p>
+                <div style="overflow-x:auto;"><table class="table table-bordered" style="background:#fff;">
+                    <thead><tr><th style="width:22%;">Mode</th><th style="width:39%;">What the card does</th><th>Mechanism, and what separates it</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>Rod parting</strong></td><td>A perfectly ordinary-looking loop &mdash; at a small fraction of the load a working string carries. Load range collapses against mean load.</td><td>Below the break nothing is lifted, so the surviving string carries only its own buoyant weight plus friction and inertia. Absolute load, not shape, is the tell.</td></tr>
+                    <tr><td><strong>Gas lock</strong></td><td>A low-load loop with almost no enclosed area: the valves never open.</td><td>Gas trapped in the barrel is compressed and expanded without ever reaching discharge pressure. Extreme gas interference, past the point where the card has corners to gouge.</td></tr>
+                    <tr><td><strong>Stuck pump</strong></td><td>Near-zero position range; a tiny collapsed card at working load.</td><td>Debris, scale or mechanical obstruction stops the plunger while the unit keeps stroking.</td></tr>
+                    </tbody>
+                </table></div>
+
+                <h3 style="font-size:1.05em;margin-top:24px;">Family 6 &mdash; stroke length against the expected stroke</h3>
+                <p style="font-size:.94em;color:#52606d;">These three <strong>differ only in absolute plunger travel</strong>. Under a normalised card shape they are literally the same measurement, which is why a screen that works on shape alone cannot separate them and a screen that works on real units can.</p>
+                <div style="overflow-x:auto;"><table class="table table-bordered" style="background:#fff;">
+                    <thead><tr><th style="width:22%;">Mode</th><th style="width:39%;">What the card does</th><th>Mechanism, and what separates it</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>Normal</strong></td><td>Full expected plunger travel, tight corners, flat branches.</td><td>The reference case.</td></tr>
+                    <tr><td><strong>Tubing movement</strong></td><td>An elongated card &mdash; plunger travel longer than the pump geometry accounts for, with a load slope across the loop.</td><td>Unanchored tubing stretches and contracts with the fluid load. Consider a tubing anchor.</td></tr>
+                    <tr><td><strong>Plunger undertravel</strong></td><td>A correctly-shaped card over a badly truncated position range.</td><td>The plunger never travels the stroke the surface unit is making.</td></tr>
+                    </tbody>
+                </table></div>
+
+                <h3 style="font-size:1.05em;margin-top:24px;">Family 7 &mdash; loop thickness and load bias</h3>
+                <div style="overflow-x:auto;"><table class="table table-bordered" style="background:#fff;">
+                    <thead><tr><th style="width:22%;">Mode</th><th style="width:39%;">What the card does</th><th>Mechanism, and what separates it</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>Excessive friction</strong></td><td>A thick loop: the upstroke carries extra load and the downstroke carries less, opening the card and squaring its corners.</td><td>Rod-on-tubing drag, a tight stuffing box, or a deviated hole.</td></tr>
+                    <tr><td><strong>Bent barrel</strong></td><td>Load biased with position, shifting the card's centroid off centre. The bias runs in <em>either</em> direction.</td><td>A bent barrel binds at one end of the stroke &mdash; which end depends on the bend, so this one fault draws two mirror-image cards.</td></tr>
+                    </tbody>
+                </table></div>
+
+                <h3 style="font-size:1.05em;margin-top:24px;">Family 8 &mdash; the texture of the trace</h3>
+                <p style="font-size:.94em;color:#52606d;">Roughness alone cannot separate these: sand and vibration both spoil a clean trace. <strong>Periodicity</strong> does &mdash; vibration is a wave, sand is scatter.</p>
+                <div style="overflow-x:auto;"><table class="table table-bordered" style="background:#fff;">
+                    <thead><tr><th style="width:22%;">Mode</th><th style="width:39%;">What the card does</th><th>Mechanism, and what separates it</th></tr></thead>
+                    <tbody>
+                    <tr><td><strong>Sand abrasion</strong></td><td>A jagged, aperiodic load trace over a slightly slanted card.</td><td>Grains passing through the plunger-barrel fit; the fit itself wears open, which adds the slant. The jaggedness is grain-by-grain and therefore <em>not</em> periodic.</td></tr>
+                    <tr><td><strong>Excessive vibration</strong></td><td>A regular high-frequency oscillation riding on an otherwise normal card.</td><td>Mechanical resonance or imbalance in the surface unit &mdash; not a pump condition at all, which is worth knowing before anyone pulls a pump.</td></tr>
+                    <tr><td><strong>Paraffin restriction</strong></td><td>Concave dents in the trace plus a raised friction signature on an otherwise normal card.</td><td>Paraffin narrows the tubing and grabs the rods intermittently. The dents can be shallow enough to be lost &mdash; see the limits below.</td></tr>
+                    </tbody>
+                </table></div>
+            </div></div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">Where the method stops being valid</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 style="font-size:1.05em;color:#1f7a3d;">Covers</h3>
+                        <ul class="ask-list">
+                            <li>Vertical or near-vertical sucker-rod (beam) pumped wells with a steel rod string.</li>
+                            <li>Surface-to-pump card conversion by the damped wave equation, in the frequency domain or by finite difference.</li>
+                            <li>Fillage, fluid load, net and gross plunger travel, pump intake and discharge pressure from the pump card.</li>
+                            <li>A ranked shortlist of the twenty named signatures, with the measurements that drove the ranking shown.</li>
+                            <li>Inferred production from displacement, fillage and runtime, with the runtime source reported.</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 style="font-size:1.05em;color:#9a3b2e;">Does not cover</h3>
+                        <ul class="ask-list">
+                            <li>Any lift method that is not rod lift &mdash; ESP, gas lift, PCP and plunger lift are different instruments and different diagnostics.</li>
+                            <li>Fibreglass or composite rod strings, and highly deviated or horizontal wellbores, where the rod-string model above no longer describes the string.</li>
+                            <li>Confirming a fault. A signature narrows candidates; a valve check, a fluid shot and a runtime record confirm one.</li>
+                            <li>Predicting what production would be after an intervention.</li>
+                            <li>Rod, tubing or pumping-unit design, and gearbox or structural rating checks, which are separate calculations against API 11E and API RP 11L.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="font-size:1.05em;margin-top:26px;">Named limits, stated plainly</h3>
+                <ul class="ask-list">
+                    <li><strong>The conversion carries empirical calibration.</strong> The damping coefficient in the frequency-domain solution is a fixed calibrated constant rather than a per-well measurement, and the downhole load is scaled by a calibration factor rather than propagated through the wave equation the way position is. On a well far from the calibration set, the pump card's <em>shape</em> is more trustworthy than its absolute load.</li>
+                    <li><strong>Different faults draw the same card.</strong> Gas interference, fluid pound and a standing-valve leak all gut the lower-right corner. Two of them are told apart by the width of one transition, which measurement noise can move. A screen should return a shortlist; a single confident answer from a single card is a claim the card cannot support.</li>
+                    <li><strong>Small, local signatures are the ones that get lost.</strong> A paraffin restriction whose dents are shallow, and a valve closure delayed over only the very bottom of the upstroke, both sit on an otherwise normal card body and can read as normal. Absence of a signature is not evidence of a healthy pump.</li>
+                    <li><strong>Faults co-occur; the method assumes one at a time.</strong> A gassy well that is also pounding, or a worn barrel on a string with excessive friction, produces a card that is not any single reference signature.</li>
+                    <li><strong>Stroke-length modes need the card in real units.</strong> Normal, tubing movement and plunger undertravel are indistinguishable on a normalised card shape. A card that arrives without units, or normalised for plotting, cannot be screened for them.</li>
+                    <li><strong>Inferred production is only as good as the runtime.</strong> The runtime recorded with the card, not a runtime carried over from an older well test, and never a silent assumption of twenty-four hours.</li>
+                    <li><strong>No accuracy figure is published for this method, deliberately.</strong> The signature library it is checked against is synthetic. Checking generated exemplars against their own generators measures self-consistency, not field performance, and quoting it as an accuracy would be a claim the evidence does not support. A number will appear here when there is a benchmark against labelled real cards to put behind it, and not before.</li>
+                </ul>
+            </div></div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;background:#f8f9fa;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">References</h2>
+                <ul class="ask-list">
+                    <li><strong>Gibbs, S. G.</strong> &mdash; &ldquo;Predicting the Behavior of Sucker-Rod Pumping Systems&rdquo;, <em>Journal of Petroleum Technology</em>, 1963. The wave-equation treatment the surface-to-pump conversion rests on.</li>
+                    <li><strong>API RP 11L</strong> &mdash; Recommended Practice for Design Calculations for Sucker Rod Pumping Systems.</li>
+                    <li><strong>API 11E</strong> &mdash; Specification for Pumping Units.</li>
+                    <li><strong>API 11B</strong> &mdash; Sucker rods: material properties for the rod-string model.</li>
+                </ul>
+            </div></div>
         </div>
     </section>
 
@@ -115,9 +358,10 @@ rootPath: "../"
                 <span class="domain-chip">Sucker-rod pump</span>
                 <span class="domain-chip">Fluid pound</span>
                 <span class="domain-chip">Gas interference</span>
+                <span class="domain-chip">Pump fillage</span>
                 <span class="domain-chip">Artificial lift</span>
             </div>
-            <p>Part of <a href="../solutions/wells-subsurface.html">Wells &amp; Subsurface</a> &middot; <a href="../platform.html">see the platform engine</a></p>
+            <p>Part of <a href="../solutions/wells-subsurface.html">Wells &amp; Subsurface</a> &middot; <a href="arps-decline-curve.html">Arps decline</a> &middot; <a href="well-nodal-analysis.html">Well nodal analysis</a> &middot; <a href="../platform.html">see the platform engine</a></p>
         </div>
     </section>
 
@@ -125,17 +369,20 @@ rootPath: "../"
         <div class="container">
             <div class="row"><div class="col-md-10 col-md-offset-1">
                 <h2 class="section-title text-center">Questions</h2>
-                    <details class="faq"><summary>What does a dynacard show?</summary><p>The load on the rod string through a pump stroke; its shape reveals pump conditions — gas interference, fluid pound, a worn or stuck pump — for a sucker-rod (beam) pumped well.</p></details>
-                    <details class="faq"><summary>What does Deckhand return?</summary><p>A reading of the card with the likely pump condition flagged and a short diagnosis report.</p></details>
+                    <details class="faq"><summary>What does a dynamometer card show?</summary><p>Load against position over one complete pump stroke. A surface card is measured at the polished rod and is dominated by the rod string. A pump (downhole) card is what the plunger sees, and it is the card pump conditions actually draw shapes on.</p></details>
+                    <details class="faq"><summary>Why does the surface card have to be converted before it is read?</summary><p>The rod string is an elastic member thousands of feet long. Its stretch, inertia and damping are superimposed on whatever the pump is doing. Converting the surface card to a pump card by solving the rod-string wave equation removes the rod string so the remaining shape is the pump's.</p></details>
+                    <details class="faq"><summary>How is pump fillage calculated?</summary><p>Fillage is net plunger travel divided by gross plunger travel, both taken from the pump card. It is never computed on the surface stroke: rod stretch and overtravel make the polished-rod stroke a different length from the plunger stroke, and using it flatters a starved pump.</p></details>
+                    <details class="faq"><summary>Can a card signature identify a fault on its own?</summary><p>No. A signature narrows the candidates; it does not confirm a fault. Different faults leave the same mark &mdash; a gutted lower-right corner is drawn by gas interference, fluid pound and a standing-valve leak alike &mdash; and confirmation needs pump context such as fluid level, intake pressure, runtime and a valve check.</p></details>
+                    <details class="faq"><summary>Is there a published accuracy figure for the diagnosis?</summary><p>No, and that is deliberate. The signature library is synthetic, so checking it against itself measures self-consistency rather than field performance. Publishing that as an accuracy would overstate what the evidence supports.</p></details>
             </div></div>
         </div>
     </section>
 
     <section class="cta-section">
         <div class="container"><div class="row"><div class="col-md-8 col-md-offset-2 text-center">
-            <h2>Run Dynamometer card on your own inputs</h2>
-            <p>Every capability is free to explore &mdash; open the published dataset behind the check and read the numbers yourself.</p>
-            <a href="/capabilities/" class="btn btn-primary btn-lg" data-cta="capabilities" data-src="src_web_std_dynacard-diagnostics_footer">Explore capabilities &rarr;</a>
+            <h2>Read a card yourself</h2>
+            <p>The signature screen runs entirely in your browser on a card you select or paste, and shows every measurement it used to reach its ranking.</p>
+            <a href="../calculators/dynacard-diagnostics.html" class="btn btn-primary btn-lg" data-cta="calculator" data-src="src_web_std_dynacard-diagnostics_footer">Open the signature screen &rarr;</a>
         </div></div></div>
     </section>
 

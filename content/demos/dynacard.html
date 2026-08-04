@@ -1,0 +1,535 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The twenty characteristic sucker-rod pump card signatures drawn side by side — fluid pound, gas interference, gas lock, worn barrel, parted rod, pump tagging up and down and the rest — each with the measurement that separates it from its neighbours.">
+    <meta name="keywords" content="dynamometer card signatures, dynacard examples, fluid pound card, gas interference card, gas lock, pump tagging, valve leak card, rod parting, worn barrel, sucker-rod pump diagnostics, rod lift">
+
+    <meta property="og:title" content="Twenty Pump Card Signatures, Drawn and Measured | AceEngineer">
+    <meta property="og:description" content="Every characteristic sucker-rod pump card signature drawn side by side, with the measurement that separates it from the ones it resembles.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aceengineer.com/demos/dynacard.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Twenty Pump Card Signatures, Drawn and Measured">
+    <meta name="twitter:description" content="Every characteristic sucker-rod pump card signature drawn side by side, with the measurement that separates it from the ones it resembles.">
+
+    <title>Twenty Pump Card Signatures, Drawn and Measured - AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <style>
+        .page-header { margin-bottom: 24px; padding-bottom: 15px; border-bottom: 2px solid #428bca; }
+        .family { margin-top: 40px; }
+        .family-lede { color: #52606d; font-size: .96em; }
+        .sig {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 18px;
+        }
+        .sig h3 { margin-top: 0; }
+        .sig-plot { background: #fff; width: 100%; height: auto; }
+        .sig p { margin-bottom: 8px; font-size: .94em; }
+        .sig-measures td { font-size: .86em; }
+        .sig-measures td.num {
+            text-align: right;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+        .limits-box {
+            background: #fdf6e3;
+            border: 1px solid #e8dcc0;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-top: 30px;
+        }
+        .info-section { margin-top: 36px; padding-top: 26px; border-top: 1px solid #e0e0e0; }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <main id="main">
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Twenty Pump Card Signatures, Drawn and Measured</h1>
+            <p class="lead">What each sucker-rod pump condition does to the pump card &mdash; and the one measurement that separates it from the conditions it resembles</p>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>These are pump (downhole) cards, and they are synthetic.</strong>
+            Each is drawn at the centre of its condition's parameter range from published signature
+            descriptions, so the geometry a screen looks for is written down and inspectable. They are
+            not measurements from anyone's wells, and they are not a substitute for a labelled field
+            card library. A real card is messier than every one of these.
+        </div>
+
+        <h2>How to read these</h2>
+        <p>
+            A pump card is a closed loop of load against plunger position over one stroke. Its four corners
+            are the four events of the pump cycle: the standing valve closing and the fluid load
+            transferring onto the travelling valve at the bottom, the plunger lifting the column, the
+            travelling valve opening and the load transferring back at the top, and the plunger falling
+            through the fluid to the bottom again. On every plot below, the dashed rectangle is the card's
+            bounding box &mdash; the reference the corner clearances are measured against &mdash; and the
+            orange marker is the <strong>bottom-right corner</strong>, where the travelling valve finishes
+            opening. Net plunger travel is measured to that corner, and
+            <strong>pump fillage is net plunger travel over gross plunger travel, on the plunger stroke,
+            never on the surface stroke</strong>.
+        </p>
+        <p>
+            An ideal card is a rectangle and no real one is: fluid-load transfer is not instantaneous and it
+            straddles the stroke turnaround, so a healthy card's corners are visibly cut away. Watch what
+            happens to those corners. Nearly every signature below is a corner that has been gouged out,
+            a corner the card now reaches that it should not, or &mdash; for a few of them &mdash; nothing
+            to do with shape at all.
+        </p>
+        <p>
+            The signatures are grouped by <em>which measurement separates them</em>, because that is the
+            honest grouping: modes inside a family look alike, and modes in different families are rarely
+            confused. Full method, equations and limits are on
+            <a href="../standards/dynacard-diagnostics.html">the dynamometer card method page</a>; to run
+            these against a card of your own, use the
+            <a href="../calculators/dynacard-diagnostics.html">signature screen</a>.
+        </p>
+
+        <div class="family">
+            <h2>Family 1 &mdash; fluid load shed late on the downstroke</h2>
+            <p class="family-lede">All four gouge the card's lower-right corner: the rods keep carrying fluid load past the top of the stroke and shed it lower down. The <strong>width</strong> of that transfer window is what separates them.</p>
+
+            <div class="sig" data-mode="FLUID_POUND">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-FLUID_POUND d-FLUID_POUND"><title id="t-FLUID_POUND">Fluid pound pump card</title><desc id="d-FLUID_POUND">Load against plunger position: full fluid load carried into the downstroke, then collapsing almost vertically part-way down.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Fluid pound</h3>
+                        <p><strong>What the card does.</strong> Full fluid load is held into the downstroke and then collapses almost vertically. The upstroke also droops slightly as the stroke proceeds.</p>
+                        <p><strong>Mechanism.</strong> The barrel is only part filled, so the plunger falls through empty space carrying the whole fluid column until it slaps the fluid surface. A starved barrel also lets fluid slip past the plunger for the whole upstroke, which is the droop.</p>
+                        <p><strong>What separates it.</strong> The collapse is <em>abrupt</em> &mdash; under about a fifth of the stroke, against better than 0.4 of it for gas interference. That width is the whole difference between the two.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sig" data-mode="GAS_INTERFERENCE">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-GAS_INTERFERENCE d-GAS_INTERFERENCE"><title id="t-GAS_INTERFERENCE">Gas interference pump card</title><desc id="d-GAS_INTERFERENCE">Load against plunger position: fluid load bleeding off gradually down a long slanted lower branch.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Gas interference</h3>
+                        <p><strong>What the card does.</strong> Load bleeds off over a long slanted lower branch instead of dropping at the top of the stroke. The lower-right corner is rounded away and the lower branch slopes upward with position.</p>
+                        <p><strong>Mechanism.</strong> Free gas in the barrel has to be compressed back up to discharge pressure before the travelling valve can open, and compression is gradual.</p>
+                        <p><strong>What separates it.</strong> Transfer width, and the upward slope of the lower branch. A fluid pound collapses; gas interference bleeds.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sig" data-mode="VALVE_LEAK_SV">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-VALVE_LEAK_SV d-VALVE_LEAK_SV"><title id="t-VALVE_LEAK_SV">Standing-valve leak pump card</title><desc id="d-VALVE_LEAK_SV">Load against plunger position: load shed slowly down the downstroke while the top of the card stays square.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Standing-valve leak</h3>
+                        <p><strong>What the card does.</strong> Load sheds slowly down the downstroke while the top of the card stays square.</p>
+                        <p><strong>Mechanism.</strong> Fluid bypasses the standing valve, so it cannot take the fluid column back off the rods at the top of the stroke; the rods keep carrying part of it until the plunger is moving down fast enough to out-run the leak.</p>
+                        <p><strong>What separates it.</strong> The shelf carries much less load than a fluid pound's, and it is held nearly to the bottom of the stroke rather than released part-way down.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sig" data-mode="PUMP_TAGGING_UP">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-PUMP_TAGGING_UP d-PUMP_TAGGING_UP"><title id="t-PUMP_TAGGING_UP">Pump tagging up card</title><desc id="d-PUMP_TAGGING_UP">Load against plunger position: an impact spike at maximum position standing clear of the upstroke plateau.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Pump tagging up</h3>
+                        <p><strong>What the card does.</strong> A distinct impact spike at <em>maximum</em> position, standing clear of the upstroke plateau, on a card body that is otherwise recognisable.</p>
+                        <p><strong>Mechanism.</strong> The plunger strikes the top of the barrel or the pull tube. While it is jammed there the fluid load has nowhere to go, so it does not transfer at the turnaround at all &mdash; it comes off as the plunger backs away, which also opens the lower-right corner.</p>
+                        <p><strong>What separates it, and the repair.</strong> Peak-load prominence at the top of the stroke. Space the pump <em>down</em>.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="family">
+            <h2>Family 2 &mdash; load picked up late on the upstroke</h2>
+            <p class="family-lede">Both round away the card's <em>top-left</em> corner while the lower-right stays square &mdash; the mirror image of family 1.</p>
+
+            <div class="sig" data-mode="VALVE_LEAK_TV">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-VALVE_LEAK_TV d-VALVE_LEAK_TV"><title id="t-VALVE_LEAK_TV">Travelling-valve leak pump card</title><desc id="d-VALVE_LEAK_TV">Load against plunger position: load building slowly up the first third of the upstroke.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Travelling-valve leak</h3>
+                        <p><strong>What the card does.</strong> Load builds slowly up the first third of the upstroke instead of arriving at the turnaround. The top-left corner is rounded away; the lower-right stays square.</p>
+                        <p><strong>Mechanism.</strong> Fluid bypasses the travelling valve at a rate set by the pressure across it, while the rate the plunger <em>displaces</em> fluid is set by its velocity &mdash; which is zero at the turnaround. Near the bottom of the upstroke the leak wins outright and no load develops.</p>
+                        <p><strong>What separates it.</strong> Which corner is missing. This one loses the top-left; family 1 loses the bottom-right.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sig" data-mode="DELAYED_TV_CLOSURE">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-DELAYED_TV_CLOSURE d-DELAYED_TV_CLOSURE"><title id="t-DELAYED_TV_CLOSURE">Delayed travelling-valve closure card</title><desc id="d-DELAYED_TV_CLOSURE">Load against plunger position: an exponential load pickup confined to the very start of the upstroke.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Delayed travelling-valve closure</h3>
+                        <p><strong>What the card does.</strong> An exponential load pickup confined to the very start of the upstroke, and then a normal card.</p>
+                        <p><strong>Mechanism.</strong> A weak or fouled valve spring closes the travelling valve late.</p>
+                        <p><strong>What separates it &mdash; and where it fails.</strong> The curvature of the pickup, over a short window. When the delay is short the affected window is a tenth of the stroke and the card is otherwise healthy, at which point <strong>this signature is genuinely lost</strong>. It is one of two modes this method will read as normal.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="family">
+            <h2>Family 3 &mdash; fluid load lost part-way up the upstroke</h2>
+            <p class="family-lede">Both take load off the upstroke before it reaches the top. A cliff or a decay &mdash; that is the difference.</p>
+
+            <div class="sig" data-mode="PLUNGER_OUT_OF_BARREL">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-PLUNGER_OUT_OF_BARREL d-PLUNGER_OUT_OF_BARREL"><title id="t-PLUNGER_OUT_OF_BARREL">Plunger out of barrel card</title><desc id="d-PLUNGER_OUT_OF_BARREL">Load against plunger position: the upstroke falling off a cliff mid-stroke and running flat and low to the top.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Plunger out of barrel</h3>
+                        <p><strong>What the card does.</strong> The upstroke falls off a cliff mid-stroke and runs flat and low to the top. The top-right corner is missing entirely.</p>
+                        <p><strong>Mechanism.</strong> The pump is spaced so long that the plunger leaves the top of the barrel before the upstroke ends, dumping the fluid load the moment it clears.</p>
+                        <p><strong>What separates it, and the repair.</strong> Top-right corner clearance, which is several times a normal card's. Space the pump down.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sig" data-mode="WORN_BARREL">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-WORN_BARREL d-WORN_BARREL"><title id="t-WORN_BARREL">Worn barrel card</title><desc id="d-WORN_BARREL">Load against plunger position: upstroke load decaying progressively away from the plateau.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Worn barrel</h3>
+                        <p><strong>What the card does.</strong> Upstroke load decays progressively away from the plateau; card area is lost gradually.</p>
+                        <p><strong>Mechanism.</strong> A worn plunger-to-barrel fit slips more as the fluid column builds.</p>
+                        <p><strong>What separates it.</strong> Gradual decay, not a cliff. The upstroke branch slope is negative and the top-right corner is soft rather than absent.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="family">
+            <h2>Family 4 &mdash; mechanical contact at one end of the stroke</h2>
+            <p class="family-lede">These two were one label until it was noticed that they are opposite mechanisms with <strong>opposite repairs</strong>. Collapsing them loses the only thing the diagnosis is for.</p>
+
+            <div class="sig" data-mode="PUMP_TAGGING_DOWN">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-PUMP_TAGGING_DOWN d-PUMP_TAGGING_DOWN"><title id="t-PUMP_TAGGING_DOWN">Pump tagging down card</title><desc id="d-PUMP_TAGGING_DOWN">Load against plunger position: load dipping sharply below the downstroke line at minimum position.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Pump tagging down</h3>
+                        <p><strong>What the card does.</strong> Load dips sharply <em>below</em> the downstroke line at <em>minimum</em> position. The card reaches its own bottom-left corner, which a healthy card never does.</p>
+                        <p><strong>Mechanism.</strong> The plunger strikes the standing valve or the bottom of the barrel and the rods go into compression, so minimum load coincides with minimum position.</p>
+                        <p><strong>What separates it, and the repair.</strong> Bottom-left corner clearance near zero, and the stroke position of the load minimum. Space the pump <em>up</em> &mdash; the opposite of tagging up, which is why the two are separate classes.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="family">
+            <h2>Family 5 &mdash; the card's scale, not its shape</h2>
+            <p class="family-lede">A normalised card shape cannot see these at all. They are read off absolute load and absolute travel, which is why a card must arrive in real units to be screened for them.</p>
+
+            <div class="sig" data-mode="ROD_PARTING">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-ROD_PARTING d-ROD_PARTING"><title id="t-ROD_PARTING">Rod parting card</title><desc id="d-ROD_PARTING">Load against plunger position: an ordinary-looking loop at a small fraction of working load.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Rod parting</h3>
+                        <p><strong>What the card does.</strong> A perfectly ordinary-looking loop &mdash; at a small fraction of the load a working string carries. Load range collapses against mean load.</p>
+                        <p><strong>Mechanism.</strong> Below the break nothing is lifted, so the surviving string carries only its own buoyant weight plus friction and inertia. That still traces a closed loop: friction opens it, and rod inertia tilts both branches upward with position.</p>
+                        <p><strong>What separates it.</strong> Absolute load, not shape. Read the axis, not the outline.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sig" data-mode="GAS_LOCK">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-GAS_LOCK d-GAS_LOCK"><title id="t-GAS_LOCK">Gas lock card</title><desc id="d-GAS_LOCK">Load against plunger position: a low-load loop with almost no enclosed area.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Gas lock</h3>
+                        <p><strong>What the card does.</strong> A low-load loop with almost no enclosed area &mdash; the valves never open.</p>
+                        <p><strong>Mechanism.</strong> Gas trapped in the barrel is compressed and expanded without ever reaching discharge pressure. This is gas interference past the point where the card still has corners to gouge.</p>
+                        <p><strong>What separates it.</strong> Card area at low absolute load. A parted rod string draws a proper loop; a gas-locked pump draws barely any.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sig" data-mode="STUCK_PUMP">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-STUCK_PUMP d-STUCK_PUMP"><title id="t-STUCK_PUMP">Stuck pump card</title><desc id="d-STUCK_PUMP">Load against plunger position: a tiny collapsed card over a near-zero position range at working load.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Stuck pump</h3>
+                        <p><strong>What the card does.</strong> Near-zero position range; a tiny collapsed card at working load.</p>
+                        <p><strong>Mechanism.</strong> Debris, scale or a mechanical obstruction stops the plunger while the surface unit keeps stroking.</p>
+                        <p><strong>What separates it.</strong> Plunger travel of a few inches at loads that are otherwise normal. Gas lock has the travel and not the load; this has the load and not the travel.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="family">
+            <h2>Family 6 &mdash; stroke length against the expected stroke</h2>
+            <p class="family-lede">These three <strong>differ only in absolute plunger travel</strong>. Under a normalised card shape they are literally the same measurement &mdash; which is why a screen that works on shape alone cannot separate them, and one that keeps real units can.</p>
+
+            <div class="sig" data-mode="NORMAL">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-NORMAL d-NORMAL"><title id="t-NORMAL">Normal pump card</title><desc id="d-NORMAL">Load against plunger position: a full card with tight corners and flat branches.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Normal</h3>
+                        <p><strong>What the card does.</strong> Full expected plunger travel, tight corners, flat branches, high fill ratio. The corners are cut away slightly &mdash; that is the valve-transfer window, not a fault.</p>
+                        <p><strong>Mechanism.</strong> The reference case: the pump fills, lifts, transfers and falls as designed.</p>
+                        <p><strong>What separates it.</strong> Nothing distinguishes a healthy card except the absence of every other signature &mdash; which is exactly why absence of a signature is weak evidence.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sig" data-mode="TUBING_MOVEMENT">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-TUBING_MOVEMENT d-TUBING_MOVEMENT"><title id="t-TUBING_MOVEMENT">Tubing movement card</title><desc id="d-TUBING_MOVEMENT">Load against plunger position: an elongated card with a load slope across the loop.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Tubing movement</h3>
+                        <p><strong>What the card does.</strong> An elongated card &mdash; plunger travel longer than the pump geometry accounts for &mdash; with a load slope across the loop.</p>
+                        <p><strong>Mechanism.</strong> Unanchored tubing stretches and contracts with the fluid load through the stroke.</p>
+                        <p><strong>What separates it, and the repair.</strong> Absolute stroke length against the expected plunger stroke. Consider a tubing anchor.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sig" data-mode="PLUNGER_UNDERTRAVEL">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-PLUNGER_UNDERTRAVEL d-PLUNGER_UNDERTRAVEL"><title id="t-PLUNGER_UNDERTRAVEL">Plunger undertravel card</title><desc id="d-PLUNGER_UNDERTRAVEL">Load against plunger position: a correctly shaped card over a badly truncated position range.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Plunger undertravel</h3>
+                        <p><strong>What the card does.</strong> A correctly shaped card over a badly truncated position range.</p>
+                        <p><strong>Mechanism.</strong> The plunger never travels the stroke the surface unit is making &mdash; rod stretch, tubing movement, or a spacing problem.</p>
+                        <p><strong>What separates it.</strong> Absolute stroke length again, in the other direction. On a normalised plot this card and a healthy one are indistinguishable.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="family">
+            <h2>Family 7 &mdash; loop thickness and load bias</h2>
+            <p class="family-lede">Neither is a valve or fillage problem. Both change what the loop encloses rather than which corner it keeps.</p>
+
+            <div class="sig" data-mode="EXCESSIVE_FRICTION">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-EXCESSIVE_FRICTION d-EXCESSIVE_FRICTION"><title id="t-EXCESSIVE_FRICTION">Excessive friction card</title><desc id="d-EXCESSIVE_FRICTION">Load against plunger position: a thick loop with the upstroke carrying extra load and the downstroke less.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Excessive friction</h3>
+                        <p><strong>What the card does.</strong> A thick loop: the upstroke carries extra load and the downstroke carries less, opening the card and squaring its corners.</p>
+                        <p><strong>Mechanism.</strong> Rod-on-tubing drag, a tight stuffing box, or a deviated hole.</p>
+                        <p><strong>What separates it.</strong> Fill ratio approaching one with corner clearances near zero &mdash; a card squarer than valve transfer permits.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sig" data-mode="BENT_BARREL">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-BENT_BARREL d-BENT_BARREL"><title id="t-BENT_BARREL">Bent barrel card</title><desc id="d-BENT_BARREL">Load against plunger position: load biased with position, shifting the card's centroid off centre.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Bent barrel</h3>
+                        <p><strong>What the card does.</strong> Load biased with position, shifting the card's centroid off centre. The bias runs in <em>either</em> direction.</p>
+                        <p><strong>Mechanism.</strong> A bent barrel binds at one end of the stroke &mdash; which end depends on the bend, so this one fault draws two mirror-image cards. Both are carried as reference signatures for exactly that reason.</p>
+                        <p><strong>What separates it.</strong> Branch slopes of the same sign on both branches, with the loop otherwise intact.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="family">
+            <h2>Family 8 &mdash; the texture of the trace</h2>
+            <p class="family-lede">Roughness alone cannot separate these: sand and vibration both spoil a clean trace. <strong>Periodicity</strong> does &mdash; vibration is a wave, sand is scatter.</p>
+
+            <div class="sig" data-mode="SAND_ABRASION">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-SAND_ABRASION d-SAND_ABRASION"><title id="t-SAND_ABRASION">Sand abrasion card</title><desc id="d-SAND_ABRASION">Load against plunger position: a jagged, aperiodic load trace over a slightly slanted card.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Sand abrasion</h3>
+                        <p><strong>What the card does.</strong> A jagged, aperiodic load trace over a slightly slanted card.</p>
+                        <p><strong>Mechanism.</strong> Grains passing through the plunger-barrel fit; the fit itself wears open, which adds the slant, because a worn fit slips at a rate that follows the differential across the plunger.</p>
+                        <p><strong>What separates it.</strong> High roughness with <em>low</em> periodicity. The jaggedness is grain-by-grain and therefore not a wave.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sig" data-mode="EXCESSIVE_VIBRATION">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-EXCESSIVE_VIBRATION d-EXCESSIVE_VIBRATION"><title id="t-EXCESSIVE_VIBRATION">Excessive vibration card</title><desc id="d-EXCESSIVE_VIBRATION">Load against plunger position: a regular high-frequency oscillation riding on an otherwise normal card.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Excessive vibration</h3>
+                        <p><strong>What the card does.</strong> A regular high-frequency oscillation riding on an otherwise normal card.</p>
+                        <p><strong>Mechanism.</strong> Mechanical resonance or imbalance in the surface unit &mdash; not a pump condition at all, which is worth establishing before anyone pulls a pump.</p>
+                        <p><strong>What separates it.</strong> High roughness with <em>high</em> periodicity: the residual autocorrelates because it is a wave.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sig" data-mode="PARAFFIN_RESTRICTION">
+                <div class="row">
+                    <div class="col-md-5"><svg class="sig-plot" viewBox="0 0 420 300" role="img" aria-labelledby="t-PARAFFIN_RESTRICTION d-PARAFFIN_RESTRICTION"><title id="t-PARAFFIN_RESTRICTION">Paraffin restriction card</title><desc id="d-PARAFFIN_RESTRICTION">Load against plunger position: concave dents in the trace plus a raised friction signature.</desc></svg></div>
+                    <div class="col-md-7">
+                        <h3>Paraffin restriction</h3>
+                        <p><strong>What the card does.</strong> Concave dents in the trace plus a raised friction signature on an otherwise normal card.</p>
+                        <p><strong>Mechanism.</strong> Paraffin narrows the tubing and grabs the rods intermittently.</p>
+                        <p><strong>What separates it &mdash; and where it fails.</strong> Dent count and depth. When the dents are shallow this card is a normal card with a little noise on it, and <strong>the signature is genuinely lost</strong>. It is the other of the two modes this method will read as normal.</p>
+                        <table class="table table-condensed sig-measures"><tbody></tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="limits-box">
+            <h2 class="h-size-h4" style="margin-top:0;">What these examples are not</h2>
+            <ul style="margin-bottom:0;">
+                <li><strong>They are not field cards.</strong> Every plot on this page is synthetic, drawn at the centre of a published parameter range. A real card carries measurement noise, a rod string that does not match the model, and often more than one fault at once.</li>
+                <li><strong>Matching a shape is not a diagnosis.</strong> Several conditions here draw nearly the same card: gas interference, fluid pound and a standing-valve leak all gut the lower-right corner, and two of them are told apart by the width of one transition that measurement noise can move.</li>
+                <li><strong>Two of the twenty can read as normal.</strong> A shallow paraffin restriction and a briefly delayed valve closure both sit on an otherwise healthy card body. Absence of a signature is not evidence of a healthy pump.</li>
+                <li><strong>No accuracy figure is published for this method, deliberately.</strong> Checking synthetic cards against their own generators measures self-consistency, not field performance. A number belongs here only when there is a benchmark against labelled real cards to put behind it.</li>
+                <li><strong>Nothing here predicts production.</strong> Fillage and displacement give an inferred rate for the stroke recorded; what a well would make after an intervention is not on the card.</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h2>Where these come from</h2>
+            <p>
+                The shapes are drawn from published sucker-rod pump signature descriptions and from the
+                geometry of the pump cycle itself &mdash; the valve-transfer window that rounds a healthy
+                card's corners, the compression of free gas that slants a lower branch, the rod inertia that
+                tilts both branches of a parted string. Each card is generated deterministically, so the
+                same condition always draws the same reference card and the measurements underneath it are
+                reproducible rather than asserted. The
+                <a href="../calculators/dynacard-diagnostics.html">signature screen</a> runs the same
+                generators and the same measurements against a card of your own, and
+                <a href="../standards/dynacard-diagnostics.html">the method page</a> carries the wave
+                equation, the fillage and pressure relationships, and the full limits.
+            </p>
+            <p>
+                <a href="../calculators/dynacard-diagnostics.html" class="btn btn-primary">Open the signature screen</a>
+                <a href="../standards/dynacard-diagnostics.html" class="btn btn-default">Read the method</a>
+                <a href="../contact.html?vertical=energy" class="btn btn-success">Run this on your own cards</a>
+            </p>
+        </div>
+    </div>
+
+    </main>
+
+    <include src="partials/footer.html"></include>
+
+    <script src="{{ rootPath }}assets/js/dynacard-engine.js"></script>
+    <script>
+    (function () {
+        var SVG_NS = 'http://www.w3.org/2000/svg';
+
+        function fmt(v, dp) { return isFinite(v) ? v.toFixed(dp) : '--'; }
+
+        function draw(svg, card) {
+            var W = 420, H = 300, m = { l: 54, r: 14, t: 14, b: 44 };
+            var pMin = Math.min.apply(null, card.position);
+            var pMax = Math.max.apply(null, card.position);
+            var lMin = Math.min.apply(null, card.load);
+            var lMax = Math.max.apply(null, card.load);
+            var px = function (p) { return m.l + ((p - pMin) / (pMax - pMin || 1)) * (W - m.l - m.r); };
+            var py = function (l) { return H - m.b - ((l - lMin) / (lMax - lMin || 1)) * (H - m.t - m.b); };
+
+            function add(tag, attrs, text) {
+                var el = document.createElementNS(SVG_NS, tag);
+                Object.keys(attrs).forEach(function (k) { el.setAttribute(k, attrs[k]); });
+                if (text !== undefined) el.textContent = text;
+                svg.appendChild(el);
+                return el;
+            }
+
+            add('rect', {
+                x: px(pMin), y: py(lMax), width: px(pMax) - px(pMin), height: py(lMin) - py(lMax),
+                fill: 'none', stroke: '#d0d7de', 'stroke-dasharray': '4 4'
+            });
+            add('line', { x1: m.l, y1: H - m.b, x2: W - m.r, y2: H - m.b, stroke: '#8a949e' });
+            add('line', { x1: m.l, y1: m.t, x2: m.l, y2: H - m.b, stroke: '#8a949e' });
+            add('text', { x: m.l, y: H - m.b + 15, 'font-size': '10', fill: '#6b7785' }, fmt(pMin, 0) + ' in');
+            add('text', { x: W - m.r, y: H - m.b + 15, 'text-anchor': 'end', 'font-size': '10', fill: '#6b7785' }, fmt(pMax, 0) + ' in');
+            add('text', { x: m.l - 5, y: H - m.b, 'text-anchor': 'end', 'font-size': '10', fill: '#6b7785' }, fmt(lMin, 0));
+            add('text', { x: m.l - 5, y: m.t + 9, 'text-anchor': 'end', 'font-size': '10', fill: '#6b7785' }, fmt(lMax, 0));
+            add('text', { x: (m.l + W - m.r) / 2, y: H - 8, 'text-anchor': 'middle', 'font-size': '10', fill: '#52606d' }, 'plunger position');
+            add('text', {
+                x: 12, y: (m.t + H - m.b) / 2, 'text-anchor': 'middle', 'font-size': '10', fill: '#52606d',
+                transform: 'rotate(-90 12 ' + ((m.t + H - m.b) / 2) + ')'
+            }, 'load (lb)');
+
+            var d = '';
+            for (var i = 0; i < card.position.length; i += 1) {
+                d += (i === 0 ? 'M' : 'L') + px(card.position[i]).toFixed(2) + ' ' + py(card.load[i]).toFixed(2) + ' ';
+            }
+            add('path', { d: d + 'Z', fill: 'rgba(66,139,202,0.10)', stroke: '#0b3d5c', 'stroke-width': '1.8' });
+
+            var fill = Dynacard.pumpFillage(card.position, card.load);
+            add('circle', {
+                cx: px(card.position[fill.brIndex]), cy: py(card.load[fill.brIndex]), r: '4.5', fill: '#c94a1b'
+            });
+            return fill;
+        }
+
+        var ROWS = [
+            ['fillage', 'Pump fillage (plunger stroke)', 1, '%'],
+            ['grossStroke', 'Gross plunger travel (in)', 1, ''],
+            ['loadRange', 'Load range (lb)', 0, ''],
+            ['loadRangeRatio', 'Load range / mean load', 2, ''],
+            ['fillRatio', 'Card fill ratio', 2, ''],
+            ['clearTL', 'Top-left corner clearance', 2, ''],
+            ['clearTR', 'Top-right corner clearance', 2, ''],
+            ['clearBL', 'Bottom-left corner clearance', 2, ''],
+            ['clearBR', 'Bottom-right corner clearance', 2, ''],
+            ['upperSlope', 'Upstroke branch slope', 2, ''],
+            ['lowerSlope', 'Downstroke branch slope', 2, ''],
+            ['transferWidth', 'Downstroke transfer width', 2, ''],
+            ['roughness', 'Trace roughness', 3, ''],
+            ['periodicity', 'Trace periodicity', 2, '']
+        ];
+
+        var blocks = document.querySelectorAll('.sig[data-mode]');
+        for (var i = 0; i < blocks.length; i += 1) {
+            var block = blocks[i];
+            var mode = block.getAttribute('data-mode');
+            var card = Dynacard.generateCard(mode, null);
+            draw(block.querySelector('svg'), card);
+
+            var features = Dynacard.extractFeatures(card.position, card.load);
+            var body = block.querySelector('.sig-measures tbody');
+            ROWS.forEach(function (row) {
+                var tr = document.createElement('tr');
+                var a = document.createElement('td');
+                a.textContent = row[1];
+                var b = document.createElement('td');
+                b.className = 'num';
+                b.textContent = fmt(features[row[0]], row[2]) + row[3];
+                tr.appendChild(a);
+                tr.appendChild(b);
+                body.appendChild(tr);
+            });
+        }
+    }());
+    </script>
+
+</body>
+</html>

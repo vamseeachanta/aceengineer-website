@@ -35,8 +35,8 @@ const IRR_BRACKET_HIGH = 2.0;
  *
  * The page renders IRR as toFixed(2) on a percentage, so 0.01 percentage
  * points -- 1e-4 as a rate fraction -- is everything it can display. This
- * bound is 1e-6, two orders finer than that, and is reached in 22 bisections
- * of a 2.5-wide bracket, comfortably inside the iteration budget.
+ * bound is 1e-6, two orders finer than that. Roots arrive already bracketed to
+ * IRR_SCAN_STEP, so about 7 bisections reach it, well inside the budget.
  *
  * It is stated in RATE units and therefore carries no cashflow magnitude,
  * which is the whole point: a bound on |NPV| is scale-dependent, too loose on
@@ -143,11 +143,15 @@ function calcIRR(capex, cashflows) {
  * of the bracket while being positive in between. An endpoint test calls that
  * "no root" even when two exist.
  *
- * Where several roots exist the IRR is genuinely ambiguous. The rate reported
- * is the one above which NPV stays negative -- the downward crossing, which is
- * what a decision-maker compares against a cost of capital. For a conventional
+ * Only a DOWNWARD crossing -- NPV positive below the rate, negative above it --
+ * is an IRR you can compare against a cost of capital. A cashflow can have a
+ * root that goes the other way, and reporting one as "the IRR" puts a green
+ * "IRR > discount rate" next to a NOT VIABLE headline. Where no downward
+ * crossing exists the status is 'no-decision-rate' and irr is null, with the
+ * roots still returned so the shape stays inspectable. For a conventional
  * cashflow there is exactly one crossing and this reduces to the usual IRR.
- * All roots found are returned so the ambiguity stays inspectable.
+ *
+ * Statuses: 'ok', 'no-root', 'no-decision-rate', 'not-converged', 'invalid'.
  *
  * @param {number}   capex      Initial CAPEX (positive, same unit as cashflows)
  * @param {number[]} cashflows  Annual net cashflows
@@ -168,46 +172,75 @@ function calcIRRResult(capex, cashflows, options) {
   const npvAtLow = calcNPV(capex, cashflows, IRR_BRACKET_LOW);
   const npvAtHigh = calcNPV(capex, cashflows, IRR_BRACKET_HIGH);
 
-  const refuse = (status) => ({
+  const result = (status, irr, roots) => ({
     status: status,
-    irr: null,
-    roots: [],
-    multipleRoots: false,
+    irr: irr,
+    roots: roots || [],
+    multipleRoots: (roots || []).length > 1,
     npvAtLow: npvAtLow,
     npvAtHigh: npvAtHigh,
   });
 
-  // Locate every sub-interval in which NPV changes sign.
-  const brackets = [];
+  // Non-finite input cannot be reasoned about: Math.sign(NaN) !== Math.sign(NaN)
+  // is true, so every scan step would look like a sign change and the bisection
+  // would return a confident number for nonsense.
+  const finite = (x) => typeof x === 'number' && isFinite(x);
+  if (!finite(capex) || !Array.isArray(cashflows) || !cashflows.every(finite)) {
+    return result('invalid', null, []);
+  }
+  if (!finite(npvAtLow) || !finite(npvAtHigh)) {
+    return result('invalid', null, []);
+  }
+
+  // Scan the bracket for sign changes. Testing only the two ENDS is unsound
+  // here: production declines while OPEX escalates, so late-year cashflows turn
+  // negative, the cashflow changes sign more than once, and NPV can be negative
+  // at both ends while positive in between.
+  const crossings = [];
+  const steps = Math.ceil((IRR_BRACKET_HIGH - IRR_BRACKET_LOW) / IRR_SCAN_STEP);
   let prevRate = IRR_BRACKET_LOW;
   let prevNpv = npvAtLow;
-  const steps = Math.ceil((IRR_BRACKET_HIGH - IRR_BRACKET_LOW) / IRR_SCAN_STEP);
+  let anyNonZero = npvAtLow !== 0;
+
+  // A root sitting exactly on the low endpoint would otherwise be stepped over.
+  if (npvAtLow === 0) {
+    crossings.push({ low: IRR_BRACKET_LOW, high: IRR_BRACKET_LOW, loSign: 0 });
+  }
 
   for (let i = 1; i <= steps; i++) {
-    const rate = Math.min(
-      IRR_BRACKET_LOW + i * IRR_SCAN_STEP,
-      IRR_BRACKET_HIGH
-    );
+    const rate = Math.min(IRR_BRACKET_LOW + i * IRR_SCAN_STEP, IRR_BRACKET_HIGH);
     const npv = calcNPV(capex, cashflows, rate);
+    if (!finite(npv)) {
+      return result('invalid', null, []);
+    }
+    if (npv !== 0) {
+      anyNonZero = true;
+    }
     if (npv === 0) {
-      brackets.push([rate, rate]);
+      if (prevNpv !== 0) {
+        crossings.push({ low: rate, high: rate, loSign: Math.sign(prevNpv) });
+      }
     } else if (prevNpv !== 0 && Math.sign(npv) !== Math.sign(prevNpv)) {
-      brackets.push([prevRate, rate]);
+      crossings.push({ low: prevRate, high: rate, loSign: Math.sign(prevNpv) });
     }
     prevRate = rate;
     prevNpv = npv;
   }
 
-  if (brackets.length === 0) {
-    return refuse('no-root');
+  // NPV identically zero across the whole bracket: every rate solves it, which
+  // is a degenerate cashflow, not an IRR.
+  if (!anyNonZero || crossings.length === 0) {
+    return result('no-root', null, []);
   }
 
-  // Bisect each bracketed root down to the rate tolerance.
+  // Bisect each bracketed root. The direction is known from the bracket's own
+  // endpoint sign, so no probe offset outside the bracket is needed.
   const roots = [];
-  for (let b = 0; b < brackets.length; b++) {
-    let low = brackets[b][0];
-    let high = brackets[b][1];
-    const npvLowSign = Math.sign(calcNPV(capex, cashflows, low));
+  const downward = [];
+  for (let c = 0; c < crossings.length; c++) {
+    let low = crossings[c].low;
+    let high = crossings[c].high;
+    const loSign = crossings[c].loSign;
     let converged = high - low <= rateTolerance;
 
     for (let i = 0; i < maxIterations && !converged; i++) {
@@ -216,7 +249,7 @@ function calcIRRResult(capex, cashflows, options) {
       if (npvMid === 0) {
         low = mid;
         high = mid;
-      } else if (Math.sign(npvMid) === npvLowSign) {
+      } else if (Math.sign(npvMid) === loSign) {
         low = mid;
       } else {
         high = mid;
@@ -225,33 +258,30 @@ function calcIRRResult(capex, cashflows, options) {
     }
 
     if (!converged) {
-      return refuse('not-converged');
+      return result('not-converged', null, []);
     }
-    roots.push((low + high) / 2);
+
+    const root = (low + high) / 2;
+    // Skip a duplicate of the previous root (adjacent degenerate zeros).
+    if (roots.length && Math.abs(root - roots[roots.length - 1]) <= rateTolerance) {
+      continue;
+    }
+    roots.push(root);
+    // Positive below, negative above: the only orientation you can compare to
+    // a cost of capital.
+    if (loSign > 0) {
+      downward.push(root);
+    }
   }
 
-  // The downward crossing: NPV positive below it, negative above.
-  let reported = null;
-  for (let i = roots.length - 1; i >= 0; i--) {
-    const below = calcNPV(capex, cashflows, roots[i] - rateTolerance * 10);
-    const above = calcNPV(capex, cashflows, roots[i] + rateTolerance * 10);
-    if (below > 0 && above < 0) {
-      reported = roots[i];
-      break;
-    }
-  }
-  if (reported === null) {
-    reported = roots[roots.length - 1];
+  if (downward.length === 0) {
+    // Roots exist, but NPV never falls through zero. There is no rate here
+    // that behaves like an IRR, and reporting one would print a green
+    // "IRR > discount rate" beside a NOT VIABLE headline.
+    return result('no-decision-rate', null, roots);
   }
 
-  return {
-    status: 'ok',
-    irr: reported * 100,
-    roots: roots,
-    multipleRoots: roots.length > 1,
-    npvAtLow: npvAtLow,
-    npvAtHigh: npvAtHigh,
-  };
+  return result('ok', downward[downward.length - 1] * 100, roots);
 }
 
 /**

@@ -528,6 +528,12 @@ rootPath: "../"
             if (irrResult.status === 'no-root') {
                 return 'No IRR in the -50% to 200% range';
             }
+            if (irrResult.status === 'no-decision-rate') {
+                return 'No IRR (NPV never falls through zero)';
+            }
+            if (irrResult.status === 'invalid') {
+                return 'Not calculable (invalid input)';
+            }
             return 'Not calculable (did not converge)';
         }
 

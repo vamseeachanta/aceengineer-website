@@ -95,6 +95,11 @@
         "testMatch": ["<rootDir>/tests/js/npv-parity.test.js"]
       },
       {
+        "displayName": "npv-browser",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/npv-browser.test.js"]
+      },
+      {
         "displayName": "hse-render",
         "testEnvironment": "jsdom",
         "testMatch": ["<rootDir>/tests/js/hse-render.test.js"]

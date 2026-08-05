@@ -499,3 +499,80 @@ describe('buildYearlyCashflows — the cumulative origin is explicit', () => {
     );
   });
 });
+
+// ===================================================================
+// #124 adversarial-review findings. Each of these produced a
+// confidently WRONG number before the fix, not a refusal.
+// ===================================================================
+
+describe('calcIRRResult — only a downward crossing is an IRR', () => {
+  // Reported by review against page-legal inputs: initial_rate 36530,
+  // decline 50%, 5 years, $150/bbl, capex 10, opex 1000. NPV rises through
+  // zero rather than falling through it, so there is a root but no rate that
+  // behaves like an IRR. Reporting it printed a green "IRR 34.40% > discount
+  // rate" beside a NOT VIABLE headline.
+  const upwardOnlyCapex = 10;
+  const upwardOnly = [1000.0, -30.0, -560.9, -842.7, -1000.5];
+
+  test('an upward-only crossing is refused as no-decision-rate', () => {
+    const r = calcIRRResult(upwardOnlyCapex, upwardOnly);
+    expect(r.status).toBe('no-decision-rate');
+  });
+
+  test('no rate is reported when none can be compared to a cost of capital', () => {
+    expect(calcIRRResult(upwardOnlyCapex, upwardOnly).irr).toBeNull();
+  });
+
+  test('the root is still returned so the shape stays inspectable', () => {
+    const r = calcIRRResult(upwardOnlyCapex, upwardOnly);
+    expect(r.roots.map((x) => Number((x * 100).toFixed(2)))).toEqual([34.4]);
+  });
+
+  test('no-decision-rate is distinct from no-root and from ok', () => {
+    const statuses = [
+      calcIRRResult(upwardOnlyCapex, upwardOnly).status,
+      calcIRRResult(100, [-10, -10, -10]).status,
+      calcIRRResult(100, [40, 40, 40]).status,
+    ];
+    expect(new Set(statuses).size).toBe(3);
+  });
+});
+
+describe('calcIRRResult — degenerate and non-finite input is refused, not answered', () => {
+  test('NaN capex is refused rather than yielding a rate', () => {
+    // Math.sign(NaN) !== Math.sign(NaN) is true, so every scan step looked
+    // like a sign change and bisection returned a confident 199.99%.
+    const r = calcIRRResult(NaN, [10, 10, 10]);
+    expect(r.status).toBe('invalid');
+    expect(r.irr).toBeNull();
+  });
+
+  test('a non-finite cashflow is refused', () => {
+    expect(calcIRRResult(100, [10, Infinity, 10]).status).toBe('invalid');
+  });
+
+  test('an all-zero cashflow against zero capex is refused, not certified 200%', () => {
+    // NPV is identically zero, so every rate "solves" it. That is a degenerate
+    // cashflow, not an internal rate of return.
+    const r = calcIRRResult(0, [0, 0, 0]);
+    expect(r.status).toBe('no-root');
+    expect(r.irr).toBeNull();
+  });
+
+  test('an empty cashflow against zero capex is refused', () => {
+    expect(calcIRRResult(0, []).status).toBe('no-root');
+  });
+});
+
+describe('calcIRRResult — the bracket endpoints are treated symmetrically', () => {
+  test('a root exactly at the low endpoint is found', () => {
+    // capex 1 against a single flow of 0.5 has an IRR of exactly -50%.
+    const r = calcIRRResult(1, [0.5]);
+    expect(r.roots.map((x) => Number(x.toFixed(6)))).toEqual([-0.5]);
+  });
+
+  test('a root exactly at the high endpoint is found', () => {
+    // capex 1 against a single flow of 3 has an IRR of exactly 200%.
+    expect(calcIRRResult(1, [3]).roots.map((x) => Number(x.toFixed(6)))).toEqual([2]);
+  });
+});

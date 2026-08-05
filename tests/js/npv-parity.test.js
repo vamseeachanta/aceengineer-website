@@ -240,6 +240,23 @@ describe('the page loads the tested engine rather than duplicating it', () => {
     );
   });
 
+  test('the engine is loaded BEFORE the inline script that calls it', () => {
+    // The page's inline script resolves calcIRRResult and DOLLARS_PER_MILLION
+    // as globals contributed by a separate classic <script>. If that tag ever
+    // moves below the inline block, the page throws on the first click.
+    //
+    // Verified against the built artifact with real classic-script semantics:
+    // the engine's top-level `const` lands in the global LEXICAL environment,
+    // not on window. It resolves by identifier lookup, which is why this
+    // ordering — not window assignment — is what the page actually depends on.
+    const src = fs.readFileSync(PAGE, 'utf8');
+    const enginePos = src.indexOf('npv-calculator-engine.js');
+    const inlinePos = src.indexOf('function calculateNPV');
+    expect(enginePos).toBeGreaterThan(-1);
+    expect(inlinePos).toBeGreaterThan(-1);
+    expect(enginePos).toBeLessThan(inlinePos);
+  });
+
   test('the page no longer defines its own IRR routine', () => {
     expect(calculatorScript()).not.toMatch(/function\s+calculateIRR\b/);
   });

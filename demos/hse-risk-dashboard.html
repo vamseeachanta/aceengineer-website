@@ -660,36 +660,52 @@
             ? (rows.reduce(function (s, r) { return s + r.composite_score; }, 0) / rows.length).toFixed(1)
             : '—';
 
-        strip.innerHTML =
-            '<div class="stat-card"><div class="stat-val">' + rows.length + '</div><div class="stat-lbl">Activity Rows</div></div>' +
-            '<div class="stat-card"><div class="stat-val">' + totalInc.toLocaleString() + '</div><div class="stat-lbl">Total Incidents</div></div>' +
-            '<div class="stat-card"><div class="stat-val">' + avgScore + '</div><div class="stat-lbl">Avg Composite</div></div>' +
-            '<div class="stat-card"><div class="stat-val val-critical">' + counts.CRITICAL + '</div><div class="stat-lbl">Critical</div></div>' +
-            '<div class="stat-card"><div class="stat-val val-high">' + counts.HIGH + '</div><div class="stat-lbl">High</div></div>' +
-            '<div class="stat-card"><div class="stat-val val-medium">' + counts.MEDIUM + '</div><div class="stat-lbl">Medium</div></div>' +
-            '<div class="stat-card"><div class="stat-val val-low">' + counts.LOW + '</div><div class="stat-lbl">Low</div></div>';
+        var stats = [
+            [rows.length, 'Activity Rows', 'stat-val'],
+            [totalInc.toLocaleString(), 'Total Incidents', 'stat-val'],
+            [avgScore, 'Avg Composite', 'stat-val'],
+            [counts.CRITICAL, 'Critical', 'stat-val val-critical'],
+            [counts.HIGH, 'High', 'stat-val val-high'],
+            [counts.MEDIUM, 'Medium', 'stat-val val-medium'],
+            [counts.LOW, 'Low', 'stat-val val-low'],
+        ];
+
+        strip.replaceChildren();
+        stats.forEach(function (stat) {
+            var card = document.createElement('div');
+            var value = document.createElement('div');
+            var label = document.createElement('div');
+            card.className = 'stat-card';
+            value.className = stat[2];
+            value.textContent = stat[0];
+            label.className = 'stat-lbl';
+            label.textContent = stat[1];
+            card.appendChild(value);
+            card.appendChild(label);
+            strip.appendChild(card);
+        });
     }
 
     // -------------------------------------------------------------------
     // Ranked table
     // -------------------------------------------------------------------
-    function colorForScore(score) {
-        var cat = data.getRiskCategory(score).toLowerCase();
-        return CATEGORY_COLORS[data.getRiskCategory(score)];
-    }
-
-    function badgeHtml(score) {
-        var cat = data.getRiskCategory(score);
-        var lower = cat.toLowerCase();
-        return '<span class="risk-badge badge-' + lower + '">' + cat + '</span>';
-    }
-
-    function scoreBarHtml(score, color) {
+    function scoreBarEl(score, color) {
         var pct = ((score - 1) / 9 * 100).toFixed(1);
-        return '<div class="score-bar-wrap">' +
-            '<span style="min-width:30px;font-weight:600;">' + score.toFixed(1) + '</span>' +
-            '<div class="score-bar-bg"><div class="score-bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div>' +
-            '</div>';
+        var wrap = document.createElement('div');
+        var scoreText = document.createElement('span');
+        var barBackground = document.createElement('div');
+        var barFill = document.createElement('div');
+
+        wrap.className = 'score-bar-wrap';
+        scoreText.setAttribute('style', 'min-width:30px;font-weight:600;');
+        scoreText.textContent = score.toFixed(1);
+        barBackground.className = 'score-bar-bg';
+        barFill.className = 'score-bar-fill';
+        barFill.setAttribute('style', 'width:' + pct + '%;background:' + color);
+        barBackground.appendChild(barFill);
+        wrap.appendChild(scoreText);
+        wrap.appendChild(barBackground);
+        return wrap;
     }
 
     function updateTable(rows) {
@@ -697,22 +713,52 @@
         if (!tbody) return;
 
         var sorted = rows.slice().sort(function (a, b) { return b.composite_score - a.composite_score; });
-        tbody.innerHTML = sorted.map(function (r, i) {
+        tbody.replaceChildren();
+        sorted.forEach(function (r, i) {
             var cat   = data.getRiskCategory(r.composite_score);
             var color = CATEGORY_COLORS[cat];
             var confCls = 'conf-' + r.confidence;
-            return '<tr>' +
-                '<td>' + (i + 1) + '</td>' +
-                '<td>' + r.activity_name + '</td>' +
-                '<td>' + (DEPTH_LABELS[r.water_depth_band] || r.water_depth_band) + '</td>' +
-                '<td>' + scoreBarHtml(r.composite_score, color) + '</td>' +
-                '<td style="color:' + color + ';font-weight:600;">' + r.acute_score.toFixed(1) + '</td>' +
-                '<td style="color:' + color + ';font-weight:600;">' + r.chronic_score.toFixed(1) + '</td>' +
-                '<td style="color:' + color + ';font-weight:600;">' + r.compliance_score.toFixed(1) + '</td>' +
-                '<td>' + r.incident_count.toLocaleString() + '</td>' +
-                '<td class="' + confCls + '">' + r.confidence.charAt(0).toUpperCase() + r.confidence.slice(1) + '</td>' +
-                '</tr>';
-        }).join('');
+            var tr = document.createElement('tr');
+            var values = [
+                i + 1,
+                r.activity_name,
+                DEPTH_LABELS[r.water_depth_band] || r.water_depth_band,
+            ];
+
+            values.forEach(function (value) {
+                var td = document.createElement('td');
+                td.textContent = value;
+                tr.appendChild(td);
+            });
+
+            var scoreCell = document.createElement('td');
+            scoreCell.appendChild(scoreBarEl(r.composite_score, color));
+            tr.appendChild(scoreCell);
+
+            [r.acute_score, r.chronic_score, r.compliance_score].forEach(function (score) {
+                var td = document.createElement('td');
+                td.setAttribute('style', 'color:' + color + ';font-weight:600;');
+                td.textContent = score.toFixed(1);
+                tr.appendChild(td);
+            });
+
+            var incidentCell = document.createElement('td');
+            incidentCell.textContent = r.incident_count.toLocaleString();
+            tr.appendChild(incidentCell);
+
+            var confidenceCell = document.createElement('td');
+            confidenceCell.className = confCls;
+            confidenceCell.textContent = r.confidence.charAt(0).toUpperCase() + r.confidence.slice(1);
+            tr.appendChild(confidenceCell);
+            tbody.appendChild(tr);
+        });
+    }
+
+    function showEmptyState(el, message) {
+        var paragraph = document.createElement('p');
+        paragraph.setAttribute('style', 'color:#999;padding:20px;');
+        paragraph.textContent = message;
+        el.replaceChildren(paragraph);
     }
 
     // -------------------------------------------------------------------
@@ -721,7 +767,7 @@
     function renderHeatmap(rows) {
         var el = document.getElementById('chart-heatmap');
         if (!el || !rows.length) {
-            if (el) el.innerHTML = '<p style="color:#999;padding:20px;">No data for selected filters.</p>';
+            if (el) showEmptyState(el, 'No data for selected filters.');
             return;
         }
 
@@ -761,7 +807,7 @@
     function renderBar(rows) {
         var el = document.getElementById('chart-bar');
         if (!el || !rows.length) {
-            if (el) el.innerHTML = '<p style="color:#999;padding:20px;">No data for selected filters.</p>';
+            if (el) showEmptyState(el, 'No data for selected filters.');
             return;
         }
 
@@ -795,7 +841,7 @@
         if (!el) return;
 
         if (!trendRows.length) {
-            el.innerHTML = '<p style="color:#999;padding:20px;">No data for selected period.</p>';
+            showEmptyState(el, 'No data for selected period.');
             return;
         }
 

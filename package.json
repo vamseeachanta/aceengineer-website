@@ -85,6 +85,31 @@
         "testMatch": ["<rootDir>/tests/js/npv-calculator.test.js"]
       },
       {
+        "displayName": "npv-render",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/npv-render.test.js"]
+      },
+      {
+        "displayName": "npv-parity",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/npv-parity.test.js"]
+      },
+      {
+        "displayName": "npv-browser",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/npv-browser.test.js"]
+      },
+      {
+        "displayName": "hse-render",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/hse-render.test.js"]
+      },
+      {
+        "displayName": "html-sinks",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/html-sinks.test.js"]
+      },
+      {
         "displayName": "obs-calculator",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/obs-calculator.test.js"]

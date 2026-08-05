@@ -262,6 +262,28 @@ describe('NPV inline calculator — frozen valid-input behaviour', () => {
     expect(out.textContent).toMatch(/Payback Period: 4\.5 years/);
   });
 
+  test('an ambiguous IRR is disclosed to the visitor, not silently collapsed', () => {
+    // This project's cashflow turns negative in its late years, so two rates
+    // solve NPV = 0. Reporting one of them without saying so would present a
+    // unique answer where none exists.
+    const out = boot(VIABLE_FIELDS);
+    expect(out.textContent).toMatch(
+      /Cashflow changes sign more than once, so 2 rates solve NPV = 0/
+    );
+  });
+
+  test('an unambiguous IRR carries no ambiguity note', () => {
+    // Guards against the note becoming boilerplate that always renders.
+    const out = boot(
+      Object.assign({}, VIABLE_FIELDS, { project_years: '8', opex_escalation: '0' })
+    );
+    // Assert an IRR is actually REPORTED here, so the note's absence is
+    // because this cashflow has exactly one root — not because the IRR was
+    // refused, which would make this test pass for the wrong reason.
+    expect(out.textContent).toMatch(/Internal Rate of Return: 11\.02%/);
+    expect(out.textContent).not.toMatch(/changes sign more than once/);
+  });
+
   // ENDORSED VALUES (#124), replacing the #16 characterisation block.
   //
   // The values below are no longer "whatever the page happens to emit". They

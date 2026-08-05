@@ -13,6 +13,40 @@
 'use strict';
 
 /**
+ * Dollars per million dollars. This is the definition of the unit, not a
+ * tuned constant. The engine computes in DOLLARS; the calculator page's form
+ * is denominated in $M, so exactly one conversion sits between them.
+ */
+const DOLLARS_PER_MILLION = 1e6;
+
+/** IRR search bracket: -50% to +200%. */
+const IRR_BRACKET_LOW = -0.5;
+const IRR_BRACKET_HIGH = 2.0;
+
+/**
+ * Convergence bound, expressed as the WIDTH OF THE RATE BRACKET.
+ *
+ * The page renders IRR as toFixed(2) on a percentage, so 0.01 percentage
+ * points -- 1e-4 as a rate fraction -- is everything it can display. This
+ * bound is 1e-6, two orders finer than that, and is reached in 22 bisections
+ * of a 2.5-wide bracket, comfortably inside the iteration budget.
+ *
+ * It is stated in RATE units and therefore carries no cashflow magnitude,
+ * which is the whole point: a bound on |NPV| is scale-dependent, too loose on
+ * small cashflows and unreachable on large ones.
+ */
+const IRR_RATE_TOLERANCE = 1e-6;
+
+/**
+ * Resolution of the sign-change scan across the bracket, in rate units.
+ * Set to the page's display resolution (0.01pp = 1e-4) so that no root the
+ * page could distinguish on screen can be stepped over.
+ */
+const IRR_SCAN_STEP = 1e-4;
+
+const IRR_MAX_ITERATIONS = 100;
+
+/**
  * Exponential decline production for a given year.
  * Q(t) = Q0 * (1 - declineRate)^(year - 1)
  *
@@ -85,36 +119,132 @@ function calcNPV(capex, cashflows, rate) {
  * @returns {number|null} IRR as a percentage, or null
  */
 function calcIRR(capex, cashflows) {
-  const tolerance = 0.0001;
-  const maxIterations = 100;
+  return calcIRRResult(capex, cashflows).irr;
+}
 
-  let low = -0.5;
-  let high = 2.0;
+/**
+ * Internal Rate of Return, reported with the REASON when none is available.
+ *
+ * "No IRR exists for this project" and "the search failed to pin one down"
+ * are different facts, and a bare null conflates them. This returns which
+ * happened.
+ *
+ * Roots are located by scanning the bracket for sign changes rather than by
+ * testing only the sign at its two ends. A field whose production declines
+ * while its OPEX escalates has negative cashflows in its late years, so the
+ * cashflow changes sign more than once and NPV can be negative at BOTH ends
+ * of the bracket while being positive in between. An endpoint test calls that
+ * "no root" even when two exist.
+ *
+ * Where several roots exist the IRR is genuinely ambiguous. The rate reported
+ * is the one above which NPV stays negative -- the downward crossing, which is
+ * what a decision-maker compares against a cost of capital. For a conventional
+ * cashflow there is exactly one crossing and this reduces to the usual IRR.
+ * All roots found are returned so the ambiguity stays inspectable.
+ *
+ * @param {number}   capex      Initial CAPEX (positive, same unit as cashflows)
+ * @param {number[]} cashflows  Annual net cashflows
+ * @param {object}   [options]
+ * @param {number}   [options.rateTolerance]  Bracket width to converge to
+ * @param {number}   [options.maxIterations]  Bisection budget per root
+ * @returns {{status: string, irr: number|null, roots: number[],
+ *           multipleRoots: boolean, npvAtLow: number, npvAtHigh: number}}
+ *          status is 'ok', 'no-root' or 'not-converged'
+ */
+function calcIRRResult(capex, cashflows, options) {
+  const opts = options || {};
+  const rateTolerance =
+    opts.rateTolerance === undefined ? IRR_RATE_TOLERANCE : opts.rateTolerance;
+  const maxIterations =
+    opts.maxIterations === undefined ? IRR_MAX_ITERATIONS : opts.maxIterations;
 
-  const npvAtLow = calcNPV(capex, cashflows, low);
-  const npvAtHigh = calcNPV(capex, cashflows, high);
+  const npvAtLow = calcNPV(capex, cashflows, IRR_BRACKET_LOW);
+  const npvAtHigh = calcNPV(capex, cashflows, IRR_BRACKET_HIGH);
 
-  // IRR requires NPV to change sign across the search range
-  if (npvAtLow * npvAtHigh > 0) {
-    return null;
+  const refuse = (status) => ({
+    status: status,
+    irr: null,
+    roots: [],
+    multipleRoots: false,
+    npvAtLow: npvAtLow,
+    npvAtHigh: npvAtHigh,
+  });
+
+  // Locate every sub-interval in which NPV changes sign.
+  const brackets = [];
+  let prevRate = IRR_BRACKET_LOW;
+  let prevNpv = npvAtLow;
+  const steps = Math.ceil((IRR_BRACKET_HIGH - IRR_BRACKET_LOW) / IRR_SCAN_STEP);
+
+  for (let i = 1; i <= steps; i++) {
+    const rate = Math.min(
+      IRR_BRACKET_LOW + i * IRR_SCAN_STEP,
+      IRR_BRACKET_HIGH
+    );
+    const npv = calcNPV(capex, cashflows, rate);
+    if (npv === 0) {
+      brackets.push([rate, rate]);
+    } else if (prevNpv !== 0 && Math.sign(npv) !== Math.sign(prevNpv)) {
+      brackets.push([prevRate, rate]);
+    }
+    prevRate = rate;
+    prevNpv = npv;
   }
 
-  for (let i = 0; i < maxIterations; i++) {
-    const mid = (low + high) / 2;
-    const npvMid = calcNPV(capex, cashflows, mid);
-
-    if (Math.abs(npvMid) < tolerance) {
-      return mid * 100;
-    }
-
-    if (npvMid > 0) {
-      low = mid;
-    } else {
-      high = mid;
-    }
+  if (brackets.length === 0) {
+    return refuse('no-root');
   }
 
-  return ((low + high) / 2) * 100;
+  // Bisect each bracketed root down to the rate tolerance.
+  const roots = [];
+  for (let b = 0; b < brackets.length; b++) {
+    let low = brackets[b][0];
+    let high = brackets[b][1];
+    const npvLowSign = Math.sign(calcNPV(capex, cashflows, low));
+    let converged = high - low <= rateTolerance;
+
+    for (let i = 0; i < maxIterations && !converged; i++) {
+      const mid = (low + high) / 2;
+      const npvMid = calcNPV(capex, cashflows, mid);
+      if (npvMid === 0) {
+        low = mid;
+        high = mid;
+      } else if (Math.sign(npvMid) === npvLowSign) {
+        low = mid;
+      } else {
+        high = mid;
+      }
+      converged = high - low <= rateTolerance;
+    }
+
+    if (!converged) {
+      return refuse('not-converged');
+    }
+    roots.push((low + high) / 2);
+  }
+
+  // The downward crossing: NPV positive below it, negative above.
+  let reported = null;
+  for (let i = roots.length - 1; i >= 0; i--) {
+    const below = calcNPV(capex, cashflows, roots[i] - rateTolerance * 10);
+    const above = calcNPV(capex, cashflows, roots[i] + rateTolerance * 10);
+    if (below > 0 && above < 0) {
+      reported = roots[i];
+      break;
+    }
+  }
+  if (reported === null) {
+    reported = roots[roots.length - 1];
+  }
+
+  return {
+    status: 'ok',
+    irr: reported * 100,
+    roots: roots,
+    multipleRoots: roots.length > 1,
+    npvAtLow: npvAtLow,
+    npvAtHigh: npvAtHigh,
+  };
 }
 
 /**
@@ -217,6 +347,13 @@ function formatMoney(value) {
  * @param {number} params.opexEscalation    Annual OPEX escalation fraction
  * @param {number} params.taxRate           Income tax fraction
  * @param {number} params.royaltyRate       Royalty fraction
+ * @param {number} [params.initialCumulative=0]
+ *        Where the cumulative cashflow series STARTS. Defaults to 0, i.e. the
+ *        series counts operating cashflow only. Pass -capex to make it a
+ *        project-level series that begins in the hole, which is what a payback
+ *        period is normally measured against. Stated explicitly because the
+ *        calculator page and this module previously disagreed about it in
+ *        silence, and the two meanings of "payback" are not interchangeable.
  * @returns {object} { years, revenue, costs, netCashflow, cumulativeCashflow }
  */
 function buildYearlyCashflows(params) {
@@ -230,6 +367,7 @@ function buildYearlyCashflows(params) {
     opexEscalation,
     taxRate,
     royaltyRate,
+    initialCumulative,
   } = params;
 
   const years = [];
@@ -238,7 +376,7 @@ function buildYearlyCashflows(params) {
   const netCashflow = [];
   const cumulativeCashflow = [];
 
-  let cumulative = 0;
+  let cumulative = initialCumulative === undefined ? 0 : initialCumulative;
 
   for (let year = 1; year <= projectYears; year++) {
     const prod = calcDeclineProduction(initialRate, declineRate, year);
@@ -263,14 +401,20 @@ function buildYearlyCashflows(params) {
   return { years, revenue, costs, netCashflow, cumulativeCashflow };
 }
 
-// CommonJS export for Node.js/Jest; also exposed as browser globals
+// CommonJS export for Node.js/Jest. In the browser this file is loaded as a
+// classic <script>, so the declarations above are already globals.
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
+    DOLLARS_PER_MILLION,
+    IRR_BRACKET_LOW,
+    IRR_BRACKET_HIGH,
+    IRR_RATE_TOLERANCE,
     calcDeclineProduction,
     calcAnnualRevenue,
     calcAnnualOpex,
     calcNPV,
     calcIRR,
+    calcIRRResult,
     calcMIRR,
     calcPayback,
     formatMoney,

@@ -88,6 +88,51 @@ function boot(overrides) {
   return document.getElementById('result-content');
 }
 
+describe('the shipped default values are valid against their own inputs', () => {
+  // A default that violates its input's own step/min/max renders as :invalid
+  // in the browser. Changing decline_rate to a cited 12.5 against step="1"
+  // would have done exactly that.
+  const inputAttrs = () => {
+    const html = fs.readFileSync(PAGE, 'utf8');
+    const found = {};
+    for (const m of html.matchAll(/<input\b[^>]*id="([^"]+)"[^>]*>/g)) {
+      const tag = m[0];
+      const attr = (name) => {
+        const a = tag.match(new RegExp(name + '="([^"]*)"'));
+        return a ? a[1] : null;
+      };
+      found[m[1]] = {
+        value: attr('value'),
+        min: attr('min'),
+        max: attr('max'),
+        step: attr('step'),
+      };
+    }
+    return found;
+  };
+
+  test.each(Object.keys(FIELDS))('%s default satisfies min, max and step', (id) => {
+    const a = inputAttrs()[id];
+    const value = parseFloat(a.value);
+    const min = parseFloat(a.min);
+    const step = parseFloat(a.step);
+    expect(value).toBeGreaterThanOrEqual(min);
+    expect(value).toBeLessThanOrEqual(parseFloat(a.max));
+    // Floating-point safe multiple check against the step base (min).
+    const steps = (value - min) / step;
+    expect(Math.abs(steps - Math.round(steps))).toBeLessThan(1e-9);
+  });
+
+  test('the form defaults match the values the tests assert against', () => {
+    const attrs = inputAttrs();
+    const fromPage = {};
+    Object.keys(FIELDS).forEach((id) => {
+      fromPage[id] = attrs[id].value;
+    });
+    expect(fromPage).toEqual(FIELDS);
+  });
+});
+
 describe('NPV inline calculator — input guards', () => {
   test('a blank required field renders a validation message, not NaN', () => {
     const out = boot({ capex: '' });

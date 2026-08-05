@@ -205,19 +205,29 @@ describe('the page and the engine agree', () => {
 });
 
 describe('the unit conversion happens in exactly one place', () => {
-  test('the inline script converts dollars to $M exactly once', () => {
+  test('the inline script divides by the named constant exactly once', () => {
     const src = calculatorScript();
-    // The named constant is the single conversion site. Any second literal
-    // 1e6 / 1000000 in the page is a second, unguarded conversion - which is
-    // how the chart and the headline drifted apart in the first place.
-    const literals = src.match(/\b(1e6|1000000)\b/g) || [];
-    expect(literals).toHaveLength(1);
+    const conversions = src.match(/\/\s*DOLLARS_PER_MILLION/g) || [];
+    expect(conversions).toHaveLength(1);
   });
 
-  test('the single conversion site is a named constant', () => {
-    expect(calculatorScript()).toMatch(
-      /const\s+DOLLARS_PER_MILLION\s*=\s*1e6\s*;/
+  test('the inline script contains no bare magnitude literal', () => {
+    // The chart used to carry four separate `/ 1e6` conversions while the
+    // headline carried none, which is how the two drifted apart. The unit is
+    // defined once, in the engine, and the page names it.
+    const literals = calculatorScript().match(/\b(1e6|1000000)\b/g) || [];
+    expect(literals).toHaveLength(0);
+  });
+
+  test('the constant is defined once, in the engine', () => {
+    const engineSrc = fs.readFileSync(
+      path.join(__dirname, '..', '..', 'assets', 'js', 'npv-calculator-engine.js'),
+      'utf8'
     );
+    const definitions =
+      engineSrc.match(/const\s+DOLLARS_PER_MILLION\s*=\s*1e6\s*;/g) || [];
+    expect(definitions).toHaveLength(1);
+    expect(engine.DOLLARS_PER_MILLION).toBe(1e6);
   });
 });
 

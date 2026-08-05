@@ -1,0 +1,246 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Well-by-well production engineering for small and marginal operators — dynamometer card diagnosis, field triage, and keep/workover/shut-in/plug economics with the plugging liability carried.">
+    <meta name="keywords" content="stripper well, marginal well, small operator, rod pump, dynamometer card, pump fillage, pump-off controller, lease operating expense, plugging and abandonment, workover candidate, artificial lift">
+    <meta property="og:title" content="Small-Operator Brief — AceEngineer">
+    <meta property="og:description" content="Send one well's card file. Get back the downhole card, fillage stroke by stroke, and which parts of the card aren't trustworthy enough to diagnose on.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aceengineer.com/outreach/small-operator-brief.html">
+    <meta property="og:site_name" content="Analytical &amp; Computational Engineering">
+
+    <title>Small-Operator Brief — AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <style>
+        .brochure-hero {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 60%, #d97706 100%);
+            color: #fff;
+            padding: 64px 0 48px;
+            margin-top: -20px;
+        }
+        .brochure-hero h1 {
+            font-size: 2.4em;
+            font-weight: 700;
+            line-height: 1.15;
+            margin: 0 0 14px;
+        }
+        .brochure-hero .lead {
+            font-size: 1.18em;
+            opacity: 0.92;
+            max-width: 760px;
+            margin: 0 auto;
+            line-height: 1.55;
+        }
+        .brochure-hero .tagline {
+            display: inline-block;
+            font-size: 0.85em;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+        .why-block {
+            background: #f8f9fa;
+            padding: 28px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .why-block p {
+            font-size: 1.05em;
+            line-height: 1.6;
+            color: #2d3748;
+            margin: 0 0 12px;
+            max-width: 880px;
+        }
+        .why-block p:last-child { margin-bottom: 0; }
+        .pillar-section { padding: 40px 0; }
+        .pillar {
+            border-left: 3px solid #d97706;
+            padding: 8px 0 8px 16px;
+            height: 100%;
+        }
+        .pillar h3 {
+            font-size: 1.15em;
+            font-weight: 600;
+            color: #1a365d;
+            margin: 0 0 8px;
+        }
+        .pillar p { color: #4a5568; line-height: 1.55; margin: 0; }
+        .niches { padding: 36px 0; background: #fff; }
+        .niches h2, .engagement h2, .pillar-section h2, .worked h2 {
+            font-size: 1.6em;
+            color: #1a365d;
+            margin: 0 0 18px;
+        }
+        .niches li { margin-bottom: 10px; line-height: 1.55; color: #2d3748; }
+        .niches li strong { color: #1a365d; }
+        .engagement { padding: 36px 0; background: #f8f9fa; }
+        .engagement p { line-height: 1.6; color: #2d3748; max-width: 880px; }
+        .worked { padding: 36px 0; background: #fff; }
+        .worked table { width: 100%; max-width: 760px; margin-bottom: 14px; }
+        .worked th {
+            font-size: 0.82em;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #4a5568;
+            border-bottom: 2px solid #d97706;
+            padding: 6px 14px 6px 0;
+            text-align: left;
+        }
+        .worked td {
+            padding: 9px 14px 9px 0;
+            border-bottom: 1px solid #e2e8f0;
+            color: #2d3748;
+        }
+        .worked td.num {
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-variant-numeric: tabular-nums;
+        }
+        .worked td.act-keep { color: #1f6f43; font-weight: 600; }
+        .worked td.act-hold { color: #8a5a1f; font-weight: 600; }
+        .worked .caveat { font-size: 0.92em; color: #4a5568; max-width: 820px; }
+        .honesty {
+            border-left: 3px solid #1a365d;
+            background: #f8f9fa;
+            padding: 16px 20px;
+            margin-top: 18px;
+            max-width: 880px;
+        }
+        .honesty p { margin: 0 0 10px; line-height: 1.6; color: #2d3748; }
+        .honesty p:last-child { margin-bottom: 0; }
+        .cta-block {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: #fff;
+            padding: 44px 0;
+            text-align: center;
+        }
+        .cta-block h2 { font-size: 1.6em; margin: 0 0 18px; }
+        .cta-block .btn { margin: 6px 8px; }
+        .cta-block .secondary {
+            display: block;
+            margin-top: 16px;
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+        @media (max-width: 768px) {
+            .brochure-hero h1 { font-size: 1.8em; }
+            .worked table { font-size: 0.92em; }
+        }
+    </style>
+</head>
+<body>
+
+<include src="partials/nav.html"></include>
+
+<main id="main">
+
+<section class="brochure-hero">
+    <div class="container text-center">
+        <span class="tagline">For Operators of Stripper &amp; Marginal Wells</span>
+        <h1>Which wells to work over, which to leave, and which to let go.</h1>
+        <p class="lead">Well-by-well production engineering for fields where a workover has to pay for itself. Send one dynamometer card file and get back a real diagnosis — including which parts of the card are not trustworthy enough to diagnose on.</p>
+    </div>
+</section>
+
+<section class="why-block">
+    <div class="container">
+        <p>This list did not come from a market study. It came from reading what operators running shallow, conventional wells wrote about their own fields — the cards they pulled, the bearings they lost, the parts they could not find.</p>
+        <p>We work rod lift and production engineering as software: physics that runs on your well data, not a dashboard subscription. Where we can help, this page says so plainly. Where we cannot, it says that too.</p>
+    </div>
+</section>
+
+<section class="pillar-section">
+    <div class="container">
+        <h2>Three things we do well</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="pillar">
+                    <h3>Read the card properly</h3>
+                    <p>Full surface-to-downhole conversion, fillage computed on plunger stroke rather than surface stroke, failure mode with a confidence figure — and an explicit statement of which segments of the derived card carry enough numerical confidence to diagnose on.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pillar">
+                    <h3>Rank the field</h3>
+                    <p>Nobody holds 150 wellbores in their head, so the marginal ones stay invisible until they fail loudly. We score every well you send and return one ordered list: which to drive to this week, and why. No new hardware on the lease.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pillar">
+                    <h3>Price the decision</h3>
+                    <p>Keep, work over, shut in, or plug — scored on one basis, with the plugging liability carried in every case. Leave P&amp;A out of the sum and every answer quietly tilts toward "keep pumping".</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="niches">
+    <div class="container">
+        <h2>What we keep hearing</h2>
+        <ul>
+            <li><strong>The well pumps off in five minutes and there is no controller on it.</strong> "Set a shutdown below 65–75% fillage" assumes hardware the well does not have, and is not tuned to your pump, rod string or inflow. The right setpoint is a calculation.</li>
+            <li><strong>Is that noise on the card real, or is it the instrument?</strong> On an accelerometer-based dyno, position is integrated twice from acceleration, so error accumulates across a stroke. Some of what looks like a pump tag is arithmetic.</li>
+            <li><strong>The low-volume wells get no attention until a neighbour calls.</strong> Not an equipment problem — a ranking problem.</li>
+            <li><strong>The walking beam left and took the saddle bearing with it.</strong> Torque and gearbox loading against the unit's actual rating finds the units running outside their envelope before the structure tells you.</li>
+            <li><strong>Repeated tubing splits, never the same joint.</strong> Fluid pound puts the lower rods into compression on the downstroke; buckled rods bear on tubing. If that holds, the pump-off fix is also the tubing fix, and rotators are treating a symptom.</li>
+            <li><strong>One missing seat nipple idles a rig day.</strong> A rod-lift workover bill of materials is something every operator in a basin holds a partial copy of.</li>
+            <li><strong>"Workovers will add 30 BOPD" — will they?</strong> A capital partner asks which wellbores, how much, and what the error bars are. That is inflow and field-health work, and it is the number that a flat claim cannot defend.</li>
+        </ul>
+    </div>
+</section>
+
+<section class="worked">
+    <div class="container">
+        <h2>Worked example — the plugging bill is deferred, not avoided</h2>
+        <p class="caveat">A marginal well is not competing against zero. It is competing against paying the plugging bill today, and deferral has real time value. That is why a well can lose money every month and still be worth holding — and why "shut in" is sometimes right when both producing and plugging are wrong.</p>
+        <table>
+            <thead>
+                <tr><th>Well</th><th>Month-1 operating cash</th><th>Breakeven oil price</th><th>Way forward</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>8 BOPD, 30 BWPD</td><td class="num">+$9,412</td><td class="num">$18.38/bbl</td><td class="act-keep">Keep</td></tr>
+                <tr><td>4 BOPD, 60 BWPD</td><td class="num">+$3,154</td><td class="num">$33.76/bbl</td><td class="act-keep">Keep — 127 months left</td></tr>
+                <tr><td>1.5 BOPD, 90 BWPD</td><td class="num">&minus;$1,014</td><td class="num">$91.79/bbl</td><td class="act-hold">Shut in</td></tr>
+                <tr><td>0.6 BOPD, 120 BWPD</td><td class="num">&minus;$2,953</td><td class="num">$260.03/bbl</td><td class="act-hold">Shut in</td></tr>
+            </tbody>
+        </table>
+        <p class="caveat">Illustrative cost deck — $65 oil, $45k plugging, 12.5% royalty, $0.75/bbl water, 8%/yr decline, 10% discount. Not any real operator's numbers. Note the bottom two: producing them destroys value, yet shutting in still beats plugging by roughly $16,000 each, purely from deferring the plugging bill.</p>
+        <div class="honesty">
+            <p><strong>An example of the kind of thing we will tell you.</strong> Preparing a card review this month we found a defect in our own fillage calculation: past a certain pump-off severity it reported a pounded-off pump as full. Severe, fast pump-off is exactly the regime a controller setpoint exists to catch, and it failed toward "healthy".</p>
+            <p>It is fixed, with a regression test, and the four vendor-analysed reference wells still agree to within 0.85 fillage points. We mention it because a firm that never reports finding anything wrong with its own tools is not checking.</p>
+        </div>
+    </div>
+</section>
+
+<section class="engagement">
+    <div class="container">
+        <h2>How to start</h2>
+        <p><strong>Send one well's card file</strong> — whatever your dyno or handheld exports. No install, no telemetry, no account.</p>
+        <p><strong>You get back</strong> the downhole card, fillage stroke by stroke, the diagnosis with a confidence figure, and the parts of the card we do <em>not</em> trust. If you also send a full-pump card from the same well, we calibrate the fillage scale first — a "shut down at 75%" rule means something different against a scale that does not top out at 100%.</p>
+        <p><strong>If it is useful, send the field.</strong> If it is not, you have lost an email and we have learned something about your wells.</p>
+        <p>What we do not do: find you money, or advise you on your bonding or plugging obligations. We are engineers, not a placement agent, and the obligation is a question for your counsel. We model the cost.</p>
+    </div>
+</section>
+
+<section class="cta-block">
+    <div class="container">
+        <h2>Send one card. See what comes back.</h2>
+        <a href="{{ rootPath }}contact.html" class="btn btn-info btn-lg">Get in touch</a>
+        <a href="{{ rootPath }}outreach/" class="btn btn-default btn-lg">Other briefs</a>
+        <span class="secondary">Achanta AceEngineer Inc., DBA AceEngineer &middot; vamsee.achanta@aceengineer.com</span>
+    </div>
+</section>
+
+</main>
+
+<include src="partials/footer.html"></include>
+
+</body>
+</html>

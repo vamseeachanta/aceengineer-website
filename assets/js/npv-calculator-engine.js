@@ -6,8 +6,15 @@
  *
  * Exports:
  *   calcDeclineProduction, calcAnnualRevenue, calcAnnualOpex,
- *   calcNPV, calcIRR, calcMIRR, calcPayback, formatMoney,
- *   buildYearlyCashflows
+ *   calcNPV, calcIRR, calcIRRResult, calcMIRR, calcPayback, formatMoney,
+ *   buildYearlyCashflows,
+ *   DOLLARS_PER_MILLION, IRR_BRACKET_LOW, IRR_BRACKET_HIGH,
+ *   IRR_RATE_TOLERANCE
+ *
+ * UNITS: this module computes in DOLLARS throughout. The calculator page's
+ * form is denominated in $M, so exactly one conversion sits between them —
+ * see DOLLARS_PER_MILLION. The one exception is formatMoney, which takes $M
+ * because it is a presentation helper; that contract is asserted by test.
  */
 
 'use strict';

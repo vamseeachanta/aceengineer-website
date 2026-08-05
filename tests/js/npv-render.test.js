@@ -27,20 +27,32 @@ const PAGE = path.join(
   'npv-field-development.html'
 );
 
+const engine = require('../../assets/js/npv-calculator-engine');
+
 // Default values mirror the `value="…"` attributes on the live inputs.
+// decline_rate and opex changed under #124 to cited public figures — see the
+// commit body. Everything else is as it shipped.
 const FIELDS = {
   initial_rate: '5000',
-  decline_rate: '15',
+  decline_rate: '12.5',
   project_years: '20',
   oil_price: '70',
   price_escalation: '2',
   capex: '500',
-  opex: '50',
+  opex: '16',
   opex_escalation: '3',
   discount_rate: '10',
   tax_rate: '21',
   royalty_rate: '18.75',
 };
+
+// A named input set that reaches the VIABLE branch and produces a real IRR.
+// Not a page default — a test input, used to prove those branches are live.
+const VIABLE_FIELDS = Object.assign({}, FIELDS, {
+  initial_rate: '40000',
+  capex: '2000',
+  opex: '120',
+});
 
 function calculatorScript() {
   const html = fs.readFileSync(PAGE, 'utf8');
@@ -66,6 +78,9 @@ function boot(overrides) {
   window.gtag = function () {};
   window.Plotly = { newPlot: function () {} };
 
+  // A classic <script src> exposes the engine's declarations as globals; the
+  // page depends on them the same way its sibling calculators do.
+  Object.assign(window, engine);
   // Indirect eval → the script's function declarations land on `window`.
   window.eval(calculatorScript());
   window.calculateNPV();
@@ -118,6 +133,7 @@ describe('NPV inline calculator — input guards', () => {
       '<div id="cashflow-chart"></div>';
     window.gtag = function () {};
     window.Plotly = { newPlot: spy };
+    Object.assign(window, engine);
     window.eval(calculatorScript());
     window.calculateNPV();
     expect(spy).not.toHaveBeenCalled();
@@ -146,11 +162,19 @@ describe('NPV inline calculator — DOM construction (no HTML sink)', () => {
 });
 
 describe('NPV inline calculator — frozen valid-input behaviour', () => {
+  // CORRECTED under #124. The old pattern allowed an optional `B` before the
+  // ` M` suffix, so it accepted the dimensionally incoherent `$348915.5B M`
+  // that shipped. Billions-and-millions is not a unit; the headline is $M.
   test('renders the NPV headline with the money format and unit', () => {
     const out = boot();
     const headline = out.querySelector('.result-value');
     expect(headline).not.toBeNull();
-    expect(headline.textContent).toMatch(/^\$-?[\d.]+B? M$/);
+    expect(headline.textContent).toMatch(/^\$-?\d+\.\d M$/);
+  });
+
+  test('no rendered result ever carries a "B M" unit string', () => {
+    expect(boot().textContent).not.toMatch(/B M/);
+    expect(boot(VIABLE_FIELDS).textContent).not.toMatch(/B M/);
   });
 
   test('the NPV label text is unchanged', () => {
@@ -160,47 +184,101 @@ describe('NPV inline calculator — frozen valid-input behaviour', () => {
     );
   });
 
+  // CORRECTED under #124. This test used the PAGE DEFAULTS and asserted they
+  // were profitable. With the units fixed they are not — the cited field loses
+  // money — so the assertion is re-pointed at a named profitable input set and
+  // the defaults get their own NOT VIABLE test below. The branch coverage this
+  // test was providing is preserved; only the input that reaches it changed.
   test('a profitable case is classed positive and reported VIABLE', () => {
-    const out = boot();
+    const out = boot(VIABLE_FIELDS);
     const headline = out.querySelector('.result-value');
     expect(headline.classList.contains('positive')).toBe(true);
     expect(out.textContent).toMatch(/VIABLE/);
     expect(out.querySelector('.success-text')).not.toBeNull();
   });
 
-  // CHARACTERISATION, NOT ENDORSEMENT.
-  //
-  // The shipped inline maths mixes units: annual revenue is computed in
-  // DOLLARS (rate * price * 365) while capex/opex are entered in $M, so the
-  // headline is ~6 orders of magnitude too large and the IRR bisection never
-  // converges (hence "Not calculable" on every run). That is a correctness
-  // defect in its own right and is explicitly OUT OF SCOPE for #16, which is a
-  // security/hardening issue.
-  //
-  // These tests pin the CURRENT numbers precisely so the innerHTML -> DOM
-  // refactor is provably behaviour-preserving. When the units defect is fixed
-  // under its own issue, these expectations must be updated deliberately.
-  test('the default-input headline value is unchanged by the refactor', () => {
+  test('the NOT VIABLE branch is reached by the page defaults', () => {
     const out = boot();
-    expect(out.querySelector('.result-value').textContent).toBe('$348915.5B M');
+    const headline = out.querySelector('.result-value');
+    expect(headline.classList.contains('negative')).toBe(true);
+    expect(out.textContent).toMatch(/NOT VIABLE/);
+    expect(out.querySelector('.danger-text')).not.toBeNull();
   });
 
-  test('the default-input profit ratio is unchanged by the refactor', () => {
-    const out = boot();
-    expect(out.textContent).toMatch(/Profit-to-Investment Ratio: 1162054\.01x/);
+  test('a profitable case reports a real IRR', () => {
+    // Two roots exist for this cashflow (-23.14% and +32.52% style shape);
+    // the rate above which NPV stays negative is the one reported.
+    const out = boot(VIABLE_FIELDS);
+    expect(out.textContent).toMatch(/Internal Rate of Return: 11\.76%/);
   });
 
+  test('a profitable case reports a payback period', () => {
+    const out = boot(VIABLE_FIELDS);
+    expect(out.textContent).toMatch(/Payback Period: 4\.5 years/);
+  });
+
+  // ENDORSED VALUES (#124), replacing the #16 characterisation block.
+  //
+  // The values below are no longer "whatever the page happens to emit". They
+  // are computed from the model and the cited default inputs, and the page is
+  // required to match them:
+  //
+  //   year-1 revenue after royalty = 5000 bbl/d x $70/bbl x 365 x (1-0.1875)
+  //                                = $103.8M, against $16M OPEX
+  //   NPV @ 10% over 20 years, 12.5%/yr decline, 3%/yr OPEX escalation
+  //                                = -$245.166196... M  ->  "$-245.2 M"
+  //   total undiscounted profit / CAPEX = -0.33553872...  ->  "-0.34x"
+  //
+  // The old expectations were $348915.5B M and 1162054.01x. Those were pinned
+  // deliberately by PR #123 as CHARACTERISATION, NOT ENDORSEMENT, precisely so
+  // this change would have to be made on purpose. They were wrong by a factor
+  // of ~1e6 because revenue was computed in dollars and costs in $M.
+  test('the default-input headline value is the corrected $M figure', () => {
+    const out = boot();
+    expect(out.querySelector('.result-value').textContent).toBe('$-245.2 M');
+  });
+
+  test('the default-input profit ratio is the corrected figure', () => {
+    const out = boot();
+    expect(out.textContent).toMatch(/Profit-to-Investment Ratio: -0\.34x/);
+  });
+
+  // CORRECTED under #124. This asserted `Payback Period: 1.0 years`, which was
+  // an artefact of revenue being ~1e6 too large — the project "repaid" its
+  // CAPEX in year one for any input at all. The cited defaults never repay.
   test('IRR and payback lines are both present', () => {
     const out = boot();
     expect(out.textContent).toMatch(/Internal Rate of Return:/);
-    expect(out.textContent).toMatch(/Payback Period: 1\.0 years/);
+    expect(out.textContent).toMatch(/Payback Period: No payback within project life/);
   });
 
-  test('the non-converging IRR is reported as Not calculable, in the danger style', () => {
+  // RE-POINTED under #124, and this is the subtle one. The string
+  // "Not calculable" survived the fix while its MEANING inverted: it used to
+  // mean "bisection exhausted 100 iterations against an absolute tolerance it
+  // could never meet", and now it would mean "no root exists". A test that
+  // keeps passing for a changed reason is worse than one that fails, so the
+  // page now distinguishes the two outcomes and this test pins the specific
+  // one the defaults actually produce.
+  test('the defaults report no IRR because no root exists, not a convergence failure', () => {
     const out = boot();
-    expect(out.textContent).toMatch(/Not calculable/);
+    expect(out.textContent).toMatch(/No IRR in the -50% to 200% range/);
+    expect(out.textContent).not.toMatch(/did not converge/);
     const danger = [...out.querySelectorAll('.danger-text')].map((el) => el.textContent);
-    expect(danger).toContain('Not calculable');
+    expect(danger).toContain('No IRR in the -50% to 200% range');
+  });
+
+  test('"no root" and "did not converge" are different rendered strings', () => {
+    // The engine is the authority on which outcome occurred; the page must not
+    // collapse them into one message the way the shipped code collapsed every
+    // failure into a bare null.
+    boot(); // loads the page script, which exposes irrMessage
+    const noRoot = engine.calcIRRResult(100, [-10, -10, -10]);
+    const notConverged = engine.calcIRRResult(100, [40, 40, 40], {
+      maxIterations: 1,
+    });
+    expect(noRoot.status).toBe('no-root');
+    expect(notConverged.status).toBe('not-converged');
+    expect(window.irrMessage(noRoot)).not.toBe(window.irrMessage(notConverged));
   });
 
   test('the results card is revealed on a successful calculation', () => {
@@ -219,6 +297,7 @@ describe('NPV inline calculator — frozen valid-input behaviour', () => {
       '<div id="cashflow-chart"></div>';
     window.gtag = function () {};
     window.Plotly = { newPlot: spy };
+    Object.assign(window, engine);
     window.eval(calculatorScript());
     window.calculateNPV();
     expect(spy).toHaveBeenCalledTimes(1);

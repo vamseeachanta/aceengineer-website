@@ -177,6 +177,7 @@
       "assets/js/capabilities-refresh.js",
       "assets/js/npv-calculator-engine.js",
       "assets/js/mooring-fatigue-engine.js",
+      "assets/js/dnv-c203-sn-engine.js",
       "assets/js/decline-curve-engine.js",
       "assets/js/dynacard-engine.js",
       "demos/hse-risk-dashboard-data.js"

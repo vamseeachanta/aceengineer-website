@@ -63,7 +63,7 @@
         "featureList": [
             "S-N curve calculations per DNV-RP-C203",
             "15 weld detail classifications (B1 through W3, plus T)",
-            "Thickness correction for plates > 25mm",
+            "Class-specific thickness correction per DNV-RP-C203 section 2.4.3",
             "In-air and seawater environment curves",
             "Two-slope S-N curves with automatic regime detection",
             "Supports API RP 2A and BS 7608 standards"
@@ -250,7 +250,7 @@
                     <div class="form-group">
                         <label for="thickness">Plate Thickness (mm)</label>
                         <input type="number" class="form-control" id="thickness" value="25" min="1" max="200" step="1">
-                        <p class="help-block">Reference thickness is 25mm. Correction applied for t > 25mm</p>
+                        <p class="help-block">Reference thickness t<sub>ref</sub> is 25 mm (32 mm for the T curve). Correction applied for t &gt; t<sub>ref</sub> with the class exponent k</p>
                     </div>
 
                     <div class="form-group">
@@ -260,7 +260,7 @@
                             <option value="seawater_cp">Seawater with Cathodic Protection</option>
                             <option value="seawater_free">Seawater, Free Corrosion</option>
                         </select>
-                        <p class="help-block">Seawater curves use DNV-RP-C203 Table 2-2 parameters</p>
+                        <p class="help-block">Curves per DNV-RP-C203 (2011) Table 2-1 (air), Table 2-2 (cathodic protection) and Table 2-3 (free corrosion)</p>
                     </div>
 
                     <button class="btn btn-primary btn-lg btn-block" onclick="calculateFatigue()">
@@ -311,13 +311,16 @@
                         log(N) = log(a) - m x log(S)<br><br>
                         <strong>Thickness Correction:</strong><br>
                         S<sub>corrected</sub> = S x (t/t<sub>ref</sub>)<sup>k</sup><br>
-                        where t<sub>ref</sub> = 25mm, k = 0.25 for t > 25mm
+                        for t &gt; t<sub>ref</sub>, where t<sub>ref</sub> = 25 mm (32 mm for the T curve)
+                        and k is the class exponent (DNV-RP-C203 section 2.4.3)
                     </div>
                 </div>
 
                 <div class="alert alert-info" style="margin-top: 20px;">
-                    <strong>Note:</strong> This calculator uses two-slope S-N curves per DNV-RP-C203.
-                    The transition from slope m1 to m2 occurs at N = 10^7 cycles.
+                    <strong>Note:</strong> In air and in seawater with cathodic protection this calculator uses the
+                    two-slope S-N curves of DNV-RP-C203: slope m1 changes to m2 = 5 at N = 10^7 cycles in air
+                    and N = 10^6 cycles with cathodic protection. Free-corrosion curves are single slope, m = 3.
+                    Below 10^5 cycles, air and cathodic-protection lives are capped at the B1 curve of the same environment.
                 </div>
             </div>
         </div>
@@ -363,7 +366,7 @@
 
             <h3>Thickness Correction</h3>
             <p>
-                For plates thicker than the reference thickness (typically 25mm), a thickness correction is
+                For plates thicker than the reference thickness t<sub>ref</sub>, a thickness correction is
                 applied to account for increased probability of defects and stress gradient effects:
             </p>
 
@@ -374,8 +377,13 @@
             </div>
 
             <p>
-                Where k = 0.25 for welded joints (per DNV-RP-C203). This effectively reduces the allowable
-                fatigue life for thicker sections.
+                The correction applies only for t &gt; t<sub>ref</sub>. Per DNV-RP-C203 (2011) section 2.4.3,
+                t<sub>ref</sub> = 25 mm for welded connections other than tubular joints and 32 mm for tubular
+                joints (T curve). The exponent k depends on the curve class (Tables 2-1 to 2-3): k = 0 for
+                B1 and B2 (no correction), 0.15 for C, C1 and C2, 0.20 for D and E, and 0.25 for F to W3.
+                For the T curve, k = 0.25 for SCF &le; 10 and 0.30 for SCF &gt; 10; this calculator has no
+                SCF input and assumes SCF &le; 10 (k = 0.25). The correction reduces the allowable fatigue
+                life for thicker sections.
             </p>
 
             <h3>Environment Effects</h3>
@@ -456,119 +464,45 @@
 </footer>
 
 
+    <script src="../assets/js/dnv-c203-sn-engine.js"></script>
     <script>
-    // S-N curve parameters from DNV-RP-C203
-    // In-air curves: two-slope with transition at N=10^7
-    // Seawater curves: single slope (no transition) per DNV-RP-C203 Table 2-2
-    // B1/B2 seawater: m=4, C through W3 seawater: m=3
+    // DNV-RP-C203 curve parameters and life come from the shared engine
+    // (assets/js/dnv-c203-sn-engine.js): DNV-RP-C203 (2011) Tables 2-1, 2-2, 2-3.
+    // In air and with cathodic protection the curves are bilinear (knee at 1e7
+    // and 1e6 cycles); free-corrosion curves are single slope, m = 3.
     const snCurves = {
-        'B1': {
-            air: { loga1: 15.117, m1: 4, loga2: 17.146, m2: 5 },
-            seawater_cp: { loga1: 14.917, m1: 4, loga2: null, m2: null },
-            seawater_free: { loga1: 14.617, m1: 4, loga2: null, m2: null },
-            desc: 'Non-welded base material with machined edges'
-        },
-        'B2': {
-            air: { loga1: 14.885, m1: 4, loga2: 16.856, m2: 5 },
-            seawater_cp: { loga1: 14.685, m1: 4, loga2: null, m2: null },
-            seawater_free: { loga1: 14.385, m1: 4, loga2: null, m2: null },
-            desc: 'Butt welds ground flush to plate surface'
-        },
-        'C': {
-            air: { loga1: 12.592, m1: 3, loga2: 16.320, m2: 5 },
-            seawater_cp: { loga1: 12.192, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 11.892, m1: 3, loga2: null, m2: null },
-            desc: 'Butt welds with weld cap intact'
-        },
-        'C1': {
-            air: { loga1: 12.449, m1: 3, loga2: 16.081, m2: 5 },
-            seawater_cp: { loga1: 12.049, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 11.749, m1: 3, loga2: null, m2: null },
-            desc: 'Transverse butt welds on backing strip'
-        },
-        'C2': {
-            air: { loga1: 12.301, m1: 3, loga2: 15.835, m2: 5 },
-            seawater_cp: { loga1: 11.901, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 11.601, m1: 3, loga2: null, m2: null },
-            desc: 'Cruciform joints with full penetration welds'
-        },
-        'D': {
-            air: { loga1: 12.164, m1: 3, loga2: 15.606, m2: 5 },
-            seawater_cp: { loga1: 11.764, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 11.464, m1: 3, loga2: null, m2: null },
-            desc: 'Typical fillet welded joints for offshore structures'
-        },
-        'E': {
-            air: { loga1: 12.010, m1: 3, loga2: 15.350, m2: 5 },
-            seawater_cp: { loga1: 11.610, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 11.310, m1: 3, loga2: null, m2: null },
-            desc: 'Attachments and cover plates'
-        },
-        'F': {
-            air: { loga1: 11.855, m1: 3, loga2: 15.091, m2: 5 },
-            seawater_cp: { loga1: 11.455, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 11.155, m1: 3, loga2: null, m2: null },
-            desc: 'Lap joints with severe geometric discontinuities'
-        },
-        'F1': {
-            air: { loga1: 11.699, m1: 3, loga2: 14.832, m2: 5 },
-            seawater_cp: { loga1: 11.299, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 10.999, m1: 3, loga2: null, m2: null },
-            desc: 'Shear connectors and similar details'
-        },
-        'F3': {
-            air: { loga1: 11.546, m1: 3, loga2: 14.576, m2: 5 },
-            seawater_cp: { loga1: 11.146, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 10.846, m1: 3, loga2: null, m2: null },
-            desc: 'Severe notch details'
-        },
-        'G': {
-            air: { loga1: 11.398, m1: 3, loga2: 14.330, m2: 5 },
-            seawater_cp: { loga1: 10.998, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 10.698, m1: 3, loga2: null, m2: null },
-            desc: 'Partial penetration welds'
-        },
-        'W1': {
-            air: { loga1: 11.261, m1: 3, loga2: 14.101, m2: 5 },
-            seawater_cp: { loga1: 10.861, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 10.561, m1: 3, loga2: null, m2: null },
-            desc: 'Weld root details with backing left in place'
-        },
-        'W2': {
-            air: { loga1: 11.107, m1: 3, loga2: 13.845, m2: 5 },
-            seawater_cp: { loga1: 10.707, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 10.407, m1: 3, loga2: null, m2: null },
-            desc: 'Weld root with backing removed'
-        },
-        'W3': {
-            air: { loga1: 10.970, m1: 3, loga2: 13.617, m2: 5 },
-            seawater_cp: { loga1: 10.570, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 10.270, m1: 3, loga2: null, m2: null },
-            desc: 'Single-sided fillet welds'
-        },
-        'T': {
-            air: { loga1: 12.164, m1: 3, loga2: 15.606, m2: 5 },
-            seawater_cp: { loga1: 11.764, m1: 3, loga2: null, m2: null },
-            seawater_free: { loga1: 11.464, m1: 3, loga2: null, m2: null },
-            desc: 'Tubular joints using hot-spot stress method'
-        }
+        'B1': { desc: 'Non-welded base material with machined edges' },
+        'B2': { desc: 'Butt welds ground flush to plate surface' },
+        'C': { desc: 'Butt welds with weld cap intact' },
+        'C1': { desc: 'Transverse butt welds on backing strip' },
+        'C2': { desc: 'Cruciform joints with full penetration welds' },
+        'D': { desc: 'Typical fillet welded joints for offshore structures' },
+        'E': { desc: 'Attachments and cover plates' },
+        'F': { desc: 'Lap joints with severe geometric discontinuities' },
+        'F1': { desc: 'Shear connectors and similar details' },
+        'F3': { desc: 'Severe notch details' },
+        'G': { desc: 'Partial penetration welds' },
+        'W1': { desc: 'Weld root details with backing left in place' },
+        'W2': { desc: 'Weld root with backing removed' },
+        'W3': { desc: 'Single-sided fillet welds' },
+        'T': { desc: 'Tubular joints using hot-spot stress method' }
     };
 
     function updateCurveInfo() {
         const curve = document.getElementById('snCurve').value;
         const environment = document.getElementById('environment').value;
         const curveData = snCurves[curve];
-        const params = curveData[environment];
+        const params = DnvC203Sn.curveParams(curve, environment);
 
         document.getElementById('curveDescription').textContent = curveData.desc;
 
         // Display parameters based on environment
-        if (params.loga2 !== null) {
+        if (params.knee_cycles !== null) {
             document.getElementById('paramDisplay').textContent =
-                `log(a1) = ${params.loga1}, m1 = ${params.m1}, log(a2) = ${params.loga2}, m2 = ${params.m2}`;
+                `log(a1) = ${params.log_a1.toFixed(3)}, m1 = ${params.m1}, log(a2) = ${params.log_a2.toFixed(3)}, m2 = ${params.m2}, knee at N = 10^${Math.log10(params.knee_cycles)}`;
         } else {
             document.getElementById('paramDisplay').textContent =
-                `log(a) = ${params.loga1}, m = ${params.m1} (single slope for seawater)`;
+                `log(a) = ${params.log_a1.toFixed(3)}, m = ${params.m1} (single slope, free corrosion)`;
         }
     }
 
@@ -585,51 +519,36 @@
             return;
         }
 
-        // Get S-N curve parameters for selected environment
-        const curveData = snCurves[curve];
-        const params = curveData[environment];
-
-        // Calculate thickness correction (for t > 25mm)
-        const tRef = 25;
-        const k = 0.25;
-        let thicknessCorrFactor = 1.0;
-        if (thickness > tRef) {
-            thicknessCorrFactor = Math.pow(thickness / tRef, k);
+        if (isNaN(thickness) || thickness <= 0) {
+            alert('Please enter a valid thickness');
+            return;
         }
+
+        // Thickness correction, DNV-RP-C203 section 2.4.3: class-specific k,
+        // t_ref = 25 mm (32 mm for the T curve), applied only for t > t_ref.
+        // No SCF input: SCF <= 10 is assumed for the T curve (k = 0.25).
+        const thicknessCorrFactor = DnvC203Sn.thicknessCorrection(curve, thickness).factor;
 
         // Apply corrections to stress range
         const correctedStress = stressRange * thicknessCorrFactor;
 
-        // Calculate log(S)
-        const logS = Math.log10(correctedStress);
-
-        let logN, regime;
-
-        // Check if two-slope curve (in-air and some seawater cases) or single slope (most seawater)
-        if (params.loga2 !== null && params.m2 !== null) {
-            // Two-slope curve: transition at N = 10^7 cycles
-            const transitionLogN = 7;
-            const transitionLogS1 = (params.loga1 - transitionLogN) / params.m1;
-            const transitionS = Math.pow(10, transitionLogS1);
-
-            if (correctedStress >= transitionS) {
-                // High stress, use first slope (m1)
-                logN = params.loga1 - params.m1 * logS;
-                regime = `Slope m1 = ${params.m1} (N < 10^7)`;
-            } else {
-                // Low stress, use second slope (m2)
-                logN = params.loga2 - params.m2 * logS;
-                regime = `Slope m2 = ${params.m2} (N > 10^7)`;
-            }
+        // Allowable cycles from DNV-RP-C203: bilinear air and CP curves,
+        // single-slope free corrosion, B1 cap below 1e5 cycles for air and CP
+        const r = DnvC203Sn.allowableCycles(curve, environment, correctedStress);
+        const logN = r.logN;
+        let regime;
+        if (r.capped) {
+            regime = `B1 curve, m = ${r.m} (low-cycle cap below 10^5 cycles)`;
+        } else if (DnvC203Sn.curveParams(curve, environment).knee_cycles === null) {
+            regime = `Single slope m = ${r.m} (free-corrosion curve)`;
+        } else if (r.segment === 1) {
+            regime = `Slope m1 = ${r.m} (N at or below the knee)`;
         } else {
-            // Single slope curve (seawater environments per DNV-RP-C203)
-            // No transition - single slope extends to endurance limit
-            logN = params.loga1 - params.m1 * logS;
-            regime = `Single slope m = ${params.m1} (seawater curve)`;
+            regime = `Slope m2 = ${r.m} (N above the knee)`;
         }
 
         // Calculate N
-        let N = Math.pow(10, logN);
+        let N = r.N;
 
         // Update results display
         const resultBox = document.getElementById('resultBox');

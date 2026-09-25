@@ -40,6 +40,7 @@
 </script>
 
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" integrity="sha384-Hl48Kq2HifOWdXEjMsKo6qxqvRLTYqIGbvlENBmkHAxZKIGCXv43H6W1jA671RzC" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../assets/js/dnv-c203-sn-engine.js"></script>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -452,23 +453,23 @@
             dnv: {
                 name: 'DNV-RP-C203',
                 curves: {
-                    'B1': { log_a_air: 15.117, m1: 4.0, log_a_sw: 14.917, m_sw: 4.0, desc: 'Base material, automatic welds' },
-                    'B2': { log_a_air: 14.885, m1: 4.0, log_a_sw: 14.685, m_sw: 4.0, desc: 'Butt welds, double sided' },
-                    'C': { log_a_air: 12.592, m1: 3.0, log_a_sw: 12.192, m_sw: 3.0, desc: 'Transverse butt welds' },
-                    'C1': { log_a_air: 12.449, m1: 3.0, log_a_sw: 12.049, m_sw: 3.0, desc: 'Transverse butt welds, one side' },
-                    'C2': { log_a_air: 12.301, m1: 3.0, log_a_sw: 11.901, m_sw: 3.0, desc: 'Cruciform joints' },
-                    'D': { log_a_air: 12.164, m1: 3.0, log_a_sw: 11.764, m_sw: 3.0, desc: 'Welded attachments, load-carrying' },
-                    'E': { log_a_air: 12.010, m1: 3.0, log_a_sw: 11.610, m_sw: 3.0, desc: 'Cover plates, gussets' },
-                    'F': { log_a_air: 11.855, m1: 3.0, log_a_sw: 11.455, m_sw: 3.0, desc: 'Longitudinal attachments' },
-                    'F1': { log_a_air: 11.699, m1: 3.0, log_a_sw: 11.299, m_sw: 3.0, desc: 'Longitudinal welds' },
-                    'F3': { log_a_air: 11.546, m1: 3.0, log_a_sw: 11.146, m_sw: 3.0, desc: 'Intermittent welds' },
-                    'G': { log_a_air: 11.398, m1: 3.0, log_a_sw: 10.998, m_sw: 3.0, desc: 'Fillet welds' },
-                    'W1': { log_a_air: 11.261, m1: 3.0, log_a_sw: 10.861, m_sw: 3.0, desc: 'Partial penetration welds' },
-                    'W2': { log_a_air: 11.107, m1: 3.0, log_a_sw: 10.707, m_sw: 3.0, desc: 'Fillet welds, load-carrying' },
-                    'W3': { log_a_air: 10.970, m1: 3.0, log_a_sw: 10.570, m_sw: 3.0, desc: 'Root failures' },
-                    'T': { log_a_air: 12.164, m1: 3.0, log_a_sw: 11.764, m_sw: 3.0, desc: 'Tubular joints' }
+                    'B1': { desc: 'Base material, automatic welds' },
+                    'B2': { desc: 'Butt welds, double sided' },
+                    'C': { desc: 'Transverse butt welds' },
+                    'C1': { desc: 'Transverse butt welds, one side' },
+                    'C2': { desc: 'Cruciform joints' },
+                    'D': { desc: 'Welded attachments, load-carrying' },
+                    'E': { desc: 'Cover plates, gussets' },
+                    'F': { desc: 'Longitudinal attachments' },
+                    'F1': { desc: 'Longitudinal welds' },
+                    'F3': { desc: 'Intermittent welds' },
+                    'G': { desc: 'Fillet welds' },
+                    'W1': { desc: 'Partial penetration welds' },
+                    'W2': { desc: 'Fillet welds, load-carrying' },
+                    'W3': { desc: 'Root failures' },
+                    'T': { desc: 'Tubular joints' }
                 },
-                info: 'DNV-RP-C203 provides S-N curves for fatigue analysis of offshore steel structures. The curves account for different weld details, environments, and thickness effects.'
+                info: 'DNV-RP-C203 provides S-N curves for fatigue analysis of offshore steel structures. The curves account for different weld details, environments, and thickness effects. In air and in seawater with cathodic protection the curves are bilinear: slope m1 up to the knee (10^7 cycles in air, 10^6 with cathodic protection), then m = 5. Free-corrosion curves are single slope, m = 3. Below 10^5 cycles the air and cathodic-protection curves are capped at the B1 curve of the same environment. Parameters: DNV-RP-C203 (2011) Tables 2-1 to 2-3; for these classes the air and cathodic-protection values are unchanged in the 2021 edition.'
             },
             api: {
                 name: 'API RP 2A',
@@ -564,28 +565,45 @@
             const cycles = document.getElementById('cycles').value ? parseFloat(document.getElementById('cycles').value) : null;
             const scf = parseFloat(document.getElementById('scf').value);
 
-            // Get curve parameters
-            const curve = snCurves[standard].curves[curveKey];
-            let log_a, m;
-
-            if (environment === 'air') {
-                log_a = curve.log_a_air;
-                m = curve.m1;
-            } else if (environment === 'seawater_cp') {
-                log_a = curve.log_a_sw;
-                m = curve.m_sw || curve.m1;
-            } else {
-                // Free corrosion - reduce by additional factor
-                log_a = curve.log_a_sw - 0.3;
-                m = curve.m_sw || curve.m1;
-            }
-
             // Apply SCF to stress range
             const effectiveStress = stressRange * scf;
 
-            // Calculate allowable cycles: N = 10^(log_a) / S^m
-            const a = Math.pow(10, log_a);
-            const allowableCycles = a / Math.pow(effectiveStress, m);
+            let log_a, m, allowableCycles;
+            let curveNote = '';
+            if (standard === 'dnv') {
+                // DNV-RP-C203: bilinear air and CP curves, single-slope free-corrosion
+                // curves, and the B1 cap below 1e5 cycles (assets/js/dnv-c203-sn-engine.js)
+                const r = DnvC203Sn.allowableCycles(curveKey, environment, effectiveStress);
+                log_a = r.log_a;
+                m = r.m;
+                allowableCycles = r.N;
+                if (r.capped) {
+                    curveNote = ' (B1 curve: low-cycle cap below 10^5 cycles)';
+                } else if (DnvC203Sn.curveParams(curveKey, environment).knee_cycles) {
+                    curveNote = r.segment === 1 ? ' (segment 1, above the knee stress)' : ' (segment 2, below the knee stress)';
+                } else {
+                    curveNote = ' (single slope)';
+                }
+            } else {
+                // Get curve parameters
+                const curve = snCurves[standard].curves[curveKey];
+
+                if (environment === 'air') {
+                    log_a = curve.log_a_air;
+                    m = curve.m1;
+                } else if (environment === 'seawater_cp') {
+                    log_a = curve.log_a_sw;
+                    m = curve.m_sw || curve.m1;
+                } else {
+                    // Free corrosion - reduce by additional factor
+                    log_a = curve.log_a_sw - 0.3;
+                    m = curve.m_sw || curve.m1;
+                }
+
+                // Calculate allowable cycles: N = 10^(log_a) / S^m
+                const a = Math.pow(10, log_a);
+                allowableCycles = a / Math.pow(effectiveStress, m);
+            }
 
             // Calculate damage if cycles provided
             let damage = null;
@@ -603,7 +621,7 @@
                     <p><strong>Effective Stress:</strong> ${effectiveStress.toFixed(1)} MPa</p>
                     <p><strong>S-N Curve:</strong> ${snCurves[standard].name} - ${curveKey}</p>
                     <p><strong>Environment:</strong> ${getEnvironmentName(environment)}</p>
-                    <p><strong>log(a):</strong> ${log_a.toFixed(3)} | <strong>m:</strong> ${m}</p>
+                    <p><strong>log(a):</strong> ${log_a.toFixed(3)} | <strong>m:</strong> ${m}${curveNote}</p>
             `;
 
             if (damage !== null) {
@@ -641,20 +659,32 @@
             const environment = document.getElementById('environment').value;
             const curve = snCurves[standard].curves[curveKey];
 
-            let log_a = environment === 'air' ? curve.log_a_air : curve.log_a_sw;
-            if (environment === 'seawater_fc') log_a -= 0.3;
-            const m = environment === 'air' ? curve.m1 : (curve.m_sw || curve.m1);
-
             // Generate S-N curve data
             const stressValues = [];
             const cycleValues = [];
-            const a = Math.pow(10, log_a);
 
-            for (let s = 10; s <= 500; s += 5) {
-                const n = a / Math.pow(s, m);
-                if (n >= 1e3 && n <= 1e10) {
-                    stressValues.push(s);
-                    cycleValues.push(n);
+            if (standard === 'dnv') {
+                // Log-spaced stress ranges, 10 to 1000 MPa, so the knee and both segments are drawn
+                for (let i = 0; i <= 240; i += 1) {
+                    const s = Math.pow(10, 1 + i / 120);
+                    const n = DnvC203Sn.allowableCycles(curveKey, environment, s).N;
+                    if (n >= 1e3 && n <= 1e10) {
+                        stressValues.push(s);
+                        cycleValues.push(n);
+                    }
+                }
+            } else {
+                let log_a = environment === 'air' ? curve.log_a_air : curve.log_a_sw;
+                if (environment === 'seawater_fc') log_a -= 0.3;
+                const m = environment === 'air' ? curve.m1 : (curve.m_sw || curve.m1);
+                const a = Math.pow(10, log_a);
+
+                for (let s = 10; s <= 500; s += 5) {
+                    const n = a / Math.pow(s, m);
+                    if (n >= 1e3 && n <= 1e10) {
+                        stressValues.push(s);
+                        cycleValues.push(n);
+                    }
                 }
             }
 

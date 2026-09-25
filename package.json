@@ -140,6 +140,11 @@
         "testMatch": ["<rootDir>/tests/js/mooring-fatigue.test.js"]
       },
       {
+        "displayName": "fatigue-sn-dnv-curves",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/fatigue-sn-dnv-curves.test.js"]
+      },
+      {
         "displayName": "decline-curve",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/decline-curve.test.js"]

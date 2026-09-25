@@ -63,7 +63,7 @@
         "featureList": [
             "S-N curve calculations per DNV-RP-C203",
             "15 weld detail classifications (B1 through W3, plus T)",
-            "Thickness correction for plates > 25mm",
+            "Class-specific thickness correction per DNV-RP-C203 section 2.4.3",
             "In-air and seawater environment curves",
             "Two-slope S-N curves with automatic regime detection",
             "Supports API RP 2A and BS 7608 standards"
@@ -250,7 +250,7 @@
                     <div class="form-group">
                         <label for="thickness">Plate Thickness (mm)</label>
                         <input type="number" class="form-control" id="thickness" value="25" min="1" max="200" step="1">
-                        <p class="help-block">Reference thickness is 25mm. Correction applied for t > 25mm</p>
+                        <p class="help-block">Reference thickness t<sub>ref</sub> is 25 mm (32 mm for the T curve). Correction applied for t &gt; t<sub>ref</sub> with the class exponent k</p>
                     </div>
 
                     <div class="form-group">
@@ -311,7 +311,8 @@
                         log(N) = log(a) - m x log(S)<br><br>
                         <strong>Thickness Correction:</strong><br>
                         S<sub>corrected</sub> = S x (t/t<sub>ref</sub>)<sup>k</sup><br>
-                        where t<sub>ref</sub> = 25mm, k = 0.25 for t > 25mm
+                        for t &gt; t<sub>ref</sub>, where t<sub>ref</sub> = 25 mm (32 mm for the T curve)
+                        and k is the class exponent (DNV-RP-C203 section 2.4.3)
                     </div>
                 </div>
 
@@ -365,7 +366,7 @@
 
             <h3>Thickness Correction</h3>
             <p>
-                For plates thicker than the reference thickness (typically 25mm), a thickness correction is
+                For plates thicker than the reference thickness t<sub>ref</sub>, a thickness correction is
                 applied to account for increased probability of defects and stress gradient effects:
             </p>
 
@@ -376,8 +377,13 @@
             </div>
 
             <p>
-                Where k = 0.25 for welded joints (per DNV-RP-C203). This effectively reduces the allowable
-                fatigue life for thicker sections.
+                The correction applies only for t &gt; t<sub>ref</sub>. Per DNV-RP-C203 (2011) section 2.4.3,
+                t<sub>ref</sub> = 25 mm for welded connections other than tubular joints and 32 mm for tubular
+                joints (T curve). The exponent k depends on the curve class (Tables 2-1 to 2-3): k = 0 for
+                B1 and B2 (no correction), 0.15 for C, C1 and C2, 0.20 for D and E, and 0.25 for F to W3.
+                For the T curve, k = 0.25 for SCF &le; 10 and 0.30 for SCF &gt; 10; this calculator has no
+                SCF input and assumes SCF &le; 10 (k = 0.25). The correction reduces the allowable fatigue
+                life for thicker sections.
             </p>
 
             <h3>Environment Effects</h3>
@@ -513,13 +519,15 @@
             return;
         }
 
-        // Calculate thickness correction (for t > 25mm)
-        const tRef = 25;
-        const k = 0.25;
-        let thicknessCorrFactor = 1.0;
-        if (thickness > tRef) {
-            thicknessCorrFactor = Math.pow(thickness / tRef, k);
+        if (isNaN(thickness) || thickness <= 0) {
+            alert('Please enter a valid thickness');
+            return;
         }
+
+        // Thickness correction, DNV-RP-C203 section 2.4.3: class-specific k,
+        // t_ref = 25 mm (32 mm for the T curve), applied only for t > t_ref.
+        // No SCF input: SCF <= 10 is assumed for the T curve (k = 0.25).
+        const thicknessCorrFactor = DnvC203Sn.thicknessCorrection(curve, thickness).factor;
 
         // Apply corrections to stress range
         const correctedStress = stressRange * thicknessCorrFactor;

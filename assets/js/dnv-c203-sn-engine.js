@@ -22,8 +22,18 @@
  * No cap is stated for free corrosion. Where the detail curve gives fewer
  * than 1e5 cycles, N is taken from B1 if B1 gives fewer cycles.
  *
- * Not applied here: thickness correction, the section 2.11 fatigue-limit
- * conditions, and design fatigue factors.
+ * Thickness correction (section 2.4.3), thicknessCorrection():
+ *   S_corrected = S (t / t_ref)^k   for t > t_ref, otherwise S
+ *   t_ref = 25 mm for welded connections other than tubular joints,
+ *           32 mm for tubular joints (T curve)
+ *   k per class from Tables 2-1 to 2-3 (the same in all environments);
+ *   T curve: k = 0.25 for SCF <= 10, 0.30 for SCF > 10. Where no SCF is
+ *   given, SCF <= 10 is assumed (k = 0.25).
+ *   Not covered: k = 0.10 for tubular butt welds made from one side, and
+ *   the bolt reference thickness.
+ *
+ * Not applied here: the section 2.11 fatigue-limit conditions and design
+ * fatigue factors.
  */
 
 // 'use strict' sits inside the function so that the top-level `var` stays a
@@ -116,6 +126,38 @@ var DnvC203Sn = (function () {
     return { N: Math.pow(10, r.logN), logN: r.logN, segment: r.segment, m: r.m, log_a: r.log_a, capped: capped };
   }
 
+  // Thickness exponent k, Tables 2-1, 2-2 and 2-3 (same in all environments).
+  var THICKNESS_K = {
+    B1: 0, B2: 0,
+    C: 0.15, C1: 0.15, C2: 0.15,
+    D: 0.20, E: 0.20,
+    F: 0.25, F1: 0.25, F3: 0.25, G: 0.25, W1: 0.25, W2: 0.25, W3: 0.25,
+    T: 0.25
+  };
+  var T_K_SCF_GT_10 = 0.30;
+  var T_REF_MM = { welded: 25, tubular: 32 };
+
+  /**
+   * Thickness correction factor on stress range, section 2.4.3.
+   * t_mm: thickness (mm); scf: optional SCF, used only for the T curve
+   * (omitted -> SCF <= 10 assumed).
+   * Returns { factor, t_ref, k, applied }.
+   */
+  function thicknessCorrection(cls, t_mm, scf) {
+    if (!Object.prototype.hasOwnProperty.call(THICKNESS_K, cls)) {
+      throw new Error('Unknown DNV-RP-C203 curve class: ' + cls);
+    }
+    if (typeof t_mm !== 'number' || !isFinite(t_mm) || t_mm <= 0) {
+      throw new Error('Thickness must be a positive number');
+    }
+    var tubular = cls === 'T';
+    var t_ref = tubular ? T_REF_MM.tubular : T_REF_MM.welded;
+    var k = THICKNESS_K[cls];
+    if (tubular && typeof scf === 'number' && scf > 10) k = T_K_SCF_GT_10;
+    var applied = t_mm > t_ref && k > 0;
+    return { factor: applied ? Math.pow(t_mm / t_ref, k) : 1, t_ref: t_ref, k: k, applied: applied };
+  }
+
   var CURVES = {};
   Object.keys(TABLE).forEach(function (cls) {
     CURVES[cls] = {
@@ -132,7 +174,8 @@ var DnvC203Sn = (function () {
     normaliseEnvironment: normaliseEnvironment,
     curveParams: curveParams,
     lowCycleCapCurve: lowCycleCapCurve,
-    allowableCycles: allowableCycles
+    allowableCycles: allowableCycles,
+    thicknessCorrection: thicknessCorrection
   };
 })();
 

@@ -355,12 +355,16 @@ describe('engine: thickness correction (section 2.4.3)', () => {
 // dist/assets/ (only CSS is filtered). The legacy copies under calculators/
 // are served as they are. So a URL is resolved against the page's served
 // directory, and dist/ maps back to the repository root.
+// Parsed as HTML (scripts not run), so commented-out tags and data-src attributes are not
+// elements with a src; only JavaScript script types count as executable dependencies.
 function engineScriptSrcs(html) {
-  const srcs = [];
-  const re = /<script\b[^>]*\bsrc\s*=\s*"([^"]*dnv-c203-sn-engine[^"]*)"[^>]*>/gi;
-  let m;
-  while ((m = re.exec(html)) !== null) srcs.push(m[1]);
-  return srcs;
+  const body = html.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
+  const doc = new JSDOM(body).window.document;
+  const jsTypes = new Set(['', 'text/javascript', 'application/javascript', 'module']);
+  return [...doc.querySelectorAll('script[src]')]
+    .filter((s) => jsTypes.has((s.getAttribute('type') || '').trim().toLowerCase()))
+    .map((s) => s.getAttribute('src'))
+    .filter((src) => src.includes('dnv-c203-sn-engine'));
 }
 
 function resolveServedFile(relPath, html, src) {

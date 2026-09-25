@@ -380,6 +380,26 @@ function resolveServedFile(relPath, html, src) {
   return path.join(ROOT, served);
 }
 
+describe('engineScriptSrcs only counts executable script tags', () => {
+  const tag = '<script src="../assets/js/dnv-c203-sn-engine.js"></script>';
+  test('a live tag is found', () => {
+    expect(engineScriptSrcs(`<html><body>${tag}</body></html>`)).toHaveLength(1);
+  });
+  test('a commented-out tag is not a dependency', () => {
+    expect(engineScriptSrcs(`<html><body><!-- ${tag} --></body></html>`)).toHaveLength(0);
+  });
+  test('a data-src attribute is not a dependency', () => {
+    expect(engineScriptSrcs(
+      '<html><body><script data-src="../assets/js/dnv-c203-sn-engine.js"></script></body></html>',
+    )).toHaveLength(0);
+  });
+  test('a non-JavaScript type is not a dependency', () => {
+    expect(engineScriptSrcs(
+      '<html><body><script type="text/plain" src="../assets/js/dnv-c203-sn-engine.js"></script></body></html>',
+    )).toHaveLength(0);
+  });
+});
+
 describe.each([...SN_PAGES, ...LIFE_PAGES])('%s engine URL', (relPath) => {
   const html = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
 

@@ -279,6 +279,121 @@ describe('engine: low-cycle cap at the B1 curve below 1e5 cycles', () => {
   });
 });
 
+// Thickness exponent k per class, DNV-RP-C203 (2011) Tables 2-1, 2-2, 2-3
+// (the same k in all three environments). T: k = 0.25 for SCF <= 10 and
+// 0.30 for SCF > 10. Section 2.4.3: t_ref = 25 mm for welded connections
+// other than tubular joints, 32 mm for tubular joints (T curve); the
+// correction applies only for t > t_ref.
+const THICKNESS_K = {
+  B1: 0, B2: 0,
+  C: 0.15, C1: 0.15, C2: 0.15,
+  D: 0.20, E: 0.20,
+  F: 0.25, F1: 0.25, F3: 0.25, G: 0.25, W1: 0.25, W2: 0.25, W3: 0.25,
+  T: 0.25,
+};
+
+describe('engine: thickness correction (section 2.4.3)', () => {
+  test.each(CLASSES)('class %s: k and t_ref from the table', (cls) => {
+    const r = engine.thicknessCorrection(cls, 60);
+    expect(r.k).toBe(THICKNESS_K[cls]);
+    expect(r.t_ref).toBe(cls === 'T' ? 32 : 25);
+    expect(r.factor).toBeCloseTo((60 / r.t_ref) ** THICKNESS_K[cls], 12);
+  });
+
+  test('B1 and B2 (k = 0): no reduction at non-reference thicknesses', () => {
+    for (const cls of ['B1', 'B2']) {
+      for (const t of [26, 40, 50, 100]) {
+        expect(engine.thicknessCorrection(cls, t).factor).toBe(1);
+      }
+    }
+  });
+
+  test('T curve: t_ref is 32 mm, so 32 mm gives no correction', () => {
+    const r = engine.thicknessCorrection('T', 32);
+    expect(r.t_ref).toBe(32);
+    expect(r.factor).toBe(1);
+  });
+
+  test('T curve at 40 mm: (40/32)^0.25 for SCF <= 10', () => {
+    expect(engine.thicknessCorrection('T', 40).factor).toBeCloseTo((40 / 32) ** 0.25, 12);
+    expect(engine.thicknessCorrection('T', 40, 10).factor).toBeCloseTo((40 / 32) ** 0.25, 12);
+  });
+
+  test('T curve at 40 mm with SCF > 10: k = 0.30', () => {
+    const r = engine.thicknessCorrection('T', 40, 12);
+    expect(r.k).toBe(0.30);
+    expect(r.factor).toBeCloseTo((40 / 32) ** 0.30, 12);
+  });
+
+  test('D (k = 0.20) at 50 mm: (50/25)^0.20, not (50/25)^0.25', () => {
+    const r = engine.thicknessCorrection('D', 50);
+    expect(r.k).toBe(0.20);
+    expect(r.factor).toBeCloseTo(2 ** 0.20, 12);
+    expect(r.factor).not.toBeCloseTo(2 ** 0.25, 6);
+  });
+
+  test('no correction at or below t_ref', () => {
+    for (const cls of CLASSES) {
+      expect(engine.thicknessCorrection(cls, 25).factor).toBe(1);
+      expect(engine.thicknessCorrection(cls, 10).factor).toBe(1);
+    }
+  });
+
+  test('rejects an unknown class or a non-positive thickness', () => {
+    expect(() => engine.thicknessCorrection('X', 40)).toThrow();
+    expect(() => engine.thicknessCorrection('D', 0)).toThrow();
+    expect(() => engine.thicknessCorrection('D', NaN)).toThrow();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Pages: each page's own engine URL resolves to a real file.
+// ---------------------------------------------------------------------------
+
+// build.js renders content/<dir>/<page> to dist/<dir>/<page>, substituting
+// {{ rootPath }} from the page's front matter, and copies assets/ to
+// dist/assets/ (only CSS is filtered). The legacy copies under calculators/
+// are served as they are. So a URL is resolved against the page's served
+// directory, and dist/ maps back to the repository root.
+function engineScriptSrcs(html) {
+  const srcs = [];
+  const re = /<script\b[^>]*\bsrc\s*=\s*"([^"]*dnv-c203-sn-engine[^"]*)"[^>]*>/gi;
+  let m;
+  while ((m = re.exec(html)) !== null) srcs.push(m[1]);
+  return srcs;
+}
+
+function resolveServedFile(relPath, html, src) {
+  let url = src;
+  let servedDir = path.posix.dirname(relPath);
+  if (relPath.startsWith('content/')) {
+    const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(html);
+    const rp = fm && /^rootPath:\s*"([^"]*)"\s*$/m.exec(fm[1]);
+    url = url.replace(/\{\{\s*rootPath\s*\}\}/g, rp ? rp[1] : '');
+    servedDir = path.posix.dirname(relPath.slice('content/'.length));
+  }
+  if (/[{}]/.test(url) || /^[a-z]+:|^\/\//i.test(url)) return null;
+  const served = url.startsWith('/')
+    ? path.posix.normalize(url.slice(1))
+    : path.posix.normalize(path.posix.join(servedDir, url));
+  if (served.startsWith('..')) return null;
+  return path.join(ROOT, served);
+}
+
+describe.each([...SN_PAGES, ...LIFE_PAGES])('%s engine URL', (relPath) => {
+  const html = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
+
+  test('every engine <script src> resolves to the engine file in the repo', () => {
+    const srcs = engineScriptSrcs(html);
+    expect(srcs.length).toBeGreaterThan(0);
+    for (const src of srcs) {
+      const file = resolveServedFile(relPath, html, src);
+      expect({ src, file }).toEqual({ src, file: ENGINE_PATH });
+      expect(fs.existsSync(file)).toBe(true);
+    }
+  });
+});
+
 // ---------------------------------------------------------------------------
 // Pages: each copy loads the engine and computes with it.
 // ---------------------------------------------------------------------------
@@ -393,5 +508,46 @@ describe.each(LIFE_PAGES)('%s computes DNV lives with the engine', (relPath) => 
     w.calculateFatigue();
     const logN = parseFloat(w.document.getElementById('logN').textContent);
     expect(logN).toBeCloseTo(engine.allowableCycles(cls, env, S).logN, 3);
+  });
+
+  function runLife(cls, env, S, t) {
+    const { w } = loadPage(relPath);
+    w.document.getElementById('snCurve').value = cls;
+    w.document.getElementById('environment').value = env;
+    w.document.getElementById('stressRange').value = String(S);
+    w.document.getElementById('thickness').value = String(t);
+    w.calculateFatigue();
+    return {
+      logN: parseFloat(w.document.getElementById('logN').textContent),
+      factor: parseFloat(w.document.getElementById('thicknessFactor').textContent),
+    };
+  }
+
+  test.each([
+    // class, environment, S (MPa), t (mm), expected thickness factor
+    ['T', 'seawater_cp', 40, 32, 1],
+    ['T', 'seawater_cp', 40, 40, (40 / 32) ** 0.25],
+    ['B1', 'air', 100, 50, 1],
+    ['B2', 'seawater_cp', 100, 80, 1],
+    ['D', 'air', 100, 50, 2 ** 0.20],
+    ['E', 'seawater_free', 60, 40, (40 / 25) ** 0.20],
+    ['C', 'air', 100, 50, 2 ** 0.15],
+    ['F', 'air', 100, 50, 2 ** 0.25],
+  ])('%s %s at %d MPa, t = %d mm: class-specific thickness correction', (cls, env, S, t, factor) => {
+    const r = runLife(cls, env, S, t);
+    expect(r.factor).toBeCloseTo(factor, 4);
+    expect(r.logN).toBeCloseTo(engine.allowableCycles(cls, env, S * factor).logN, 3);
+  });
+
+  test('T with CP at 40 MPa and 32 mm is about 39.4e6 cycles (no correction at t_ref = 32 mm)', () => {
+    const r = runLife('T', 'seawater_cp', 40, 32);
+    expect(10 ** r.logN).toBeGreaterThan(39.0e6);
+    expect(10 ** r.logN).toBeLessThan(39.8e6);
+  });
+
+  test('states the T-curve SCF assumption for the thickness exponent', () => {
+    const html = fs.readFileSync(path.join(ROOT, relPath), 'utf8');
+    expect(html).toMatch(/SCF\s*(&le;|<=|≤)\s*10/);
+    expect(html).not.toMatch(/k = 0\.25 for t > 25mm/);
   });
 });

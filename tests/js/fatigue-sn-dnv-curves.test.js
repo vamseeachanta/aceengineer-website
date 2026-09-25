@@ -308,7 +308,8 @@ function loadPage(relPath) {
   w.Plotly = { newPlot: (id, traces) => { w.__traces = traces; } };
   w.alert = () => {};
   w.eval(ENGINE_SRC);
-  for (const src of inlineScripts(html)) w.eval(src);
+  // One evaluation, so the page's top-level const bindings are visible to the export line.
+  w.eval(`${inlineScripts(html).join('\n;\n')}\n;window.__snCurves = typeof snCurves === 'undefined' ? undefined : snCurves;`);
   return { w, html };
 }
 
@@ -319,16 +320,20 @@ describe.each([...SN_PAGES, ...LIFE_PAGES])('%s', (relPath) => {
     expect(html).toMatch(/<script[^>]+src="[^"]*assets\/js\/dnv-c203-sn-engine\.js"/);
   });
 
-  test('carries no free-corrosion offset from the CP curve', () => {
-    expect(html).not.toMatch(/log_a_sw\s*-\s*0\.3/);
-    expect(html).not.toMatch(/log_a\s*-=\s*0\.3/);
+  test('carries no DNV curve parameters of its own (the engine is the single source)', () => {
     expect(html).not.toMatch(/seawater_free:\s*\{\s*loga1/);
+    if (SN_PAGES.includes(relPath)) {
+      const { w } = loadPage(relPath);
+      for (const entry of Object.values(w.__snCurves.dnv.curves)) {
+        expect(Object.keys(entry)).toEqual(['desc']);
+      }
+    }
   });
 
   test('lists only engine classes for DNV', () => {
     const { w } = loadPage(relPath);
     const listed = SN_PAGES.includes(relPath)
-      ? Object.keys(w.eval('snCurves').dnv.curves)
+      ? Object.keys(w.__snCurves.dnv.curves)
       : Array.from(w.document.querySelectorAll('#snCurve option')).map((o) => o.value);
     expect(listed.sort()).toEqual([...CLASSES].sort());
   });

@@ -6,13 +6,15 @@ Reads config/seo/standards.yaml and emits:
   - content/standards/index.html       the cluster hub
 
 The generated pages are committed (the repo builds content/ -> dist/). Re-run
-after editing the manifest:
+after editing the manifest. Entries marked preserve_authored retain existing
+HTML so calculator sections and qualified copy cannot be discarded:
 
     uv run python scripts/seo/generate_standard_pages.py
 
 Each page is part of a topic cluster that points up to its Solutions pillar
 page (W5) and, where one exists, the matching free calculator. Content is
-authored in the manifest; this script only renders it. No external claims are
+authored in the manifest or, for protected pages, the retained HTML. Protected
+pages will be edited directly and reviewed against their manifest entry. No external claims are
 invented here.
 """
 
@@ -48,11 +50,8 @@ def render_page(s: dict) -> str:
     url = f"{BASE}/standards/{slug}.html"
 
     title = f"{s['code']} — {s['name']} | AceEngineer"
-    description = (
-        f"{s['code']}: {s['name']}. Run it from chat with Deckhand — "
-        "standards-traceable, deterministic, with every assumption shown."
-    )
-    keywords = ", ".join(s.get("chips", []) + [f"{s['code']} calculator", "offshore engineering AI"])
+    description = f"{s['code']}: {s['name']}. Engineering reference scope and assessment topics."
+    keywords = ", ".join(s.get("chips", []) + [f"{s['code']} calculator", "offshore engineering reference"])
 
     # --- structured data ---
     breadcrumb = {
@@ -131,6 +130,8 @@ rootPath: "../"
 
     <include src="partials/nav.html"></include>
 
+    <main id="main">
+
     <section class="hero-section" style="padding-bottom:36px;">
         <div class="container">
             <div class="row">
@@ -140,8 +141,7 @@ rootPath: "../"
                     <p style="font-size:1.05em;color:#52606d;margin:-6px 0 14px;">{name}</p>
                     <p class="hero-subtitle" style="text-align:left;margin-left:0;">{intro}</p>
                     <div class="hero-cta" style="text-align:left;">
-                        <!-- OPEN_DECK_CTA: swap to https://t.me/the_deckhand_bot?start={src_tag} once deckhand#432 live -->
-                        <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="{src_tag}">Run it on Open Deck</a>
+                        <a href="../capabilities/" class="btn btn-primary btn-lg" data-cta="capabilities" data-src="{src_tag}">Published capabilities</a>
                         {calc_btn}
                     </div>
                 </div>
@@ -153,7 +153,7 @@ rootPath: "../"
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <h2 class="section-title text-center">What you can ask it to do</h2>
+                    <h2 class="section-title text-center">Assessment topics</h2>
                     <ul class="ask-list">
 {does_html}
                     </ul>
@@ -183,12 +183,13 @@ rootPath: "../"
 
     <section class="cta-section">
         <div class="container"><div class="row"><div class="col-md-8 col-md-offset-2 text-center">
-            <h2>Run {code} on your own inputs</h2>
-            <p>Open Deck is free &mdash; bring your numbers and check the result against your own methods.</p>
-            <!-- OPEN_DECK_CTA -->
-            <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="{src_tag}_footer">Try Open Deck on Telegram</a>
+            <h2>Discuss a {code} assessment</h2>
+            <p>Contact AceEngineer to discuss inputs, assessment scope and project requirements.</p>
+            <a href="../contact.html" class="btn btn-primary btn-lg">Contact AceEngineer</a>
         </div></div></div>
     </section>
+
+    </main>
 
     <include src="partials/footer.html"></include>
 
@@ -225,19 +226,19 @@ rootPath: "../"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Engineering standards you can run from chat — DNV, API, ASME and more. Each page explains the standard and lets you run the check on Open Deck, standards-traceable and deterministic.">
+    <meta name="description" content="Engineering standards reference — DNV, API, ASME and more. Each page describes assessment topics and scope.">
     <meta name="keywords" content="engineering standards calculator, DNV API ASME calculators, offshore standards, fatigue wall thickness on-bottom stability cathodic protection">
 
-    <meta property="og:title" content="Engineering Standards, Run From Chat | AceEngineer">
-    <meta property="og:description" content="Run DNV / API / ASME checks from a chat message — traced to the clause, deterministic.">
+    <meta property="og:title" content="Engineering Standards Reference | AceEngineer">
+    <meta property="og:description" content="Reference pages for DNV / API / ASME assessment topics.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{BASE}/standards/">
     <meta property="og:site_name" content="Analytical & Computational Engineering">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Engineering Standards, Run From Chat | AceEngineer">
-    <meta name="twitter:description" content="Run DNV / API / ASME checks from chat, traced to the clause.">
+    <meta name="twitter:title" content="Engineering Standards Reference | AceEngineer">
+    <meta name="twitter:description" content="Reference pages for DNV / API / ASME assessment topics.">
 
-    <title>Engineering Standards, Run From Chat | AceEngineer</title>
+    <title>Engineering Standards Reference | AceEngineer</title>
 
     <include src="partials/head-common.html"></include>
 
@@ -252,12 +253,14 @@ rootPath: "../"
 
     <include src="partials/nav.html"></include>
 
+    <main id="main">
+
     <section class="hero-section" style="padding-bottom:24px;">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
-                    <h1 class="hero-title">Standards, run from chat</h1>
-                    <p class="hero-subtitle">Each standard below explains what it governs and lets you run the check on Open Deck &mdash; traced to the clause, deterministic, with the assumptions shown.</p>
+                    <h1 class="hero-title">Engineering standards</h1>
+                    <p class="hero-subtitle">Each page below describes a standard or engineering method and its assessment topics.</p>
                 </div>
             </div>
         </div>
@@ -275,12 +278,13 @@ rootPath: "../"
 
     <section class="cta-section">
         <div class="container"><div class="row"><div class="col-md-8 col-md-offset-2 text-center">
-            <h2>Bring a real check</h2>
-            <p>Join Open Deck and run any of these against your own inputs.</p>
-            <!-- OPEN_DECK_CTA -->
-            <a href="https://t.me/+T6HF8jf-NGdmM2I5" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta="open-deck" data-src="src_web_standards_hub">Try Open Deck on Telegram</a>
+            <h2>Discuss an assessment</h2>
+            <p>Contact AceEngineer to discuss the applicable standard and project scope.</p>
+            <a href="../contact.html" class="btn btn-primary btn-lg">Contact AceEngineer</a>
         </div></div></div>
     </section>
+
+    </main>
 
     <include src="partials/footer.html"></include>
 
@@ -296,11 +300,18 @@ def main() -> None:
     standards = data["standards"]
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
+    generated = 0
+    preserved = 0
     for s in standards:
-        (OUT_DIR / f"{s['slug']}.html").write_text(render_page(s))
+        target = OUT_DIR / f"{s['slug']}.html"
+        if s.get("preserve_authored") and target.exists():
+            preserved += 1
+            continue
+        target.write_text(render_page(s))
+        generated += 1
     (OUT_DIR / "index.html").write_text(render_index(standards))
 
-    print(f"generated {len(standards)} standard pages + index into {OUT_DIR.relative_to(ROOT)}")
+    print(f"generated {generated} standard pages + index; preserved {preserved} authored pages into {OUT_DIR.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

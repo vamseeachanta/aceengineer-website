@@ -17,9 +17,9 @@
 #   discipline   topic-cluster label
 #   pillar       {label, href}  -> Solutions page (href relative to /standards/)
 #   calculator   {label, href}  -> free calculator, or omit if none
-#   src_tag      Open Deck source tag (src_web_std_<slug>)
+#   src_tag      Capability source tag (src_web_std_<slug>)
 #   intro        1-2 sentence lede
-#   does         bullet list — what you can ask / what it computes
+#   does         bullet list — assessment topics
 #   chips        related codes shown as chips
 #   faqs         list of {q, a} -> FAQPage schema + on-page accordion
 
@@ -34,9 +34,7 @@ standards:
     calculator: { label: "S-N fatigue calculator", href: "../calculators/fatigue-sn-curve.html" }
     src_tag: src_web_std_dnv-rp-c203-fatigue
     intro: >-
-      DNV-RP-C203 gives the S-N curves and stress-concentration guidance for fatigue
-      design of welded and bolted offshore steel details. Ask Deckhand to run a check
-      against the right curve and it returns the damage, the life, and the assumptions.
+      This page describes Fatigue design of offshore steel structures and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Pick the correct S-N curve for a detail (in air, seawater with or without cathodic protection) and estimate fatigue damage from a stress history.
       - Apply stress-concentration and thickness corrections and report the governing detail.
@@ -44,11 +42,11 @@ standards:
     chips: ["DNV-RP-C203", "API RP 2A-WSD", "BS 7608", "S-N curves", "Miner's rule"]
     faqs:
       - q: What does DNV-RP-C203 cover?
-        a: It is the recommended practice for fatigue design of offshore steel structures — S-N curves for welded, base-material and bolted details, stress-concentration factors, thickness effect, and the environment classes (air, seawater with and without cathodic protection).
+        a: "It is the recommended practice for fatigue design of offshore steel structures — S-N curves for welded, base-material and bolted details, stress-concentration factors, thickness effect, and the environment classes (air, seawater with and without cathodic protection)."
       - q: Which S-N curve should I use?
-        a: The curve depends on the detail geometry, the loading direction, the environment, and whether the weld is ground or as-welded. Deckhand selects the curve from your detail description and states the choice so a checker can verify it.
+        a: The curve depends on the detail geometry, the loading direction, the environment, and whether the weld is ground or as-welded.
       - q: Can you compare fatigue across standards?
-        a: Yes — the same stress history can be assessed by DNV-RP-C203, API RP 2A-WSD or BS 7608 and the results shown together, so you can see how the governing curve changes.
+        a: "Yes — the same stress history can be assessed by DNV-RP-C203, API RP 2A-WSD or BS 7608 and the results shown together, so you can see how the governing curve changes."
 
   - slug: dnv-st-f101-wall-thickness
     code: DNV-ST-F101
@@ -58,9 +56,7 @@ standards:
     calculator: { label: "Wall-thickness calculator", href: "../calculators/wall-thickness.html" }
     src_tag: src_web_std_dnv-st-f101-wall-thickness
     intro: >-
-      DNV-ST-F101 is the offshore pipeline standard. Ask Deckhand to size a wall for
-      pressure containment and the collapse and combined-loading limits, with every
-      factor and assumption shown.
+      This page describes Submarine pipeline systems — pressure containment & wall thickness and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Size a pipeline wall for design pressure (pressure containment) with fabrication and corrosion allowances.
       - Check system collapse and propagation buckling, and combined-loading utilisation.
@@ -68,14 +64,11 @@ standards:
     chips: ["DNV-ST-F101", "ASME B31.4 / B31.8", "PD 8010", "Pressure containment", "Collapse"]
     faqs:
       - q: What does DNV-ST-F101 govern?
-        a: >-
-          It is the standard for submarine pipeline systems — design, materials, construction
-          and operation. The most-asked part is wall-thickness design — pressure containment,
-          local buckling/collapse, and combined loading.
+        a: "It is the standard for submarine pipeline systems — design, materials, construction and operation. The most-asked part is wall-thickness design — pressure containment, local buckling/collapse, and combined loading."
       - q: How is the minimum wall thickness determined?
-        a: From the design pressure and the pipe grade for pressure containment, plus fabrication tolerance and corrosion allowance, then verified against collapse and combined-loading limits. Deckhand reports the governing check and the utilisation.
+        a: From the design pressure and the pipe grade for pressure containment, plus fabrication tolerance and corrosion allowance, then verified against collapse and combined-loading limits.
       - q: Can you compare design codes?
-        a: Yes — wall thickness can be screened across DNV-ST-F101, ASME B31 and PD 8010 together so the code difference is explicit.
+        a: "Yes — wall thickness can be screened across DNV-ST-F101, ASME B31 and PD 8010 together so the code difference is explicit."
 
   - slug: dnv-rp-f109-on-bottom-stability
     code: DNV-RP-F109
@@ -85,9 +78,7 @@ standards:
     calculator: { label: "On-bottom stability calculator", href: "../calculators/on-bottom-stability.html" }
     src_tag: src_web_std_dnv-rp-f109-on-bottom-stability
     intro: >-
-      DNV-RP-F109 covers the stability of a subsea line on the seabed under wave and
-      current loading. Ask Deckhand to check it and get the required submerged weight
-      and the utilisation.
+      This page describes On-bottom stability design of submarine pipelines and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Work out hydrodynamic loads on a pipeline from a sea state and current and the submerged weight it needs.
       - Run the absolute-stability and the generalised (allowed-displacement) checks.
@@ -97,20 +88,19 @@ standards:
       - q: What is on-bottom stability?
         a: Whether a subsea pipeline stays put on the seabed under wave and current loads, rather than being lifted or pushed sideways. DNV-RP-F109 is the recommended practice for designing it.
       - q: What drives the result?
-        a: The sea state and current, the pipe's submerged weight (including any concrete coating), the seabed friction, and the allowed displacement. Deckhand reports which governs and the utilisation.
-      - q: Do you size the concrete coating?
-        a: Yes — Deckhand can report the submerged weight, and hence the coating, required to bring the stability utilisation within the criterion.
+        a: The sea state and current, the pipe's submerged weight (including any concrete coating), the seabed friction, and the allowed displacement.
+      - q: What governs the coating assessment?
+        a: Coating and submerged-weight requirements depend on the stated stability criterion, sea state, current and seabed conditions. Project use requires qualified inputs and engineering review.
 
   - slug: dnv-rp-f105-free-span-viv
+    preserve_authored: true
     code: DNV-RP-F105
     name: Free spanning pipelines — VIV and fatigue
     discipline: Pipelines
     pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
     src_tag: src_web_std_dnv-rp-f105-free-span-viv
     intro: >-
-      DNV-RP-F105 governs free-spanning subsea pipelines — the vortex-induced
-      vibration and the fatigue it drives. Ask Deckhand to screen a span for allowable
-      length.
+      This page describes Free spanning pipelines — VIV and fatigue and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Estimate a span's natural frequencies and screen it for cross-flow and in-line vortex-induced vibration.
       - Work out the allowable free-span length for the seabed and flow conditions.
@@ -120,7 +110,7 @@ standards:
       - q: Why are free spans a problem?
         a: Where a pipeline crosses a depression it spans unsupported; current over the span sheds vortices that make it vibrate, and the cyclic stress accumulates fatigue. DNV-RP-F105 is the recommended practice for assessing it.
       - q: What is the allowable span length?
-        a: The longest unsupported length that keeps vortex-induced vibration and the resulting fatigue within limits for the seabed and flow conditions. Deckhand estimates it and flags spans that need intervention.
+        a: The longest unsupported length that keeps vortex-induced vibration and the resulting fatigue within limits for the seabed and flow conditions.
 
   - slug: api-579-fitness-for-service
     code: API 579-1 / ASME FFS-1
@@ -129,9 +119,7 @@ standards:
     pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
     src_tag: src_web_std_api-579-fitness-for-service
     intro: >-
-      API 579 / ASME FFS-1 is the fitness-for-service standard for in-service damage.
-      Ask Deckhand to assess a corroded line or vessel from inspection readings and get
-      a remaining-strength verdict.
+      This page describes Fitness-for-service assessment of in-service equipment and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Run a Level 1 / Level 2 general and local metal-loss assessment from wall-thickness readings against the design pressure.
       - Estimate remaining strength and the maximum allowable working pressure.
@@ -139,34 +127,32 @@ standards:
     chips: ["API 579-1", "ASME FFS-1", "Fitness-for-service", "Metal loss", "Remaining strength"]
     faqs:
       - q: What is fitness-for-service?
-        a: A quantitative check of whether equipment with damage — corrosion, cracks, dents — is still fit to operate. API 579-1/ASME FFS-1 gives the assessment levels and acceptance criteria.
-      - q: What can Deckhand assess?
+        a: "A quantitative check of whether equipment with damage — corrosion, cracks, dents — is still fit to operate. API 579-1/ASME FFS-1 gives the assessment levels and acceptance criteria."
+      - q: What assessment outputs are described?
         a: General and local metal loss at Levels 1 and 2 from wall-thickness readings against the design pressure, returning the remaining strength and the allowable pressure, with the assumptions traced.
 
   - slug: dnv-rp-b401-cathodic-protection
+    preserve_authored: true
     code: DNV-RP-B401
     name: Cathodic protection design — sacrificial anodes
     discipline: Asset integrity
     pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
     src_tag: src_web_std_dnv-rp-b401-cathodic-protection
     intro: >-
-      DNV-RP-B401 is the recommended practice for sacrificial-anode cathodic-protection
-      design. Ask Deckhand to size the anodes for a structure and get the current
-      demand and anode mass.
+      DNV-RP-B401 is the recommended practice for sacrificial-anode cathodic-protection design. This page describes screening scope and project-use qualification requirements.
     does:
-      - Work out current demand from surface areas, coating breakdown and design life.
-      - Size the sacrificial-anode mass and number, and check the final-current capacity.
-      - Apply it to a jacket, manifold, monopile, FPSO hull or pipeline.
+      - "Screen offshore galvanic CP (DNV-RP-B401, 2021 edition as implemented): current demand, anode mass and final-current capacity for a stated configuration and coating condition."
     chips: ["DNV-RP-B401", "DNV-RP-F103", "Cathodic protection", "Sacrificial anodes", "Coating breakdown"]
     faqs:
       - q: What does DNV-RP-B401 cover?
-        a: The design of sacrificial-anode cathodic-protection systems for offshore structures — current-density demand, coating breakdown factors, anode mass and current-capacity checks over the design life.
-      - q: What structures can Deckhand size?
-        a: Jackets, subsea manifolds, offshore-wind monopiles, FPSO hulls and pipelines (the pipeline case uses DNV-RP-F103 for anode spacing and reach).
+        a: "The design of sacrificial-anode cathodic-protection systems for offshore structures — current-density demand, coating breakdown factors, anode mass and current-capacity checks over the design life."
+      - q: What is the screening scope?
+        a: Offshore galvanic sizing (DNV-RP-B401) and pipeline bracelet anodes (DNV-RP-F103, 2019 edition as implemented) are conditionally implemented calculation routes. They are screening tools until a project's inputs are qualified, the configuration is frozen and a named engineer checks the result. Terminal anode banks and attenuation, monopile interiors and buried zones, ICCP and current-distribution modelling are not offered.
 
   # ===== Batch 2 — Floating & Marine cluster (W8 batch 2) =====================
 
   - slug: mooring-line-fatigue
+    preserve_authored: true
     code: Mooring line fatigue
     name: Mooring line fatigue (API RP 2SK / DNV-OS-E301)
     discipline: Mooring
@@ -174,8 +160,7 @@ standards:
     calculator: { label: "Mooring fatigue calculator", href: "../calculators/mooring-fatigue.html" }
     src_tag: src_web_std_mooring-line-fatigue
     intro: >-
-      Ask Deckhand to estimate the fatigue life of a chain or wire mooring line from its
-      tension cycles, to the offshore mooring codes — the assumptions traced.
+      This page describes Mooring line fatigue (API RP 2SK / DNV-OS-E301) and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Estimate fatigue life of a chain or wire mooring line from its tension-cycle history.
       - Apply T-N / S-N data for the component and report the damage and the safety factor.
@@ -183,9 +168,9 @@ standards:
     chips: ["API RP 2SK", "DNV-OS-E301", "Mooring fatigue", "T-N curves", "Tension cycles"]
     faqs:
       - q: How is mooring fatigue estimated?
-        a: From the line's tension-cycle history and the component T-N (or S-N) data, accumulating damage by Miner's rule against the design service life. Deckhand reports the damage, the implied life and the governing line.
+        a: From the line's tension-cycle history and the component T-N (or S-N) data, accumulating damage by Miner's rule against the design service life.
       - q: Which codes apply?
-        a: Offshore station-keeping codes — API RP 2SK and DNV-OS-E301 — govern mooring strength and fatigue; the component fatigue data depends on chain, wire or connector type.
+        a: "Offshore station-keeping codes — API RP 2SK and DNV-OS-E301 — govern mooring strength and fatigue; the component fatigue data depends on chain, wire or connector type."
 
   - slug: fpso-spread-mooring-api-rp-2sk
     code: API RP 2SK
@@ -194,8 +179,7 @@ standards:
     pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
     src_tag: src_web_std_fpso-spread-mooring-api-rp-2sk
     intro: >-
-      Ask Deckhand to screen an FPSO spread-mooring system for line safety factors, or run the
-      full environmental-load static equilibrium of the system.
+      This page describes FPSO spread mooring — strength and utilisation and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Screen a spread-mooring system for line tensions and safety factors (API RP 2SK).
       - Run the environmental-load static equilibrium of the moored system.
@@ -203,8 +187,8 @@ standards:
     chips: ["API RP 2SK", "DNV-OS-E301", "Spread mooring", "FPSO", "Line safety factor"]
     faqs:
       - q: What does API RP 2SK cover?
-        a: The design and analysis of station-keeping (mooring) systems for floating structures — line tensions, safety factors, and the intact and damaged conditions.
-      - q: What can Deckhand return?
+        a: "The design and analysis of station-keeping (mooring) systems for floating structures — line tensions, safety factors, and the intact and damaged conditions."
+      - q: What assessment outputs are described?
         a: Line tensions and safety factors for a spread-mooring layout, the static equilibrium under environmental load, and the governing line and its utilisation.
 
   - slug: synthetic-rope-mooring
@@ -214,8 +198,7 @@ standards:
     pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
     src_tag: src_web_std_synthetic-rope-mooring
     intro: >-
-      Ask Deckhand to screen a polyester fibre-rope mooring for service life — fatigue, creep
-      and minimum tension — to the fibre-rope guidance.
+      This page describes Synthetic (polyester) fibre-rope mooring service life and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Screen a polyester fibre-rope mooring for fatigue, creep and minimum-tension limits.
       - Estimate service life and flag the governing failure mode.
@@ -224,8 +207,8 @@ standards:
     faqs:
       - q: Why are fibre-rope moorings checked differently?
         a: Polyester rope has non-linear, time-dependent stiffness and creep, so service life is governed by fatigue, creep and minimum-tension limits rather than a single break-load check. Guidance such as API RP 2SM applies.
-      - q: What does Deckhand report?
-        a: A service-life screen with the governing mode — fatigue, creep or minimum tension — and the assumptions on rope stiffness bounds.
+      - q: What assessment outputs are described?
+        a: "A service-life screen with the governing mode — fatigue, creep or minimum tension — and the assumptions on rope stiffness bounds."
 
   - slug: ocimf-meg4-mooring-loads
     code: OCIMF MEG4
@@ -234,8 +217,7 @@ standards:
     pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
     src_tag: src_web_std_ocimf-meg4-mooring-loads
     intro: >-
-      Ask Deckhand to work out wind and current mooring loads on a moored tanker using the
-      OCIMF load coefficients.
+      This page describes Wind and current mooring loads on a moored tanker and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Compute wind and current load on a moored tanker from the OCIMF coefficients.
       - Resolve longitudinal, lateral and yaw load components for a heading and environment.
@@ -244,7 +226,7 @@ standards:
     faqs:
       - q: What is OCIMF MEG4 used for?
         a: The OCIMF Mooring Equipment Guidelines give standard wind and current load coefficients for tankers, used to work out environmental mooring loads at a berth or on a moored vessel.
-      - q: What does Deckhand return?
+      - q: What assessment outputs are described?
         a: The longitudinal, lateral and yaw wind and current loads for the heading and environment, ready to feed a mooring or berthing assessment.
 
   - slug: vessel-seakeeping
@@ -254,8 +236,7 @@ standards:
     pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
     src_tag: src_web_std_vessel-seakeeping
     intro: >-
-      Ask Deckhand to estimate a vessel's motions, natural periods and motion comfort in a
-      given sea state.
+      This page describes Vessel seakeeping — motions, natural periods, comfort and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Estimate vessel motions and accelerations from its RAOs and a sea state.
       - Report roll, pitch and heave natural periods.
@@ -263,9 +244,9 @@ standards:
     chips: ["Seakeeping", "RAOs", "Natural periods", "Motion comfort", "Operability"]
     faqs:
       - q: What does a seakeeping screen tell me?
-        a: How a vessel moves in a sea state — motions, accelerations and natural periods — and whether motion comfort and operability limits are met for the operation.
+        a: "How a vessel moves in a sea state — motions, accelerations and natural periods — and whether motion comfort and operability limits are met for the operation."
       - q: What inputs are needed?
-        a: The vessel's response amplitude operators (RAOs) and the sea state (wave height, period, spectrum). Deckhand can also prepare the hydrodynamic model that produces the RAOs.
+        a: The vessel's response amplitude operators (RAOs) and the sea state (wave height, period, spectrum).
 
   - slug: intact-stability-imo
     code: IMO intact stability
@@ -274,8 +255,7 @@ standards:
     pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
     src_tag: src_web_std_intact-stability-imo
     intro: >-
-      Ask Deckhand to check a floating platform's intact stability — metacentric height,
-      righting-arm curve and wind heel — against the IMO criteria.
+      This page describes Intact stability — GM, righting arm, wind heel and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Compute metacentric height (GM) and the righting-arm (GZ) curve.
       - Check wind-heel and area-ratio criteria against the IMO intact-stability rules.
@@ -283,8 +263,8 @@ standards:
     chips: ["IMO IS Code", "GM", "Righting arm (GZ)", "Wind heel", "Intact stability"]
     faqs:
       - q: What governs intact stability?
-        a: The IMO Intact Stability (IS) Code criteria — minimum GM, righting-arm area ratios and a wind-heel check — adapted for offshore floaters and MODUs.
-      - q: What does Deckhand return?
+        a: "The IMO Intact Stability (IS) Code criteria — minimum GM, righting-arm area ratios and a wind-heel check — adapted for offshore floaters and MODUs."
+      - q: What assessment outputs are described?
         a: GM, the GZ curve, the wind-heel and area-ratio checks, and the governing criterion with its margin.
 
   - slug: hull-hydrodynamics-diffraction
@@ -294,8 +274,7 @@ standards:
     pillar: { label: "Floating & Marine Systems", href: "../solutions/floating-marine.html" }
     src_tag: src_web_std_hull-hydrodynamics-diffraction
     intro: >-
-      Ask Deckhand to set up a diffraction and radiation model for a floating hull (OrcaWave or
-      AQWA) and check the coefficients and RAOs.
+      This page describes Hull hydrodynamics — diffraction, radiation and RAOs and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Prepare a diffraction and radiation model for a floating hull (OrcaWave / AQWA).
       - Check added-mass and damping coefficients and their causality.
@@ -303,13 +282,14 @@ standards:
     chips: ["Diffraction", "OrcaWave", "AQWA", "Added mass / damping", "Wave spectra"]
     faqs:
       - q: What is a diffraction analysis for?
-        a: It computes how a floating hull responds to waves — added mass, damping, wave loads and the motion RAOs — the foundation for mooring, seakeeping and operability work.
-      - q: Which tools does Deckhand prepare?
+        a: "It computes how a floating hull responds to waves — added mass, damping, wave loads and the motion RAOs — the foundation for mooring, seakeeping and operability work."
+      - q: Which modelling tools are referenced?
         a: It sets up the input for boundary-element diffraction solvers (OrcaWave or AQWA) and checks the resulting coefficients and RAOs.
 
   # ===== Batch 3 — Wells & Subsurface cluster (W8 batch 3) ====================
 
   - slug: arps-decline-curve
+    preserve_authored: true
     code: Arps decline
     name: Production forecasting and decline (Arps)
     discipline: Production
@@ -317,8 +297,7 @@ standards:
     calculator: { label: "Decline curve & EUR calculator", href: "../calculators/decline-curve.html" }
     src_tag: src_web_std_arps-decline-curve
     intro: >-
-      Ask Deckhand to forecast a well's decline and estimate ultimate recovery using the Arps
-      decline-curve models.
+      This page describes Production forecasting and decline (Arps) and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Fit a well's history to an Arps model — exponential, hyperbolic or harmonic.
       - Forecast future rate and estimate ultimate recovery (EUR).
@@ -326,8 +305,8 @@ standards:
     chips: ["Arps decline", "EUR", "Exponential / hyperbolic / harmonic", "Decline curve", "Production forecast"]
     faqs:
       - q: What is Arps decline-curve analysis?
-        a: The standard empirical method for forecasting oil and gas production decline — exponential, hyperbolic or harmonic — and estimating ultimate recovery from the rate history.
-      - q: What does Deckhand return?
+        a: "The standard empirical method for forecasting oil and gas production decline — exponential, hyperbolic or harmonic — and estimating ultimate recovery from the rate history."
+      - q: What assessment outputs are described?
         a: The fitted decline parameters, a forward rate forecast, and the estimated ultimate recovery with the assumptions stated.
 
   - slug: field-economics-npv
@@ -338,18 +317,17 @@ standards:
     calculator: { label: "NPV field-development calculator", href: "../calculators/npv-field-development.html" }
     src_tag: src_web_std_field-economics-npv
     intro: >-
-      Ask Deckhand to run a field-development economics case — net present value, rate of return
-      and payback — and a price and production-rate sensitivity.
+      This page describes Field-development economics — NPV, IRR, payback and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Run a field case for net present value, internal rate of return and payback.
       - Apply a discount rate, CAPEX/OPEX profile and a production forecast.
       - Run a price and production-rate sensitivity on the economics.
     chips: ["NPV", "IRR", "MIRR", "Payback", "Field economics"]
     faqs:
-      - q: What economics can Deckhand run?
+      - q: What does a field-economics assessment include?
         a: A field-development case returning net present value, internal rate of return, MIRR and payback from a CAPEX/OPEX profile, a discount rate and a production forecast.
       - q: Can it run sensitivities?
-        a: Yes — a price and production-rate sensitivity shows how the economics move with the key uncertainties.
+        a: "Yes — a price and production-rate sensitivity shows how the economics move with the key uncertainties."
 
   - slug: well-nodal-analysis
     code: Nodal analysis
@@ -358,8 +336,7 @@ standards:
     pillar: { label: "Wells & Subsurface", href: "../solutions/wells-subsurface.html" }
     src_tag: src_web_std_well-nodal-analysis
     intro: >-
-      Ask Deckhand to find a well's operating point from its inflow and outflow performance
-      (nodal analysis).
+      This page describes Well nodal analysis — inflow and outflow operating point and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Build the inflow (IPR) and outflow (VLP) curves for a well.
       - Find the operating point where they intersect.
@@ -368,17 +345,18 @@ standards:
     faqs:
       - q: What is nodal analysis?
         a: A method that finds a well's producing rate by intersecting its inflow performance (reservoir into wellbore) with its outflow performance (wellbore to surface) at a chosen node.
-      - q: What does Deckhand return?
+      - q: What assessment outputs are described?
         a: The IPR and VLP curves, the operating point, and how it shifts when a design parameter changes.
 
   - slug: dynacard-diagnostics
+    preserve_authored: true
     code: Dynamometer card
     name: Sucker-rod pump diagnostics from the dynamometer card
     discipline: Production
     pillar: { label: "Wells & Subsurface", href: "../solutions/wells-subsurface.html" }
     src_tag: src_web_std_dynacard-diagnostics
     intro: >-
-      Ask Deckhand to diagnose a sucker-rod pump from its dynamometer card and get a report.
+      This page describes Sucker-rod pump diagnostics from the dynamometer card and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Interpret a surface or downhole dynamometer card for a sucker-rod pump.
       - Flag conditions such as gas interference, fluid pound or worn pump.
@@ -386,8 +364,8 @@ standards:
     chips: ["Dynamometer card", "Sucker-rod pump", "Fluid pound", "Gas interference", "Artificial lift"]
     faqs:
       - q: What does a dynacard show?
-        a: The load on the rod string through a pump stroke; its shape reveals pump conditions — gas interference, fluid pound, a worn or stuck pump — for a sucker-rod (beam) pumped well.
-      - q: What does Deckhand return?
+        a: "The load on the rod string through a pump stroke; its shape reveals pump conditions — gas interference, fluid pound, a worn or stuck pump — for a sucker-rod (beam) pumped well."
+      - q: What assessment outputs are described?
         a: A reading of the card with the likely pump condition flagged and a short diagnosis report.
 
   - slug: bsee-gom-production-data
@@ -397,8 +375,7 @@ standards:
     pillar: { label: "Wells & Subsurface", href: "../solutions/wells-subsurface.html" }
     src_tag: src_web_std_bsee-gom-production-data
     intro: >-
-      Ask Deckhand to summarise lease and well oil and gas production from the public BSEE
-      data, and compare wells across a field or block.
+      This page describes Gulf of Mexico production data (BSEE) and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Summarise lease and well oil and gas production from the public BSEE data.
       - Compare well production across a field or block.
@@ -406,7 +383,7 @@ standards:
     chips: ["BSEE", "Gulf of Mexico", "Production data", "Lease / well", "Public data"]
     faqs:
       - q: What is the BSEE data?
-        a: The US Bureau of Safety and Environmental Enforcement publishes Gulf of Mexico lease and well production data; Deckhand summarises and compares it without you wrangling the raw files.
+        a: The US Bureau of Safety and Environmental Enforcement publishes Gulf of Mexico lease and well production data;
       - q: What can I do with it?
         a: Summarise a lease or well, compare wells across a block, and feed the history into a decline forecast or a field-economics case.
 
@@ -419,8 +396,7 @@ standards:
     pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
     src_tag: src_web_std_riser-combined-loading
     intro: >-
-      Ask Deckhand to run a riser combined tension-and-bending utilisation check — the API RP 2RD
-      working-stress method or the DNV-OS-F201 LRFD method — the governing case traced.
+      This page describes Riser combined-loading utilisation and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Run a combined tension-and-bending utilisation check (API RP 2RD, working stress).
       - Run the LRFD combined-loading utilisation check (DNV-OS-F201).
@@ -428,9 +404,9 @@ standards:
     chips: ["API RP 2RD", "DNV-OS-F201", "Riser", "Combined loading", "Utilisation"]
     faqs:
       - q: What is a riser combined-loading check?
-        a: A check that a riser's combined effective tension and bending stays within the allowable — by the API RP 2RD working-stress method or the DNV-OS-F201 load-and-resistance-factor (LRFD) method.
+        a: "A check that a riser's combined effective tension and bending stays within the allowable — by the API RP 2RD working-stress method or the DNV-OS-F201 load-and-resistance-factor (LRFD) method."
       - q: Which method should I use?
-        a: API RP 2RD is the working-stress approach; DNV-OS-F201 is the LRFD approach. Deckhand runs either and reports the governing load case and the utilisation.
+        a: API RP 2RD is the working-stress approach; DNV-OS-F201 is the LRFD approach.
 
   - slug: catenary-riser
     code: Catenary riser
@@ -439,8 +415,7 @@ standards:
     pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
     src_tag: src_web_std_catenary-riser
     intro: >-
-      Ask Deckhand to work out the shape, layback and top tension of a catenary riser or line
-      from its weight and the water depth.
+      This page describes Catenary riser shape, layback and top tension and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Work out the catenary shape, layback and touchdown point of a riser or line.
       - Compute the top tension and the bottom tension.
@@ -448,7 +423,7 @@ standards:
     chips: ["Catenary", "Steel catenary riser (SCR)", "Top tension", "Layback", "Touchdown"]
     faqs:
       - q: What does a catenary calculation give me?
-        a: The static shape of a riser or line hanging as a catenary — the layback, the touchdown point, and the top and bottom tensions — for a given submerged weight and water depth.
+        a: "The static shape of a riser or line hanging as a catenary — the layback, the touchdown point, and the top and bottom tensions — for a given submerged weight and water depth."
       - q: What is it used for?
         a: First-pass sizing of steel catenary risers and similar lines, and a sanity check before a full dynamic analysis.
 
@@ -459,8 +434,7 @@ standards:
     pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
     src_tag: src_web_std_pipeline-lateral-buckling
     intro: >-
-      Ask Deckhand to check a line for lateral (snake) buckling under high pressure and
-      temperature, to DNV-RP-F110.
+      This page describes Pipeline lateral (snake) buckling — DNV-RP-F110 and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Screen a line's susceptibility to global lateral (snake) buckling under HP/HT.
       - Estimate buckle spacing and the feed-in into a buckle.
@@ -469,7 +443,7 @@ standards:
     faqs:
       - q: What is lateral buckling?
         a: A high-pressure/high-temperature line wants to expand; where it is unrestrained on the seabed it relieves that load by snaking sideways into lateral buckles. DNV-RP-F110 governs the global-buckling design.
-      - q: What does Deckhand return?
+      - q: What assessment outputs are described?
         a: A susceptibility screen, an estimate of buckle spacing and feed-in, and a flag where mitigation is needed.
 
   - slug: pipeline-upheaval-buckling
@@ -479,8 +453,7 @@ standards:
     pillar: { label: "Subsea, Pipelines & Integrity", href: "../solutions/subsea-pipelines-integrity.html" }
     src_tag: src_web_std_pipeline-upheaval-buckling
     intro: >-
-      Ask Deckhand to check a buried line for upheaval buckling and work out the cover it needs,
-      to DNV-RP-F110.
+      This page describes Pipeline upheaval buckling and required cover — DNV-RP-F110 and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.
     does:
       - Screen a buried line for upheaval buckling from an imperfection under temperature and pressure.
       - Work out the download (cover/rock) needed to restrain it.
@@ -488,6 +461,6 @@ standards:
     chips: ["DNV-RP-F110", "Upheaval buckling", "Buried pipeline", "Cover height", "Rock dump"]
     faqs:
       - q: What is upheaval buckling?
-        a: A buried high-temperature line at a vertical imperfection (an overbend) can push up through its cover; the design provides enough download — soil cover or rock dump — to hold it down. DNV-RP-F110 governs it.
-      - q: What does Deckhand return?
+        a: "A buried high-temperature line at a vertical imperfection (an overbend) can push up through its cover; the design provides enough download — soil cover or rock dump — to hold it down. DNV-RP-F110 governs it."
+      - q: What assessment outputs are described?
         a: An upheaval susceptibility screen and the required cover/download to restrain the line, flagging where rock dump is needed.

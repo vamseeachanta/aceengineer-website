@@ -40,6 +40,9 @@ jobs:
       - name: Validate capabilities registry (schema + live HF resolution)
         run: npm run validate:registry
 
+      - name: Check public claim boundaries
+        run: npm run test:claims
+
       - name: Run Jest suite
         run: npm test -- --runInBand
 

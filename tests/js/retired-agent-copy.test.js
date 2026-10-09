@@ -18,7 +18,7 @@ test('published copy contains no active retired-agent or chat-service promises',
     .filter(file => /\.(html|yaml|md)$/.test(file));
   const defects = paths.flatMap(file => {
     const text = prose(fs.readFileSync(file, 'utf8'));
-    const patterns = [/ask deckhand/i, /deckhand (?:is|runs|can|selects|reports|estimates|summarises)/i,
+    const patterns = [/ask deckhand/i, /deckhand (?:is(?! not currently)|runs|can|selects|reports|estimates|summarises)/i,
       /(?:run|runs|analysis|checks|standards)[^.!?]{0,70}from (?:a )?chat/i,
       /live deckhand channel/i, /engine behind deckhand/i, /(?:try|run it on) open deck/i,
       /every workflow is an api path you can call/i, /what you can ask it to do/i];
@@ -26,10 +26,11 @@ test('published copy contains no active retired-agent or chat-service promises',
   });
   assert.deepEqual(defects, []);
 });
-test('legacy routes are retirement notices with published alternatives', () => {
+test('legacy routes are neutral status notices with published alternatives', () => {
   for (const route of ['deckhand.html', 'deckhand-api.html']) {
     const html = fs.readFileSync(path.join(root, 'content', route), 'utf8');
-    assert.match(html, /retired/i);
+    assert.match(html, /not currently (?:available|offered)/i);
+    assert.doesNotMatch(html, /retired/i);
     assert.match(html, /href="\/?capabilities\//);
     assert.match(html, /href="\/?contact\.html"/);
     assert.doesNotMatch(html, /SoftwareApplication|"price"|POST \/api\/run|Telegram|WhatsApp/i);
@@ -42,7 +43,7 @@ test('standard-page generator cannot resurrect retired service CTAs', () => {
 
 test('catalog records do not advertise an active API tier', () => {
   const html = fs.readFileSync(path.join(root, 'content/api-catalog.html'), 'utf8');
-  assert.match(html, /former service has been retired/i);
+  assert.match(html, /former service is not currently offered/i);
   assert.match(html, /historical reference records/i);
   assert.doesNotMatch(html, />LIVE<|>ONBOARDING<|Call a live path|Runnable today|Every call returns/i);
   assert.match(html, /deckhand-sandbox/);

@@ -14,6 +14,7 @@
     "refresh:sloshing": "node scripts/refresh-sloshing-data.js",
     "publish:sloshing-enrichment": "node scripts/publish-sloshing-enrichment.js",
     "test": "jest",
+    "test:claims": "node --test tests/js/phase1-claims.test.js tests/js/retired-agent-copy.test.js",
     "test:coverage": "jest --coverage",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots"

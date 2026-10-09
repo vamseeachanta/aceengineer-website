@@ -226,11 +226,13 @@ capabilities:
       check, not a missing value. Screening only, not a project design check.
 
   - id: corrosion-control
-    title: Corrosion Control — Anode Sizing and Galvanic Compatibility
+    title: Corrosion Control — Anode Sizing and Galvanic Index Screening
     domain: digitalmodel
     summary: >-
-      Cathodic-protection anode sizing across structures, climates and coating conditions,
-      plus galvanic compatibility for every metal pair in three exposure environments.
+      Screening-level sacrificial-anode sizing to DNV-RP-B401 (2021 edition as
+      implemented) for two reference geometries, plus anodic-index screening
+      categories for metal pairs. Screening only: not a project CP design, not a
+      material-compatibility finding, and not qualified for client delivery.
     hf_dataset: aceengineer/digitalmodel-corrosion
     provenance_url: https://vamseeachanta.github.io/digitalmodel/capabilities/api/cathodic-protection-explorer.html
     status: live
@@ -241,7 +243,7 @@ capabilities:
         viz: table
         highlight_columns: [structure, climate, coating, design_life_years, anode_mass_kg, anode_count]
       - config: galvanic_compatibility
-        label: Galvanic compatibility
+        label: Galvanic index screening
         viz: table
         highlight_columns: [environment, metal_a, metal_b, verdict, delta_v, allowable_delta_v]
     data_limits: >-

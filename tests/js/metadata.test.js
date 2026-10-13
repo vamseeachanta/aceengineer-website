@@ -97,6 +97,25 @@ test('home metadata has no exemptions and references the shared Organization', (
   expect(page.about).toEqual({ '@id': 'https://www.aceengineer.com/#organization' });
 });
 
+test('shared serviceType and knowsAbout entries occur verbatim in visible text', () => {
+  const visible = pages.map(page => {
+    const body = documents.get(page).body.cloneNode(true);
+    body.querySelectorAll('script, style').forEach(node => node.remove());
+    return body.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
+  });
+  for (const page of destinations) {
+    const organization = nodesFor(page).find(node => node['@type'] === 'Organization' && node.name);
+    for (const key of ['serviceType', 'knowsAbout']) {
+      if (!(key in organization)) continue;
+      expect(organization[key].length).toBeGreaterThan(0);
+      for (const entry of organization[key]) {
+        expect({ page, key, entry, visible: visible.some(text => text.includes(entry.toLowerCase())) })
+          .toEqual({ page, key, entry, visible: true });
+      }
+    }
+  }
+});
+
 test('both interactive templates expand the shared Organization token', () => {
   for (const page of ['capabilities/dc-drilldown.html', 'capabilities/dc-qaqc-hub.html']) {
     const html = fs.readFileSync(path.join(distDir, page), 'utf8');

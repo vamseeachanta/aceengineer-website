@@ -329,3 +329,83 @@ test('llms.txt page descriptions omit percentage and currency figures', () => {
   const title = documents.get(page).title;
   expect(text.split('\n')).toContain(`- [${title}](https://www.aceengineer.com/${page})`);
 });
+
+// The home copy is bounded by main.home-page; shared navigation and footer
+// cannot supply evidence for a service claim.
+function visibleCopy(root) {
+  const body = root.cloneNode(true);
+  const originals = [...root.querySelectorAll('*')];
+  const copies = [...body.querySelectorAll('*')];
+  originals.forEach((node, index) => {
+    const style = root.ownerDocument.defaultView.getComputedStyle(node);
+    if (style.display === 'none' || ['hidden', 'collapse'].includes(style.visibility)) copies[index].remove();
+  });
+  body.querySelectorAll('script, style, template, nav, footer, [hidden], [aria-hidden="true"], input[type="hidden"], .hidden, .sr-only, .visually-hidden')
+    .forEach(node => node.remove());
+  body.querySelectorAll('[style]').forEach(node => {
+    if (node.style.display === 'none' || ['hidden', 'collapse'].includes(node.style.visibility)) node.remove();
+  });
+  return body.textContent.replace(/\s+/g, ' ').trim();
+}
+
+// Names published on the engineering, platform, diffraction and capability pages.
+const softwareNames = ['OrcaFlex', 'OrcaWave', 'AQWA', 'ANSYS', 'OpenFOAM', 'digitalmodel', 'Python'];
+const standardDesignation = /\b[A-Z]{2,}(?:[ -][A-Z]{2,})*[ -](?=[A-Z0-9.-]*\d)[A-Z0-9]+(?:[.-][A-Z0-9]+)*\b/g;
+function wholeToken(text, token) {
+  const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`(?<![\\w-])${escaped}(?![\\w-])`, 'i').test(text);
+}
+function unsupportedHomeItems(text, otherPages, products = softwareNames) {
+  const found = [...new Set([
+    ...Array.from(text.matchAll(standardDesignation), match => match[0]),
+    ...products.filter(name => wholeToken(text, name)),
+  ])];
+  return { found, missing: found.filter(item => !otherPages.some(page => wholeToken(page, item))) };
+}
+const homeCopyText = visibleCopy(documents.get('index.html').querySelector('main.home-page'));
+const otherCopyTexts = pages.filter(page => page !== 'index.html')
+  .map(page => visibleCopy(documents.get(page).body));
+
+test('home standards and software have whole-token support on another built page', () => {
+  const result = unsupportedHomeItems(homeCopyText, otherCopyTexts);
+  console.info(`Home support: ${result.found.length} collected; ${result.missing.length} unsupported`);
+  if (result.missing.length) throw new Error(`Unsupported home items: ${result.missing.join(', ')}`);
+  expect(result.missing).toEqual([]);
+});
+
+test('home support lists both injected designation and product without hidden or shared evidence', () => {
+  const designation = 'ZXQ-RP-X987654';
+  const product = 'SyntheticSolver';
+  const injected = `${homeCopyText} ${designation} ${product}`;
+  const fixture = new JSDOM(`<head><style>.concealed { display: none; }</style></head><body><nav>${designation}</nav><footer>${product}</footer><p hidden>${designation}</p><p style="display:none">${product}</p><p class="concealed">${designation} ${product}</p><script>${product}</script><style>${designation}</style></body>`);
+  const evidence = [...otherCopyTexts, visibleCopy(fixture.window.document.body)];
+  const result = unsupportedHomeItems(injected, evidence, [...softwareNames, product]);
+  expect(result.missing).toEqual(expect.arrayContaining([designation, product]));
+  expect(unsupportedHomeItems('', evidence).found).toEqual([]);
+  expect(wholeToken(`Prefix${product}Suffix`, product)).toBe(false);
+  expect(wholeToken(`prefix-${designation}-suffix`, designation)).toBe(false);
+  expect(wholeToken(product.toLowerCase(), product)).toBe(true);
+});
+
+test('home lead sentence and the three description texts agree', () => {
+  const home = documents.get('index.html');
+  const sentence = home.querySelector('.home-lead').textContent.trim().split(/\.\s+/).slice(0, 2).join('. ') + '.';
+  const meta = home.querySelector('meta[name="description"]').content;
+  const schema = nodesFor('index.html').find(node => node['@type'] === 'WebPage').description;
+  const header = fs.readFileSync(path.join(distDir, 'llms.txt'), 'utf8').match(/^> (.*)$/m)[1];
+  expect([meta, schema, header]).toEqual([sentence, sentence, sentence]);
+});
+
+const supportedHomeCopy = [
+  ['service scope', ['We provide engineering services: analysis, design calculations and integrity assessment.']],
+  ['corrosion screening', ['Cathodic protection screening', 'Sacrificial-anode screening to DNV-RP-B401 and DNV-RP-F103.', 'Client receives: screening calculations, subject to qualified inputs and an engineer-of-record check']],
+  ['remaining strength', ['Remaining-strength assessment of corroded components to API 579-1 and B31G.', 'Client receives: a remaining-strength calculation report']],
+  ['riser analysis', ['Riser analysis', 'Analysis against API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.', 'Client receives: a riser analysis calculation report']],
+  ['diffraction comparison', ['Wave diffraction and radiation analysis, with diffraction results compared between two solvers.']],
+  ['duration listings', ['Client receives: drilling and completion durations; per-well drilling and completion-day listings']],
+  ['installation screening', ['Lifting and lowering operations screened by phase, reported as utilisation by phase and an operability limit on significant wave height.', 'Client receives: utilisation by phase and an operability limit on significant wave height']],
+  ['client segments', ['AceEngineer Inc. provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms and EPC contractors.']],
+];
+test.each(supportedHomeCopy)('home wording follows existing page support: %s', (key, expected) => {
+  for (const sentence of expected) expect(homeCopyText).toContain(sentence);
+});

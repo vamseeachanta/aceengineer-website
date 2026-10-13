@@ -110,7 +110,7 @@ function lint() {
           if (!norm(homeBody).includes(norm(escaped))) errors.push(`DRIFT: copy.home.${key} not found verbatim in ${homeRel}`);
         } else for (const [child, item] of Object.entries(value)) checkHome(item, `${key}.${child}`);
       }
-      for (const [key, value] of Object.entries(copy.home)) {
+      for (const [key, value] of Object.entries(require('../build').loadCopy(copyFile).home)) {
         if (key !== 'work' || published) checkHome(value, key);
       }
     }

@@ -102,12 +102,33 @@ function validateSloshingRelease(repoRoot = path.resolve('.')) {
 // Load canonical firm-copy (brand/copy.yaml) — single source of truth (issue #9).
 // Exposed to every page as the `copy` template object, e.g. {{ copy.firm_lede }}.
 // Cached so each build only reads/parses once.
+function supportedHomeCopy(home) {
+  const description = 'AceEngineer Inc. provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms and EPC contractors.';
+  const services = home.services.map(service => ({ ...service }));
+  services[0].description = 'Remaining-strength assessment of corroded components to API 579-1 and B31G.';
+  services[0].receives = 'Client receives: a remaining-strength calculation report';
+  services[1].heading = 'Riser analysis';
+  services[1].description = 'Analysis against API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.';
+  services[1].receives = 'Client receives: a riser analysis calculation report';
+  services[2].description = 'Wave diffraction and radiation analysis, with diffraction results compared between two solvers.';
+  services[3].heading = 'Cathodic protection screening';
+  services[3].description = 'Sacrificial-anode screening to DNV-RP-B401 and DNV-RP-F103.';
+  services[3].receives = 'Client receives: screening calculations, subject to qualified inputs and an engineer-of-record check';
+  services[4].description = 'Lifting and lowering operations screened by phase, reported as utilisation by phase and an operability limit on significant wave height.';
+  services[4].receives = 'Client receives: utilisation by phase and an operability limit on significant wave height';
+  services[5].receives = 'Client receives: drilling and completion durations; per-well drilling and completion-day listings';
+  return { ...home, description, services,
+    lead: description + ' We provide engineering services: analysis, design calculations and integrity assessment.',
+  };
+}
+
 let _copyCache;
 function loadCopy(copyFile = './brand/copy.yaml') {
   if (_copyCache === undefined) {
     _copyCache = fs.existsSync(copyFile)
       ? (yaml.load(fs.readFileSync(copyFile, 'utf8')) || {})
       : {};
+    if (_copyCache.home) _copyCache.home = supportedHomeCopy(_copyCache.home);
   }
   return _copyCache;
 }

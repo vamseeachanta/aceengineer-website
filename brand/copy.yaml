@@ -22,7 +22,7 @@
 names:
   firm: AceEngineer
   seo: Analytical & Computational Engineering
-  legal: AceEngineer Inc.
+  legal: Achanta AceEngineer Inc.
   retired_acronym: A&CE
 
 tagline: Offshore Engineering Analytics at Scale
@@ -96,12 +96,12 @@ targets:
   home: content/index.html
 
 home:
-  title: AceEngineer Inc. Offshore and marine engineering firm
-  description: AceEngineer Inc. provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms and EPC contractors.
+  title: AceEngineer | Offshore and marine engineering firm
+  description: AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms and EPC contractors.
   kicker: Offshore and marine engineering firm | Houston, Texas
   heading: Engineering analysis that can be checked, line by line.
   lead: >-
-    AceEngineer Inc. provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms and EPC contractors. We provide engineering services: analysis, design calculations and integrity assessment.
+    AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms and EPC contractors. We provide engineering services: analysis, design calculations and integrity assessment.
   discuss: Discuss a scope
   facts:
     - heading: Founded 2010

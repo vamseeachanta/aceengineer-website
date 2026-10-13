@@ -66,7 +66,7 @@ function document(title, summary, url, type, schemas, body) {
 <include src="partials/footer.html"></include></body></html>`;
 }
 function samplesIndexDocument(published) {
-  const title = 'Selected work | AceEngineer Inc.'; const url = `${origin}/samples/`;
+  const title = 'Selected work | AceEngineer'; const url = `${origin}/samples/`;
   const rows = published.map(entry => `<tr><td><a href="${escapeHtml(entry.slug)}.html">${escapeHtml(entry.title)}</a></td><td>${escapeHtml(entry.discipline)}</td><td>${escapeHtml(entry.summary)}</td></tr>`).join('\n');
   return document(title, description, url, 'website', [
     { '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, description, url, publisher: organization },
@@ -74,7 +74,7 @@ function samplesIndexDocument(published) {
   ], `<h1>Selected work</h1><p>${notice}</p><h2>Samples</h2><div class="samples-table-wrap"><table class="samples-table"><thead><tr><th>Sample</th><th>Discipline</th><th>What it demonstrates</th></tr></thead><tbody>${rows}</tbody></table></div>`);
 }
 function sampleDocument(entry) {
-  const title = `${entry.title} | AceEngineer Inc.`; const url = `${origin}/${entry.page}`;
+  const title = `${entry.title} | AceEngineer`; const url = `${origin}/${entry.page}`;
   return document(title, entry.summary, url, 'article', [
     { '@context': 'https://schema.org', '@type': 'Report', name: title, description: entry.summary, url, publisher: organization, encoding: { '@type': 'MediaObject', contentUrl: `${origin}/${entry.pdf}`, encodingFormat: 'application/pdf' } },
     breadcrumb([['Home', `${origin}/`], ['Selected work', `${origin}/samples/`], [entry.title, url]]),

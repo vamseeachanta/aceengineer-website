@@ -29,23 +29,23 @@ test('six service cards each have exactly one client-receives line', () => {
   expect(cards).toHaveLength(6);
   for (const card of cards) expect([...card.querySelectorAll('p')].filter(p => p.textContent.startsWith('Client receives:'))).toHaveLength(1);
 });
-test('footer uses the specified legal identity and copyright', () => {
-  expect(doc.querySelector('footer').textContent).toContain('AceEngineer Inc.');
-  expect(doc.querySelector('footer').textContent).toContain('© 2026 AceEngineer Inc.');
-  expect([...doc.querySelectorAll('footer .text-center p')].map(p => p.textContent)).toEqual(['AceEngineer Inc. | www.aceengineer.com | Houston, Texas', '© 2026 AceEngineer Inc.']);
+test('footer uses the specified display name and copyright', () => {
+  expect(doc.querySelector('footer').textContent).toContain('AceEngineer');
+  expect(doc.querySelector('footer').textContent).toContain('© 2026 AceEngineer');
+  expect([...doc.querySelectorAll('footer .text-center p')].map(p => p.textContent)).toEqual(['AceEngineer | www.aceengineer.com | Houston, Texas', '© 2026 AceEngineer']);
 });
 test('home has one shared Organization and a WebPage referencing it', () => {
   const nodes = [...doc.querySelectorAll('script[type="application/ld+json"]')].flatMap(s => { const v = JSON.parse(s.textContent); return Array.isArray(v) ? v : [v]; });
   const org = nodes.filter(v => v['@type'] === 'Organization' && v.name);
   expect(org).toHaveLength(1);
-  expect(org[0]).toMatchObject({ name: 'AceEngineer', legalName: 'AceEngineer Inc.' });
+  expect(org[0]).toMatchObject({ '@id': 'https://www.aceengineer.com/#organization', name: 'AceEngineer' });
   const page = nodes.filter(v => v['@type'] === 'WebPage'); expect(page).toHaveLength(1);
   expect(page[0].about).toEqual({ '@id': org[0]['@id'] });
   expect(page[0].name).toBe(doc.title);
   expect(page[0].description).toBe(doc.querySelector('meta[name="description"]').content);
 });
 test('home has specified Open Graph and Twitter metadata', () => {
-  expect(doc.title).toBe('AceEngineer Inc. Offshore and marine engineering firm');
+  expect(doc.title).toBe('AceEngineer | Offshore and marine engineering firm');
   expect(doc.querySelector('meta[property="og:title"]').content).toBe(doc.title);
   expect(doc.querySelector('meta[property="og:image"]').content).toBe('https://www.aceengineer.com/assets/img/logo.png');
   expect(doc.querySelector('meta[property="og:site_name"]').content).toBe('AceEngineer');
@@ -70,9 +70,9 @@ test('published fixture renders all conditional home copy and only published row
   expect(published.querySelector('#work tbody').textContent).not.toContain('Draft analysis');
   expect(published.querySelector('#work tbody a').textContent).toBe(copy.home.work.open);
 });
-test('brand document states the legal identity, logo palette and existing tokens', () => {
+test('brand document states the display name, logo palette and existing tokens', () => {
   const brand = fs.readFileSync('brand/BRAND.md', 'utf8');
-  expect(brand).toContain('**AceEngineer Inc.**');
+  expect(brand).toContain('Consumer-facing/site/social/marketing brand: **AceEngineer**.');
   expect(brand).toContain('#0B3D91'); expect(brand).toContain('#2BB2A6');
   expect(brand).not.toMatch(/plum|copper/);
   for (const token of ['--navy', '--navy-2', '--teal', '--teal-lift', '--teal-deep', '--blue', '--ink', '--muted', '--tint', '--hairline', '--underline', '--bg', '--font-body', '--font-ui', '--font-mono']) expect(brand).toContain(token);

@@ -77,17 +77,17 @@ test('every built JSON-LD block parses', () => {
   for (const page of pages) expect(() => nodesFor(page)).not.toThrow();
 });
 
-test('destinations have one shared Organization with the required legal identity', () => {
+test('destinations have one shared Organization with the required display name', () => {
   for (const page of destinations) {
     const full = nodesFor(page).filter(node => node['@type'] === 'Organization' && node.name);
     expect({ page, count: full.length }).toEqual({ page, count: 1 });
     expect(full[0]).toMatchObject({
       '@id': 'https://www.aceengineer.com/#organization',
-      name: 'AceEngineer', legalName: 'AceEngineer Inc.',
+      name: 'AceEngineer',
       alternateName: 'Analytical & Computational Engineering',
     });
-    for (const node of nodesFor(page).filter(node => node.legalName)) {
-      expect(node.legalName).toBe('AceEngineer Inc.');
+    for (const node of nodesFor(page)) {
+      expect(node).not.toHaveProperty('legalName');
     }
   }
 });
@@ -121,7 +121,7 @@ test('both interactive templates expand the shared Organization token', () => {
   for (const page of ['capabilities/dc-drilldown.html', 'capabilities/dc-qaqc-hub.html']) {
     const html = fs.readFileSync(path.join(distDir, page), 'utf8');
     expect(html).not.toContain('<!--ORGANIZATION_JSONLD-->');
-    expect(nodesFor(page).some(node => node['@type'] === 'Organization' && node.legalName === 'AceEngineer Inc.')).toBe(true);
+    expect(nodesFor(page).some(node => node['@type'] === 'Organization' && node['@id'] === 'https://www.aceengineer.com/#organization' && node.name === 'AceEngineer')).toBe(true);
   }
 });
 
@@ -401,7 +401,7 @@ test('home support lists both injected designation and product without hidden or
 
 test('home lead sentence and the three description texts agree', () => {
   const home = documents.get('index.html');
-  const sentence = home.querySelector('.home-lead').textContent.trim().split(/\.\s+/).slice(0, 2).join('. ') + '.';
+  const sentence = home.querySelector('.home-lead').textContent.trim().split(/\.\s+/).slice(0, 1).join('. ') + '.';
   const meta = home.querySelector('meta[name="description"]').content;
   const schema = nodesFor('index.html').find(node => node['@type'] === 'WebPage').description;
   const header = fs.readFileSync(path.join(distDir, 'llms.txt'), 'utf8').match(/^> (.*)$/m)[1];
@@ -423,5 +423,17 @@ test.each(supportedHomeCopy)('home wording follows existing page support: %s', (
   for (const keyPath of paths) {
     const sentence = keyPath.split('.').reduce((value, part) => value[part], homeCopy);
     expect(homeCopyText).toContain(sentence);
+  }
+});
+
+test('every built page omits legalName at every depth and a legal form in titles and footers', () => {
+  const legalForm = /AceEngineer\s+(?:Inc\.?|Incorporated|LLC)\b/i;
+  for (const page of pages) {
+    for (const node of nodesFor(page)) expect(node).not.toHaveProperty('legalName');
+    const doc = documents.get(page);
+    expect({ page, title: legalForm.test(doc.title) }).toEqual({ page, title: false });
+    for (const footer of doc.querySelectorAll('footer')) {
+      expect({ page, footer: legalForm.test(footer.textContent) }).toEqual({ page, footer: false });
+    }
   }
 });

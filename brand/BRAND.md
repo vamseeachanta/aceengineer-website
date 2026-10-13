@@ -4,7 +4,7 @@
 
 - Consumer-facing/site/social/marketing brand: **AceEngineer**.
 - SEO/accessibility long form: **Analytical & Computational Engineering**.
-- Legal/contractual entity when a legal entity is required: **AceEngineer Inc.**.
+- Legal/contractual entity when a legal entity is required: **Achanta AceEngineer Inc.**.
 - Retired placeholder/historical acronym: **A&CE**. Do not use it for new visible brand surfaces, page titles, social metadata, schema alternate names, forms, CTAs, or navigation labels.
 
 ## Visual DNA decision

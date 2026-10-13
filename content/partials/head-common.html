@@ -24,4 +24,6 @@
   })();
 </script>
 
-<include src="partials/organization-jsonld.html"></include>
+<if condition="!metadataExcluded">
+  <include src="partials/organization-jsonld.html"></include>
+</if>

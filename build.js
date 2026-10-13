@@ -188,6 +188,7 @@ async function processFile(filePath) {
 
   const rawContent = fs.readFileSync(filePath, 'utf8');
   const { locals, content } = parseFrontMatter(rawContent);
+  locals.metadataExcluded = relativePath.split(path.sep).join('/') in SITEMAP_EXCLUDE;
 
   // Default rootPath to empty string if not specified
   if (!locals.rootPath) {
@@ -258,6 +259,7 @@ async function buildCapabilityDetailPages(registry) {
       rootPath: '../',
       copy: loadCopy(),
       canonicalUrl: canonicalUrlFor(`capabilities/${detailFileName(cap)}`),
+      metadataExcluded: false,
     });
     fs.writeFileSync(path.join(outDir, detailFileName(cap)), html);
     console.log(`Built: capabilities/${detailFileName(cap)}`);

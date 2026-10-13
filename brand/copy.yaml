@@ -97,11 +97,11 @@ targets:
 
 home:
   title: AceEngineer Inc. Offshore and marine engineering firm
-  description: AceEngineer Inc. provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore operators, drilling contractors and marine consultancies.
+  description: AceEngineer Inc. provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms and EPC contractors.
   kicker: Offshore and marine engineering firm | Houston, Texas
   heading: Engineering analysis that can be checked, line by line.
   lead: >-
-    AceEngineer Inc. provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore operators, drilling contractors and marine consultancies. We provide engineering services: analysis, design calculations, integrity assessment and independent verification.
+    AceEngineer Inc. provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms and EPC contractors. We provide engineering services: analysis, design calculations and integrity assessment.
   discuss: Discuss a scope
   facts:
     - heading: Founded 2010
@@ -113,23 +113,23 @@ home:
   services_heading: Services
   services:
     - heading: Asset integrity and fitness-for-service
-      description: Remaining-strength assessment of corroded components to API 579-1, ASME B31G and DNV-RP-F101, with a stated accept, re-rate or re-measure decision.
-      receives: 'Client receives: a calculation report with a stated decision: accept, re-rate, take more measurements, or escalate'
-    - heading: Drilling riser and riser analysis
-      description: Operability envelopes against API RP 16Q and API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.
-      receives: 'Client receives: an operability envelope and a calculation report'
+      description: Remaining-strength assessment of corroded components to API 579-1 and B31G.
+      receives: 'Client receives: a remaining-strength calculation report'
+    - heading: Riser analysis
+      description: Analysis against API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.
+      receives: 'Client receives: a riser analysis calculation report'
     - heading: Hydrodynamics and vessel motions
-      description: Wave diffraction and radiation analysis, results compared between independent analyses before a response is accepted.
+      description: Wave diffraction and radiation analysis, with diffraction results compared between two solvers.
       receives: 'Client receives: a vessel motions calculation report'
-    - heading: Cathodic protection design
-      description: Sacrificial-anode and impressed-current design for jackets, monopiles, subsea structures, pipelines and hulls to DNV-RP-B401 and DNV-RP-F103.
-      receives: 'Client receives: a design calculation report'
+    - heading: Cathodic protection screening
+      description: Sacrificial-anode screening to DNV-RP-B401 and DNV-RP-F103.
+      receives: 'Client receives: screening calculations, subject to qualified inputs and an engineer-of-record check'
     - heading: Marine installation screening
-      description: Lifting and lowering operations screened by phase, reported as a utilisation envelope over wave height and period.
-      receives: 'Client receives: a utilisation envelope over significant wave height and peak period'
+      description: Lifting and lowering operations screened by phase, reported as utilisation by phase and an operability limit on significant wave height.
+      receives: 'Client receives: utilisation by phase and an operability limit on significant wave height'
     - heading: Offshore energy data and field analytics
       description: Well, lease and production analysis for the United States Gulf of Mexico from public regulatory filings.
-      receives: 'Client receives: drilling and completion durations; per-well performance benchmarking; life-to-date field economics for Lower Tertiary deepwater fields'
+      receives: 'Client receives: drilling and completion durations; per-well drilling and completion-day listings'
   work:
     button: See selected work
     heading: Selected work

@@ -426,6 +426,11 @@ test.each(supportedHomeCopy)('home wording follows existing page support: %s', (
   }
 });
 
+test('outreach contact line uses the display name without a legal form', () => {
+  const contact = documents.get('outreach/small-operator-brief.html').querySelector('.cta-block .secondary');
+  expect(contact.textContent.split('·')[0].trim()).toBe('AceEngineer');
+});
+
 test('every built page omits legalName at every depth and a legal form in titles and footers', () => {
   const legalForm = /AceEngineer\s+(?:Inc\.?|Incorporated|LLC)\b/i;
   for (const page of pages) {

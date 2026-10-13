@@ -50,10 +50,12 @@
             </div>
         </section>
         <section id="about" class="home-facts">
-            <div class="container home-facts-grid">
+            <div class="container">
+                <div class="home-facts-grid">
                 <each loop="fact in copy.home.facts">
                     <p><strong>{{ fact.heading }}</strong><br>{{ fact.detail }}</p>
                 </each>
+                </div>
             </div>
         </section>
         <section id="services" class="home-section">

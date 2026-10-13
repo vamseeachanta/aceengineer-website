@@ -97,11 +97,11 @@ targets:
 
 home:
   title: AceEngineer | Offshore and marine engineering firm
-  description: AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms and EPC contractors.
+  description: AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms, EPC contractors and drilling contractors.
   kicker: Offshore and marine engineering firm | Houston, Texas
   heading: Engineering analysis that can be checked, line by line.
   lead: >-
-    AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms and EPC contractors. We provide engineering services: analysis, design calculations and integrity assessment.
+    AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms, EPC contractors and drilling contractors. We provide engineering services: analysis, design calculations and integrity assessment.
   discuss: Discuss a scope
   facts:
     - heading: Founded 2010
@@ -114,10 +114,10 @@ home:
   services:
     - heading: Asset integrity and fitness-for-service
       description: Remaining-strength assessment of corroded components to API 579-1 and B31G.
-      receives: 'Client receives: a remaining-strength calculation report'
+      receives: 'Client receives: a remaining-strength calculation report with a stated decision: accept, re-rate, take more measurements, or escalate'
     - heading: Riser analysis
-      description: Analysis against API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.
-      receives: 'Client receives: a riser analysis calculation report'
+      description: Riser analysis and operability envelopes for drilling risers to API RP 16Q. Analysis against API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.
+      receives: 'Client receives: an operability envelope and a riser analysis calculation report'
     - heading: Hydrodynamics and vessel motions
       description: Wave diffraction and radiation analysis, with diffraction results compared between two solvers.
       receives: 'Client receives: a vessel motions calculation report'

@@ -477,3 +477,17 @@ test('every built page omits the misleading standards facts tile', () => {
     }
   }
 });
+
+test('drilling contractors have visible home and About support', () => {
+  const about = documents.get('about.html');
+  const section = [...about.querySelectorAll('h2')].find(node => node.textContent.trim() === 'Who We Serve').closest('section');
+  expect([wholeToken(homeCopyText, 'drilling contractors'), wholeToken(visibleCopy(section), 'drilling contractors')]).toEqual([true, true]);
+});
+test('fitness-for-service outcomes have visible home and integrity support', () => {
+  const home = documents.get('index.html').querySelector('#services article');
+  const integrity = documents.get('solutions/subsea-pipelines-integrity.html').querySelector('main');
+  for (const outcome of ['accept', 're-rate', 'take more measurements', 'escalate']) {
+    expect({ outcome, home: wholeToken(visibleCopy(home), outcome), support: wholeToken(visibleCopy(integrity), outcome) })
+      .toEqual({ outcome, home: true, support: true });
+  }
+});

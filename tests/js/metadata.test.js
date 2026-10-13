@@ -12,6 +12,50 @@ const documents = new Map(pages.map(page => [page,
 const destinations = pages.filter(page => !(page in SITEMAP_EXCLUDE));
 const exemptions = {};
 
+function addressPropertyHits(html) {
+  const doc = new JSDOM(html).window.document;
+  const hits = [];
+  const prohibited = ['streetAddress', 'postalCode'];
+  function visit(value) {
+    if (Array.isArray(value)) value.forEach(visit);
+    else if (value && typeof value === 'object') {
+      for (const key of Object.keys(value)) {
+        if (prohibited.includes(key)) hits.push(key);
+        visit(value[key]);
+      }
+    }
+  }
+  for (const script of doc.querySelectorAll('script[type="application/ld+json"]')) {
+    visit(JSON.parse(script.textContent));
+  }
+  for (const node of doc.querySelectorAll('[itemprop]')) {
+    for (const key of node.getAttribute('itemprop').split(/\s+/)) {
+      if (prohibited.includes(key)) hits.push(key);
+    }
+  }
+  return hits;
+}
+
+test('every built page omits the two address properties', () => {
+  for (const page of pages) {
+    const hits = addressPropertyHits(fs.readFileSync(path.join(distDir, page), 'utf8'));
+    expect({ page, hits }).toEqual({ page, hits: [] });
+  }
+});
+
+test('address property scan rejects nested JSON-LD and microdata fixtures', () => {
+  const folder = fs.mkdtempSync(path.join(process.env.TEST_TEMP_DIR || require('os').tmpdir(), 'address-properties-'));
+  try {
+    const file = path.join(folder, 'fixture.html');
+    fs.writeFileSync(file, '<html><head><script type="application/ld+json">{"@graph":[{"address":{"streetAddress":"synthetic","postalCode":"synthetic"}}]}</script></head><body><span itemprop="streetAddress postalCode">synthetic</span></body></html>');
+    expect(addressPropertyHits(fs.readFileSync(file, 'utf8'))).toEqual([
+      'streetAddress', 'postalCode', 'streetAddress', 'postalCode',
+    ]);
+  } finally {
+    fs.rmSync(folder, { recursive: true });
+  }
+});
+
 function nodesFor(page) {
   const nodes = [];
   function visit(value) {

@@ -3,117 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="AceEngineer turns everyday complex engineering into deterministic, reusable workflows — each backed by a public dataset you can explore and use for free.">
-    <meta name="keywords" content="deterministic engineering workflows, offshore engineering, field development, digital model, world energy data, lookup tables, reproducible engineering">
-
-    <meta property="og:title" content="AceEngineer — Everyday complex engineering, made deterministically simple">
-    <meta property="og:description" content="Deterministic engineering workflows, each backed by a public dataset you can explore and use for free.">
+    <title>{{ copy.home.title }}</title>
+    <meta name="description" content="{{ copy.home.description }}">
+    <meta property="og:title" content="{{ copy.home.title }}">
+    <meta property="og:description" content="{{ copy.home.description }}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.aceengineer.com/">
-    <meta property="og:site_name" content="Analytical & Computational Engineering">
+    <meta property="og:site_name" content="AceEngineer">
+    <meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="AceEngineer — made deterministically simple">
-    <meta name="twitter:description" content="Deterministic engineering workflows, each backed by a public dataset. Use it for free.">
-
-    <title>AceEngineer — Everyday complex engineering, made deterministically simple</title>
-
+    <meta name="twitter:title" content="{{ copy.home.title }}">
+    <meta name="twitter:description" content="{{ copy.home.description }}">
     <include src="partials/head-common.html"></include>
-
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "@id": "https://www.aceengineer.com/#organization",
-        "name": "Analytical & Computational Engineering",
-        "alternateName": "AceEngineer",
-        "url": "https://www.aceengineer.com",
-        "description": "Deterministic engineering workflows for offshore and energy engineering, each backed by a public dataset.",
-        "foundingDate": "2010",
-        "areaServed": "Worldwide",
-        "founder": { "@type": "Person", "name": "Vamsee Achanta" }
-    }
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "url": "https://www.aceengineer.com/",
+            "name": "{{ copy.home.title }}",
+            "description": "{{ copy.home.description }}",
+            "about": { "@id": "https://www.aceengineer.com/#organization" }
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.aceengineer.com/" }
+            ]
+        }
+    ]
     </script>
 </head>
 <body class="theme-page">
-
     <include src="partials/nav.html"></include>
-
-    <main id="main">
-
-    <!-- Hero -->
-    <section style="padding:64px 0 40px;">
-        <div class="container" style="max-width:860px;">
-            <p class="kicker">Deterministic engineering workflows</p>
-            <h1 style="font-size:2.6rem;line-height:1.15;margin:0 0 14px;">Everyday complex engineering —<br>made deterministically simple.</h1>
-            <p style="font-size:1.2rem;color:var(--ink);max-width:680px;">
-                We pre-compute the hard engineering across the envelope and hand you the simple part:
-                a lookup you can read in daily work — every number traceable to its standard, code, and data.
-            </p>
-            <div style="margin-top:26px;display:flex;gap:14px;flex-wrap:wrap;">
-                <a href="/capabilities/" class="btn-free">Use it for free →</a>
-                <a href="contact.html" class="btn-ghost">Custom work? Reach out</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Iceberg / lookup motif: simple on top, rigorous underneath -->
-    <section style="padding:20px 0 44px;">
-        <div class="container">
-            <div class="layers">
-                <div class="surface">
-                    <div class="row"><span>your case</span><span class="arrow">→</span><span>your answer</span></div>
-                    <p style="margin:10px 0 0;color:var(--muted);font-family:var(--font-ui);font-size:.85rem;">Simple at the point of use — a lookup, ready in daily work.</p>
-                </div>
-                <div class="depth">
-                    <div class="waterline-note">Rigorous underneath</div>
-                    Deterministic workflows · curated data · encoded standards · golden tests · input &amp; result hashes.
-                    <br>Composition is model-assisted; execution is 100% deterministic — the model never produces an engineering number.
+    <main id="main" class="home-page">
+        <section class="home-hero">
+            <div class="container">
+                <p class="kicker">{{ copy.home.kicker }}</p>
+                <h1>{{ copy.home.heading }}</h1>
+                <p class="home-lead">{{ copy.home.lead }}</p>
+                <div class="home-actions">
+                    <if condition="samplesPublished"><a href="#work" class="btn-free">{{ copy.home.work.button }}</a></if>
+                    <a href="#contact" class="btn-ghost">{{ copy.home.discuss }}</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Capabilities (live, data-backed) -->
-    <section style="padding:20px 0 40px;">
-        <div class="container">
-            <h2 class="section-label">Capabilities — live &amp; data-backed</h2>
-            <p style="max-width:720px;color:var(--ink);margin:0 0 22px;">
-                Each capability is powered by a public dataset we publish from our engineering and
-                energy-data pipelines. Explore the real records, or use the workflow for free.
-                New capabilities appear here automatically as we ship them.
-            </p>
-            {{{ capabilitiesCards }}}
-        </div>
-    </section>
-
-    <!-- Deterministic pipeline -->
-    <section style="padding:20px 0 44px;">
-        <div class="container" style="max-width:860px;">
-            <h2 class="section-label">How a result is produced</h2>
-            <div class="flow">client basis&nbsp; →&nbsp; explicit specification&nbsp; →&nbsp; deterministic workflow&nbsp; →&nbsp; checked result&nbsp; →&nbsp; report</div>
-            <div class="callout" style="margin-top:18px;">
-                <em class="mantra">Everyday complex engineering — made deterministically simple.</em>
+        </section>
+        <section id="about" class="home-facts">
+            <div class="container home-facts-grid">
+                <each loop="fact in copy.home.facts">
+                    <p><strong>{{ fact.heading }}</strong><br>{{ fact.detail }}</p>
+                </each>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA + custom work -->
-    <section style="padding:44px 0 60px;background:var(--tint);">
-        <div class="container" style="max-width:760px;text-align:center;">
-            <h2 style="font-size:1.7rem;color:var(--navy);margin:0 0 10px;">Use it for free</h2>
-            <p style="color:var(--ink);margin:0 0 22px;">
-                Explore the live capabilities and put the workflows to work — no cost, no sign-up.
-            </p>
-            <a href="/capabilities/" class="btn-free">Explore capabilities →</a>
-            <p style="color:var(--muted);font-family:var(--font-ui);font-size:.9rem;margin:26px 0 0;">
-                Need something beyond the published capabilities? <a href="contact.html" class="link-quiet">Reach out</a> and we'll tell you what's possible.
-            </p>
-        </div>
-    </section>
-
+        </section>
+        <section id="services" class="home-section">
+            <div class="container">
+                <h2>{{ copy.home.services_heading }}</h2>
+                <div class="home-services-grid">
+                    <each loop="service in copy.home.services">
+                        <article class="home-service">
+                            <h3>{{ service.heading }}</h3>
+                            <p>{{ service.description }}</p>
+                            <p class="home-receives">{{ service.receives }}</p>
+                        </article>
+                    </each>
+                </div>
+            </div>
+        </section>
+        <if condition="samplesPublished">
+            <section id="work" class="home-section">
+                <div class="container">
+                    <h2>{{ copy.home.work.heading }}</h2>
+                    <p>{{ copy.home.work.description }}</p>
+                    <div class="samples-table-wrap">
+                        <table class="samples-table">
+                            <thead><tr><th>{{ copy.home.work.sample }}</th><th>{{ copy.home.work.demonstrates }}</th><th>{{ copy.home.work.open }}</th></tr></thead>
+                            <tbody>{{{ sampleHomeRows }}}</tbody>
+                        </table>
+                    </div>
+                    <p><a href="samples/">{{ copy.home.work.all }}</a></p>
+                </div>
+            </section>
+        </if>
+        <section id="contact" class="home-section home-contact">
+            <div class="container">
+                <h2>{{ copy.home.contact.heading }}</h2>
+                <p>{{ copy.home.contact.principal }}<br><a href="mailto:{{ copy.home.contact.email }}">{{ copy.home.contact.email }}</a></p>
+            </div>
+        </section>
     </main>
-
     <include src="partials/footer.html"></include>
-
 </body>
 </html>

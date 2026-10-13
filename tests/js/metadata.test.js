@@ -10,11 +10,7 @@ const pages = builtPages(distDir);
 const documents = new Map(pages.map(page => [page,
   new JSDOM(fs.readFileSync(path.join(distDir, page), 'utf8')).window.document]));
 const destinations = pages.filter(page => !(page in SITEMAP_EXCLUDE));
-const exemptions = {
-  'index.html': {
-    organization: 'Protected source retains the former Organization definition.',
-  },
-};
+const exemptions = {};
 
 function nodesFor(page) {
   const nodes = [];
@@ -106,9 +102,6 @@ const requiredTypes = {
     'solutions/field-development-screening.html',
   ],
 };
-exemptions['index.html'].page = 'Protected source has only its inline Organization schema.';
-exemptions['index.html'].breadcrumb = 'Protected source has no BreadcrumbList.';
-exemptions['index.html'].image = 'Protected source Open Graph tags have no og:image.';
 const { loadCapabilities } = require('../../build');
 const { isReleaseBacked } = require('../../scripts/render-capabilities');
 for (const cap of loadCapabilities().capabilities.filter(cap => cap.status !== 'withheld' && !isReleaseBacked(cap))) {

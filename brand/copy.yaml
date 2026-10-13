@@ -22,7 +22,7 @@
 names:
   firm: AceEngineer
   seo: Analytical & Computational Engineering
-  legal: Achanta AceEngineer Inc.
+  legal: AceEngineer Inc.
   retired_acronym: A&CE
 
 tagline: Offshore Engineering Analytics at Scale
@@ -93,3 +93,52 @@ forbidden_phrases:
 # Keys map to copy fields above; the lint reads this to know what to assert where.
 targets:
   about: content/about.html
+  home: content/index.html
+
+home:
+  title: AceEngineer Inc. Offshore and marine engineering firm
+  description: AceEngineer Inc. provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore operators, drilling contractors and marine consultancies.
+  kicker: Offshore and marine engineering firm | Houston, Texas
+  heading: Engineering analysis that can be checked, line by line.
+  lead: >-
+    AceEngineer Inc. provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore operators, drilling contractors and marine consultancies. We provide engineering services: analysis, design calculations, integrity assessment and independent verification.
+  discuss: Discuss a scope
+  facts:
+    - heading: Founded 2010
+      detail: Houston, Texas
+    - heading: 15+ years of experience
+      detail: Principal engineer, offshore and marine
+    - heading: Published standards
+      detail: 'API, ASME, DNV: edition and clause cited'
+  services_heading: Services
+  services:
+    - heading: Asset integrity and fitness-for-service
+      description: Remaining-strength assessment of corroded components to API 579-1, ASME B31G and DNV-RP-F101, with a stated accept, re-rate or re-measure decision.
+      receives: 'Client receives: a calculation report with a stated decision: accept, re-rate, take more measurements, or escalate'
+    - heading: Drilling riser and riser analysis
+      description: Operability envelopes against API RP 16Q and API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.
+      receives: 'Client receives: an operability envelope and a calculation report'
+    - heading: Hydrodynamics and vessel motions
+      description: Wave diffraction and radiation analysis, results compared between independent analyses before a response is accepted.
+      receives: 'Client receives: a vessel motions calculation report'
+    - heading: Cathodic protection design
+      description: Sacrificial-anode and impressed-current design for jackets, monopiles, subsea structures, pipelines and hulls to DNV-RP-B401 and DNV-RP-F103.
+      receives: 'Client receives: a design calculation report'
+    - heading: Marine installation screening
+      description: Lifting and lowering operations screened by phase, reported as a utilisation envelope over wave height and period.
+      receives: 'Client receives: a utilisation envelope over significant wave height and peak period'
+    - heading: Offshore energy data and field analytics
+      description: Well, lease and production analysis for the United States Gulf of Mexico from public regulatory filings.
+      receives: 'Client receives: drilling and completion durations; per-well performance benchmarking; life-to-date field economics for Lower Tertiary deepwater fields'
+  work:
+    button: See selected work
+    heading: Selected work
+    description: The samples are prepared from public data and published standards, or from synthetic inputs where stated, and contain no client information.
+    sample: Sample
+    demonstrates: What it demonstrates
+    open: Open
+    all: All samples
+  contact:
+    heading: Contact
+    principal: Vamsee Achanta, Principal Engineer
+    email: support@aceengineer.com

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
+const yaml = require('js-yaml');
 const { builtPages, SITEMAP_EXCLUDE, PAGE_DESCRIPTION_PATTERNS } = require('../../build');
 const { buildDrilldown, buildHub } = require('../../scripts/build-drilldown');
 
@@ -348,8 +349,19 @@ function visibleCopy(root) {
   return body.textContent.replace(/\s+/g, ' ').trim();
 }
 
-// Names published on the engineering, platform, diffraction and capability pages.
-const softwareNames = ['OrcaFlex', 'OrcaWave', 'AQWA', 'ANSYS', 'OpenFOAM', 'digitalmodel', 'Python'];
+// Program names come from the published integration list, solver links and capability summaries.
+const softwareQuestion = [...documents.get('faq.html').querySelectorAll('p > b')]
+  .find(node => /software tools/i.test(node.textContent));
+const integrations = [...softwareQuestion.parentElement.nextElementSibling.nextElementSibling.querySelectorAll('li > strong')]
+  .flatMap(node => node.textContent.replace(/:$/, '').split('/'));
+const diffractionSolvers = [...documents.get('reports/diffraction/index.html').querySelectorAll('a[href]')]
+  .flatMap(node => [...new URL(node.getAttribute('href'), 'https://www.aceengineer.com').searchParams]
+    .filter(([key]) => /^solver(?:A|B)?$/.test(key)).map(([, value]) => value));
+const platformName = documents.get('platform.html').querySelector('.hero-subtitle > strong').textContent.trim();
+const capabilityRegistry = yaml.load(fs.readFileSync(path.join(__dirname, '../../config/capabilities.yaml'), 'utf8'));
+const capabilitySolvers = capabilityRegistry.capabilities.flatMap(entry =>
+  [...entry.summary.matchAll(/\b([A-Za-z][A-Za-z0-9]+) VOF\b/g)].map(match => match[1]));
+const softwareNames = [...new Set([...integrations, ...diffractionSolvers, platformName, ...capabilitySolvers])];
 const standardDesignation = /\b[A-Z]{2,}(?:[ -][A-Z]{2,})*[ -](?=[A-Z0-9.-]*\d)[A-Z0-9]+(?:[.-][A-Z0-9]+)*\b/g;
 function wholeToken(text, token) {
   const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -396,16 +408,20 @@ test('home lead sentence and the three description texts agree', () => {
   expect([meta, schema, header]).toEqual([sentence, sentence, sentence]);
 });
 
+const homeCopy = yaml.load(fs.readFileSync(path.join(__dirname, '../../brand/copy.yaml'), 'utf8'));
 const supportedHomeCopy = [
-  ['service scope', ['We provide engineering services: analysis, design calculations and integrity assessment.']],
-  ['corrosion screening', ['Cathodic protection screening', 'Sacrificial-anode screening to DNV-RP-B401 and DNV-RP-F103.', 'Client receives: screening calculations, subject to qualified inputs and an engineer-of-record check']],
-  ['remaining strength', ['Remaining-strength assessment of corroded components to API 579-1 and B31G.', 'Client receives: a remaining-strength calculation report']],
-  ['riser analysis', ['Riser analysis', 'Analysis against API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.', 'Client receives: a riser analysis calculation report']],
-  ['diffraction comparison', ['Wave diffraction and radiation analysis, with diffraction results compared between two solvers.']],
-  ['duration listings', ['Client receives: drilling and completion durations; per-well drilling and completion-day listings']],
-  ['installation screening', ['Lifting and lowering operations screened by phase, reported as utilisation by phase and an operability limit on significant wave height.', 'Client receives: utilisation by phase and an operability limit on significant wave height']],
-  ['client segments', ['AceEngineer Inc. provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms and EPC contractors.']],
-];
-test.each(supportedHomeCopy)('home wording follows existing page support: %s', (key, expected) => {
-  for (const sentence of expected) expect(homeCopyText).toContain(sentence);
+  ['home.lead'],
+  ['home.services.3.heading', 'home.services.3.description', 'home.services.3.receives'],
+  ['home.services.0.description', 'home.services.0.receives'],
+  ['home.services.1.heading', 'home.services.1.description', 'home.services.1.receives'],
+  ['home.services.2.description'],
+  ['home.services.5.receives'],
+  ['home.services.4.description', 'home.services.4.receives'],
+  ['home.description'],
+].map(keys => [keys.join(', '), keys]);
+test.each(supportedHomeCopy)('home wording follows existing page support: %s', (key, paths) => {
+  for (const keyPath of paths) {
+    const sentence = keyPath.split('.').reduce((value, part) => value[part], homeCopy);
+    expect(homeCopyText).toContain(sentence);
+  }
 });

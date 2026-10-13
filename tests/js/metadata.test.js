@@ -78,7 +78,6 @@ test('every built JSON-LD block parses', () => {
 
 test('destinations have one shared Organization with the required legal identity', () => {
   for (const page of destinations) {
-    if (exemptions[page]?.organization) continue;
     const full = nodesFor(page).filter(node => node['@type'] === 'Organization' && node.name);
     expect({ page, count: full.length }).toEqual({ page, count: 1 });
     expect(full[0]).toMatchObject({
@@ -90,6 +89,12 @@ test('destinations have one shared Organization with the required legal identity
       expect(node.legalName).toBe('AceEngineer Inc.');
     }
   }
+});
+
+test('home metadata has no exemptions and references the shared Organization', () => {
+  expect(exemptions).not.toHaveProperty('index.html');
+  const page = nodesFor('index.html').find(node => node['@type'] === 'WebPage');
+  expect(page.about).toEqual({ '@id': 'https://www.aceengineer.com/#organization' });
 });
 
 test('both interactive templates expand the shared Organization token', () => {
@@ -198,14 +203,11 @@ test('destinations have canonical Open Graph metadata and the existing logo', ()
   for (const page of destinations) {
     const doc = documents.get(page);
     for (const field of ['title', 'description', 'type', 'url', 'image']) {
-      if (field === 'image' && exemptions[page]?.image) continue;
       expect({ page, field, present: !!doc.querySelector(`meta[property="og:${field}"]`)?.content })
         .toEqual({ page, field, present: true });
     }
     expect(doc.querySelector('meta[property="og:url"]').content).toBe(doc.querySelector('link[rel="canonical"]').href);
-    if (!exemptions[page]?.image) {
-      expect(doc.querySelector('meta[property="og:image"]').content).toBe('https://www.aceengineer.com/assets/img/logo.png');
-    }
+    expect(doc.querySelector('meta[property="og:image"]').content).toBe('https://www.aceengineer.com/assets/img/logo.png');
   }
 });
 

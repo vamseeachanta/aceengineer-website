@@ -207,3 +207,14 @@ test('titles are unique across source and generated pages', () => {
   const duplicates = [...titles.entries()].filter(([, list]) => list.length > 1);
   expect(duplicates).toEqual([]);
 });
+
+test('llms.txt covers every sitemap URL and excludes noindex pages', () => {
+  const file = path.join(distDir, 'llms.txt');
+  expect(fs.existsSync(file)).toBe(true);
+  const text = fs.readFileSync(file, 'utf8');
+  const sitemap = fs.readFileSync(path.join(distDir, 'sitemap.xml'), 'utf8');
+  const expected = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(match => match[1]);
+  const listed = [...text.matchAll(/^-[^\n]*\]\((https:\/\/[^)]+)\):/gm)].map(match => match[1]);
+  expect([...new Set(listed)].sort()).toEqual(expected.sort());
+  for (const page of Object.keys(SITEMAP_EXCLUDE)) expect(text).not.toContain(page);
+});

@@ -7,7 +7,7 @@ const yaml = require('js-yaml');
 const { PurgeCSS } = require('purgecss');
 const CleanCSS = require('clean-css');
 const hf = require('./scripts/hf-fetch');
-const { renderCards, capabilityDetailDocument, detailFileName, isReleaseBacked } = require('./scripts/render-capabilities');
+const { renderCards, capabilityDetailDocument, detailFileName, detailHref, isReleaseBacked } = require('./scripts/render-capabilities');
 
 const srcDir = './content';
 const distDir = './dist';
@@ -453,6 +453,65 @@ function copyRobotsTxt(srcFile = './robots.txt', destDirArg = distDir) {
   }
 }
 
+// Read decoded head metadata through the same HTML parser used by the build.
+function readBuiltPageMetadata(html, relPath) {
+  const tree = posthtml().process(html, {
+    sync: true, decodeEntities: true, lowerCaseTags: true, lowerCaseAttributeNames: true,
+  }).tree;
+  const metadata = { title: '', description: '' };
+  function visit(nodes, inHead = false) {
+    for (const node of nodes) {
+      if (!node || typeof node !== 'object') continue;
+      const head = inHead || node.tag === 'head';
+      if (head && node.tag === 'title') metadata.title = (node.content || []).join('');
+      if (head && node.tag === 'meta' && node.attrs?.name === 'description') {
+        metadata.description = node.attrs.content || '';
+      }
+      if (node.content) visit(node.content, head);
+    }
+  }
+  visit(tree);
+  for (const key of Object.keys(metadata)) metadata[key] = metadata[key].replace(/\s+/g, ' ').trim();
+  if (!metadata.title || !metadata.description) throw new Error(`llms.txt: missing title or description in ${relPath}`);
+  return metadata;
+}
+
+// Proposal: "The /llms.txt file", https://llmstxt.org/ — headings and Markdown links.
+function writeLlmsTxt(destDirArg = distDir, registry = loadCapabilities()) {
+  const copy = loadCopy();
+  const pages = builtPages(destDirArg).filter(page => !(page in SITEMAP_EXCLUDE));
+  const metadata = new Map(pages.map(page => [page,
+    readBuiltPageMetadata(fs.readFileSync(path.join(destDirArg, page), 'utf8'), page)]));
+  const lines = [`# ${copy.names.firm}`, '', `> ${metadata.get('index.html').description}`, '', '## Capabilities', ''];
+  for (const cap of (registry.capabilities || []).filter(cap => cap.status !== 'withheld')) {
+    const title = `${cap.title}${cap.status === 'pending' ? ' (pending)' : ''}`;
+    const summary = String(cap.summary).replace(/\s+/g, ' ').trim();
+    lines.push(`- [${title}](${new URL(detailHref(cap), SITE_ORIGIN).href}): ${summary}`);
+  }
+  const groups = new Map();
+  const company = [];
+  for (const page of pages) {
+    const { title, description } = metadata.get(page);
+    const line = `- [${title}](${canonicalUrlFor(page)}): ${description}`;
+    if (!page.includes('/')) { company.push(line); continue; }
+    const directory = page.split('/')[0];
+    if (!groups.has(directory)) groups.set(directory, []);
+    groups.get(directory).push(line);
+  }
+  for (const [directory, entries] of groups) {
+    const section = directory.split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
+    lines.push('', `## ${section}`, '', ...entries);
+  }
+  lines.push('', '## Company', '', ...company, '');
+  const text = lines.join('\n');
+  if (copy.forbidden_phrases.some(phrase => text.toLowerCase().includes(phrase.toLowerCase()))) {
+    throw new Error('llms.txt contains a forbidden phrase');
+  }
+  fs.writeFileSync(path.join(destDirArg, 'llms.txt'), text, 'utf8');
+  console.log(`Generated: llms.txt — ${pages.length} pages`);
+  return pages;
+}
+
 // Main build function
 async function build() {
   console.log('Building site...\n');
@@ -517,6 +576,7 @@ async function build() {
   copyAssets();
   writeSitemap();
   copyRobotsTxt();
+  writeLlmsTxt();
 
   console.log(`\nBuild complete! ${files.length} pages built.`);
 }
@@ -595,4 +655,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, verifyVendoredAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };
+module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeLlmsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, verifyVendoredAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };

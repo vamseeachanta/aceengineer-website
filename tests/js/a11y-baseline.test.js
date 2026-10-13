@@ -60,9 +60,36 @@ const read = p => fs.readFileSync(p, 'utf8');
 
 const chromePages = pages.filter(p => !(rel(p) in CHROME_EXEMPT));
 
+function addressProperties(value, found = []) {
+  if (value === null || typeof value !== 'object') return found;
+  for (const [key, child] of Object.entries(value)) {
+    if (key === 'streetAddress' || key === 'postalCode') found.push(key);
+    addressProperties(child, found);
+  }
+  return found;
+}
+
 describe('a11y baseline (dist/)', () => {
   test('the build output exists — run `npm run build` first', () => {
     expect(pages.length).toBeGreaterThan(50);
+  });
+
+  test('every page excludes streetAddress and postalCode from structured data', () => {
+    const bad = [];
+    for (const p of pages) {
+      for (const block of docFor(p).querySelectorAll('script[type="application/ld+json"]')) {
+        const data = JSON.parse(block.textContent);
+        for (const property of addressProperties(data)) bad.push([rel(p), property]);
+      }
+    }
+    expect(bad).toEqual([]);
+  });
+
+  test('the structured-data walker detects nested address properties', () => {
+    const fixture = {
+      '@graph': [{ address: { streetAddress: 'SYNTHETIC', postalCode: 'SYNTHETIC' } }],
+    };
+    expect(addressProperties(fixture)).toEqual(['streetAddress', 'postalCode']);
   });
 
   test('every page declares a viewport', () => {

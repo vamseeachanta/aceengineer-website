@@ -190,3 +190,20 @@ test('source metadata meets the required coverage floors', () => {
     ['meta[property="og:title"]', 110], ['meta[property="og:image"]', 109],
   ]) expect(sources.filter(doc => doc.querySelector(selector)).length).toBeGreaterThanOrEqual(floor);
 });
+
+test('every built page has a nonempty meta description', () => {
+  const missing = pages.filter(page => !documents.get(page).querySelector('meta[name="description"]')?.content.trim());
+  expect(missing).toEqual([]);
+});
+
+test('titles are unique across source and generated pages', () => {
+  const titles = new Map();
+  for (const page of pages) {
+    const title = documents.get(page).title;
+    expect(title.trim().length).toBeGreaterThan(0);
+    if (!titles.has(title)) titles.set(title, []);
+    titles.get(title).push(page);
+  }
+  const duplicates = [...titles.entries()].filter(([, list]) => list.length > 1);
+  expect(duplicates).toEqual([]);
+});

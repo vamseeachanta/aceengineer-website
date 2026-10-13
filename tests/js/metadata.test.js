@@ -167,6 +167,42 @@ function schemasFor(page) {
     });
 }
 
+const siteSuffix = /\s[-–—|]\s*(?:AceEngineer(?: Engineering)?|Analytical & Computational Engineering)\s*$/i;
+
+test('all breadcrumb levels omit the site title suffix', () => {
+  for (const page of pages) {
+    for (const node of nodesFor(page).filter(node => node['@type'] === 'BreadcrumbList')) {
+      for (const item of node.itemListElement) {
+        expect({ page, name: item.name, hasSuffix: siteSuffix.test(item.name) })
+          .toEqual({ page, name: item.name, hasSuffix: false });
+      }
+    }
+  }
+});
+
+test('all home breadcrumb targets use the canonical trailing slash', () => {
+  for (const page of pages) {
+    for (const node of nodesFor(page).filter(node => node['@type'] === 'BreadcrumbList')) {
+      for (const item of node.itemListElement) {
+        if (/^https:\/\/www\.aceengineer\.com\/?$/.test(item.item)) {
+          expect({ page, item: item.item }).toEqual({ page, item: 'https://www.aceengineer.com/' });
+        }
+      }
+    }
+  }
+});
+
+test('contact metadata uses ContactPage with its copied page metadata', () => {
+  const doc = documents.get('contact.html');
+  const schemas = schemasFor('contact.html').filter(node => node['@type'] === 'ContactPage');
+  expect(schemas).toHaveLength(1);
+  expect(schemas[0]).toMatchObject({
+    name: doc.title, description: doc.querySelector('meta[name="description"]').content,
+    url: doc.querySelector('link[rel="canonical"]').href,
+  });
+  expect(schemasFor('contact.html').some(node => node['@type'] === 'WebPage')).toBe(false);
+});
+
 test('destinations have page schema and canonical final breadcrumbs', () => {
   for (const page of destinations) {
     const schemas = schemasFor(page);

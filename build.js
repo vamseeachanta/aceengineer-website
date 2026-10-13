@@ -9,6 +9,8 @@ const CleanCSS = require('clean-css');
 const hf = require('./scripts/hf-fetch');
 const { renderCards, capabilityDetailDocument, detailFileName, detailHref, isReleaseBacked } = require('./scripts/render-capabilities');
 
+const { loadSamples, validateSamples, sampleLocals, buildSamplePages } = require('./scripts/render-samples');
+
 const srcDir = './content';
 const distDir = './dist';
 
@@ -83,6 +85,7 @@ let _capabilitiesCards = '';
 // can reuse it without re-fetching.
 let _hydratedRegistry = null;
 let _sloshingRelease = null;
+let _sampleLocals = { samplesPublished: false, sampleHomeRows: '' };
 
 // Validate the committed content-addressed sloshing release before rendering any
 // report. This reuses the publication trust loop and never performs network I/O.
@@ -224,6 +227,7 @@ async function processFile(filePath) {
     locals.sloshingAssetPath = _sloshingRelease.assetPath;
   }
 
+  Object.assign(locals, _sampleLocals);
   const html = await renderHtml(content, locals);
 
   ensureDir(path.dirname(outputPath));
@@ -256,6 +260,7 @@ async function buildCapabilityDetailPages(registry) {
   for (const cap of generated) {
     const doc = capabilityDetailDocument(cap, caps, { renderedAt });
     const html = await renderHtml(doc, {
+      ..._sampleLocals,
       rootPath: '../',
       copy: loadCopy(),
       canonicalUrl: canonicalUrlFor(`capabilities/${detailFileName(cap)}`),
@@ -398,6 +403,7 @@ function builtPages(dir = distDir, base = dir, out = []) {
 function sourceFileFor(relPath) {
   const direct = path.join(srcDir, relPath);
   if (fs.existsSync(direct)) return direct;
+  if (relPath.startsWith('samples/')) return './config/samples.yaml';
   if (relPath.startsWith('capabilities/')) return './config/capabilities.yaml';
   return null;
 }
@@ -516,6 +522,9 @@ function writeLlmsTxt(destDirArg = distDir, registry = loadCapabilities()) {
 async function build() {
   console.log('Building site...\n');
 
+  const samples = validateSamples(loadSamples(), { assetsRoot: './assets' });
+  _sampleLocals = sampleLocals(samples);
+
   // Clean dist directory
   if (fs.existsSync(distDir)) {
     fs.rmSync(distDir, { recursive: true });
@@ -569,6 +578,8 @@ async function build() {
     if (err.code === 'ENOENT' && String(err.path).endsWith('organization-jsonld.html')) throw err;
     console.warn(`Drill-down skipped: ${err.message}`);
   }
+
+  await buildSamplePages(samples, { distDir, assetsRoot: './assets', renderHtml });
 
   // Copy assets — integrity-check vendored blobs before they reach dist/
   const verified = verifyVendoredAssets();
@@ -655,4 +666,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeLlmsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, verifyVendoredAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };
+module.exports = { renderHtml, processFile, buildCapabilityDetailPages, sourceFileFor, loadSamples, validateSamples, sampleLocals, buildSamplePages, parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeLlmsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, verifyVendoredAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };

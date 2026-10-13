@@ -70,3 +70,10 @@ test('published fixture renders all conditional home copy and only published row
   expect(published.querySelector('#work tbody').textContent).not.toContain('Draft analysis');
   expect(published.querySelector('#work tbody a').textContent).toBe(copy.home.work.open);
 });
+test('brand document states the legal identity, logo palette and existing tokens', () => {
+  const brand = fs.readFileSync('brand/BRAND.md', 'utf8');
+  expect(brand).toContain('**AceEngineer Inc.**');
+  expect(brand).toContain('#0B3D91'); expect(brand).toContain('#2BB2A6');
+  expect(brand).not.toMatch(/plum|copper/);
+  for (const token of ['--navy', '--navy-2', '--teal', '--teal-lift', '--teal-deep', '--blue', '--ink', '--muted', '--tint', '--hairline', '--underline', '--bg', '--font-body', '--font-ui', '--font-mono']) expect(brand).toContain(token);
+});

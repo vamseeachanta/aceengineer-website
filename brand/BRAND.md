@@ -4,12 +4,12 @@
 
 - Consumer-facing/site/social/marketing brand: **AceEngineer**.
 - SEO/accessibility long form: **Analytical & Computational Engineering**.
-- Legal/contractual entity when a legal entity is required: **Achanta AceEngineer Inc.**.
+- Legal/contractual entity when a legal entity is required: **AceEngineer Inc.**.
 - Retired placeholder/historical acronym: **A&CE**. Do not use it for new visible brand surfaces, page titles, social metadata, schema alternate names, forms, CTAs, or navigation labels.
 
 ## Visual DNA decision
 
-Issue #2440 locked Option B: aceengineer.com deliberately differentiates from digitalmodel. The AceEngineer logo therefore uses the site's existing plum/copper family and does not inherit digitalmodel's navy/teal asset identity.
+The wordmark `assets/img/logo.svg` is navy `#0B3D91` and teal `#2BB2A6`. `assets/img/logo-inverse.svg` is white and teal for dark backgrounds. Site colour and type tokens are the custom properties in `assets/css/theme.css`: `--navy`, `--navy-2`, `--teal`, `--teal-lift`, `--teal-deep`, `--blue`, `--ink`, `--muted`, `--tint`, `--hairline`, `--underline`, `--bg`, `--font-body`, `--font-ui` and `--font-mono`.
 
 ## Asset contract
 

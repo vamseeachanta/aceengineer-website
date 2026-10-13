@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
-const { builtPages, SITEMAP_EXCLUDE } = require('../../build');
+const { builtPages, SITEMAP_EXCLUDE, PAGE_DESCRIPTION_PATTERNS } = require('../../build');
 const { buildDrilldown, buildHub } = require('../../scripts/build-drilldown');
 
 const distDir = path.join(__dirname, '..', '..', 'dist');
@@ -315,11 +315,15 @@ test('llms.txt covers every sitemap URL and excludes noindex pages', () => {
 
 test('llms.txt page descriptions omit percentage and currency figures', () => {
   const text = fs.readFileSync(path.join(distDir, 'llms.txt'), 'utf8');
-  const pageSections = text.split('## Capabilities\n')[1].split(/\n## /).slice(1).join('\n## ');
-  const figures = /\d[\d,.]*\s*(?:%|percent\b|dollars?\b|euros?\b|pounds?\b|yen\b|rupees?\b|USD\b|EUR\b|GBP\b|CAD\b|AUD\b|JPY\b|INR\b|CHF\b|CNY\b)|[$€£¥₹]\s*\d/i;
+  const registryStart = text.indexOf('## Capabilities\n') + '## Capabilities\n'.length;
+  const pageSections = text.slice(text.indexOf('\n## ', registryStart));
+  expect(pageSections.split('\n').filter(line => line.startsWith('- '))).toHaveLength(destinations.length);
   for (const line of pageSections.split('\n').filter(line => line.startsWith('- '))) {
     const description = line.match(/\]\([^)]*\): (.*)$/)?.[1];
-    if (description) expect({ line, hasFigure: figures.test(description) }).toEqual({ line, hasFigure: false });
+    if (description) {
+      const hasFigure = PAGE_DESCRIPTION_PATTERNS.some(pattern => pattern.test(description));
+      expect({ line, hasFigure }).toEqual({ line, hasFigure: false });
+    }
   }
   const page = 'blog/energy-data-automation-pipelines.html';
   const title = documents.get(page).title;

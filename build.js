@@ -505,6 +505,7 @@ async function build() {
     const hub = buildHub(distDir);
     if (hub) console.log(`Built: ${hub}`);
   } catch (err) {
+    if (err.code === 'ENOENT' && String(err.path).endsWith('organization-jsonld.html')) throw err;
     console.warn(`Drill-down skipped: ${err.message}`);
   }
 

@@ -22,6 +22,11 @@
   "jest": {
     "projects": [
       {
+        "displayName": "metadata",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/metadata.test.js"]
+      },
+      {
         "displayName": "node",
         "testMatch": ["<rootDir>/tests/js/build.test.js"]
       },

@@ -482,12 +482,30 @@ function readBuiltPageMetadata(html, relPath) {
   return metadata;
 }
 
+const PERCENTAGE_PATTERN = /\d[\d,.]*\s*(?:%|percent\b)/i;
+const CURRENCY_SYMBOL_PATTERN = /[$€£¥₹]\s*\d/i;
+const CURRENCY_WORD_PATTERN = /\d[\d,.]*\s*(?:(?:thousand|million|billion|trillion)\s+)?(?:dollars?|euros?|pounds?|yen|rupees?|USD|EUR|GBP|CAD|AUD|JPY|INR|CHF|CNY|RMB)\b/i;
+const CURRENCY_CODE_PATTERN = /\b(?:USD|EUR|GBP|CAD|AUD|JPY|INR|CHF|CNY|RMB)\s*\d/i;
+const PAGE_DESCRIPTION_PATTERNS = [
+  PERCENTAGE_PATTERN, CURRENCY_SYMBOL_PATTERN, CURRENCY_WORD_PATTERN, CURRENCY_CODE_PATTERN,
+];
+
+function formatLlmsPageLine(title, url, description) {
+  const link = `- [${title}](${url})`;
+  return PAGE_DESCRIPTION_PATTERNS.some(pattern => pattern.test(description))
+    ? link : `${link}: ${description}`;
+}
+
 // Proposal: "The /llms.txt file", https://llmstxt.org/ — headings and Markdown links.
 function writeLlmsTxt(destDirArg = distDir, registry = loadCapabilities()) {
   const copy = loadCopy();
   const pages = builtPages(destDirArg).filter(page => !(page in SITEMAP_EXCLUDE));
   const metadata = new Map(pages.map(page => [page,
     readBuiltPageMetadata(fs.readFileSync(path.join(destDirArg, page), 'utf8'), page)]));
+  if ([...metadata.values()].some(({ description }) =>
+    copy.forbidden_phrases.some(phrase => description.toLowerCase().includes(phrase.toLowerCase())))) {
+    throw new Error('llms.txt contains a forbidden phrase');
+  }
   const lines = [`# ${copy.names.firm}`, '', `> ${metadata.get('index.html').description}`, '', '## Capabilities', ''];
   for (const cap of (registry.capabilities || []).filter(cap => cap.status !== 'withheld')) {
     const title = `${cap.title}${cap.status === 'pending' ? ' (pending)' : ''}`;
@@ -498,7 +516,7 @@ function writeLlmsTxt(destDirArg = distDir, registry = loadCapabilities()) {
   const company = [];
   for (const page of pages) {
     const { title, description } = metadata.get(page);
-    const line = `- [${title}](${canonicalUrlFor(page)}): ${description}`;
+    const line = formatLlmsPageLine(title, canonicalUrlFor(page), description);
     if (!page.includes('/')) { company.push(line); continue; }
     const directory = page.split('/')[0];
     if (!groups.has(directory)) groups.set(directory, []);
@@ -666,4 +684,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { renderHtml, processFile, buildCapabilityDetailPages, sourceFileFor, loadSamples, validateSamples, sampleLocals, buildSamplePages, parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeLlmsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, verifyVendoredAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };
+module.exports = { formatLlmsPageLine, PAGE_DESCRIPTION_PATTERNS, renderHtml, processFile, buildCapabilityDetailPages, sourceFileFor, loadSamples, validateSamples, sampleLocals, buildSamplePages, parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeLlmsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, verifyVendoredAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };

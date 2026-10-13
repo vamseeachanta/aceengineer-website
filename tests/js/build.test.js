@@ -375,4 +375,29 @@ describe('writeLlmsTxt', () => {
     const forbidden = { capabilities: [{ ...registry.capabilities[0], summary: loadCopy().forbidden_phrases[0] }] };
     expect(() => writeLlmsTxt(tmpDir, forbidden)).toThrow(/forbidden phrase/i);
   });
+
+  test.each([
+    'Reduction of 12%.', 'Reduction of 12 percent.', 'Reduction of 60-80%.',
+    'Cost of $120.', 'Cost of €120.', 'Cost of 120 USD.', 'Cost of 120 dollars.',
+    'Cost of GBP 120.',
+  ])('page line omits a description containing a figure: %s', description => {
+    const { formatLlmsPageLine } = require('../../build');
+    expect(formatLlmsPageLine('Example', 'https://www.aceengineer.com/example.html', description))
+      .toBe('- [Example](https://www.aceengineer.com/example.html)');
+  });
+
+  test('page line keeps a number without a percentage or currency unit', () => {
+    const { formatLlmsPageLine } = require('../../build');
+    expect(formatLlmsPageLine('Example', 'https://www.aceengineer.com/example.html', 'Analysis of 253 wellbores.'))
+      .toBe('- [Example](https://www.aceengineer.com/example.html): Analysis of 253 wellbores.');
+  });
+
+  test('omission preserves forbidden phrase validation and capability summaries', () => {
+    seed('about.html', 'About', 'Reduction of 12%.');
+    writeLlmsTxt(tmpDir, registry);
+    expect(read().split('\n')).toContain('- [About](https://www.aceengineer.com/about.html)');
+    expect(read()).toContain('- [Live Capability](https://www.aceengineer.com/capabilities/live-example.html): Live summary.');
+    seed('about.html', 'About', `${loadCopy().forbidden_phrases[0]} 12%.`);
+    expect(() => writeLlmsTxt(tmpDir, registry)).toThrow(/forbidden phrase/i);
+  });
 });

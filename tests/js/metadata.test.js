@@ -289,7 +289,20 @@ test('llms.txt covers every sitemap URL and excludes noindex pages', () => {
   const text = fs.readFileSync(file, 'utf8');
   const sitemap = fs.readFileSync(path.join(distDir, 'sitemap.xml'), 'utf8');
   const expected = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(match => match[1]);
-  const listed = [...text.matchAll(/^-[^\n]*\]\((https:\/\/[^)]+)\):/gm)].map(match => match[1]);
+  const listed = [...text.matchAll(/^-[^\n]*\]\((https:\/\/[^)]+)\)(?::[^\n]*)?$/gm)].map(match => match[1]);
   expect([...new Set(listed)].sort()).toEqual(expected.sort());
   for (const page of Object.keys(SITEMAP_EXCLUDE)) expect(text).not.toContain(page);
+});
+
+test('llms.txt page descriptions omit percentage and currency figures', () => {
+  const text = fs.readFileSync(path.join(distDir, 'llms.txt'), 'utf8');
+  const pageSections = text.split('## Capabilities\n')[1].split(/\n## /).slice(1).join('\n## ');
+  const figures = /\d[\d,.]*\s*(?:%|percent\b|dollars?\b|euros?\b|pounds?\b|yen\b|rupees?\b|USD\b|EUR\b|GBP\b|CAD\b|AUD\b|JPY\b|INR\b|CHF\b|CNY\b)|[$€£¥₹]\s*\d/i;
+  for (const line of pageSections.split('\n').filter(line => line.startsWith('- '))) {
+    const description = line.match(/\]\([^)]*\): (.*)$/)?.[1];
+    if (description) expect({ line, hasFigure: figures.test(description) }).toEqual({ line, hasFigure: false });
+  }
+  const page = 'blog/energy-data-automation-pipelines.html';
+  const title = documents.get(page).title;
+  expect(text.split('\n')).toContain(`- [${title}](https://www.aceengineer.com/${page})`);
 });

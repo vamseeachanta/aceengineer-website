@@ -437,3 +437,43 @@ test('every built page omits legalName at every depth and a legal form in titles
     }
   }
 });
+
+test('every built page uses the specified figure for years of experience', () => {
+  const otherYearCounts = [
+    { page: 'engineering.html', text: '5+ years', reason: 'extended platform life' },
+    { page: 'blog/gulf-of-mexico-production-data-access.html', text: '50+ years', reason: 'public dataset span' },
+  ];
+  for (const page of pages) {
+    const doc = documents.get(page);
+    const text = [visibleCopy(doc.body), ...[...doc.querySelectorAll('meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]')].map(node => node.content)].join(' ');
+    const figures = [...text.matchAll(/\b\d+\+\s*years\b|\b\d+\s*years(?:\s+of)?\s+experience\b/gi)].map(match => match[0]);
+    const unrelated = otherYearCounts.filter(entry => entry.page === page);
+    for (const entry of unrelated) expect(text).toContain(entry.text);
+    expect({ page, otherExperienceFigures: figures.filter(figure => !/^25\+\s*years$/i.test(figure) && !unrelated.some(entry => entry.text === figure)) })
+      .toEqual({ page, otherExperienceFigures: [] });
+  }
+});
+test('shared contactPoint and all visible telephone numbers agree', () => {
+  const expected = '+1 713-306-9029';
+  for (const page of destinations) {
+    const org = nodesFor(page).find(node => node['@type'] === 'Organization' && node.name);
+    expect(org.contactPoint.telephone).toBe(expected);
+  }
+  for (const page of pages) {
+    const doc = documents.get(page);
+    for (const link of doc.querySelectorAll('a[href^="tel:"]')) {
+      expect(link.getAttribute('href')).toBe('tel:+17133069029');
+      expect(link.textContent).toBe(expected);
+    }
+    for (const number of visibleCopy(doc.body).matchAll(/\+\d{1,3}\s[\d ()-]{8,}\d/g)) expect(number[0]).toBe(expected);
+    for (const node of nodesFor(page).filter(node => Object.hasOwn(node, 'telephone'))) expect(node.telephone).toBe(expected);
+  }
+});
+test('every built page omits the misleading standards facts tile', () => {
+  for (const page of pages) {
+    const doc = documents.get(page);
+    for (const node of doc.querySelectorAll('h1,h2,h3,h4,h5,h6,.badge-item,.number-box,.home-facts-grid > p')) {
+      expect({ page, text: /Published standards/i.test(visibleCopy(node)) }).toEqual({ page, text: false });
+    }
+  }
+});

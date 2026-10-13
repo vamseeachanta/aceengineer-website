@@ -21,7 +21,7 @@ test('home navigation has the four specified links in order and no CTA', () => {
   ]);
   expect(doc.querySelector('.navbar-right')).toBeNull();
 });
-test.each(['Fitness-for-service decision walk-through', '[LINK', 'All nine samples', 'capabilitiesCards', 'Explore capabilities', 'consultancy', 'ISO 9001', 'quality management', 'P.E.', 'Telephone', 'tel:', '25 years', 'President'])('home omits forbidden or unsupported copy: %s', text => {
+test.each(['Fitness-for-service decision walk-through', '[LINK', 'All nine samples', 'capabilitiesCards', 'Explore capabilities', 'consultancy', 'ISO 9001', 'quality management', 'Telephone', '25 years', 'President'])('home omits forbidden or unsupported copy: %s', text => {
   expect(html).not.toContain(text);
 });
 test('six service cards each have exactly one client-receives line', () => {
@@ -66,6 +66,7 @@ test('published fixture renders all conditional home copy and only published row
   const rendered = await renderHtml(fs.readFileSync('content/index.html', 'utf8'), { rootPath: '', metadataExcluded: false, canonicalUrl: canonicalUrlFor('index.html'), copy, ...sampleLocals(reg) });
   const published = new JSDOM(rendered).window.document;
   for (const text of strings(copy.home.work)) expect(norm(published.textContent + rendered)).toContain(norm(text));
+  expect(published.querySelector('#work > .container > p').textContent).toBe(copy.home.work.description);
   expect(published.querySelector('#work tbody').textContent).toContain(entry.title);
   expect(published.querySelector('#work tbody').textContent).not.toContain('Draft analysis');
   expect(published.querySelector('#work tbody a').textContent).toBe(copy.home.work.open);
@@ -76,4 +77,30 @@ test('brand document states the display name, logo palette and existing tokens',
   expect(brand).toContain('#0B3D91'); expect(brand).toContain('#2BB2A6');
   expect(brand).not.toMatch(/plum|copper/);
   for (const token of ['--navy', '--navy-2', '--teal', '--teal-lift', '--teal-deep', '--blue', '--ink', '--muted', '--tint', '--hairline', '--underline', '--bg', '--font-body', '--font-ui', '--font-mono']) expect(brand).toContain(token);
+});
+
+test('home and About show the specified years of experience', () => {
+  expect(doc.querySelector('.home-facts').textContent).toContain('25+ years of experience');
+  const about = new JSDOM(fs.readFileSync('dist/about.html', 'utf8')).window.document;
+  expect(about.body.textContent).toContain('25+ years');
+});
+test('home contact and About show the principal suffix and title', () => {
+  expect(copy.home.contact.principal).toBe('Vamsee Achanta, P.E., Principal Engineer');
+  expect(doc.querySelector('#contact').textContent).toContain(copy.home.contact.principal);
+  const about = new JSDOM(fs.readFileSync('dist/about.html', 'utf8')).window.document;
+  expect([...about.querySelectorAll('strong')].map(node => node.textContent)).toContain(copy.home.contact.principal);
+});
+test('home and Contact show one direct telephone link', () => {
+  const contact = new JSDOM(fs.readFileSync('dist/contact.html', 'utf8')).window.document;
+  for (const block of [doc.querySelector('#contact'), contact.querySelector('.contact-info-card')]) {
+    const links = [...block.querySelectorAll('a[href^="tel:"]')];
+    expect(links).toHaveLength(1);
+    expect(links[0].getAttribute('href')).toBe('tel:+17133069029');
+    expect(links[0].textContent).toBe('+1 713-306-9029');
+  }
+});
+test('home facts contain the three specified items without the standards item', () => {
+  expect([...doc.querySelectorAll('.home-facts-grid > p > strong')].map(node => node.textContent))
+    .toEqual(['Founded 2010', '25+ years of experience', 'Public samples']);
+  expect(doc.querySelector('.home-facts').textContent).not.toContain('Published standards');
 });

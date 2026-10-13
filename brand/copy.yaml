@@ -64,7 +64,7 @@ capabilities:
       while the team sleeps.
 
 credentials:
-  - 15+ years
+  - 25+ years
   - 704+ modules
   - founded in 2010 in Houston, Texas
 
@@ -106,10 +106,10 @@ home:
   facts:
     - heading: Founded 2010
       detail: Houston, Texas
-    - heading: 15+ years of experience
+    - heading: 25+ years of experience
       detail: Principal engineer, offshore and marine
-    - heading: Published standards
-      detail: 'API, ASME, DNV: edition and clause cited'
+    - heading: Public samples
+      detail: Public data and synthetic inputs
   services_heading: Services
   services:
     - heading: Asset integrity and fitness-for-service
@@ -140,5 +140,7 @@ home:
     all: All samples
   contact:
     heading: Contact
-    principal: Vamsee Achanta, Principal Engineer
+    principal: Vamsee Achanta, P.E., Principal Engineer
     email: support@aceengineer.com
+    phone: +1 713-306-9029
+    phone_href: tel:+17133069029

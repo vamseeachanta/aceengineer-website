@@ -15,7 +15,7 @@ test('canonical home copy renders with work copy conditional on publication', ()
   for (const service of copy.home.services) {
     expect(norm(doc.body.textContent)).toContain(norm(service.heading));
     expect(norm(doc.body.textContent)).toContain(norm(service.receives));
-    expect(doc.body.textContent).not.toContain(copy.service_details[copy.home.services.indexOf(service)].description);
+    expect(doc.querySelector('#services article > p:not(.home-receives):not(.service-samples)')).toBeNull();
   }
   expect(doc.querySelector('#work')).toBeNull();
   expect(doc.querySelector('a[href="#work"]')).toBeNull();
@@ -209,4 +209,14 @@ test('a published report is adjacent to its own service detail', async () => {
   const page = new JSDOM(rendered).window.document;
   expect(page.querySelector('[data-sample] a').getAttribute('href')).toBe('../' + entry.page);
   expect(page.querySelector('[data-sample]').textContent).not.toContain('sample report in preparation');
+});
+
+test('each home output summary stays near twenty words without removing qualification', () => {
+  for (const card of doc.querySelectorAll('#services article')) {
+    const words = card.querySelector('.home-receives').textContent.trim().split(/\s+/).length;
+    expect(words).toBeGreaterThanOrEqual(17);
+    expect(words).toBeLessThanOrEqual(26);
+  }
+  const screening = [...doc.querySelectorAll('#services article')].find(card => card.querySelector('h3').textContent === copy.home.services[3].heading);
+  expect(screening.textContent).toContain(copy.home.services[3].receives);
 });

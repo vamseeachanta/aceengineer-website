@@ -69,7 +69,7 @@
                     <each loop="service in copy.home.services">
                         <article class="home-service">
                             <h3><a href="{{ service.page }}">{{ service.heading }}</a></h3>
-                            <p class="home-receives">{{ service.receives }}</p>
+                            <p class="home-receives">{{ service.receives }}<if condition="service.context">. {{ service.context }}</if></p>
                             <include src="partials/service-samples.html"></include>
                         </article>
                     </each>

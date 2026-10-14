@@ -485,6 +485,7 @@ function capabilityDetailDocument(cap, siblings = [], options = {}) {
     `<!DOCTYPE html>\n<html lang="en">\n<head>\n` +
     `<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n` +
     `<meta name="description" content="${escapeHtml(cap.summary)}">\n` +
+    `<meta property="og:image" content="${SITE_ORIGIN}/assets/img/logo.png">\n` +
     `<meta property="og:title" content="${escapeHtml(title)}">\n` +
     `<meta property="og:description" content="${escapeHtml(cap.summary)}">\n` +
     `<meta property="og:type" content="website">\n` +

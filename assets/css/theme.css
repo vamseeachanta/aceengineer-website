@@ -213,3 +213,33 @@ main .cap-hero a.button.primary {
   background: var(--teal); color: #063b38; border-radius: 6px; font-weight: 700;
 }
 .navbar-inverse.theme-nav .btn-nav-cta:hover { background: #fff; color: var(--navy); }
+
+/* Home page and samples section */
+.home-page, .samples-page { color: var(--ink); font-family: var(--font-body); }
+.home-hero { padding: 64px 0 48px; }
+.home-hero h1 { max-width: 900px; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.15; margin: 0 0 24px; color: var(--navy); }
+.home-lead { max-width: 840px; font-size: 1.2rem; line-height: 1.7; }
+.home-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 28px; }
+.home-facts { padding: 28px 0; background: var(--tint); border-block: 1px solid var(--hairline); }
+.home-facts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.home-facts strong { color: var(--navy); font-family: var(--font-ui); }
+.home-section, .samples-page section { padding: 48px 0; }
+.home-section h2, .samples-page h1, .samples-page h2 { color: var(--navy); }
+.home-services-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 24px; }
+.home-service { padding: 28px; border: 1px solid var(--hairline); background: var(--bg); border-radius: 8px; }
+.home-service h3 { color: var(--navy); margin: 0 0 16px; font-size: 1.3rem; }
+.home-service p { line-height: 1.7; }
+.home-receives { border-top: 1px solid var(--hairline); padding-top: 16px; margin-bottom: 0; font-family: var(--font-ui); }
+.home-contact { background: var(--tint); }
+.home-page main a, .home-page a:not(.btn-free):not(.btn-ghost), .samples-page a { color: var(--navy); text-decoration: underline; }
+.samples-table-wrap { overflow-x: auto; margin: 24px 0; }
+.samples-table { width: 100%; border-collapse: collapse; }
+.samples-table th, .samples-table td { padding: 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--hairline); }
+.samples-table th { background: var(--tint); color: var(--navy); font-family: var(--font-ui); }
+@media (max-width: 767px) {
+  .home-hero { padding: 40px 0 32px; }
+  .home-facts-grid, .home-services-grid { grid-template-columns: 1fr; }
+  .home-section, .samples-page section { padding: 32px 0; }
+  .home-service { padding: 20px; }
+}
+/* End home page and samples section */

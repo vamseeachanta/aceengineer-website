@@ -6,7 +6,7 @@
 ## Who
 
 Vamsee Achanta · Principal, Analytical & Computational Engineering (A&CE) · Houston, TX
-- Email: `vamsee.achanta@aceengineer.com` · Phone: `+1 713-306-9029`
+- Email: `support@aceengineer.com` · Phone: `+1 713-306-9029`
 - 20+ years offshore engineering practice — deep-water field development life-cycle, mooring & riser dynamic analysis, subsea infrastructure, LNG terminal mooring, intervention engineering
 - Active engineering software practice: [`digitalmodel`](https://github.com/vamseeachanta/digitalmodel) (open source), `aceengineercode`, `worldenergydata`
 

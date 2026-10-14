@@ -124,6 +124,8 @@ function toPayload(snapshot) {
 
 /** Render the page into distDir. Returns the payload summary, or null if skipped. */
 function buildDrilldown(distDir) {
+  const organization = fs.readFileSync(
+    path.join(repoRoot, 'content', 'partials', 'organization-jsonld.html'), 'utf8');
   if (!fs.existsSync(SNAPSHOT) || !fs.existsSync(TEMPLATE)) return null;
   const snap = JSON.parse(fs.readFileSync(SNAPSHOT, 'utf8'));
   if (snap.truncated) {
@@ -133,20 +135,25 @@ function buildDrilldown(distDir) {
   }
   const payload = toPayload(snap);
   const json = JSON.stringify(payload).replace(/<\//g, '<\\/');
-  const html = fs.readFileSync(TEMPLATE, 'utf8').replace('__DATA__', json);
+  const html = fs.readFileSync(TEMPLATE, 'utf8').replace('__DATA__', json)
+    .replace('<!--ORGANIZATION_JSONLD-->', organization);
   const outDir = path.join(distDir, 'capabilities');
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, 'dc-drilldown.html'), html);
   return { fields: payload.fields.length, blocks: payload.blocks.length, bores: payload.bores.length };
 }
 
-/** Copy the static QA/QC hub page (no data payload) into distDir. */
+/** Render the static QA/QC hub page (no data payload) into distDir. */
 function buildHub(distDir) {
+  const organization = fs.readFileSync(
+    path.join(repoRoot, 'content', 'partials', 'organization-jsonld.html'), 'utf8');
   const tpl = path.join(__dirname, 'templates', 'dc-qaqc-hub.html');
   if (!fs.existsSync(tpl)) return null;
   const outDir = path.join(distDir, 'capabilities');
   fs.mkdirSync(outDir, { recursive: true });
-  fs.copyFileSync(tpl, path.join(outDir, 'dc-qaqc-hub.html'));
+  const html = fs.readFileSync(tpl, 'utf8')
+    .replace('<!--ORGANIZATION_JSONLD-->', organization);
+  fs.writeFileSync(path.join(outDir, 'dc-qaqc-hub.html'), html);
   return 'capabilities/dc-qaqc-hub.html';
 }
 

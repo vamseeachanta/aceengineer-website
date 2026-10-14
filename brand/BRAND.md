@@ -9,7 +9,7 @@
 
 ## Visual DNA decision
 
-Issue #2440 locked Option B: aceengineer.com deliberately differentiates from digitalmodel. The AceEngineer logo therefore uses the site's existing plum/copper family and does not inherit digitalmodel's navy/teal asset identity.
+The wordmark `assets/img/logo.svg` is navy `#0B3D91` and teal `#2BB2A6`. `assets/img/logo-inverse.svg` is white and teal for dark backgrounds. Site colour and type tokens are the custom properties in `assets/css/theme.css`: `--navy`, `--navy-2`, `--teal`, `--teal-lift`, `--teal-deep`, `--blue`, `--ink`, `--muted`, `--tint`, `--hairline`, `--underline`, `--bg`, `--font-body`, `--font-ui` and `--font-mono`.
 
 ## Asset contract
 

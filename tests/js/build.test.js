@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeSitemap, canonicalUrlFor, SITEMAP_EXCLUDE } = require('../../build');
+const { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeSitemap, writeLlmsTxt, loadCopy, canonicalUrlFor, SITEMAP_EXCLUDE } = require('../../build');
 
 describe('parseFrontMatter', () => {
   test('parses valid front matter with multiple fields', () => {
@@ -294,5 +294,110 @@ describe('copyRobotsTxt', () => {
     expect(() => copyRobotsTxt(srcFile, destDir)).not.toThrow();
     expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('robots.txt not found'));
     expect(fs.existsSync(path.join(destDir, 'robots.txt'))).toBe(false);
+  });
+});
+
+describe('writeLlmsTxt', () => {
+  let tmpDir;
+  const registry = { capabilities: [
+    { id: 'live-example', title: 'Live Capability', summary: 'Live\n  summary.', status: 'live' },
+    { id: 'pending-example', title: 'Pending Capability', summary: 'Pending summary.', status: 'pending' },
+    { id: 'withheld-example', title: 'Withheld Capability', summary: 'Withheld summary.', status: 'withheld' },
+    { id: 'release-example', title: 'Release Capability', summary: 'Release summary.', status: 'live',
+      backing: 'release', release: { hub_url: '/reports/sloshing/' } },
+  ] };
+  function seed(page, title, description) {
+    const file = path.join(tmpDir, page);
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, `<html><head><title>${title}</title><meta content="${description}" name="description"></head><body></body></html>`);
+  }
+  function read() { return fs.readFileSync(path.join(tmpDir, 'llms.txt'), 'utf8'); }
+  beforeEach(() => {
+    tmpDir = fs.mkdtempSync(path.join(process.env.TEST_TEMP_DIR || os.tmpdir(), 'llms-test-'));
+    seed('index.html', 'Home', 'Home description.');
+    seed('about.html', 'About', 'About description.');
+    seed('blog/index.html', 'Articles', 'Articles description.');
+    seed('blog/example.html', 'Flow &amp; Loads', 'Loads &#38; response &quot;summary&quot;.');
+    for (const page of Object.keys(SITEMAP_EXCLUDE)) seed(page, 'Excluded', 'Excluded description.');
+    expect(writeLlmsTxt).toEqual(expect.any(Function));
+  });
+  afterEach(() => fs.rmSync(tmpDir, { recursive: true, force: true }));
+
+  test('lists live and pending capabilities with collapsed summaries', () => {
+    writeLlmsTxt(tmpDir, registry);
+    expect(read()).toContain('- [Live Capability](https://www.aceengineer.com/capabilities/live-example.html): Live summary.');
+    expect(read()).toContain('- [Pending Capability (pending)](https://www.aceengineer.com/capabilities/pending-example.html): Pending summary.');
+  });
+  test('withheld capabilities are absent', () => {
+    writeLlmsTxt(tmpDir, registry);
+    expect(read()).not.toContain('Withheld Capability');
+    expect(read()).not.toContain('withheld-example');
+  });
+  test('sitemap exclusions are absent', () => {
+    writeLlmsTxt(tmpDir, registry);
+    for (const page of Object.keys(SITEMAP_EXCLUDE)) expect(read()).not.toContain(page);
+    expect(read()).not.toContain('Excluded description.');
+  });
+  test('page line count equals the sitemap count for the same tree', () => {
+    const sitemap = writeSitemap(tmpDir);
+    writeLlmsTxt(tmpDir, registry);
+    const pageLines = read().split('\n').filter(line => line.startsWith('- ')).length - 3;
+    expect(pageLines).toBe(sitemap.length);
+  });
+  test('two writes produce identical bytes', () => {
+    writeLlmsTxt(tmpDir, registry);
+    const first = fs.readFileSync(path.join(tmpDir, 'llms.txt'));
+    writeLlmsTxt(tmpDir, registry);
+    expect(fs.readFileSync(path.join(tmpDir, 'llms.txt')).equals(first)).toBe(true);
+  });
+  test('a forbidden page description rejects the output before writing', () => {
+    seed('about.html', 'About', loadCopy().forbidden_phrases[0].toUpperCase());
+    expect(() => writeLlmsTxt(tmpDir, registry)).toThrow(/forbidden phrase/i);
+    expect(fs.existsSync(path.join(tmpDir, 'llms.txt'))).toBe(false);
+  });
+  test('the firm heading and home description come from canonical copy and metadata', () => {
+    writeLlmsTxt(tmpDir, registry);
+    expect(read().split('\n')[0]).toBe('# AceEngineer');
+    expect(read()).toContain('> Home description.');
+  });
+  test('entities are decoded and directory pages use canonical URLs', () => {
+    writeLlmsTxt(tmpDir, registry);
+    expect(read()).toContain('- [Flow & Loads](https://www.aceengineer.com/blog/example.html): Loads & response "summary".');
+    expect(read()).toContain('- [Articles](https://www.aceengineer.com/blog/): Articles description.');
+    expect(read()).toContain('## Company');
+    expect(read().indexOf('[Articles]')).toBeLessThan(read().indexOf('[Home]'));
+  });
+  test('release-backed capabilities use the existing report hub', () => {
+    writeLlmsTxt(tmpDir, registry);
+    expect(read()).toContain('- [Release Capability](https://www.aceengineer.com/reports/sloshing/): Release summary.');
+  });
+  test('a forbidden registry summary rejects the output', () => {
+    const forbidden = { capabilities: [{ ...registry.capabilities[0], summary: loadCopy().forbidden_phrases[0] }] };
+    expect(() => writeLlmsTxt(tmpDir, forbidden)).toThrow(/forbidden phrase/i);
+  });
+
+  test.each([
+    'Reduction of 12%.', 'Reduction of 12 percent.', 'Reduction of 60-80%.',
+    'Cost of $120.', 'Cost of €120.', 'Cost of 120 USD.', 'Cost of 120 dollars.',
+    'Cost of GBP 120.',
+  ])('page line omits a description containing a figure: %s', description => {
+    const { formatLlmsPageLine } = require('../../build');
+    expect(formatLlmsPageLine('Example', 'https://www.aceengineer.com/example.html', description))
+      .toBe('- [Example](https://www.aceengineer.com/example.html)');
+  });
+
+  test('page line keeps a number without a percentage or currency unit', () => {
+    const { formatLlmsPageLine } = require('../../build');
+    expect(formatLlmsPageLine('Example', 'https://www.aceengineer.com/example.html', 'Analysis of 253 wellbores.'))
+      .toBe('- [Example](https://www.aceengineer.com/example.html): Analysis of 253 wellbores.');
+  });
+
+  test('omission preserves forbidden phrase validation and capability summaries', () => {
+    seed('about.html', 'About', 'Reduction of 12%.');
+    writeLlmsTxt(tmpDir, registry);
+    expect(read().split('\n')).toContain('- [About](https://www.aceengineer.com/about.html)');
+    expect(read()).toContain('- [Live Capability](https://www.aceengineer.com/capabilities/live-example.html): Live summary.');
+    seed('about.html', 'About', `${loadCopy().forbidden_phrases[0]} 12%.`);
+    expect(() => writeLlmsTxt(tmpDir, registry)).toThrow(/forbidden phrase/i);
   });
 });

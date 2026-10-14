@@ -32,10 +32,9 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-/* Brand contract: UI type and the accent text token for dark backgrounds. */
+/* Legal identification inherits the copyright line's type and muted colour. */
 .footer-section .footer-legal {
-  font-family: var(--font-ui);
-  color: var(--teal-lift);
+  font-size: .9em;
   font-style: normal;
 }
 

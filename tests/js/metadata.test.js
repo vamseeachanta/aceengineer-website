@@ -485,14 +485,13 @@ test('legal name appears only once in the shared footer and once in Organization
   expect(organizationPages).toBeGreaterThan(0);
 });
 
-test('legal footer uses the brand type and dark-background text tokens', () => {
+test('legal footer inherits copyright type and colour at a smaller size', () => {
   const css = fs.readFileSync(path.join(__dirname, '../../assets/css/theme.css'), 'utf8');
   const rule = css.match(/\.footer-section \.footer-legal\s*\{([^}]+)\}/);
   expect(rule).not.toBeNull();
-  expect(rule[1]).toMatch(/font-family:\s*var\(--font-ui\)/);
-  expect(rule[1]).toMatch(/color:\s*var\(--teal-lift\)/);
+  expect(rule[1]).not.toMatch(/(?:font-family|color|font):/);
+  expect(rule[1]).toMatch(/font-size:\s*\.9em/);
   expect(rule[1]).toMatch(/font-style:\s*normal/);
-  for (const token of ['--font-ui', '--teal-lift']) expect(brandContract).toContain(token);
 });
 
 test('every built page uses the specified figure for years of experience', () => {

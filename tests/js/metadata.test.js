@@ -496,3 +496,17 @@ test('fitness-for-service outcomes have visible home and integrity support', () 
       .toEqual({ outcome, home: true, support: true });
   }
 });
+
+test('every shared footer uses the specified standards line', () => {
+  let checked = 0;
+  for (const [page, doc] of documents) {
+    const footer = doc.querySelector('footer.footer-section');
+    if (!footer) continue;
+    const line = footer.querySelector('.col-md-4 > p:last-child');
+    expect({ page, text: line.textContent }).toEqual({
+      page, text: 'Work to DNV, API, ABS, BS and NORSOK standards',
+    });
+    checked += 1;
+  }
+  expect(checked).toBeGreaterThan(0);
+});

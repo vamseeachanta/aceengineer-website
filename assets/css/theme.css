@@ -32,6 +32,12 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* Legal identification inherits the copyright line's type and muted colour. */
+.footer-section .footer-legal {
+  font-size: .9em;
+  font-style: normal;
+}
+
 /* ---- Capabilities-focused surfaces opt in via .theme-page on <body> ---- */
 .theme-page {
   background: var(--bg);

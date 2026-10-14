@@ -19,9 +19,16 @@ const { test, expect } = require('@playwright/test');
 // the shared one". The inconsistency itself is reported on #81/#82, not enforced here.
 const NAV = { name: 'nav', selector: 'nav.navbar' };
 const FOOTER = { name: 'footer', selector: 'body > footer' };
+const servicePages = require('js-yaml').load(require('fs').readFileSync('brand/copy.yaml', 'utf8')).home.services;
 
-// Seven pages, chosen in #101 for structural variety rather than coverage count.
+// Thirteen pages: six service destinations and seven representative site pages.
 const PAGES = [
+  ...servicePages.map(service => ({
+    id: service.page.split('/').pop().replace('.html', ''),
+    path: '/' + service.page,
+    why: 'received outputs and service detail',
+    elements: [NAV, FOOTER, { name: 'detail', selector: 'main > .container' }],
+  })),
   {
     id: 'home',
     path: '/index.html',

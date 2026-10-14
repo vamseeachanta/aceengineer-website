@@ -135,3 +135,49 @@ test('published samples enable the conditional fact, table and sample pages toge
   expect(fs.existsSync(path.join(distDir, 'samples/index.html'))).toBe(true);
   expect(fs.existsSync(path.join(distDir, entry.page))).toBe(true);
 });
+
+test('a published sample appears only beside its own home service', async () => {
+  const entry = { ...fixture(), status: 'published' };
+  pdf(entry);
+  const reg = registry(entry);
+  await buildSamplePages(reg, { distDir, assetsRoot, renderHtml });
+  const rendered = doc(await home(reg));
+  const cards = [...rendered.querySelectorAll('#services article')];
+  const matching = cards.find(card => card.querySelector('h3').textContent === entry.discipline);
+  expect(matching.querySelector('.service-samples a').getAttribute('href')).toBe(entry.page);
+  expect(fs.existsSync(path.join(distDir, entry.page))).toBe(true);
+  expect(cards.filter(card => card !== matching).every(card => card.querySelector('.service-samples').textContent.trim() === 'sample report in preparation')).toBe(true);
+});
+
+test('service sample labels remain text when a registry title contains markup', async () => {
+  const entry = { ...fixture(), title: 'Report <strong>label</strong>', status: 'published' };
+  const rendered = doc(await home(registry(entry)));
+  const link = rendered.querySelector('#services .service-samples a');
+  expect(link.textContent).toBe(entry.title);
+  expect(link.querySelector('strong')).toBeNull();
+});
+
+test('each registry discipline maps to exactly one home service', () => {
+  const copy = loadCopy();
+  for (const entry of loadSamples('config/samples.yaml').samples) {
+    const matches = copy.home.services.filter((service, index) => copy.service_details[index].sampleDiscipline === entry.discipline);
+    expect({ discipline: entry.discipline, destinations: matches.map(service => service.page) })
+      .toEqual({ discipline: entry.discipline, destinations: [expect.any(String)] });
+    const published = { ...entry, status: 'published' };
+    const locals = sampleLocals(registry(published));
+    expect(Object.entries(locals.serviceSamples).filter(([, samples]) => samples.length).map(([page]) => page))
+      .toEqual(matches.map(service => service.page));
+  }
+});
+
+test('default service sample mapping resolves copy independently of working directory', () => {
+  const { execFileSync } = require('child_process');
+  const modulePath = require.resolve('../../scripts/render-samples');
+  const entry = { ...fixture(), status: 'published' };
+  const script = 'const renderer = require(process.argv[1]); process.stdout.write(JSON.stringify(renderer.sampleLocals(JSON.parse(process.argv[2])).serviceSamples));';
+  const output = execFileSync(process.execPath, ['-e', script, modulePath, JSON.stringify(registry(entry))], {
+    cwd: dir, encoding: 'utf8',
+    env: Object.fromEntries(Object.entries(process.env).filter(([key]) => !['GIT_DIR', 'GIT_WORK_TREE', 'GIT_COMMON_DIR'].includes(key))),
+  });
+  expect(JSON.parse(output)['services/marine-installation.html']).toEqual([entry]);
+});

@@ -43,9 +43,9 @@
                 <p class="kicker">{{ copy.home.kicker }}</p>
                 <h1>{{ copy.home.heading }}</h1>
                 <p class="home-lead">{{ copy.home.lead }}</p>
+                <include src="partials/scope-invitation.html"></include>
                 <div class="home-actions">
                     <if condition="samplesPublished"><a href="#work" class="btn-free">{{ copy.home.work.button }}</a></if>
-                    <a href="#contact" class="btn-ghost">{{ copy.home.discuss }}</a>
                 </div>
             </div>
         </section>
@@ -67,9 +67,9 @@
                 <div class="home-services-grid">
                     <each loop="service in copy.home.services">
                         <article class="home-service">
-                            <h3>{{ service.heading }}</h3>
-                            <p>{{ service.description }}</p>
-                            <p class="home-receives">{{ service.receives }}</p>
+                            <h3><a href="{{ service.page }}">{{ service.heading }}</a></h3>
+                            <p class="home-receives">{{ service.receives }}<if condition="service.context">. {{ service.context }}</if></p>
+                            <include src="partials/service-samples.html"></include>
                         </article>
                     </each>
                 </div>

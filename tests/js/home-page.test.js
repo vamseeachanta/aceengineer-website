@@ -10,7 +10,12 @@ function strings(value) { return typeof value === 'string' ? [value] : Object.va
 test('canonical home copy renders with work copy conditional on publication', () => {
   expect(copy.home).toBeDefined();
   for (const [key, value] of Object.entries(copy.home)) {
-    if (key !== 'work') for (const text of strings(value)) expect(norm(doc.documentElement.textContent + html)).toContain(norm(text));
+    if (!['work', 'services'].includes(key)) for (const text of strings(value)) expect(norm(doc.documentElement.textContent + html)).toContain(norm(text));
+  }
+  for (const service of copy.home.services) {
+    expect(norm(doc.body.textContent)).toContain(norm(service.heading));
+    expect(norm(doc.body.textContent)).toContain(norm(service.receives));
+    expect(doc.querySelector('#services article > p:not(.home-receives):not(.service-samples)')).toBeNull();
   }
   expect(doc.querySelector('#work')).toBeNull();
   expect(doc.querySelector('a[href="#work"]')).toBeNull();
@@ -32,7 +37,8 @@ test('six service cards each have exactly one client-receives line', () => {
 test('footer uses the specified display name and copyright', () => {
   expect(doc.querySelector('footer').textContent).toContain('AceEngineer');
   expect(doc.querySelector('footer').textContent).toContain('© 2026 AceEngineer');
-  expect([...doc.querySelectorAll('footer .text-center p')].map(p => p.textContent)).toEqual(['AceEngineer | www.aceengineer.com | Houston, Texas', '© 2026 AceEngineer']);
+  expect([...doc.querySelectorAll('footer .text-center p:not(.footer-legal)')].map(p => p.textContent)).toEqual(['AceEngineer | www.aceengineer.com | Houston, Texas', '© 2026 AceEngineer']);
+  expect(doc.querySelectorAll('footer .footer-legal')).toHaveLength(1);
 });
 test('home has one shared Organization and a WebPage referencing it', () => {
   const nodes = [...doc.querySelectorAll('script[type="application/ld+json"]')].flatMap(s => { const v = JSON.parse(s.textContent); return Array.isArray(v) ? v : [v]; });
@@ -129,7 +135,7 @@ test('About experience wording follows canonical copy without a redundant qualif
 
 test('not-found copyright has the shared footer form', () => {
   const missing = new JSDOM(fs.readFileSync('dist/404.html', 'utf8')).window.document;
-  const canonical = doc.querySelector('footer .text-center p:last-child').textContent;
+  const canonical = doc.querySelector('footer .text-center p:nth-child(2)').textContent;
   expect(missing.querySelector('body > footer p').textContent === canonical).toBe(true);
 });
 
@@ -146,4 +152,98 @@ test.each([
   expect(firmAddresses.every(address => address === support)).toBe(true);
   const contactLine = text.split('\n')[line - 1];
   expect(contactLine.includes(support)).toBe(true);
+});
+
+test('service cards link to distinct detail pages and keep one concise output line', () => {
+  const cards = [...doc.querySelectorAll('#services article')];
+  const destinations = new Set();
+  for (const card of cards) {
+    const link = card.querySelector('h3 a');
+    expect(link).not.toBeNull();
+    destinations.add(link.getAttribute('href'));
+    const output = card.querySelector('.home-receives');
+    expect(output.textContent.trim().split(/\s+/).length).toBeLessThanOrEqual(26);
+    expect(card.querySelectorAll('p')).toHaveLength(2);
+    expect(card.querySelector('.service-samples').textContent.trim()).toBe('sample report in preparation');
+    expect(card.querySelector('.service-samples a')).toBeNull();
+  }
+  expect(destinations.size).toBe(6);
+});
+
+test('the home invitation follows the opening copy and offers the form and canonical contact', () => {
+  const invitation = doc.querySelector('.home-lead + .scope-invitation');
+  expect(invitation).not.toBeNull();
+  expect(invitation.querySelector('a[href="contact.html"]')).not.toBeNull();
+  expect(invitation.querySelector('a[href^="mailto:"]').textContent).toBe(copy.home.contact.email);
+});
+
+test('every home service destination builds with output, sample and invitation', () => {
+  for (const service of copy.home.services) {
+    expect(fs.existsSync('dist/' + service.page)).toBe(true);
+    const page = new JSDOM(fs.readFileSync('dist/' + service.page, 'utf8')).window.document;
+    expect(page.querySelector('h1').textContent).toBe(service.heading);
+    expect(page.querySelector('[data-deliverable]').textContent).toContain(service.receives);
+    expect(page.querySelector('.service-samples').textContent.trim()).toBe('sample report in preparation');
+    expect(page.querySelector('.scope-invitation a[href="../contact.html"]')).not.toBeNull();
+    expect(page.querySelector('.scope-invitation a[href^="mailto:"]').textContent).toBe(copy.home.contact.email);
+  }
+});
+
+test('service sections follow problem, received output, method, sample and scoping order', () => {
+  for (const service of copy.home.services) {
+    const page = new JSDOM(fs.readFileSync('dist/' + service.page, 'utf8')).window.document;
+    const container = page.querySelector('main > .container');
+    const sections = [...container.children].filter(node => node.tagName !== 'H1');
+    const detail = copy.service_details[copy.home.services.indexOf(service)];
+    expect(sections.map(node => node.hasAttribute('data-problem') ? 'problem' : node.hasAttribute('data-deliverable') ? 'deliverable' : node.hasAttribute('data-method') ? 'method' : node.hasAttribute('data-sample') ? 'sample' : node.className))
+      .toEqual([...(detail.problem ? ['problem'] : []), 'deliverable', 'method', 'sample', 'scope-invitation']);
+    if (detail.problem) expect(page.querySelector('[data-problem] p').textContent).toBe(detail.problem);
+    if (detail.contents) expect(page.querySelector('[data-deliverable]').textContent).toContain(detail.contents);
+    for (const citation of detail.codes || []) expect(page.querySelector('[data-method]').textContent).toContain(citation);
+  }
+});
+
+test('a published report is adjacent to its own service detail', async () => {
+  const service = copy.home.services[4];
+  const entry = { slug: 'published-analysis', title: 'Published analysis', summary: 'Installation analysis.', discipline: copy.service_details[4].sampleDiscipline, page: 'samples/published-analysis.html', status: 'published' };
+  const rendered = await renderHtml(fs.readFileSync('content/partials/service-page.html', 'utf8'), { rootPath: '../', service: { problem: '', contents: '', codes: [], ...service, ...copy.service_details[4] }, copy, canonicalUrl: canonicalUrlFor(service.page), metadataExcluded: false, ...sampleLocals({ samples: [entry] }) });
+  const page = new JSDOM(rendered).window.document;
+  expect(page.querySelector('[data-sample] a').getAttribute('href')).toBe('../' + entry.page);
+  expect(page.querySelector('[data-sample]').textContent).not.toContain('sample report in preparation');
+});
+
+test('each home output summary stays near twenty words without removing qualification', () => {
+  for (const card of doc.querySelectorAll('#services article')) {
+    const words = card.querySelector('.home-receives').textContent.trim().split(/\s+/).length;
+    expect(words).toBeGreaterThanOrEqual(17);
+    expect(words).toBeLessThanOrEqual(26);
+  }
+  const screening = [...doc.querySelectorAll('#services article')].find(card => card.querySelector('h3').textContent === copy.home.services[3].heading);
+  expect(screening.textContent).toContain(copy.home.services[3].receives);
+});
+
+test('the home hero has exactly one scoping link with or without published work', async () => {
+  const heroLinks = page => [...page.querySelectorAll('.home-hero a')]
+    .filter(link => link.textContent.trim() === copy.home.discuss);
+  expect(heroLinks(doc)).toHaveLength(1);
+  expect(heroLinks(doc)[0].getAttribute('href')).toBe('contact.html');
+  const entry = { slug: 'published-analysis', title: 'Published analysis', summary: 'Installation analysis.', discipline: copy.service_details[4].sampleDiscipline, page: 'samples/published-analysis.html', status: 'published' };
+  const rendered = await renderHtml(fs.readFileSync('content/index.html', 'utf8'), { rootPath: '', metadataExcluded: false, canonicalUrl: canonicalUrlFor('index.html'), copy, ...sampleLocals({ samples: [entry] }) });
+  const published = new JSDOM(rendered).window.document;
+  expect(heroLinks(published)).toHaveLength(1);
+  expect(published.querySelector('.home-hero a[href="#work"]').textContent).toBe(copy.home.work.button);
+});
+
+test('offshore card retains the regional coverage restriction', () => {
+  const card = [...doc.querySelectorAll('#services article')]
+    .find(node => node.querySelector('h3 a').getAttribute('href') === 'services/offshore-energy-data.html');
+  expect(card.querySelector('.home-receives').textContent).toContain('for the United States Gulf of Mexico');
+});
+
+test.each([
+  ['services/asset-integrity.html', 'API 579-1'],
+  ['services/cathodic-protection.html', 'DNV-RP-B401'],
+])('code list uses a designation where no published title is sourced: %s', (file, designation) => {
+  const page = new JSDOM(fs.readFileSync('dist/' + file, 'utf8')).window.document;
+  expect([...page.querySelectorAll('[data-method] li')].map(node => node.textContent)).toEqual([designation]);
 });

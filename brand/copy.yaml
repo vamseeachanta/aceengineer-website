@@ -111,23 +111,29 @@ home:
   services_heading: Services
   services:
     - heading: Asset integrity and fitness-for-service
-      description: Remaining-strength assessment of corroded components to API 579-1 and B31G.
+      page: services/asset-integrity.html
       receives: 'Client receives: a remaining-strength calculation report with a stated decision: accept, re-rate, take more measurements, or escalate'
+      context: ''
     - heading: Riser analysis
-      description: Riser analysis and operability envelopes for drilling risers to API RP 16Q. Analysis against API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.
+      page: services/riser-analysis.html
       receives: 'Client receives: an operability envelope and a riser analysis calculation report'
+      context: Riser analysis and operability envelopes for drilling risers.
     - heading: Hydrodynamics and vessel motions
-      description: Wave diffraction and radiation analysis, with diffraction results compared between two solvers.
+      page: services/hydrodynamics.html
       receives: 'Client receives: a vessel motions calculation report'
+      context: Wave diffraction and radiation analysis, with diffraction results compared between two solvers.
     - heading: Cathodic protection screening
-      description: Sacrificial-anode screening to DNV-RP-B401 and DNV-RP-F103.
+      page: services/cathodic-protection.html
       receives: 'Client receives: screening calculations, subject to qualified inputs and an engineer-of-record check'
+      context: Sacrificial-anode screening to DNV-RP-B401 and DNV-RP-F103.
     - heading: Marine installation screening
-      description: Lifting and lowering operations screened by phase, reported as utilisation by phase and an operability limit on significant wave height.
+      page: services/marine-installation.html
       receives: 'Client receives: utilisation by phase and an operability limit on significant wave height'
+      context: Lifting and lowering operations screened by phase.
     - heading: Offshore energy data and field analytics
-      description: Well, lease and production analysis for the United States Gulf of Mexico from public regulatory filings.
+      page: services/offshore-energy-data.html
       receives: 'Client receives: drilling and completion durations; per-well drilling and completion-day listings'
+      context: Well, lease and production analysis for the United States Gulf of Mexico.
   work:
     fact:
       heading: Public samples
@@ -145,3 +151,27 @@ home:
     email: support@aceengineer.com
     phone: +1 713-306-9029
     phone_href: tel:+17133069029
+
+service_details:
+  - sampleDiscipline: Asset integrity and fitness-for-service
+    description: Remaining-strength assessment of corroded components to API 579-1 and B31G.
+    problem: Whether equipment with damage is still fit to operate.
+    contents: Remaining strength and the allowable pressure, with the assumptions traced.
+    codes:
+      - API 579-1
+  - sampleDiscipline: Drilling riser and riser analysis
+    description: Riser analysis and operability envelopes for drilling risers to API RP 16Q. Analysis against API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.
+    codes:
+      - API RP 16Q — Design, Selection, Operation, and Maintenance of Marine Drilling Riser Systems
+      - DNV-RP-C203 — Fatigue design of offshore steel structures
+  - sampleDiscipline: Hydrodynamics and vessel motions
+    description: Wave diffraction and radiation analysis, with diffraction results compared between two solvers.
+    problem: How a floating hull responds to waves.
+  - sampleDiscipline: Cathodic protection design
+    description: Sacrificial-anode screening to DNV-RP-B401 and DNV-RP-F103.
+    codes:
+      - DNV-RP-B401
+  - sampleDiscipline: Marine installation screening
+    description: Lifting and lowering operations screened by phase, reported as utilisation by phase and an operability limit on significant wave height.
+  - sampleDiscipline: Offshore energy data and field analytics
+    description: Well, lease and production analysis for the United States Gulf of Mexico from public regulatory filings.

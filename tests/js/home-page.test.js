@@ -37,7 +37,8 @@ test('six service cards each have exactly one client-receives line', () => {
 test('footer uses the specified display name and copyright', () => {
   expect(doc.querySelector('footer').textContent).toContain('AceEngineer');
   expect(doc.querySelector('footer').textContent).toContain('© 2026 AceEngineer');
-  expect([...doc.querySelectorAll('footer .text-center p')].map(p => p.textContent)).toEqual(['AceEngineer | www.aceengineer.com | Houston, Texas', '© 2026 AceEngineer']);
+  expect([...doc.querySelectorAll('footer .text-center p:not(.footer-legal)')].map(p => p.textContent)).toEqual(['AceEngineer | www.aceengineer.com | Houston, Texas', '© 2026 AceEngineer']);
+  expect(doc.querySelectorAll('footer .footer-legal')).toHaveLength(1);
 });
 test('home has one shared Organization and a WebPage referencing it', () => {
   const nodes = [...doc.querySelectorAll('script[type="application/ld+json"]')].flatMap(s => { const v = JSON.parse(s.textContent); return Array.isArray(v) ? v : [v]; });
@@ -134,7 +135,7 @@ test('About experience wording follows canonical copy without a redundant qualif
 
 test('not-found copyright has the shared footer form', () => {
   const missing = new JSDOM(fs.readFileSync('dist/404.html', 'utf8')).window.document;
-  const canonical = doc.querySelector('footer .text-center p:last-child').textContent;
+  const canonical = doc.querySelector('footer .text-center p:nth-child(2)').textContent;
   expect(missing.querySelector('body > footer p').textContent === canonical).toBe(true);
 });
 

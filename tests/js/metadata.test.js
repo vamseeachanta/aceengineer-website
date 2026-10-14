@@ -12,6 +12,8 @@ const documents = new Map(pages.map(page => [page,
   new JSDOM(fs.readFileSync(path.join(distDir, page), 'utf8')).window.document]));
 const destinations = pages.filter(page => !(page in SITEMAP_EXCLUDE));
 const exemptions = {};
+const brandContract = fs.readFileSync(path.join(__dirname, '../../brand/BRAND.md'), 'utf8');
+const legalName = brandContract.match(/Legal\/contractual entity[^:\n]*:\s*\*\*([^*\n]+)\*\*/)[1];
 
 function addressPropertyHits(html) {
   const doc = new JSDOM(html).window.document;
@@ -85,10 +87,8 @@ test('destinations have one shared Organization with the required display name',
       '@id': 'https://www.aceengineer.com/#organization',
       name: 'AceEngineer',
       alternateName: 'Analytical & Computational Engineering',
+      legalName,
     });
-    for (const node of nodesFor(page)) {
-      expect(node).not.toHaveProperty('legalName');
-    }
   }
 });
 
@@ -433,16 +433,66 @@ test('outreach contact line uses the display name without a legal form', () => {
   expect(contact.textContent.split('·')[0].trim()).toBe('AceEngineer');
 });
 
-test('every built page omits legalName at every depth and a legal form in titles and footers', () => {
-  const legalForm = /AceEngineer\s+(?:Inc\.?|Incorporated|LLC)\b/i;
+test('legal name appears only once in the shared footer and once in Organization metadata per page', () => {
+  let footerPages = 0;
+  let organizationPages = 0;
   for (const page of pages) {
-    for (const node of nodesFor(page)) expect(node).not.toHaveProperty('legalName');
-    const doc = documents.get(page);
-    expect({ page, title: legalForm.test(doc.title) }).toEqual({ page, title: false });
-    for (const footer of doc.querySelectorAll('footer')) {
-      expect({ page, footer: legalForm.test(footer.textContent) }).toEqual({ page, footer: false });
+    const doc = documents.get(page).cloneNode(true);
+    const footers = doc.querySelectorAll('footer.footer-section');
+    expect(footers.length).toBeLessThanOrEqual(1);
+    for (const footer of footers) {
+      const lines = footer.querySelectorAll('.footer-legal');
+      expect({ page, count: lines.length }).toEqual({ page, count: 1 });
+      expect(lines[0].textContent.trim()).toBe(legalName + ', doing business as AceEngineer');
+      expect(footer.textContent.split(legalName)).toHaveLength(2);
+      lines[0].remove();
+      footerPages++;
     }
+    let organizations = 0;
+    for (const script of doc.querySelectorAll('script[type="application/ld+json"]')) {
+      const value = JSON.parse(script.textContent);
+      function visit(node) {
+        if (Array.isArray(node)) node.forEach(visit);
+        else if (node && typeof node === 'object') {
+          if ('legalName' in node) {
+            expect(node['@type']).toBe('Organization');
+            expect(node['@id']).toBe('https://www.aceengineer.com/#organization');
+            expect(node.name).toBe('AceEngineer');
+            expect(node.legalName).toBe(legalName);
+            delete node.legalName;
+            organizations++;
+          }
+          Object.values(node).forEach(visit);
+        }
+      }
+      visit(value);
+      script.textContent = JSON.stringify(value);
+    }
+    const expectedOrganizations = nodesFor(page).filter(node =>
+      node['@type'] === 'Organization' && node['@id'] === 'https://www.aceengineer.com/#organization' && node.name
+    ).length;
+    expect({ page, organizations }).toEqual({ page, organizations: expectedOrganizations });
+    expect(organizations).toBeLessThanOrEqual(1);
+    organizationPages += organizations;
+    expect({ page, misplaced: doc.documentElement.outerHTML.includes(legalName) })
+      .toEqual({ page, misplaced: false });
+    for (const footer of doc.querySelectorAll('footer')) {
+      expect(footer.textContent).not.toMatch(/AceEngineer\s+(?:Inc\.?|Incorporated|LLC)\b/i);
+    }
+    expect(doc.title).not.toMatch(/AceEngineer\s+(?:Inc\.?|Incorporated|LLC)\b/i);
   }
+  expect(footerPages).toBeGreaterThan(0);
+  expect(organizationPages).toBeGreaterThan(0);
+});
+
+test('legal footer uses the brand type and dark-background text tokens', () => {
+  const css = fs.readFileSync(path.join(__dirname, '../../assets/css/theme.css'), 'utf8');
+  const rule = css.match(/\.footer-section \.footer-legal\s*\{([^}]+)\}/);
+  expect(rule).not.toBeNull();
+  expect(rule[1]).toMatch(/font-family:\s*var\(--font-ui\)/);
+  expect(rule[1]).toMatch(/color:\s*var\(--teal-lift\)/);
+  expect(rule[1]).toMatch(/font-style:\s*normal/);
+  for (const token of ['--font-ui', '--teal-lift']) expect(brandContract).toContain(token);
 });
 
 test('every built page uses the specified figure for years of experience', () => {

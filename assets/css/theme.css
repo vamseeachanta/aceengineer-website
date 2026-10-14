@@ -32,6 +32,13 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* Brand contract: UI type and the accent text token for dark backgrounds. */
+.footer-section .footer-legal {
+  font-family: var(--font-ui);
+  color: var(--teal-lift);
+  font-style: normal;
+}
+
 /* ---- Capabilities-focused surfaces opt in via .theme-page on <body> ---- */
 .theme-page {
   background: var(--bg);

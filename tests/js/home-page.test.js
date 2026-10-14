@@ -110,3 +110,40 @@ test('home headline uses the specified engineering analysis wording', () => {
   expect(copy.home.heading).toBe(heading);
   expect(doc.querySelector('h1').textContent).toBe(heading);
 });
+
+test('tracked HTML omits the obsolete standards footer text', () => {
+  const { execFileSync } = require('child_process');
+  const files = execFileSync('git', ['ls-files', '-z', '--', '*.html'], { encoding: 'utf8' })
+    .split('\0').filter(file => file && !file.startsWith('dist/'));
+  expect(files.length).toBeGreaterThan(0);
+  const obsolete = /Standards:\s*DNV\s*•\s*API\s*•\s*ABS\s*•\s*BS\s*•\s*Norsok/;
+  expect(files.filter(file => obsolete.test(fs.readFileSync(file, 'utf8').replace(/&bull;|&#8226;/g, '•')))).toEqual([]);
+});
+
+test('About experience wording follows canonical copy without a redundant qualifier', () => {
+  const about = new JSDOM(fs.readFileSync('dist/about.html', 'utf8')).window.document;
+  const story = about.querySelector('#story') || about.querySelector('main');
+  expect(story.textContent.includes(copy.credentials[0])).toBe(true);
+  expect(/Over\s+\d+\+\s+years/i.test(story.textContent)).toBe(false);
+});
+
+test('not-found copyright has the shared footer form', () => {
+  const missing = new JSDOM(fs.readFileSync('dist/404.html', 'utf8')).window.document;
+  const canonical = doc.querySelector('footer .text-center p:last-child').textContent;
+  expect(missing.querySelector('body > footer p').textContent === canonical).toBe(true);
+});
+
+test.each([
+  ['docs/marketing/ENGINEERING_SERVICES_BRIEF.md', 3],
+  ['docs/marketing/ENGINEERING_SERVICES_ONE_PAGER.md', 9],
+])('marketing contact uses only the canonical support address: %s', (file, line) => {
+  const support = copy.home.contact.email;
+  const text = fs.readFileSync(file, 'utf8');
+  const addresses = text.match(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/gi) || [];
+  const domain = support.split('@')[1].toLowerCase();
+  const firmAddresses = addresses.filter(address => address.split('@')[1].toLowerCase() === domain);
+  expect(firmAddresses.length).toBeGreaterThan(0);
+  expect(firmAddresses.every(address => address === support)).toBe(true);
+  const contactLine = text.split('\n')[line - 1];
+  expect(contactLine.includes(support)).toBe(true);
+});

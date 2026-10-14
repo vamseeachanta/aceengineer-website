@@ -510,3 +510,37 @@ test('every shared footer uses the specified standards line', () => {
   }
   expect(checked).toBeGreaterThan(0);
 });
+
+test('built contact text, mail links and structured data use one support address', () => {
+  const support = 'support@aceengineer.com';
+  const addresses = value => String(value).match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi) || [];
+  const failures = [];
+  let checked = 0;
+  for (const [page, doc] of documents) {
+    function check(value, kind) {
+      const found = addresses(value);
+      checked += found.length;
+      const count = found.filter(address => address !== support).length;
+      if (count) failures.push({ page, kind, count });
+    }
+    for (const link of doc.querySelectorAll('a[href^="mailto:"]')) {
+      check(decodeURIComponent(link.getAttribute('href').slice(7).split('?')[0]), 'link target');
+    }
+    function visit(value) {
+      if (Array.isArray(value)) value.forEach(visit);
+      else if (value && typeof value === 'object') {
+        for (const [key, child] of Object.entries(value)) {
+          if (key === 'email') check(child, 'structured-data property');
+          visit(child);
+        }
+      }
+    }
+    for (const node of doc.querySelectorAll('script[type="application/ld+json"]')) visit(JSON.parse(node.textContent));
+    const body = doc.body.cloneNode(true);
+    body.querySelectorAll('script, style, template, [hidden], [aria-hidden="true"]').forEach(node => node.remove());
+    body.querySelectorAll('br').forEach(node => node.replaceWith(' '));
+    check(body.textContent, 'visible text');
+  }
+  expect(failures).toEqual([]);
+  expect(checked).toBeGreaterThan(0);
+});

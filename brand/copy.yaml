@@ -133,7 +133,7 @@ home:
     - heading: Offshore energy data and field analytics
       page: services/offshore-energy-data.html
       receives: 'Client receives: drilling and completion durations; per-well drilling and completion-day listings'
-      context: Well, lease and production analysis from public regulatory filings.
+      context: Well, lease and production analysis for the United States Gulf of Mexico.
   work:
     fact:
       heading: Public samples
@@ -158,7 +158,7 @@ service_details:
     problem: Whether equipment with damage is still fit to operate.
     contents: Remaining strength and the allowable pressure, with the assumptions traced.
     codes:
-      - API 579-1 — Fitness-for-service assessment of in-service equipment
+      - API 579-1
   - sampleDiscipline: Drilling riser and riser analysis
     description: Riser analysis and operability envelopes for drilling risers to API RP 16Q. Analysis against API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.
     codes:
@@ -170,7 +170,7 @@ service_details:
   - sampleDiscipline: Cathodic protection design
     description: Sacrificial-anode screening to DNV-RP-B401 and DNV-RP-F103.
     codes:
-      - DNV-RP-B401 — Cathodic protection design — sacrificial anodes
+      - DNV-RP-B401
   - sampleDiscipline: Marine installation screening
     description: Lifting and lowering operations screened by phase, reported as utilisation by phase and an operability limit on significant wave height.
   - sampleDiscipline: Offshore energy data and field analytics

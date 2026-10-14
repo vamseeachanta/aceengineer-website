@@ -156,3 +156,28 @@ test('service sample labels remain text when a registry title contains markup', 
   expect(link.textContent).toBe(entry.title);
   expect(link.querySelector('strong')).toBeNull();
 });
+
+test('each registry discipline maps to exactly one home service', () => {
+  const copy = loadCopy();
+  for (const entry of loadSamples('config/samples.yaml').samples) {
+    const matches = copy.home.services.filter((service, index) => copy.service_details[index].sampleDiscipline === entry.discipline);
+    expect({ discipline: entry.discipline, destinations: matches.map(service => service.page) })
+      .toEqual({ discipline: entry.discipline, destinations: [expect.any(String)] });
+    const published = { ...entry, status: 'published' };
+    const locals = sampleLocals(registry(published));
+    expect(Object.entries(locals.serviceSamples).filter(([, samples]) => samples.length).map(([page]) => page))
+      .toEqual(matches.map(service => service.page));
+  }
+});
+
+test('default service sample mapping resolves copy independently of working directory', () => {
+  const { execFileSync } = require('child_process');
+  const modulePath = require.resolve('../../scripts/render-samples');
+  const entry = { ...fixture(), status: 'published' };
+  const script = 'const renderer = require(process.argv[1]); process.stdout.write(JSON.stringify(renderer.sampleLocals(JSON.parse(process.argv[2])).serviceSamples));';
+  const output = execFileSync(process.execPath, ['-e', script, modulePath, JSON.stringify(registry(entry))], {
+    cwd: dir, encoding: 'utf8',
+    env: Object.fromEntries(Object.entries(process.env).filter(([key]) => !['GIT_DIR', 'GIT_WORK_TREE', 'GIT_COMMON_DIR'].includes(key))),
+  });
+  expect(JSON.parse(output)['services/marine-installation.html']).toEqual([entry]);
+});

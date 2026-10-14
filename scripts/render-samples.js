@@ -40,7 +40,7 @@ function validateSamples(registry, { assetsRoot = './assets' } = {}) {
 function publishedSamples(registry) {
   return registry.samples.filter(entry => entry.status === 'published');
 }
-function sampleLocals(registry, copy = yaml.load(fs.readFileSync('./brand/copy.yaml', 'utf8'))) {
+function sampleLocals(registry, copy = yaml.load(fs.readFileSync(path.join(__dirname, '../brand/copy.yaml'), 'utf8'))) {
   const published = publishedSamples(registry);
   return {
     samplesPublished: published.length > 0,

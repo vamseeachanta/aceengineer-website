@@ -220,3 +220,29 @@ test('each home output summary stays near twenty words without removing qualific
   const screening = [...doc.querySelectorAll('#services article')].find(card => card.querySelector('h3').textContent === copy.home.services[3].heading);
   expect(screening.textContent).toContain(copy.home.services[3].receives);
 });
+
+test('the home hero has exactly one scoping link with or without published work', async () => {
+  const heroLinks = page => [...page.querySelectorAll('.home-hero a')]
+    .filter(link => link.textContent.trim() === copy.home.discuss);
+  expect(heroLinks(doc)).toHaveLength(1);
+  expect(heroLinks(doc)[0].getAttribute('href')).toBe('contact.html');
+  const entry = { slug: 'published-analysis', title: 'Published analysis', summary: 'Installation analysis.', discipline: copy.service_details[4].sampleDiscipline, page: 'samples/published-analysis.html', status: 'published' };
+  const rendered = await renderHtml(fs.readFileSync('content/index.html', 'utf8'), { rootPath: '', metadataExcluded: false, canonicalUrl: canonicalUrlFor('index.html'), copy, ...sampleLocals({ samples: [entry] }) });
+  const published = new JSDOM(rendered).window.document;
+  expect(heroLinks(published)).toHaveLength(1);
+  expect(published.querySelector('.home-hero a[href="#work"]').textContent).toBe(copy.home.work.button);
+});
+
+test('offshore card retains the regional coverage restriction', () => {
+  const card = [...doc.querySelectorAll('#services article')]
+    .find(node => node.querySelector('h3 a').getAttribute('href') === 'services/offshore-energy-data.html');
+  expect(card.querySelector('.home-receives').textContent).toContain('for the United States Gulf of Mexico');
+});
+
+test.each([
+  ['services/asset-integrity.html', 'API 579-1'],
+  ['services/cathodic-protection.html', 'DNV-RP-B401'],
+])('code list uses a designation where no published title is sourced: %s', (file, designation) => {
+  const page = new JSDOM(fs.readFileSync('dist/' + file, 'utf8')).window.document;
+  expect([...page.querySelectorAll('[data-method] li')].map(node => node.textContent)).toEqual([designation]);
+});

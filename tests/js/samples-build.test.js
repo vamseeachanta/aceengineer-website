@@ -101,3 +101,37 @@ test('home rows preserve registry order, limit to four and escape registry strin
   expect((rows.match(/<tr>/g) || [])).toHaveLength(4);
   expect(rows).toContain('Sample &lt;0&gt;'); expect(rows).not.toContain('Sample &lt;4&gt;');
 });
+
+test('unpublished samples omit fact wording throughout the built and rendered home', async () => {
+  const reg = loadSamples('config/samples.yaml');
+  expect(publishedSamples(reg)).toHaveLength(0);
+  const rendered = await home(reg);
+  const built = fs.readFileSync('dist/index.html', 'utf8');
+  for (const html of [built, rendered]) {
+    expect([...doc(html).querySelectorAll('.home-facts-grid > p > strong')].map(node => node.textContent))
+      .toEqual(['Founded 2010', '25+ years of experience']);
+    expect(html).not.toContain('Public samples');
+    expect(html).not.toContain('Public data and synthetic inputs');
+    expect(doc(html).querySelector('#work')).toBeNull();
+  }
+  await buildSamplePages(reg, { distDir, assetsRoot, renderHtml });
+  expect(fs.existsSync(path.join(distDir, 'samples'))).toBe(false);
+});
+test('published samples enable the conditional fact, table and sample pages together', async () => {
+  expect(loadCopy().home.work.fact).toEqual({
+    heading: 'Public samples', detail: 'Public data and synthetic inputs',
+  });
+  const entry = { ...fixture(), status: 'published' }; pdf(entry);
+  const reg = registry(entry);
+  await buildSamplePages(reg, { distDir, assetsRoot, renderHtml });
+  const rendered = await home(reg);
+  fs.writeFileSync(path.join(distDir, 'index.html'), rendered);
+  const page = doc(read('index.html'));
+  expect([...page.querySelectorAll('.home-facts-grid > p > strong')].map(node => node.textContent))
+    .toEqual(['Founded 2010', '25+ years of experience', 'Public samples']);
+  expect(page.querySelector('.home-facts').textContent).toContain(loadCopy().home.work.fact.detail);
+  expect(page.querySelector('#work table tbody').textContent).toContain(entry.title);
+  expect(page.querySelector('nav a[href="samples/"]')).not.toBeNull();
+  expect(fs.existsSync(path.join(distDir, 'samples/index.html'))).toBe(true);
+  expect(fs.existsSync(path.join(distDir, entry.page))).toBe(true);
+});

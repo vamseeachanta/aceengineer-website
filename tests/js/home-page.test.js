@@ -99,9 +99,9 @@ test('home and Contact show one direct telephone link', () => {
     expect(links[0].textContent).toBe('+1 713-306-9029');
   }
 });
-test('home facts contain the three specified items without the standards item', () => {
+test('home facts contain two items without unpublished samples or the standards item', () => {
   expect([...doc.querySelectorAll('.home-facts-grid > p > strong')].map(node => node.textContent))
-    .toEqual(['Founded 2010', '25+ years of experience', 'Public samples']);
+    .toEqual(['Founded 2010', '25+ years of experience']);
   expect(doc.querySelector('.home-facts').textContent).not.toContain('Published standards');
 });
 

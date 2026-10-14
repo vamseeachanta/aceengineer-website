@@ -55,6 +55,9 @@
                 <each loop="fact in copy.home.facts">
                     <p><strong>{{ fact.heading }}</strong><br>{{ fact.detail }}</p>
                 </each>
+                <if condition="samplesPublished">
+                    <p><strong>{{ copy.home.work.fact.heading }}</strong><br>{{ copy.home.work.fact.detail }}</p>
+                </if>
                 </div>
             </div>
         </section>

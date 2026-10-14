@@ -108,8 +108,6 @@ home:
       detail: Houston, Texas
     - heading: 25+ years of experience
       detail: Principal engineer, offshore and marine
-    - heading: Public samples
-      detail: Public data and synthetic inputs
   services_heading: Services
   services:
     - heading: Asset integrity and fitness-for-service
@@ -131,6 +129,9 @@ home:
       description: Well, lease and production analysis for the United States Gulf of Mexico from public regulatory filings.
       receives: 'Client receives: drilling and completion durations; per-well drilling and completion-day listings'
   work:
+    fact:
+      heading: Public samples
+      detail: Public data and synthetic inputs
     button: See selected work
     heading: Selected work
     description: The samples are prepared from public data and published standards, or from synthetic inputs where stated, and contain no client information.

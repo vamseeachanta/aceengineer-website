@@ -187,3 +187,26 @@ test('every home service destination builds with output, sample and invitation',
     expect(page.querySelector('.scope-invitation a[href^="mailto:"]').textContent).toBe(copy.home.contact.email);
   }
 });
+
+test('service sections follow problem, received output, method, sample and scoping order', () => {
+  for (const service of copy.home.services) {
+    const page = new JSDOM(fs.readFileSync('dist/' + service.page, 'utf8')).window.document;
+    const container = page.querySelector('main > .container');
+    const sections = [...container.children].filter(node => node.tagName !== 'H1');
+    const detail = copy.service_details[copy.home.services.indexOf(service)];
+    expect(sections.map(node => node.hasAttribute('data-problem') ? 'problem' : node.hasAttribute('data-deliverable') ? 'deliverable' : node.hasAttribute('data-method') ? 'method' : node.hasAttribute('data-sample') ? 'sample' : node.className))
+      .toEqual([...(detail.problem ? ['problem'] : []), 'deliverable', 'method', 'sample', 'scope-invitation']);
+    if (detail.problem) expect(page.querySelector('[data-problem] p').textContent).toBe(detail.problem);
+    if (detail.contents) expect(page.querySelector('[data-deliverable]').textContent).toContain(detail.contents);
+    for (const citation of detail.codes || []) expect(page.querySelector('[data-method]').textContent).toContain(citation);
+  }
+});
+
+test('a published report is adjacent to its own service detail', async () => {
+  const service = copy.home.services[4];
+  const entry = { slug: 'published-analysis', title: 'Published analysis', summary: 'Installation analysis.', discipline: copy.service_details[4].sampleDiscipline, page: 'samples/published-analysis.html', status: 'published' };
+  const rendered = await renderHtml(fs.readFileSync('content/partials/service-page.html', 'utf8'), { rootPath: '../', service: { problem: '', contents: '', codes: [], ...service, ...copy.service_details[4] }, copy, canonicalUrl: canonicalUrlFor(service.page), metadataExcluded: false, ...sampleLocals({ samples: [entry] }) });
+  const page = new JSDOM(rendered).window.document;
+  expect(page.querySelector('[data-sample] a').getAttribute('href')).toBe('../' + entry.page);
+  expect(page.querySelector('[data-sample]').textContent).not.toContain('sample report in preparation');
+});

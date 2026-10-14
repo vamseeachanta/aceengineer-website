@@ -215,7 +215,7 @@ async function processFile(filePath) {
     const index = Number(locals.serviceIndex);
     locals.service = locals.copy.home.services[index];
     if (!locals.service) throw new Error('Unknown service index');
-    locals.service = { ...locals.service, ...locals.copy.service_details[index] };
+    locals.service = { problem: '', contents: '', codes: [], ...locals.service, ...locals.copy.service_details[index] };
   }
 
   // Expose the rendered capability cards (C3) to any page that wants them

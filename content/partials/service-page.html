@@ -20,15 +20,25 @@
     <main id="main" class="samples-page service-page">
         <section class="container">
             <h1>{{ service.heading }}</h1>
+            <if condition="service.problem">
+                <section data-problem><h2>The problem</h2><p>{{ service.problem }}</p></section>
+            </if>
             <section data-deliverable>
                 <h2>What you receive</h2>
                 <p>{{ service.receives }}</p>
+                <if condition="service.contents"><p>{{ service.contents }}</p></if>
             </section>
             <section data-method>
                 <h2>Method and codes</h2>
                 <p>{{ service.description }}</p>
+                <if condition="service.codes.length">
+                    <ul><each loop="citation in service.codes"><li>{{ citation }}</li></each></ul>
+                </if>
             </section>
-            <include src="partials/service-samples.html"></include>
+            <section data-sample>
+                <h2>{{ copy.home.work.sample }}</h2>
+                <include src="partials/service-samples.html"></include>
+            </section>
             <include src="partials/scope-invitation.html"></include>
         </section>
     </main>

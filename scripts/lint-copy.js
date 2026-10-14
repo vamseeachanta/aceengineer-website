@@ -96,6 +96,26 @@ function lint() {
     }
   }
 
+  if (targets.home) {
+    const homeRel = resolveRendered(targets.home);
+    const homeBody = readPage(homeRel);
+    if (homeBody === null) errors.push(`target page missing: ${homeRel}`);
+    else {
+      const registryFile = path.join(repoRoot, 'config', 'samples.yaml');
+      const registry = yaml.load(fs.readFileSync(registryFile, 'utf8'));
+      const published = registry.samples.some(entry => entry.status === 'published');
+      function checkHome(value, key) {
+        if (typeof value === 'string') {
+          const escaped = value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+          if (!norm(homeBody).includes(norm(escaped))) errors.push(`DRIFT: copy.home.${key} not found verbatim in ${homeRel}`);
+        } else for (const [child, item] of Object.entries(value)) checkHome(item, `${key}.${child}`);
+      }
+      for (const [key, value] of Object.entries(copy.home)) {
+        if (key !== 'work' || published) checkHome(value, key);
+      }
+    }
+  }
+
   // 2) Forbidden phrases must not appear on any visible source page.
   const forbidden = Array.isArray(copy.forbidden_phrases) ? copy.forbidden_phrases : [];
   if (forbidden.length) {

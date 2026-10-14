@@ -64,7 +64,7 @@ capabilities:
       while the team sleeps.
 
 credentials:
-  - 15+ years
+  - 25+ years
   - 704+ modules
   - founded in 2010 in Houston, Texas
 
@@ -93,3 +93,55 @@ forbidden_phrases:
 # Keys map to copy fields above; the lint reads this to know what to assert where.
 targets:
   about: content/about.html
+  home: content/index.html
+
+home:
+  title: AceEngineer | Offshore and marine engineering firm
+  description: AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms, EPC contractors and drilling contractors.
+  kicker: Offshore and marine engineering firm | Houston, Texas
+  heading: Engineering analysis that is practical, dependable and repeatable.
+  lead: >-
+    AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms, EPC contractors and drilling contractors. We provide engineering services: analysis, design calculations and integrity assessment.
+  discuss: Discuss a scope
+  facts:
+    - heading: Founded 2010
+      detail: Houston, Texas
+    - heading: 25+ years of experience
+      detail: Principal engineer, offshore and marine
+  services_heading: Services
+  services:
+    - heading: Asset integrity and fitness-for-service
+      description: Remaining-strength assessment of corroded components to API 579-1 and B31G.
+      receives: 'Client receives: a remaining-strength calculation report with a stated decision: accept, re-rate, take more measurements, or escalate'
+    - heading: Riser analysis
+      description: Riser analysis and operability envelopes for drilling risers to API RP 16Q. Analysis against API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.
+      receives: 'Client receives: an operability envelope and a riser analysis calculation report'
+    - heading: Hydrodynamics and vessel motions
+      description: Wave diffraction and radiation analysis, with diffraction results compared between two solvers.
+      receives: 'Client receives: a vessel motions calculation report'
+    - heading: Cathodic protection screening
+      description: Sacrificial-anode screening to DNV-RP-B401 and DNV-RP-F103.
+      receives: 'Client receives: screening calculations, subject to qualified inputs and an engineer-of-record check'
+    - heading: Marine installation screening
+      description: Lifting and lowering operations screened by phase, reported as utilisation by phase and an operability limit on significant wave height.
+      receives: 'Client receives: utilisation by phase and an operability limit on significant wave height'
+    - heading: Offshore energy data and field analytics
+      description: Well, lease and production analysis for the United States Gulf of Mexico from public regulatory filings.
+      receives: 'Client receives: drilling and completion durations; per-well drilling and completion-day listings'
+  work:
+    fact:
+      heading: Public samples
+      detail: Public data and synthetic inputs
+    button: See selected work
+    heading: Selected work
+    description: The samples are prepared from public data and published standards, or from synthetic inputs where stated, and contain no client information.
+    sample: Sample
+    demonstrates: What it demonstrates
+    open: Open
+    all: All samples
+  contact:
+    heading: Contact
+    principal: Vamsee Achanta, P.E., Principal Engineer
+    email: support@aceengineer.com
+    phone: +1 713-306-9029
+    phone_href: tel:+17133069029

@@ -104,3 +104,9 @@ test('home facts contain the three specified items without the standards item', 
     .toEqual(['Founded 2010', '25+ years of experience', 'Public samples']);
   expect(doc.querySelector('.home-facts').textContent).not.toContain('Published standards');
 });
+
+test('home headline uses the specified engineering analysis wording', () => {
+  const heading = 'Engineering analysis that is practical, dependable and repeatable.';
+  expect(copy.home.heading).toBe(heading);
+  expect(doc.querySelector('h1').textContent).toBe(heading);
+});

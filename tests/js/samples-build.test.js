@@ -135,3 +135,24 @@ test('published samples enable the conditional fact, table and sample pages toge
   expect(fs.existsSync(path.join(distDir, 'samples/index.html'))).toBe(true);
   expect(fs.existsSync(path.join(distDir, entry.page))).toBe(true);
 });
+
+test('a published sample appears only beside its own home service', async () => {
+  const entry = { ...fixture(), status: 'published' };
+  pdf(entry);
+  const reg = registry(entry);
+  await buildSamplePages(reg, { distDir, assetsRoot, renderHtml });
+  const rendered = doc(await home(reg));
+  const cards = [...rendered.querySelectorAll('#services article')];
+  const matching = cards.find(card => card.querySelector('h3').textContent === entry.discipline);
+  expect(matching.querySelector('.service-samples a').getAttribute('href')).toBe(entry.page);
+  expect(fs.existsSync(path.join(distDir, entry.page))).toBe(true);
+  expect(cards.filter(card => card !== matching).every(card => card.querySelector('.service-samples').textContent.trim() === 'sample report in preparation')).toBe(true);
+});
+
+test('service sample labels remain text when a registry title contains markup', async () => {
+  const entry = { ...fixture(), title: 'Report <strong>label</strong>', status: 'published' };
+  const rendered = doc(await home(registry(entry)));
+  const link = rendered.querySelector('#services .service-samples a');
+  expect(link.textContent).toBe(entry.title);
+  expect(link.querySelector('strong')).toBeNull();
+});

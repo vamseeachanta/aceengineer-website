@@ -40,10 +40,11 @@ function validateSamples(registry, { assetsRoot = './assets' } = {}) {
 function publishedSamples(registry) {
   return registry.samples.filter(entry => entry.status === 'published');
 }
-function sampleLocals(registry) {
+function sampleLocals(registry, copy = yaml.load(fs.readFileSync('./brand/copy.yaml', 'utf8'))) {
   const published = publishedSamples(registry);
   return {
     samplesPublished: published.length > 0,
+    serviceSamples: Object.fromEntries(copy.home.services.map((service, index) => [service.page, published.filter(entry => entry.discipline === copy.service_details[index].sampleDiscipline)])),
     sampleHomeRows: published.slice(0, 4).map(entry => `<tr><td>${escapeHtml(entry.title)}</td><td>${escapeHtml(entry.summary)}</td><td><a href="${escapeHtml(entry.page)}">{{ copy.home.work.open }}</a></td></tr>`).join('\n'),
   };
 }

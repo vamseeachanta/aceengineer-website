@@ -1,0 +1,8 @@
+<p class="service-samples">
+    <if condition="serviceSamples[service.page] && serviceSamples[service.page].length">
+        <each loop="sample in serviceSamples[service.page]">
+            <a href="{{ rootPath }}{{ sample.page }}">{{ sample.title }}</a>
+        </each>
+    </if>
+    <else>sample report in preparation</else>
+</p>

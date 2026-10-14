@@ -279,7 +279,7 @@ test('source metadata meets the required coverage floors', () => {
   const { getHtmlFiles } = require('../../build');
   const sources = getHtmlFiles(path.join(__dirname, '../../content'))
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
-  expect(sources).toHaveLength(114);
+  expect(sources).toHaveLength(120);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 110],
     ['meta[property="og:title"]', 110], ['meta[property="og:image"]', 109],
@@ -411,18 +411,20 @@ test('home lead sentence and the three description texts agree', () => {
 const homeCopy = yaml.load(fs.readFileSync(path.join(__dirname, '../../brand/copy.yaml'), 'utf8'));
 const supportedHomeCopy = [
   ['home.lead'],
-  ['home.services.3.heading', 'home.services.3.description', 'home.services.3.receives'],
-  ['home.services.0.description', 'home.services.0.receives'],
-  ['home.services.1.heading', 'home.services.1.description', 'home.services.1.receives'],
-  ['home.services.2.description'],
+  ['home.services.3.heading', 'service_details.3.description', 'home.services.3.receives'],
+  ['service_details.0.description', 'home.services.0.receives'],
+  ['home.services.1.heading', 'service_details.1.description', 'home.services.1.receives'],
+  ['service_details.2.description'],
   ['home.services.5.receives'],
-  ['home.services.4.description', 'home.services.4.receives'],
+  ['service_details.4.description', 'home.services.4.receives'],
   ['home.description'],
 ].map(keys => [keys.join(', '), keys]);
 test.each(supportedHomeCopy)('home wording follows existing page support: %s', (key, paths) => {
   for (const keyPath of paths) {
     const sentence = keyPath.split('.').reduce((value, part) => value[part], homeCopy);
-    expect(homeCopyText).toContain(sentence);
+    const detail = keyPath.match(/^service_details\.(\d)\.description$/);
+    const visible = detail ? visibleCopy(documents.get(homeCopy.home.services[Number(detail[1])].page).querySelector('main')) : homeCopyText;
+    expect(visible).toContain(sentence);
   }
 });
 

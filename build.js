@@ -211,6 +211,13 @@ async function processFile(filePath) {
     locals.copy = loadCopy();
   }
 
+  if (locals.serviceIndex !== undefined) {
+    const index = Number(locals.serviceIndex);
+    locals.service = locals.copy.home.services[index];
+    if (!locals.service) throw new Error('Unknown service index');
+    locals.service = { ...locals.service, ...locals.copy.service_details[index] };
+  }
+
   // Expose the rendered capability cards (C3) to any page that wants them
   // (content/capabilities/index.html uses {{{ capabilitiesCards }}}).
   if (locals.capabilitiesCards === undefined) {
@@ -541,7 +548,7 @@ async function build() {
   console.log('Building site...\n');
 
   const samples = validateSamples(loadSamples(), { assetsRoot: './assets' });
-  _sampleLocals = sampleLocals(samples);
+  _sampleLocals = sampleLocals(samples, loadCopy());
 
   // Clean dist directory
   if (fs.existsSync(distDir)) {

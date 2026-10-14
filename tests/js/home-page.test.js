@@ -10,7 +10,12 @@ function strings(value) { return typeof value === 'string' ? [value] : Object.va
 test('canonical home copy renders with work copy conditional on publication', () => {
   expect(copy.home).toBeDefined();
   for (const [key, value] of Object.entries(copy.home)) {
-    if (key !== 'work') for (const text of strings(value)) expect(norm(doc.documentElement.textContent + html)).toContain(norm(text));
+    if (!['work', 'services'].includes(key)) for (const text of strings(value)) expect(norm(doc.documentElement.textContent + html)).toContain(norm(text));
+  }
+  for (const service of copy.home.services) {
+    expect(norm(doc.body.textContent)).toContain(norm(service.heading));
+    expect(norm(doc.body.textContent)).toContain(norm(service.receives));
+    expect(doc.body.textContent).not.toContain(copy.service_details[copy.home.services.indexOf(service)].description);
   }
   expect(doc.querySelector('#work')).toBeNull();
   expect(doc.querySelector('a[href="#work"]')).toBeNull();
@@ -146,4 +151,39 @@ test.each([
   expect(firmAddresses.every(address => address === support)).toBe(true);
   const contactLine = text.split('\n')[line - 1];
   expect(contactLine.includes(support)).toBe(true);
+});
+
+test('service cards link to distinct detail pages and keep one concise output line', () => {
+  const cards = [...doc.querySelectorAll('#services article')];
+  const destinations = new Set();
+  for (const card of cards) {
+    const link = card.querySelector('h3 a');
+    expect(link).not.toBeNull();
+    destinations.add(link.getAttribute('href'));
+    const output = card.querySelector('.home-receives');
+    expect(output.textContent.trim().split(/\s+/).length).toBeLessThanOrEqual(26);
+    expect(card.querySelectorAll('p')).toHaveLength(2);
+    expect(card.querySelector('.service-samples').textContent.trim()).toBe('sample report in preparation');
+    expect(card.querySelector('.service-samples a')).toBeNull();
+  }
+  expect(destinations.size).toBe(6);
+});
+
+test('the home invitation follows the opening copy and offers the form and canonical contact', () => {
+  const invitation = doc.querySelector('.home-lead + .scope-invitation');
+  expect(invitation).not.toBeNull();
+  expect(invitation.querySelector('a[href="contact.html"]')).not.toBeNull();
+  expect(invitation.querySelector('a[href^="mailto:"]').textContent).toBe(copy.home.contact.email);
+});
+
+test('every home service destination builds with output, sample and invitation', () => {
+  for (const service of copy.home.services) {
+    expect(fs.existsSync('dist/' + service.page)).toBe(true);
+    const page = new JSDOM(fs.readFileSync('dist/' + service.page, 'utf8')).window.document;
+    expect(page.querySelector('h1').textContent).toBe(service.heading);
+    expect(page.querySelector('[data-deliverable]').textContent).toContain(service.receives);
+    expect(page.querySelector('.service-samples').textContent.trim()).toBe('sample report in preparation');
+    expect(page.querySelector('.scope-invitation a[href="../contact.html"]')).not.toBeNull();
+    expect(page.querySelector('.scope-invitation a[href^="mailto:"]').textContent).toBe(copy.home.contact.email);
+  }
 });

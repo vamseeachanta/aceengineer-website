@@ -13,6 +13,17 @@
       ],
       "destination": "https://www.aceengineer.com/:path",
       "permanent": true
+    },
+    {
+      "source": "/:path(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "aceengineer-website-delta.vercel.app"
+        }
+      ],
+      "destination": "https://www.aceengineer.com/:path",
+      "permanent": true
     }
   ],
   "headers": [

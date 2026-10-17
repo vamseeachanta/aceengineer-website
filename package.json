@@ -22,6 +22,11 @@
   "jest": {
     "projects": [
       {
+        "displayName": "diffraction-provenance",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/diffraction-provenance.test.js"]
+      },
+      {
         "displayName": "home-page",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/home-page.test.js"]

@@ -25,9 +25,9 @@ const DIST = path.join(__dirname, '..', '..', 'dist');
  * exemption safe.
  */
 const CHROME_EXEMPT = {
-  'reports/diffraction/aqwa-analysis.html': 'noindex redirect stub -> analysis.html',
-  'reports/diffraction/orcawave-analysis.html': 'noindex redirect stub -> analysis.html',
-  'reports/diffraction/orcawave-aqwa-comparison.html': 'noindex redirect stub -> comparison.html',
+  'reports/diffraction/aqwa-analysis.html': 'noindex redirect stub -> diffraction index',
+  'reports/diffraction/orcawave-analysis.html': 'noindex redirect stub -> diffraction index',
+  'reports/diffraction/orcawave-aqwa-comparison.html': 'noindex redirect stub -> diffraction index',
 };
 
 function walk(dir, out = []) {

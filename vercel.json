@@ -4,6 +4,31 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/reports/diffraction/analysis.html",
+      "destination": "/reports/diffraction/",
+      "permanent": true
+    },
+    {
+      "source": "/reports/diffraction/comparison.html",
+      "destination": "/reports/diffraction/",
+      "permanent": true
+    },
+    {
+      "source": "/reports/diffraction/aqwa-analysis.html",
+      "destination": "/reports/diffraction/",
+      "permanent": true
+    },
+    {
+      "source": "/reports/diffraction/orcawave-analysis.html",
+      "destination": "/reports/diffraction/",
+      "permanent": true
+    },
+    {
+      "source": "/reports/diffraction/orcawave-aqwa-comparison.html",
+      "destination": "/reports/diffraction/",
+      "permanent": true
+    },
+    {
       "source": "/pricing.html",
       "destination": "/contact.html",
       "permanent": true

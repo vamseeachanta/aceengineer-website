@@ -44,6 +44,17 @@ const RULES = {
     /\b\d+[- ]?(?:hours?|hrs?|days?)[- ](?:[\w-]+\s+){0,2}(?:turnaround|response|runs?|screenings?|sweeps?|memos?|deliver(?:y|ables?)|SOP|engagements?)\b/i,
     // "decision-grade memo in 48": a deliverable promised within a period
     /\b(?:memos?|deliverables?)\s+(?:with)?in\s+(?:under\s+)?\d+\b/i,
+    // "results in 2 business days", "results in 24 hours": what the reader receives, and when.
+    // A before-and-after outcome ("results in 3 days instead of 3 weeks") is history and passes.
+    /\b(?:results?|answers?|reports?)\s+(?:with)?in\s+(?:under\s+)?\d+\s+(?:business\s+|working\s+)?(?:hours?|days?)\b(?!\s+instead\b)/i,
+    // business or working days are a service interval, never a run time
+    /\b\d+(?:\s*(?:-|–|to)\s*\d+)?\s+(?:business|working)\s+(?:days?|hours?)\b/i,
+    // "same-day turnaround", "next-day results"
+    /\b(?:same|next)[- ]day\s+(?:[\w-]+\s+)?(?:turnaround|response|results?|answers?|delivery|deliverables?|screenings?|service|memos?|reports?)\b/i,
+    // "Overnight screening", "screening overnight", "Installation Screening, Overnight.": overnight
+    // tied to a screening, a result or a turnaround. "Runs overnight on eight cores" is a run time.
+    /\bovernight\s+(?:screenings?|screens?|turnaround|results?|answers?|memos?|reports?|deliver(?:y|ables?))\b/i,
+    /\b(?:screenings?|screens?|turnaround|results?|answers?|memos?|reports?|deliver(?:y|ables?))\s*[,:–—-]?\s*overnight\b/i,
     /\bresponse\s+guarantee\b/i,
     /\b\d+\s?(?:hr|hours?)\s+response\b/i,
     /\bby\s+morning\b/i,
@@ -179,6 +190,14 @@ test.each([
   ['turnaround', 'Following the same 48-hour SOP used for the other demos.'],
   ['turnaround', 'A 72 hr parametric sweep on your matrix.'],
   ['turnaround', '~120 screened cases, decision-grade memo in 48.'],
+  ['turnaround', 'Overnight screening, P.E.-stamped, custom runs on your data.'],
+  ['turnaround', 'Parametric installation screening overnight.'],
+  ['turnaround', 'Installation Screening, Overnight. P.E.-Stamped, Code-Ready.'],
+  ['turnaround', 'You receive results in 2 business days.'],
+  ['turnaround', 'Results in 24 hours on your data.'],
+  ['turnaround', 'Allow 3-5 working days for the memo.'],
+  ['turnaround', 'Same-day turnaround on screening requests.'],
+  ['turnaround', 'Next-day results for standard matrices.'],
 ])('the %s rule catches "%s"', (rule, sample) => {
   expect(findings(sample).some(hit => hit.startsWith(`${rule}:`))).toBe(true);
 });
@@ -195,6 +214,12 @@ test.each([
   ['a table cell', PAGE('', '<table><tr><td>Weeks of setup</td><td>~120 cases, decision-grade memo in 48</td></tr></table>')],
   ['a figure and label', PAGE('', '<div class="hero-kpi">\n<span class="number">&lt; 8 hrs</span>\n<span class="label">Overnight turnaround</span>\n</div>')],
   ['a consulting charge', PAGE('', '<p>Traditional consulting approaches would require 8-12 weeks and cost $150K-250K.</p>')],
+  ['overnight in description metadata', PAGE('<meta name="description" content="Heavy-lift, pipelay, PLSV, FOWT. Overnight screening, P.E.-stamped.">', '')],
+  ['overnight in JSON-LD', PAGE('<script type="application/ld+json">{"@type":"WebPage","description":"FOWT. Overnight screening, P.E.-stamped."}</script>', '')],
+  ['overnight in og:description', PAGE('<meta property="og:description" content="Parametric installation screening overnight. P.E.-stamped.">', '')],
+  ['overnight in a heading', PAGE('', '<section><h1>Installation Screening, Overnight. P.E.-Stamped, Code-Ready.</h1></section>')],
+  ['business days in body text', PAGE('', '<p>Send the matrix; results in 2 business days.</p>')],
+  ['same-day in a figure and label', PAGE('', '<div class="hero-kpi">\n<span class="number">Same-day</span>\n<span class="label">turnaround</span>\n</div>')],
 ])('rendered pages are caught: %s', (_where, html) => {
   expect(findings(renderedCopy(html))).not.toEqual([]);
 });
@@ -213,6 +238,11 @@ test.each([
   'Run the 3-hour storm simulation for each sea state.',
   'Field development cost $1.2B over a 25-year life.',
   'Compute time per demo batch: under 8 hrs.',
+  'Composite of the five shipped overnight runs.',
+  'Parametric tools that run hundreds of cases overnight.',
+  'All 50 simulations queued and executed overnight on 8 parallel cores.',
+  'Delivered complete results in 3 days instead of 3 weeks.',
+  'Perfect match: same day, same location.',
 ])('engineering wording passes: "%s"', sample => {
   expect(findings(sample)).toEqual([]);
 });

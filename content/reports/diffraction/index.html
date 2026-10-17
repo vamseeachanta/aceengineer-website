@@ -6,14 +6,14 @@ rootPath: "../../"
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Diffraction Analysis Reports — Live Dataset Reports | AceEngineer</title>
-<meta name="description" content="Live hydrodynamic diffraction analysis reports — OrcaWave and AQWA vessel motion RAOs and cross-solver comparison, rendered from the de-identified aceengineer/digitalmodel-diffraction-rao Hugging Face dataset.">
+<title>Diffraction Analysis Reports — Methods and Source Review | AceEngineer</title>
+<meta name="description" content="Hydrodynamic diffraction analysis methods, response amplitude operators and comparison methods. Numerical results are withheld pending source review.">
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "Diffraction Analysis Reports — Live Dataset Reports | AceEngineer",
-  "description": "Live hydrodynamic diffraction analysis reports — OrcaWave and AQWA vessel motion RAOs and cross-solver comparison, rendered from the de-identified aceengineer/digitalmodel-diffraction-rao Hugging Face dataset.",
+  "name": "Diffraction Analysis Reports — Methods and Source Review | AceEngineer",
+  "description": "Hydrodynamic diffraction analysis methods, response amplitude operators and comparison methods. Numerical results are withheld pending source review.",
   "url": "https://www.aceengineer.com/reports/diffraction/",
   "inLanguage": "en",
   "publisher": {
@@ -35,14 +35,14 @@ rootPath: "../../"
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Diffraction Analysis Reports — Live Dataset Reports",
+      "name": "Diffraction Analysis Reports — Methods and Source Review",
       "item": "https://www.aceengineer.com/reports/diffraction/"
     }
   ]
 }
     </script>
-    <meta property="og:title" content="Diffraction Analysis Reports — Live Dataset Reports | AceEngineer">
-    <meta property="og:description" content="Live hydrodynamic diffraction analysis reports — OrcaWave and AQWA vessel motion RAOs and cross-solver comparison, rendered from the de-identified aceengineer/digitalmodel-diffraction-rao Hugging Face dataset.">
+    <meta property="og:title" content="Diffraction Analysis Reports — Methods and Source Review | AceEngineer">
+    <meta property="og:description" content="Hydrodynamic diffraction analysis methods, response amplitude operators and comparison methods. Numerical results are withheld pending source review.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.aceengineer.com/reports/diffraction/">
     <meta property="og:site_name" content="Analytical & Computational Engineering">
@@ -74,50 +74,55 @@ rootPath: "../../"
 <main id="main">
 <div class="container">
   <div class="report-header">
-    <div class="eyebrow">AceEngineer · digitalmodel · live dataset reports</div>
+    <div class="eyebrow">Diffraction methods · source review</div>
     <h1>Hydrodynamic Diffraction Analysis Reports</h1>
-    <p style="margin:0;opacity:0.85">Vessel motion RAOs from potential-flow diffraction analysis, rendered
-    live in your browser from the de-identified Hugging Face dataset
-    <a href="https://huggingface.co/datasets/aceengineer/digitalmodel-diffraction-rao" style="color:#aed6f1">aceengineer/digitalmodel-diffraction-rao</a>.
-    No result values are baked into these pages.</p>
+    <p>Results without a public source were removed pending source review.</p>
   </div>
-
-  <div class="card">
-    <h2><a href="analysis.html">Diffraction Analysis — select program, vessel &amp; damping</a></h2>
-    <p><span class="tag live">LIVE</span>One report for all published series: pick the program
-    (AQWA / OrcaWave), vessel and damping ratio from dropdowns — the series list itself comes live from
-    the dataset, so new publications appear automatically. Six-DOF RAO plots, peaks, hydrostatics and
-    reliability flags per series.</p>
-    <p>Presets:
-    <a href="analysis.html?solver=AQWA&amp;vessel=drill_samsung96k_1&amp;damping=0">AQWA · drillship · ζ=0</a> ·
-    <a href="analysis.html?solver=OrcaWave&amp;vessel=drill_samsung96k_1&amp;damping=0">OrcaWave · drillship · ζ=0</a> ·
-    <a href="analysis.html?solver=OrcaWave&amp;vessel=drill_samsung96k_1&amp;damping=5">OrcaWave · drillship · ζ=5</a> ·
-    <a href="analysis.html?solver=OrcaWave&amp;vessel=install_bokalift_2&amp;damping=5">OrcaWave · heavy-lift · ζ=5</a></p>
-  </div>
-
-  <div class="card">
-    <h2><a href="comparison.html">Diffraction Comparison — any two series</a></h2>
-    <p><span class="tag live">LIVE</span>Pick any two published series (across program, vessel or
-    damping ratio) with the same dropdown selectors: overlay plots and interpolated delta statistics
-    per DOF and heading. Flagged artifact bands are plotted but excluded from the statistics;
-    mismatched damping or vessels are banner-flagged so differences are attributed correctly.</p>
-    <p>Presets:
-    <a href="comparison.html?solverA=AQWA&amp;vesselA=drill_samsung96k_1&amp;dampingA=0&amp;solverB=OrcaWave&amp;vesselB=drill_samsung96k_1&amp;dampingB=0">solver benchmark (AQWA vs OrcaWave · drillship · ζ=0)</a> ·
-    <a href="comparison.html?solverA=OrcaWave&amp;vesselA=drill_samsung96k_1&amp;dampingA=0&amp;solverB=OrcaWave&amp;vesselB=drill_samsung96k_1&amp;dampingB=5">damping sensitivity (OrcaWave · drillship · ζ=0 vs ζ=5)</a></p>
-  </div>
-
-  <div class="card">
-    <h2>How these reports work</h2>
-    <p>Each page queries the Hugging Face <span class="mono">datasets-server</span> API at load time,
-    computes summary statistics in-browser, and states its exact data contract (filter clause, row counts,
-    dataset revision sha). Results are screening-grade and de-identified — vessels are referenced only by
-    <span class="mono">vessel_db</span> IDs, and reliability flags travel with every row.</p>
+  <section class="card">
+    <h2>Analysis method</h2>
+    <p>Potential-flow diffraction analysis describes a floating hull's six-degree-of-freedom motion
+    response amplitude operators (RAOs) across wave frequency and heading: surge, sway, heave,
+    roll, pitch and yaw. Amplitude and phase require consistent units and phase conventions.</p>
+    <p>A generic heavy-lift vessel is a neutral description of a hull category. The label does not
+    establish a public input basis for any particular model or result.</p>
+  </section>
+  <section class="card">
+    <h2>Model basis and interpretation</h2>
+    <p>A report basis identifies geometry, mass, loading condition, restoring properties, mesh,
+    water depth, wave headings, frequency grid and damping treatment. Each input requires a
+    public source or an explicitly generic definition before results can be published here.</p>
+    <p>Radiation damping alone excludes external or viscous roll damping. Roll-resonance response
+    depends on damping treatment; an undamped potential-flow peak is not an operability prediction.
+    Frequency-band coverage and mesh resolution constrain interpretation.</p>
+    <p>The long-period check compares translational response with wave-following limits and
+    rotational response with wave-slope limits. In the long-wave limit, surge follows the cosine of wave heading
+    and sway follows its sine; heave approaches wave elevation. Roll and pitch approach
+    the corresponding wave-slope components, while yaw tends toward zero. A finite-period
+    comparison requires the stated heading, units and convergence criterion.</p>
+    <p>Reliability flags identify response bands that require review. Flagged rows are excluded from
+    automatic summary statistics. Phase conventions require alignment before cross-tool comparison.</p>
+  </section>
+  <section class="card">
+    <h2>Comparison method</h2>
+    <p>Magnitude comparisons use the overlapping period band at common headings, with linear interpolation
+    of the second series onto the first series' period grid. Peak differences compare each series'
+    own peak within that band. Maximum absolute differences and root-mean-square differences
+    summarize the overlapping response.</p>
+    <p>Percentage differences use the first series as the reference and are suppressed where its
+    magnitude is below 5 % of its peak, to avoid ratios dominated by near-zero values. Rows with
+    unresolved reliability flags are excluded from comparison statistics.</p>
+    <p>Comparisons require consistent hull geometry, loading, restoring properties, damping,
+    phase conventions and wave conditions. Comparisons between different hulls require separate interpretation of geometry
+    and loading effects. Changes in damping treatment are assessed as damping sensitivity.</p>
+  </section>
+  <section class="card">
+    <h2>Publication basis</h2>
+    <p>No numerical analysis results are presented on this index. Publication requires traceable
+    public input particulars and sources, or a documented generic geometry and analysis basis.
+    A public result file or a neutral hull label alone does not establish that basis.</p>
     <p>Related: <a href="{{ rootPath }}standards/hull-hydrodynamics-diffraction.html">hull hydrodynamics
-    &amp; diffraction standards page</a> · <a href="{{ rootPath }}capabilities/index.html">data-backed
-    capabilities</a>.</p>
-  </div>
-
-  <footer>AceEngineer · live dataset reports · CC-BY-4.0 dataset · client-side rendering.</footer>
+    &amp; diffraction methods</a> · <a href="{{ rootPath }}capabilities/index.html">capabilities</a>.</p>
+  </section>
 </div>
 </main>
 </body>

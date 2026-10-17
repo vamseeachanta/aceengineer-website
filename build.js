@@ -25,9 +25,11 @@ const SITE_ORIGIN = 'https://www.aceengineer.com';
 // Shared with the reachability allowlist when #81 lands — one list, two consumers.
 const SITEMAP_EXCLUDE = {
   '404.html': 'error page — not a destination',
-  'reports/diffraction/aqwa-analysis.html': 'noindex redirect stub -> analysis.html',
-  'reports/diffraction/orcawave-analysis.html': 'noindex redirect stub -> analysis.html',
-  'reports/diffraction/orcawave-aqwa-comparison.html': 'noindex redirect stub -> comparison.html',
+  'reports/diffraction/analysis.html': 'noindex redirect stub -> diffraction index after source review',
+  'reports/diffraction/comparison.html': 'noindex redirect stub -> diffraction index after source review',
+  'reports/diffraction/aqwa-analysis.html': 'noindex redirect stub -> diffraction index',
+  'reports/diffraction/orcawave-analysis.html': 'noindex redirect stub -> diffraction index',
+  'reports/diffraction/orcawave-aqwa-comparison.html': 'noindex redirect stub -> diffraction index',
 };
 
 // Classes that only ever appear because JavaScript adds them at runtime, so PurgeCSS

@@ -595,3 +595,11 @@ test('built contact text, mail links and structured data use one support address
   expect(failures).toEqual([]);
   expect(checked).toBeGreaterThan(0);
 });
+
+test('every destination page carries the site analytics tag', () => {
+  // The two generated D&C pages shipped without it until 2026-10-17, so the
+  // analytics never counted them. One partial now feeds every page.
+  const missing = destinations.filter(page =>
+    !fs.readFileSync(path.join(distDir, page), 'utf8').includes("gtag('config', 'G-K31E51DQ47')"));
+  expect(missing).toEqual([]);
+});

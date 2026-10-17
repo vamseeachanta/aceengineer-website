@@ -4,25 +4,7 @@
 <script defer src="{{ rootPath }}assets/js/navbar-toggle.js"></script>
 <script defer src="{{ rootPath }}assets/js/cta-tracking.js"></script>
 
-<!-- Google Analytics - deferred until after page is interactive -->
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-K31E51DQ47');
-  (function() {
-    function loadGtag() {
-      var s = document.createElement('script');
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-K31E51DQ47';
-      document.head.appendChild(s);
-    }
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(loadGtag);
-    } else {
-      window.addEventListener('load', loadGtag);
-    }
-  })();
-</script>
+<include src="partials/analytics.html"></include>
 
 <if condition="!metadataExcluded">
   <include src="partials/organization-jsonld.html"></include>

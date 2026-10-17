@@ -18,6 +18,19 @@ describe('CSP allows the datasets-server origin (C6)', () => {
     const scriptSrc = csp.split(';').map(s => s.trim()).find(s => s.startsWith('script-src'));
     expect(scriptSrc).toContain("'self'");
   });
+
+  test('vercel.json connect-src allows every Google Analytics collection endpoint', () => {
+    // Measured 2026-10-17: gtag also posts to www.google.com/g/collect, which the
+    // policy blocked on every page.
+    const vercel = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', 'vercel.json'), 'utf8'));
+    const csp = vercel.headers
+      .flatMap(h => h.headers)
+      .find(h => h.key === 'Content-Security-Policy').value;
+    const connectSrc = csp.split(';').map(s => s.trim()).find(s => s.startsWith('connect-src'));
+    for (const origin of ['https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://www.google.com']) {
+      expect(connectSrc).toContain(origin);
+    }
+  });
 });
 
 // A datasets-server /rows payload with two columns (label + numeric) and two rows.

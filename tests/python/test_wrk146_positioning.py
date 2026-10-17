@@ -1,32 +1,26 @@
-"""Tests for WRK-146: aceengineer-website positioning overhaul.
+"""Positioning checks against canonical content and shared firm copy.
 
-Verifies that key positioning elements from the WRK-146 spec are present
-in the modified HTML pages. Tests cover:
-- Homepage hero uses AI-native positioning (not generic automation tagline)
-- Homepage has "How We Work" section with solo+AI model
-- About page has full Vamsee founder story with AI orchestration
-- About page has solo+AI positioning throughout
-- Case studies have narrative structure (problem, process, outcome)
-- Blog posts are surfaced/linked from homepage and services
-- Social proof section present with standards bodies
-- Pricing claims linked to case studies
-- Consistent "solo engineer + AI" framing sitewide
+The homepage now uses the firm/service layout in brand/copy.yaml. It must not
+be tested against the retired AI-native homepage in a legacy root HTML copy.
+Rendered homepage behavior is also covered by tests/js/home-page.test.js.
 """
 
 from pathlib import Path
 
 import pytest
+import yaml
 
 
 # ---------------------------------------------------------------------------
 # Shared helpers
 # ---------------------------------------------------------------------------
 
-SITE_ROOT = Path(__file__).parent.parent.parent
+SITE_ROOT = Path(__file__).parent.parent.parent / "content"
+HOME = yaml.safe_load((SITE_ROOT.parent / "brand" / "copy.yaml").read_text())["home"]
 
 
 def read_page(relative_path: str) -> str:
-    """Read an HTML page from the site root for legacy positioning coverage."""
+    """Read the canonical content source rather than a stale root copy."""
     return (SITE_ROOT / relative_path).read_text(encoding="utf-8")
 
 
@@ -36,90 +30,61 @@ def read_page(relative_path: str) -> str:
 
 
 class TestHomepagePositioning:
-    """Homepage hero must lead with AI-native offshore analytics positioning."""
+    """Homepage sources must use the current firm/service layout."""
 
-    def test_hero_contains_ai_native_phrase(self):
+    def test_hero_uses_shared_firm_heading(self):
         content = read_page("index.html")
-        assert "AI-native" in content or "ai-native" in content.lower(), (
-            "Homepage hero must contain 'AI-native' positioning phrase"
-        )
+        assert "<h1>{{ copy.home.heading }}</h1>" in content
+        assert "engineering analysis" in HOME["heading"].lower()
 
-    def test_hero_contains_offshore_engineering_analytics(self):
+    def test_hero_positions_as_offshore_and_marine_firm(self):
         content = read_page("index.html")
-        assert "offshore engineering analytics" in content.lower(), (
-            "Homepage must position as 'offshore engineering analytics'"
-        )
+        assert "{{ copy.home.kicker }}" in content
+        assert "offshore and marine engineering firm" in HOME["kicker"].lower()
 
     def test_meta_description_reflects_new_positioning(self):
         content = read_page("index.html")
-        assert "ai-native" in content.lower() or "offshore engineering analytics" in content.lower(), (
-            "Meta description must reflect AI-native or analytics positioning"
-        )
+        assert 'name="description" content="{{ copy.home.description }}"' in content
+        assert "engineering firms" in HOME["description"].lower()
 
     def test_hero_title_not_generic_automation_only(self):
         """Hero h1 must not be exclusively the old generic automation tagline."""
         content = read_page("index.html")
-        # The old tagline was about riser configurations; new h1 should include
-        # AI-native, analytics, or firm-level positioning.
         h1_region = content[content.find("<h1"):content.find("</h1>") + 5]
-        old_only = (
-            "ai-native" not in h1_region.lower()
-            and "offshore engineering analytics" not in h1_region.lower()
-            and "analytical" not in h1_region.lower()
-        )
-        assert not old_only, (
-            "Hero h1 must include AI-native/analytics positioning, "
-            f"got: {h1_region[:200]}"
-        )
+        assert "copy.home.heading" in h1_region
+        assert "engineering" in HOME["heading"].lower()
 
-    def test_homepage_has_how_we_work_section(self):
+    def test_homepage_has_services_section(self):
         content = read_page("index.html")
-        assert "how we work" in content.lower() or "How We Work" in content, (
-            "Homepage must have a 'How We Work' section explaining the solo+AI model"
-        )
+        assert 'id="services"' in content
+        assert "service in copy.home.services" in content
 
-    def test_homepage_solo_ai_model_mentioned(self):
+    def test_homepage_explains_engineering_delivery(self):
         content = read_page("index.html")
-        # Accept any variant of solo/one engineer + AI framing
-        framing_present = any(
-            phrase in content.lower()
-            for phrase in [
-                "solo engineer",
-                "one engineer",
-                "ai orchestration",
-                "ai-augmented",
-                "ai augmented",
-                "engineer + ai",
-            ]
-        )
-        assert framing_present, (
-            "Homepage must mention the solo-engineer + AI delivery model"
-        )
+        assert "{{ copy.home.lead }}" in content
+        assert "analysis, design calculations and integrity assessment" in HOME["lead"]
 
-    def test_homepage_key_numbers_present(self):
+    def test_homepage_firm_facts_present(self):
         content = read_page("index.html")
-        assert "704" in content, "Homepage must show 704+ production modules"
-        assert "221" in content, "Homepage must show 221 S-N curves"
-        assert "15" in content, "Homepage must show 15+ years experience"
+        assert "fact in copy.home.facts" in content
+        facts = str(HOME["facts"])
+        assert "Founded 2010" in facts
+        assert "25+ years" in facts
 
-    def test_homepage_blog_preview_section_exists(self):
+    def test_homepage_uses_shared_navigation(self):
         content = read_page("index.html")
-        assert "blog" in content.lower(), (
-            "Homepage must have a blog preview/link section"
-        )
+        assert '<include src="partials/nav.html">' in content
 
-    def test_homepage_case_study_links_present(self):
+    def test_homepage_service_links_resolve_to_content(self):
         content = read_page("index.html")
-        assert "case-studies" in content or "case_studies" in content.lower(), (
-            "Homepage must link to case studies"
-        )
+        assert 'href="{{ service.page }}"' in content
+        for service in HOME["services"]:
+            assert (SITE_ROOT / service["page"]).is_file()
 
-    def test_homepage_social_proof_standards_section(self):
+    def test_homepage_samples_section_is_conditional(self):
         content = read_page("index.html")
-        for standard in ["DNV", "API", "BS"]:
-            assert standard in content, (
-                f"Homepage social proof must include {standard} standard"
-            )
+        assert '<if condition="samplesPublished">' in content
+        assert "{{{ sampleHomeRows }}}" in content
 
 
 # ---------------------------------------------------------------------------
@@ -312,23 +277,16 @@ class TestCaseStudyNarratives:
 
 
 class TestBlogIntegration:
-    """Blog articles must be surfaced from homepage and services page."""
+    """Blog navigation must remain available through shared chrome and services."""
 
-    def test_homepage_links_to_blog_articles(self):
+    def test_homepage_includes_shared_footer_with_blog_link(self):
         content = read_page("index.html")
-        # Should have at least 2 direct blog article links
-        blog_link_count = content.count("blog/")
-        assert blog_link_count >= 2, (
-            f"Homepage must link to at least 2 blog articles, found {blog_link_count}"
-        )
+        assert '<include src="partials/footer.html">' in content
+        assert "blog/" in read_page("partials/footer.html")
 
-    def test_homepage_blog_section_has_articles(self):
-        content = read_page("index.html")
-        # The blog preview section should have article cards
-        assert "blog-preview" in content or "blog_preview" in content or (
-            "Technical Insights" in content or "Featured Analysis" in content
-            or "blog/" in content
-        ), "Homepage must surface blog articles in a preview/featured section"
+    def test_blog_index_links_to_articles(self):
+        content = read_page("blog/index.html")
+        assert content.count(".html") >= 2
 
     def test_services_page_links_to_blog(self):
         content = read_page("engineering.html")
@@ -343,33 +301,27 @@ class TestBlogIntegration:
 
 
 # ---------------------------------------------------------------------------
-# Pricing and social proof tests
+# Services and social proof tests
 # ---------------------------------------------------------------------------
 
 
-class TestPricingAndSocialProof:
-    """Pricing claims must link to case studies; social proof section must exist."""
+class TestServicesAndSocialProof:
+    """Services must link to case studies and shared copy must describe deliverables."""
 
-    def test_pricing_links_to_case_studies(self):
+    def test_services_link_to_case_studies(self):
         content = read_page("engineering.html")
         assert "case-studies/" in content or "case_studies/" in content, (
-            "Pricing section must link to supporting case studies"
+            "Services must link to supporting case studies"
         )
 
-    def test_social_proof_standards_badges_on_homepage(self):
-        content = read_page("index.html")
-        for badge in ["DNV", "API"]:
-            assert badge in content, (
-                f"Social proof section must include {badge} standards badge"
-            )
+    def test_homepage_services_describe_client_deliverables(self):
+        for service in HOME["services"]:
+            assert service["receives"].startswith("Client receives:")
 
-    def test_social_proof_industry_experience_mentioned(self):
-        content = read_page("index.html")
-        sectors = ["deepwater", "FPSO", "mooring", "pipeline", "offshore"]
-        found = [s for s in sectors if s.lower() in content.lower()]
-        assert len(found) >= 2, (
-            f"Homepage must mention at least 2 industry sectors, found: {found}"
-        )
+    def test_homepage_explains_engineering_disciplines(self):
+        content = HOME["lead"]
+        for discipline in ["riser", "hydrodynamic", "asset integrity", "cathodic protection", "marine installation"]:
+            assert discipline in content.lower()
 
     def test_social_proof_section_on_about_page(self):
         content = read_page("about.html")
@@ -387,27 +339,19 @@ class TestPricingAndSocialProof:
 
 
 class TestConsistentPositioning:
-    """Verify consistent solo-engineer + AI-native positioning sitewide."""
+    """Verify firm branding, shared chrome and contact navigation."""
 
-    def test_index_page_title_includes_analytics_or_ai_native(self):
+    def test_index_page_title_uses_shared_firm_title(self):
         content = read_page("index.html")
-        title_start = content.find("<title>")
-        title_end = content.find("</title>")
-        title = content[title_start:title_end]
-        has_positioning = any(
-            phrase in title.lower()
-            for phrase in ["analytics", "ai-native", "offshore", "a&ce", "ace"]
-        )
-        assert has_positioning, (
-            f"Page title must reflect positioning, got: {title}"
-        )
+        assert "<title>{{ copy.home.title }}</title>" in content
+        assert "AceEngineer" in HOME["title"]
+        assert "offshore" in HOME["title"].lower()
 
     def test_footer_firm_name_consistent(self):
         for page in ["index.html", "about.html", "engineering.html"]:
             content = read_page(page)
-            assert "AceEngineer" in content or "Analytical" in content, (
-                f"Footer in {page} must use approved firm/site brand"
-            )
+            assert '<include src="partials/footer.html">' in content
+        assert "AceEngineer" in read_page("partials/footer.html")
 
     def test_no_page_says_freelancer(self):
         """No core page should describe the firm as a freelancer."""
@@ -418,9 +362,8 @@ class TestConsistentPositioning:
             )
 
     def test_all_pages_have_contact_cta(self):
-        """All core pages must have a contact/quote CTA."""
+        """All core pages must have a contact CTA, directly or through the shared include."""
         for page in ["index.html", "about.html", "engineering.html"]:
             content = read_page(page)
-            assert "contact.html" in content, (
-                f"{page} must have a link to contact.html"
-            )
+            assert "contact.html" in content or '<include src="partials/scope-invitation.html">' in content
+        assert "contact.html" in read_page("partials/scope-invitation.html")

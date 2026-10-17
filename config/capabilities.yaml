@@ -209,7 +209,7 @@ capabilities:
       Wall-thickness screening for a reference pipe across six design codes — utilisation
       and the governing check at each thickness, so the codes are directly comparable.
     hf_dataset: aceengineer/digitalmodel-integrity
-    provenance_url: https://vamseeachanta.github.io/digitalmodel/capabilities/api/wall-thickness-explorer.html
+    provenance_url: https://github.com/vamseeachanta/digitalmodel/blob/main/scripts/hf/build_capability_datasets.py
     status: live
     primary_config: wall_thickness
     tables:
@@ -234,7 +234,7 @@ capabilities:
       categories for metal pairs. Screening only: not a project CP design, not a
       material-compatibility finding, and not qualified for client delivery.
     hf_dataset: aceengineer/digitalmodel-corrosion
-    provenance_url: https://vamseeachanta.github.io/digitalmodel/capabilities/api/cathodic-protection-explorer.html
+    provenance_url: https://github.com/vamseeachanta/digitalmodel/blob/main/scripts/hf/build_capability_datasets.py
     status: live
     primary_config: cathodic_protection
     tables:

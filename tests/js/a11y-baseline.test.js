@@ -16,19 +16,7 @@ const { JSDOM } = require('jsdom');
 
 const DIST = path.join(__dirname, '..', '..', 'dist');
 
-/**
- * Pages exempt from the page-chrome rules, with the reason. These are the
- * consolidated-report redirect stubs: `noindex`, no visible content beyond a
- * one-line fallback link, and a `location.replace` in the head. Giving them a
- * heading, a landmark and a skip link would be theatre. They ARE still required
- * to be noindex — see the dedicated test below, which is what makes the
- * exemption safe.
- */
-const CHROME_EXEMPT = {
-  'reports/diffraction/aqwa-analysis.html': 'noindex redirect stub -> diffraction index',
-  'reports/diffraction/orcawave-analysis.html': 'noindex redirect stub -> diffraction index',
-  'reports/diffraction/orcawave-aqwa-comparison.html': 'noindex redirect stub -> diffraction index',
-};
+const CHROME_EXEMPT = {};
 
 function walk(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {

@@ -103,8 +103,8 @@ class TestAboutPagePositioning:
 
     def test_about_mentions_years_experience(self):
         content = read_page("about.html")
-        assert "15" in content, (
-            "About page must mention 15+ years of experience"
+        assert "25+ years" in content, (
+            "About page must mention 25+ years of experience"
         )
 
     def test_about_mentions_python_modules(self):

@@ -58,15 +58,8 @@ rootPath: "../../"
   .rpt .report-header .eyebrow { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.75em; opacity: 0.75; }
   .rpt .card { background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 1.2em; padding: 1.2em 1.5em; }
   .rpt .card h2 { margin: 0 0 0.4em; font-size: 1.15em; }
-  .rpt .card h2 a { color: #2c3e50; text-decoration: none; }
-  .rpt .card h2 a:hover { color: #2980b9; }
   .rpt .card p { margin: 0.3em 0; color: #555; font-size: 0.95em; }
-  .rpt .tag { display: inline-block; padding: 2px 9px; border-radius: 3px; font-size: 0.75em; font-weight: 700; color: #fff; margin-right: 0.5em; }
-  .rpt .tag.live { background: #27ae60; }
-  .rpt .tag.pending { background: #7f8c8d; }
-  .rpt .mono { font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace; }
   .rpt a { color: #2980b9; }
-  .rpt footer { color: #7f8c8d; font-size: 0.85em; padding-top: 1em; }
 </style>
 </head>
 <body class="rpt">
@@ -83,8 +76,6 @@ rootPath: "../../"
     <p>Potential-flow diffraction analysis describes a floating hull's six-degree-of-freedom motion
     response amplitude operators (RAOs) across wave frequency and heading: surge, sway, heave,
     roll, pitch and yaw. Amplitude and phase require consistent units and phase conventions.</p>
-    <p>A generic heavy-lift vessel is a neutral description of a hull category. The label does not
-    establish a public input basis for any particular model or result.</p>
   </section>
   <section class="card">
     <h2>Model basis and interpretation</h2>
@@ -95,7 +86,7 @@ rootPath: "../../"
     depends on damping treatment; an undamped potential-flow peak is not an operability prediction.
     Frequency-band coverage and mesh resolution constrain interpretation.</p>
     <p>The long-period check compares translational response with wave-following limits and
-    rotational response with wave-slope limits. In the long-wave limit, surge follows the cosine of wave heading
+    rotational response with wave-slope limits. In the long-wave limit in deep water, surge follows the cosine of wave heading
     and sway follows its sine; heave approaches wave elevation. Roll and pitch approach
     the corresponding wave-slope components, while yaw tends toward zero. A finite-period
     comparison requires the stated heading, units and convergence criterion.</p>
@@ -118,8 +109,7 @@ rootPath: "../../"
   <section class="card">
     <h2>Publication basis</h2>
     <p>No numerical analysis results are presented on this index. Publication requires traceable
-    public input particulars and sources, or a documented generic geometry and analysis basis.
-    A public result file or a neutral hull label alone does not establish that basis.</p>
+    public input particulars and sources, or a documented generic geometry and analysis basis.</p>
     <p>Related: <a href="{{ rootPath }}standards/hull-hydrodynamics-diffraction.html">hull hydrodynamics
     &amp; diffraction methods</a> · <a href="{{ rootPath }}capabilities/index.html">capabilities</a>.</p>
   </section>

@@ -69,7 +69,7 @@ test('the index retains generic analysis and comparison methods', () => {
   const page = doc('dist/reports/diffraction/index.html');
   const text = page.querySelector('main').textContent.replace(/\s+/g, ' ').toLowerCase();
   for (const method of [
-    'generic heavy-lift vessel', 'six-degree-of-freedom', 'radiation damping',
+    'six-degree-of-freedom', 'radiation damping',
     'long-period', 'overlapping period band', 'linear interpolation', 'phase conventions',
   ]) expect(text).toContain(method);
   expect(text).toContain('results without a public source were removed pending source review.');

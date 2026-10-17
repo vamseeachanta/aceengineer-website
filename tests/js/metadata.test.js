@@ -350,14 +350,12 @@ function visibleCopy(root) {
   return body.textContent.replace(/\s+/g, ' ').trim();
 }
 
-// Program names come from the published integration list, solver links and capability summaries.
+// Program names come from the published integration list, explicit solver names and capability summaries.
 const softwareQuestion = [...documents.get('faq.html').querySelectorAll('p > b')]
   .find(node => /software tools/i.test(node.textContent));
 const integrations = [...softwareQuestion.parentElement.nextElementSibling.nextElementSibling.querySelectorAll('li > strong')]
   .flatMap(node => node.textContent.replace(/:$/, '').split('/'));
-const diffractionSolvers = [...documents.get('reports/diffraction/index.html').querySelectorAll('a[href]')]
-  .flatMap(node => [...new URL(node.getAttribute('href'), 'https://www.aceengineer.com').searchParams]
-    .filter(([key]) => /^solver(?:A|B)?$/.test(key)).map(([, value]) => value));
+const diffractionSolvers = ['AQWA', 'OrcaWave'];
 const platformName = documents.get('platform.html').querySelector('.hero-subtitle > strong').textContent.trim();
 const capabilityRegistry = yaml.load(fs.readFileSync(path.join(__dirname, '../../config/capabilities.yaml'), 'utf8'));
 const capabilitySolvers = capabilityRegistry.capabilities.flatMap(entry =>

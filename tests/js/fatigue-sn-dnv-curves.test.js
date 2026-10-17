@@ -19,9 +19,8 @@
  *     the B1 curve of the same environment (air: section 2.4.4; CP: 2.4.5);
  *     no cap is stated for free corrosion.
  *
- * The same engine is loaded by both calculators and both tracked copies of
- * each page (content/calculators/ is the build source; calculators/ is the
- * legacy copy). The page tests run each page's own script against the engine.
+ * The same engine is loaded by both calculators in content/calculators/.
+ * The page tests run each source page's own script against the engine.
  *
  * @jest-environment node
  */
@@ -36,11 +35,9 @@ const engine = require(ENGINE_PATH);
 
 const SN_PAGES = [
   'content/calculators/fatigue-sn-curve.html',
-  'calculators/fatigue-sn-curve.html',
 ];
 const LIFE_PAGES = [
   'content/calculators/fatigue-life-calculator.html',
-  'calculators/fatigue-life-calculator.html',
 ];
 
 // Reference values, 2011 edition. Air and CP: [m1, log a1, m2, log a2].

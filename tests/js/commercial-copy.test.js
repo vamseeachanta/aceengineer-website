@@ -3,7 +3,8 @@
  * promises (maintainer ruling; a plain "contact us for help" line is the call to action).
  *
  * Reads the rendered pages in dist/ (run `npm run build` first): visible body text, the
- * title, the description metadata and every JSON-LD string. Engineering economics (NPV,
+ * title, the description metadata and every JSON-LD string. Also scans HTML outside
+ * content/ so stale checked-in copies cannot retain withdrawn offers. Engineering economics (NPV,
  * field costs, savings in a worked example) and physical uses of "free" (free span, free
  * decay, free surface) are not commercial copy, so the patterns below name commercial
  * wording only. The fixture tests at the end prove each pattern fires, and that ordinary
@@ -16,6 +17,7 @@ const { JSDOM } = require('jsdom');
 const { builtPages, SITEMAP_EXCLUDE } = require('../../build');
 
 const distDir = path.join(__dirname, '..', '..', 'dist');
+const repoDir = path.join(__dirname, '..', '..');
 
 const RULES = {
   price: [
@@ -117,15 +119,68 @@ function findings(text, page) {
 
 // Every built page, including those left out of the sitemap (404, redirect stubs): leaving a
 // page out of the sitemap does not keep it off the site.
-function scan(dir) {
+function scan(dir, pages = builtPages(dir)) {
   const failures = [];
-  for (const page of builtPages(dir)) {
+  for (const page of pages) {
     for (const hit of findings(renderedCopy(fs.readFileSync(path.join(dir, page), 'utf8')), page)) {
       failures.push(`${page} — ${hit}`);
     }
   }
   return failures;
 }
+
+function outsideContentPages(root, dir = root) {
+  const pages = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const file = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (['.git', 'node_modules', '.venv'].includes(entry.name)) continue;
+      const parts = path.relative(root, file).split(path.sep);
+      if (parts[0] === 'tests' && ['fixtures', '__fixtures__'].includes(entry.name)) continue;
+      if (dir === root && ['content', 'dist'].includes(entry.name)) continue;
+      pages.push(...outsideContentPages(root, file));
+    } else if (/\.html$/i.test(entry.name)) {
+      pages.push(path.relative(root, file).split(path.sep).join('/'));
+    }
+  }
+  return pages.sort();
+}
+
+test('no HTML outside content states a price, a free offer or a turnaround promise', () => {
+  expect(scan(repoDir, outsideContentPages(repoDir))).toEqual([]);
+});
+
+test('the outside-content scan catches root and nested copies and excludes build output and fixtures', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'commercial-copy-outside-'));
+  try {
+    const files = {
+      'index.html': '<p>Studies from $500/hr.</p>',
+      'blog/old.html': '<meta name="description" content="Free consultation">',
+      'scripts/templates/old.html': '<script type="application/ld+json">{"description":"Results in 2 business days"}</script>',
+      'demos/engineering.html': '<p>Free-span analysis; contact us for help.</p>',
+      'assets/fixtures/offer.HTML': '<p>Free trial</p>',
+      'content/index.html': '<p>Free consultation</p>',
+      'dist/index.html': '<p>Free consultation</p>',
+      'node_modules/example/index.html': '<p>Free consultation</p>',
+      'tests/fixtures/offers.html': '<p>Free consultation</p>',
+      'tests/__fixtures__/offers.html': '<p>Free consultation</p>',
+    };
+    for (const [file, html] of Object.entries(files)) {
+      fs.mkdirSync(path.dirname(path.join(dir, file)), { recursive: true });
+      fs.writeFileSync(path.join(dir, file), html);
+    }
+    const pages = outsideContentPages(dir);
+    expect(pages).toEqual(['assets/fixtures/offer.HTML', 'blog/old.html', 'demos/engineering.html', 'index.html', 'scripts/templates/old.html']);
+    const failures = scan(dir, pages);
+    expect(failures.some(f => f.startsWith('index.html — price:'))).toBe(true);
+    expect(failures.some(f => f.startsWith('blog/old.html — freeOffer:'))).toBe(true);
+    expect(failures.some(f => f.startsWith('scripts/templates/old.html — turnaround:'))).toBe(true);
+    expect(failures.some(f => f.startsWith('assets/fixtures/offer.HTML — freeOffer:'))).toBe(true);
+    expect(failures.some(f => f.startsWith('demos/engineering.html'))).toBe(false);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
 
 test('no built page states a price, a free offer or a turnaround promise', () => {
   if (!fs.existsSync(distDir)) throw new Error('dist/ is absent; run npm run build first');

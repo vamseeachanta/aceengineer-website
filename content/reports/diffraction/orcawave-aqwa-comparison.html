@@ -6,29 +6,22 @@ rootPath: "../../"
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="This report has moved to the consolidated diffraction comparison report.">
-<title>OrcaWave vs AQWA Comparison (moved) | AceEngineer</title>
+<meta name="description" content="Diffraction methods remain available on the reports index pending source review.">
+<title>OrcaWave and AQWA Comparison (moved) | AceEngineer</title>
 <meta name="robots" content="noindex">
-<link rel="canonical" href="https://www.aceengineer.com/reports/diffraction/comparison.html">
+<link rel="canonical" href="https://www.aceengineer.com/reports/diffraction/">
+<meta http-equiv="refresh" content="0; url=/reports/diffraction/">
 <script>
 "use strict";
-// Consolidated into comparison.html (any two series via selectors). The old
-// page's fixed semantic was A=AQWA, B=OrcaWave.
-const q = new URLSearchParams(location.search);
-const p = new URLSearchParams({
-  solverA: "AQWA",
-  vesselA: q.get("vesselA") || "drill_samsung96k_1",
-  dampingA: q.get("dampingA") !== null ? q.get("dampingA") : "0",
-  solverB: "OrcaWave",
-  vesselB: q.get("vesselB") || "drill_samsung96k_1",
-  dampingB: q.get("dampingB") !== null ? q.get("dampingB") : "0"
-});
-location.replace("comparison.html?" + p);
+location.replace("/reports/diffraction/");
 </script>
 </head>
 <body>
-<p>This report has moved to
-<a href="comparison.html?solverA=AQWA&amp;vesselA=drill_samsung96k_1&amp;dampingA=0&amp;solverB=OrcaWave&amp;vesselB=drill_samsung96k_1&amp;dampingB=0">the
-consolidated diffraction comparison report</a>.</p>
+<a class="skip-link" href="#main">Skip to main content</a>
+<main id="main">
+<h1>Diffraction analysis methods</h1>
+<p>Results without a public source were removed pending source review.</p>
+<p><a href="/reports/diffraction/">Diffraction analysis methods</a></p>
+</main>
 </body>
 </html>

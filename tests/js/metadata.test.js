@@ -155,8 +155,7 @@ const requiredTypes = {
     'reports/sloshing-tank-summary.html', 'reports/sloshing/analysis.html',
     'reports/sloshing/comparison.html', 'reports/sloshing/damping-and-sizing.html',
     'reports/sloshing/dual-connected-tanks.html', 'reports/sloshing/study.html',
-    'reports/sloshing/validation.html', 'reports/diffraction/analysis.html',
-    'reports/diffraction/comparison.html',
+    'reports/sloshing/validation.html',
   ],
   WebPage: [
     'api-catalog.html', 'deckhand.html', 'deckhand-api.html', 'platform.html',
@@ -279,12 +278,12 @@ test('source metadata meets the required coverage floors', () => {
   const { getHtmlFiles } = require('../../build');
   const sources = getHtmlFiles(path.join(__dirname, '../../content'))
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
-  // 119 since pricing.html was removed (it now redirects to contact.html). It carried JSON-LD
-  // and og:title, so those two floors drop by that one page; the share of pages is unchanged.
+  // The two diffraction detail pages now redirect to the methods index.
+  // The source count stays fixed; only their JSON-LD and Open Graph are removed.
   expect(sources).toHaveLength(119);
   for (const [selector, floor] of [
-    ['script[type="application/ld+json"]', 109],
-    ['meta[property="og:title"]', 109], ['meta[property="og:image"]', 109],
+    ['script[type="application/ld+json"]', 107],
+    ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],
   ]) expect(sources.filter(doc => doc.querySelector(selector)).length).toBeGreaterThanOrEqual(floor);
 });
 

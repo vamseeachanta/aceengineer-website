@@ -155,23 +155,29 @@ home:
 service_details:
   - sampleDiscipline: Asset integrity and fitness-for-service
     description: Remaining-strength assessment of corroded components to API 579-1 and B31G.
+    meta_description: 'Remaining-strength assessment of corroded components to API 579-1 and B31G, with a stated decision: accept, re-rate, take more measurements, or escalate.'
     problem: Whether equipment with damage is still fit to operate.
     contents: Remaining strength and the allowable pressure, with the assumptions traced.
     codes:
       - API 579-1
   - sampleDiscipline: Drilling riser and riser analysis
     description: Riser analysis and operability envelopes for drilling risers to API RP 16Q. Analysis against API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.
+    meta_description: 'Riser analysis and operability envelopes for drilling risers to API RP 16Q and API STD 2RD, with vortex-induced vibration screening and DNV-RP-C203 fatigue.'
     codes:
       - API RP 16Q — Design, Selection, Operation, and Maintenance of Marine Drilling Riser Systems
       - DNV-RP-C203 — Fatigue design of offshore steel structures
   - sampleDiscipline: Hydrodynamics and vessel motions
     description: Wave diffraction and radiation analysis, with diffraction results compared between two solvers.
+    meta_description: 'Wave diffraction and radiation analysis of floating hulls, compared between two solvers and delivered as a vessel motions calculation report.'
     problem: How a floating hull responds to waves.
   - sampleDiscipline: Cathodic protection design
     description: Sacrificial-anode screening to DNV-RP-B401 and DNV-RP-F103.
+    meta_description: 'Sacrificial-anode cathodic protection screening to DNV-RP-B401 and DNV-RP-F103, subject to qualified inputs and an engineer-of-record check.'
     codes:
       - DNV-RP-B401
   - sampleDiscipline: Marine installation screening
     description: Lifting and lowering operations screened by phase, reported as utilisation by phase and an operability limit on significant wave height.
+    meta_description: 'Lifting and lowering operations screened by phase, reported as utilisation by phase and an operability limit on significant wave height.'
   - sampleDiscipline: Offshore energy data and field analytics
     description: Well, lease and production analysis for the United States Gulf of Mexico from public regulatory filings.
+    meta_description: 'Well, lease and production analysis for the United States Gulf of Mexico from public regulatory filings, with drilling and completion durations per well.'

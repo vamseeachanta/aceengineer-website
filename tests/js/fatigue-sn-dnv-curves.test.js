@@ -349,8 +349,7 @@ describe('engine: thickness correction (section 2.4.3)', () => {
 
 // build.js renders content/<dir>/<page> to dist/<dir>/<page>, substituting
 // {{ rootPath }} from the page's front matter, and copies assets/ to
-// dist/assets/ (only CSS is filtered). The legacy copies under calculators/
-// are served as they are. So a URL is resolved against the page's served
+// dist/assets/ (only CSS is filtered). A URL is resolved against the page's served
 // directory, and dist/ maps back to the repository root.
 // Parsed as HTML (scripts not run), so commented-out tags and data-src attributes are not
 // elements with a src; only JavaScript script types count as executable dependencies.

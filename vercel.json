@@ -4,6 +4,16 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/blog/drilling-technology-evolution-mpd-adoption.html",
+      "destination": "/blog/",
+      "permanent": false
+    },
+    {
+      "source": "/blog/installation-constraints-offshore-design.html",
+      "destination": "/blog/",
+      "permanent": false
+    },
+    {
       "source": "/reports/diffraction/analysis.html",
       "destination": "/reports/diffraction/",
       "permanent": true

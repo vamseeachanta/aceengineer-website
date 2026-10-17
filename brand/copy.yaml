@@ -58,10 +58,9 @@ capabilities:
   - id: cap_03
     heading: Who We Serve
     blurb: >-
-      The result: engineering firms send a design matrix and receive validated results
-      overnight. What used to take 3 weeks of manual iteration now takes 3 days. What
-      used to require pulling senior engineers from billable work now runs automatically
-      while the team sleeps.
+      The result: engineering firms send a design matrix and get validated, traceable
+      results from one automated batch, without pulling senior engineers from billable
+      work.
 
 credentials:
   - 25+ years

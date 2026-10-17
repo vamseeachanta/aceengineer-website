@@ -24,24 +24,79 @@ rootPath: "../"
     <include src="partials/head-common.html"></include>
 
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "serviceType": "Wells, Subsurface and Field Economics",
-        "provider": { "@id": "https://www.aceengineer.com/#organization" },
-        "areaServed": "Worldwide",
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Wells, Subsurface and Field Economics",
+            "provider": {
+                "@id": "https://www.aceengineer.com/#organization"
+            },
+            "areaServed": "Worldwide"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
             "name": "Wells & Subsurface Analyses",
             "itemListElement": [
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Production forecasting and decline (Arps)" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Field-development economics (NPV / IRR / payback)" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Nodal analysis" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Sucker-rod pump (dynacard) diagnostics" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Public production-data summaries (BSEE, Texas RRC, SODIR)" } }
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "item": {
+                        "@type": "Service",
+                        "name": "Production forecasting and decline (Arps)",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
+                        "@type": "Service",
+                        "name": "Field-development economics (NPV / IRR / payback)",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": {
+                        "@type": "Service",
+                        "name": "Nodal analysis",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 4,
+                    "item": {
+                        "@type": "Service",
+                        "name": "Sucker-rod pump (dynacard) diagnostics",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 5,
+                    "item": {
+                        "@type": "Service",
+                        "name": "Public production-data summaries (BSEE, Texas RRC, SODIR)",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
+                    }
+                }
             ]
         }
-    }
+    ]
     </script>
     <script type="application/ld+json">
     { "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -112,7 +167,7 @@ rootPath: "../"
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <h2>Bring a real well or field</h2>
-                    <p>The wells, production and economics capabilities are free to explore &mdash; open the data behind them and check it against your own.</p>
+                    <p>The wells, production and economics capabilities are public &mdash; open the data behind them and check it against your own.</p>
                     <a href="/capabilities/" class="btn btn-primary btn-lg" data-cta="capabilities" data-src="src_web_wells-subsurface_footer">Explore capabilities &rarr;</a>
                 </div>
             </div>

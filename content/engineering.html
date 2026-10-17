@@ -45,43 +45,60 @@
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "serviceType": "Engineering Automation Services",
-        "provider": { "@id": "https://www.aceengineer.com/#organization" },
-        "areaServed": "Worldwide",
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Engineering Automation Services",
+            "provider": {
+                "@id": "https://www.aceengineer.com/#organization"
+            },
+            "areaServed": "Worldwide"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
             "name": "Engineering Automation Solutions",
             "itemListElement": [
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "item": {
                         "@type": "Service",
                         "name": "OrcaFlex Automation",
-                        "description": "Batch processing for riser, mooring, and marine operations analysis"
+                        "description": "Batch processing for riser, mooring, and marine operations analysis",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
                         "@type": "Service",
                         "name": "AQWA Automation",
-                        "description": "Hydrodynamic analysis automation for vessel and platform motion studies"
+                        "description": "Hydrodynamic analysis automation for vessel and platform motion studies",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": {
                         "@type": "Service",
                         "name": "Fatigue Analysis Library",
-                        "description": "221 S-N curves from DNV, API, BS 7608, ABS standards with automated assessment"
+                        "description": "221 S-N curves from DNV, API, BS 7608, ABS standards with automated assessment",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 }
             ]
         }
-    }
+    ]
     </script>
 </head>
 <body>
@@ -97,7 +114,7 @@
                 <div class="col-md-10 col-md-offset-1 text-center">
                     <h1 class="hero-title">Engineering Automation That <br>Transforms Your Workflow</h1>
                     <p class="hero-subtitle">
-                        Stop spending weeks on manual analysis. Our automation tools run 50+ configurations overnight
+                        Stop spending weeks on manual analysis. Our automation tools run 50+ configurations in one batch
                         while your team focuses on engineering judgment, not repetitive tasks.
                     </p>
                     <div class="hero-cta">

@@ -50,77 +50,108 @@
 
     <!-- Service Schema -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "serviceType": "Energy Solutions",
-        "provider": {
-            "@id": "https://www.aceengineer.com/#organization"
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Energy Solutions",
+            "provider": {
+                "@id": "https://www.aceengineer.com/#organization"
+            },
+            "areaServed": "Worldwide"
         },
-        "areaServed": "Worldwide",
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
             "name": "Energy Solutions Portfolio",
             "itemListElement": [
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "item": {
                         "@type": "Service",
                         "name": "Field Development",
-                        "description": "Field economics analysis and development activities"
+                        "description": "Field economics analysis and development activities",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
                         "@type": "Service",
                         "name": "Engineering Design",
-                        "description": "Digital twin lifecycle packages and pipe capacity analysis tools"
+                        "description": "Digital twin lifecycle packages and pipe capacity analysis tools",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": {
                         "@type": "Service",
                         "name": "Physics-Based Simulations",
-                        "description": "Engineering simulations and physics-based animations"
+                        "description": "Engineering simulations and physics-based animations",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 4,
+                    "item": {
                         "@type": "Service",
                         "name": "Drilling Engineering",
-                        "description": "Real-time drilling algorithms and day-to-day operations"
+                        "description": "Real-time drilling algorithms and day-to-day operations",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 5,
+                    "item": {
                         "@type": "Service",
                         "name": "Operations and Production",
-                        "description": "Production algorithms and Fitness for Service (FFS) analysis utilizing API 579 and BS7910 standards"
+                        "description": "Production algorithms and Fitness for Service (FFS) analysis utilizing API 579 and BS7910 standards",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 6,
+                    "item": {
                         "@type": "Service",
                         "name": "Intervention Services",
-                        "description": "Intervention and work-over activities"
+                        "description": "Intervention and work-over activities",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 7,
+                    "item": {
                         "@type": "Service",
                         "name": "Decommissioning Engineering",
-                        "description": "End-of-life and decommissioning engineering solutions"
+                        "description": "End-of-life and decommissioning engineering solutions",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 }
             ]
         }
-    }
+    ]
     </script>
 </head>
 <body>

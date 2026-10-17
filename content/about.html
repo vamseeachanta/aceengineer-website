@@ -50,45 +50,60 @@
 
     <!-- Service Schema -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "serviceType": "Computational Engineering Services",
-        "provider": {
-            "@id": "https://www.aceengineer.com/#organization"
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Computational Engineering Services",
+            "provider": {
+                "@id": "https://www.aceengineer.com/#organization"
+            },
+            "areaServed": "Worldwide"
         },
-        "areaServed": "Worldwide",
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
             "name": "Engineering Automation Solutions",
             "itemListElement": [
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "item": {
                         "@type": "Service",
                         "name": "OrcaFlex Batch Automation",
-                        "description": "Automated riser, mooring, and marine operations analysis with overnight batch processing"
+                        "description": "Automated riser, mooring, and marine operations analysis with overnight batch processing",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
                         "@type": "Service",
                         "name": "Fatigue Analysis Library",
-                        "description": "221 S-N curves from 17 international standards with automated assessment workflows"
+                        "description": "221 S-N curves from 17 international standards with automated assessment workflows",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": {
                         "@type": "Service",
                         "name": "AQWA Integration",
-                        "description": "Hydrodynamic model generation, RAO processing, and operability analysis"
+                        "description": "Hydrodynamic model generation, RAO processing, and operability analysis",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 }
             ]
         }
-    }
+    ]
     </script>
 
     <style>
@@ -255,7 +270,7 @@
                         AceEngineer was built to solve this. Every recurring offshore engineering workflow was codified into production-grade Python modules&mdash;tested, validated against industry standards, and designed to run at scale. Today, 704+ modules cover fatigue analysis, riser design, mooring systems, hydrodynamics, and more.
                     </p>
                     <p>
-                        The result: engineering firms send a design matrix and receive validated results overnight. What used to take 3 weeks of manual iteration now takes 3 days. What used to require pulling senior engineers from billable work now runs automatically while the team sleeps.
+                        The result: engineering firms send a design matrix and get validated, traceable results from one automated batch, without pulling senior engineers from billable work.
                     </p>
                 </div>
             </div>

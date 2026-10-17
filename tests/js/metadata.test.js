@@ -279,10 +279,12 @@ test('source metadata meets the required coverage floors', () => {
   const { getHtmlFiles } = require('../../build');
   const sources = getHtmlFiles(path.join(__dirname, '../../content'))
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
-  expect(sources).toHaveLength(120);
+  // 119 since pricing.html was removed (it now redirects to contact.html). It carried JSON-LD
+  // and og:title, so those two floors drop by that one page; the share of pages is unchanged.
+  expect(sources).toHaveLength(119);
   for (const [selector, floor] of [
-    ['script[type="application/ld+json"]', 110],
-    ['meta[property="og:title"]', 110], ['meta[property="og:image"]', 109],
+    ['script[type="application/ld+json"]', 109],
+    ['meta[property="og:title"]', 109], ['meta[property="og:image"]', 109],
   ]) expect(sources.filter(doc => doc.querySelector(selector)).length).toBeGreaterThanOrEqual(floor);
 });
 
@@ -602,4 +604,18 @@ test('every destination page carries the site analytics tag', () => {
   const missing = destinations.filter(page =>
     !fs.readFileSync(path.join(distDir, page), 'utf8').includes("gtag('config', 'G-K31E51DQ47')"));
   expect(missing).toEqual([]);
+});
+
+test('no page publishes an Offer, OfferCatalog or offers record', () => {
+  // The site states no prices or offers; service lists are Service records in an ItemList.
+  const offerTypes = new Set(['Offer', 'OfferCatalog', 'AggregateOffer']);
+  const hits = [];
+  for (const page of pages) {
+    for (const node of nodesFor(page)) {
+      const types = [].concat(node['@type'] || []);
+      if (types.some(type => offerTypes.has(type))) hits.push(`${page}: @type ${types.join(',')}`);
+      for (const key of ['offers', 'hasOfferCatalog', 'makesOffer']) if (key in node) hits.push(`${page}: ${key}`);
+    }
+  }
+  expect(hits).toEqual([]);
 });

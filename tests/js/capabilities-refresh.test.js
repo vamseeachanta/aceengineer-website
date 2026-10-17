@@ -19,17 +19,20 @@ describe('CSP allows the datasets-server origin (C6)', () => {
     expect(scriptSrc).toContain("'self'");
   });
 
-  test('vercel.json connect-src allows every Google Analytics collection endpoint', () => {
-    // Measured 2026-10-17: gtag also posts to www.google.com/g/collect, which the
-    // policy blocked on every page.
+  test('vercel.json connect-src names each Google Analytics collection host, with no wildcards', () => {
+    // Measured 2026-10-17: gtag posts page views to www.google-analytics.com and, on some
+    // loads, to www.google.com/g/collect, which the policy refused. Hosts are listed one by
+    // one; a wildcard source would admit every subdomain.
     const vercel = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', 'vercel.json'), 'utf8'));
     const csp = vercel.headers
       .flatMap(h => h.headers)
       .find(h => h.key === 'Content-Security-Policy').value;
     const connectSrc = csp.split(';').map(s => s.trim()).find(s => s.startsWith('connect-src'));
-    for (const origin of ['https://*.google-analytics.com', 'https://*.analytics.google.com', 'https://www.google.com']) {
-      expect(connectSrc).toContain(origin);
+    const sources = connectSrc.split(/\s+/).slice(1);
+    for (const origin of ['https://www.google-analytics.com', 'https://region1.google-analytics.com', 'https://www.google.com']) {
+      expect(sources).toContain(origin);
     }
+    expect(csp.split(/[\s;]+/).filter(source => source.includes('*'))).toEqual([]);
   });
 });
 

@@ -24,24 +24,79 @@ rootPath: "../"
     <include src="partials/head-common.html"></include>
 
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "serviceType": "Floating and Marine Systems Engineering",
-        "provider": { "@id": "https://www.aceengineer.com/#organization" },
-        "areaServed": "Worldwide",
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Floating and Marine Systems Engineering",
+            "provider": {
+                "@id": "https://www.aceengineer.com/#organization"
+            },
+            "areaServed": "Worldwide"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
             "name": "Floating & Marine Analyses",
             "itemListElement": [
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Mooring line fatigue" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "FPSO spread mooring screening" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Vessel seakeeping and stability" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "OCIMF wind and current mooring loads" } },
-                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hydrodynamics (OrcaWave / AQWA model prep)" } }
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "item": {
+                        "@type": "Service",
+                        "name": "Mooring line fatigue",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
+                        "@type": "Service",
+                        "name": "FPSO spread mooring screening",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": {
+                        "@type": "Service",
+                        "name": "Vessel seakeeping and stability",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 4,
+                    "item": {
+                        "@type": "Service",
+                        "name": "OCIMF wind and current mooring loads",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
+                    }
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 5,
+                    "item": {
+                        "@type": "Service",
+                        "name": "Hydrodynamics (OrcaWave / AQWA model prep)",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
+                    }
+                }
             ]
         }
-    }
+    ]
     </script>
     <script type="application/ld+json">
     { "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -115,7 +170,7 @@ rootPath: "../"
             <div class="row">
                 <div class="col-md-8 col-md-offset-2 text-center">
                     <h2>Bring a real mooring or hull</h2>
-                    <p>The floating and marine capabilities are free to explore &mdash; open the data behind them and bring your own project numbers.</p>
+                    <p>The floating and marine capabilities are public &mdash; open the data behind them and bring your own project numbers.</p>
                     <a href="/capabilities/" class="btn btn-primary btn-lg" data-cta="capabilities" data-src="src_web_floating-marine_footer">Explore capabilities &rarr;</a>
                 </div>
             </div>

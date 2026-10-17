@@ -45,43 +45,60 @@
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "serviceType": "Engineering Automation Services",
-        "provider": { "@id": "https://www.aceengineer.com/#organization" },
-        "areaServed": "Worldwide",
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Engineering Automation Services",
+            "provider": {
+                "@id": "https://www.aceengineer.com/#organization"
+            },
+            "areaServed": "Worldwide"
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
             "name": "Engineering Automation Solutions",
             "itemListElement": [
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "item": {
                         "@type": "Service",
                         "name": "OrcaFlex Automation",
-                        "description": "Batch processing for riser, mooring, and marine operations analysis"
+                        "description": "Batch processing for riser, mooring, and marine operations analysis",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
                         "@type": "Service",
                         "name": "AQWA Automation",
-                        "description": "Hydrodynamic analysis automation for vessel and platform motion studies"
+                        "description": "Hydrodynamic analysis automation for vessel and platform motion studies",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": {
                         "@type": "Service",
                         "name": "Fatigue Analysis Library",
-                        "description": "221 S-N curves from DNV, API, BS 7608, ABS standards with automated assessment"
+                        "description": "221 S-N curves from DNV, API, BS 7608, ABS standards with automated assessment",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 }
             ]
         }
-    }
+    ]
     </script>
 </head>
 <body>
@@ -97,12 +114,11 @@
                 <div class="col-md-10 col-md-offset-1 text-center">
                     <h1 class="hero-title">Engineering Automation That <br>Transforms Your Workflow</h1>
                     <p class="hero-subtitle">
-                        Stop spending weeks on manual analysis. Our automation tools run 50+ configurations overnight
+                        Stop spending weeks on manual analysis. Our automation tools run 50+ configurations in one batch
                         while your team focuses on engineering judgment, not repetitive tasks.
                     </p>
                     <div class="hero-cta">
-                        <a href="contact.html" class="btn btn-primary btn-lg">Schedule a Demo</a>
-                        <a href="#pricing" class="btn btn-default btn-lg">See Pricing</a>
+                        <a href="contact.html" class="btn btn-primary btn-lg">Contact us for help</a>
                         <a href="capabilities/" class="btn btn-default btn-lg">Explore Live Data</a>
                     </div>
                 </div>
@@ -303,76 +319,13 @@
     </section>
 
     <!-- Pricing Section -->
-    <section id="pricing" class="solution-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1 text-center">
-                    <h2 class="section-title">Automation vs. Traditional Consulting</h2>
-                    <p class="section-subtitle">
-                        We don't charge by the hour for riser analysis. We charge per configuration.
-                    </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <table class="table pricing-table">
-                        <thead>
-                            <tr>
-                                <th>Service</th>
-                                <th>Traditional Consulting</th>
-                                <th>AceEngineer Automation</th>
-                                <th>Your Savings</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Riser Fatigue Study</strong><br><small>50 configurations</small></td>
-                                <td>$50,000<br><small>100 hrs × $500/hr</small></td>
-                                <td>$15,000 flat</td>
-                                <td class="savings">70% <a href="case-studies/orcaflex-riser-sensitivity-automation.html" style="display:block; font-size:0.8em;">See case study &rarr;</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Mooring Sensitivity</strong><br><small>100 cases</small></td>
-                                <td>$75,000<br><small>150 hrs × $500/hr</small></td>
-                                <td>$25,000 flat</td>
-                                <td class="savings">67%</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Platform Integrity Assessment</strong><br><small>Full reassessment</small></td>
-                                <td>$100,000<br><small>200 hrs × $500/hr</small></td>
-                                <td>$40,000 flat</td>
-                                <td class="savings">60% <a href="case-studies/offshore-platform-fatigue-optimization.html" style="display:block; font-size:0.8em;">See case study &rarr;</a></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Annual Retainer</strong><br><small>Unlimited automation runs</small></td>
-                                <td>N/A</td>
-                                <td>$120,000/year</td>
-                                <td class="savings">Predictable cost</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1 text-center">
-                    <p style="margin-top: 20px; color: var(--text-muted);">
-                        <strong>How it works:</strong> You send us your design matrix. Our automation runs 50 configurations overnight.
-                        You get validated results by 8 AM, ready for client review.
-                    </p>
-                    <a href="contact.html" class="btn btn-primary btn-lg" style="margin-top: 15px;">Get a Custom Quote</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Engineering Calculators Section -->
     <section class="pain-section">
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1 text-center">
-                    <h2 class="section-title">Free Engineering Calculators</h2>
+                    <h2 class="section-title">Engineering Calculators</h2>
                     <p class="section-subtitle">
                         Try our methodology. Interactive tools for preliminary engineering assessments.
                     </p>
@@ -542,10 +495,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1 text-center">
-                    <h2>Ready to Transform Your Engineering Workflow?</h2>
-                    <p>See how our automation can deliver 60-80% time savings for your team.</p>
-                    <a href="contact.html" class="btn btn-primary btn-lg">Schedule a Demo</a>
-                    <p class="cta-note">Free consultation • No commitment required • Response within 24 hours</p>
+                    <h2>Need help with an engineering workflow?</h2>
+                    <p>Contact us for help: <a href="mailto:support@aceengineer.com">support@aceengineer.com</a></p>
+                    <a href="contact.html" class="btn btn-primary btn-lg">Contact us</a>
                 </div>
             </div>
         </div>

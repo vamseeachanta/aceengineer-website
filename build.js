@@ -170,7 +170,9 @@ function getHtmlFiles(dir, files = []) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       getHtmlFiles(fullPath, files);
-    } else if (entry.name.endsWith('.html') && !fullPath.includes('/partials/')) {
+    } else if (entry.name.endsWith('.html') && !fullPath.split(path.sep).includes('partials')) {
+      // Split on the platform separator: the old '/partials/' substring test never
+      // matched on Windows, so partials were rendered as pages and the build failed.
       files.push(fullPath);
     }
   }

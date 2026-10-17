@@ -75,7 +75,7 @@ def render_page(s: dict) -> str:
             "@context": "https://schema.org", "@type": "SoftwareApplication",
             "name": f"{s['code']} calculator", "applicationCategory": "EngineeringApplication",
             "operatingSystem": "Web", "url": url,
-            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+            # No "offers" block: the site states no prices, a zero price included.
             "publisher": {"@id": f"{BASE}/#organization"},
         })
     schema_html = "\n".join(

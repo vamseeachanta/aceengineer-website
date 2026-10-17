@@ -122,6 +122,13 @@ function toPayload(snapshot) {
   };
 }
 
+// The site-wide Google Analytics tag (content/partials/analytics.html, also included by
+// head-common.html). The two generated pages are not built from content/, so without this
+// they were the only pages the analytics did not count.
+function analyticsTag() {
+  return fs.readFileSync(path.join(repoRoot, 'content', 'partials', 'analytics.html'), 'utf8');
+}
+
 /** Render the page into distDir. Returns the payload summary, or null if skipped. */
 function buildDrilldown(distDir) {
   const organization = fs.readFileSync(
@@ -136,7 +143,8 @@ function buildDrilldown(distDir) {
   const payload = toPayload(snap);
   const json = JSON.stringify(payload).replace(/<\//g, '<\\/');
   const html = fs.readFileSync(TEMPLATE, 'utf8').replace('__DATA__', json)
-    .replace('<!--ORGANIZATION_JSONLD-->', organization);
+    .replace('<!--ORGANIZATION_JSONLD-->', organization)
+    .replace('<!--ANALYTICS-->', analyticsTag());
   const outDir = path.join(distDir, 'capabilities');
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, 'dc-drilldown.html'), html);
@@ -152,7 +160,8 @@ function buildHub(distDir) {
   const outDir = path.join(distDir, 'capabilities');
   fs.mkdirSync(outDir, { recursive: true });
   const html = fs.readFileSync(tpl, 'utf8')
-    .replace('<!--ORGANIZATION_JSONLD-->', organization);
+    .replace('<!--ORGANIZATION_JSONLD-->', organization)
+    .replace('<!--ANALYTICS-->', analyticsTag());
   fs.writeFileSync(path.join(outDir, 'dc-qaqc-hub.html'), html);
   return 'capabilities/dc-qaqc-hub.html';
 }

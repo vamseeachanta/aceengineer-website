@@ -50,77 +50,108 @@
 
     <!-- Service Schema -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "serviceType": "Energy Solutions",
-        "provider": {
-            "@id": "https://www.aceengineer.com/#organization"
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Energy Solutions",
+            "provider": {
+                "@id": "https://www.aceengineer.com/#organization"
+            },
+            "areaServed": "Worldwide"
         },
-        "areaServed": "Worldwide",
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
             "name": "Energy Solutions Portfolio",
             "itemListElement": [
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "item": {
                         "@type": "Service",
                         "name": "Field Development",
-                        "description": "Field economics analysis and development activities"
+                        "description": "Field economics analysis and development activities",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
                         "@type": "Service",
                         "name": "Engineering Design",
-                        "description": "Digital twin lifecycle packages and pipe capacity analysis tools"
+                        "description": "Digital twin lifecycle packages and pipe capacity analysis tools",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": {
                         "@type": "Service",
                         "name": "Physics-Based Simulations",
-                        "description": "Engineering simulations and physics-based animations"
+                        "description": "Engineering simulations and physics-based animations",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 4,
+                    "item": {
                         "@type": "Service",
                         "name": "Drilling Engineering",
-                        "description": "Real-time drilling algorithms and day-to-day operations"
+                        "description": "Real-time drilling algorithms and day-to-day operations",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 5,
+                    "item": {
                         "@type": "Service",
                         "name": "Operations and Production",
-                        "description": "Production algorithms and Fitness for Service (FFS) analysis utilizing API 579 and BS7910 standards"
+                        "description": "Production algorithms and Fitness for Service (FFS) analysis utilizing API 579 and BS7910 standards",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 6,
+                    "item": {
                         "@type": "Service",
                         "name": "Intervention Services",
-                        "description": "Intervention and work-over activities"
+                        "description": "Intervention and work-over activities",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 },
                 {
-                    "@type": "Offer",
-                    "itemOffered": {
+                    "@type": "ListItem",
+                    "position": 7,
+                    "item": {
                         "@type": "Service",
                         "name": "Decommissioning Engineering",
-                        "description": "End-of-life and decommissioning engineering solutions"
+                        "description": "End-of-life and decommissioning engineering solutions",
+                        "provider": {
+                            "@id": "https://www.aceengineer.com/#organization"
+                        }
                     }
                 }
             ]
         }
-    }
+    ]
     </script>
 </head>
 <body>
@@ -153,7 +184,7 @@
             <li>A lifecycle <a href="https://github.com/vamseeachanta/digitalmodel">digital twin</a> package to help perform design, engineering, operations, and decommissioning.</li>
         </ul>
         <ul>
-            <li>A <a href="https://github.com/vamseeachanta/pipecapacity">pipe capacity</a> package to help perform load calculations on pipes.</li>
+            <li>A <a href="https://github.com/vamseeachanta/digitalmodel/tree/main/src/digitalmodel/structural/pipe_capacity">pipe capacity</a> package to help perform load calculations on pipes.</li>
         </ul>
 
         <h2>Engineering</h2>
@@ -165,7 +196,7 @@
         <h2>Operations and Production</h2>
         <p>Day-to-day operations and production-related algorithms in near real-time.</p>
         <ul>
-            <li><a href="https://github.com/vamseeachanta/pyintegrity">Fitness for Service</a> (FFS) analysis utilizing API 579 (2016) and BS7910 standards.</li>
+            <li><a href="https://github.com/vamseeachanta/digitalmodel/tree/main/src/digitalmodel/asset_integrity">Fitness for Service</a> (FFS) analysis utilizing API 579 (2016) and BS7910 standards.</li>
         </ul>
 
         <h2>Intervention</h2>
@@ -181,7 +212,7 @@
         </ul>
 
         <br>
-        <p>Let <b>AceEngineer</b> help your project by using the <a href="contact.html">contact form</a>. We will respond within 24 hours.</p>
+        <p>Contact us for help: use the <a href="contact.html">contact form</a> or write to <a href="mailto:support@aceengineer.com">support@aceengineer.com</a>.</p>
     </div>
 
     </main>

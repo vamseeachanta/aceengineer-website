@@ -29,7 +29,8 @@ describe('CSP allows the datasets-server origin (C6)', () => {
       .find(h => h.key === 'Content-Security-Policy').value;
     const connectSrc = csp.split(';').map(s => s.trim()).find(s => s.startsWith('connect-src'));
     const sources = connectSrc.split(/\s+/).slice(1);
-    for (const origin of ['https://www.google-analytics.com', 'https://region1.google-analytics.com', 'https://www.google.com']) {
+    for (const origin of ['https://www.google-analytics.com', 'https://region1.google-analytics.com',
+      'https://region1.analytics.google.com', 'https://www.google.com']) {
       expect(sources).toContain(origin);
     }
     expect(csp.split(/[\s;]+/).filter(source => source.includes('*'))).toEqual([]);

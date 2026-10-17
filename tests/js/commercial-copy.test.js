@@ -10,6 +10,7 @@
  * engineering wording passes.
  */
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { JSDOM } = require('jsdom');
 const { builtPages, SITEMAP_EXCLUDE } = require('../../build');
@@ -24,6 +25,8 @@ const RULES = {
     /\bmarginal cost\s*\(\s*\$/i,                                            // "at marginal cost ($3K ...)"
     /\b(?:fixed[- ]price|volume[- ]based pricing|request pricing|custom quote|see pricing|pricing tiers?)\b/i,
     /\bengagements?\s+(?:run|cost|start)s?\s+(?:at\s+|from\s+)?\$/i,
+    // what a consultant or a traditional engagement would charge: "consulting ... cost $150K-250K"
+    /\bconsult(?:ing|ants?|ancy)\b[^.]{0,80}\$\s?\d/i,
   ],
   freeOffer: [
     /\bfree\s+(?:assessment|consultation|pilot|trial|of charge|quote)\b/i,
@@ -36,7 +39,11 @@ const RULES = {
   ],
   turnaround: [
     /\bwithin\s+\d+\s+(?:business\s+)?(?:hours?|days?)\b/i,
-    /\b\d+[- ]?(?:hours?|hr|days?)[- ](?:turnaround|response|custom run|delivery)\b/i,
+    // "48hr custom runs", "48-hour parametric run", "the 48-hour screening", "48-hour project
+    // run", "48-hour SOP": a period of hours or days in front of a deliverable, up to two words apart
+    /\b\d+[- ]?(?:hours?|hrs?|days?)[- ](?:[\w-]+\s+){0,2}(?:turnaround|response|runs?|screenings?|sweeps?|memos?|deliver(?:y|ables?)|SOP|engagements?)\b/i,
+    // "decision-grade memo in 48": a deliverable promised within a period
+    /\b(?:memos?|deliverables?)\s+(?:with)?in\s+(?:under\s+)?\d+\b/i,
     /\bresponse\s+guarantee\b/i,
     /\b\d+\s?(?:hr|hours?)\s+response\b/i,
     /\bby\s+morning\b/i,
@@ -97,17 +104,42 @@ function findings(text, page) {
   return hits;
 }
 
-test('no built page states a price, a free offer or a turnaround promise', () => {
-  if (!fs.existsSync(distDir)) throw new Error('dist/ is absent; run npm run build first');
-  const pages = builtPages(distDir).filter(page => !(page in SITEMAP_EXCLUDE));
-  expect(pages.length).toBeGreaterThan(100);
+// Every built page, including those left out of the sitemap (404, redirect stubs): leaving a
+// page out of the sitemap does not keep it off the site.
+function scan(dir) {
   const failures = [];
-  for (const page of pages) {
-    for (const hit of findings(renderedCopy(fs.readFileSync(path.join(distDir, page), 'utf8')), page)) {
+  for (const page of builtPages(dir)) {
+    for (const hit of findings(renderedCopy(fs.readFileSync(path.join(dir, page), 'utf8')), page)) {
       failures.push(`${page} — ${hit}`);
     }
   }
-  expect(failures).toEqual([]);
+  return failures;
+}
+
+test('no built page states a price, a free offer or a turnaround promise', () => {
+  if (!fs.existsSync(distDir)) throw new Error('dist/ is absent; run npm run build first');
+  const pages = builtPages(distDir);
+  expect(pages.length).toBeGreaterThan(100);
+  expect(pages).toEqual(expect.arrayContaining(Object.keys(SITEMAP_EXCLUDE)));
+  expect(scan(distDir)).toEqual([]);
+});
+
+test('the scan reads pages left out of the sitemap', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'commercial-copy-'));
+  try {
+    const page = body => `<html><head><title>t</title></head><body>${body}</body></html>`;
+    fs.mkdirSync(path.join(dir, 'reports', 'diffraction'), { recursive: true });
+    fs.writeFileSync(path.join(dir, 'index.html'), page('<p>Contact us for help.</p>'));
+    fs.writeFileSync(path.join(dir, '404.html'), page('<p>Page not found. Studies from $500/hr.</p>'));
+    fs.writeFileSync(path.join(dir, 'reports', 'diffraction', 'aqwa-analysis.html'),
+      page('<p>Moved. Free consultation available.</p>'));
+    const failures = scan(dir);
+    expect(failures.some(f => f.startsWith('404.html — price:'))).toBe(true);
+    expect(failures.some(f => f.startsWith('reports/diffraction/aqwa-analysis.html — freeOffer:'))).toBe(true);
+    expect(failures.some(f => f.startsWith('index.html'))).toBe(false);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 test('every economics exception still matches its page, so stale entries are removed', () => {
@@ -125,6 +157,7 @@ test.each([
   ['price', 'later requested 30 configurations at marginal cost ($3K vs $30K)'],
   ['price', 'Screening engagements run $5K to $15K.'],
   ['price', 'Request Pricing'],
+  ['price', 'Traditional consulting approaches would require 8-12 weeks and cost $150K-250K.'],
   ['freeOffer', 'Get a free assessment of how automation can help.'],
   ['freeOffer', 'Free interactive tools for fatigue assessment.'],
   ['freeOffer', 'Free Arps decline curve and EUR calculator.'],
@@ -139,8 +172,31 @@ test.each([
   ['turnaround', 'You get validated results by 8 AM.'],
   ['turnaround', 'Send a design matrix and receive validated results overnight.'],
   ['turnaround', 'What used to take 3 weeks of manual iteration now takes 3 days.'],
+  ['turnaround', 'Overnight screening, P.E.-stamped, 48hr custom runs.'],
+  ['turnaround', 'Quickest path to a 48-hour parametric run on your data.'],
+  ['turnaround', 'ACE then runs the 48-hour screening using RAFT + MoorPy.'],
+  ['turnaround', 'Per-prospect numbers are produced by the 48-hour project run.'],
+  ['turnaround', 'Following the same 48-hour SOP used for the other demos.'],
+  ['turnaround', 'A 72 hr parametric sweep on your matrix.'],
+  ['turnaround', '~120 screened cases, decision-grade memo in 48.'],
 ])('the %s rule catches "%s"', (rule, sample) => {
   expect(findings(sample).some(hit => hit.startsWith(`${rule}:`))).toBe(true);
+});
+
+// The same wording as it sits in a built page: description metadata, JSON-LD, body text,
+// a table cell and a figure-and-label pair.
+const PAGE = (head, body) => `<html><head><title>Vessel screening</title>${head}</head><body>${body}</body></html>`;
+test.each([
+  ['description metadata', PAGE('<meta name="description" content="Overnight screening, P.E.-stamped, 48hr custom runs.">', '')],
+  ['JSON-LD', PAGE('<script type="application/ld+json">{"@type":"WebPage","description":"P.E.-stamped, 48hr custom runs."}</script>', '')],
+  ['a lead paragraph', PAGE('', '<p class="lead">Quickest path to a 48-hour parametric run on your data: email us.</p>')],
+  ['screening copy', PAGE('', '<p>ACE then runs the 48-hour\n  screening using RAFT + MoorPy.</p>')],
+  ['a note', PAGE('', '<div class="illustrative-note">Produced by the 48-hour project run on submission.</div>')],
+  ['a table cell', PAGE('', '<table><tr><td>Weeks of setup</td><td>~120 cases, decision-grade memo in 48</td></tr></table>')],
+  ['a figure and label', PAGE('', '<div class="hero-kpi">\n<span class="number">&lt; 8 hrs</span>\n<span class="label">Overnight turnaround</span>\n</div>')],
+  ['a consulting charge', PAGE('', '<p>Traditional consulting approaches would require 8-12 weeks and cost $150K-250K.</p>')],
+])('rendered pages are caught: %s', (_where, html) => {
+  expect(findings(renderedCopy(html))).not.toEqual([]);
 });
 
 test.each([
@@ -152,6 +208,11 @@ test.each([
   'All simulations completed by 6 AM with no failures.',
   'Delivered the final report by 2 PM on day 3.',
   'Contact us for help: support@aceengineer.com',
+  'A real engagement starts with a 1-hour intake to capture the floater concept.',
+  'Results Extraction (50 configs x 30 min) 25 hours Report Compilation 10 hours',
+  'Run the 3-hour storm simulation for each sea state.',
+  'Field development cost $1.2B over a 25-year life.',
+  'Compute time per demo batch: under 8 hrs.',
 ])('engineering wording passes: "%s"', sample => {
   expect(findings(sample)).toEqual([]);
 });

@@ -449,3 +449,59 @@ img {
         -webkit-print-color-adjust: exact;
     }
 }
+
+/* ============================================
+   Phone width: nothing may scroll the page sideways.
+   Measured 2026-10-17 at 390 px: 36 of 129 built pages scrolled
+   sideways; with these rules 4 still do (2 blog tables, 2 reports).
+   ============================================ */
+@media (max-width: 767px) {
+    /* Newsletter form: Bootstrap floats the field, which pushed the
+       Subscribe button 344 px off-screen on /blog/. */
+    .input-group .form-control {
+        float: none;
+    }
+
+    /* Tables shrink to the screen instead of widening the page.
+       Prose tables (blog posts, case studies) hyphenate words; the
+       'main table.' selectors outrank the pages' own <style> blocks. */
+    .comparison-table,
+    .table-results,
+    .risk-matrix {
+        min-width: 0;
+    }
+
+    main table.comparison-table, main table.table-results,
+    main table.risk-matrix, main table.pricing-table {
+        font-size: 0.875em;
+    }
+
+    main table.comparison-table th, main table.comparison-table td,
+    main table.table-results th, main table.table-results td,
+    main table.risk-matrix th, main table.risk-matrix td,
+    main table.pricing-table th, main table.pricing-table td {
+        padding: 6px 5px;
+        overflow-wrap: break-word;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+
+    /* Data tables (demos, reports) hold identifiers and long numbers
+       that cannot hyphenate, so their cells may break anywhere. */
+    .dataframe th, .dataframe td,
+    .accessible-data th, .accessible-data td,
+    .rpt .section th, .rpt .section td {
+        overflow-wrap: anywhere;
+    }
+
+    /* Long button labels wrap rather than run off the screen. */
+    .btn-lg {
+        white-space: normal;
+    }
+
+    /* Fixed-width charts scroll inside their own box. */
+    .plotly-graph-div {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+}

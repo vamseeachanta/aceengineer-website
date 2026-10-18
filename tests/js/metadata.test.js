@@ -278,9 +278,8 @@ test('source metadata meets the required coverage floors', () => {
   const { getHtmlFiles } = require('../../build');
   const sources = getHtmlFiles(path.join(__dirname, '../../content'))
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
-  // The two diffraction detail pages now redirect to the methods index.
-  // The source count stays fixed; only their JSON-LD and Open Graph are removed.
-  expect(sources).toHaveLength(119);
+  // Includes issue 1 and its four chart pages; redirect sources still count.
+  expect(sources).toHaveLength(124);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 107],
     ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],
@@ -550,7 +549,7 @@ test('fitness-for-service outcomes have visible home and integrity support', () 
 test('every shared footer uses the specified standards line', () => {
   let checked = 0;
   for (const [page, doc] of documents) {
-    const footer = doc.querySelector('footer.footer-section');
+    const footer = doc.querySelector('footer.footer-section:not(.newsletter-footer)');
     if (!footer) continue;
     const line = footer.querySelector('.col-md-4 > p:last-child');
     expect({ page, text: line.textContent }).toEqual({

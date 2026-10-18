@@ -3,6 +3,19 @@ const path = require('path');
 const os = require('os');
 const { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeSitemap, writeLlmsTxt, loadCopy, canonicalUrlFor, SITEMAP_EXCLUDE } = require('../../build');
 
+test('newsletter web sources contain no e-mail campaign tracking tags', () => {
+  const newsletterDir = path.join(__dirname, '../../content/newsletter');
+  function checkDirectory(dir) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const file = path.join(dir, entry.name);
+      if (entry.isDirectory()) checkDirectory(file);
+      else expect({ file: path.relative(newsletterDir, file), tagged: /utm_/i.test(fs.readFileSync(file, 'utf8')) })
+        .toEqual({ file: path.relative(newsletterDir, file), tagged: false });
+    }
+  }
+  checkDirectory(newsletterDir);
+});
+
 describe('parseFrontMatter', () => {
   test('parses valid front matter with multiple fields', () => {
     const input = '---\ntitle: Hello World\nauthor: Jane\n---\n<p>Body</p>';

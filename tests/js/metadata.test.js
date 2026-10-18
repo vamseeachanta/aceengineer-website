@@ -278,9 +278,8 @@ test('source metadata meets the required coverage floors', () => {
   const { getHtmlFiles } = require('../../build');
   const sources = getHtmlFiles(path.join(__dirname, '../../content'))
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
-  // The two diffraction detail pages now redirect to the methods index.
-  // The source count stays fixed; only their JSON-LD and Open Graph are removed.
-  expect(sources).toHaveLength(119);
+  // Includes issue 1 and its four chart pages; redirect sources still count.
+  expect(sources).toHaveLength(124);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 107],
     ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],
@@ -432,13 +431,15 @@ test('outreach contact line uses the display name without a legal form', () => {
   expect(contact.textContent.split('·')[0].trim()).toBe('AceEngineer');
 });
 
-test('legal name appears only once in the shared footer and once in Organization metadata per page', () => {
+test('legal name appears once per footer and once in Organization metadata per page', () => {
   let footerPages = 0;
   let organizationPages = 0;
   for (const page of pages) {
     const doc = documents.get(page).cloneNode(true);
     const footers = doc.querySelectorAll('footer.footer-section');
-    expect(footers.length).toBeLessThanOrEqual(1);
+    expect(doc.querySelectorAll('footer.footer-section:not(.newsletter-footer)').length).toBeLessThanOrEqual(1);
+    expect(doc.querySelectorAll('footer.newsletter-footer').length)
+      .toBe(page === 'newsletter/issue-001/index.html' ? 1 : 0);
     for (const footer of footers) {
       const lines = footer.querySelectorAll('.footer-legal');
       expect({ page, count: lines.length }).toEqual({ page, count: 1 });
@@ -482,6 +483,47 @@ test('legal name appears only once in the shared footer and once in Organization
   }
   expect(footerPages).toBeGreaterThan(0);
   expect(organizationPages).toBeGreaterThan(0);
+});
+
+test('newsletter chart descriptions stay within the site band and agree across metadata', () => {
+  for (const page of pages.filter(page => page.startsWith('newsletter/charts/'))) {
+    const doc = documents.get(page);
+    const description = doc.querySelector('meta[name="description"]').content;
+    expect(description.length).toBeGreaterThanOrEqual(70);
+    expect(description.length).toBeLessThanOrEqual(160);
+    expect(doc.querySelector('meta[property="og:description"]').content).toBe(description);
+    expect(doc.querySelector('meta[name="twitter:description"]').content).toBe(description);
+    expect(nodesFor(page).find(node => node['@type'] === 'WebPage').description).toBe(description);
+  }
+});
+
+test('published chart pages distinguish the planned interactive version', () => {
+  const charts = pages.filter(page => page.startsWith('newsletter/charts/'));
+  expect(charts).toHaveLength(4);
+  for (const page of charts) {
+    const text = documents.get(page).querySelector('main').textContent;
+    expect(text).not.toContain('Interactive page planned:');
+    expect(text).toContain('An interactive version of this chart is planned.');
+  }
+});
+
+test('newsletter issue includes the shared site footer after its reviewed main content', () => {
+  const doc = documents.get('newsletter/issue-001/index.html');
+  const main = doc.querySelector('main');
+  expect(main.querySelectorAll('footer.newsletter-footer')).toHaveLength(1);
+  const sharedFooter = main.nextElementSibling;
+  expect(sharedFooter.matches('footer.footer-section:not(.newsletter-footer)')).toBe(true);
+  expect(sharedFooter.querySelector('.footer-legal')).not.toBeNull();
+});
+
+test('maintainer decisions fragment preserves the existing issue-one fragment', () => {
+  const doc = documents.get('newsletter/issue-001/index.html');
+  const alias = doc.getElementById('maintainer-decisions');
+  expect(alias).not.toBeNull();
+  const heading = alias.parentElement;
+  expect(heading.tagName).toBe('H2');
+  expect(heading.id).toMatch(/-decisions$/);
+  expect(heading.id).not.toBe('maintainer-decisions');
 });
 
 test('legal footer inherits copyright type and colour at a smaller size', () => {
@@ -550,7 +592,7 @@ test('fitness-for-service outcomes have visible home and integrity support', () 
 test('every shared footer uses the specified standards line', () => {
   let checked = 0;
   for (const [page, doc] of documents) {
-    const footer = doc.querySelector('footer.footer-section');
+    const footer = doc.querySelector('footer.footer-section:not(.newsletter-footer)');
     if (!footer) continue;
     const line = footer.querySelector('.col-md-4 > p:last-child');
     expect({ page, text: line.textContent }).toEqual({

@@ -1,0 +1,59 @@
+{
+  "revision": "A",
+  "source_base": "2492de4b6a850e8eb1625bb98bc45b1253780f73",
+  "date": "2026-10-19",
+  "family": "business",
+  "scope": "Corrections only; no new claims.",
+  "exemplar": "aceengineer-admin:business/newsletter/tribune-2026-10-15/issue-001-web-r10.html (named by family; unavailable locally; existing website layout retained)",
+  "changes": [
+    {
+      "page": "subsea-fea-automation",
+      "old": "$340K; net annual benefit $340,000",
+      "new": "$740K; net annual benefit $740,000",
+      "evidence": "content/case-studies/subsea-fea-automation.html: Return on Investment",
+      "classification": "measured",
+      "basis": "$680,000 + $45,000 + $120,000 - $85,000 - $20,000 = $740,000"
+    },
+    {
+      "page": "marine-safety-correlation",
+      "old": "7 authorities; 53K+ incidents; MAIB 1989-2025",
+      "new": "2 recorded sources; 53,261 incidents; MAIB 2018-2024",
+      "evidence": "worldenergydata:docs/data-sources/PHASE_2_IMPORT_COMPLETE.md; scripts/generate_marine_safety_data.py: generate_source_distribution",
+      "classification": "measured",
+      "basis": "TSB 47,385 + MAIB 5,876 = 53,261. Additional visualization sources are sample or estimated entries."
+    },
+    {
+      "page": "bsee-field-economics",
+      "old": "15% IRR; 10,000 Monte Carlo iterations; real production and investment viability",
+      "new": "IRR correction pending; deterministic illustrative output from synthetic production and assumed costs",
+      "evidence": "scripts/generate_field_economics_data.py: create_production_profile, calculate_economics, main; assets/data/field_economics_metrics.json",
+      "classification": "measured",
+      "basis": "The exception fallback assigns irr = 0.15; no random draws, simulation loop or sensitivity sweep is implemented. Issue 106 tracks calibrated rebuilding."
+    },
+    {
+      "page": "offshore-platform-fatigue-optimization",
+      "old": "BSEE Accepted; ensemble of XGBoost regressors and associated training/validation details",
+      "new": "Acceptance badge removed; specific trained model and validation evidence not established",
+      "evidence": "Tracked repository inventory at base revision; content/blog/machine-learning-fatigue-prediction.html (generic example only)",
+      "classification": "inferred",
+      "basis": "No case-specific acceptance report or model report, test, dataset or log was located in the 672 tracked files. The generic tutorial does not establish this case."
+    },
+    {
+      "page": "wind-turbine-foundation-analysis",
+      "old": "Full DNV certification; Type Certification; DNVGL-RP-C203 Certified; XGBoost ensemble",
+      "new": "Certification outcome and specific model architecture not established; standards reference retained",
+      "evidence": "Tracked repository inventory at base revision; content/blog/machine-learning-fatigue-prediction.html (generic example only)",
+      "classification": "inferred",
+      "basis": "No case-specific certification statement or trained-model evidence was located in the 672 tracked files."
+    }
+  ],
+  "source_files": {
+    "content/case-studies/subsea-fea-automation.html": "9f773347b2ab4f245c44035fa4d3e810a56d63285f60138d1df06ba8da51acb9",
+    "content/case-studies/marine-safety-correlation.html": "4ce0101bfb59968412dd88d70f5bdd5278505fe9f422301ed1966244d931099d",
+    "content/case-studies/bsee-field-economics.html": "17e4c528358271d7c00ecac539ca73c922e569e9b527cca08cd8075c97764a47",
+    "content/case-studies/offshore-platform-fatigue-optimization.html": "f9ea0d4db8074d559532ac9ce081653316d9b1cc805dcf94c2f36430dc4ec57e",
+    "content/case-studies/wind-turbine-foundation-analysis.html": "c62685f2d19ae374cd796f2cc3ae923feb99f65053c0c61d04605fdd770dc17a",
+    "content/case-studies/index.html": "e031c172b303ab46994b32978efcca3a6057b3d0d2cbb9a2731d406747c47657",
+    "content/energy.html": "cb85e01b7c0838c60b4d1068ccbdb20f69b768a20af2c45d22dfbc27624d7e19"
+  }
+}

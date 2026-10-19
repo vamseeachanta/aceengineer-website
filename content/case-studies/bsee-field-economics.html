@@ -6,7 +6,7 @@ rootPath: "../"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Case study: BSEE field economics analysis with NPV/IRR workflow for Gulf of Mexico deepwater development. Real production data analysis and financial modeling.">
+    <meta name="description" content="Case study: Illustrative field economics using a synthetic Gulf of Mexico production profile and assumed costs. IRR correction and calibrated data are pending.">
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -38,7 +38,7 @@ rootPath: "../"
 
     <!-- Open Graph meta tags -->
     <meta property="og:title" content="Case Study: BSEE Field Economics Analysis with NPV/IRR">
-    <meta property="og:description" content="Comprehensive field economics analysis using BSEE production data, delivering $6.1B NPV calculation with 15% IRR for deepwater Gulf of Mexico development.">
+    <meta property="og:description" content="Illustrative field economics with synthetic production, deterministic cash flows and a placeholder IRR. Correction is pending under issue 106.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://www.aceengineer.com/case-studies/bsee-field-economics.html">
     <meta property="og:site_name" content="Analytical & Computational Engineering">
@@ -46,7 +46,7 @@ rootPath: "../"
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Case Study: BSEE Field Economics Analysis">
-    <meta name="twitter:description" content="NPV/IRR analysis workflow using BSEE production data for Gulf of Mexico field development.">
+    <meta name="twitter:description" content="Illustrative field economics with synthetic production and assumed costs; IRR correction is pending.">
 
     <title>Case Study: BSEE Field Economics Analysis - AceEngineer</title>
 
@@ -59,7 +59,7 @@ rootPath: "../"
         "@type": "Article",
         "@id": "https://www.aceengineer.com/case-studies/bsee-field-economics.html#article",
         "headline": "BSEE Field Economics Analysis with NPV/IRR Workflow",
-        "description": "Case study demonstrating comprehensive field economics analysis using BSEE production data with NPV and IRR calculations.",
+        "description": "Illustrative field economics using synthetic production and assumed costs. Deterministic NPV and cash flows are calculated; IRR correction is pending.",
         "datePublished": "2025-02-13",
         "dateModified": "2025-02-13",
         "author": {
@@ -222,8 +222,8 @@ rootPath: "../"
                 <strong>Duration:</strong> 3 weeks
             </p>
             <p style="margin-top: 20px;">
-                <span class="compliance-badge">BSEE Public Data</span>
-                <span class="compliance-badge">Industry Standard Economics</span>
+                <span class="compliance-badge">Illustrative Production Profile</span>
+                <span class="compliance-badge">Assumed Costs</span>
                 <span class="compliance-badge">Auditable Methodology</span>
             </p>
         </div>
@@ -235,33 +235,33 @@ rootPath: "../"
         <div class="metrics-row">
             <div class="metric-box">
                 <div class="metric-value">$6.1B</div>
-                <div class="metric-label">NPV (10% Discount)</div>
+                <div class="metric-label">Illustrative NPV (10% Discount)</div>
             </div>
             <div class="metric-box">
-                <div class="metric-value">15%</div>
-                <div class="metric-label">Internal Rate of Return</div>
+                <div class="metric-value">Pending</div>
+                <div class="metric-label">IRR Correction</div>
             </div>
             <div class="metric-box">
                 <div class="metric-value">32</div>
-                <div class="metric-label">Payback (Months)</div>
+                <div class="metric-label">Illustrative Payback (Months)</div>
             </div>
             <div class="metric-box">
                 <div class="metric-value">374</div>
-                <div class="metric-label">MMbbls Recoverable</div>
+                <div class="metric-label">Synthetic Production (MMbbls)</div>
             </div>
         </div>
 
         <!-- Executive Summary -->
         <h2 class="section-title">Executive Summary</h2>
         <p>
-            An independent oil and gas operator required comprehensive economic analysis for a proposed Gulf of Mexico deepwater development to support investment decisions and partner negotiations. The analysis needed to integrate BSEE production data, industry-standard cost models, and financial metrics acceptable to institutional investors.
+            This field economics example illustrates a Gulf of Mexico deepwater production profile and financial model. Analysis is performed to calculate deterministic net present value (NPV), monthly cash flows and payback using synthetic production and assumed costs.
         </p>
         <p>
-            Using publicly available BSEE production profiles and established financial modeling workflows, we delivered a complete field economics assessment including NPV sensitivity analysis, IRR calculations, and cash flow projections. The analysis demonstrated project viability with a $6.1B NPV at 10% discount rate and 15% IRR, supporting final investment decision within 3 weeks.
+            The saved illustrative output gives $6.1B NPV at a 10% discount rate and 32-month payback. The internal rate of return (IRR) is a hard-coded fallback placeholder, not a validated return. Monte Carlo simulation is not implemented in the linked script. The calibrated-data rebuild and IRR correction are pending under <a href="https://github.com/vamseeachanta/aceengineer-website/issues/106">issue 106</a>.
         </p>
 
         <div class="data-source-note">
-            <strong>Data Transparency:</strong> This analysis uses publicly available BSEE production data and industry-standard cost assumptions. All calculations follow established petroleum economics practices and are fully auditable. Production profiles are based on observed Gulf of Mexico deepwater field performance data.
+            <strong>Data Transparency:</strong> The <a href="https://github.com/vamseeachanta/aceengineer-website/blob/2492de4b6a850e8eb1625bb98bc45b1253780f73/scripts/generate_field_economics_data.py">illustrative data generator</a> constructs synthetic production rather than importing BSEE records. The <a href="../assets/data/field_economics_metrics.json">saved metrics</a> and <a href="../assets/data/field_economics_cashflow.csv">cash flows</a> reflect the script's assumed inputs and do not establish investment viability.
         </div>
 
         <!-- The Challenge -->
@@ -294,9 +294,9 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">1</div>
             <div class="step-content">
-                <h3 class="h-size-h4">BSEE Data Collection and Validation</h3>
+                <h3 class="h-size-h4">Illustrative Production Data</h3>
                 <p>
-                    Extracted 15 years of production history from BSEE public datasets covering analogous Gulf of Mexico deepwater fields. Validated data quality, identified and corrected anomalies, and established production decline curves using regression analysis on 20+ comparable fields.
+                    A synthetic 15-year production profile is generated by the script. BSEE data collection, anomaly correction and regression against comparable fields are not performed by this generator.
                 </p>
             </div>
         </div>
@@ -306,7 +306,7 @@ rootPath: "../"
             <div class="step-content">
                 <h3 class="h-size-h4">Production Profile Development</h3>
                 <p>
-                    Built type curves for deepwater development incorporating 12-month ramp-up, 24-month plateau at 100,000 bopd, and exponential decline at 8% annually. Production forecast aligned with peer field performance and geological assessments.
+                    The synthetic profile incorporates a 12-month ramp-up, a 24-month plateau at 100,000 barrels of oil per day, and exponential decline using an assumed 8% annual rate.
                 </p>
             </div>
         </div>
@@ -316,7 +316,7 @@ rootPath: "../"
             <div class="step-content">
                 <h3 class="h-size-h4">Financial Modeling and NPV/IRR Calculation</h3>
                 <p>
-                    Implemented monthly cash flow model with industry-standard assumptions: $3.5B CAPEX, $18/bbl OPEX, 18.75% federal royalty, and 10% discount rate. Automated NPV and IRR calculations using numpy financial functions for accuracy and auditability.
+                    Monthly cash flows are calculated with assumed $3.5B capital expenditure, $18/bbl operating expenditure, 18.75% royalty and a 10% discount rate. Discounted cash flows are summed for NPV. The attempted numpy IRR calculation falls back to a hard-coded placeholder on error; a validated IRR is not established.
                 </p>
             </div>
         </div>
@@ -324,9 +324,9 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">4</div>
             <div class="step-content">
-                <h3 class="h-size-h4">Sensitivity Analysis and Risk Assessment</h3>
+                <h3 class="h-size-h4">Deterministic Output</h3>
                 <p>
-                    Generated tornado diagrams showing NPV sensitivity to key variables. Performed Monte Carlo simulation with 10,000 iterations to quantify P10/P50/P90 outcomes. Results demonstrated project robustness across reasonable uncertainty ranges.
+                    One fixed set of financial assumptions is evaluated. Cash flows are written to CSV and summary metrics to JSON. Sensitivity sweeps and probabilistic outcomes are not calculated by this script.
                 </p>
             </div>
         </div>
@@ -336,13 +336,13 @@ rootPath: "../"
 
         <h3>Data Processing Workflow</h3>
         <p>
-            The analysis leveraged the worldenergydata Python library for BSEE data access and processing:
+            The linked generator uses pandas and numpy to construct the illustrative profile and cash flows:
         </p>
         <ul>
-            <li><strong>Data Source:</strong> BSEE production API (mv_productionsum and lease-level datasets)</li>
+            <li><strong>Data Source:</strong> Synthetic production profile constructed in the script</li>
             <li><strong>Analysis Period:</strong> 180 months (15 years) from first oil</li>
-            <li><strong>Production Aggregation:</strong> Field-level rollup across 12 development leases</li>
-            <li><strong>Decline Modeling:</strong> Exponential decline curves fitted to historical performance</li>
+            <li><strong>Production Aggregation:</strong> No lease-level aggregation is performed</li>
+            <li><strong>Decline Modeling:</strong> Assumed exponential decline after ramp-up and plateau</li>
         </ul>
 
         <h3>Financial Model Assumptions</h3>
@@ -356,68 +356,66 @@ rootPath: "../"
             <tr>
                 <td>Oil Price</td>
                 <td>$75/bbl</td>
-                <td>Long-term WTI consensus (2024-2040)</td>
+                <td>ASSUMED - to be confirmed; fixed script input</td>
             </tr>
             <tr>
                 <td>Royalty Rate</td>
                 <td>18.75%</td>
-                <td>Federal OCS standard royalty</td>
+                <td>ASSUMED - to be confirmed; fixed script input</td>
             </tr>
             <tr>
                 <td>Operating Cost</td>
                 <td>$18/bbl</td>
-                <td>GoM deepwater industry average (Wood Mackenzie 2024)</td>
+                <td>ASSUMED - to be confirmed; fixed script input</td>
             </tr>
             <tr>
                 <td>Development CAPEX</td>
                 <td>$3.5 billion</td>
-                <td>Subsea tieback with 8 wells, SURF, host modifications</td>
+                <td>ASSUMED - to be confirmed; spread over the first 24 months</td>
             </tr>
             <tr>
                 <td>Discount Rate</td>
                 <td>10% annual</td>
-                <td>Industry standard for deepwater developments</td>
+                <td>ASSUMED - to be confirmed; fixed script input</td>
             </tr>
             <tr>
                 <td>Peak Production</td>
                 <td>100,000 bopd</td>
-                <td>Based on reservoir simulation and facility constraints</td>
+                <td>ASSUMED - to be confirmed; synthetic plateau</td>
             </tr>
         </table>
         </div>
 
         <h3>Computational Efficiency</h3>
         <p>
-            Automated workflow enabled rapid scenario analysis:
+            The generator writes deterministic outputs for the fixed assumptions:
         </p>
         <ul>
-            <li><strong>Base Case NPV/IRR:</strong> Calculated in &lt;5 seconds using vectorized pandas operations</li>
-            <li><strong>Sensitivity Analysis:</strong> 25 scenarios evaluated in &lt;30 seconds</li>
-            <li><strong>Monte Carlo Simulation:</strong> 10,000 iterations completed in &lt;2 minutes</li>
-            <li><strong>Report Generation:</strong> Automated Excel output with charts and tables in &lt;10 seconds</li>
+            <li><strong>Cash Flow Output:</strong> Monthly CSV containing revenue, costs and discounted cash flow</li>
+            <li><strong>Summary Output:</strong> JSON containing illustrative financial metrics and the placeholder IRR</li>
         </ul>
 
         <!-- Results -->
         <h2 class="section-title">Results</h2>
 
         <div class="result-box">
-            <h3 class="h-size-h4">Strong Project Economics</h3>
+            <h3 class="h-size-h4">Illustrative Base Case</h3>
             <p>
-                Base case analysis delivered $6.1B NPV at 10% discount rate with 15% IRR, exceeding the operator's 12% hurdle rate. Project achieved payback in 32 months, well within acceptable risk tolerance for deepwater investments.
+                The saved illustrative output gives $6.1B NPV at a 10% discount rate and 32-month payback. Comparison against an investment hurdle rate is not established because the IRR remains a placeholder and the inputs are synthetic or assumed.
             </p>
         </div>
 
         <div class="result-box">
-            <h3 class="h-size-h4">Robust to Price Volatility</h3>
+            <h3 class="h-size-h4">Price Sensitivity Not Established</h3>
             <p>
-                Sensitivity analysis showed project remained economic across oil price range of $60-90/bbl. NPV ranged from $3.8B (at $60/bbl) to $8.4B (at $90/bbl), demonstrating acceptable downside protection.
+                The script evaluates a fixed oil price of $75/bbl. A price sweep and probabilistic downside assessment are not implemented.
             </p>
         </div>
 
         <div class="result-box">
-            <h3 class="h-size-h4">Decision Support Delivered on Schedule</h3>
+            <h3 class="h-size-h4">Calibrated Analysis Pending</h3>
             <p>
-                Complete analysis package delivered in 18 days, including executive summary, detailed financial model, sensitivity analyses, and risk assessment. Partners approved project advancement to FEED based on analysis.
+                The calibrated-cost rebuild is tracked in <a href="https://github.com/vamseeachanta/aceengineer-website/issues/106">issue 106</a>. The illustrative generator does not establish a client investment decision or project approval.
             </p>
         </div>
 
@@ -427,27 +425,27 @@ rootPath: "../"
             <tr>
                 <th>Metric</th>
                 <th>Value</th>
-                <th>Industry Benchmark</th>
+                <th>Basis</th>
             </tr>
             <tr>
                 <td>NPV (10%)</td>
                 <td>$6,078 million</td>
-                <td>Target: &gt;$1,000M for project sanction</td>
+                <td>Illustrative saved output at assumed inputs</td>
             </tr>
             <tr>
                 <td>IRR</td>
-                <td>15.0%</td>
-                <td>Hurdle rate: 12%</td>
+                <td>Placeholder; correction pending</td>
+                <td>Not a validated calculated return</td>
             </tr>
             <tr>
                 <td>Payback Period</td>
                 <td>32 months</td>
-                <td>Target: &lt;48 months</td>
+                <td>Illustrative saved output at assumed inputs</td>
             </tr>
             <tr>
-                <td>Total Recoverable</td>
+                <td>Total Synthetic Production</td>
                 <td>373.5 MMbbls</td>
-                <td>Comparable to Thunder Horse, Mad Dog</td>
+                <td>Generated production profile</td>
             </tr>
             <tr>
                 <td>Total Revenue</td>
@@ -467,7 +465,7 @@ rootPath: "../"
 
         <h3>For Asset Owners and Operators</h3>
         <ul>
-            <li>BSEE public data provides sufficient fidelity for screening-level economics and investment decisions</li>
+            <li>The current example uses synthetic production; calibrated field inputs are pending</li>
             <li>Automated workflows reduce analysis cost by 80-90% compared to traditional consulting approaches</li>
             <li>Python-based models enable rapid scenario analysis and sensitivity testing impossible with spreadsheets</li>
             <li>Transparent, auditable methodology builds confidence with partners and investors</li>
@@ -476,24 +474,23 @@ rootPath: "../"
         <h3>For Financial Analysts</h3>
         <ul>
             <li>Vectorized operations in pandas enable NPV calculations for 180-month projects in milliseconds</li>
-            <li>Monte Carlo simulation quantifies uncertainty more rigorously than deterministic sensitivity analysis</li>
+            <li>Probabilistic uncertainty is not quantified by the current deterministic generator</li>
             <li>Reproducible analysis frameworks reduce errors and enable version control for regulatory submissions</li>
         </ul>
 
         <!-- Technologies Used -->
         <h2 class="section-title">Technologies & Tools</h2>
         <p>
-            <strong>Data Source:</strong> BSEE public production API and lease databases<br>
-            <strong>Data Processing:</strong> Python (pandas, numpy) for data extraction and aggregation<br>
-            <strong>Financial Modeling:</strong> Custom cash flow calculator with numpy financial functions<br>
-            <strong>Visualization:</strong> Static PNG exports for production curves and NPV sensitivity<br>
-            <strong>Reporting:</strong> Automated Excel generation with openpyxl<br>
+            <strong>Data Source:</strong> Synthetic production profile and assumed financial inputs<br>
+            <strong>Data Processing:</strong> Python (pandas, numpy) for profile generation and cash flows<br>
+            <strong>Financial Modeling:</strong> Deterministic discounted cash flows; IRR correction pending<br>
+            <strong>Reporting:</strong> CSV cash flows and JSON summary metrics<br>
             <strong>Version Control:</strong> Git for model versioning and audit trail
         </p>
 
         <h3>Reproducibility Note</h3>
         <p>
-            All analysis results can be reproduced using the following command:
+            The following command regenerates the illustrative cash flows and summary metrics, including the IRR placeholder; it does not perform sensitivity or probabilistic analysis:
         </p>
         <pre style="background: #f5f5f5; padding: 15px; border-radius: 4px; overflow-x: auto;">
 python3 scripts/generate_field_economics_data.py

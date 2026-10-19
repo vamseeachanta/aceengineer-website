@@ -217,7 +217,6 @@ rootPath: "../"
             <p style="margin-top: 20px;">
                 <span class="compliance-badge">API RP 2A Compliant</span>
                 <span class="compliance-badge">DNV-RP-C203 Validated</span>
-                <span class="compliance-badge">BSEE Accepted</span>
             </p>
         </div>
     </div>
@@ -304,7 +303,7 @@ rootPath: "../"
             <div class="step-content">
                 <h3 class="h-size-h4">Hybrid FEA-ML Model Development</h3>
                 <p>
-                    Trained gradient boosting models on validated FEA results for 120 representative load cases. The ML models learned the relationship between global platform response and local hot spot stresses at critical joints.
+                    The approach describes surrogate prediction of local hot spot stresses from global platform response. The specific trained model and its case-specific validation evidence are not established in the published material.
                 </p>
             </div>
         </div>
@@ -334,14 +333,8 @@ rootPath: "../"
 
         <h3>Machine Learning Architecture</h3>
         <p>
-            The prediction model used an ensemble of XGBoost regressors, with separate models trained for each structural zone. Key features included:
+            The specific model architecture, training data and validation results are not documented by a case-specific report, dataset, test or log in this repository.
         </p>
-        <ul>
-            <li><strong>Input features:</strong> Wave height, period, direction, current velocity, wind speed, operational deck loads</li>
-            <li><strong>Output:</strong> Hot spot stress ranges at critical joint locations</li>
-            <li><strong>Validation:</strong> 80/20 train-test split with 5-fold cross-validation</li>
-            <li><strong>Performance:</strong> R^2 > 0.94 on held-out test data</li>
-        </ul>
 
         <h3>Computational Efficiency</h3>
         <div class="table-responsive-wrapper">
@@ -465,7 +458,6 @@ rootPath: "../"
         <h2 class="section-title">Technologies & Tools</h2>
         <p>
             <strong>FEA:</strong> SACS (Bentley) for global analysis, ANSYS for local stress analysis<br>
-            <strong>ML Framework:</strong> XGBoost, scikit-learn<br>
             <strong>Data Processing:</strong> Python (pandas, numpy), Apache Spark for large dataset handling<br>
             <strong>Visualization:</strong> Plotly for interactive reports<br>
             <strong>Fatigue Analysis:</strong> Custom Python library for rainflow counting and Miner's summation<br>

@@ -237,7 +237,7 @@ rootPath: "../"
             <p style="margin-top: 20px;">
                 <span class="compliance-badge">DNV-ST-0126 Compliant</span>
                 <span class="compliance-badge">IEC 61400-3 Validated</span>
-                <span class="compliance-badge">DNVGL-RP-C203 Certified</span>
+                <span class="compliance-badge">DNVGL-RP-C203</span>
             </p>
         </div>
     </div>
@@ -415,15 +415,8 @@ rootPath: "../"
 
         <h3>Machine Learning Architecture</h3>
         <p>
-            The load prediction system employed an ensemble of XGBoost regressors with hyperparameters optimized through Bayesian optimization. Key model characteristics:
+            The specific model architecture, training data and validation results are not documented by a case-specific report, dataset, test or log in this repository.
         </p>
-        <ul>
-            <li><strong>Input Features (14):</strong> Wind speed, turbulence intensity, wind direction sector, H<sub>s</sub>, T<sub>p</sub>, wave direction, wind-wave misalignment, current velocity, water depth, soil stiffness parameters, foundation geometry ratios</li>
-            <li><strong>Output Targets (7):</strong> DEL at mudline (M<sub>x</sub>, M<sub>y</sub>, F<sub>z</sub>), DEL at maximum stress concentration, peak loads for ULS verification</li>
-            <li><strong>Training Data:</strong> 2,400 DLC simulations x 92 site configurations = 220,800 training samples</li>
-            <li><strong>Validation:</strong> 5-fold cross-validation with site-stratified sampling</li>
-            <li><strong>Performance:</strong> R<sup>2</sup> = 0.962, MAPE = 4.2%, maximum error < 12% (conservative)</li>
-        </ul>
 
         <h3>Fatigue Analysis Framework</h3>
         <div class="solution-box">
@@ -598,7 +591,7 @@ rootPath: "../"
         <h2 class="section-title">Industry Standard Compliance</h2>
 
         <p>
-            The methodology achieved full certification from DNV for offshore wind foundation design:
+            The design discussion references the following standards. A certification outcome is not established by the evidence published with this case study:
         </p>
         <ul>
             <li><strong>DNV-ST-0126:</strong> Support structure design requirements including all applicable design load cases (DLC 1.1 through 8.2)</li>
@@ -609,9 +602,9 @@ rootPath: "../"
         </ul>
 
         <div class="solution-box">
-            <h3 class="h-size-h4">Third-Party Validation</h3>
+            <h3 class="h-size-h4">Certification Evidence</h3>
             <p>
-                Independent review by DNV confirmed the ML-based methodology met requirements for Type Certification of the foundation designs. The certification statement specifically acknowledged the validated surrogate model approach as compliant with DNV-ST-0126 Section 4.5.3 provisions for alternative analysis methods when adequately documented and verified.
+                No case-specific certification statement is held in this repository. The listed standards do not establish third-party certification of the foundation designs or the surrogate methodology.
             </p>
         </div>
 
@@ -646,7 +639,6 @@ rootPath: "../"
         <p>
             <strong>Aeroelastic Simulation:</strong> OpenFAST v3.5 with AeroDyn, HydroDyn, and SubDyn modules<br>
             <strong>Finite Element Analysis:</strong> ANSYS Mechanical for detailed stress analysis, custom Python FEA for parametric studies<br>
-            <strong>Machine Learning:</strong> XGBoost, scikit-learn, Optuna for hyperparameter optimization<br>
             <strong>Fatigue Analysis:</strong> Custom Python library implementing rainflow counting (ASTM E1049) and Miner's rule<br>
             <strong>Data Processing:</strong> Python (pandas, NumPy, Dask for parallel processing), PostgreSQL for load database<br>
             <strong>Geotechnical:</strong> PLAXIS 3D for soil-structure interaction validation, custom p-y curve implementation<br>

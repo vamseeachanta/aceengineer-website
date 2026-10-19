@@ -158,7 +158,7 @@ const requiredTypes = {
     'reports/sloshing/validation.html',
   ],
   WebPage: [
-    'api-catalog.html', 'deckhand.html', 'deckhand-api.html', 'platform.html',
+    'platform.html',
     'proof.html', 'vision.html', 'demos/dynacard.html', 'demos/freespan.html',
     'demos/jumper-installation.html', 'demos/mooring.html', 'demos/mudmat.html',
     'demos/pipelay.html', 'demos/wall-thickness.html',
@@ -278,11 +278,12 @@ test('source metadata meets the required coverage floors', () => {
   const { getHtmlFiles } = require('../../build');
   const sources = getHtmlFiles(path.join(__dirname, '../../content'))
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
-  // Includes issue 1 and its four chart pages; redirect sources still count.
-  expect(sources).toHaveLength(124);
+  // Includes the newsletter archive and both automation pages; retired sources still count.
+  // Maintainer approval for I-0245: lower each metadata floor by exactly 3 (107 -> 104).
+  expect(sources).toHaveLength(127);
   for (const [selector, floor] of [
-    ['script[type="application/ld+json"]', 107],
-    ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],
+    ['script[type="application/ld+json"]', 104],
+    ['meta[property="og:title"]', 104], ['meta[property="og:image"]', 104],
   ]) expect(sources.filter(doc => doc.querySelector(selector)).length).toBeGreaterThanOrEqual(floor);
 });
 
@@ -328,7 +329,9 @@ test('llms.txt page descriptions omit percentage and currency figures', () => {
   }
   const page = 'blog/energy-data-automation-pipelines.html';
   const title = documents.get(page).title;
-  expect(text.split('\n')).toContain(`- [${title}](https://www.aceengineer.com/${page})`);
+  const description = documents.get(page).querySelector('meta[name="description"]').content;
+  expect(PAGE_DESCRIPTION_PATTERNS.some(pattern => pattern.test(description))).toBe(false);
+  expect(text.split('\n')).toContain(`- [${title}](https://www.aceengineer.com/${page}): ${description}`);
 });
 
 // The home copy is bounded by main.home-page; shared navigation and footer
@@ -537,7 +540,6 @@ test('legal footer inherits copyright type and colour at a smaller size', () => 
 
 test('every built page uses the specified figure for years of experience', () => {
   const otherYearCounts = [
-    { page: 'engineering.html', text: '5+ years', reason: 'extended platform life' },
     { page: 'blog/gulf-of-mexico-production-data-access.html', text: '50+ years', reason: 'public dataset span' },
   ];
   for (const page of pages) {
@@ -657,4 +659,53 @@ test('no page publishes an Offer, OfferCatalog or offers record', () => {
     }
   }
   expect(hits).toEqual([]);
+});
+
+
+test('approved archive and automation pages are indexed, linked and canonical', () => {
+  for (const page of ['newsletter/index.html', 'ai-automation/index.html', 'small-business/index.html']) {
+    expect(destinations).toContain(page);
+    const doc = documents.get(page);
+    expect(doc.querySelector('main h1')).not.toBeNull();
+    expect(doc.querySelector('link[rel="canonical"]').href).toBe('https://www.aceengineer.com/' + page.replace('index.html', ''));
+  }
+  const blog = documents.get('blog/index.html');
+  expect(blog.querySelector('form')).toBeNull();
+  expect(blog.querySelector('main a[href="../newsletter/"]')).not.toBeNull();
+  expect(blog.querySelector('main').textContent).toContain('reply to any issue to subscribe or stop');
+});
+
+test('only the three retired Deckhand pages leave the index for this review', () => {
+  for (const page of ['deckhand.html', 'deckhand-api.html', 'api-catalog.html']) {
+    expect(Object.hasOwn(SITEMAP_EXCLUDE, page)).toBe(true);
+    expect(documents.get(page).querySelector('meta[name="robots"]').content).toContain('noindex');
+    expect(destinations).not.toContain(page);
+  }
+  const config = JSON.parse(fs.readFileSync('vercel.json', 'utf8'));
+  expect(config.redirects).toContainEqual({source: '/pricing.html', destination: '/contact.html', permanent: true});
+});
+
+test('public module count is dated and the draft card is never used by metadata', () => {
+  const summary = JSON.parse(fs.readFileSync('assets/data/module-catalogue-summary.json', 'utf8'));
+  expect(summary).toMatchObject({date: '2026-10-17', outward: 35, modules: 196, criteria_revision: '2026-10-17-third-review-engineering-reference'});
+  expect(documents.get('about.html').querySelector('#module-checks').textContent).toContain('35 of 196');
+  for (const doc of documents.values()) {
+    for (const meta of doc.querySelectorAll('meta[property="og:image"], meta[name="twitter:image"]')) expect(meta.content).not.toContain('/drafts/');
+  }
+  const png = fs.readFileSync('assets/drafts/share-card-draft.png');
+  expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+});
+
+
+test('newsletter story tracking counts one tagged arrival and ignores arbitrary query data', () => {
+  const vm = require('vm');
+  const source = fs.readFileSync('assets/js/newsletter-story.js', 'utf8');
+  function events(search) {
+    const calls = [];
+    vm.runInNewContext(source, {URLSearchParams, window: {location: {search}, gtag: (...args) => calls.push(args)}, document: documents.get('newsletter/issue-001/index.html')});
+    return calls;
+  }
+  expect(events('?utm_campaign=issue-001&utm_content=specialists')).toEqual([['event', 'newsletter_story', {issue: 'issue-001', story: 'specialists'}]]);
+  expect(events('?utm_campaign=issue-001&utm_content=arbitrary-value')).toEqual([]);
+  expect(events('?utm_content=specialists')).toEqual([]);
 });

@@ -4,476 +4,92 @@ rootPath: "../"
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Engineering case studies demonstrating advanced computational methods for structural analysis, fatigue assessment, and offshore engineering projects.">
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://www.aceengineer.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Case Studies",
-      "item": "https://www.aceengineer.com/case-studies/"
-    }
-  ]
-}
-    </script>
-    <meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
-    <meta name="keywords" content="engineering case studies, offshore engineering, fatigue analysis, structural analysis, computational engineering, engineering automation">
-
-    <!-- Open Graph meta tags -->
-    <meta property="og:title" content="Case Studies - AceEngineer">
-    <meta property="og:description" content="Technical case studies demonstrating advanced computational methods with quantifiable results.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.aceengineer.com/case-studies/">
-    <meta property="og:site_name" content="Analytical & Computational Engineering">
-
-    <!-- Twitter Card meta tags -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Case Studies - AceEngineer">
-    <meta name="twitter:description" content="Technical case studies demonstrating advanced computational methods.">
-
-    <title>Case Studies - AceEngineer</title>
-
-    <include src="partials/head-common.html"></include>
-
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "@id": "https://www.aceengineer.com/case-studies/#collection",
-        "name": "AceEngineer Engineering Case Studies",
-        "url": "https://www.aceengineer.com/case-studies/",
-        "description": "Technical case studies demonstrating advanced computational methods with quantifiable results",
-        "publisher": { "@id": "https://www.aceengineer.com/#organization" }
-    }
-    </script>
-
-    <style>
-        .case-study-card {
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 30px;
-            transition: box-shadow 0.3s ease;
-        }
-        .case-study-card:hover {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .case-study-card h3 {
-            margin-top: 0;
-            color: #2c3e50;
-        }
-        .case-study-meta {
-            color: #5a6b76;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-        }
-        .case-study-metrics {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin: 15px 0;
-        }
-        .metric {
-            text-align: center;
-            padding: 10px 15px;
-            background: #f8f9fa;
-            border-radius: 4px;
-        }
-        .metric-value {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #428bca;
-        }
-        .metric-label {
-            font-size: 0.8em;
-            color: #666;
-        }
-        .compliance-tag {
-            display: inline-block;
-            background: #28a745;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            margin-right: 5px;
-            margin-bottom: 5px;
-        }
-        .page-header {
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #428bca;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engineering and data analysis methods | AceEngineer</title>
+<meta name="description" content="Method notes on engineering analysis and data workflows: fatigue, FEA post-processing, risers, wall thickness, stability, energy economics and safety data.">
+<meta property="og:title" content="Engineering and data analysis methods | AceEngineer">
+<meta property="og:description" content="Method notes on engineering analysis and data workflows: fatigue, FEA post-processing, risers, wall thickness, stability, energy economics and safety data.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.aceengineer.com/case-studies/">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Engineering and data analysis methods | AceEngineer">
+<meta name="twitter:description" content="Method notes on engineering analysis and data workflows: fatigue, FEA post-processing, risers, wall thickness, stability, energy economics and safety data.">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"CollectionPage","name":"Engineering and data analysis methods | AceEngineer","description":"Method notes on engineering analysis and data workflows: fatigue, FEA post-processing, risers, wall thickness, stability, energy economics and safety data.","url":"https://www.aceengineer.com/case-studies/","inLanguage":"en","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Engineering and data analysis methods","item":"https://www.aceengineer.com/case-studies/"}]}]</script>
+<include src="partials/head-common.html">
+</include>
 </head>
-<body>
-
-    <include src="partials/nav.html"></include>
-
-    <main id="main">
-
-    <div class="container">
-        <div class="page-header">
-            <h1>Case Studies</h1>
-            <p class="lead">Real projects demonstrating advanced computational methods with quantifiable results and validated methodologies.</p>
-        </div>
-
-        <!-- Case Study 1 -->
-        <div class="case-study-card">
-            <h2 class="h-size-h3"><a href="offshore-platform-fatigue-optimization.html">Computational Fatigue Assessment for Offshore Platform</a></h2>
-            <div class="case-study-meta">
-                <strong>Industry:</strong> Oil & Gas |
-                <strong>Location:</strong> Gulf of Mexico |
-                <strong>Duration:</strong> 6 weeks
-            </div>
-            <p>
-                Comprehensive fatigue life assessment for a 40-year-old fixed platform using machine learning to incorporate 15 years of operational monitoring data. Reduced assessment time by 85% while improving prediction accuracy by 23%.
-            </p>
-            <div class="case-study-metrics">
-                <div class="metric">
-                    <div class="metric-value">85%</div>
-                    <div class="metric-label">Time Reduction</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">23%</div>
-                    <div class="metric-label">Accuracy Improvement</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">$2.1M</div>
-                    <div class="metric-label">Cost Avoided</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">847</div>
-                    <div class="metric-label">Joints Analyzed</div>
-                </div>
-            </div>
-            <div>
-                <span class="compliance-tag">API RP 2A</span>
-                <span class="compliance-tag">DNV-RP-C203</span>
-                <span class="compliance-tag">BSEE Accepted</span>
-            </div>
-            <p style="margin-top: 15px;">
-                <a href="offshore-platform-fatigue-optimization.html" class="btn btn-primary" aria-label="Read full case study: Computational Fatigue Assessment for Offshore Platform">Read Full Case Study</a>
-            </p>
-        </div>
-
-        <!-- Case Study 2 -->
-        <div class="case-study-card">
-            <h2 class="h-size-h3"><a href="subsea-fea-automation.html">Automated FEA Post-Processing Pipeline for Subsea Equipment</a></h2>
-            <div class="case-study-meta">
-                <strong>Industry:</strong> Oil & Gas |
-                <strong>Client:</strong> Subsea Equipment Manufacturer |
-                <strong>Duration:</strong> 8 weeks
-            </div>
-            <p>
-                Python automation pipeline for NASTRAN FEA post-processing that eliminated manual data extraction bottlenecks. Reduced post-processing time by 90% and enabled 50+ qualification reports per week with zero manual errors.
-            </p>
-            <div class="case-study-metrics">
-                <div class="metric">
-                    <div class="metric-value">90%</div>
-                    <div class="metric-label">Time Reduction</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">50+</div>
-                    <div class="metric-label">Reports/Week</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">0</div>
-                    <div class="metric-label">Manual Errors</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">$340K</div>
-                    <div class="metric-label">Annual Savings</div>
-                </div>
-            </div>
-            <div>
-                <span class="compliance-tag">API 17D</span>
-                <span class="compliance-tag">DNV-OS-F101</span>
-                <span class="compliance-tag">ISO 13628</span>
-            </div>
-            <p style="margin-top: 15px;">
-                <a href="subsea-fea-automation.html" class="btn btn-primary" aria-label="Read full case study: Automated FEA Post-Processing for Subsea Equipment">Read Full Case Study</a>
-            </p>
-        </div>
-
-        <!-- Case Study 3 -->
-        <div class="case-study-card">
-            <h2 class="h-size-h3"><a href="wind-turbine-foundation-analysis.html">Computational Wind Turbine Foundation Analysis</a></h2>
-            <div class="case-study-meta">
-                <strong>Industry:</strong> Offshore Wind |
-                <strong>Location:</strong> North Sea |
-                <strong>Duration:</strong> 8 weeks
-            </div>
-            <p>
-                Structural integrity assessments for 92 monopile foundations using machine learning-based load prediction and fatigue assessment. Achieved 70% reduction in analysis time and 25% foundation weight optimization through site-specific probabilistic analysis.
-            </p>
-            <div class="case-study-metrics">
-                <div class="metric">
-                    <div class="metric-value">70%</div>
-                    <div class="metric-label">Time Reduction</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">25%</div>
-                    <div class="metric-label">Weight Optimization</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">4.2M</div>
-                    <div class="metric-label">Load Cycles</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">92</div>
-                    <div class="metric-label">Foundations</div>
-                </div>
-            </div>
-            <div>
-                <span class="compliance-tag">DNV-ST-0126</span>
-                <span class="compliance-tag">IEC 61400-3</span>
-                <span class="compliance-tag">DNVGL-RP-C203</span>
-            </div>
-            <p style="margin-top: 15px;">
-                <a href="wind-turbine-foundation-analysis.html" class="btn btn-primary" aria-label="Read full case study: Computational Wind Turbine Foundation Analysis">Read Full Case Study</a>
-            </p>
-        </div>
-
-        <!-- Case Study 4 -->
-        <div class="case-study-card">
-            <h2 class="h-size-h3"><a href="orcaflex-riser-sensitivity-automation.html">OrcaFlex Riser Sensitivity Automation</a></h2>
-            <div class="case-study-meta">
-                <strong>Industry:</strong> Oil & Gas |
-                <strong>Location:</strong> Gulf of Mexico |
-                <strong>Duration:</strong> 2 weeks
-            </div>
-            <p>
-                OrcaFlex batch automation reduced Steel Catenary Riser sensitivity analysis from 50 engineer-hours to 4 hours overnight. Delivered 70% cost savings for mid-market engineering firm with complete results in 3 days instead of 3 weeks.
-            </p>
-            <div class="case-study-metrics">
-                <div class="metric">
-                    <div class="metric-value">70%</div>
-                    <div class="metric-label">Cost Savings</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">50</div>
-                    <div class="metric-label">Configurations</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">4 hrs</div>
-                    <div class="metric-label">Analysis Time</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">$35K</div>
-                    <div class="metric-label">Project Savings</div>
-                </div>
-            </div>
-            <div>
-                <span class="compliance-tag">API RP 2RD</span>
-                <span class="compliance-tag">DNV-OS-F201</span>
-                <span class="compliance-tag">DNV-RP-C203</span>
-            </div>
-            <p style="margin-top: 15px;">
-                <a href="orcaflex-riser-sensitivity-automation.html" class="btn btn-primary" aria-label="Read full case study: OrcaFlex Riser Sensitivity Automation">Read Full Case Study</a>
-            </p>
-        </div>
-
-        <!-- Case Study 5 -->
-        <div class="case-study-card">
-            <h2 class="h-size-h3"><a href="bsee-field-economics.html">BSEE Field Economics Analysis with NPV/IRR</a></h2>
-            <div class="case-study-meta">
-                <strong>Industry:</strong> Oil & Gas |
-                <strong>Region:</strong> Gulf of Mexico |
-                <strong>Duration:</strong> 3 weeks
-            </div>
-            <p>
-                Comprehensive field economics analysis using BSEE production data delivered $6.1B NPV calculation with 15% IRR for deepwater development. Automated workflow enabled rapid scenario analysis and sensitivity testing for investment decision support.
-            </p>
-            <div class="case-study-metrics">
-                <div class="metric">
-                    <div class="metric-value">$6.1B</div>
-                    <div class="metric-label">NPV (10%)</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">15%</div>
-                    <div class="metric-label">IRR</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">32 mo</div>
-                    <div class="metric-label">Payback Period</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">374</div>
-                    <div class="metric-label">MMbbls Recoverable</div>
-                </div>
-            </div>
-            <div>
-                <span class="compliance-tag">BSEE Public Data</span>
-                <span class="compliance-tag">Industry Standard Economics</span>
-                <span class="compliance-badge">Auditable Methodology</span>
-            </div>
-            <p style="margin-top: 15px;">
-                <a href="bsee-field-economics.html" class="btn btn-primary" aria-label="Read full case study: BSEE Field Economics Analysis">Read Full Case Study</a>
-            </p>
-        </div>
-
-        <!-- Case Study 6 -->
-        <div class="case-study-card">
-            <h2 class="h-size-h3"><a href="marine-safety-correlation.html">Marine Safety Incident Correlation Across 7 Authorities</a></h2>
-            <div class="case-study-meta">
-                <strong>Industry:</strong> Maritime |
-                <strong>Scope:</strong> Global |
-                <strong>Duration:</strong> 8 weeks
-            </div>
-            <p>
-                Cross-database incident correlation system integrating 7 maritime authorities (MAIB, TSB, USCG, NTSB, ATSB, IMO, EMSA) using fuzzy matching and intelligent deduplication. Delivered 92% reduction in manual correlation time with automated cross-reference of 53K+ incidents.
-            </p>
-            <div class="case-study-metrics">
-                <div class="metric">
-                    <div class="metric-value">7</div>
-                    <div class="metric-label">Maritime Authorities</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">53K+</div>
-                    <div class="metric-label">Incidents</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">92%</div>
-                    <div class="metric-label">Time Reduction</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">2,300+</div>
-                    <div class="metric-label">Cross-Links Found</div>
-                </div>
-            </div>
-            <div>
-                <span class="compliance-tag">Public Maritime Data</span>
-                <span class="compliance-tag">Fuzzy Matching</span>
-                <span class="compliance-tag">Auditable Deduplication</span>
-            </div>
-            <p style="margin-top: 15px;">
-                <a href="marine-safety-correlation.html" class="btn btn-primary" aria-label="Read full case study: Marine Safety Incident Correlation">Read Full Case Study</a>
-            </p>
-        </div>
-
-        <!-- Case Study 7 -->
-        <div class="case-study-card">
-            <h2 class="h-size-h3"><a href="pipeline-on-bottom-stability-assessment.html">Pipeline On-Bottom Stability Assessment -- Deepwater Gulf of Mexico</a></h2>
-            <div class="case-study-meta">
-                <strong>Industry:</strong> Oil & Gas |
-                <strong>Location:</strong> Gulf of Mexico |
-                <strong>Standard:</strong> DNV-RP-F109
-            </div>
-            <p>
-                Automated on-bottom stability assessment for a 12 km deepwater export pipeline across 48 environmental load cases. Reduced assessment time by 60% and identified 3 critical spans requiring remediation that manual spot-checks had missed.
-            </p>
-            <div class="case-study-metrics">
-                <div class="metric">
-                    <div class="metric-value">60%</div>
-                    <div class="metric-label">Time Reduction</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">12 km</div>
-                    <div class="metric-label">Pipeline Length</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">48</div>
-                    <div class="metric-label">Load Cases</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">3</div>
-                    <div class="metric-label">Critical Spans Found</div>
-                </div>
-            </div>
-            <div>
-                <span class="compliance-tag">DNV-RP-F109</span>
-                <span class="compliance-tag">DNV-ST-F101</span>
-            </div>
-            <p style="margin-top: 15px;">
-                <a href="pipeline-on-bottom-stability-assessment.html" class="btn btn-primary" aria-label="Read full case study: Pipeline On-Bottom Stability Assessment">Read Full Case Study</a>
-            </p>
-        </div>
-
-        <!-- Case Study 8 -->
-        <div class="case-study-card">
-            <h2 class="h-size-h3"><a href="multi-code-wall-thickness-comparison.html">Multi-Code Wall Thickness Comparison -- Subsea Flowline Design</a></h2>
-            <div class="case-study-meta">
-                <strong>Industry:</strong> Oil & Gas |
-                <strong>Application:</strong> Subsea Flowline |
-                <strong>Standards:</strong> ASME B31.4, API 1111, DNV-ST-F101
-            </div>
-            <p>
-                Simultaneous wall thickness design across three international codes for a deepwater flowline project. Automated comparison identified code-specific governing conditions per pipe size, reducing design time by 40% and enabling $1.2M material cost savings through optimal thickness selection.
-            </p>
-            <div class="case-study-metrics">
-                <div class="metric">
-                    <div class="metric-value">3</div>
-                    <div class="metric-label">Codes Compared</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">40%</div>
-                    <div class="metric-label">Design Time Reduction</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">$1.2M</div>
-                    <div class="metric-label">Material Savings</div>
-                </div>
-                <div class="metric">
-                    <div class="metric-value">5</div>
-                    <div class="metric-label">Pipe Sizes</div>
-                </div>
-            </div>
-            <div>
-                <span class="compliance-tag">ASME B31.4</span>
-                <span class="compliance-tag">API 1111</span>
-                <span class="compliance-tag">DNV-ST-F101</span>
-            </div>
-            <p style="margin-top: 15px;">
-                <a href="multi-code-wall-thickness-comparison.html" class="btn btn-primary" aria-label="Read full case study: Multi-Code Wall Thickness Comparison">Read Full Case Study</a>
-            </p>
-        </div>
-
-        <div class="case-study-card">
-            <h2 class="h-size-h3">Tank Sloshing CFD Reports</h2>
-            <div class="case-study-meta"><strong>Methods:</strong> Multiphase CFD, analytical sloshing theory, mesh and timestep verification</div>
-            <p>Explore the reviewed free-decay and forced-roll loading conditions in a case-by-case report, or compare all accepted response and theory curves in the configurable summary.</p>
-            <p>
-                <a href="../reports/sloshing/" class="btn btn-primary">Open Sloshing Capability</a>
-                <a href="../reports/sloshing/browse.html" class="btn btn-default">Browse All Cases</a>
-                <a href="../reports/sloshing/validation.html" class="btn btn-default">Open Validation Fixture</a>
-                <a href="../reports/sloshing-cfd-case.html" class="btn btn-primary">Open Individual CFD Report</a>
-                <a href="../reports/sloshing-tank-summary.html" class="btn btn-default">Open Sloshing Summary</a>
-                <a href="../reports/sloshing-cfd-analysis.html" class="btn btn-default">Open CFD QA Analysis</a>
-            </p>
-        </div>
-
-        <hr>
-
-        <h2>More Case Studies Coming Soon</h2>
-        <p>We're documenting additional projects across these areas:</p>
-        <ul>
-            <li><strong>FPSO Mooring Analysis:</strong> Automated mooring line fatigue under operational loading</li>
-            <li><strong>Jacket Platform Decommissioning:</strong> Structural assessment for reverse installation</li>
-        </ul>
-
-        <p style="margin-top: 30px;">
-            <a href="../contact.html" class="btn btn-success btn-lg">Discuss Your Project</a>
-            <a href="../engineering.html" class="btn btn-default btn-lg">View Our Services</a>
-        </p>
-
-    </div>
-
-    </main>
-
-    <include src="partials/footer.html"></include>
-
+<body class="theme-page">
+<include src="partials/nav.html">
+</include>
+<main id="main" class="samples-page">
+<div class="container">
+<h1>Case studies: analysis methods</h1>
+<p>Methods for engineering analysis and data processing.</p>
+<article>
+<h2>
+<a href="bsee-field-economics.html">BSEE Field Economics Analysis with NPV/IRR</a>
+</h2>
+<p>Calculation steps, workflow and technical references.</p>
+</article>
+<article>
+<h2>
+<a href="marine-safety-correlation.html">Marine safety incident correlation methods</a>
+</h2>
+<p>Calculation steps, workflow and technical references.</p>
+</article>
+<article>
+<h2>
+<a href="multi-code-wall-thickness-comparison.html">Multi-Code Wall Thickness Comparison</a>
+</h2>
+<p>Calculation steps, workflow and technical references.</p>
+</article>
+<article>
+<h2>
+<a href="offshore-platform-fatigue-optimization.html">Computational Fatigue Assessment for Offshore Platform</a>
+</h2>
+<p>Calculation steps, workflow and technical references.</p>
+</article>
+<article>
+<h2>
+<a href="orcaflex-riser-sensitivity-automation.html">OrcaFlex Riser Sensitivity Automation</a>
+</h2>
+<p>Calculation steps, workflow and technical references.</p>
+</article>
+<article>
+<h2>
+<a href="pipeline-on-bottom-stability-assessment.html">Pipeline On-Bottom Stability Assessment</a>
+</h2>
+<p>Calculation steps, workflow and technical references.</p>
+</article>
+<article>
+<h2>
+<a href="subsea-fea-automation.html">Automated FEA Post-Processing Pipeline for Subsea Equipment Qualification</a>
+</h2>
+<p>Calculation steps, workflow and technical references.</p>
+</article>
+<article>
+<h2>
+<a href="wind-turbine-foundation-analysis.html">Computational Wind Turbine Foundation Analysis</a>
+</h2>
+<p>Calculation steps, workflow and technical references.</p>
+</article>
+<article>
+<h2>
+<a href="../reports/sloshing/">Tank sloshing CFD reports</a>
+</h2>
+<p>Published study methods and release data.</p>
+<p><a href="../reports/sloshing/browse.html">Browse the release</a> · <a href="../reports/sloshing/validation.html">Validation fixture</a> · <a href="../reports/sloshing/study.html">Study method</a></p>
+<p>
+<a href="../reports/sloshing-cfd-case.html">CFD case method</a> · <a href="../reports/sloshing-cfd-analysis.html">CFD analysis</a> · <a href="../reports/sloshing-tank-summary.html">Tank summary</a>
+</p>
+</article>
+<include src="partials/scope-invitation.html">
+</include>
+</div>
+</main>
+<include src="partials/footer.html">
+</include>
 </body>
 </html>

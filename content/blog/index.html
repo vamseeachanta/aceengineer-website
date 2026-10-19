@@ -6,23 +6,23 @@ rootPath: "../"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Technical blog on computational engineering, automated analysis methods, engineering software tools, and open-source projects.">
+    <meta name="description" content="Articles on engineering analysis, open energy data, AI automation and agentic workflows. Read the newsletter archive and explore the public code.">
     <meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
     <meta name="keywords" content="AI engineering, computational methods, machine learning, structural analysis, engineering blog, technical articles">
 
     <!-- Open Graph meta tags -->
-    <meta property="og:title" content="Engineering Blog - AceEngineer">
-    <meta property="og:description" content="Technical articles on computational engineering methods, automated workflows, and industry insights.">
+    <meta property="og:title" content="Engineering and automation articles | AceEngineer">
+    <meta property="og:description" content="Articles on engineering analysis, open energy data, AI automation and agentic workflows. Read the newsletter archive and explore the public code.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.aceengineer.com/blog/">
     <meta property="og:site_name" content="Analytical & Computational Engineering">
 
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Engineering Blog - AceEngineer">
-    <meta name="twitter:description" content="Technical articles on computational engineering methods and automated workflows.">
+    <meta name="twitter:title" content="Engineering and automation articles | AceEngineer">
+    <meta name="twitter:description" content="Articles on engineering analysis, open energy data, AI automation and agentic workflows. Read the newsletter archive and explore the public code.">
 
-    <title>Engineering Blog - AceEngineer</title>
+    <title>Engineering and automation articles | AceEngineer</title>
 
     <include src="partials/head-common.html"></include>
 
@@ -302,59 +302,20 @@ rootPath: "../"
         <hr>
 
         <h2>Coming Soon</h2>
-        <p>We publish 2-4 technical articles per month on:</p>
+        <p>Articles cover:</p>
         <ul>
             <li><strong>Machine Learning for Engineering</strong> - Fatigue prediction, optimization, and anomaly detection</li>
             <li><strong>Computational Methods</strong> - FEA, CFD, and coupled physics simulations</li>
             <li><strong>Open-Source Tools</strong> - Engineering software and libraries we're developing</li>
             <li><strong>Industry Standards</strong> - API, DNV, ISO, and ASME compliance</li>
-            <li><strong>Case Studies</strong> - Real projects and lessons learned</li>
+            <li><strong>Case Studies</strong> - Analysis methods and lessons learned</li>
             <li><strong>Best Practices</strong> - Software engineering for computational methods</li>
         </ul>
 
-        <h2>Subscribe</h2>
-        <p>Get notified when we publish new articles. We respect your privacy—no spam, only engineering insights.</p>
-        <div style="margin: 20px 0; max-width: 500px;">
-            <form action="https://api.web3forms.com/submit" method="POST" id="newsletter-form">
-                <input type="hidden" name="access_key" value="c7338953-f620-4831-92c4-d41b90f034ea">
-                <input type="hidden" name="subject" value="New Newsletter Subscriber - AceEngineer Blog">
-                <input type="hidden" name="from_name" value="AceEngineer Newsletter">
-                <input type="hidden" name="redirect" value="https://www.aceengineer.com/blog/?subscribed=true">
-                <!-- Anti-abuse honeypot: Web3Forms drops submissions where this is filled. -->
-                <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true">
-                <div class="input-group">
-                    <label class="sr-only" for="newsletter-email">Email address</label>
-                    <input type="email" id="newsletter-email" name="email" class="form-control" placeholder="Enter your email" required>
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-primary">Subscribe</button>
-                    </span>
-                </div>
-                <p style="font-size: 12px; color: #5a6b76; margin-top: 8px;">
-                    Join 50+ engineers receiving technical insights. Unsubscribe anytime.
-                </p>
-            </form>
-            <script>
-                // Show success message if redirected with subscribed parameter
-                const urlParams = new URLSearchParams(window.location.search);
-                if (urlParams.get('subscribed') === 'true') {
-                    // Replace the form with a success notice via safe DOM APIs (no innerHTML).
-                    var newsletterForm = document.getElementById('newsletter-form');
-                    while (newsletterForm.firstChild) { newsletterForm.removeChild(newsletterForm.firstChild); }
-                    var subBox = document.createElement('div');
-                    subBox.className = 'alert alert-success';
-                    subBox.textContent = "Thanks for subscribing! You'll receive our next article in your inbox.";
-                    newsletterForm.appendChild(subBox);
-                }
-
-                // GA4 event tracking for newsletter signup
-                document.getElementById('newsletter-form').addEventListener('submit', function() {
-                    gtag('event', 'newsletter_signup', {
-                        'event_category': 'engagement',
-                        'event_label': 'blog_newsletter_subscribe'
-                    });
-                });
-            </script>
-        </div>
+        <h2>The Deckhand Chronicle</h2>
+        <p><a href="../newsletter/">Read every issue in the newsletter archive</a>.</p>
+        <p>reply to any issue to subscribe or stop</p>
+        <p>Or write to <a href="mailto:support@aceengineer.com">support@aceengineer.com</a>.</p>
 
     </div>
 

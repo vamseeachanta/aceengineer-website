@@ -74,9 +74,6 @@ const ECONOMICS = {
     'FTE @ $120k',     // the analyst salary assumed in that example
     '$2M/year',        // a field optimisation opportunity in the same example
   ],
-  'case-studies/subsea-fea-automation.html': [
-    '@ $85/hr',        // the client's labour rate in a savings estimate, not a fee
-  ],
 };
 
 // The reviewed newsletter describes a contractor's possible goal, not a service

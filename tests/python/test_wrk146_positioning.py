@@ -40,7 +40,7 @@ class TestHomepagePositioning:
     def test_hero_positions_as_offshore_and_marine_firm(self):
         content = read_page("index.html")
         assert "{{ copy.home.kicker }}" in content
-        assert "offshore and marine engineering firm" in HOME["kicker"].lower()
+        assert "engineering analysis, ai automation and agentic workflows" in HOME["kicker"].lower()
 
     def test_meta_description_reflects_new_positioning(self):
         content = read_page("index.html")
@@ -62,7 +62,7 @@ class TestHomepagePositioning:
     def test_homepage_explains_engineering_delivery(self):
         content = read_page("index.html")
         assert "{{ copy.home.lead }}" in content
-        assert "analysis, design calculations and integrity assessment" in HOME["lead"]
+        assert "AI automation and agentic workflows" in HOME["lead"]
 
     def test_homepage_firm_facts_present(self):
         content = read_page("index.html")
@@ -109,9 +109,8 @@ class TestAboutPagePositioning:
 
     def test_about_mentions_python_modules(self):
         content = read_page("about.html")
-        assert "704" in content or "700" in content, (
-            "About page must mention 700+ Python modules"
-        )
+        assert "35 of 196 modules" in content
+        assert "704+" not in content
 
     def test_about_mentions_ai_orchestration(self):
         content = read_page("about.html")
@@ -244,12 +243,12 @@ class TestCaseStudyNarratives:
         ],
     )
     def test_case_study_has_quantified_result(self, case_file):
-        """Case studies must have quantified results (%, $, or numeric)."""
+        """Case studies retain method text without unsupported outcome figures."""
         content = read_page(case_file)
-        has_quantity = "%" in content or "$" in content
-        assert has_quantity, (
-            f"{case_file} must have quantified results (%, $, or similar)"
-        )
+        import re
+        visible = re.sub(r"<style[\s\S]*?</style>|<[^>]+>", " ", content)
+        assert not re.search(r"\d+%|\$\d", visible)
+        assert "Method" in content or "Approach" in content
 
     @pytest.mark.parametrize(
         "case_file",
@@ -345,7 +344,7 @@ class TestConsistentPositioning:
         content = read_page("index.html")
         assert "<title>{{ copy.home.title }}</title>" in content
         assert "AceEngineer" in HOME["title"]
-        assert "offshore" in HOME["title"].lower()
+        assert "engineering analysis and ai automation" in HOME["title"].lower()
 
     def test_footer_firm_name_consistent(self):
         for page in ["index.html", "about.html", "engineering.html"]:

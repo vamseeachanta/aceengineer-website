@@ -43,7 +43,9 @@
                 <p class="kicker">{{ copy.home.kicker }}</p>
                 <h1>{{ copy.home.heading }}</h1>
                 <p class="home-lead">{{ copy.home.lead }}</p>
+                <p>Start with our public data and code: <a href="https://github.com/vamseeachanta/digitalmodel">digitalmodel</a>, <a href="https://github.com/vamseeachanta/worldenergydata">worldenergydata</a> and <a href="https://github.com/vamseeachanta/assetutilities">assetutilities</a> on GitHub, and our <a href="https://huggingface.co/aceengineer">datasets on Hugging Face</a>.</p>
                 <include src="partials/scope-invitation.html"></include>
+                <p><a href="newsletter/issue-001/">Latest issue: The Deckhand Chronicle, issue 1</a> · <a href="newsletter/">Newsletter archive</a></p>
                 <div class="home-actions">
                     <if condition="samplesPublished"><a href="#work" class="btn-free">{{ copy.home.work.button }}</a></if>
                 </div>
@@ -64,15 +66,19 @@
         <section id="services" class="home-section">
             <div class="container">
                 <h2>{{ copy.home.services_heading }}</h2>
+                <p>{{ copy.services_intro }}</p>
                 <div class="home-services-grid">
                     <each loop="service in copy.home.services">
-                        <article class="home-service">
+                        <article class="home-service" data-engineering-service>
                             <h3><a href="{{ service.page }}">{{ service.heading }}</a></h3>
                             <p class="home-receives">{{ service.receives }}<if condition="service.context">. {{ service.context }}</if></p>
                             <include src="partials/service-samples.html"></include>
                         </article>
                     </each>
+                    <article class="home-service"><h3><a href="ai-automation/">AI automation and agentic workflows</a></h3><p>AI automation and agentic workflows for engineering and small-business administration. Contact us to discuss a separately agreed scope.</p></article>
+                    <article class="home-service"><h3><a href="small-business/">AI and automation help for small businesses</a></h3><p>From tax to analysis to contract negotiation to improvements, construction ideas or any administrative automation work.</p></article>
                 </div>
+                <p><a href="about.html#module-checks">Module count: catalogue date, criteria and revision</a></p>
             </div>
         </section>
         <if condition="samplesPublished">

@@ -24,6 +24,9 @@ const SITE_ORIGIN = 'https://www.aceengineer.com';
 // so listing them would advertise URLs we are actively telling crawlers to ignore.
 // Shared with the reachability allowlist when #81 lands — one list, two consumers.
 const SITEMAP_EXCLUDE = {
+  'deckhand.html': 'retired Deckhand page — noindex',
+  'deckhand-api.html': 'retired Deckhand page — noindex',
+  'api-catalog.html': 'retired Deckhand page — noindex',
   '404.html': 'error page — not a destination',
   'reports/diffraction/analysis.html': 'noindex redirect stub -> diffraction index after source review',
   'reports/diffraction/comparison.html': 'noindex redirect stub -> diffraction index after source review',
@@ -614,6 +617,8 @@ async function build() {
   const verified = verifyVendoredAssets();
   console.log(`Verified: ${verified.length} vendored asset(s) against .sha256 — ${verified.join(', ') || 'none'}`);
   copyAssets();
+  fs.mkdirSync(path.join(distDir, 'newsletter'), { recursive: true });
+  fs.copyFileSync('content/newsletter/feed.xml', path.join(distDir, 'newsletter/feed.xml'));
   writeSitemap();
   copyRobotsTxt();
   writeLlmsTxt();

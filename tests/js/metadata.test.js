@@ -279,11 +279,11 @@ test('source metadata meets the required coverage floors', () => {
   const sources = getHtmlFiles(path.join(__dirname, '../../content'))
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
   // Includes the newsletter archive and both automation pages; retired sources still count.
-  // Maintainer approval for I-0245: lower each metadata floor by exactly 3 (107 -> 104).
+  // Keep the existing 107 floor: noindex exclusions do not require a reduction.
   expect(sources).toHaveLength(127);
   for (const [selector, floor] of [
-    ['script[type="application/ld+json"]', 104],
-    ['meta[property="og:title"]', 104], ['meta[property="og:image"]', 104],
+    ['script[type="application/ld+json"]', 107],
+    ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],
   ]) expect(sources.filter(doc => doc.querySelector(selector)).length).toBeGreaterThanOrEqual(floor);
 });
 
@@ -400,9 +400,9 @@ test('home support lists both injected designation and product without hidden or
   expect(wholeToken(product.toLowerCase(), product)).toBe(true);
 });
 
-test('home lead sentence and the three description texts agree', () => {
+test('home services introduction and the three description texts agree', () => {
   const home = documents.get('index.html');
-  const sentence = home.querySelector('.home-lead').textContent.trim().split(/\.\s+/).slice(0, 1).join('. ') + '.';
+  const sentence = home.querySelector('#services > .container > p').textContent.trim().match(/^.*?\./)[0];
   const meta = home.querySelector('meta[name="description"]').content;
   const schema = nodesFor('index.html').find(node => node['@type'] === 'WebPage').description;
   const header = fs.readFileSync(path.join(distDir, 'llms.txt'), 'utf8').match(/^> (.*)$/m)[1];

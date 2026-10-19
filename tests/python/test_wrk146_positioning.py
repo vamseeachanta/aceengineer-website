@@ -16,7 +16,9 @@ import yaml
 # ---------------------------------------------------------------------------
 
 SITE_ROOT = Path(__file__).parent.parent.parent / "content"
-HOME = yaml.safe_load((SITE_ROOT.parent / "brand" / "copy.yaml").read_text())["home"]
+COPY = yaml.safe_load((SITE_ROOT.parent / "brand" / "copy.yaml").read_text())
+HOME = COPY["home"]
+SERVICES_INTRO = COPY["services_intro"]
 
 
 def read_page(relative_path: str) -> str:
@@ -242,7 +244,7 @@ class TestCaseStudyNarratives:
             "case-studies/subsea-fea-automation.html",
         ],
     )
-    def test_case_study_has_quantified_result(self, case_file):
+    def test_case_study_retains_method_without_unsupported_outcomes(self, case_file):
         """Case studies retain method text without unsupported outcome figures."""
         content = read_page(case_file)
         import re
@@ -318,7 +320,8 @@ class TestServicesAndSocialProof:
             assert service["receives"].startswith("Client receives:")
 
     def test_homepage_explains_engineering_disciplines(self):
-        content = HOME["lead"]
+        assert "{{ copy.services_intro }}" in read_page("index.html")
+        content = SERVICES_INTRO
         for discipline in ["riser", "hydrodynamic", "asset integrity", "cathodic protection", "marine installation"]:
             assert discipline in content.lower()
 

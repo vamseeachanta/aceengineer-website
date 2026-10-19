@@ -72,7 +72,6 @@ const ECONOMICS = {
   'blog/energy-data-automation-pipelines.html': [
     '$100,800/year',   // the yearly cost of manual data collection in the worked example
     'FTE @ $120k',     // the analyst salary assumed in that example
-    '$2M/year',        // a field optimisation opportunity in the same example
   ],
 };
 

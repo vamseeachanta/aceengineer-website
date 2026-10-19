@@ -356,6 +356,7 @@ function copyAssets() {
     recursive: true,
     filter: (src) => {
       const rel = path.relative(assetsDir, src).split(path.sep).join('/');
+      if (rel === 'drafts' || rel.startsWith('drafts/')) return false;
       if (rel.startsWith('css/') && CSS_NOT_COPIED.has(path.basename(src))) {
         skipped++;
         return false;

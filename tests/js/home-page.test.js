@@ -15,24 +15,24 @@ test('canonical home copy renders with work copy conditional on publication', ()
   for (const service of copy.home.services) {
     expect(norm(doc.body.textContent)).toContain(norm(service.heading));
     expect(norm(doc.body.textContent)).toContain(norm(service.receives));
-    expect(doc.querySelector('#services article > p:not(.home-receives):not(.service-samples)')).toBeNull();
+    expect(doc.querySelector('#services article[data-engineering-service] > p:not(.home-receives):not(.service-samples)')).toBeNull();
   }
   expect(doc.querySelector('#work')).toBeNull();
   expect(doc.querySelector('a[href="#work"]')).toBeNull();
 });
-test('home navigation has the four specified links in order and no CTA', () => {
+test('home navigation has the six specified links in order and no CTA', () => {
   expect([...doc.querySelectorAll('nav ul a')].map(a => [a.textContent, a.getAttribute('href')])).toEqual([
-    ['Home', 'index.html'], ['Services', 'capabilities/'], ['About', 'about.html'], ['Contact', 'contact.html'],
+    ['Home', 'index.html'], ['Services', 'capabilities/'], ['AI automation', 'ai-automation/'], ['Newsletter', 'newsletter/'], ['About', 'about.html'], ['Contact', 'contact.html'],
   ]);
   expect(doc.querySelector('.navbar-right')).toBeNull();
 });
 test.each(['Fitness-for-service decision walk-through', '[LINK', 'All nine samples', 'capabilitiesCards', 'Explore capabilities', 'consultancy', 'ISO 9001', 'quality management', 'Telephone', '25 years', 'President'])('home omits forbidden or unsupported copy: %s', text => {
   expect(html).not.toContain(text);
 });
-test('six service cards each have exactly one client-receives line', () => {
+test('six engineering cards keep their received outputs alongside two automation cards', () => {
   const cards = [...doc.querySelectorAll('#services article')];
-  expect(cards).toHaveLength(6);
-  for (const card of cards) expect([...card.querySelectorAll('p')].filter(p => p.textContent.startsWith('Client receives:'))).toHaveLength(1);
+  expect(cards).toHaveLength(8);
+  for (const card of cards.filter(card => card.hasAttribute('data-engineering-service'))) expect([...card.querySelectorAll('p')].filter(p => p.textContent.startsWith('Client receives:'))).toHaveLength(1);
 });
 test('footer uses the specified display name and copyright', () => {
   expect(doc.querySelector('footer').textContent).toContain('AceEngineer');
@@ -51,7 +51,7 @@ test('home has one shared Organization and a WebPage referencing it', () => {
   expect(page[0].description).toBe(doc.querySelector('meta[name="description"]').content);
 });
 test('home has specified Open Graph and Twitter metadata', () => {
-  expect(doc.title).toBe('AceEngineer | Offshore and marine engineering firm');
+  expect(doc.title).toBe('AceEngineer | Engineering analysis and AI automation');
   expect(doc.querySelector('meta[property="og:title"]').content).toBe(doc.title);
   expect(doc.querySelector('meta[property="og:image"]').content).toBe('https://www.aceengineer.com/assets/img/logo.png');
   expect(doc.querySelector('meta[property="og:site_name"]').content).toBe('AceEngineer');
@@ -107,7 +107,7 @@ test('home and Contact show one direct telephone link', () => {
 });
 test('home facts contain two items without unpublished samples or the standards item', () => {
   expect([...doc.querySelectorAll('.home-facts-grid > p > strong')].map(node => node.textContent))
-    .toEqual(['Founded 2010', '25+ years of experience']);
+    .toEqual(['Founded 2010', '25+ years of experience', 'Public, checked code']);
   expect(doc.querySelector('.home-facts').textContent).not.toContain('Published standards');
 });
 
@@ -155,7 +155,7 @@ test.each([
 });
 
 test('service cards link to distinct detail pages and keep one concise output line', () => {
-  const cards = [...doc.querySelectorAll('#services article')];
+  const cards = [...doc.querySelectorAll('#services article[data-engineering-service]')];
   const destinations = new Set();
   for (const card of cards) {
     const link = card.querySelector('h3 a');
@@ -171,7 +171,7 @@ test('service cards link to distinct detail pages and keep one concise output li
 });
 
 test('the home invitation follows the opening copy and offers the form and canonical contact', () => {
-  const invitation = doc.querySelector('.home-lead + .scope-invitation');
+  const invitation = doc.querySelector('.home-hero .scope-invitation');
   expect(invitation).not.toBeNull();
   expect(invitation.querySelector('a[href="contact.html"]')).not.toBeNull();
   expect(invitation.querySelector('a[href^="mailto:"]').textContent).toBe(copy.home.contact.email);
@@ -213,7 +213,7 @@ test('a published report is adjacent to its own service detail', async () => {
 });
 
 test('each home output summary stays near twenty words without removing qualification', () => {
-  for (const card of doc.querySelectorAll('#services article')) {
+  for (const card of doc.querySelectorAll('#services article[data-engineering-service]')) {
     const words = card.querySelector('.home-receives').textContent.trim().split(/\s+/).length;
     expect(words).toBeGreaterThanOrEqual(17);
     expect(words).toBeLessThanOrEqual(26);

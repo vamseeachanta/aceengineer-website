@@ -32,8 +32,8 @@
     },
     {
       "page": "offshore-platform-fatigue-optimization",
-      "old": "BSEE Accepted; ensemble of XGBoost regressors and associated training/validation details",
-      "new": "Acceptance badge removed; specific trained model and validation evidence not established",
+      "old": "BSEE Accepted; approved for 10 additional years; ensemble of XGBoost regressors and associated training/validation details",
+      "new": "Acceptance badge removed; regulatory approval and specific trained-model evidence not established",
       "evidence": "Tracked repository inventory at base revision; content/blog/machine-learning-fatigue-prediction.html (generic example only)",
       "classification": "inferred",
       "basis": "No case-specific acceptance report or model report, test, dataset or log was located in the 672 tracked files. The generic tutorial does not establish this case."
@@ -51,7 +51,7 @@
     "content/case-studies/subsea-fea-automation.html": "9f773347b2ab4f245c44035fa4d3e810a56d63285f60138d1df06ba8da51acb9",
     "content/case-studies/marine-safety-correlation.html": "4ce0101bfb59968412dd88d70f5bdd5278505fe9f422301ed1966244d931099d",
     "content/case-studies/bsee-field-economics.html": "17e4c528358271d7c00ecac539ca73c922e569e9b527cca08cd8075c97764a47",
-    "content/case-studies/offshore-platform-fatigue-optimization.html": "f9ea0d4db8074d559532ac9ce081653316d9b1cc805dcf94c2f36430dc4ec57e",
+    "content/case-studies/offshore-platform-fatigue-optimization.html": "61fa2c280972e7fcf73b4f78f08dc4ed632183f0f61317f7b8693ae3afe2238e",
     "content/case-studies/wind-turbine-foundation-analysis.html": "c62685f2d19ae374cd796f2cc3ae923feb99f65053c0c61d04605fdd770dc17a",
     "content/case-studies/index.html": "e031c172b303ab46994b32978efcca3a6057b3d0d2cbb9a2731d406747c47657",
     "content/energy.html": "cb85e01b7c0838c60b4d1068ccbdb20f69b768a20af2c45d22dfbc27624d7e19"

@@ -81,6 +81,7 @@ def test_case_specific_model_and_approval_claims_require_evidence(slug):
     assert "full certification" not in page
     assert "Type Certification" not in page
     assert "C203 Certified" not in page
+    assert not re.search(r"approved for 10 additional years", page, re.I)
 
 
 def test_generated_discovery_surfaces_do_not_repeat_retired_claims():

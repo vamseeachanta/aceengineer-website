@@ -20,11 +20,26 @@ test('canonical home copy renders with work copy conditional on publication', ()
   expect(doc.querySelector('#work')).toBeNull();
   expect(doc.querySelector('a[href="#work"]')).toBeNull();
 });
-test('home navigation has the six specified links in order and no CTA', () => {
-  expect([...doc.querySelectorAll('nav ul a')].map(a => [a.textContent, a.getAttribute('href')])).toEqual([
-    ['Home', 'index.html'], ['Services', 'capabilities/'], ['AI automation', 'ai-automation/'], ['Newsletter', 'newsletter/'], ['About', 'about.html'], ['Contact', 'contact.html'],
+test('home navigation keeps the current destinations in order and matches footer quality links', () => {
+  const links = selector => [...doc.querySelectorAll(selector)].map(a => [a.textContent, a.getAttribute('href')]);
+  const menu = links('nav ul a');
+  expect(menu).toEqual([
+    ['Home', 'index.html'], ['Services', 'engineering.html'], ['AI automation', 'ai-automation/'], ['Newsletter', 'newsletter/'],
+    ['Solutions', 'solutions/'], ['Case Studies', 'case-studies/'], ['Calculators', 'calculators/'],
+    ['Platform', 'platform.html'], ['Work so far', 'proof.html'], ['About', 'about.html'], ['Contact', 'contact.html'],
   ]);
+  const footer = links('footer .footer-links a');
+  for (const target of ['engineering.html', 'solutions/', 'case-studies/', 'calculators/', 'platform.html', 'proof.html']) {
+    const entry = footer.find(([, href]) => href === target);
+    expect(entry).toBeDefined();
+    expect(menu).toContainEqual(entry);
+  }
   expect(doc.querySelector('.navbar-right')).toBeNull();
+});
+test('services copy omits the unsupported weather-window cost', () => {
+  const services = new JSDOM(fs.readFileSync('dist/engineering.html', 'utf8')).window.document;
+  expect(services.querySelector('#epc .col-md-6 li').textContent)
+    .toBe('Weather Window Analysis: Vessel operability requires 100+ sea states');
 });
 test.each(['Fitness-for-service decision walk-through', '[LINK', 'All nine samples', 'capabilitiesCards', 'Explore capabilities', 'consultancy', 'ISO 9001', 'quality management', 'Telephone', '25 years', 'President'])('home omits forbidden or unsupported copy: %s', text => {
   expect(html).not.toContain(text);

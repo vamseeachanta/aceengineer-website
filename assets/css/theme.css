@@ -226,6 +226,15 @@ main .demo-cta-section .scope-invitation a:focus {
 .navbar-inverse.theme-nav { background: var(--navy); border: none; }
 .navbar-inverse.theme-nav .navbar-nav > li > a { color: #dce7ef; font-family: var(--font-ui); }
 .navbar-inverse.theme-nav .navbar-nav > li > a:hover { color: #fff; }
+/* Keep the full menu behind the existing toggle until it fits beside the logo. */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .theme-nav .navbar-header { float: none; }
+  .theme-nav .navbar-toggle { display: block; }
+  .theme-nav .navbar-collapse { clear: both; }
+  .theme-nav .navbar-collapse.collapse:not(.in) { display: none !important; }
+  .theme-nav .navbar-nav { float: none; margin: 7.5px -15px; }
+  .theme-nav .navbar-nav > li { float: none; }
+}
 .navbar-inverse.theme-nav .btn-nav-cta {
   background: var(--teal); color: #063b38; border-radius: 6px; font-weight: 700;
 }

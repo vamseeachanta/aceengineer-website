@@ -6,75 +6,77 @@ rootPath: "../"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Case study: Marine safety incident correlation with recorded coverage of 53,261 incidents from 2 sources: TSB Canada (47,385) and MAIB UK (5,876).">
+    <meta name="description" content="Marine safety import record: TSB Canada and MAIB UK counts total 53,261 incidents. Cross-source matching performance is not established by the import record.">
     <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://www.aceengineer.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Case Studies",
-      "item": "https://www.aceengineer.com/case-studies/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Case Study: Marine Safety Incident Correlation",
-      "item": "https://www.aceengineer.com/case-studies/marine-safety-correlation.html"
-    }
-  ]
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.aceengineer.com/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Case Studies",
+            "item": "https://www.aceengineer.com/case-studies/"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Marine Safety Import Coverage",
+            "item": "https://www.aceengineer.com/case-studies/marine-safety-correlation.html"
+        }
+    ]
 }
     </script>
     <meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
-    <meta name="keywords" content="marine safety, incident correlation, fuzzy matching, MAIB, TSB, maritime data integration">
+    <meta name="keywords" content="marine safety import coverage, method scope, evidence limitations">
 
     <!-- Open Graph meta tags -->
-    <meta property="og:title" content="Case Study: Marine Safety Incident Correlation">
-    <meta property="og:description" content="Marine safety incident correlation with recorded coverage of 53,261 incidents from TSB Canada and MAIB UK.">
+    <meta property="og:title" content="Marine Safety Import Coverage">
+    <meta property="og:description" content="Marine safety import record: TSB Canada and MAIB UK counts total 53,261 incidents. Cross-source matching performance is not established by the import record.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://www.aceengineer.com/case-studies/marine-safety-correlation.html">
     <meta property="og:site_name" content="Analytical & Computational Engineering">
 
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Case Study: Marine Safety Incident Correlation">
-    <meta name="twitter:description" content="Cross-database correlation engine for maritime incident data with fuzzy matching and deduplication.">
+    <meta name="twitter:title" content="Marine Safety Import Coverage">
+    <meta name="twitter:description" content="Marine safety import record: TSB Canada and MAIB UK counts total 53,261 incidents. Cross-source matching performance is not established by the import record.">
 
-    <title>Case Study: Marine Safety Incident Correlation - AceEngineer</title>
+    <title>Marine Safety Import Coverage - AceEngineer</title>
 
     <include src="partials/head-common.html"></include>
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "@id": "https://www.aceengineer.com/case-studies/marine-safety-correlation.html#article",
-        "headline": "Marine Safety Incident Correlation Across 2 Sources",
-        "description": "Recorded coverage of 53,261 incidents: TSB Canada (47,385) and MAIB UK (5,876).",
-        "datePublished": "2026-02-13",
-        "dateModified": "2026-02-13",
-        "author": {
-            "@type": "Person",
-            "name": "Vamsee Achanta",
-            "honorificSuffix": "P.E.",
-            "url": "https://www.aceengineer.com/about.html"
-        },
-        "publisher": { "@id": "https://www.aceengineer.com/#organization" },
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://www.aceengineer.com/case-studies/marine-safety-correlation.html"
-        },
-        "keywords": ["marine safety", "incident correlation", "fuzzy matching", "maritime data", "MAIB", "TSB"]
-    }
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://www.aceengineer.com/case-studies/marine-safety-correlation.html#article",
+    "headline": "Marine Safety Import Coverage",
+    "description": "Marine safety import record: TSB Canada and MAIB UK counts total 53,261 incidents. Cross-source matching performance is not established by the import record.",
+    "datePublished": "2026-02-13",
+    "dateModified": "2026-10-20",
+    "author": {
+        "@id": "https://www.aceengineer.com/#organization"
+    },
+    "publisher": {
+        "@id": "https://www.aceengineer.com/#organization"
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.aceengineer.com/case-studies/marine-safety-correlation.html"
+    },
+    "keywords": [
+        "Marine Safety Import Coverage",
+        "evidence limitations"
+    ]
+}
     </script>
 
     <style>
@@ -210,299 +212,34 @@ rootPath: "../"
     <include src="partials/nav.html"></include>
 
     <main id="main">
-
-    <!-- Case Study Header -->
     <div class="case-study-header">
         <div class="container">
-            <h1>Marine Safety Incident Correlation</h1>
-            <p class="case-study-meta">
-                <strong>Industry:</strong> Maritime |
-                <strong>Scope:</strong> Global |
-                <strong>Recorded Coverage:</strong> 2 Sources |
-                <strong>Duration:</strong> 8 weeks
-            </p>
-            <p style="margin-top: 20px;">
-                <span class="compliance-badge">Public Maritime Data</span>
-                <span class="compliance-badge">Fuzzy Matching</span>
-                <span class="compliance-badge">Auditable Deduplication</span>
-            </p>
+            <h1>Marine Safety Import Coverage</h1>
+            <p class="case-study-meta">Recorded scope: North America + UK waters</p>
         </div>
     </div>
-
     <div class="container">
-
-        <!-- Key Metrics -->
-        <div class="metrics-row">
-            <div class="metric-box">
-                <div class="metric-value">2</div>
-                <div class="metric-label">Recorded Sources</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-value">53,261</div>
-                <div class="metric-label">Recorded Incidents</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-value">50</div>
-                <div class="metric-label">Years Historical Data</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-value">92%</div>
-                <div class="metric-label">Analysis Time Reduction</div>
-            </div>
-        </div>
-
-        <!-- Executive Summary -->
-        <h2 class="section-title">Executive Summary</h2>
-        <p>
-            A maritime insurance provider required unified incident intelligence across multiple international investigation databases to improve risk assessment accuracy and reduce claim processing time. Existing manual correlation processes were fragmented, labor-intensive, and missed critical incident relationships across jurisdictions.
-        </p>
-        <p>
-            The recorded import covers 53,261 incidents from 2 sources: the Transportation Safety Board of Canada (TSB), with 47,385 incidents, and the UK Marine Accident Investigation Branch (MAIB), with 5,876 incidents. The system delivered 92% reduction in manual correlation time and identified previously unknown incident relationships across 30+ vessel operators.
-        </p>
-
-        <div class="data-source-note">
-            <strong>Data Transparency:</strong> The <a href="https://github.com/vamseeachanta/worldenergydata/blob/7493f54316cc1d1ee5b5813afe69c90c873c04e7/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md">recorded import statistics</a> give 47,385 TSB incidents plus 5,876 MAIB incidents, totaling 53,261. The linked visualization script generates sample data; its additional source entries do not establish measured seven-authority coverage.
-        </div>
-
-        <!-- The Challenge -->
-        <h2 class="section-title">The Challenge</h2>
-
-        <div class="challenge-box">
-            <h3 class="h-size-h4">Fragmented International Databases</h3>
-            <p>
-                Maritime incidents are investigated by local authorities, creating data silos across MAIB (UK), TSB (Canada), USCG (USA), NTSB (USA), ATSB (Australia), IMO (global), and EMSA (EU). The same incident often appears in multiple databases with inconsistent vessel names, dates, and location formats.
-            </p>
-        </div>
-
-        <div class="challenge-box">
-            <h3 class="h-size-h4">Manual Correlation Bottlenecks</h3>
-            <p>
-                Risk analysts spent 40+ hours per week manually cross-referencing incidents across databases. Vessel name variations ("MV Pacific Star" vs "PACIFIC STAR" vs "Pacific-Star"), timezone differences, and location format inconsistencies led to missed correlations and duplicate risk assessments.
-            </p>
-        </div>
-
-        <div class="challenge-box">
-            <h3 class="h-size-h4">Inconsistent Data Quality</h3>
-            <p>
-                Each authority uses different reporting schemas, severity classifications, and investigation timelines. IMO numbers were inconsistent, vessel names contained typos, and incident dates varied by timezone. No single identifier existed to reliably link cross-border incidents.
-            </p>
-        </div>
-
-        <!-- Our Approach -->
-        <h2 class="section-title">Our Approach</h2>
-
-        <div class="methodology-step">
-            <div class="step-number">1</div>
-            <div class="step-content">
-                <h3 class="h-size-h4">Multi-Source Data Integration</h3>
-                <p>
-                    Recorded imports cover MAIB (5,876 incidents) and TSB (47,385 incidents). Source-specific schemas, date formats, and severity classifications are mapped to a unified data model.
-                </p>
-            </div>
-        </div>
-
-        <div class="methodology-step">
-            <div class="step-number">2</div>
-            <div class="step-content">
-                <h3 class="h-size-h4">Fuzzy Matching Engine Implementation</h3>
-                <p>
-                    Implemented multi-stage correlation using IMO number exact matching (primary), Levenshtein distance for vessel name similarity (secondary), geographic haversine proximity (tertiary), and temporal proximity within configurable windows. Combined confidence scoring weighted by match quality.
-                </p>
-            </div>
-        </div>
-
-        <div class="methodology-step">
-            <div class="step-number">3</div>
-            <div class="step-content">
-                <h3 class="h-size-h4">Intelligent Deduplication Workflow</h3>
-                <p>
-                    Created batch deduplication pipeline with confidence thresholds (0.7-1.0), manual verification flags for borderline matches, and audit trails for all correlation decisions. System automatically links high-confidence matches while flagging uncertain correlations for analyst review.
-                </p>
-            </div>
-        </div>
-
-        <div class="methodology-step">
-            <div class="step-number">4</div>
-            <div class="step-content">
-                <h3 class="h-size-h4">Unified Incident Dashboard</h3>
-                <p>
-                    Deployed SQLite-based correlation database with CLI tools for match discovery, manual linking, and statistics reporting. Analysts can query incidents by vessel IMO, name pattern, date range, or location with cross-reference to related incidents in the recorded TSB and MAIB sources.
-                </p>
-            </div>
-        </div>
-
-        <!-- Technical Details -->
-        <h2 class="section-title">Technical Implementation</h2>
-
-        <h3>Data Source Coverage</h3>
+        <h2 class="section-title">Recorded Import Coverage</h2>
+        <p>The <a href="https://github.com/vamseeachanta/worldenergydata/blob/7493f54316cc1d1ee5b5813afe69c90c873c04e7/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md">Phase 2 marine safety import record</a> reports 47,385 incidents from the Transportation Safety Board of Canada (TSB) and 5,876 from the UK Marine Accident Investigation Branch (MAIB). These recorded source counts sum to 53,261 incidents at the cited revision; they are not a current live database count.</p>
+        <p>The geographic scope stated in the record is North America + UK waters. The counts below cover TSB Canada and MAIB UK only.</p>
         <div class="table-responsive-wrapper">
-        <table class="table-results">
-            <tr>
-                <th>Authority</th>
-                <th>Region</th>
-                <th>Incidents</th>
-                <th>Date Range</th>
-            </tr>
-            <tr>
-                <td>TSB Canada</td>
-                <td>Canada</td>
-                <td>47,385</td>
-                <td>1975-2025</td>
-            </tr>
-            <tr>
-                <td>MAIB UK</td>
-                <td>United Kingdom</td>
-                <td>5,876</td>
-                <td>2018-2024</td>
-            </tr>
-        </table>
+            <table class="table-results">
+                <tr><th>Source</th><th>Recorded incidents</th><th>Recorded date range</th></tr>
+                <tr><td>TSB Canada</td><td>47,385</td><td>1975-2025</td></tr>
+                <tr><td>MAIB UK</td><td>5,876</td><td>2018-2024</td></tr>
+            </table>
         </div>
-
-        <h3>Correlation Algorithm</h3>
-        <p>
-            The fuzzy matching engine uses multi-stage correlation with weighted confidence scoring:
-        </p>
-        <ul>
-            <li><strong>IMO Number Match:</strong> Exact 7-digit IMO number matching (confidence: 1.0 when present)</li>
-            <li><strong>Vessel Name Similarity:</strong> Levenshtein distance with normalization (strip case, punctuation, common prefixes like MV/SS)</li>
-            <li><strong>Geographic Proximity:</strong> Haversine formula with configurable radius threshold (default 50km)</li>
-            <li><strong>Temporal Proximity:</strong> Date matching within tolerance window (default 3 days for timezone/reporting lag)</li>
-            <li><strong>Combined Scoring:</strong> Weighted average across all match dimensions with minimum confidence threshold (default 0.7)</li>
-        </ul>
-
-        <h3>Performance Characteristics</h3>
-        <p>
-            Optimized batch processing enables rapid correlation analysis:
-        </p>
-        <ul>
-            <li><strong>Recorded Import:</strong> 53,261 incidents from TSB and MAIB</li>
-            <li><strong>Correlation Matching:</strong> Full cross-source analysis completes in under 5 minutes</li>
-            <li><strong>Incremental Updates:</strong> New incidents correlated in real-time as data arrives</li>
-            <li><strong>Query Response:</strong> Vessel incident history retrieval in under 100ms</li>
-        </ul>
-
-        <!-- Results -->
-        <h2 class="section-title">Results</h2>
-
-        <div class="result-box">
-            <h3 class="h-size-h4">Unified Incident Intelligence</h3>
-            <p>
-                Recorded imports total 53,261 incidents from TSB and MAIB, with combined coverage spanning 1975-2025. Automated correlation identified 2,300+ cross-jurisdiction incident relationships that were previously unknown to analysts, revealing patterns in operator safety performance.
-            </p>
-        </div>
-
-        <div class="result-box">
-            <h3 class="h-size-h4">92% Reduction in Manual Effort</h3>
-            <p>
-                Automated fuzzy matching reduced weekly analyst correlation time from 40 hours to 3 hours (verification only). High-confidence matches (confidence greater than 0.9) require no manual review. Medium-confidence matches (0.7-0.9) flagged for quick analyst verification.
-            </p>
-        </div>
-
-        <div class="result-box">
-            <h3 class="h-size-h4">Improved Risk Assessment Accuracy</h3>
-            <p>
-                Cross-database correlation revealed that 18% of high-severity incidents appeared in multiple authority databases but were previously counted as separate events. Unified view enabled accurate fleet risk scoring and premium calculations based on complete incident history.
-            </p>
-        </div>
-
-        <h3>Key Impact Metrics</h3>
-        <div class="table-responsive-wrapper">
-        <table class="table-results">
-            <tr>
-                <th>Metric</th>
-                <th>Before</th>
-                <th>After</th>
-                <th>Improvement</th>
-            </tr>
-            <tr>
-                <td>Manual Correlation Time</td>
-                <td>40 hrs/week</td>
-                <td>3 hrs/week</td>
-                <td>92% reduction</td>
-            </tr>
-            <tr>
-                <td>Data Source Coverage</td>
-                <td>Prior coverage not established</td>
-                <td>2 recorded sources (TSB, MAIB)</td>
-                <td>Coverage increase not established</td>
-            </tr>
-            <tr>
-                <td>Incident Relationships Identified</td>
-                <td>Manual discovery only</td>
-                <td>2,300+ automated</td>
-                <td>New capability</td>
-            </tr>
-            <tr>
-                <td>Query Response Time</td>
-                <td>Hours (manual search)</td>
-                <td>Under 100ms</td>
-                <td>99.9% faster</td>
-            </tr>
-            <tr>
-                <td>Duplicate Risk Assessments</td>
-                <td>18% incidents counted twice</td>
-                <td>Zero duplicates</td>
-                <td>100% accuracy</td>
-            </tr>
-        </table>
-        </div>
-
-        <!-- Lessons Learned -->
-        <h2 class="section-title">Key Takeaways</h2>
-
-        <h3>For Maritime Insurers and Operators</h3>
-        <ul>
-            <li>Cross-jurisdiction incident correlation reveals hidden patterns impossible to detect in single-source analysis</li>
-            <li>Fuzzy matching with configurable confidence thresholds balances automation with analyst verification needs</li>
-            <li>IMO numbers remain unreliable identifiers - only 60% of incidents include valid IMO numbers</li>
-            <li>Vessel name normalization (case, punctuation, prefix removal) critical for fuzzy matching accuracy</li>
-        </ul>
-
-        <h3>For Data Engineers</h3>
-        <ul>
-            <li>Levenshtein distance alone insufficient - geographic and temporal proximity required for marine incidents</li>
-            <li>Multi-stage matching with weighted confidence scoring outperforms single-algorithm approaches</li>
-            <li>SQLite with full-text search adequate for 50K+ incident datasets - no complex infrastructure needed</li>
-            <li>Audit trails and manual verification flags essential for regulatory compliance and analyst trust</li>
-        </ul>
-
-        <!-- Technologies Used -->
-        <h2 class="section-title">Technologies & Tools</h2>
-        <p>
-            <strong>Recorded Data Sources:</strong> TSB Canada and MAIB UK public databases<br>
-            <strong>Data Processing:</strong> Python (pandas, numpy) for ETL and normalization<br>
-            <strong>Fuzzy Matching:</strong> Levenshtein distance (python-Levenshtein), haversine formula for geolocation<br>
-            <strong>Database:</strong> SQLite with full-text search and foreign key constraints<br>
-            <strong>CLI Tools:</strong> Click framework with Rich library for interactive correlation management<br>
-            <strong>Testing:</strong> pytest with 80+ correlation engine tests
-        </p>
-
-        <h3>Reproducibility Note</h3>
-        <p>
-            The following command regenerates sample visualization data, including estimated entries for additional authorities; it does not repeat the measured imports:
-        </p>
-        <pre style="background: #f5f5f5; padding: 15px; border-radius: 4px; overflow-x: auto;">
-python3 scripts/generate_marine_safety_data.py
-# Outputs: assets/data/marine_safety_correlation.json</pre>
-
-        <!-- CTA Section -->
-        <div class="cta-section">
-            <h3>Need Cross-Database Data Integration?</h3>
-            <p>We deliver intelligent data fusion solutions for fragmented industry databases with fuzzy matching and deduplication.</p>
-            <a href="../contact.html" class="btn btn-primary btn-lg">Discuss Your Project</a>
-            <a href="../energy.html" class="btn btn-default btn-lg">View Energy Solutions</a>
-        </div>
-
-        <hr style="margin-top: 50px;">
-
-        <p>
-            <a href="index.html">View All Case Studies</a> |
-            <a href="../energy.html">Energy Data Solutions</a> |
-            <a href="../blog/">Technical Blog</a>
-        </p>
-
+        <p>Table 1. Source counts and periods reported in the cited import record.</p>
+        <h2 class="section-title">Identity and Matching Limitations</h2>
+        <p>The same record states that MAIB rows lack vessel names and IMO numbers. TSB records include vessel details, but older records can lack location coordinates. The record also notes vessel-creation errors requiring correction.</p>
+        <p>The import counts do not establish cross-source incident matches, a deduplicated cross-jurisdiction total, operator coverage, analyst time savings or matching accuracy. Name-based and IMO-based matching cannot be claimed for MAIB rows without the missing identifiers.</p>
+        <h2 class="section-title">Sample Visualization Data</h2>
+        <p>The <a href="https://github.com/vamseeachanta/aceengineer-website/blob/2492de4b6a850e8eb1625bb98bc45b1253780f73/scripts/generate_marine_safety_data.py">sample visualization generator</a> writes fixed example distributions and correlation statistics to <a href="../assets/data/marine_safety_correlation.json">sample JSON</a>. It does not rerun the recorded imports or measure correlation results. Its additional authority entries and matching statistics do not establish imported coverage or observed performance.</p>
+        <h2 class="section-title">Basis for Further Analysis</h2>
+        <p>A correlation analysis would require qualified source identifiers, documented matching rules and a retained set of reviewed candidate matches. Source-count arithmetic alone does not establish incident identity or a risk-assessment outcome.</p>
+        <hr>
+        <p><a href="./">View All Case Studies</a> | <a href="../energy.html">Energy Solutions</a></p>
     </div>
-
     </main>
 
     <include src="partials/footer.html"></include>

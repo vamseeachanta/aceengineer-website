@@ -79,3 +79,24 @@ test('all page JSON-LD remains valid and prose has no deletion fragments', () =>
     assert.doesNotMatch(html, /the calculator and<\/em>|<p>Yes —<\/p>/, path.relative(root, file));
   }
 });
+
+test('main menu shares footer destinations and wording for engineering work', () => {
+  const read = file => fs.readFileSync(path.join(root, 'content', file), 'utf8');
+  const links = html => [...html.matchAll(/href="\{\{ rootPath \}\}([^"]+)"[^>]*>([^<]+)<\/a>/g)]
+    .map(match => [match[1], match[2]]);
+  const menu = links(read('partials/nav.html'));
+  const footer = links(read('partials/footer.html'));
+  for (const target of ['solutions/', 'case-studies/', 'calculators/', 'platform.html', 'proof.html', 'engineering.html']) {
+    const expected = footer.find(([href]) => href === target);
+    assert.ok(expected, target + ' must exist in the footer');
+    assert.deepEqual(menu.find(([href]) => href === target), expected, target);
+  }
+  const mainOnly = ['index.html', 'about.html', 'samples/'];
+  for (const entry of menu) {
+    assert.ok(mainOnly.includes(entry[0]) || footer.some(item => item[0] === entry[0] && item[1] === entry[1]), entry.join(': '));
+    assert.ok(fs.existsSync(path.join(root, 'content', entry[0], entry[0].endsWith('/') ? 'index.html' : '')) || entry[0] === 'samples/', entry[0]);
+  }
+  const cases = read('case-studies/index.html');
+  assert.match(cases, /href="\.\.\/reports\/sloshing\/"/);
+  assert.ok(fs.existsSync(path.join(root, 'content/reports/sloshing/index.html')));
+});

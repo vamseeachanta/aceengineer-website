@@ -48,6 +48,12 @@ describe('vendored assets (dist/)', () => {
     expect(pages.length).toBeGreaterThan(50);
   });
 
+  test('review drafts stay out of deployment while public assets ship', () => {
+    expect(fs.existsSync(path.join(ROOT, 'assets/drafts/share-card-draft.png'))).toBe(true);
+    expect(fs.existsSync(path.join(DIST, 'assets/drafts'))).toBe(false);
+    expect(fs.existsSync(path.join(DIST, 'assets/img/logo.png'))).toBe(true);
+  });
+
   test('no page loads a script from cdn.plot.ly', () => {
     const bad = pages
       .map(p => [rel(p), scriptSrcs(p).filter(s => /cdn\.plot\.ly/.test(s))])

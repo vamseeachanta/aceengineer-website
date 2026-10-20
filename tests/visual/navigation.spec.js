@@ -3,7 +3,7 @@
 const { test, expect } = require('@playwright/test');
 
 const widths = [375, 768, 1024, 1100, 1210, 1219, 1220, 1279, 1280, 1440];
-const qualityTargets = ['engineering.html', 'solutions/', 'case-studies/', 'calculators/', 'platform.html', 'proof.html'];
+const qualityTargets = ['solutions/', 'case-studies/', 'calculators/', 'platform.html', 'proof.html'];
 
 for (const width of widths) {
   test(`navigation stays compact and every quality target is reachable at ${width}px`, async ({ page }) => {
@@ -32,6 +32,9 @@ for (const width of widths) {
     } else {
       await expect(toggle).toBeHidden();
     }
+    const services = nav.getByRole('link', { name: 'Services', exact: true });
+    await expect(services).toBeVisible();
+    await expect(services).toHaveAttribute('href', 'capabilities/');
     for (const target of qualityTargets) {
       const link = nav.locator(`a[href="${target}"]`);
       await expect(link).toBeVisible();

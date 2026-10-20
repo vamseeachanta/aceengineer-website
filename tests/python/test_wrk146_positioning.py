@@ -169,10 +169,10 @@ class TestAboutPagePositioning:
             f"got: {len(text_only)}"
         )
 
-    def test_about_sn_curves_count_mentioned(self):
+    def test_about_omits_unsupported_sn_curve_count(self):
         content = read_page("about.html")
-        assert "221" in content, (
-            "About page must mention 221 S-N curves to quantify technical depth"
+        assert "221" not in content, (
+            "About page must omit the unsupported S-N curve count"
         )
 
     def test_about_how_we_work_section(self):

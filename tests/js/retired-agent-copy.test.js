@@ -13,6 +13,33 @@ function prose(text) {
   return text.replace(/<!--[^]*?-->/g, '').replace(/(?:https?:\/\/|\/?(?:domains\/)?)[^\s<>"']*deckhand[^\s<>"']*/gi, '')
     .replace(/(?:href|data-src)="[^"]*"/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
 }
+const unsupportedStandardsClaims = [
+  /Validated methodologies you can trust/i, /RP-C203\s+Validated/i,
+  /RP\s+2A\s+Compliant/i, /7608\s+Certified/i, /API\s*\/\s*DNV\s+Compliant/i,
+  /\b221\b/, /\b17\s+(?:international\s+)?standards\b/i,
+  /\bvalidated\s+(?:S-N\s+)?curves\b/i,
+  /Every result traces to a DNV \/ API \/ ISO \/ ASME clause\./i,
+];
+function assertNoUnsupportedStandardsClaims(html) {
+  const text = html + ' ' + prose(html);
+  for (const pattern of unsupportedStandardsClaims) assert.doesNotMatch(text, pattern);
+}
+test('engineering overview pages omit unsupported curve counts and certification claims', () => {
+  for (const page of ['engineering', 'contact', 'about', 'faq', 'platform']) {
+    assertNoUnsupportedStandardsClaims(fs.readFileSync(path.join(root, 'content', page + '.html'), 'utf8'));
+  }
+});
+test('standards claim guard rejects the withdrawn claims, including split badges and metadata', () => {
+  for (const claim of [
+    'Validated methodologies you can trust', 'RP-C203 Validated', 'RP 2A Compliant', '7608 Certified',
+    '<div>API/DNV</div><div>Compliant</div>', '221 validated S-N curves',
+    '221 validated curves pre-loaded', '221 S-N curves, 17 standards',
+    'All 221 S-N curves are validated against published standard values',
+    'S-N fatigue (221 curves, 17 standards)', 'Batch analysis with validated curves',
+    '<meta content="Every result traces to a DNV / API / ISO / ASME clause.">',
+  ]) assert.throws(() => assertNoUnsupportedStandardsClaims(claim), assert.AssertionError, claim);
+  assertNoUnsupportedStandardsClaims('DNV-RP-C203, API RP 2A, BS 7608. Tests cover the listed calculator classes.');
+});
 test('published copy contains no active retired-agent or chat-service promises', () => {
   const paths = ['content', 'brand', 'config/seo'].flatMap(dir => files(path.join(root, dir)))
     .filter(file => /\.(html|yaml|md)$/.test(file));
@@ -80,18 +107,23 @@ test('all page JSON-LD remains valid and prose has no deletion fragments', () =>
   }
 });
 
-test('main menu shares footer destinations and wording for engineering work', () => {
-  const read = file => fs.readFileSync(path.join(root, 'content', file), 'utf8');
-  const links = html => [...html.matchAll(/href="\{\{ rootPath \}\}([^"]+)"[^>]*>([^<]+)<\/a>/g)]
-    .map(match => [match[1], match[2]]);
-  const menu = links(read('partials/nav.html'));
-  const footer = links(read('partials/footer.html'));
-  for (const target of ['solutions/', 'case-studies/', 'calculators/', 'platform.html', 'proof.html', 'engineering.html']) {
+const qualityTargets = ['solutions/', 'case-studies/', 'calculators/', 'platform.html', 'proof.html'];
+const menuLinks = html => [...html.matchAll(/href="\{\{ rootPath \}\}([^"]+)"[^>]*>([^<]+)<\/a>/g)]
+  .map(match => [match[1], match[2]]);
+function assertEngineeringMenu(menu, footer) {
+  assert.deepEqual(menu.find(([, label]) => label === 'Services'), ['capabilities/', 'Services']);
+  for (const target of qualityTargets) {
     const expected = footer.find(([href]) => href === target);
     assert.ok(expected, target + ' must exist in the footer');
     assert.deepEqual(menu.find(([href]) => href === target), expected, target);
   }
-  const mainOnly = ['index.html', 'about.html', 'samples/'];
+}
+test('main menu shares the five requested footer targets and preserves Services', () => {
+  const read = file => fs.readFileSync(path.join(root, 'content', file), 'utf8');
+  const menu = menuLinks(read('partials/nav.html'));
+  const footer = menuLinks(read('partials/footer.html'));
+  assertEngineeringMenu(menu, footer);
+  const mainOnly = ['index.html', 'about.html', 'samples/', 'capabilities/'];
   for (const entry of menu) {
     assert.ok(mainOnly.includes(entry[0]) || footer.some(item => item[0] === entry[0] && item[1] === entry[1]), entry.join(': '));
     assert.ok(fs.existsSync(path.join(root, 'content', entry[0], entry[0].endsWith('/') ? 'index.html' : '')) || entry[0] === 'samples/', entry[0]);
@@ -99,4 +131,15 @@ test('main menu shares footer destinations and wording for engineering work', ()
   const cases = read('case-studies/index.html');
   assert.match(cases, /href="\.\.\/reports\/sloshing\/"/);
   assert.ok(fs.existsSync(path.join(root, 'content/reports/sloshing/index.html')));
+});
+test('menu guard rejects missing targets, changed wording and a retargeted Services link', () => {
+  const menu = menuLinks(fs.readFileSync(path.join(root, 'content/partials/nav.html'), 'utf8'));
+  const footer = menuLinks(fs.readFileSync(path.join(root, 'content/partials/footer.html'), 'utf8'));
+  const validMenu = menu.map(([href, label]) => [label === 'Services' ? 'capabilities/' : href, label]);
+  assertEngineeringMenu(validMenu, footer);
+  const invalidMenus = qualityTargets.map(target => validMenu.filter(([href]) => href !== target));
+  invalidMenus.push(validMenu.map(([href, label]) => [label === 'Services' ? 'engineering.html' : href, label]));
+  invalidMenus.push(validMenu.map(([href, label]) => [href === 'proof.html' ? 'legacy.html' : href, label]));
+  invalidMenus.push(validMenu.map(([href, label]) => [href, href === 'proof.html' ? 'Proof' : label]));
+  for (const invalid of invalidMenus) assert.throws(() => assertEngineeringMenu(invalid, footer), assert.AssertionError);
 });

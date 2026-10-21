@@ -53,9 +53,8 @@ capabilities:
   - id: cap_03
     heading: Who We Serve
     blurb: >-
-      The result: engineering firms send a design matrix and get validated, traceable
-      results from one automated batch, without pulling senior engineers from billable
-      work.
+      The result: engineering firms send a design matrix and receive batch results
+      with recorded inputs for engineering review.
 
 credentials:
   - 25+ years

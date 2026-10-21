@@ -19,13 +19,17 @@ const unsupportedStandardsClaims = [
   /\b221\b/, /\b17\s+(?:international\s+)?standards\b/i,
   /\bvalidated\s+(?:S-N\s+)?curves\b/i,
   /Every result traces to a DNV \/ API \/ ISO \/ ASME clause\./i,
+  /\bvalidated\b/i, /standards compliance/i, /multi-standard compliance/i,
+  /full (?:standards )?traceability/i, /Every output traces/i,
+  /standards-traceable calculations/i,
+  /Automated regression testing against published standard values/i,
 ];
 function assertNoUnsupportedStandardsClaims(html) {
   const text = html + ' ' + prose(html);
   for (const pattern of unsupportedStandardsClaims) assert.doesNotMatch(text, pattern);
 }
-test('engineering overview pages omit unsupported curve counts and certification claims', () => {
-  for (const page of ['engineering', 'contact', 'about', 'faq', 'platform']) {
+test('engineering overview and fatigue calculator pages omit unsupported standards claims', () => {
+  for (const page of ['engineering', 'contact', 'about', 'faq', 'platform', 'calculators/fatigue-sn-curve']) {
     assertNoUnsupportedStandardsClaims(fs.readFileSync(path.join(root, 'content', page + '.html'), 'utf8'));
   }
 });
@@ -37,8 +41,22 @@ test('standards claim guard rejects the withdrawn claims, including split badges
     'All 221 S-N curves are validated against published standard values',
     'S-N fatigue (221 curves, 17 standards)', 'Batch analysis with validated curves',
     '<meta content="Every result traces to a DNV / API / ISO / ASME clause.">',
+    'get validated, traceable results', 'You Review Validated Results',
+    'Pre-built standards compliance', 'DNV, API, BS, and multi-standard compliance',
+    'Full traceability from inputs to results',
+    'computational tools with full standards traceability',
+    'Every output traces back to inputs, standards references, and methodology',
+    '<meta content="standards-traceable calculations">',
+    'Automated regression testing against published standard values',
   ]) assert.throws(() => assertNoUnsupportedStandardsClaims(claim), assert.AssertionError, claim);
   assertNoUnsupportedStandardsClaims('DNV-RP-C203, API RP 2A, BS 7608. Tests cover the listed calculator classes.');
+  assertNoUnsupportedStandardsClaims('Results with recorded inputs for engineering review; standards referenced.');
+});
+test('published fatigue class counts match the calculator engine', () => {
+  const count = Object.keys(require('../../assets/js/dnv-c203-sn-engine').CURVES).length;
+  const read = page => prose(fs.readFileSync(path.join(root, 'content', page + '.html'), 'utf8'));
+  assert.match(read('about'), new RegExp(`\\b${count} DNV-RP-C203 classes Air, CP, free corrosion\\b`));
+  assert.match(read('calculators/fatigue-sn-curve'), new RegExp(`\\b${count} DNV-RP-C203 S-N classes in air, seawater with cathodic protection and free corrosion\\b`));
 });
 test('published copy contains no active retired-agent or chat-service promises', () => {
   const paths = ['content', 'brand', 'config/seo'].flatMap(dir => files(path.join(root, dir)))

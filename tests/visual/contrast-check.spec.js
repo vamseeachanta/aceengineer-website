@@ -98,6 +98,9 @@ test('content links meet WCAG AA on every built page', async ({ page }) => {
   let indeterminate = 0;
   for (const p of PAGES) {
     await page.goto(p);
+    if (p === '/newsletter/issue-001/index.html') {
+      await expect(page).toHaveURL(/\/newsletter\/issue-001-energy-street\/$/);
+    }
     const results = await readLinks(page.locator('main a'));
     for (const r of results) {
       if (!r.text) continue;

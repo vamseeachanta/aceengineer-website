@@ -28,6 +28,7 @@ const SITEMAP_EXCLUDE = {
   'deckhand-api.html': 'retired Deckhand page — noindex',
   'api-catalog.html': 'retired Deckhand page — noindex',
   '404.html': 'error page — not a destination',
+  'newsletter/issue-001/index.html': 'superseded issue — noindex redirect to the current edition',
   'reports/diffraction/analysis.html': 'noindex redirect stub -> diffraction index after source review',
   'reports/diffraction/comparison.html': 'noindex redirect stub -> diffraction index after source review',
   'reports/diffraction/aqwa-analysis.html': 'noindex redirect stub -> diffraction index',

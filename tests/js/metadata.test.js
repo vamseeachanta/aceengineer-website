@@ -280,7 +280,7 @@ test('source metadata meets the required coverage floors', () => {
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
   // Includes the newsletter archive and both automation pages; retired sources still count.
   // Keep the existing 107 floor: noindex exclusions do not require a reduction.
-  expect(sources).toHaveLength(127);
+  expect(sources).toHaveLength(128);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 107],
     ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],
@@ -441,8 +441,7 @@ test('legal name appears once per footer and once in Organization metadata per p
     const doc = documents.get(page).cloneNode(true);
     const footers = doc.querySelectorAll('footer.footer-section');
     expect(doc.querySelectorAll('footer.footer-section:not(.newsletter-footer)').length).toBeLessThanOrEqual(1);
-    expect(doc.querySelectorAll('footer.newsletter-footer').length)
-      .toBe(page === 'newsletter/issue-001/index.html' ? 1 : 0);
+    expect(doc.querySelectorAll('footer.newsletter-footer').length).toBe(0);
     for (const footer of footers) {
       const lines = footer.querySelectorAll('.footer-legal');
       expect({ page, count: lines.length }).toEqual({ page, count: 1 });
@@ -511,22 +510,18 @@ test('published chart pages distinguish the planned interactive version', () => 
 });
 
 test('newsletter issue includes the shared site footer after its reviewed main content', () => {
-  const doc = documents.get('newsletter/issue-001/index.html');
+  const doc = documents.get('newsletter/issue-001-energy-street/index.html');
   const main = doc.querySelector('main');
-  expect(main.querySelectorAll('footer.newsletter-footer')).toHaveLength(1);
+  expect(main.querySelectorAll('article footer')).toHaveLength(1);
   const sharedFooter = main.nextElementSibling;
   expect(sharedFooter.matches('footer.footer-section:not(.newsletter-footer)')).toBe(true);
   expect(sharedFooter.querySelector('.footer-legal')).not.toBeNull();
 });
 
-test('maintainer decisions fragment preserves the existing issue-one fragment', () => {
+test('the superseded issue no longer carries the withdrawn decisions section', () => {
   const doc = documents.get('newsletter/issue-001/index.html');
-  const alias = doc.getElementById('maintainer-decisions');
-  expect(alias).not.toBeNull();
-  const heading = alias.parentElement;
-  expect(heading.tagName).toBe('H2');
-  expect(heading.id).toMatch(/-decisions$/);
-  expect(heading.id).not.toBe('maintainer-decisions');
+  expect(doc.getElementById('maintainer-decisions')).toBeNull();
+  expect(doc.querySelector('main a').getAttribute('href')).toBe('/newsletter/issue-001-energy-street/');
 });
 
 test('legal footer inherits copyright type and colour at a smaller size', () => {
@@ -702,7 +697,7 @@ test('newsletter story tracking counts one tagged arrival and ignores arbitrary 
   const source = fs.readFileSync('assets/js/newsletter-story.js', 'utf8');
   function events(search) {
     const calls = [];
-    vm.runInNewContext(source, {URLSearchParams, window: {location: {search}, gtag: (...args) => calls.push(args)}, document: documents.get('newsletter/issue-001/index.html')});
+    vm.runInNewContext(source, {URLSearchParams, window: {location: {search}, gtag: (...args) => calls.push(args)}, document: documents.get('newsletter/issue-001-energy-street/index.html')});
     return calls;
   }
   expect(events('?utm_campaign=issue-001&utm_content=specialists')).toEqual([['event', 'newsletter_story', {issue: 'issue-001', story: 'specialists'}]]);

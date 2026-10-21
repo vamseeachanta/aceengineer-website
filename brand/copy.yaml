@@ -25,22 +25,17 @@ names:
   legal: Achanta AceEngineer Inc.
   retired_acronym: A&CE
 
-tagline: Offshore Engineering Analytics at Scale
+tagline: Engineering analysis and AI automation
 
 firm_lede: >-
-  AceEngineer is an AI-native offshore engineering firm&mdash;not a contractor
-  with a laptop. Backed by an AI orchestration layer and 704+ production-tested
-  Python modules, we ship validated pipelines for <strong>computational fatigue
-  assessment, riser &amp; mooring analysis, and diffraction analysis</strong>.
-  Based in Houston. Every filing cites the applicable standard, clause, equation,
-  and parameter values&mdash;reproducible with the pipeline we hand back.
+  AceEngineer is a Houston engineering firm that runs its analysis as automated, checked workflows. AI automation and agentic workflows are topics for discussion under a separately agreed scope. The engineering code is public: of 196 modules in digitalmodel, worldenergydata and assetutilities, 35 pass their cited checks (catalogue run 2026-10-17). The pinned catalogue records the evidence available for its classifications.
 
 founding: >-
   Analytical &amp; Computational Engineering was founded in 2010 in Houston, Texas,
   with a clear mission: eliminate the repetitive manual work that consumes offshore
   engineering teams.
 
-service_model: "We deliver automated workflows, not consulting hours. The process is straightforward:"
+service_model: "AI and agentic workflows: contact us to discuss a separately agreed scope."
 
 capabilities:
   - id: cap_01
@@ -58,13 +53,12 @@ capabilities:
   - id: cap_03
     heading: Who We Serve
     blurb: >-
-      The result: engineering firms send a design matrix and get validated, traceable
-      results from one automated batch, without pulling senior engineers from billable
-      work.
+      The result: engineering firms send a design matrix and receive batch results
+      with recorded inputs for engineering review.
 
 credentials:
   - 25+ years
-  - 704+ modules
+  - 35 of 196 modules
   - founded in 2010 in Houston, Texas
 
 # Visible-surface negative constraints (#6). Lint fails if any of these appears in a
@@ -95,18 +89,20 @@ targets:
   home: content/index.html
 
 home:
-  title: AceEngineer | Offshore and marine engineering firm
+  title: AceEngineer | Engineering analysis and AI automation
   description: AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms, EPC contractors and drilling contractors.
-  kicker: Offshore and marine engineering firm | Houston, Texas
+  kicker: Engineering analysis, AI automation and agentic workflows | Houston, Texas
   heading: Engineering analysis that is practical, dependable and repeatable.
   lead: >-
-    AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms, EPC contractors and drilling contractors. We provide engineering services: analysis, design calculations and integrity assessment.
-  discuss: Discuss a scope
+    AI automation and agentic workflows are topics for discussion under a separately agreed scope.
+  discuss: Contact us
   facts:
     - heading: Founded 2010
       detail: Houston, Texas
     - heading: 25+ years of experience
       detail: Principal engineer, offshore and marine
+    - heading: Public, checked code
+      detail: 35 of 196 modules pass their cited checks (catalogue run 2026-10-17)
   services_heading: Services
   services:
     - heading: Asset integrity and fitness-for-service
@@ -150,6 +146,9 @@ home:
     email: support@aceengineer.com
     phone: +1 713-306-9029
     phone_href: tel:+17133069029
+
+services_intro: >-
+  AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms, EPC contractors and drilling contractors. We run that work as automated, checked workflows, with AI agents doing the repeat steps and an engineer signing the result, and we bring the same approach to independent contractors and small and medium-sized businesses (SMBs).
 
 service_details:
   - sampleDiscipline: Asset integrity and fitness-for-service

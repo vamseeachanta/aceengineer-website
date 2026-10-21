@@ -189,6 +189,17 @@ main .cap-hero a.button.primary {
 }
 .btn-ghost:hover { border-color: var(--navy); text-decoration: none; }
 
+/* Shared invitation links must stay legible on the dark CTA gradients. */
+main .cta-section .scope-invitation a,
+main .cta-section .scope-invitation a:hover,
+main .cta-section .scope-invitation a:focus,
+main .demo-cta-section .scope-invitation a,
+main .demo-cta-section .scope-invitation a:hover,
+main .demo-cta-section .scope-invitation a:focus {
+  color: #fff;
+  border-color: rgba(255, 255, 255, .6);
+}
+
 /* Two-layer "lookup on top / rigorous underneath" panel (the iceberg motif) */
 .layers { max-width: 720px; margin: 0 auto; border-radius: 10px; overflow: hidden; border: 1px solid var(--hairline); }
 .layers .surface { background: #f4fbfa; padding: 20px 22px; }
@@ -215,6 +226,15 @@ main .cap-hero a.button.primary {
 .navbar-inverse.theme-nav { background: var(--navy); border: none; }
 .navbar-inverse.theme-nav .navbar-nav > li > a { color: #dce7ef; font-family: var(--font-ui); }
 .navbar-inverse.theme-nav .navbar-nav > li > a:hover { color: #fff; }
+/* Keep the full menu behind the existing toggle until it fits beside the logo. */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .theme-nav .navbar-header { float: none; }
+  .theme-nav .navbar-toggle { display: block; }
+  .theme-nav .navbar-collapse { clear: both; }
+  .theme-nav .navbar-collapse.collapse:not(.in) { display: none !important; }
+  .theme-nav .navbar-nav { float: none; margin: 7.5px -15px; }
+  .theme-nav .navbar-nav > li { float: none; }
+}
 .navbar-inverse.theme-nav .btn-nav-cta {
   background: var(--teal); color: #063b38; border-radius: 6px; font-weight: 700;
 }

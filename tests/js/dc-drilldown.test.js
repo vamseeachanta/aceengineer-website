@@ -65,10 +65,12 @@ test('absent engineering pages stay null, never fabricated links', () => {
 test('template is self-contained and carries the data placeholder', () => {
   const t = fs.readFileSync(TEMPLATE, 'utf8');
   assert.ok(t.includes('__DATA__'));
-  assert.ok(!t.includes('<link'));
+  const doc = new (require('jsdom').JSDOM)(t).window.document;
+  assert.strictEqual(doc.querySelector('link[rel="canonical"]').href, 'https://www.aceengineer.com/capabilities/dc-drilldown.html');
+  assert.strictEqual(doc.querySelector('link[rel="stylesheet"], script[src]'), null);
   assert.ok(!t.includes('<img'));
   assert.ok(!t.includes('@import'));
-  assert.strictEqual((t.match(/<\/script>/g) || []).length, 1);
+  assert.strictEqual([...doc.scripts].filter(script => script.type !== 'application/ld+json').length, 1);
 });
 
 test('built page embeds every bore and cannot break out of its script tag', () => {

@@ -289,8 +289,10 @@ describe('page wiring', () => {
     const src = fs.readFileSync(path.join(repoRoot, 'content', 'capabilities', 'index.html'), 'utf8');
     expect(src).toContain('{{{ capabilitiesCards }}}');
   });
-  test('nav links to the capabilities page', () => {
+  test('Services retains the capabilities target, also linked from engineering', () => {
     const nav = fs.readFileSync(path.join(repoRoot, 'content', 'partials', 'nav.html'), 'utf8');
-    expect(nav).toContain('capabilities/');
+    expect(nav).toContain('href="{{ rootPath }}capabilities/">Services</a>');
+    const engineering = fs.readFileSync(path.join(repoRoot, 'content', 'engineering.html'), 'utf8');
+    expect(engineering).toMatch(/href="capabilities\/"/);
   });
 });

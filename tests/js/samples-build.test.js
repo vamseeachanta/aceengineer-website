@@ -109,7 +109,7 @@ test('unpublished samples omit fact wording throughout the built and rendered ho
   const built = fs.readFileSync('dist/index.html', 'utf8');
   for (const html of [built, rendered]) {
     expect([...doc(html).querySelectorAll('.home-facts-grid > p > strong')].map(node => node.textContent))
-      .toEqual(['Founded 2010', '25+ years of experience']);
+      .toEqual(['Founded 2010', '25+ years of experience', 'Public, checked code']);
     expect(html).not.toContain('Public samples');
     expect(html).not.toContain('Public data and synthetic inputs');
     expect(doc(html).querySelector('#work')).toBeNull();
@@ -128,7 +128,7 @@ test('published samples enable the conditional fact, table and sample pages toge
   fs.writeFileSync(path.join(distDir, 'index.html'), rendered);
   const page = doc(read('index.html'));
   expect([...page.querySelectorAll('.home-facts-grid > p > strong')].map(node => node.textContent))
-    .toEqual(['Founded 2010', '25+ years of experience', 'Public samples']);
+    .toEqual(['Founded 2010', '25+ years of experience', 'Public, checked code', 'Public samples']);
   expect(page.querySelector('.home-facts').textContent).toContain(loadCopy().home.work.fact.detail);
   expect(page.querySelector('#work table tbody').textContent).toContain(entry.title);
   expect(page.querySelector('nav a[href="samples/"]')).not.toBeNull();
@@ -142,7 +142,7 @@ test('a published sample appears only beside its own home service', async () => 
   const reg = registry(entry);
   await buildSamplePages(reg, { distDir, assetsRoot, renderHtml });
   const rendered = doc(await home(reg));
-  const cards = [...rendered.querySelectorAll('#services article')];
+  const cards = [...rendered.querySelectorAll('#services article[data-engineering-service]')];
   const matching = cards.find(card => card.querySelector('h3').textContent === entry.discipline);
   expect(matching.querySelector('.service-samples a').getAttribute('href')).toBe(entry.page);
   expect(fs.existsSync(path.join(distDir, entry.page))).toBe(true);

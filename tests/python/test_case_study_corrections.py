@@ -1,4 +1,4 @@
-"""Guard retired case-study claims without requiring promotional figures or links."""
+"""Guard retired claims and preserve case-study navigation."""
 
 import json
 import re
@@ -11,6 +11,11 @@ ROOT = Path(__file__).resolve().parents[2]
 CASE_STUDIES = ROOT / "content" / "case-studies"
 MODEL_PAGES = [
     "offshore-platform-fatigue-optimization", "wind-turbine-foundation-analysis",
+]
+METHOD_PAGES = MODEL_PAGES + [
+    "bsee-field-economics", "marine-safety-correlation",
+    "multi-code-wall-thickness-comparison", "orcaflex-riser-sensitivity-automation",
+    "pipeline-on-bottom-stability-assessment", "subsea-fea-automation",
 ]
 
 
@@ -29,18 +34,35 @@ def card_text(slug):
     return next((card for card in cards if f'href="{slug}.html"' in card), "")
 
 
-def test_subsea_roi_arithmetic_when_a_table_is_published():
-    page = page_text("subsea-fea-automation")
-    assert "$340K" not in page + card_text("subsea-fea-automation")
-    if "<h3>Return on Investment</h3>" not in page:
-        return
-    table = page.split("<h3>Return on Investment</h3>", 1)[1].split("</table>", 1)[0]
-    cells = re.findall(r"<td[^>]*>(.*?)</td>", table, re.S)
-    amounts = [plain_text(cell).strip() for cell in cells[1::2]]
-    numbers = [int(re.sub(r"[^0-9]", "", amount)) for amount in amounts]
-    expected = sum(-value if "(" in amount else value
-                   for amount, value in zip(amounts[:-1], numbers[:-1]))
-    assert numbers[-1] == expected == 740000
+def test_subsea_retires_unsubstantiated_savings_and_hourly_rate():
+    text = plain_text(page_text("subsea-fea-automation")
+                      + card_text("subsea-fea-automation"))
+    for claim in ["$340K", "$740K", "$740,000", "Annual Savings", "$85/hr"]:
+        assert claim.lower() not in text.lower(), claim
+
+
+def test_case_study_index_remains_metric_free():
+    page = page_text("index")
+    assert "$" not in page and "%" not in page
+    assert "metric-value" not in page
+    assert "Illustrative Field Economics" in card_text("bsee-field-economics")
+    assert "Marine Safety Import Coverage" in card_text("marine-safety-correlation")
+
+
+@pytest.mark.parametrize("slug", METHOD_PAGES)
+def test_method_navigation_survives_claim_corrections(slug):
+    source = page_text(slug)
+    assert 'src="partials/scope-invitation.html"' in source
+    for page in [source, (ROOT / "dist/case-studies" / f"{slug}.html").read_text()]:
+        assert re.search(r'<nav\b[^>]*aria-label="Breadcrumb"', page)
+        assert 'href="./"' in page
+        related = re.search(r"<h2>Related methods</h2>\s*<ul>(.*?)</ul>", page, re.S)
+        assert related is not None
+        links = re.findall(r'<a href="([^"#?]+\.html)">', related[1])
+        assert len(links) >= 2
+        assert all((CASE_STUDIES / link).is_file() for link in links)
+    built = (ROOT / "dist/case-studies" / f"{slug}.html").read_text()
+    assert "Use our data that is available." in built
 
 
 @pytest.mark.parametrize("slug", ["marine-safety-correlation", "index"])
@@ -66,13 +88,14 @@ def test_marine_names_the_import_record_and_its_identity_limitations():
     assert "linked visualization script" not in text
 
 
-def test_marine_published_counts_agree_with_the_named_source_entries():
-    data = json.loads((ROOT / "assets/data/marine_safety_correlation.json").read_text())
-    counts = {item["source"]: item["count"] for item in data["source_distribution"]}
+def test_marine_published_counts_are_pinned_to_the_import_record():
+    revision = "7493f54316cc1d1ee5b5813afe69c90c873c04e7"
     page = page_text("marine-safety-correlation")
-    for source, label in [("TSB_CANADA", "TSB Canada"), ("MAIB_UK", "MAIB UK")]:
+    assert f"/blob/{revision}/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md" in page
+    for label, count in [("TSB Canada", 47385), ("MAIB UK", 5876)]:
         row = re.search(fr"<tr>\s*<td>{label}</td>(.*?)</tr>", page, re.S)[1]
-        assert f"{counts[source]:,}" in row
+        cells = re.findall(r"<td[^>]*>(.*?)</td>", row, re.S)
+        assert plain_text(cells[0]).strip() == f"{count:,}"
 
 
 @pytest.mark.parametrize("slug", ["bsee-field-economics", "index"])
@@ -116,7 +139,13 @@ def test_model_pages_reject_unsupported_training_validation_and_outcomes(slug):
                     r"validated against.*inspection", r"full certification",
                     r"Type Certification", r"C203 Certified", r"BSEE Accepted"]:
         assert not re.search(pattern, text, re.I), pattern
-    assert "not claimed" in text
+    assert "This page describes the method; it reports no project results." in text
+    assert "machine-learning surrogate model" in text
+    assert "not claimed" not in text
+    descriptions = re.findall(r'<meta[^>]*(?:name|property)="[^"]*description"[^>]*content="([^"]+)"', page)
+    assert len(descriptions) == 3
+    assert all("assessment" in description.lower() for description in descriptions)
+    assert all("not claimed" not in description for description in descriptions)
 
 
 @pytest.mark.parametrize("slug", MODEL_PAGES)
@@ -135,6 +164,8 @@ def test_site_copy_omits_internal_workflow_references(slug):
 
 def test_energy_links_qualify_economics_and_import_coverage():
     page = (ROOT / "content/energy.html").read_text()
+    assert "public production data where available" in page
+    assert "using BSEE production data" not in page
     items = re.findall(r"<li\b[^>]*>.*?</li>", page, re.S)
     economics = next(item for item in items if "bsee-field-economics.html" in item)
     assert "illustrative" in economics.lower() and "synthetic" in economics.lower()

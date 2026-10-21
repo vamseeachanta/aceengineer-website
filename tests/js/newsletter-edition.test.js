@@ -6,6 +6,8 @@ const { SITEMAP_EXCLUDE } = require('../../build');
 
 const edition = 'newsletter/issue-001-energy-street/index.html';
 const retired = 'newsletter/issue-001/index.html';
+const retiredCharts = ['hse-drilling', 'diffraction-heave', 'field-depth', 'completion-strata'];
+const retiredClaims = /The Deckhand Chronicle · Issue 1|Specialists|Well-control classifications|68 of 85|85 classified|Heave agrees within|0\.055 m\/m|4\.25 degrees|Water depth less than 1,000 ft|1,151 distinct field codes|Records before 2000|55,269 of 72,844|An interactive version of this chart is planned/i;
 const route = '/newsletter/issue-001-energy-street/';
 const expectedTitle = 'The Deckhand Chronicles — Energy Street · Issue 1';
 const textDigest = '98ba78cfe3b96fa598b63616b5f5cc8a647404fb02db5172cf050614ab38be26';
@@ -55,15 +57,84 @@ test('copy and link controls reject altered wording, split headings, omissions a
   expect(digest(JSON.stringify(links))).not.toBe(linksDigest);
 });
 
-function assertRetired(doc, source = false) {
-  expect(doc.querySelector('meta[name="robots"]').content).toContain('noindex');
+function assertRetired(doc, source = false, kind = 'issue') {
+  expect(doc.querySelector('meta[name="robots"]')?.content).toMatch(/\bnoindex\b/i);
   const canonical = doc.querySelector('link[rel="canonical"]').getAttribute('href');
   expect(source ? canonical : new URL(canonical).pathname).toBe(source ? '{{ canonicalUrl }}' : route);
   expect(doc.querySelector('meta[http-equiv="refresh"]').content).toBe(`0; url=${route}`);
   expect(doc.querySelectorAll('main a')).toHaveLength(1);
   expect(doc.querySelector('main a').getAttribute('href')).toBe(route);
-  expect(normalizedText(doc.body)).toBe('Skip to main content This issue has moved Read the Energy Street edition.');
+  expect(normalizedText(doc.body)).toBe(`Skip to main content This ${kind} has moved Read the Energy Street edition.`);
 }
+
+function assertNoRetiredClaims(html) {
+  expect(html).not.toMatch(retiredClaims);
+}
+
+function assertNoOldChartLinks(doc) {
+  for (const link of doc.querySelectorAll('a')) {
+    expect(link.getAttribute('href')).not.toMatch(/(?:^|\/)issue-001\/#/);
+  }
+}
+
+function assertChartUnlisted(index, chart) {
+  expect(index).not.toContain(`/newsletter/charts/${chart}/`);
+}
+
+describe.each(retiredCharts)('retired chart %s', chart => {
+  const page = `newsletter/charts/${chart}/index.html`;
+
+  test('source and output are short noindex redirects to the current edition', () => {
+    expect(read(`content/${page}`)).toContain(`canonicalPath: "${edition}"`);
+    for (const prefix of ['content', 'dist']) {
+      const doc = documentFor(`${prefix}/${page}`);
+      assertRetired(doc, prefix === 'content', 'chart');
+      expect(doc.querySelectorAll('img, script, include')).toHaveLength(0);
+    }
+    expect(documentFor(`dist/${page}`).querySelector('link[rel="canonical"]').href)
+      .toBe(`https://www.aceengineer.com${route}`);
+  });
+
+  test('retired claims are absent from all source and output markup', () => {
+    for (const prefix of ['content', 'dist']) assertNoRetiredClaims(read(`${prefix}/${page}`));
+  });
+
+  test('source and output have no links to the old issue anchors', () => {
+    for (const prefix of ['content', 'dist']) assertNoOldChartLinks(documentFor(`${prefix}/${page}`));
+  });
+
+  test('the chart is excluded from the sitemap and discovery index', () => {
+    expect(SITEMAP_EXCLUDE[page]).toBeDefined();
+    for (const file of ['dist/sitemap.xml', 'dist/llms.txt']) assertChartUnlisted(read(file), chart);
+  });
+
+  test('negative controls reject indexing, wrong destinations, old links and hidden claims', () => {
+    const original = documentFor(`dist/${retired}`);
+    original.querySelector('h1').textContent = 'This chart has moved';
+    assertRetired(original, false, 'chart');
+    const missingNoindex = original.cloneNode(true);
+    missingNoindex.querySelector('meta[name="robots"]').content = 'index';
+    expect(() => assertRetired(missingNoindex, false, 'chart')).toThrow();
+    const wrongCanonical = original.cloneNode(true);
+    wrongCanonical.querySelector('link[rel="canonical"]').href = 'https://www.aceengineer.com/newsletter/';
+    expect(() => assertRetired(wrongCanonical, false, 'chart')).toThrow();
+    const wrongLink = original.cloneNode(true);
+    wrongLink.querySelector('main a').href = '/newsletter/';
+    expect(() => assertRetired(wrongLink, false, 'chart')).toThrow();
+    const oldLink = original.cloneNode(true);
+    oldLink.querySelector('main a').href = `https://www.aceengineer.com/newsletter/issue-001/#${chart}`;
+    expect(() => assertNoOldChartLinks(oldLink)).toThrow();
+    for (const claim of ['68 of 85', '0.055 m/m', '1,151 distinct field codes', '55,269 of 72,844']) {
+      const hiddenClaim = original.cloneNode(true);
+      hiddenClaim.querySelector('meta[name="description"]').content = claim;
+      expect(() => assertNoRetiredClaims(hiddenClaim.documentElement.outerHTML)).toThrow();
+    }
+    for (const file of ['dist/sitemap.xml', 'dist/llms.txt']) {
+      const contaminated = `${read(file)}\nhttps://www.aceengineer.com/newsletter/charts/${chart}/`;
+      expect(() => assertChartUnlisted(contaminated, chart)).toThrow();
+    }
+  });
+});
 
 test('the superseded issue is only a short noindex redirect to the edition', () => {
   expect(read(`content/${retired}`)).toContain(`canonicalPath: "${edition}"`);

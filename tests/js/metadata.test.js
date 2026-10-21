@@ -487,25 +487,27 @@ test('legal name appears once per footer and once in Organization metadata per p
   expect(organizationPages).toBeGreaterThan(0);
 });
 
-test('newsletter chart descriptions stay within the site band and agree across metadata', () => {
+test('retired newsletter charts carry only retirement metadata', () => {
   for (const page of pages.filter(page => page.startsWith('newsletter/charts/'))) {
     const doc = documents.get(page);
     const description = doc.querySelector('meta[name="description"]').content;
-    expect(description.length).toBeGreaterThanOrEqual(70);
-    expect(description.length).toBeLessThanOrEqual(160);
-    expect(doc.querySelector('meta[property="og:description"]').content).toBe(description);
-    expect(doc.querySelector('meta[name="twitter:description"]').content).toBe(description);
-    expect(nodesFor(page).find(node => node['@type'] === 'WebPage').description).toBe(description);
+    expect(description).toBe('Read the Energy Street edition at its new address.');
+    expect(doc.querySelector('meta[name="robots"]')?.content).toBe('noindex');
+    expect(doc.querySelector('meta[property="og:description"]')).toBeNull();
+    expect(doc.querySelector('meta[name="twitter:description"]')).toBeNull();
+    expect(nodesFor(page)).toEqual([]);
   }
 });
 
-test('published chart pages distinguish the planned interactive version', () => {
+test('retired chart pages point to the current newsletter edition', () => {
   const charts = pages.filter(page => page.startsWith('newsletter/charts/'));
   expect(charts).toHaveLength(4);
   for (const page of charts) {
     const text = documents.get(page).querySelector('main').textContent;
-    expect(text).not.toContain('Interactive page planned:');
-    expect(text).toContain('An interactive version of this chart is planned.');
+    expect(text).toContain('This chart has moved');
+    expect(text).not.toContain('An interactive version of this chart is planned.');
+    expect(documents.get(page).querySelector('main a').getAttribute('href'))
+      .toBe('/newsletter/issue-001-energy-street/');
   }
 });
 

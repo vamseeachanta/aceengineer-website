@@ -6,17 +6,17 @@ rootPath: "../"
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BSEE Field Economics Analysis with NPV/IRR | AceEngineer</title>
-<meta name="description" content="Analysis method: BSEE Field Economics Analysis with NPV/IRR. Workflow, calculation steps and technical references for a separately agreed scope.">
-<meta property="og:title" content="BSEE Field Economics Analysis with NPV/IRR | AceEngineer">
-<meta property="og:description" content="Analysis method: BSEE Field Economics Analysis with NPV/IRR. Workflow, calculation steps and technical references for a separately agreed scope.">
+<title>Illustrative Field Economics | AceEngineer</title>
+<meta name="description" content="Illustrative field economics with synthetic production and assumed costs. Saved NPV and cash flows are illustrative; IRR remains a placeholder.">
+<meta property="og:title" content="Illustrative Field Economics | AceEngineer">
+<meta property="og:description" content="Illustrative field economics with synthetic production and assumed costs. Saved NPV and cash flows are illustrative; IRR remains a placeholder.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.aceengineer.com/case-studies/bsee-field-economics.html">
 <meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="BSEE Field Economics Analysis with NPV/IRR | AceEngineer">
-<meta name="twitter:description" content="Analysis method: BSEE Field Economics Analysis with NPV/IRR. Workflow, calculation steps and technical references for a separately agreed scope.">
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"BSEE Field Economics Analysis with NPV/IRR | AceEngineer","description":"Analysis method: BSEE Field Economics Analysis with NPV/IRR. Workflow, calculation steps and technical references for a separately agreed scope.","url":"https://www.aceengineer.com/case-studies/bsee-field-economics.html","inLanguage":"en","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Case Studies","item":"https://www.aceengineer.com/case-studies/"},{"@type":"ListItem","position":3,"name":"BSEE Field Economics Analysis with NPV/IRR","item":"https://www.aceengineer.com/case-studies/bsee-field-economics.html"}]}]</script>
+<meta name="twitter:title" content="Illustrative Field Economics | AceEngineer">
+<meta name="twitter:description" content="Illustrative field economics with synthetic production and assumed costs. Saved NPV and cash flows are illustrative; IRR remains a placeholder.">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"Illustrative Field Economics | AceEngineer","description":"Illustrative field economics with synthetic production and assumed costs. Saved NPV and cash flows are illustrative; IRR remains a placeholder.","url":"https://www.aceengineer.com/case-studies/bsee-field-economics.html","inLanguage":"en","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Case Studies","item":"https://www.aceengineer.com/case-studies/"},{"@type":"ListItem","position":3,"name":"Illustrative Field Economics","item":"https://www.aceengineer.com/case-studies/bsee-field-economics.html"}]}]</script>
 <include src="partials/head-common.html">
 </include>
 </head>
@@ -25,86 +25,30 @@ rootPath: "../"
 </include>
 <main id="main" class="samples-page">
 <div class="container">
-<nav aria-label="Breadcrumb"><ol class="breadcrumb"><li><a href="../">Home</a></li><li><a href="./">Case Studies</a></li><li aria-current="page">BSEE Field Economics Analysis with NPV/IRR</li></ol></nav>
-<h1>BSEE Field Economics Analysis with NPV/IRR</h1>
-<p>Method notes for engineering and data workflows.</p>
-<h2>The challenge</h2>
-<p>Organise the inputs, calculations and reporting into a repeatable workflow with checks.</p>
-<h2 class="section-title">Our Approach</h2>
-
-        <div class="methodology-step">
-            <div class="step-number">1</div>
-            <div class="step-content">
-                <h3 class="h-size-h4">BSEE Data Collection and Validation</h3>
-                <p>
-                    Extracted production history from BSEE public datasets covering analogous Gulf of Mexico deepwater fields. Validated data quality, identified and corrected anomalies, and established production decline curves using regression analysis on comparable fields.
-                </p>
-            </div>
+<nav aria-label="Breadcrumb"><ol class="breadcrumb"><li><a href="../">Home</a></li><li><a href="./">Case Studies</a></li><li aria-current="page">Illustrative Field Economics</li></ol></nav>
+<h1>Illustrative Field Economics</h1>
+        <h2 class="section-title">Illustrative Example</h2>
+        <p>This example describes the <a href="https://github.com/vamseeachanta/aceengineer-website/blob/2492de4b6a850e8eb1625bb98bc45b1253780f73/scripts/generate_field_economics_data.py">field economics generator</a>, its <a href="../assets/data/field_economics_metrics.json">saved metrics</a> and <a href="../assets/data/field_economics_cashflow.csv">saved cash flows</a>. The production profile is synthetic and the financial inputs are assumed. No BSEE records are imported by this generator, and no client engagement or investment decision is represented.</p>
+        <h2 class="section-title">Production and Financial Basis</h2>
+        <p>The script constructs a 180-month profile with a 12-month ramp-up, a 24-month plateau at 100,000 barrels per day and exponential decline using an assumed annual rate of 8%. Monthly production uses an assumed 30.4 days per month.</p>
+        <p>Fixed financial assumptions are $75/bbl oil price, $18/bbl operating cost, $3.5 billion capital expenditure spread across the first 24 months, 18.75% royalty and a 10% annual discount rate. These are script inputs, not calibrated field data.</p>
+        <h2 class="section-title">Saved Deterministic Outputs</h2>
+        <div class="table-responsive-wrapper">
+            <table class="table-results">
+                <tr><th>Quantity</th><th>Saved illustrative value</th><th>Basis</th></tr>
+                <tr><td>NPV (million USD)</td><td>6,078.1</td><td>Discounted monthly cash flows at the assumed discount rate</td></tr>
+                <tr><td>Production (million bbl)</td><td>373.5</td><td>Synthetic profile total</td></tr>
+                <tr><td>Payback index (month, zero-based)</td><td>32</td><td>First positive cumulative cash flow; index 32 is the 33rd modeled month</td></tr>
+                <tr><td>IRR</td><td>Placeholder; correction pending</td><td>The attempted NumPy calculation falls back to a hard-coded value on error</td></tr>
+            </table>
         </div>
-
-        <div class="methodology-step">
-            <div class="step-number">2</div>
-            <div class="step-content">
-                <h3 class="h-size-h4">Production Profile Development</h3>
-                <p>
-                    Built type curves with ramp-up, plateau and decline phases. State the production assumptions and compare them with the source data.
-                </p>
-            </div>
-        </div>
-
-        <div class="methodology-step">
-            <div class="step-number">3</div>
-            <div class="step-content">
-                <h3 class="h-size-h4">Financial Modeling and NPV/IRR Calculation</h3>
-                <p>
-                    Implemented a monthly cash-flow model with explicit capital, operating-cost, royalty and discount-rate assumptions. Automated NPV and IRR calculations using numpy financial functions.
-                </p>
-            </div>
-        </div>
-
-        <div class="methodology-step">
-            <div class="step-number">4</div>
-            <div class="step-content">
-                <h3 class="h-size-h4">Sensitivity Analysis and Risk Assessment</h3>
-                <p>
-                    Generated tornado diagrams showing NPV sensitivity to key variables. Performed Monte Carlo simulation with 10,000 iterations to quantify P10/P50/P90 outcomes.
-                </p>
-            </div>
-        </div>
-
-        <!-- Technical Details -->
-
-<h2 class="section-title">Technical Implementation</h2>
-
-        <h3>Data Processing Workflow</h3>
-        <p>
-            The analysis leveraged the worldenergydata Python library for BSEE data access and processing:
-        </p>
-        <ul>
-            <li>
-<strong>Data Source:</strong> BSEE production API (mv_productionsum and lease-level datasets)</li>
-            <li>
-<strong>Analysis Period:</strong> 180 months (15 years) from first oil</li>
-            <li>
-<strong>Production Aggregation:</strong> Field-level rollup across development leases</li>
-            <li>
-<strong>Decline Modeling:</strong> Exponential decline curves fitted to historical performance</li>
-        </ul>
-
-        <h3>Financial model inputs</h3>
-<p>State the oil price, royalty, operating cost, development capital, discount rate and production assumptions before calculating cash flows.</p>
-<h2 class="section-title">Technologies &amp; Tools</h2>
-<p>
-            <strong>Data Source:</strong> BSEE public production API and lease databases<br>
-            <strong>Data Processing:</strong> Python (pandas, numpy) for data extraction and aggregation<br>
-            <strong>Financial Modeling:</strong> Custom cash flow calculator with numpy financial functions<br>
-            <strong>Visualization:</strong> Static PNG exports for production curves and NPV sensitivity<br>
-            <strong>Reporting:</strong> Automated Excel generation with openpyxl<br>
-            <strong>Version Control:</strong> Git for model versioning and audit trail
-        </p>
+        <p>Table 1. Saved example outputs; these values do not establish investment viability.</p>
+        <h2 class="section-title">Limitations and Next Step</h2>
+        <p>Monte Carlo simulation is not implemented. The generator evaluates one fixed set of assumptions; it does not import lease records or perform sensitivity sweeps. A validated IRR is not established, and a calibrated rebuild is pending.</p>
+        <p>Project use would require qualified production and cost inputs, a corrected return calculation and validation against the governing investment criteria. Analysis duration, consulting cost reductions and investment outcomes are not claimed.</p>
 <h2>Related methods</h2>
 <ul>
-<li><a href="marine-safety-correlation.html">Marine safety incident correlation methods</a></li>
+<li><a href="marine-safety-correlation.html">Marine Safety Import Coverage</a></li>
 <li><a href="pipeline-on-bottom-stability-assessment.html">Pipeline On-Bottom Stability Assessment</a></li>
 </ul>
 <h2>Summary</h2>

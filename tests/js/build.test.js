@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const { JSDOM } = require('jsdom');
 const { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeSitemap, writeLlmsTxt, loadCopy, canonicalUrlFor, SITEMAP_EXCLUDE } = require('../../build');
 
 test('newsletter web sources contain no e-mail campaign tracking tags', () => {
@@ -412,5 +413,92 @@ describe('writeLlmsTxt', () => {
     expect(read()).toContain('- [Live Capability](https://www.aceengineer.com/capabilities/live-example.html): Live summary.');
     seed('about.html', 'About', `${loadCopy().forbidden_phrases[0]} 12%.`);
     expect(() => writeLlmsTxt(tmpDir, registry)).toThrow(/forbidden phrase/i);
+  });
+});
+
+describe('newsletter issue publication', () => {
+  const issuePath = 'newsletter/issue-001-energy-street/index.html';
+  const issueUrl = canonicalUrlFor(issuePath);
+  const outputDir = process.env.NEWSLETTER_BUILD_DIR || path.join(__dirname, '../../dist');
+
+  function assertPublished(dir) {
+    expect(fs.statSync(path.join(dir, issuePath)).isFile()).toBe(true);
+    const sitemap = new JSDOM(fs.readFileSync(path.join(dir, 'sitemap.xml'), 'utf8'),
+      { contentType: 'text/xml' }).window.document;
+    const locations = [...sitemap.querySelectorAll('urlset > url > loc')].map(node => node.textContent);
+    expect(locations.filter(url => url === issueUrl)).toHaveLength(1);
+    const feed = new JSDOM(fs.readFileSync(path.join(dir, 'newsletter/feed.xml'), 'utf8'),
+      { contentType: 'text/xml' }).window.document;
+    const entries = [...feed.querySelectorAll('rss > channel > item')]
+      .filter(item => item.querySelector('link')?.textContent === issueUrl);
+    expect(entries).toHaveLength(1);
+    expect(entries[0].querySelector('guid[isPermaLink="true"]')?.textContent).toBe(issueUrl);
+  }
+
+  test('the built issue is published in the generated sitemap and newsletter feed', () => {
+    assertPublished(outputDir);
+  });
+
+  test.each(['/newsletter/issue-001', '/newsletter/issue-001/'])(
+    '%s has an explicit 301 to a built destination', source => {
+      const config = JSON.parse(fs.readFileSync(path.join(__dirname, '../../vercel.json'), 'utf8'));
+      const rules = config.redirects.filter(rule => rule.source === source);
+      expect(rules).toEqual([{ source, destination: '/newsletter/issue-001-energy-street/', statusCode: 301 }]);
+      const destination = path.join(outputDir, rules[0].destination, 'index.html');
+      expect(fs.statSync(destination).isFile()).toBe(true);
+    });
+
+  test('the old route has no built stub that can answer 200', () => {
+    expect(fs.existsSync(path.join(outputDir, 'newsletter/issue-001/index.html'))).toBe(false);
+  });
+
+  test.each([
+    '/newsletter/issue-001', '/newsletter/issue-001/',
+    '/newsletter/issue-001?source=archive', '/newsletter/issue-001/?source=archive',
+  ])('the local preview serves the configured 301 for %s', url => {
+    const serverFile = path.join(__dirname, '../../scripts/static-server.js');
+    let handleRequest;
+    const scriptRequire = require('module').createRequire(serverFile);
+    require('vm').runInNewContext(fs.readFileSync(serverFile, 'utf8'), {
+      __dirname: path.dirname(serverFile),
+      process: { env: {} },
+      require: name => name === 'http' ? {
+        createServer: handler => {
+          handleRequest = handler;
+          return { listen: () => {} };
+        },
+      } : scriptRequire(name),
+    });
+    const response = { writeHead: jest.fn(), end: jest.fn() };
+    handleRequest({ url }, response);
+    expect(response.writeHead).toHaveBeenCalledWith(301, {
+      location: '/newsletter/issue-001-energy-street/', 'cache-control': 'no-store',
+    });
+    expect(response.end).toHaveBeenCalledTimes(1);
+  });
+
+  test.each(['page', 'sitemap', 'feed'])('rejects a removed %s entry in a scratch build copy', entry => {
+    const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'newsletter-publication-'));
+    for (const file of [issuePath, 'sitemap.xml', 'newsletter/feed.xml']) {
+      const target = path.join(scratch, file);
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.copyFileSync(path.join(outputDir, file), target);
+    }
+    assertPublished(scratch);
+    if (entry === 'page') {
+      fs.unlinkSync(path.join(scratch, issuePath));
+      expect(() => assertPublished(scratch)).toThrow(/ENOENT/);
+    } else {
+      const file = entry === 'sitemap' ? 'sitemap.xml' : 'newsletter/feed.xml';
+      const doc = new JSDOM(fs.readFileSync(path.join(scratch, file), 'utf8'),
+        { contentType: 'text/xml' }).window.document;
+      const nodes = doc.querySelectorAll(entry === 'sitemap' ? 'urlset > url' : 'rss > channel > item');
+      for (const node of nodes) {
+        const url = node.querySelector(entry === 'sitemap' ? 'loc' : 'link');
+        if (url?.textContent === issueUrl) node.remove();
+      }
+      fs.writeFileSync(path.join(scratch, file), new doc.defaultView.XMLSerializer().serializeToString(doc));
+      expect(() => assertPublished(scratch)).toThrow(/toHaveLength/);
+    }
   });
 });

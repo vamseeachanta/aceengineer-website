@@ -520,10 +520,10 @@ test('newsletter issue includes the shared site footer after its reviewed main c
   expect(sharedFooter.querySelector('.footer-legal')).not.toBeNull();
 });
 
-test('the superseded issue no longer carries the withdrawn decisions section', () => {
-  const doc = documents.get('newsletter/issue-001/index.html');
-  expect(doc.getElementById('maintainer-decisions')).toBeNull();
-  expect(doc.querySelector('main a').getAttribute('href')).toBe('/newsletter/issue-001-energy-street/');
+test('the superseded issue has no built document or withdrawn decisions section', () => {
+  expect(documents.has('newsletter/issue-001/index.html')).toBe(false);
+  expect(documents.get('newsletter/issue-001-energy-street/index.html')
+    .getElementById('maintainer-decisions')).toBeNull();
 });
 
 test('legal footer inherits copyright type and colour at a smaller size', () => {

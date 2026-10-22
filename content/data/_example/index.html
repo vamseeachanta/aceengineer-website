@@ -1,0 +1,40 @@
+---
+rootPath: "../../"
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Public data chart worked example</title>
+  <meta name="description" content="A worked example of sourced chart values, a downloadable CSV and a table that remains readable without JavaScript.">
+  <include src="partials/head-common.html"></include>
+  <link rel="stylesheet" href="/assets/css/data-chart.css">
+  <script defer src="/assets/js/plotly-2.32.0.min.js"></script>
+  <script defer src="/assets/js/data-chart.js"></script>
+</head>
+<body class="theme-page">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <include src="partials/nav.html"></include>
+  <main id="main" class="container">
+    <h1>Public data chart worked example</h1>
+    <p>This example shows reported injury counts from the public BSEE calendar-year cards. It demonstrates how to read a chart and its source. It is not a GoM HSE analysis.</p>
+    <h2>Revision history</h2>
+    <table class="table">
+      <caption>Example revisions</caption>
+      <thead><tr><th scope="col">Revision</th><th scope="col">Date</th><th scope="col">Change and reason</th></tr></thead>
+      <tbody><tr><td>1</td><td>2026-10-22</td><td>Add a sourced example to explain the shared chart component.</td></tr></tbody>
+    </table>
+    <h2>Inputs and method</h2>
+    <p>The <a href="https://www.bsee.gov/stats-facts/offshore-incident-statistics">BSEE Offshore Incident Statistics</a> Injuries cards give the inputs for calendar years 2023 and 2024. The values are transcribed without filtering, conversion or interpolation. Source date means reporting-period end; the page does not state a publication date for these cards. The retrieval time identifies the version read.</p>
+    <data-chart src="/assets/data/charts/bsee-injuries.json"></data-chart>
+    <h2>Answer and limits</h2>
+    <!-- BSEE Offshore Incident Statistics, 2023 CY and 2024 CY Injuries cards;
+         independent subtraction of the published counts: 223 - 203 = 20. -->
+    <p>The reported count increased by 20.0 injuries: 223 − 203 = 20.0. This difference describes counts. It does not measure a change in risk because no exposure denominator is supplied.</p>
+    <p>Acceptance: NOT_EVALUATED. The source supplies no acceptance limit. The example covers the Outer Continental Shelf, not a GoM-only subset. The dedicated HSE and drilling pages require the reviewed upstream exports.</p>
+  </main>
+  <include src="partials/footer.html"></include>
+</body>
+</html>

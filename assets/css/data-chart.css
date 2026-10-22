@@ -1,0 +1,12 @@
+/* Colours inherit assets/css/theme.css. Text/table alternatives and non-colour
+ * point/limit distinctions implement WCAG 2.2 (2024), 1.1.1, 1.4.1 and 1.4.11. */
+.data-chart { color: var(--ink); background: var(--bg); margin-block: 2rem; }
+.data-chart-plot { width: 100%; min-height: 24rem; }
+.data-chart :focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
+.data-chart button { background: var(--bg); color: var(--navy); border: 1px solid var(--navy); padding: .5rem 1rem; }
+.data-chart button:disabled { color: var(--muted); border-style: dashed; }
+.data-chart-table { overflow-x: auto; }
+.data-chart table { width: 100%; border-collapse: collapse; }
+.data-chart caption { color: var(--ink); text-align: left; }
+.data-chart th, .data-chart td { border-bottom: 1px solid var(--hairline); padding: .5rem; text-align: left; }
+@media print { .data-chart-plot, .data-chart button, [data-chart-status] { display: none; } }

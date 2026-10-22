@@ -1,0 +1,33 @@
+{
+  "id": "bsee-injuries",
+  "headline": "Reported OCS injuries rose from 2023 to 2024",
+  "quantity": "Reported injuries",
+  "unit": "injuries",
+  "x": {
+    "variable": "Calendar year",
+    "unit": "year"
+  },
+  "series": [
+    {
+      "x": 2023,
+      "value": 203,
+      "year": 2023
+    },
+    {
+      "x": 2024,
+      "value": 223,
+      "year": 2024
+    }
+  ],
+  "source": {
+    "name": "BSEE Offshore Incident Statistics, Injuries cards",
+    "url": "https://www.bsee.gov/stats-facts/offshore-incident-statistics",
+    "date": "2024-12-31",
+    "date_kind": "reporting-period-end",
+    "retrieved_at": "2026-10-22T17:01:13Z",
+    "input_sha256": "f3426c4feccaa591ad261bf6056c23d99ee097659476bd57764cdaf3bce69ade"
+  },
+  "limits": [],
+  "csv": "bsee-injuries.csv",
+  "text_alternative": "The BSEE calendar-year cards list 203 reported injuries in 2023 and 223 in 2024 across the Outer Continental Shelf (OCS). These counts are not a GoM-only subset or an exposure-adjusted risk rate. No reference limit was supplied."
+}

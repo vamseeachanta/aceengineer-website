@@ -22,6 +22,11 @@
   "jest": {
     "projects": [
       {
+        "displayName": "data-chart",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/data-chart.test.js", "<rootDir>/tests/js/data-chart-accessibility.test.js"]
+      },
+      {
         "displayName": "diffraction-provenance",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/diffraction-provenance.test.js"]

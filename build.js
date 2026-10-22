@@ -10,6 +10,7 @@ const hf = require('./scripts/hf-fetch');
 const { renderCards, capabilityDetailDocument, detailFileName, detailHref, isReleaseBacked } = require('./scripts/render-capabilities');
 
 const { loadSamples, validateSamples, sampleLocals, buildSamplePages } = require('./scripts/render-samples');
+const { loadChartBundles, expandCharts } = require('./scripts/data-charts');
 
 const srcDir = './content';
 const distDir = './dist';
@@ -24,6 +25,7 @@ const SITE_ORIGIN = 'https://www.aceengineer.com';
 // so listing them would advertise URLs we are actively telling crawlers to ignore.
 // Shared with the reachability allowlist when #81 lands — one list, two consumers.
 const SITEMAP_EXCLUDE = {
+  'data/_example/index.html': 'component worked example — noindex',
   'deckhand.html': 'retired Deckhand page — noindex',
   'deckhand-api.html': 'retired Deckhand page — noindex',
   'api-catalog.html': 'retired Deckhand page — noindex',
@@ -96,6 +98,7 @@ let _capabilitiesCards = '';
 let _hydratedRegistry = null;
 let _sloshingRelease = null;
 let _sampleLocals = { samplesPublished: false, sampleHomeRows: '' };
+let _chartBundles = new Map();
 
 // Validate the committed content-addressed sloshing release before rendering any
 // report. This reuses the publication trust loop and never performs network I/O.
@@ -247,7 +250,7 @@ async function processFile(filePath) {
   }
 
   Object.assign(locals, _sampleLocals);
-  const html = await renderHtml(content, locals);
+  const html = await expandCharts(await renderHtml(content, locals), _chartBundles);
 
   ensureDir(path.dirname(outputPath));
   fs.writeFileSync(outputPath, html);
@@ -559,6 +562,9 @@ function writeLlmsTxt(destDirArg = distDir, registry = loadCapabilities()) {
 // Main build function
 async function build() {
   console.log('Building site...\n');
+
+  // Fail before rendering if provenance is absent or paired CSV values differ.
+  _chartBundles = loadChartBundles();
 
   const samples = validateSamples(loadSamples(), { assetsRoot: './assets' });
   _sampleLocals = sampleLocals(samples, loadCopy());

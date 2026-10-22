@@ -22,6 +22,11 @@
   "jest": {
     "projects": [
       {
+        "displayName": "agent-readable",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/agent-readable.test.js"]
+      },
+      {
         "displayName": "diffraction-provenance",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/diffraction-provenance.test.js"]

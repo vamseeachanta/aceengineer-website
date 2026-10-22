@@ -10,6 +10,7 @@ const hf = require('./scripts/hf-fetch');
 const { renderCards, capabilityDetailDocument, detailFileName, detailHref, isReleaseBacked } = require('./scripts/render-capabilities');
 
 const { loadSamples, validateSamples, sampleLocals, buildSamplePages } = require('./scripts/render-samples');
+const { mainText, renderReportRows, validateReportTargets } = require('./scripts/agent-readable');
 
 const srcDir = './content';
 const distDir = './dist';
@@ -96,6 +97,7 @@ let _capabilitiesCards = '';
 let _hydratedRegistry = null;
 let _sloshingRelease = null;
 let _sampleLocals = { samplesPublished: false, sampleHomeRows: '' };
+let _reportRows = '';
 
 // Validate the committed content-addressed sloshing release before rendering any
 // report. This reuses the publication trust loop and never performs network I/O.
@@ -247,6 +249,7 @@ async function processFile(filePath) {
   }
 
   Object.assign(locals, _sampleLocals);
+  locals.publicReportRows = _reportRows;
   const html = await renderHtml(content, locals);
 
   ensureDir(path.dirname(outputPath));
@@ -417,12 +420,14 @@ function builtPages(dir = distDir, base = dir, out = []) {
   return out.sort();
 }
 
-// Which source file produced a built page — for the lastmod lookup. Generated pages
-// (capability details, the drill-down) have no 1:1 source, so they fall back to the
-// generator that produces them.
-function sourceFileFor(relPath) {
-  const direct = path.join(srcDir, relPath);
+// Source for lastmod: direct content first, otherwise the generated page's own
+// template or registry. Shared dependencies are not included in this date.
+function sourceFileFor(relPath, sourceDir = srcDir) {
+  const direct = path.join(sourceDir, relPath);
   if (fs.existsSync(direct)) return direct;
+  if (['capabilities/dc-drilldown.html', 'capabilities/dc-qaqc-hub.html'].includes(relPath)) {
+    return path.join('scripts', 'templates', path.basename(relPath));
+  }
   if (relPath.startsWith('samples/')) return './config/samples.yaml';
   if (relPath.startsWith('capabilities/')) return './config/capabilities.yaml';
   return null;
@@ -434,17 +439,21 @@ function sourceFileFor(relPath) {
 // (not built) and omitted 13 built pages including every capability page, so
 // everything shipped since the capability work was invisible to search. Deriving it
 // from dist/ means a new page is listed the moment it builds.
-function writeSitemap(destDirArg = distDir) {
+function writeSitemap(destDirArg = distDir, options = {}) {
   const pages = builtPages(destDirArg).filter(p => !(p in SITEMAP_EXCLUDE));
   // All-or-nothing on lastmod: a partial set is a misleading signal (see
   // gitHistoryAvailable). <lastmod> is optional in the sitemap protocol, so omitting it
   // everywhere is valid; emitting it for an arbitrary subset is not honest.
-  const datesAvailable = gitHistoryAvailable();
+  const datesAvailable = options.historyAvailable ?? gitHistoryAvailable();
   if (!datesAvailable) {
     console.warn('sitemap: shallow or non-git checkout — omitting <lastmod> (all-or-nothing)');
   }
   const entries = pages.map(p => {
-    const lastmod = datesAvailable ? gitLastModified(sourceFileFor(p)) : null;
+    // Protocol 0.9, XML tag definitions / lastmod permits the W3C complete date
+    // YYYY-MM-DD. Git's %cs is the committer date in that short form.
+    // https://www.sitemaps.org/protocol.html#lastmoddef
+    const lastmod = datesAvailable
+      ? (options.dateForSource || gitLastModified)(sourceFileFor(p, options.sourceDir)) : null;
     return [
       '  <url>',
       `    <loc>${canonicalUrlFor(p)}</loc>`,
@@ -556,9 +565,29 @@ function writeLlmsTxt(destDirArg = distDir, registry = loadCapabilities()) {
   return pages;
 }
 
+// Full text is a local companion to the llms.txt proposal, not a new protocol.
+// Reuse the sitemap's page set and metadata rather than maintaining another list.
+function writeLlmsFullTxt(destDirArg = distDir) {
+  const pages = builtPages(destDirArg).filter(page => !(page in SITEMAP_EXCLUDE));
+  const sections = pages.map(page => {
+    const html = fs.readFileSync(path.join(destDirArg, page), 'utf8');
+    const { title, description } = readBuiltPageMetadata(html, page);
+    return `## ${title}\n\nURL: ${canonicalUrlFor(page)}\nDescription: ${description}\n\n${mainText(html)}`;
+  });
+  const text = ['# Site page text',
+    '> Static main content from the indexed pages. Follow each URL for interactive results and source references.',
+    ...sections, ''].join('\n\n');
+  fs.writeFileSync(path.join(destDirArg, 'llms-full.txt'), text, 'utf8');
+  console.log(`Generated: llms-full.txt — ${pages.length} pages`);
+  return pages;
+}
+
 // Main build function
 async function build() {
   console.log('Building site...\n');
+
+  const reports = JSON.parse(fs.readFileSync('./config/public-reports.json', 'utf8')).reports;
+  _reportRows = renderReportRows(reports);
 
   const samples = validateSamples(loadSamples(), { assetsRoot: './assets' });
   _sampleLocals = sampleLocals(samples, loadCopy());
@@ -625,9 +654,11 @@ async function build() {
   copyAssets();
   fs.mkdirSync(path.join(distDir, 'newsletter'), { recursive: true });
   fs.copyFileSync('content/newsletter/feed.xml', path.join(distDir, 'newsletter/feed.xml'));
+  validateReportTargets(reports, distDir, SITEMAP_EXCLUDE);
   writeSitemap();
   copyRobotsTxt();
   writeLlmsTxt();
+  writeLlmsFullTxt();
 
   console.log(`\nBuild complete! ${files.length} pages built.`);
 }
@@ -706,4 +737,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { formatLlmsPageLine, PAGE_DESCRIPTION_PATTERNS, renderHtml, processFile, buildCapabilityDetailPages, sourceFileFor, loadSamples, validateSamples, sampleLocals, buildSamplePages, parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeLlmsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, verifyVendoredAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };
+module.exports = { writeLlmsFullTxt, formatLlmsPageLine, PAGE_DESCRIPTION_PATTERNS, renderHtml, processFile, buildCapabilityDetailPages, sourceFileFor, loadSamples, validateSamples, sampleLocals, buildSamplePages, parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeLlmsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, verifyVendoredAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };

@@ -1,0 +1,89 @@
+{
+  "dateBasis": "Content source commit date, not publication date. See docs/agent-readable-site.md.",
+  "reports": [
+    {
+      "title": "Diffraction Analysis Reports — Methods and Source Review",
+      "date": "2026-10-17",
+      "format": "HTML",
+      "href": "/reports/diffraction/",
+      "public": true
+    },
+    {
+      "title": "Tank Sloshing CFD QA Analysis",
+      "date": "2026-10-14",
+      "format": "HTML",
+      "href": "/reports/sloshing-cfd-analysis.html",
+      "public": true
+    },
+    {
+      "title": "Tank Sloshing CFD Case Report",
+      "date": "2026-10-14",
+      "format": "HTML",
+      "href": "/reports/sloshing-cfd-case.html",
+      "public": true
+    },
+    {
+      "title": "Tank Sloshing Evidence Summary",
+      "date": "2026-10-14",
+      "format": "HTML",
+      "href": "/reports/sloshing-tank-summary.html",
+      "public": true
+    },
+    {
+      "title": "Tank Sloshing CFD Case Analysis",
+      "date": "2026-10-17",
+      "format": "HTML",
+      "href": "/reports/sloshing/analysis.html",
+      "public": true
+    },
+    {
+      "title": "Browse Tank Sloshing CFD Results",
+      "date": "2026-10-14",
+      "format": "HTML",
+      "href": "/reports/sloshing/browse.html",
+      "public": true
+    },
+    {
+      "title": "Tank Sloshing CFD Comparison",
+      "date": "2026-10-14",
+      "format": "HTML",
+      "href": "/reports/sloshing/comparison.html",
+      "public": true
+    },
+    {
+      "title": "Damping & Sizing — Tank Sloshing CFD",
+      "date": "2026-10-14",
+      "format": "HTML",
+      "href": "/reports/sloshing/damping-and-sizing.html",
+      "public": true
+    },
+    {
+      "title": "Dual Connected Tanks — Tank Sloshing CFD",
+      "date": "2026-10-14",
+      "format": "HTML",
+      "href": "/reports/sloshing/dual-connected-tanks.html",
+      "public": true
+    },
+    {
+      "title": "Tank Sloshing CFD Analysis Summary",
+      "date": "2026-10-17",
+      "format": "HTML",
+      "href": "/reports/sloshing/",
+      "public": true
+    },
+    {
+      "title": "Tank Sloshing CFD Study",
+      "date": "2026-10-14",
+      "format": "HTML",
+      "href": "/reports/sloshing/study.html",
+      "public": true
+    },
+    {
+      "title": "Tank Sloshing CFD Validation Fixture",
+      "date": "2026-10-17",
+      "format": "HTML",
+      "href": "/reports/sloshing/validation.html",
+      "public": true
+    }
+  ]
+}

@@ -24,6 +24,7 @@ aceengineer-website issue work.
 | Calculators | `../content/calculators/`, `../calculators/`, and `../assets/js/` |
 | Scripts and generated data | `../scripts/`, `../config/`, and `../assets/data/` |
 | Tests | `../tests/python/` and `../tests/js/` |
+| Public data charts | `data-charts.md`, `../assets/js/data-chart.js` and `../content/data/_example/` |
 
 For full routing detail, use `maps/aceengineer-website-operator-map.md`.
 

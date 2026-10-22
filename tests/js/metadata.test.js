@@ -146,6 +146,7 @@ test('interactive generators reject a missing Organization partial', () => {
 
 const requiredTypes = {
   CollectionPage: [
+    'data/napkin-checks.html',
     'capabilities/index.html', 'outreach/index.html', 'solutions/index.html',
     'standards/index.html', 'reports/diffraction/index.html',
     'reports/sloshing/index.html', 'reports/sloshing/browse.html',
@@ -280,7 +281,7 @@ test('source metadata meets the required coverage floors', () => {
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
   // Includes the newsletter archive and both automation pages; retired sources still count.
   // Keep the existing 107 floor: noindex exclusions do not require a reduction.
-  expect(sources).toHaveLength(128);
+  expect(sources).toHaveLength(129);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 107],
     ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],

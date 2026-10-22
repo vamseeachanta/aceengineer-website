@@ -9,6 +9,12 @@ const idPattern = /^NC-(CP|HSE|DC)-\d{3}(?:-r(?:[2-9]|[1-9]\d+))?$/;
 const fields = ['run_id', 'discipline', 'asset_type', 'method', 'inputs', 'outputs', 'check_status', 'source', 'tool_or_commit', 'run_date', 'report_url', 'public_data', 'status'];
 const text = value => typeof value === 'string' && value.trim().length > 0;
 const escape = value => String(value).replace(/[&<>"'{}]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '{': '&#123;', '}': '&#125;' }[char]));
+// Encode string content for both the HTML script element and the template pass.
+const jsonText = value => JSON.stringify(value).replace(/[<>&{}]/g, char => `\\u${char.charCodeAt(0).toString(16).padStart(4, '0')}`);
+function revision(id) {
+  const [, stem, number] = id.match(/^(NC-(?:CP|HSE|DC)-\d{3})(?:-r(\d+))?$/);
+  return { stem, number: BigInt(number || '1') };
+}
 function date(value) {
   if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const parsed = new Date(`${value}T00:00:00Z`);
@@ -72,18 +78,28 @@ function validate(data) {
         if (Object.hasOwn(item, 'our_assumption') && typeof item.our_assumption !== 'boolean') fail(`${at}.our_assumption`);
         if (field === 'outputs') {
           if (Object.hasOwn(item, 'result') && !['pass', 'fail'].includes(item.result)) fail(`${at}.result`);
-          const verdict = /^(pass|fail)$/i.test(String(item.value).trim()) || Object.hasOwn(item, 'result');
+          const wording = String(item.value).trim().match(/^(pass|fail)/i);
+          const verdict = wording || Object.hasOwn(item, 'result');
           if (verdict || Object.hasOwn(item, 'criterion') || Object.hasOwn(item, 'criterion_basis')) {
             for (const key of ['criterion', 'criterion_basis']) if (!text(item[key])) fail(`${at}.${key}`);
           }
+          if (wording && item.result !== wording[1].toLowerCase()) fail(`${at}.result`);
         }
       });
     }
   });
+  const current = new Set();
   for (const run of data.runs) {
+    const from = revision(run.run_id);
+    if (run.status === 'current') {
+      if (current.has(from.stem)) throw new Error(`${run.run_id}: invalid current revision (only one per id stem)`);
+      current.add(from.stem);
+    }
     if (run.status !== 'superseded') continue;
     const fail = () => { throw new Error(`${run.run_id}: invalid superseded_by`); };
     if (!text(run.superseded_by) || !ids.has(run.superseded_by)) fail();
+    const to = revision(run.superseded_by);
+    if (from.stem !== to.stem || to.number <= from.number) fail();
     const seen = new Set([run.run_id]);
     let next = ids.get(run.superseded_by);
     while (next) {
@@ -124,11 +140,33 @@ rootPath: "../"
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escape(header.title)}</title>
 <meta name="description" content="${escape(header.purpose)}">
-<link rel="canonical" href="{{ canonicalUrl }}">
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-<link rel="stylesheet" href="../assets/css/styles.min.css">
-<script defer src="../assets/js/navbar-toggle.js"></script>
-<script defer src="../assets/js/cta-tracking.js"></script>
+<meta property="og:title" content="${escape(header.title)}">
+<meta property="og:description" content="${escape(header.purpose)}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ canonicalUrl }}">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": ${jsonText(header.title)},
+  "description": ${jsonText(header.purpose)},
+  "url": "{{ canonicalUrl }}",
+  "inLanguage": "en",
+  "publisher": { "@id": "https://www.aceengineer.com/#organization" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.aceengineer.com/" },
+    { "@type": "ListItem", "position": 2, "name": ${jsonText(header.title)}, "item": "{{ canonicalUrl }}" }
+  ]
+}
+</script>
+<include src="partials/head-common.html"></include>
 </head>
 <body class="theme-page">
 <include src="partials/nav.html"></include>
@@ -138,6 +176,22 @@ rootPath: "../"
 <h2>What this page does not do</h2>
 <p>${escape(header.what_this_page_does_not_do)}</p>
 <p>Last updated: <time datetime="${escape(header.last_updated)}">${escape(header.last_updated)}</time>.</p>
+<nav aria-label="Analyses and discipline data">
+<p><a href="../case-studies/">Analyses</a> · <a href="#cp">CP</a> · <a href="#hse">HSE</a> · <a href="#drilling-completions">Drilling and completions</a></p>
+</nav>
+<h2>Discipline resources</h2>
+<section aria-labelledby="cp">
+<h3 id="cp">Cathodic protection (CP)</h3>
+<p><a href="../services/cathodic-protection.html">Cathodic protection analysis</a> · <a href="../capabilities/corrosion-control.html">Corrosion control data</a></p>
+</section>
+<section aria-labelledby="hse">
+<h3 id="hse">HSE</h3>
+<p><a href="../blog/marine-safety-incident-analysis.html">Marine safety incident analysis</a> · <a href="../demos/hse-risk-dashboard.html">HSE risk data dashboard</a></p>
+</section>
+<section aria-labelledby="drilling-completions">
+<h3 id="drilling-completions">Drilling and completions</h3>
+<p><a href="../services/offshore-energy-data.html">Offshore energy data analysis</a> · <a href="../capabilities/dc-days-qaqc.html">Drilling and completion days data</a></p>
+</section>
 <h2>Filter runs</h2>
 <p>Use the filters to find runs. All rows remain available without JavaScript.</p>
 <div class="row">${[['discipline', 'Discipline'], ['asset_type', 'Asset type'], ['check_status', 'Check status']].map(([field, label]) => `<div class="col-md-4">${filter(field, label)}</div>`).join('\n')}</div>

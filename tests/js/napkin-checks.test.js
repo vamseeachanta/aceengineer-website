@@ -42,6 +42,39 @@ for (const verdict of ['pass', 'fail', 'PASS', ' FAIL ']) {
     test(`${verdict.trim()} without ${field} fails`, () => invalid(run => { run.outputs[1].value = verdict; delete run.outputs[1][field]; }, field));
   }
 }
+for (const verdict of ['FAIL: limit exceeded', 'PASS with qualifications', ' Failed check']) {
+  for (const field of ['criterion', 'criterion_basis']) {
+    test(`${verdict.trim()} without ${field} fails with or without a structured result`, () => {
+      for (const structured of [true, false]) {
+        invalid(run => {
+          run.outputs[1].value = verdict;
+          run.outputs[1].unit = '1';
+          delete run.outputs[1][field];
+          if (!structured) delete run.outputs[1].result;
+        }, field);
+      }
+    });
+  }
+  test(`${verdict.trim()} requires a structured result even with criteria`, () => invalid(run => {
+    run.outputs[1].value = verdict;
+    delete run.outputs[1].result;
+  }, 'result'));
+}
+test('structured result must agree with verdict text', () => invalid(run => {
+  run.outputs[1].value = 'FAIL: limit exceeded';
+  run.outputs[1].result = 'pass';
+}, 'result'));
+test('unstructured FAIL text with unit 1 and no criterion or basis is rejected', () => invalid(run => {
+  run.outputs[1] = { name: 'SYNTHETIC check', value: 'FAIL: limit exceeded', unit: '1' };
+}, 'criterion'));
+test('structured fail with qualified wording and a numeric verdict render', () => {
+  const data = fixture();
+  data.runs[0].outputs[1].value = 'FAIL: limit exceeded';
+  data.runs[0].outputs[1].result = 'fail';
+  assert.match(renderPage(data), /FAIL: limit exceeded/);
+  data.runs[0].outputs[1].value = 5;
+  assert.match(renderPage(data), /5 1 — fail/);
+});
 test('numeric output with a result also requires criteria', () => invalid(run => { run.outputs[0].result = 'fail'; }, 'criterion'));
 
 test('all check states and discipline codes render with revised ids', () => {
@@ -112,6 +145,72 @@ test('successors must exist and form no cycle', () => {
   assert.throws(() => renderPage(data), /superseded_by/);
   data.runs[1].status = 'current'; delete data.runs[1].superseded_by;
   assert.match(renderPage(data), /href="#NC-CP-900-r2"/);
+});
+
+for (const successor of ['NC-HSE-900-r2', 'NC-CP-901-r2', 'NC-CP-900']) {
+  test(`successor ${successor} must share the stem and increase the revision`, () => {
+    const data = fixture();
+    Object.assign(data.runs[0], { run_id: 'NC-CP-900-r2', status: 'superseded', superseded_by: successor });
+    data.runs.push({ ...structuredClone(fixture().runs[0]), run_id: successor, discipline: successor.includes('HSE') ? 'HSE' : 'CP' });
+    assert.throws(() => renderPage(data), /NC-CP-900-r2.*superseded_by/);
+  });
+}
+test('base id and its second revision cannot both be current in either order', () => {
+  const data = fixture();
+  data.runs.push({ ...structuredClone(data.runs[0]), run_id: 'NC-CP-900-r2' });
+  for (const runs of [data.runs, [...data.runs].reverse()]) {
+    assert.throws(() => renderPage({ ...data, runs }), /NC-CP-900.*current/);
+  }
+});
+test('successor revisions increase numerically through a chain', () => {
+  const data = fixture();
+  Object.assign(data.runs[0], { status: 'superseded', superseded_by: 'NC-CP-900-r2' });
+  data.runs.push({ ...structuredClone(data.runs[0]), run_id: 'NC-CP-900-r2', superseded_by: 'NC-CP-900-r10' });
+  data.runs.push({ ...structuredClone(fixture().runs[0]), run_id: 'NC-CP-900-r10' });
+  assert.match(renderPage(data), /href="#NC-CP-900-r10"/);
+  data.runs[2].status = 'superseded';
+  data.runs[2].superseded_by = 'NC-CP-900-r2';
+  data.runs = [data.runs[2], { ...structuredClone(fixture().runs[0]), run_id: 'NC-CP-900-r2' }];
+  assert.throws(() => renderPage(data), /NC-CP-900-r10.*superseded_by/);
+});
+
+test('empty and populated registers retain discipline anchors and confirmed site destinations', () => {
+  for (const data of [JSON.parse(fs.readFileSync(source, 'utf8')), fixture()]) {
+    const html = renderPage(data);
+    for (const anchor of ['cp', 'hse', 'drilling-completions']) {
+      assert.equal((html.match(new RegExp(`id="${anchor}"`, 'g')) || []).length, 1);
+      assert.ok(html.includes(`href="#${anchor}"`));
+    }
+    for (const target of ['case-studies/', 'services/cathodic-protection.html', 'blog/marine-safety-incident-analysis.html', 'services/offshore-energy-data.html']) {
+      assert.ok(html.includes(`href="../${target}"`), target);
+      assert.ok(fs.existsSync(path.join(root, 'content', target, target.endsWith('/') ? 'index.html' : '')), target);
+    }
+    assert.ok(html.includes('href="../demos/hse-risk-dashboard.html"'));
+    assert.ok(fs.existsSync(path.join(root, 'demos/hse-risk-dashboard.html')));
+    const registry = fs.readFileSync(path.join(root, 'config/capabilities.yaml'), 'utf8');
+    for (const id of ['corrosion-control', 'dc-days-qaqc']) {
+      assert.ok(html.includes(`href="../capabilities/${id}.html"`));
+      assert.ok(registry.includes(`- id: ${id}`));
+    }
+  }
+});
+
+test('page metadata uses the shared head and safely encodes register text in JSON-LD', () => {
+  const data = fixture();
+  data.header.title = 'SYNTHETIC </script>{{ value }} "title"';
+  const html = renderPage(data);
+  assert.match(html, /partials\/head-common.html/);
+  assert.match(html, /meta property="og:url" content="\{\{ canonicalUrl \}\}"/);
+  for (const field of ['title', 'description', 'type', 'image']) assert.ok(html.includes(`property="og:${field}"`));
+  const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]));
+  const collection = schemas.find(node => node['@type'] === 'CollectionPage');
+  assert.equal(collection.name, data.header.title);
+  assert.equal(collection.description, data.header.purpose);
+  assert.equal(collection.url, '{{ canonicalUrl }}');
+  assert.equal(collection.inLanguage, 'en');
+  assert.deepEqual(collection.publisher, { '@id': 'https://www.aceengineer.com/#organization' });
+  assert.equal(schemas.find(node => node['@type'] === 'BreadcrumbList').itemListElement.at(-1).item, '{{ canonicalUrl }}');
+  assert.doesNotMatch(html, /<\/script>\{\{ value \}\}/);
 });
 
 test('filters combine all three fields and restore the unfiltered rows', () => {

@@ -14,7 +14,7 @@
       "inputs": [{"name": "Area", "value": 2, "unit": "m²", "our_assumption": true}],
       "outputs": [
         {"name": "Current", "value": 3, "unit": "A"},
-        {"name": "Current check", "value": "pass", "unit": "1", "criterion": "Current is at most 4 A.", "criterion_basis": "SYNTHETIC test limit."}
+        {"name": "Current check", "value": "pass", "unit": "1", "result": "pass", "criterion": "Current is at most 4 A.", "criterion_basis": "SYNTHETIC test limit."}
       ],
       "check_status": "hand-checked",
       "source": {"name": "SYNTHETIC fixture", "read_date": "2026-10-21"},

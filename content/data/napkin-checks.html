@@ -1,0 +1,66 @@
+---
+rootPath: "../"
+---
+<!-- Generated from napkin-checks.json. Use scripts/generate-napkin-checks.js. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Napkin checks</title>
+<meta name="description" content="This page lists checks that use public data. Each run links to its full report. The maintainer adds runs after the source passes the publication checks.">
+<link rel="canonical" href="{{ canonicalUrl }}">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/css/styles.min.css">
+<script defer src="../assets/js/navbar-toggle.js"></script>
+<script defer src="../assets/js/cta-tracking.js"></script>
+</head>
+<body class="theme-page">
+<include src="partials/nav.html"></include>
+<main id="main" class="samples-page"><section class="container">
+<h1>Napkin checks</h1>
+<p>This page lists checks that use public data. Each run links to its full report. The maintainer adds runs after the source passes the publication checks.</p>
+<h2>What this page does not do</h2>
+<p>This page does not approve a design. It does not replace an engineering analysis. Read each report for its assumptions and limits.</p>
+<p>Last updated: <time datetime="2026-10-22">2026-10-22</time>.</p>
+<h2>Filter runs</h2>
+<p>Use the filters to find runs. All rows remain available without JavaScript.</p>
+<div class="row"><div class="col-md-4"><label for="filter-discipline">Discipline</label>
+<select class="form-control" id="filter-discipline" data-filter data-field="discipline"><option value="">All</option></select></div>
+<div class="col-md-4"><label for="filter-asset_type">Asset type</label>
+<select class="form-control" id="filter-asset_type" data-filter data-field="asset_type"><option value="">All</option></select></div>
+<div class="col-md-4"><label for="filter-check_status">Check status</label>
+<select class="form-control" id="filter-check_status" data-filter data-field="check_status"><option value="">All</option></select></div></div>
+<p id="no-filter-results" role="status" hidden>No runs match the filters.</p>
+<h2>Current runs</h2>
+<div class="table-responsive"><table class="table table-striped"><caption>Current runs</caption>
+<thead><tr><th scope="col">Run id</th><th scope="col">Discipline</th><th scope="col">Asset type</th><th scope="col">Method and edition</th><th scope="col">Inputs and units</th><th scope="col">Outputs and criteria</th><th scope="col">Check status</th><th scope="col">Source and read date</th><th scope="col">Tool or commit</th><th scope="col">Run date</th><th scope="col">Report</th></tr></thead>
+<tbody><tr><td colspan="11">No current runs are published.</td></tr></tbody></table></div>
+<h2>Earlier revisions</h2>
+<div class="table-responsive"><table class="table table-striped"><caption>Superseded runs</caption>
+<thead><tr><th scope="col">Run id</th><th scope="col">Discipline</th><th scope="col">Asset type</th><th scope="col">Method and edition</th><th scope="col">Inputs and units</th><th scope="col">Outputs and criteria</th><th scope="col">Check status</th><th scope="col">Source and read date</th><th scope="col">Tool or commit</th><th scope="col">Run date</th><th scope="col">Report</th></tr></thead>
+<tbody><tr><td colspan="11">No earlier revisions are published.</td></tr></tbody></table></div>
+<h2>Withdrawn runs</h2>
+<div class="table-responsive"><table class="table table-striped"><caption>Withdrawn runs</caption>
+<thead><tr><th scope="col">Run id</th><th scope="col">Discipline</th><th scope="col">Asset type</th><th scope="col">Method and edition</th><th scope="col">Inputs and units</th><th scope="col">Outputs and criteria</th><th scope="col">Check status</th><th scope="col">Source and read date</th><th scope="col">Tool or commit</th><th scope="col">Run date</th><th scope="col">Report</th></tr></thead>
+<tbody><tr><td colspan="11">No withdrawn runs are published.</td></tr></tbody></table></div>
+</section></main>
+<include src="partials/footer.html"></include>
+<script>
+(function () {
+  'use strict';
+  var filters = Array.from(document.querySelectorAll('[data-filter]'));
+  var rows = Array.from(document.querySelectorAll('[data-run]'));
+  function applyFilters() {
+    rows.forEach(function (row) {
+      row.hidden = !filters.every(function (filter) {
+        return !filter.value || row.dataset[filter.dataset.field] === filter.value;
+      });
+    });
+    document.getElementById('no-filter-results').hidden = !filters.some(function (filter) { return filter.value; }) || rows.some(function (row) { return !row.hidden; });
+  }
+  filters.forEach(function (filter) { filter.addEventListener('change', applyFilters); });
+}());
+</script>
+</body>
+</html>

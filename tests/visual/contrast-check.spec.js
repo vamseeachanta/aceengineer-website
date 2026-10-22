@@ -97,10 +97,18 @@ test('content links meet WCAG AA on every built page', async ({ page }) => {
   const failures = [];
   let indeterminate = 0;
   for (const p of PAGES) {
-    await page.goto(p);
-    if (p === '/newsletter/issue-001/index.html') {
-      await expect(page).toHaveURL(/\/newsletter\/issue-001-energy-street\/$/);
+    // A page that is only a meta-refresh redirect has no content of its own: navigating to it destroys the
+    // page context mid-check ("Execution context was destroyed"). Do not read it; assert that its target is a
+    // built page instead. The target is checked on its own path, so nothing is skipped.
+    const built = fs.readFileSync(path.join(DIST, p), 'utf8');
+    const refresh = built.match(/<meta[^>]+http-equiv=["']refresh["'][^>]*content=["'][^"']*url=([^"'\s>]+)/i);
+    if (refresh) {
+      const target = refresh[1].replace(/[?#].*$/, '');
+      const targetPage = target.endsWith('/') ? target + 'index.html' : target;
+      expect(PAGES, `${p} redirects to ${target}, which is not a built page`).toContain(targetPage);
+      continue;
     }
+    await page.goto(p);
     const results = await readLinks(page.locator('main a'));
     for (const r of results) {
       if (!r.text) continue;

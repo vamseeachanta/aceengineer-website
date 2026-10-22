@@ -37,6 +37,11 @@
         "testMatch": ["<rootDir>/tests/js/samples-build.test.js"]
       },
       {
+        "displayName": "newsletter-edition",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/newsletter-edition.test.js"]
+      },
+      {
         "displayName": "metadata",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/metadata.test.js"]

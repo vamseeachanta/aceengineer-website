@@ -75,11 +75,6 @@ const ECONOMICS = {
   ],
 };
 
-// The reviewed newsletter describes a contractor's possible goal, not a service
-// promise. Match the whole qualified sentence on this one page only.
-const NEWSLETTER_GOAL_PAGE = 'newsletter/issue-001/index.html';
-const NEWSLETTER_GOAL = 'Speed: an installation contractor could set a goal of running its own installation analysis in-house within 24 hours.';
-
 function jsonStrings(value, out = []) {
   if (typeof value === 'string') out.push(value);
   else if (Array.isArray(value)) value.forEach(v => jsonStrings(v, out));
@@ -108,7 +103,6 @@ function renderedCopy(html) {
 
 function findings(text, page) {
   for (const allowed of ECONOMICS[page] || []) text = text.split(allowed).join(' ');
-  if (page === NEWSLETTER_GOAL_PAGE) text = text.split(NEWSLETTER_GOAL).join(' ');
   const hits = [];
   for (const [rule, patterns] of Object.entries(RULES)) {
     for (const pattern of patterns) {
@@ -218,18 +212,16 @@ test('every economics exception still matches its page, so stale entries are rem
   }
 });
 
-test('the reviewed newsletter goal is retained and scoped to its page', () => {
-  const text = renderedCopy(fs.readFileSync(path.join(distDir, NEWSLETTER_GOAL_PAGE), 'utf8'));
-  expect(text).toContain(NEWSLETTER_GOAL);
-  expect(findings(NEWSLETTER_GOAL, NEWSLETTER_GOAL_PAGE)).toEqual([]);
-  expect(findings(NEWSLETTER_GOAL, 'index.html')).not.toEqual([]);
+test('the superseded newsletter no longer carries the turnaround example', () => {
+  const text = renderedCopy(fs.readFileSync(path.join(distDir, 'newsletter/issue-001/index.html'), 'utf8'));
+  expect(text).not.toContain('within 24 hours');
+  expect(findings(text, 'newsletter/issue-001/index.html')).toEqual([]);
 });
 
-test('the newsletter goal exception cannot hide an unqualified promise', () => {
-  expect(findings(NEWSLETTER_GOAL.replace('could set a goal of running', 'runs'), NEWSLETTER_GOAL_PAGE))
-    .not.toEqual([]);
-  expect(findings(`${NEWSLETTER_GOAL} We respond within 24 hours.`, NEWSLETTER_GOAL_PAGE))
-    .not.toEqual([]);
+test('newsletter pages have no exception for turnaround promises', () => {
+  for (const page of ['newsletter/issue-001/index.html', 'newsletter/issue-001-energy-street/index.html']) {
+    expect(findings('We respond within 24 hours.', page)).not.toEqual([]);
+  }
 });
 
 test.each([

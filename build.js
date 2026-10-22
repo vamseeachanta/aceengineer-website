@@ -7,6 +7,7 @@ const yaml = require('js-yaml');
 const { PurgeCSS } = require('purgecss');
 const CleanCSS = require('clean-css');
 const hf = require('./scripts/hf-fetch');
+const { COPIED_PAGES, copyDigitalmodelPages } = require('./scripts/copy-digitalmodel-pages');
 const { renderCards, capabilityDetailDocument, detailFileName, detailHref, isReleaseBacked } = require('./scripts/render-capabilities');
 
 const { loadSamples, validateSamples, sampleLocals, buildSamplePages } = require('./scripts/render-samples');
@@ -83,6 +84,7 @@ const BUNDLE_INPUTS = [
 // one URL per page rather than two that serve identical bytes.
 function canonicalUrlFor(relPath) {
   let p = String(relPath).split(path.sep).join('/');
+  if (COPIED_PAGES.includes(p)) return `https://aceengineer.com/${p}`;
   if (p.endsWith('index.html')) p = p.slice(0, -'index.html'.length);
   return `${SITE_ORIGIN}/${p}`;
 }
@@ -498,7 +500,7 @@ function readBuiltPageMetadata(html, relPath) {
   }
   visit(tree);
   for (const key of Object.keys(metadata)) metadata[key] = metadata[key].replace(/\s+/g, ' ').trim();
-  if (!metadata.title || !metadata.description) throw new Error(`llms.txt: missing title or description in ${relPath}`);
+  if (!metadata.title || (!metadata.description && !COPIED_PAGES.includes(relPath))) throw new Error(`llms.txt: missing title or description in ${relPath}`);
   return metadata;
 }
 
@@ -512,6 +514,7 @@ const PAGE_DESCRIPTION_PATTERNS = [
 
 function formatLlmsPageLine(title, url, description) {
   const link = `- [${title}](${url})`;
+  if (!description) return link;
   return PAGE_DESCRIPTION_PATTERNS.some(pattern => pattern.test(description))
     ? link : `${link}: ${description}`;
 }
@@ -588,8 +591,9 @@ async function build() {
     console.warn(`Capabilities render skipped: ${err.message}`);
   }
 
-  // Process all HTML files
-  const files = getHtmlFiles(srcDir);
+  // Render site templates; standalone copies bypass template parsing.
+  const files = getHtmlFiles(srcDir).filter(file =>
+    !path.relative(srcDir, file).startsWith(`digitalmodel${path.sep}`));
   for (const file of files) {
     await processFile(file);
   }
@@ -623,6 +627,7 @@ async function build() {
   const verified = verifyVendoredAssets();
   console.log(`Verified: ${verified.length} vendored asset(s) against .sha256 — ${verified.join(', ') || 'none'}`);
   copyAssets();
+  copyDigitalmodelPages(distDir);
   fs.mkdirSync(path.join(distDir, 'newsletter'), { recursive: true });
   fs.copyFileSync('content/newsletter/feed.xml', path.join(distDir, 'newsletter/feed.xml'));
   writeSitemap();

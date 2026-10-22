@@ -3,6 +3,7 @@ const path = require('path');
 const { JSDOM } = require('jsdom');
 const yaml = require('js-yaml');
 const { builtPages, SITEMAP_EXCLUDE, PAGE_DESCRIPTION_PATTERNS } = require('../../build');
+const { COPIED_PAGES } = require('../../scripts/copy-digitalmodel-pages');
 const { buildDrilldown, buildHub } = require('../../scripts/build-drilldown');
 
 const distDir = path.join(__dirname, '..', '..', 'dist');
@@ -11,6 +12,9 @@ const pages = builtPages(distDir);
 const documents = new Map(pages.map(page => [page,
   new JSDOM(fs.readFileSync(path.join(distDir, page), 'utf8')).window.document]));
 const destinations = pages.filter(page => !(page in SITEMAP_EXCLUDE));
+// Standalone technical copies retain their published markup. Shared site
+// metadata remains mandatory for every existing destination.
+const siteDestinations = destinations.filter(page => !COPIED_PAGES.includes(page));
 const exemptions = {};
 const brandContract = fs.readFileSync(path.join(__dirname, '../../brand/BRAND.md'), 'utf8');
 const legalName = brandContract.match(/Legal\/contractual entity[^:\n]*:\s*\*\*([^*\n]+)\*\*/)[1];
@@ -80,7 +84,7 @@ test('every built JSON-LD block parses', () => {
 });
 
 test('destinations have one shared Organization with the required display name', () => {
-  for (const page of destinations) {
+  for (const page of siteDestinations) {
     const full = nodesFor(page).filter(node => node['@type'] === 'Organization' && node.name);
     expect({ page, count: full.length }).toEqual({ page, count: 1 });
     expect(full[0]).toMatchObject({
@@ -104,7 +108,7 @@ test('shared serviceType and knowsAbout entries occur verbatim in visible text',
     body.querySelectorAll('script, style').forEach(node => node.remove());
     return body.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
   });
-  for (const page of destinations) {
+  for (const page of siteDestinations) {
     const organization = nodesFor(page).find(node => node['@type'] === 'Organization' && node.name);
     for (const key of ['serviceType', 'knowsAbout']) {
       if (!(key in organization)) continue;
@@ -223,7 +227,7 @@ test('contact metadata uses ContactPage with its copied page metadata', () => {
 });
 
 test('destinations have page schema and canonical final breadcrumbs', () => {
-  for (const page of destinations) {
+  for (const page of siteDestinations) {
     const schemas = schemasFor(page);
     if (!exemptions[page]?.page) {
       expect({ page, hasPage: schemas.some(node => node['@type'] && !['Organization', 'BreadcrumbList'].includes(node['@type'])) })
@@ -255,7 +259,7 @@ test('specified pages have their required schema type and copied metadata', () =
 
 test('destinations have canonical Open Graph metadata and the existing logo', () => {
   expect(fs.existsSync(path.join(distDir, 'assets/img/logo.png'))).toBe(true);
-  for (const page of destinations) {
+  for (const page of siteDestinations) {
     const doc = documents.get(page);
     for (const field of ['title', 'description', 'type', 'url', 'image']) {
       expect({ page, field, present: !!doc.querySelector(`meta[property="og:${field}"]`)?.content })
@@ -280,15 +284,16 @@ test('source metadata meets the required coverage floors', () => {
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
   // Includes the newsletter archive and both automation pages; retired sources still count.
   // Keep the existing 107 floor: noindex exclusions do not require a reduction.
-  expect(sources).toHaveLength(128);
+  expect(sources).toHaveLength(131);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 107],
     ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],
   ]) expect(sources.filter(doc => doc.querySelector(selector)).length).toBeGreaterThanOrEqual(floor);
 });
 
-test('every built page has a nonempty meta description', () => {
-  const missing = pages.filter(page => !documents.get(page).querySelector('meta[name="description"]')?.content.trim());
+test('every site page has a nonempty meta description; copied documents preserve their metadata', () => {
+  const missing = pages.filter(page => !COPIED_PAGES.includes(page))
+    .filter(page => !documents.get(page).querySelector('meta[name="description"]')?.content.trim());
   expect(missing).toEqual([]);
 });
 
@@ -551,7 +556,7 @@ test('every built page uses the specified figure for years of experience', () =>
 });
 test('shared contactPoint and all visible telephone numbers agree', () => {
   const expected = '+1 713-306-9029';
-  for (const page of destinations) {
+  for (const page of siteDestinations) {
     const org = nodesFor(page).find(node => node['@type'] === 'Organization' && node.name);
     expect(org.contactPoint.telephone).toBe(expected);
   }
@@ -639,7 +644,7 @@ test('built contact text, mail links and structured data use one support address
 test('every destination page carries the site analytics tag', () => {
   // The two generated D&C pages shipped without it until 2026-10-17, so the
   // analytics never counted them. One partial now feeds every page.
-  const missing = destinations.filter(page =>
+  const missing = siteDestinations.filter(page =>
     !fs.readFileSync(path.join(distDir, page), 'utf8').includes("gtag('config', 'G-K31E51DQ47')"));
   expect(missing).toEqual([]);
 });

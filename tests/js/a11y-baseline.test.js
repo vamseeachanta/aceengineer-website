@@ -13,6 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
+const { COPIED_PAGES } = require('../../scripts/copy-digitalmodel-pages');
 
 const DIST = path.join(__dirname, '..', '..', 'dist');
 
@@ -46,7 +47,9 @@ const pages = fs.existsSync(DIST) ? walk(DIST) : [];
 const rel = p => path.relative(DIST, p).split(path.sep).join('/');
 const read = p => fs.readFileSync(p, 'utf8');
 
-const chromePages = pages.filter(p => !(rel(p) in CHROME_EXEMPT));
+// The three standalone copies retain their published document structure.
+// Existing pages continue to require the shared site landmarks and skip link.
+const chromePages = pages.filter(p => !(rel(p) in CHROME_EXEMPT) && !COPIED_PAGES.includes(rel(p)));
 
 function addressProperties(value, found = []) {
   if (value === null || typeof value !== 'object') return found;
@@ -86,8 +89,7 @@ describe('a11y baseline (dist/)', () => {
   });
 
   test('every page has a meta description', () => {
-    const missing = pages
-      .filter(p => !(rel(p) in CHROME_EXEMPT))
+    const missing = chromePages
       .filter(p => !/name="description"/.test(read(p)))
       .map(rel);
     expect(missing).toEqual([]);
@@ -178,9 +180,14 @@ describe('a11y baseline (dist/)', () => {
     expect(bad).toEqual([]);
   });
 
-  test('no self-referencing URL uses the apex host (it 301s to www)', () => {
+  test('only the specified copied-page canonicals use the apex host', () => {
     const bad = pages
-      .filter(p => /https:\/\/aceengineer\.com(?!\w)/.test(read(p)))
+      .filter(p => {
+        const html = COPIED_PAGES.includes(rel(p))
+          ? read(p).replace(`<link rel="canonical" href="https://aceengineer.com/${rel(p)}">`, '')
+          : read(p);
+        return /https:\/\/aceengineer\.com(?!\w)/.test(html);
+      })
       .map(rel);
     expect(bad).toEqual([]);
   });

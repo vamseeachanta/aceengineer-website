@@ -3,6 +3,15 @@ const path = require('path');
 const os = require('os');
 const { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeSitemap, writeLlmsTxt, loadCopy, canonicalUrlFor, SITEMAP_EXCLUDE } = require('../../build');
 
+test('copied technical pages retain their canonical URLs, assets and forecast labels in the build', () => {
+  const { execFileSync } = require('child_process');
+  execFileSync(process.execPath, ['--test', path.join(__dirname, '../node/digitalmodel-build.test.js')], {
+    cwd: path.resolve(__dirname, '../..'),
+    env: { ...process.env, DIGITALMODEL_BUILD_DIR: path.resolve(__dirname, '../../dist') },
+    stdio: 'pipe',
+  });
+});
+
 test('newsletter web sources contain no e-mail campaign tracking tags', () => {
   const newsletterDir = path.join(__dirname, '../../content/newsletter');
   function checkDirectory(dir) {
@@ -184,7 +193,11 @@ describe('ensureDir', () => {
 });
 
 describe('canonicalUrlFor', () => {
-  test('always emits the www origin — the apex 301s (vercel.json)', () => {
+  test('copied technical pages retain their specified apex URLs', () => {
+    const { COPIED_PAGES } = require('../../scripts/copy-digitalmodel-pages');
+    for (const page of COPIED_PAGES) expect(canonicalUrlFor(page)).toBe(`https://aceengineer.com/${page}`);
+  });
+  test('ordinary site pages emit the www origin — the apex redirects (vercel.json)', () => {
     expect(canonicalUrlFor('about.html')).toBe('https://www.aceengineer.com/about.html');
   });
 
@@ -383,6 +396,14 @@ describe('writeLlmsTxt', () => {
   test('release-backed capabilities use the existing report hub', () => {
     writeLlmsTxt(tmpDir, registry);
     expect(read()).toContain('- [Release Capability](https://www.aceengineer.com/reports/sloshing/): Release summary.');
+  });
+
+  test('copied technical pages remain listed without adding source descriptions', () => {
+    const page = 'digitalmodel/cfd/sloshing-cfd-study.html';
+    seed(page, 'Sloshing study', '');
+    writeLlmsTxt(tmpDir, registry);
+    expect(read()).toContain('- [Sloshing study](https://aceengineer.com/digitalmodel/cfd/sloshing-cfd-study.html)\n');
+    expect(writeSitemap(tmpDir)).toContain(page);
   });
   test('a forbidden registry summary rejects the output', () => {
     const forbidden = { capabilities: [{ ...registry.capabilities[0], summary: loadCopy().forbidden_phrases[0] }] };

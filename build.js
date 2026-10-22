@@ -28,7 +28,6 @@ const SITEMAP_EXCLUDE = {
   'deckhand-api.html': 'retired Deckhand page — noindex',
   'api-catalog.html': 'retired Deckhand page — noindex',
   '404.html': 'error page — not a destination',
-  'newsletter/issue-001/index.html': 'superseded issue — noindex redirect to the current edition',
   'newsletter/charts/hse-drilling/index.html': 'retired chart — noindex redirect to the current edition',
   'newsletter/charts/diffraction-heave/index.html': 'retired chart — noindex redirect to the current edition',
   'newsletter/charts/field-depth/index.html': 'retired chart — noindex redirect to the current edition',

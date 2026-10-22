@@ -10,6 +10,9 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..', 'dist');
 const PORT = Number(process.env.VISUAL_SERVER_PORT || 4173);
+// Mirror explicit, unconditional literal 301 rules for local route checks.
+const REDIRECTS = require('../vercel.json').redirects.filter(rule =>
+  rule.statusCode === 301 && !rule.has && !rule.missing && !/[:()*]/.test(rule.source));
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -44,6 +47,13 @@ function resolve(urlPath) {
 }
 
 const server = http.createServer((req, res) => {
+  const pathname = (req.url || '/').split('?')[0];
+  const redirect = REDIRECTS.find(rule => rule.source === pathname);
+  if (redirect) {
+    res.writeHead(redirect.statusCode, { location: redirect.destination, 'cache-control': 'no-store' });
+    res.end();
+    return;
+  }
   const file = resolve(req.url || '/');
   if (file) {
     res.writeHead(200, {

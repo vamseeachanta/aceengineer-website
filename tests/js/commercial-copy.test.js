@@ -212,10 +212,10 @@ test('every economics exception still matches its page, so stale entries are rem
   }
 });
 
-test('the superseded newsletter no longer carries the turnaround example', () => {
-  const text = renderedCopy(fs.readFileSync(path.join(distDir, 'newsletter/issue-001/index.html'), 'utf8'));
+test('the current newsletter carries no turnaround example', () => {
+  const text = renderedCopy(fs.readFileSync(path.join(distDir, 'newsletter/issue-001-energy-street/index.html'), 'utf8'));
   expect(text).not.toContain('within 24 hours');
-  expect(findings(text, 'newsletter/issue-001/index.html')).toEqual([]);
+  expect(findings(text, 'newsletter/issue-001-energy-street/index.html')).toEqual([]);
 });
 
 test('newsletter pages have no exception for turnaround promises', () => {

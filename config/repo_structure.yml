@@ -116,6 +116,7 @@ temporary_exceptions:
       - reports/competitor-analysis/2026-02-04.html
       - reports/competitor-analysis/2026-02-06.html
       - reports/competitor-analysis/latest.html
+      - reports/case-study-figures.md
   blog_output:
     category: temporary-durable-exception
     owner: aceengineer-website maintainers

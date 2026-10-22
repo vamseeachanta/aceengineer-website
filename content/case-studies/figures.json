@@ -1,0 +1,402 @@
+[
+  {
+    "id": "bsee-field-economics.html:b8:n24",
+    "page": "bsee-field-economics.html",
+    "figure_text": "180-month",
+    "value": "180",
+    "unit": "month",
+    "source_name": "Synthetic economics generator: assumed inputs",
+    "source_location": "scripts/generate_field_economics_data.py#create_production_profile",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b8:n49",
+    "page": "bsee-field-economics.html",
+    "figure_text": "12-month",
+    "value": "12",
+    "unit": "month",
+    "source_name": "Synthetic economics generator: assumed inputs",
+    "source_location": "scripts/generate_field_economics_data.py#create_production_profile",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b8:n69",
+    "page": "bsee-field-economics.html",
+    "figure_text": "24-month",
+    "value": "24",
+    "unit": "month",
+    "source_name": "Synthetic economics generator: assumed inputs",
+    "source_location": "scripts/generate_field_economics_data.py#create_production_profile",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b8:n89",
+    "page": "bsee-field-economics.html",
+    "figure_text": "100,000 barrels per day",
+    "value": "100000",
+    "unit": "barrels per day",
+    "source_name": "Synthetic economics generator: assumed inputs",
+    "source_location": "scripts/generate_field_economics_data.py#create_production_profile",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b8:n169",
+    "page": "bsee-field-economics.html",
+    "figure_text": "8%",
+    "value": "8",
+    "unit": "%",
+    "source_name": "Synthetic economics generator: assumed inputs",
+    "source_location": "scripts/generate_field_economics_data.py#create_production_profile",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b8:n208",
+    "page": "bsee-field-economics.html",
+    "figure_text": "30.4 days per month",
+    "value": "30.4",
+    "unit": "days per month",
+    "source_name": "Synthetic economics generator: assumed inputs",
+    "source_location": "scripts/generate_field_economics_data.py#create_production_profile",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b9:n32",
+    "page": "bsee-field-economics.html",
+    "figure_text": "$75/bbl",
+    "value": "75",
+    "unit": "$/bbl",
+    "source_name": "Synthetic economics generator: assumed inputs",
+    "source_location": "scripts/generate_field_economics_data.py#main.params; calculate_economics (capital allocation)",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b9:n51",
+    "page": "bsee-field-economics.html",
+    "figure_text": "$18/bbl",
+    "value": "18",
+    "unit": "$/bbl",
+    "source_name": "Synthetic economics generator: assumed inputs",
+    "source_location": "scripts/generate_field_economics_data.py#main.params; calculate_economics (capital allocation)",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b9:n75",
+    "page": "bsee-field-economics.html",
+    "figure_text": "$3.5 billion",
+    "value": "3.5",
+    "unit": "$ billion",
+    "source_name": "Synthetic economics generator: assumed inputs",
+    "source_location": "scripts/generate_field_economics_data.py#main.params; calculate_economics (capital allocation)",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b9:n132",
+    "page": "bsee-field-economics.html",
+    "figure_text": "24 months",
+    "value": "24",
+    "unit": "months",
+    "source_name": "Synthetic economics generator: assumed inputs",
+    "source_location": "scripts/generate_field_economics_data.py#main.params; calculate_economics (capital allocation)",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b9:n143",
+    "page": "bsee-field-economics.html",
+    "figure_text": "18.75%",
+    "value": "18.75",
+    "unit": "%",
+    "source_name": "Synthetic economics generator: assumed inputs",
+    "source_location": "scripts/generate_field_economics_data.py#main.params; calculate_economics (capital allocation)",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b9:n164",
+    "page": "bsee-field-economics.html",
+    "figure_text": "10%",
+    "value": "10",
+    "unit": "%",
+    "source_name": "Synthetic economics generator: assumed inputs",
+    "source_location": "scripts/generate_field_economics_data.py#main.params; calculate_economics (capital allocation)",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b12:n20",
+    "page": "bsee-field-economics.html",
+    "figure_text": "6,078.1",
+    "value": "6078.1",
+    "unit": "million USD",
+    "source_name": "Saved synthetic economics metrics",
+    "source_location": "assets/data/field_economics_metrics.json#/npv_mm (rounded to one decimal place)",
+    "status": "ILLUSTRATIVE"
+  },
+  {
+    "id": "bsee-field-economics.html:b13:n27",
+    "page": "bsee-field-economics.html",
+    "figure_text": "373.5",
+    "value": "373.5",
+    "unit": "million bbl",
+    "source_name": "Saved synthetic economics metrics",
+    "source_location": "assets/data/field_economics_metrics.json#/total_production_mmbbls (rounded to one decimal place)",
+    "status": "ILLUSTRATIVE"
+  },
+  {
+    "id": "bsee-field-economics.html:b14:n36",
+    "page": "bsee-field-economics.html",
+    "figure_text": "32",
+    "value": "32",
+    "unit": "month",
+    "source_name": "Saved synthetic economics metrics",
+    "source_location": "assets/data/field_economics_metrics.json#/payback_months",
+    "status": "ILLUSTRATIVE"
+  },
+  {
+    "id": "bsee-field-economics.html:b14:n84",
+    "page": "bsee-field-economics.html",
+    "figure_text": "32",
+    "value": "32",
+    "unit": "month",
+    "source_name": "Saved synthetic economics metrics",
+    "source_location": "assets/data/field_economics_metrics.json#/payback_months",
+    "status": "SOURCED"
+  },
+  {
+    "id": "bsee-field-economics.html:b14:n94",
+    "page": "bsee-field-economics.html",
+    "figure_text": "33rd",
+    "value": "33",
+    "unit": "month",
+    "source_name": "Saved synthetic economics metrics",
+    "source_location": "assets/data/field_economics_metrics.json#/payback_months (zero-based index + 1)",
+    "status": "DERIVED"
+  },
+  {
+    "id": "marine-safety-correlation.html:b6:n48",
+    "page": "marine-safety-correlation.html",
+    "figure_text": "47,385",
+    "value": "47385",
+    "unit": "count",
+    "source_name": "Pinned marine safety import record",
+    "source_location": "content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts",
+    "status": "SOURCED"
+  },
+  {
+    "id": "marine-safety-correlation.html:b6:n122",
+    "page": "marine-safety-correlation.html",
+    "figure_text": "5,876",
+    "value": "5876",
+    "unit": "count",
+    "source_name": "Pinned marine safety import record",
+    "source_location": "content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts",
+    "status": "SOURCED"
+  },
+  {
+    "id": "marine-safety-correlation.html:b6:n221",
+    "page": "marine-safety-correlation.html",
+    "figure_text": "53,261",
+    "value": "53261",
+    "unit": "count",
+    "source_name": "Pinned marine safety import record",
+    "source_location": "content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts; sum of the two cited agency counts",
+    "status": "DERIVED"
+  },
+  {
+    "id": "marine-safety-correlation.html:b9:n13",
+    "page": "marine-safety-correlation.html",
+    "figure_text": "47,385",
+    "value": "47385",
+    "unit": "count",
+    "source_name": "Pinned marine safety import record",
+    "source_location": "content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts",
+    "status": "SOURCED"
+  },
+  {
+    "id": "marine-safety-correlation.html:b10:n10",
+    "page": "marine-safety-correlation.html",
+    "figure_text": "5,876",
+    "value": "5876",
+    "unit": "count",
+    "source_name": "Pinned marine safety import record",
+    "source_location": "content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts",
+    "status": "SOURCED"
+  },
+  {
+    "id": "multi-code-wall-thickness-comparison.html:b10:n78",
+    "page": "multi-code-wall-thickness-comparison.html",
+    "figure_text": "5",
+    "value": "5",
+    "unit": "count",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "multi-code-wall-thickness-comparison.html:b10:n102",
+    "page": "multi-code-wall-thickness-comparison.html",
+    "figure_text": "8",
+    "value": "8",
+    "unit": "inch",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "multi-code-wall-thickness-comparison.html:b10:n105",
+    "page": "multi-code-wall-thickness-comparison.html",
+    "figure_text": "10",
+    "value": "10",
+    "unit": "inch",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "multi-code-wall-thickness-comparison.html:b10:n109",
+    "page": "multi-code-wall-thickness-comparison.html",
+    "figure_text": "12",
+    "value": "12",
+    "unit": "inch",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "multi-code-wall-thickness-comparison.html:b10:n113",
+    "page": "multi-code-wall-thickness-comparison.html",
+    "figure_text": "14",
+    "value": "14",
+    "unit": "inch",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "multi-code-wall-thickness-comparison.html:b10:n121",
+    "page": "multi-code-wall-thickness-comparison.html",
+    "figure_text": "16 inch",
+    "value": "16",
+    "unit": "inch",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "multi-code-wall-thickness-comparison.html:b10:n131",
+    "page": "multi-code-wall-thickness-comparison.html",
+    "figure_text": "3",
+    "value": "3",
+    "unit": "count",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "multi-code-wall-thickness-comparison.html:b10:n190",
+    "page": "multi-code-wall-thickness-comparison.html",
+    "figure_text": "5,000",
+    "value": "5000",
+    "unit": "psi",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "multi-code-wall-thickness-comparison.html:b10:n199",
+    "page": "multi-code-wall-thickness-comparison.html",
+    "figure_text": "10,000 psi",
+    "value": "10000",
+    "unit": "psi",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "multi-code-wall-thickness-comparison.html:b10:n233",
+    "page": "multi-code-wall-thickness-comparison.html",
+    "figure_text": "500",
+    "value": "500",
+    "unit": "m",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "multi-code-wall-thickness-comparison.html:b10:n240",
+    "page": "multi-code-wall-thickness-comparison.html",
+    "figure_text": "2,500 m",
+    "value": "2500",
+    "unit": "m",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "multi-code-wall-thickness-comparison.html:b10:n292",
+    "page": "multi-code-wall-thickness-comparison.html",
+    "figure_text": "3",
+    "value": "3",
+    "unit": "count",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "orcaflex-riser-sensitivity-automation.html:b10:n81",
+    "page": "orcaflex-riser-sensitivity-automation.html",
+    "figure_text": "50",
+    "value": "50",
+    "unit": "count",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "orcaflex-riser-sensitivity-automation.html:b18:n507",
+    "page": "orcaflex-riser-sensitivity-automation.html",
+    "figure_text": "8",
+    "value": "8",
+    "unit": "count",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "pipeline-on-bottom-stability-assessment.html:b17:n61",
+    "page": "pipeline-on-bottom-stability-assessment.html",
+    "figure_text": "0.8",
+    "value": "0.8",
+    "unit": "ratio",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "pipeline-on-bottom-stability-assessment.html:b17:n101",
+    "page": "pipeline-on-bottom-stability-assessment.html",
+    "figure_text": "0.8",
+    "value": "0.8",
+    "unit": "ratio",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "pipeline-on-bottom-stability-assessment.html:b17:n105",
+    "page": "pipeline-on-bottom-stability-assessment.html",
+    "figure_text": "1.0",
+    "value": "1.0",
+    "unit": "ratio",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  },
+  {
+    "id": "pipeline-on-bottom-stability-assessment.html:b17:n147",
+    "page": "pipeline-on-bottom-stability-assessment.html",
+    "figure_text": "1.0",
+    "value": "1.0",
+    "unit": "ratio",
+    "source_name": "",
+    "source_location": "",
+    "status": "NOT_EVALUATED"
+  }
+]

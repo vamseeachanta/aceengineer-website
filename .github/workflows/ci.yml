@@ -30,6 +30,9 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: Check napkin register and generated page offline
+        run: npm run test:napkin-checks
+
       - name: Build site
         run: npm run build
 

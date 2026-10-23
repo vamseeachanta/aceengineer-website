@@ -146,6 +146,7 @@ test('interactive generators reject a missing Organization partial', () => {
 
 const requiredTypes = {
   CollectionPage: [
+    'data/napkin-checks.html',
     'capabilities/index.html', 'outreach/index.html', 'solutions/index.html',
     'standards/index.html', 'reports/diffraction/index.html',
     'reports/sloshing/index.html', 'reports/sloshing/browse.html',

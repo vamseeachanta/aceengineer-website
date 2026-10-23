@@ -3,6 +3,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { JSDOM } = require('jsdom');
 const { SITEMAP_EXCLUDE } = require('../../build');
+require('./newsletter-link-targets.test');
 
 const edition = 'newsletter/issue-001-energy-street/index.html';
 const retired = 'newsletter/issue-001/index.html';
@@ -64,7 +65,9 @@ function assertRetired(doc, source = false, kind = 'issue') {
   expect(doc.querySelector('meta[http-equiv="refresh"]').content).toBe(`0; url=${route}`);
   expect(doc.querySelectorAll('main a')).toHaveLength(1);
   expect(doc.querySelector('main a').getAttribute('href')).toBe(route);
-  expect(normalizedText(doc.body)).toBe(`Skip to main content This ${kind} has moved Read the Energy Street edition.`);
+  expect(normalizedText(doc.body)).toBe(kind === 'chart'
+    ? 'Skip to main content This chart is no longer published Read issue 1 of The Deckhand Chronicles, Energy Street edition.'
+    : `Skip to main content This ${kind} has moved Read the Energy Street edition.`);
 }
 
 function assertNoRetiredClaims(html) {
@@ -110,7 +113,8 @@ describe.each(retiredCharts)('retired chart %s', chart => {
 
   test('negative controls reject indexing, wrong destinations, old links and hidden claims', () => {
     const original = documentFor(`dist/${retired}`);
-    original.querySelector('h1').textContent = 'This chart has moved';
+    original.querySelector('h1').textContent = 'This chart is no longer published';
+    original.querySelector('main a').textContent = 'Read issue 1 of The Deckhand Chronicles, Energy Street edition.';
     assertRetired(original, false, 'chart');
     const missingNoindex = original.cloneNode(true);
     missingNoindex.querySelector('meta[name="robots"]').content = 'index';

@@ -280,7 +280,7 @@ test('source metadata meets the required coverage floors', () => {
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
   // Includes the newsletter archive and both automation pages; retired sources still count.
   // Keep the existing 107 floor: noindex exclusions do not require a reduction.
-  expect(sources).toHaveLength(128);
+  expect(sources).toHaveLength(129);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 107],
     ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],
@@ -491,7 +491,7 @@ test('retired newsletter charts carry only retirement metadata', () => {
   for (const page of pages.filter(page => page.startsWith('newsletter/charts/'))) {
     const doc = documents.get(page);
     const description = doc.querySelector('meta[name="description"]').content;
-    expect(description).toBe('Read the Energy Street edition at its new address.');
+    expect(description).toBe('This chart is no longer published.');
     expect(doc.querySelector('meta[name="robots"]')?.content).toBe('noindex');
     expect(doc.querySelector('meta[property="og:description"]')).toBeNull();
     expect(doc.querySelector('meta[name="twitter:description"]')).toBeNull();
@@ -504,7 +504,7 @@ test('retired chart pages point to the current newsletter edition', () => {
   expect(charts).toHaveLength(4);
   for (const page of charts) {
     const text = documents.get(page).querySelector('main').textContent;
-    expect(text).toContain('This chart has moved');
+    expect(text).toContain('This chart is no longer published');
     expect(text).not.toContain('An interactive version of this chart is planned.');
     expect(documents.get(page).querySelector('main a').getAttribute('href'))
       .toBe('/newsletter/issue-001-energy-street/');

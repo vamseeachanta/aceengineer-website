@@ -1,0 +1,101 @@
+---
+rootPath: "../../../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One place to work | AceEngineer</title>
+<meta name="description" content="We now use AI assistants for many tasks: in a chat window or an app, on a phone, and on personal and work computers.">
+<meta property="og:title" content="One place to work | AceEngineer">
+<meta property="og:description" content="We now use AI assistants for many tasks: in a chat window or an app, on a phone, and on personal and work computers.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ canonicalUrl }}">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="One place to work | AceEngineer">
+<meta name="twitter:description" content="We now use AI assistants for many tasks: in a chat window or an app, on a phone, and on personal and work computers.">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"One place to work","name":"One place to work | AceEngineer","description":"We now use AI assistants for many tasks: in a chat window or an app, on a phone, and on personal and work computers.","url":"https://www.aceengineer.com/newsletter/topics/one-place-to-work/","inLanguage":"en","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Newsletter","item":"https://www.aceengineer.com/newsletter/"},{"@type":"ListItem","position":3,"name":"One place to work","item":"https://www.aceengineer.com/newsletter/topics/one-place-to-work/"}]}]</script>
+<include src="partials/head-common.html">
+</include>
+</head>
+<body class="theme-page">
+<include src="partials/nav.html">
+</include>
+<main id="main" class="samples-page">
+<div class="container">
+<article id="one-place-to-work">
+<h1>One place to work</h1>
+<p><strong>Summary:</strong> We now use AI assistants for many tasks: in a chat window or an app, on a phone, and on personal and work computers. Language models do not always give the same answer. The answer can change from one run to the next, and with the wording of the question.</p>
+<p>Programmers know a related frustration from an old saying: "It works on my machine." We now meet a similar problem in everyday AI use: one person gets a result that another cannot repeat. Many assistants keep a record of each session. To check a result, or run it again, you need its prompt, its inputs and that record. So where these are kept matters.</p>
+<p>One answer is to keep each job in one folder, with its files, its tools, its prompts and its record of changes. Let your AI assistant work only there. The article shows how this grows from one engineer to a team and then to the company. It also gives an example from an invented small firm and eight steps you can try on Monday.</p>
+<hr>
+<p>Engineering work often lives in many places: e-mail attachments, personal and shared drives, chat threads, and spreadsheets or scripts on one engineer's laptop. Each copy changes on its own. The risk is a result that goes out from an out-of-date input, and nobody can say which input was used.</p>
+<p>AI assistants make this more important. Answers can differ from one run to the next. Keep the prompt, the inputs and the assistant's record in the job folder, with the result. Some AI assistants can now change files, not only read them; this article calls them AI agents. An agent can only work on the files it can read, and it can change those files. So the questions are: where are the files, what may the agent touch, and how do you see what it did?</p>
+<h2>What "one place" means</h2>
+<p>One place is one folder for each job. The folder holds the job's files and tools, its prompts and the assistant's records, and its record of changes. You ask your AI assistant from the chat or tool you already use, and it works only in that folder. The result comes back to you, and the change goes into the folder's record.</p>
+<p>Three layers keep this under control:</p>
+<ul>
+<li><strong>Data.</strong> The agent reads only the files in the job's scope: the folders it is allowed to see. Other files are not visible to it.</li>
+<li><strong>Execution.</strong> One harness: the same tools, the same instructions and the same guardrails for every job. Guardrails are fixed limits: the agent cannot delete files or overwrite history. It proposes each change for a person to review, and every action goes into a log (an audit trail).</li>
+<li><strong>Results.</strong> The result comes back to the place where you asked, with a record of what changed and why.</li>
+</ul>
+<p>At level 1 you set most of this up yourself. Open the AI tool only in the job folder, and review each change before you keep it. At levels 2 and 3, the system's permissions enforce the limits, not the instructions to the AI.</p>
+<h2>The ladder</h2>
+<ol>
+<li><strong>One person.</strong> You keep each job in one folder, with one set of tools and one instruction file for your AI assistant. The instruction file is a short text note: what the job is, the units, the design code and edition, and how to rerun the calculation. Start on public material, such as a textbook example, while you learn how the assistant behaves. Keep client data out of the AI tool until your firm allows it.</li>
+<li><strong>The team.</strong> The team shares one place, with one scope for each job. The calculation tools and checklists sit in the shared harness, so each new job starts from the team's best version. When a checklist is corrected, the team keeps one copy. The reviewer sees each proposed change before it is accepted.</li>
+<li><strong>The organisation.</strong> The same place sits inside the organisation's own chat or workspace, and uses the staff's existing sign-ins. Each project has one scope and one audit trail. The system's permissions enforce the guardrails. Outside partners work in a separate place, with their own scope.</li>
+</ol>
+<p>You can start at level 1 on your own. Levels 2 and 3 need the team or the company to agree, and the company's IT and security staff to approve.</p>
+<h2>Old way against one place</h2>
+<div class="table-responsive">
+<table class="table table-bordered">
+<thead>
+<tr><th scope="col">Step</th><th scope="col">Old way (in our experience)</th><th scope="col">One place</th></tr>
+</thead>
+<tbody>
+<tr><td>Where the files are</td><td>E-mail, personal and shared drives, chat</td><td>One folder for each job</td></tr>
+<tr><td>What an AI tool can see</td><td>Whatever file someone pastes in</td><td>Only the files in the job's scope</td></tr>
+<tr><td>How a change is made</td><td>Someone edits a copy</td><td>The agent proposes a change; a person reviews it</td></tr>
+<tr><td>How a reviewer finds the input</td><td>Asks, then searches</td><td>Reads the folder's record of changes</td></tr>
+<tr><td>How a new engineer starts</td><td>Copies files from a colleague</td><td>Uses the same place and harness from the first day</td></tr>
+</tbody>
+</table>
+</div>
+<h2>For a small company</h2>
+<p>A small company does not need a large platform for this. Start with the work the team repeats: a calculation package, a quote, a drawing set, a test report. Turn one of these into a small tool, for example a spreadsheet template or a short script that builds the package from one input file. Run it on your own computer, with the software and data you already have. Put the tool, its inputs and its record in one place.</p>
+<p>We work this way ourselves. Our engineering code, scripts and AI-agent instructions are in repositories: folders that keep every version. Our agents' changes arrive as pull requests (proposed changes), and they are reviewed before they are merged.</p>
+<h2>An example (invented for this article)</h2>
+<p>A small engineering firm does beam and frame checks. The firm and its people are invented for this example.</p>
+<ul>
+<li>Level 1: one engineer keeps each job in one folder, with her check spreadsheet, a record of changes and an instruction file. She opens her AI assistant only in that folder and reviews each change it proposes.</li>
+<li>Level 2: the firm's three engineers share one place, with one scope for each job. A second engineer asks the assistant to rerun her check, and reviews the result.</li>
+<li>Level 3: the firm adds a second team. Each project gets its own scope and audit trail. A partner firm works on one project, in a separate place.</li>
+</ul>
+<h2>What this does not show</h2>
+<p>This article gives no measured time saving. Setting up the place takes effort, and habits take time to change. Some files must stay where they are: files under document control, and files in the client's own system. List them in the job folder with their location, and do not move them.</p>
+<h2>Try it Monday</h2>
+<ol>
+<li>Choose one current job, and check your firm's rules on copying its files.</li>
+<li>Make one folder with four sub-folders: inputs, calculations, results and report.</li>
+<li>Copy your own working files for that job into the folder.</li>
+<li>From now on, work on this job only from this folder.</li>
+<li>List the files that must stay elsewhere, and where they are.</li>
+<li>Start a change log: a text file with one line for each new result and its input.</li>
+<li>Write an instruction file: the job, the units, the design code and how to rerun it.</li>
+<li>Before you open an AI tool on the folder, check that your firm allows it.</li>
+</ol>
+<p><em>How this article was made: an AI assistant drafted it from the author's material and his description.</em></p>
+<p>Vamsee Achanta, P.E., AceEngineer: <a href="https://www.aceengineer.com/about.html">https://www.aceengineer.com/about.html</a></p>
+<p>If you want help with any work (automation, AI automation or workflows), let us know: support&#64;aceengineer.com.</p>
+<hr>
+</article>
+<p><a href="/newsletter/issue-001-energy-street/">Read issue 1 of The Deckhand Chronicles, Energy Street edition.</a></p>
+</div>
+</main>
+<include src="partials/footer.html">
+</include>
+</body>
+</html>

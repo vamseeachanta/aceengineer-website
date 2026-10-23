@@ -6,6 +6,7 @@ const expressions = require('posthtml-expressions');
 const yaml = require('js-yaml');
 const { PurgeCSS } = require('purgecss');
 const CleanCSS = require('clean-css');
+const { addCaseStudyBlocks } = require('./scripts/case-study-summary');
 const hf = require('./scripts/hf-fetch');
 const { renderCards, capabilityDetailDocument, detailFileName, detailHref, isReleaseBacked } = require('./scripts/render-capabilities');
 
@@ -202,7 +203,9 @@ async function processFile(filePath) {
   const outputPath = path.join(distDir, relativePath);
 
   const rawContent = fs.readFileSync(filePath, 'utf8');
-  const { locals, content } = parseFrontMatter(rawContent);
+  const parsed = parseFrontMatter(rawContent);
+  const locals = parsed.locals;
+  const content = addCaseStudyBlocks(parsed.content, relativePath);
   locals.metadataExcluded = relativePath.split(path.sep).join('/') in SITEMAP_EXCLUDE;
 
   // Default rootPath to empty string if not specified

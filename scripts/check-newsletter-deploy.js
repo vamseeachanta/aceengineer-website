@@ -3,9 +3,8 @@ const path = require('node:path');
 
 function assertNewsletterDeployReady(html, deployCheck) {
   if (deployCheck !== '1') return;
-  for (const token of ['[[SEND DATE]]', 'TODO_ARTICLE_URL_A1', 'TODO_DUAL_TANK_URL']) {
-    if (html.includes(token)) throw new Error(`Unfilled newsletter token: ${token}`);
-  }
+  const token = html.match(/\[\[[^\]]+\]\]|TODO_[A-Z0-9_]+/);
+  if (token) throw new Error(`Unfilled newsletter token: ${token[0]}`);
 }
 
 if (require.main === module) {

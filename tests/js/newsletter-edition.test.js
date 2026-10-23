@@ -12,7 +12,7 @@ const retiredCharts = ['hse-drilling', 'diffraction-heave', 'field-depth', 'comp
 const retiredClaims = /The Deckhand Chronicle · Issue 1|Specialists|Well-control classifications|68 of 85|85 classified|Heave agrees within|0\.055 m\/m|4\.25 degrees|Water depth less than 1,000 ft|1,151 distinct field codes|Records before 2000|55,269 of 72,844|An interactive version of this chart is planned/i;
 const route = '/newsletter/issue-001-energy-street/';
 const expectedTitle = 'The Deckhand Chronicles: Energy Street, Issue 1';
-const textDigest = '01ce5ca134b71e66aae3fec9c4142b58c022e4ff3d5887ee0bce44fd5a2b17dd';
+const textDigest = '6524d0b28f060637f42d6354cf75bbd5b8d17b7a3db4fc1385caca0a7bbb2ca8';
 const linksDigest = '23d134dda4f322f8a06c4fafdce34c48683ae5e8d816d60dfa6d6f30784a2768';
 const root = path.resolve(__dirname, '../..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
@@ -34,7 +34,7 @@ test('the edition is built at its public route with the approved title and headi
 
 test('the approved text and all nine links retain their order in source and output', () => {
   const sourceBody = read(`content/${edition}`).match(/<article id="newsletter-edition">([\s\S]*?)<\/article>/)[1];
-  expect(digest(sourceBody)).toBe('651239356b20c33d0a128fd7b2877e949d659cc6c4df77c41df9af26f38d93c0');
+  expect(digest(sourceBody)).toBe('9453da77d71f4c655586cf8c80e4cdae03bed2a918b89a96b84c8fd9125e7ae8');
   for (const prefix of ['content', 'dist']) {
     const article = documentFor(`${prefix}/${edition}`).querySelector('#newsletter-edition');
     expect(article).not.toBeNull();
@@ -162,11 +162,24 @@ test('discovery replaces the superseded route in navigation, archive, RSS and in
     expect(html).not.toMatch(/(?:href=")?(?:https?:\/\/[^/]+)?\/?newsletter\/issue-001\//);
     expect(html).not.toMatch(/href="issue-001\/"/);
   }
-  const rss = new JSDOM(read('dist/newsletter/feed.xml'), { contentType: 'text/xml' }).window.document;
-  const sourceRss = new JSDOM(read('content/newsletter/feed.xml'), { contentType: 'text/xml' }).window.document;
-  expect(rss.querySelectorAll('item')).toHaveLength(1);
-  expect(rss.querySelector('item title').textContent).toBe(sourceRss.querySelector('item title').textContent);
-  expect(rss.querySelector('item pubDate').textContent).toBe('Thu, 22 Oct 2026 00:00:00 GMT');
+  for (const prefix of ['content', 'dist']) {
+    const feed = new JSDOM(read(prefix + '/newsletter/feed.xml'), { contentType: 'text/xml' }).window.document;
+    expect(feed.querySelectorAll('item')).toHaveLength(1);
+    expect(feed.querySelector('item title').textContent).toBe(expectedTitle);
+    expect(feed.querySelector('item pubDate').textContent).toBe('Tue, 27 Oct 2026 00:00:00 GMT');
+    expect(feed.querySelector('item link').textContent).toBe('https://www.aceengineer.com' + route);
+    expect(feed.querySelector('item guid').textContent).toBe('https://www.aceengineer.com' + route);
+    const archive = documentFor(prefix + '/newsletter/index.html').querySelector('article');
+    expect(archive.querySelector('a').textContent).toBe(expectedTitle);
+    expect(new URL(archive.querySelector('a').getAttribute('href'), 'https://www.aceengineer.com/newsletter/').href)
+      .toBe('https://www.aceengineer.com' + route);
+    expect(archive.querySelector('time').getAttribute('datetime')).toBe('2026-10-27');
+    expect(archive.querySelector('time').textContent).toBe('27 October 2026');
+    const issue = documentFor(prefix + '/' + edition);
+    expect(normalizedText(issue.querySelector('#send-date'))).toBe('October 27, 2026 · Launch issue');
+    const schemas = JSON.parse(issue.querySelector('script[type="application/ld+json"]').textContent);
+    expect(schemas.find(schema => schema['@type'] === 'Article').datePublished).toBe('2026-10-27');
+  }
   expect(SITEMAP_EXCLUDE[retired]).toBeDefined();
   for (const file of ['dist/sitemap.xml', 'dist/llms.txt']) {
     expect(read(file)).toContain(route);

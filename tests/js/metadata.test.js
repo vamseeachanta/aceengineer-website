@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { spawnSync } = require('child_process');
 const { JSDOM } = require('jsdom');
 const yaml = require('js-yaml');
 const { builtPages, SITEMAP_EXCLUDE, PAGE_DESCRIPTION_PATTERNS } = require('../../build');
@@ -14,6 +15,53 @@ const destinations = pages.filter(page => !(page in SITEMAP_EXCLUDE));
 const exemptions = {};
 const brandContract = fs.readFileSync(path.join(__dirname, '../../brand/BRAND.md'), 'utf8');
 const legalName = brandContract.match(/Legal\/contractual entity[^:\n]*:\s*\*\*([^*\n]+)\*\*/)[1];
+
+// Issue #167 (2026): audit the same built files independently of build helpers.
+// Python uses its standard library; uv selects the interpreter consistently.
+// Keep this block separate from the existing page-specific assertions.
+describe('site-wide SEO audit contract', () => {
+  let auditReport;
+  beforeAll(() => {
+    const folder = fs.mkdtempSync(path.join(process.env.TEST_TEMP_DIR || require('os').tmpdir(), 'seo-audit-'));
+    const output = path.join(folder, 'audit.json');
+    const result = spawnSync(process.env.UV_BIN || 'uv', [
+      'run', '--no-project', 'python', 'scripts/seo/audit.py',
+      '--built-root', distDir, '--output', output,
+    ], { cwd: path.join(__dirname, '../..'), encoding: 'utf8' });
+    if (result.error || result.status !== 0) {
+      throw new Error('SEO audit could not start; ensure uv and Python are available.');
+    }
+    auditReport = JSON.parse(fs.readFileSync(output, 'utf8'));
+  });
+
+  test('all built files have metadata rows and matching content digests', () => {
+    const { createHash } = require('crypto');
+    expect(auditReport.pages.map(row => row.page)).toEqual(pages);
+    for (const page of pages) {
+      const digest = createHash('sha256').update(fs.readFileSync(path.join(distDir, page))).digest('hex');
+      expect(auditReport.inputs.html_sha256[page]).toBe(digest);
+    }
+  });
+
+  test('metadata deviations match only reasoned exact allow-list entries', () => {
+    expect(auditReport.unapproved).toEqual([]);
+    expect(auditReport.stale_allowlist).toEqual([]);
+    expect(auditReport.status).toBe('PASS');
+  });
+
+  test('every row exposes the requested metadata and explicit evaluation limits', () => {
+    for (const row of auditReport.pages) {
+      for (const key of ['title', 'description', 'canonical', 'og:title', 'og:description',
+        'og:image', 'twitter:card', 'json_ld_types', 'robots']) expect(Array.isArray(row[key])).toBe(true);
+      expect(Number.isInteger(row.h1_count)).toBe(true);
+      expect(typeof row.in_sitemap).toBe('boolean');
+    }
+    expect(auditReport.not_evaluated).toEqual(expect.arrayContaining([
+      expect.objectContaining({ rule: 'title-length' }),
+      expect.objectContaining({ rule: 'description-length' }),
+    ]));
+  });
+});
 
 function addressPropertyHits(html) {
   const doc = new JSDOM(html).window.document;

@@ -25,10 +25,58 @@ names:
   legal: Achanta AceEngineer Inc.
   retired_acronym: A&CE
 
-tagline: Engineering analysis and AI automation
+# Positioning authority: issue #89 implementation brief (2026).
+# Contract and claims checklist: docs/positioning-claims.md.
+# Newsletter context: content/newsletter/issue-001-energy-street/index.html,
+# introduction and engineering-offer section (2026). These are offers, not
+# measured outcomes. Finished work supports the purpose below the lead.
+positioning:
+  purpose: &purpose >-
+    AceEngineer helps clients set up agentic engineering workflow processes suited to their needs, so that they become AI-native, and also does the engineering work.
+  primary_audience: Engineering teams that need workflow setup and engineering delivery.
+  supporting_claims:
+    - sentence: Workflow setup is scoped to the client's engineering needs.
+      basis: offer statement
+    - sentence: Engineering analysis and calculation work is available alongside workflow setup.
+      basis: offer statement
+    - sentence: Public code and samples support discussion of the agreed scope.
+      basis: offer statement
+  approved_key_terms:
+    - agentic engineering workflow processes
+    - AI-native
+    - engineering work
+  banned_wording:
+    - fully autonomous engineering
+    - guaranteed results
+    - no engineering review needed
+  leads:
+    index.html: main .home-hero .home-lead
+    ai-automation/index.html: main .positioning-lead
+    about.html: main .about-hero .lead
+  # Google Search Central, title links and snippets guides, accessed 2026-10-22:
+  # https://developers.google.com/search/docs/appearance/title-link
+  # https://developers.google.com/search/docs/appearance/snippet
+  # No fixed character limits; truncation depends on display width. The SEO
+  # audit in PR #170 also uses null bounds. Do not invent numeric thresholds.
+  metadata_length:
+    status: NOT_EVALUATED
+    title_max: null
+    description_max: null
 
-firm_lede: >-
-  AceEngineer is a Houston engineering firm that runs its analysis as automated, checked workflows. AI automation and agentic workflows are topics for discussion under a separately agreed scope. The engineering code is public: of 196 modules in digitalmodel, worldenergydata and assetutilities, 35 pass their cited checks (catalogue run 2026-10-17). The pinned catalogue records the evidence available for its classifications.
+about:
+  title: About AceEngineer | Agentic engineering workflows
+  heading: &positioning_heading Agentic engineering workflows and engineering analysis
+  description: Learn how AceEngineer helps clients become AI-native with agentic engineering workflows suited to their needs, and provides engineering analysis.
+
+ai_automation:
+  title: AI automation | Agentic engineering workflows
+  heading: AI automation for agentic engineering workflows
+  description: Set up agentic engineering workflows to become AI-native. AceEngineer scopes the process to your needs and also does engineering work.
+  lead: *purpose
+
+tagline: *positioning_heading
+
+firm_lede: *purpose
 
 founding: >-
   Analytical &amp; Computational Engineering was founded in 2010 in Houston, Texas,
@@ -89,12 +137,11 @@ targets:
   home: content/index.html
 
 home:
-  title: AceEngineer | Engineering analysis and AI automation
-  description: AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms, EPC contractors and drilling contractors.
+  title: AceEngineer | Agentic engineering workflows
+  description: AceEngineer helps clients become AI-native with agentic engineering workflows suited to their needs, and also provides engineering analysis.
   kicker: Engineering analysis, AI automation and agentic workflows | Houston, Texas
-  heading: Engineering analysis that is practical, dependable and repeatable.
-  lead: >-
-    AI automation and agentic workflows are topics for discussion under a separately agreed scope.
+  heading: Become AI-native with agentic engineering workflows
+  lead: *purpose
   discuss: Contact us
   facts:
     - heading: Founded 2010

@@ -400,9 +400,9 @@ test('home support lists both injected designation and product without hidden or
   expect(wholeToken(product.toLowerCase(), product)).toBe(true);
 });
 
-test('home services introduction and the three description texts agree', () => {
+test('home positioning description agrees with structured data and the discovery header', () => {
   const home = documents.get('index.html');
-  const sentence = home.querySelector('#services > .container > p').textContent.trim().match(/^.*?\./)[0];
+  const sentence = yaml.load(fs.readFileSync(path.join(__dirname, '../../brand/copy.yaml'), 'utf8')).home.description;
   const meta = home.querySelector('meta[name="description"]').content;
   const schema = nodesFor('index.html').find(node => node['@type'] === 'WebPage').description;
   const header = fs.readFileSync(path.join(distDir, 'llms.txt'), 'utf8').match(/^> (.*)$/m)[1];
@@ -410,6 +410,35 @@ test('home services introduction and the three description texts agree', () => {
 });
 
 const homeCopy = yaml.load(fs.readFileSync(path.join(__dirname, '../../brand/copy.yaml'), 'utf8'));
+// Rule source: issue #89 (2026), plus the Google Search Central title-link and
+// snippet guides linked in docs/positioning-claims.md. Neither sets a fixed
+// character limit; the overlapping SEO audit uses null bounds for that reason.
+test.each([
+  ['index.html', 'home', 'AceEngineer | Agentic engineering workflows'],
+  ['about.html', 'about', 'About AceEngineer | Agentic engineering workflows'],
+  ['ai-automation/index.html', 'ai_automation', 'AI automation | Agentic engineering workflows'],
+])('%s metadata and h1 match the positioning contract', (page, key, title) => {
+  const doc = documents.get(page);
+  const copy = homeCopy[key];
+  expect(doc.title).toBe(title);
+  expect(doc.querySelectorAll('main h1')).toHaveLength(1);
+  expect(doc.querySelector('main h1').textContent.trim()).toBe(copy.heading);
+  expect(copy.heading.toLowerCase()).toContain('agentic engineering workflows');
+  for (const selector of ['meta[property="og:title"]', 'meta[name="twitter:title"]']) {
+    expect(doc.querySelector(selector).content).toBe(title);
+  }
+  for (const selector of ['meta[name="description"]', 'meta[property="og:description"]', 'meta[name="twitter:description"]']) {
+    expect(doc.querySelector(selector).content).toBe(copy.description);
+    expect(doc.querySelector(selector).content).toMatch(/AI-native/);
+    expect(doc.querySelector(selector).content).toMatch(/engineering (?:analysis|work)/);
+  }
+  for (const node of nodesFor(page).filter(node => node['@type'] === 'WebPage')) {
+    expect(node).toMatchObject({ name: title, description: copy.description });
+  }
+  expect(homeCopy.positioning.metadata_length.status).toBe('NOT_EVALUATED');
+  expect(homeCopy.positioning.metadata_length.title_max).toBeNull();
+  expect(homeCopy.positioning.metadata_length.description_max).toBeNull();
+});
 const supportedHomeCopy = [
   ['home.lead'],
   ['home.services.3.heading', 'service_details.3.description', 'home.services.3.receives'],
@@ -418,7 +447,6 @@ const supportedHomeCopy = [
   ['service_details.2.description'],
   ['home.services.5.receives'],
   ['service_details.4.description', 'home.services.4.receives'],
-  ['home.description'],
 ].map(keys => [keys.join(', '), keys]);
 test.each(supportedHomeCopy)('home wording follows existing page support: %s', (key, paths) => {
   for (const keyPath of paths) {

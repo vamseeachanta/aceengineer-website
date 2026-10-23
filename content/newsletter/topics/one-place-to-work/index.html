@@ -44,10 +44,96 @@ rootPath: "../../../"
 <p>At level 1 you set most of this up yourself. Open the AI tool only in the job folder, and review each change before you keep it. At levels 2 and 3, the system's permissions enforce the limits, not the instructions to the AI.</p>
 <h2>The ladder</h2>
 <ol>
-<li><strong>One person.</strong> You keep each job in one folder, with one set of tools and one instruction file for your AI assistant. The instruction file is a short text note: what the job is, the units, the design code and edition, and how to rerun the calculation. Start on public material, such as a textbook example, while you learn how the assistant behaves. Keep client data out of the AI tool until your firm allows it.</li>
-<li><strong>The team.</strong> The team shares one place, with one scope for each job. The calculation tools and checklists sit in the shared harness, so each new job starts from the team's best version. When a checklist is corrected, the team keeps one copy. The reviewer sees each proposed change before it is accepted.</li>
-<li><strong>The organisation.</strong> The same place sits inside the organisation's own chat or workspace, and uses the staff's existing sign-ins. Each project has one scope and one audit trail. The system's permissions enforce the guardrails. Outside partners work in a separate place, with their own scope.</li>
+<li id="ladder-1"><strong>One person.</strong> You keep each job in one folder, with one set of tools and one instruction file for your AI assistant. The instruction file is a short text note: what the job is, the units, the design code and edition, and how to rerun the calculation. Start on public material, such as a textbook example, while you learn how the assistant behaves. Keep client data out of the AI tool until your firm allows it.</li>
+<li id="ladder-2"><strong>The team.</strong> The team shares one place, with one scope for each job. The calculation tools and checklists sit in the shared harness, so each new job starts from the team's best version. When a checklist is corrected, the team keeps one copy. The reviewer sees each proposed change before it is accepted.</li>
+<li id="ladder-3"><strong>The organisation.</strong> The same place sits inside the organisation's own chat or workspace, and uses the staff's existing sign-ins. Each project has one scope and one audit trail. The system's permissions enforce the guardrails. Outside partners work in a separate place, with their own scope.</li>
 </ol>
+<figure class="ladder-flow">
+<div class="ladder-flow-grid">
+<div class="ladder-flow-card">
+<span class="ladder-flow-level">Starting point</span>
+<strong class="ladder-flow-title">General chatbot</strong>
+<span>Files pasted into a chat window. No memory of the job. No shared rules.</span>
+</div>
+<div class="ladder-flow-arrow">
+<span>keep the job together</span>
+<svg viewBox="0 0 32 24" width="32" height="24" role="img" aria-label="General chatbot → One person, one place → Team central place → Organisation" focusable="false">
+<title>From a general chatbot to a team's central place</title>
+<style>
+.ladder-flow {
+  --flow-bg: var(--tint);
+  --flow-card: var(--bg);
+  --flow-ink: var(--ink);
+  --flow-accent: var(--navy);
+  --flow-border: var(--hairline);
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 2em 0;
+  padding: 1em;
+  border: 1px solid var(--flow-border);
+  border-radius: 8px;
+  background: var(--flow-bg);
+  color: var(--flow-ink);
+  font: 1.5rem/1.5 var(--font-ui);
+  overflow-wrap: anywhere;
+}
+.ladder-flow-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1em; }
+.ladder-flow .ladder-flow-card {
+  display: block;
+  min-width: 0;
+  padding: 1em;
+  border: 1px solid var(--flow-border);
+  border-top: 4px solid var(--flow-accent);
+  border-radius: 6px;
+  background: var(--flow-card);
+  color: var(--flow-ink);
+  text-decoration: none;
+}
+.ladder-flow-level { display: block; margin-bottom: .5em; font-size: .9em; }
+.ladder-flow .ladder-flow-title { display: block; margin-bottom: .6em; color: var(--flow-accent); font-size: 1.2em; }
+.ladder-flow a .ladder-flow-title { text-decoration: underline; text-underline-offset: .15em; }
+.ladder-flow a.ladder-flow-card:hover { border-color: var(--flow-accent); }
+.ladder-flow a.ladder-flow-card:focus-visible { outline: 3px solid var(--flow-accent); outline-offset: 3px; }
+.ladder-flow-arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5em; color: var(--flow-accent); text-align: center; }
+.ladder-flow-arrow svg { display: block; flex-shrink: 0; transform: rotate(90deg); }
+.ladder-flow figcaption { margin-top: 1em; font-family: var(--font-body); }
+@media (min-width: 1200px) {
+  .ladder-flow-grid { grid-template-columns: minmax(0, 1fr) 4em minmax(0, 1fr) 4em minmax(0, 1fr) 4em minmax(0, 1fr); gap: .6em; }
+  .ladder-flow-arrow svg { transform: none; }
+}
+@media (prefers-color-scheme: dark) {
+  .ladder-flow { --flow-bg: var(--navy); --flow-card: var(--navy); --flow-ink: var(--bg); --flow-accent: var(--teal-lift); --flow-border: var(--teal-lift); }
+}
+</style>
+<path d="M2 12h26m-8-8 8 8-8 8" fill="none" stroke="currentColor" stroke-width="2"/>
+</svg>
+</div>
+<a class="ladder-flow-card" href="#ladder-1">
+<span class="ladder-flow-level">Level 1</span>
+<strong class="ladder-flow-title">One person, one place</strong>
+<span>Each job in one folder, with one set of tools and one instruction file for your AI assistant: the units, the design code and edition, and how to rerun the calculation.</span>
+</a>
+<div class="ladder-flow-arrow">
+<span>share it</span>
+<svg viewBox="0 0 32 24" width="32" height="24" aria-hidden="true" focusable="false"><path d="M2 12h26m-8-8 8 8-8 8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+</div>
+<a class="ladder-flow-card" href="#ladder-2">
+<span class="ladder-flow-level">Level 2</span>
+<strong class="ladder-flow-title">Team central place</strong>
+<span>One scope for each job. Calculation tools and checklists in the shared harness. One copy of each corrected checklist. The reviewer sees each proposed change before it is accepted.</span>
+</a>
+<div class="ladder-flow-arrow">
+<span>govern it</span>
+<svg viewBox="0 0 32 24" width="32" height="24" aria-hidden="true" focusable="false"><path d="M2 12h26m-8-8 8 8-8 8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+</div>
+<a class="ladder-flow-card" href="#ladder-3">
+<span class="ladder-flow-level">Level 3</span>
+<strong class="ladder-flow-title">Organisation</strong>
+<span>The organisation's own chat or workspace, with the staff's existing sign-ins. One scope and one audit trail per project. Permissions enforce the guardrails. Outside partners in a separate place, with their own scope.</span>
+</a>
+</div>
+<figcaption>Figure 1. From a general chatbot to a team's central place: each step keeps more of the job together.</figcaption>
+</figure>
 <p>You can start at level 1 on your own. Levels 2 and 3 need the team or the company to agree, and the company's IT and security staff to approve.</p>
 <h2>Old way against one place</h2>
 <div class="table-responsive">

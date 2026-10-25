@@ -3,7 +3,7 @@ const path = require('node:path');
 
 function assertNewsletterDeployReady(html, deployCheck) {
   if (deployCheck !== '1') return;
-  const token = html.match(/\[\[[^\]]+\]\]|TODO_[A-Z0-9_]+/);
+  const token = html.match(/\[\[[^\]]+\]\]|TODO_[A-Z0-9_]+|CONTACT_EMAIL/);
   if (token) throw new Error(`Unfilled newsletter token: ${token[0]}`);
 }
 

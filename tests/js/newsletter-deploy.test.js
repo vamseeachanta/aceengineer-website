@@ -6,7 +6,7 @@ const test = typeof jest === 'undefined' ? require('node:test') : global.test;
 const { assertNewsletterDeployReady } = require('../../scripts/check-newsletter-deploy');
 
 const issue = path.resolve(__dirname, '../../content/newsletter/issue-001-energy-street/index.html');
-const tokens = ['[[SEND DATE]]', 'TODO_ARTICLE_URL_A1', 'TODO_DUAL_TANK_URL', '[[ANOTHER DATE]]', 'TODO_NEW_LINK_2'];
+const tokens = ['[[SEND DATE]]', 'TODO_ARTICLE_URL_A1', 'TODO_DUAL_TANK_URL', '[[ANOTHER DATE]]', 'TODO_NEW_LINK_2', 'CONTACT_EMAIL'];
 
 for (const token of tokens) {
   for (const html of [`<a href="${token}">Read</a>`, `<p id="send-date">${token}</p>`]) {
@@ -28,10 +28,10 @@ test('the filled issue passes the deploy check with and without the flag', () =>
   assert.equal(schemas.find(schema => schema['@type'] === 'Article').datePublished, '2026-10-27');
 });
 
-test('the issue retains the approved article bytes and nine links', () => {
+test('the issue retains the approved article bytes and ten links', () => {
   const html = fs.readFileSync(issue, 'utf8');
   const article = html.match(/<article id="newsletter-edition">([\s\S]*?)<\/article>/)[1];
   assert.equal(crypto.createHash('sha256').update(article).digest('hex'),
-    '9453da77d71f4c655586cf8c80e4cdae03bed2a918b89a96b84c8fd9125e7ae8');
-  assert.equal((article.match(/<a\b/g) || []).length, 9);
+    'b6cd9b5ddb5510dbd2ea409a5d13ebec5b6a04ce725081d9467c7a93d546d8a9');
+  assert.equal((article.match(/<a\b/g) || []).length, 10);
 });

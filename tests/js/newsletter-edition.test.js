@@ -12,8 +12,8 @@ const retiredCharts = ['hse-drilling', 'diffraction-heave', 'field-depth', 'comp
 const retiredClaims = /The Deckhand Chronicle · Issue 1|Specialists|Well-control classifications|68 of 85|85 classified|Heave agrees within|0\.055 m\/m|4\.25 degrees|Water depth less than 1,000 ft|1,151 distinct field codes|Records before 2000|55,269 of 72,844|An interactive version of this chart is planned/i;
 const route = '/newsletter/issue-001-energy-street/';
 const expectedTitle = 'The Deckhand Chronicles: Energy Street, Issue 1';
-const textDigest = '6524d0b28f060637f42d6354cf75bbd5b8d17b7a3db4fc1385caca0a7bbb2ca8';
-const linksDigest = '23d134dda4f322f8a06c4fafdce34c48683ae5e8d816d60dfa6d6f30784a2768';
+const textDigest = '04bf3761ad249b031bdc295cabd3f4a2f7c436d9c93d85cbc75232d6b3c65a1e';
+const linksDigest = '6698ac58fd2aa89b6d015397d59d2243a754d6e516c990fa6a15bcb9c88800fe';
 const root = path.resolve(__dirname, '../..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const documentFor = file => new JSDOM(read(file).replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '')).window.document;
@@ -32,14 +32,14 @@ test('the edition is built at its public route with the approved title and headi
   expect(doc.querySelector('main').nextElementSibling.matches('footer.footer-section')).toBe(true);
 });
 
-test('the approved text and all nine links retain their order in source and output', () => {
+test('the approved text and all ten links retain their order in source and output', () => {
   const sourceBody = read(`content/${edition}`).match(/<article id="newsletter-edition">([\s\S]*?)<\/article>/)[1];
-  expect(digest(sourceBody)).toBe('9453da77d71f4c655586cf8c80e4cdae03bed2a918b89a96b84c8fd9125e7ae8');
+  expect(digest(sourceBody)).toBe('b6cd9b5ddb5510dbd2ea409a5d13ebec5b6a04ce725081d9467c7a93d546d8a9');
   for (const prefix of ['content', 'dist']) {
     const article = documentFor(`${prefix}/${edition}`).querySelector('#newsletter-edition');
     expect(article).not.toBeNull();
     expect(digest(normalizedText(article))).toBe(textDigest);
-    expect(orderedLinks(article)).toHaveLength(9);
+    expect(orderedLinks(article)).toHaveLength(10);
     expect(digest(JSON.stringify(orderedLinks(article)))).toBe(linksDigest);
   }
 });

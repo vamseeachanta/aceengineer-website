@@ -8,7 +8,7 @@ test('the newsletter edition preserves headings, shared chrome and a mobile layo
   await expect(page.locator('h1')).toHaveText('The Deckhand Chronicles');
   await expect(page.locator('nav.navbar')).toBeVisible();
   await expect(page.locator('body > footer.footer-section')).toBeVisible();
-  await expect(page.locator('#newsletter-edition a')).toHaveCount(9);
+  await expect(page.locator('#newsletter-edition a')).toHaveCount(10);
   const structure = await page.evaluate(() => {
     const ids = [...document.querySelectorAll('[id]')].map(node => node.id);
     return { uniqueIds: new Set(ids).size === ids.length,

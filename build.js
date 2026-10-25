@@ -422,7 +422,6 @@ function builtPages(dir = distDir, base = dir, out = []) {
 // (capability details, the drill-down) have no 1:1 source, so they fall back to the
 // generator that produces them.
 function sourceFileFor(relPath) {
-  if (relPath === 'data/napkin-checks.html') return './content/data/napkin-checks.json';
   const direct = path.join(srcDir, relPath);
   if (fs.existsSync(direct)) return direct;
   if (relPath.startsWith('samples/')) return './config/samples.yaml';

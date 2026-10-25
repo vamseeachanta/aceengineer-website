@@ -7,7 +7,8 @@ const pageFile = path.join(root, 'content/data/napkin-checks.html');
 const checks = ['hand-checked', 'tool-checked', 'not yet checked'];
 const idPattern = /^NC-(CP|HSE|DC)-\d{3}(?:-r(?:[2-9]|[1-9]\d+))?$/;
 const fields = ['run_id', 'discipline', 'asset_type', 'method', 'inputs', 'outputs', 'check_status', 'source', 'tool_or_commit', 'run_date', 'report_url', 'public_data', 'status'];
-const text = value => typeof value === 'string' && value.trim().length > 0;
+const text = value => typeof value === 'string' && value.trim().length > 0 && !/^(?:tbd|todo|n\/?a|unknown|none|null|[-—])$/i.test(value.trim());
+const disciplines = { CP: ['CP', 'Cathodic protection'], HSE: ['HSE'], DC: ['DC', 'Drilling and completions'] };
 const escape = value => String(value).replace(/[&<>"'{}]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '{': '&#123;', '}': '&#125;' }[char]));
 // Encode string content for both the HTML script element and the template pass.
 const jsonText = value => JSON.stringify(value).replace(/[<>&{}]/g, char => `\\u${char.charCodeAt(0).toString(16).padStart(4, '0')}`);
@@ -20,16 +21,27 @@ function date(value) {
   const parsed = new Date(`${value}T00:00:00Z`);
   return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
 }
-function safeUrl(value) {
+function safeUrl(value, siteRelative = true) {
   if (!text(value) || /[\s\\]/.test(value)) return false;
-  if (/^\/(?!\/)/.test(value)) return true;
+  if (siteRelative && /^\/(?!\/)/.test(value)) return true;
+  if (!/^https:\/\//i.test(value)) return false;
   try {
     const url = new URL(value);
-    return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password;
+    return url.protocol === 'https:' && !url.username && !url.password;
   } catch { return false; }
+}
+function verdictInText(value) {
+  const wording = String(value);
+  if (/\b(?:(?:does\s+not|not|no)\s+(?:pass(?:ed)?|ok|acceptable)|fail(?:ed|ure)?|unacceptable)\b/i.test(wording)) return 'fail';
+  if (/\b(?:pass(?:ed)?|ok|acceptable)\b/i.test(wording)) return 'pass';
+  return null;
 }
 function validate(data) {
   const header = data?.header;
+  if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error('register: invalid object');
+  for (const field of Object.keys(data)) if (!['header', 'runs'].includes(field)) throw new Error(`register: invalid ${field}`);
+  if (!header || typeof header !== 'object' || Array.isArray(header)) throw new Error('header: invalid object');
+  for (const field of Object.keys(header)) if (!['title', 'purpose', 'what_this_page_does_not_do', 'last_updated'].includes(field)) throw new Error(`header: invalid ${field}`);
   for (const field of ['title', 'purpose', 'what_this_page_does_not_do', 'last_updated']) {
     if (!text(header?.[field]) || (field === 'last_updated' && !date(header[field]))) throw new Error(`header: invalid ${field}`);
   }
@@ -42,6 +54,7 @@ function validate(data) {
     if (!idPattern.test(run.run_id) || ids.has(run.run_id)) fail('run_id');
     ids.set(run.run_id, run);
     for (const field of ['discipline', 'asset_type', 'method', 'tool_or_commit']) if (!text(run[field])) fail(field);
+    if (!disciplines[run.run_id.split('-')[1]].includes(run.discipline)) fail('discipline');
     if (!/\b(?:\d{4}|edition|classical)\b/i.test(run.method)) fail('method (name an edition or a classical method)');
     if (!checks.includes(run.check_status)) fail('check_status');
     if (run.public_data !== true) fail('public_data');
@@ -52,7 +65,11 @@ function validate(data) {
     if (!safeUrl(run.report_url)) fail('report_url');
     if (!text(run.source?.name)) fail('source.name');
     if (!date(run.source?.read_date)) fail('source.read_date');
-    for (const field of Object.keys(run.source)) if (!['name', 'read_date'].includes(field)) fail(`source.${field}`);
+    if (run.source.read_date > run.run_date) fail('source.read_date (after run_date)');
+    if (!Object.hasOwn(run.source, 'url') && !text(run.source.dataset_id)) fail('source (URL or dataset_id required)');
+    if (Object.hasOwn(run.source, 'url') && !safeUrl(run.source.url, false)) fail('source.url');
+    for (const field of ['dataset_id', 'page', 'table']) if (Object.hasOwn(run.source, field) && !text(run.source[field])) fail(`source.${field}`);
+    for (const field of Object.keys(run.source)) if (!['name', 'read_date', 'url', 'dataset_id', 'page', 'table'].includes(field)) fail(`source.${field}`);
     if (run.status === 'withdrawn') {
       if (!text(run.reason)) fail('reason');
       if (!date(run.date)) fail('date');
@@ -73,17 +90,17 @@ function validate(data) {
           if (!Object.hasOwn(item, key)) fail(`${at}.${key}`);
           if (key === 'value') {
             if (!(text(item[key]) || (typeof item[key] === 'number' && Number.isFinite(item[key])))) fail(`${at}.${key}`);
-          } else if (!text(item[key])) fail(`${at}.${key}`);
+          } else if (!(key === 'unit' && item[key] === '-') && !text(item[key])) fail(`${at}.${key}`);
         }
         if (Object.hasOwn(item, 'our_assumption') && typeof item.our_assumption !== 'boolean') fail(`${at}.our_assumption`);
         if (field === 'outputs') {
           if (Object.hasOwn(item, 'result') && !['pass', 'fail'].includes(item.result)) fail(`${at}.result`);
-          const wording = String(item.value).trim().match(/^(pass|fail)/i);
+          const wording = verdictInText(item.value);
           const verdict = wording || Object.hasOwn(item, 'result');
           if (verdict || Object.hasOwn(item, 'criterion') || Object.hasOwn(item, 'criterion_basis')) {
             for (const key of ['criterion', 'criterion_basis']) if (!text(item[key])) fail(`${at}.${key}`);
           }
-          if (wording && item.result !== wording[1].toLowerCase()) fail(`${at}.result`);
+          if (wording && item.result !== wording) fail(`${at}.result`);
         }
       });
     }
@@ -117,7 +134,8 @@ function row(run) {
   const attrs = `id="${escape(run.run_id)}" data-run data-discipline="${escape(run.discipline)}" data-asset_type="${escape(run.asset_type)}" data-check_status="${escape(run.check_status)}"`;
   if (run.status === 'withdrawn') return `<tr ${attrs}><th scope="row">${escape(run.run_id)}</th><td colspan="10">withdrawn. ${escape(run.reason)} Date: ${escape(run.date)}.</td></tr>`;
   const successor = run.status === 'superseded' ? `<br>superseded. See <a href="#${escape(run.superseded_by)}">${escape(run.superseded_by)}</a>.` : '';
-  return `<tr ${attrs}><th scope="row">${escape(run.run_id)}${successor}</th><td>${escape(run.discipline)}</td><td>${escape(run.asset_type)}</td><td>${escape(run.method)}</td><td>${quantities(run.inputs)}</td><td>${quantities(run.outputs)}</td><td>${escape(run.check_status)}</td><td>${escape(run.source.name)}<br>Read: ${escape(run.source.read_date)}</td><td>${escape(run.tool_or_commit)}</td><td>${escape(run.run_date)}</td><td><a href="${escape(run.report_url)}">Full report</a></td></tr>`;
+  const source = `${run.source.url ? `<a href="${escape(run.source.url)}">${escape(run.source.name)}</a>` : escape(run.source.name)}${[['dataset_id', 'Dataset'], ['page', 'Page'], ['table', 'Table']].map(([field, label]) => run.source[field] ? `<br>${label}: ${escape(run.source[field])}` : '').join('')}<br>Read: ${escape(run.source.read_date)}`;
+  return `<tr ${attrs}><th scope="row">${escape(run.run_id)}${successor}</th><td>${escape(run.discipline)}</td><td>${escape(run.asset_type)}</td><td>${escape(run.method)}</td><td>${quantities(run.inputs)}</td><td>${quantities(run.outputs)}</td><td>${escape(run.check_status)}</td><td>${source}</td><td>${escape(run.tool_or_commit)}</td><td>${escape(run.run_date)}</td><td><a href="${escape(run.report_url)}">Full report</a></td></tr>`;
 }
 function table(runs, caption, empty) {
   return `<div class="table-responsive"><table class="table table-striped"><caption>${caption}</caption>
@@ -186,7 +204,7 @@ rootPath: "../"
 </section>
 <section aria-labelledby="hse">
 <h3 id="hse">HSE</h3>
-<p><a href="../blog/marine-safety-incident-analysis.html">Marine safety incident analysis</a> · <a href="../demos/hse-risk-dashboard.html">HSE risk data dashboard</a></p>
+<p><a href="../blog/marine-safety-incident-analysis.html">Marine safety incident analysis</a> · <a href="../services/offshore-energy-data.html">Offshore energy data analysis</a></p>
 </section>
 <section aria-labelledby="drilling-completions">
 <h3 id="drilling-completions">Drilling and completions</h3>

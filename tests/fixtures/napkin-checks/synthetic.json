@@ -17,7 +17,7 @@
         {"name": "Current check", "value": "pass", "unit": "1", "result": "pass", "criterion": "Current is at most 4 A.", "criterion_basis": "SYNTHETIC test limit."}
       ],
       "check_status": "hand-checked",
-      "source": {"name": "SYNTHETIC fixture", "read_date": "2026-10-21"},
+      "source": {"name": "SYNTHETIC fixture", "url": "https://example.org/synthetic", "read_date": "2026-10-21"},
       "tool_or_commit": "SYNTHETIC public test tool, PR #1",
       "run_date": "2026-10-22",
       "report_url": "/reports/synthetic-plate.html",

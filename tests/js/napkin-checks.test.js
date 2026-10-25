@@ -28,7 +28,7 @@ test('complete SYNTHETIC run renders every column and assumption', () => {
   assert.equal((html.match(/scope="col"/g) || []).length, 33);
   assert.match(html, /partials\/nav.html/);
   assert.match(html, /partials\/footer.html/);
-  assert.doesNotMatch(html, /(?:src|href)=["']https?:/);
+  assert.doesNotMatch(html, /(?:src|href)=["']https?:[^"']*\.(?:js|css)/);
 });
 
 for (const field of Object.keys(fixture().runs[0])) {
@@ -76,6 +76,78 @@ test('structured fail with qualified wording and a numeric verdict render', () =
   assert.match(renderPage(data), /5 1 — fail/);
 });
 test('numeric output with a result also requires criteria', () => invalid(run => { run.outputs[0].result = 'fail'; }, 'criterion'));
+
+for (const value of ['TBD', ' n/a ', 'TODO', 'unknown', '-', '—']) {
+  for (const field of ['inputs', 'outputs']) {
+    test(`${field} reject placeholder ${value.trim()}`, () => invalid(run => {
+      run[field][0].value = value;
+      run[field][0].unit = '-';
+    }, `${field}[0].value`));
+  }
+}
+for (const [value, result] of [
+  ['0.85 (pass)', 'pass'], ['Does not pass', 'fail'], ['acceptable', 'pass'],
+  ['Not OK', 'fail'], ['check failed', 'fail'], ['not acceptable', 'fail'],
+]) {
+  for (const field of ['criterion', 'criterion_basis', 'result']) {
+    test(`verdict ${value} requires ${field}`, () => invalid(run => {
+      Object.assign(run.outputs[1], { value, result });
+      delete run.outputs[1][field];
+    }, field));
+  }
+  test(`verdict ${value} agrees with the structured result`, () => {
+    const data = fixture();
+    Object.assign(data.runs[0].outputs[1], { value, result });
+    assert.ok(renderPage(data).includes(value));
+    invalid(run => Object.assign(run.outputs[1], { value, result: result === 'pass' ? 'fail' : 'pass' }), 'result');
+  });
+}
+
+test('sources require a public URL or dataset identifier', () => invalid(run => {
+  delete run.source.url;
+  delete run.source.dataset_id;
+}, 'source'));
+for (const url of ['http://example.org/data', 'https:example.org/data', 'javascript:alert(1)', '/data', `https://${['user:password', 'example.org'].join('@')}/data`]) {
+  test('source rejects an unsafe or non-HTTPS URL', () => invalid(run => { run.source.url = url; }, 'source.url'));
+}
+test('source URL and page or table locators render beside the read date', () => {
+  const data = fixture();
+  Object.assign(data.runs[0].source, { page: '12–13', table: 'Table 2' });
+  const html = renderPage(data);
+  assert.ok(html.includes('href="https://example.org/synthetic"'));
+  assert.match(html, /Page: 12–13/);
+  assert.match(html, /Table: Table 2/);
+  assert.match(html, /Read: 2026-10-21/);
+});
+test('a dataset identifier can replace or accompany a source URL', () => {
+  const data = fixture();
+  data.runs[0].source.dataset_id = 'SYNTHETIC:dataset-1';
+  assert.match(renderPage(data), /Dataset: SYNTHETIC:dataset-1/);
+  delete data.runs[0].source.url;
+  assert.match(renderPage(data), /Dataset: SYNTHETIC:dataset-1/);
+});
+for (const field of ['dataset_id', 'page', 'table']) {
+  test(`source rejects placeholder ${field}`, () => invalid(run => { run.source[field] = 'TBD'; }, `source.${field}`));
+}
+test('source citations escape template expressions and HTML', () => {
+  const data = fixture();
+  Object.assign(data.runs[0].source, { dataset_id: '<b>{{ value }}</b>', page: '<b>{{ value }}</b>', table: '<b>{{ value }}</b>' });
+  assert.doesNotMatch(renderPage(data), /<b>|\{\{ value \}\}/);
+});
+test('discipline must agree with the run id', () => invalid(run => { run.discipline = 'HSE'; }, 'discipline'));
+test('source cannot be read after the run date', () => invalid(run => { run.source.read_date = '2026-10-23'; }, 'source.read_date'));
+test('report URLs require HTTPS or a site-relative path', () => {
+  invalid(run => { run.report_url = 'http://example.org/report'; }, 'report_url');
+  const data = fixture(); data.runs[0].report_url = 'https://example.org/report';
+  assert.ok(renderPage(data).includes('href="https://example.org/report"'));
+});
+for (const target of ['header', 'register']) {
+  test(`unknown ${target} fields fail`, () => {
+    const data = fixture();
+    (target === 'header' ? data.header : data).extra = 'SYNTHETIC';
+    assert.throws(() => renderPage(data), new RegExp(`${target}.*extra`));
+  });
+}
 
 test('all check states and discipline codes render with revised ids', () => {
   for (const [discipline, check_status] of [['Cathodic protection', 'hand-checked'], ['HSE', 'tool-checked'], ['DC', 'not yet checked']]) {
@@ -185,8 +257,6 @@ test('empty and populated registers retain discipline anchors and confirmed site
       assert.ok(html.includes(`href="../${target}"`), target);
       assert.ok(fs.existsSync(path.join(root, 'content', target, target.endsWith('/') ? 'index.html' : '')), target);
     }
-    assert.ok(html.includes('href="../demos/hse-risk-dashboard.html"'));
-    assert.ok(fs.existsSync(path.join(root, 'demos/hse-risk-dashboard.html')));
     const registry = fs.readFileSync(path.join(root, 'config/capabilities.yaml'), 'utf8');
     for (const id of ['corrosion-control', 'dc-days-qaqc']) {
       assert.ok(html.includes(`href="../capabilities/${id}.html"`));

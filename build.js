@@ -6,7 +6,7 @@ const expressions = require('posthtml-expressions');
 const yaml = require('js-yaml');
 const { PurgeCSS } = require('purgecss');
 const CleanCSS = require('clean-css');
-const { assertNewsletterDeployReady } = require('./scripts/check-newsletter-deploy');
+const { assertNewsletterSourcesReady } = require('./scripts/check-newsletter-deploy');
 const hf = require('./scripts/hf-fetch');
 const { renderCards, capabilityDetailDocument, detailFileName, detailHref, isReleaseBacked } = require('./scripts/render-capabilities');
 
@@ -561,10 +561,7 @@ function writeLlmsTxt(destDirArg = distDir, registry = loadCapabilities()) {
 async function build() {
   console.log('Building site...\n');
 
-  assertNewsletterDeployReady(
-    fs.readFileSync(path.join(srcDir, 'newsletter/issue-001-energy-street/index.html'), 'utf8'),
-    process.env.NEWSLETTER_DEPLOY_CHECK
-  );
+  assertNewsletterSourcesReady(srcDir, process.env.NEWSLETTER_DEPLOY_CHECK);
 
   const samples = validateSamples(loadSamples(), { assetsRoot: './assets' });
   _sampleLocals = sampleLocals(samples, loadCopy());

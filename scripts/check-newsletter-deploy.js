@@ -7,10 +7,16 @@ function assertNewsletterDeployReady(html, deployCheck) {
   if (token) throw new Error(`Unfilled newsletter token: ${token[0]}`);
 }
 
+function assertNewsletterSourcesReady(contentRoot, deployCheck) {
+  if (deployCheck !== '1') return;
+  for (const page of ['newsletter/issue-001-energy-street/index.html', 'newsletter/topics/one-place-to-work/index.html']) {
+    assertNewsletterDeployReady(fs.readFileSync(path.join(contentRoot, page), 'utf8'), deployCheck);
+  }
+}
+
 if (require.main === module) {
-  const issue = path.resolve(__dirname, '../content/newsletter/issue-001-energy-street/index.html');
-  assertNewsletterDeployReady(fs.readFileSync(issue, 'utf8'), process.env.NEWSLETTER_DEPLOY_CHECK);
+  assertNewsletterSourcesReady(path.resolve(__dirname, '../content'), process.env.NEWSLETTER_DEPLOY_CHECK);
   console.log('Newsletter deploy check passed');
 }
 
-module.exports = { assertNewsletterDeployReady };
+module.exports = { assertNewsletterDeployReady, assertNewsletterSourcesReady };

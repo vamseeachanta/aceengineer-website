@@ -116,3 +116,11 @@ for (const [slug, name] of Object.entries(charts)) {
     assertChart(read(`dist/newsletter/charts/${slug}/index.html`), name, true);
   });
 }
+
+for (const prefix of ['content', 'dist']) {
+  test(`${prefix}: issue 1 uses the exact newsletter tagline`, () => {
+    const html = read(`${prefix}${issueRoute}index.html`);
+    assert.match(html, /<p\b[^>]*>Deckhand: Make Engineering Enjoyable Again<\/p>/);
+    assert.doesNotMatch(html, /enjoy\s+engineering\s+again/i);
+  });
+}

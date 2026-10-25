@@ -10,6 +10,7 @@ const hf = require('./scripts/hf-fetch');
 const { renderCards, capabilityDetailDocument, detailFileName, detailHref, isReleaseBacked } = require('./scripts/render-capabilities');
 
 const { loadSamples, validateSamples, sampleLocals, buildSamplePages } = require('./scripts/render-samples');
+const { generatePage: generateNapkinChecks } = require('./scripts/generate-napkin-checks');
 
 const srcDir = './content';
 const distDir = './dist';
@@ -559,6 +560,8 @@ function writeLlmsTxt(destDirArg = distDir, registry = loadCapabilities()) {
 // Main build function
 async function build() {
   console.log('Building site...\n');
+
+  generateNapkinChecks();
 
   const samples = validateSamples(loadSamples(), { assetsRoot: './assets' });
   _sampleLocals = sampleLocals(samples, loadCopy());

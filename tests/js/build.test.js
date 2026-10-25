@@ -3,6 +3,27 @@ const path = require('path');
 const os = require('os');
 const { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeSitemap, writeLlmsTxt, loadCopy, canonicalUrlFor, SITEMAP_EXCLUDE } = require('../../build');
 
+test('napkin checks use the register, shared chrome, and offline assets', async () => {
+  const { renderPage } = require('../../scripts/generate-napkin-checks');
+  const { renderHtml, sourceFileFor } = require('../../build');
+  const data = JSON.parse(fs.readFileSync('content/data/napkin-checks.json', 'utf8'));
+  const { content, locals } = parseFrontMatter(renderPage(data));
+  const html = await renderHtml(content, { ...locals, metadataExcluded: false, samplesPublished: false, canonicalUrl: canonicalUrlFor('data/napkin-checks.html') });
+  expect(html).toContain('navbar');
+  expect(html).toContain('footer-section');
+  expect(html).toContain('No current runs are published.');
+  expect(html).not.toMatch(/<include|(?:src|href)=["']https?:[^"']*\.(?:js|css)/);
+  expect(html).toContain('googletagmanager');
+  for (const [, href] of html.matchAll(/href="(\.\.\/[^"#]+)"/g)) {
+    const target = path.resolve('dist/data', href);
+    expect(fs.existsSync(href.endsWith('/') ? path.join(target, 'index.html') : target)).toBe(true);
+  }
+  expect(fs.readFileSync('dist/data/napkin-checks.html', 'utf8')).toBe(html);
+  expect(fs.readFileSync('dist/sitemap.xml', 'utf8')).toContain('/data/napkin-checks.html');
+  expect(fs.readFileSync('dist/energy.html', 'utf8')).toContain('href="data/napkin-checks.html"');
+  expect(sourceFileFor('data/napkin-checks.html')).toBe(path.join('content', 'data', 'napkin-checks.html'));
+});
+
 test('newsletter web sources contain no e-mail campaign tracking tags', () => {
   const newsletterDir = path.join(__dirname, '../../content/newsletter');
   function checkDirectory(dir) {

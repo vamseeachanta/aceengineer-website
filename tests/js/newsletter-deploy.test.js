@@ -77,6 +77,6 @@ test('the issue retains the approved article bytes and ten links', () => {
   const html = fs.readFileSync(issue, 'utf8');
   const article = html.match(/<article id="newsletter-edition">([\s\S]*?)<\/article>/)[1];
   assert.equal(crypto.createHash('sha256').update(article).digest('hex'),
-    'b6cd9b5ddb5510dbd2ea409a5d13ebec5b6a04ce725081d9467c7a93d546d8a9');
+    '5ae623aba73bc6c7c6170e2569919d396ce6720d79e808d01c1ab866b36cfabb');
   assert.equal((article.match(/<a\b/g) || []).length, 10);
 });

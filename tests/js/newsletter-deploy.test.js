@@ -13,6 +13,11 @@ const deployScript = path.resolve(__dirname, '../../scripts/check-newsletter-dep
 const pages = ['newsletter/issue-001-energy-street/index.html', 'newsletter/topics/one-place-to-work/index.html'];
 const tokens = ['[[SEND DATE]]', 'TODO_ARTICLE_URL_A1', 'TODO_DUAL_TANK_URL', '[[ANOTHER DATE]]', 'TODO_NEW_LINK_2', 'CONTACT_EMAIL'];
 
+test('the release build enables newsletter source checks', () => {
+  const config = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../vercel.json'), 'utf8'));
+  assert.equal(config.buildCommand, 'NEWSLETTER_DEPLOY_CHECK=1 npm run build');
+});
+
 for (const token of tokens) {
   for (const html of [`<a href="${token}">Read</a>`, `<p id="send-date">${token}</p>`]) {
     test(`deploy check rejects ${token} in ${html.startsWith('<a') ? 'href' : 'masthead'}`, () => {

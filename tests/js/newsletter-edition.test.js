@@ -12,7 +12,7 @@ const retiredCharts = ['hse-drilling', 'diffraction-heave', 'field-depth', 'comp
 const retiredClaims = /The Deckhand Chronicle · Issue 1|Specialists|Well-control classifications|68 of 85|85 classified|Heave agrees within|0\.055 m\/m|4\.25 degrees|Water depth less than 1,000 ft|1,151 distinct field codes|Records before 2000|55,269 of 72,844|An interactive version of this chart is planned/i;
 const route = '/newsletter/issue-001-energy-street/';
 const expectedTitle = 'The Deckhand Chronicles: Energy Street, Issue 1';
-const textDigest = '182ddf202f144d1616219cef5d2e52fda118095f9e1b87285dd7165365dc39cf';
+const textDigest = '098dd1e092464735706955627bdf7b75bb439f114149a2cc13453c75761cfd28';
 const linksDigest = '6698ac58fd2aa89b6d015397d59d2243a754d6e516c990fa6a15bcb9c88800fe';
 const root = path.resolve(__dirname, '../..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
@@ -34,7 +34,7 @@ test('the edition is built at its public route with the approved title and headi
 
 test('the approved text and all ten links retain their order in source and output', () => {
   const sourceBody = read(`content/${edition}`).match(/<article id="newsletter-edition">([\s\S]*?)<\/article>/)[1];
-  expect(digest(sourceBody)).toBe('5ae623aba73bc6c7c6170e2569919d396ce6720d79e808d01c1ab866b36cfabb');
+  expect(digest(sourceBody)).toBe('898f9f6e9c1a94ec2bc1d1f55ebb415dfb07bcf070ff59d818ad59831d9c02e7');
   for (const prefix of ['content', 'dist']) {
     const article = documentFor(`${prefix}/${edition}`).querySelector('#newsletter-edition');
     expect(article).not.toBeNull();
@@ -165,6 +165,7 @@ test('discovery replaces the superseded route in navigation, archive, RSS and in
   for (const prefix of ['content', 'dist']) {
     const feed = new JSDOM(read(prefix + '/newsletter/feed.xml'), { contentType: 'text/xml' }).window.document;
     expect(feed.querySelectorAll('item')).toHaveLength(1);
+    expect(feed.querySelector('item description').textContent).toBe('Deckhand: Make Engineering Enjoyable Again');
     expect(feed.querySelector('item title').textContent).toBe(expectedTitle);
     expect(feed.querySelector('item pubDate').textContent).toBe('Tue, 27 Oct 2026 00:00:00 GMT');
     expect(feed.querySelector('item link').textContent).toBe('https://www.aceengineer.com' + route);
@@ -175,10 +176,13 @@ test('discovery replaces the superseded route in navigation, archive, RSS and in
       .toBe('https://www.aceengineer.com' + route);
     expect(archive.querySelector('time').getAttribute('datetime')).toBe('2026-10-27');
     expect(archive.querySelector('time').textContent).toBe('27 October 2026');
+    expect(normalizedText(archive.querySelector('p'))).toBe('27 October 2026 · Deckhand: Make Engineering Enjoyable Again');
     const issue = documentFor(prefix + '/' + edition);
     expect(normalizedText(issue.querySelector('#send-date'))).toBe('October 27, 2026 · Launch issue');
     const schemas = JSON.parse(issue.querySelector('script[type="application/ld+json"]').textContent);
     expect(schemas.find(schema => schema['@type'] === 'Article').datePublished).toBe('2026-10-27');
+    expect(schemas.find(schema => schema['@type'] === 'Article').description)
+      .toBe(issue.querySelector('meta[name="description"]').content);
   }
   expect(SITEMAP_EXCLUDE[retired]).toBeDefined();
   for (const file of ['dist/sitemap.xml', 'dist/llms.txt']) {

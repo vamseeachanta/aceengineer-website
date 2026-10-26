@@ -10,7 +10,7 @@ const { assertNewsletterDeployReady } = require('../../scripts/check-newsletter-
 const issue = path.resolve(__dirname, '../../content/newsletter/issue-001-energy-street/index.html');
 const topic = path.resolve(__dirname, '../../content/newsletter/topics/one-place-to-work/index.html');
 const deployScript = path.resolve(__dirname, '../../scripts/check-newsletter-deploy.js');
-const pages = ['newsletter/issue-001-energy-street/index.html', 'newsletter/topics/one-place-to-work/index.html'];
+const pages = ['newsletter/issue-001-energy-street/index.html', 'newsletter/topics/one-place-to-work/index.html', 'newsletter/index.html', 'newsletter/feed.xml'];
 const tokens = ['[[SEND DATE]]', 'TODO_ARTICLE_URL_A1', 'TODO_DUAL_TANK_URL', '[[ANOTHER DATE]]', 'TODO_NEW_LINK_2', 'CONTACT_EMAIL'];
 
 test('the release build enables newsletter source checks', () => {
@@ -26,6 +26,47 @@ for (const token of tokens) {
       assert.doesNotThrow(() => assertNewsletterDeployReady(html, '0'));
     });
   }
+}
+
+test('deploy check allows only the exact public support mailbox', () => {
+  const contact = ['support', 'aceengineer.com'].join('@');
+  for (const encoded of [contact, contact.replace('@', '&#64;'), contact.replace('@', '&#x40;'), contact.replace('@', '&commat;'), contact.replaceAll('.', '&#46;'), contact.replaceAll('.', '&period;')]) {
+    assert.doesNotThrow(() => assertNewsletterDeployReady(`<p>${encoded}</p>`, '1'));
+  }
+  for (const address of [
+    ['other', 'example.org'].join('@'),
+    `other-${contact}`, `${contact}.example.org`, contact.toUpperCase(),
+    contact.replace('support', 'support+tag'),
+    ['"support"', 'aceengineer.com'].join('@'),
+    ['other', 'example.123'].join('@'),
+    ['other', '[127.0.0.1]'].join('@'),
+  ]) {
+    for (const encoded of [address, address.replace('@', '&#64;'), address.replace('@', '&#x40;'), address.replace('@', '&commat;')]) {
+      assert.throws(() => assertNewsletterDeployReady(`<a href="mailto:${encoded}">Contact</a>`, '1'), /Unapproved newsletter contact address/);
+      assert.doesNotThrow(() => assertNewsletterDeployReady(encoded, '0'));
+    }
+  }
+});
+
+for (const page of pages) {
+  test(`deploy command rejects another mailbox in ${page}`, () => {
+    const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'newsletter-contact-'));
+    const script = path.join(fixture, 'scripts/check-newsletter-deploy.js');
+    fs.mkdirSync(path.dirname(script), { recursive: true });
+    fs.copyFileSync(deployScript, script);
+    for (const file of pages) {
+      const target = path.join(fixture, 'content', file);
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.writeFileSync(target, file === page ? ['other', 'example.org'].join('@') : '<p>Ready</p>');
+    }
+    const result = spawnSync(process.execPath, [script], {
+      cwd: fixture,
+      env: { ...process.env, NEWSLETTER_DEPLOY_CHECK: '1' },
+      encoding: 'utf8',
+    });
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /Unapproved newsletter contact address/);
+  });
 }
 
 for (const page of pages) {
@@ -82,6 +123,6 @@ test('the issue retains the approved article bytes and ten links', () => {
   const html = fs.readFileSync(issue, 'utf8');
   const article = html.match(/<article id="newsletter-edition">([\s\S]*?)<\/article>/)[1];
   assert.equal(crypto.createHash('sha256').update(article).digest('hex'),
-    '5ae623aba73bc6c7c6170e2569919d396ce6720d79e808d01c1ab866b36cfabb');
+    '898f9f6e9c1a94ec2bc1d1f55ebb415dfb07bcf070ff59d818ad59831d9c02e7');
   assert.equal((article.match(/<a\b/g) || []).length, 10);
 });

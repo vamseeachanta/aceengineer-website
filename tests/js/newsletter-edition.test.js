@@ -12,7 +12,7 @@ const retiredCharts = ['hse-drilling', 'diffraction-heave', 'field-depth', 'comp
 const retiredClaims = /The Deckhand Chronicle · Issue 1|Specialists|Well-control classifications|68 of 85|85 classified|Heave agrees within|0\.055 m\/m|4\.25 degrees|Water depth less than 1,000 ft|1,151 distinct field codes|Records before 2000|55,269 of 72,844|An interactive version of this chart is planned/i;
 const route = '/newsletter/issue-001-energy-street/';
 const expectedTitle = 'The Deckhand Chronicles: Energy Street, Issue 1';
-const textDigest = '098dd1e092464735706955627bdf7b75bb439f114149a2cc13453c75761cfd28';
+const textDigest = '2ce3aebe37afc73f3b6a41a92050a4971165fbf1ba90e5bd907b1f7285512c05';
 const linksDigest = '6698ac58fd2aa89b6d015397d59d2243a754d6e516c990fa6a15bcb9c88800fe';
 const root = path.resolve(__dirname, '../..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
@@ -34,7 +34,7 @@ test('the edition is built at its public route with the approved title and headi
 
 test('the approved text and all ten links retain their order in source and output', () => {
   const sourceBody = read(`content/${edition}`).match(/<article id="newsletter-edition">([\s\S]*?)<\/article>/)[1];
-  expect(digest(sourceBody)).toBe('898f9f6e9c1a94ec2bc1d1f55ebb415dfb07bcf070ff59d818ad59831d9c02e7');
+  expect(digest(sourceBody)).toBe('c7e9edcd42f58c6da438a1af3e57c41370185994c16a4a5db67e495b8d53c436');
   for (const prefix of ['content', 'dist']) {
     const article = documentFor(`${prefix}/${edition}`).querySelector('#newsletter-edition');
     expect(article).not.toBeNull();

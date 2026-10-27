@@ -123,6 +123,31 @@ test('the issue retains the approved article bytes and ten links', () => {
   const html = fs.readFileSync(issue, 'utf8');
   const article = html.match(/<article id="newsletter-edition">([\s\S]*?)<\/article>/)[1];
   assert.equal(crypto.createHash('sha256').update(article).digest('hex'),
-    '898f9f6e9c1a94ec2bc1d1f55ebb415dfb07bcf070ff59d818ad59831d9c02e7');
+    'c7e9edcd42f58c6da438a1af3e57c41370185994c16a4a5db67e495b8d53c436');
   assert.equal((article.match(/<a\b/g) || []).length, 10);
+});
+
+test('the qualified issue and topic retain the approved source bytes', () => {
+  for (const [file, expected] of [
+    [issue, '71395ad4ce2d3428e49b7d6ecea0e861b1887d2875555204199d561ee2a0f59c'],
+    [topic, 'e78dfc951c225a2b950b776df90b3e6a6a29655b8c0d5babcae05f819e2b812b'],
+  ]) {
+    assert.equal(crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex'), expected);
+  }
+});
+
+test('the issue and topic share the approved summary paragraphs word for word', () => {
+  const issueHtml = fs.readFileSync(issue, 'utf8');
+  const topicHtml = fs.readFileSync(topic, 'utf8');
+  const paragraphs = html => [...html.matchAll(/<p\b[^>]*>([\s\S]*?)<\/p>/g)]
+    .map(match => match[1].replace('<strong>Summary:</strong> ', ''));
+  const summary = topicHtml.match(/<article id="one-place-to-work">([\s\S]*?)<hr>/)[1];
+  const section = issueHtml.match(/<section id="short-read">([\s\S]*?)<\/section>/)[1];
+  assert.deepEqual(paragraphs(section).slice(0, 4), paragraphs(summary));
+  for (const html of [issueHtml, topicHtml]) {
+    for (const sentence of [
+      'The AI assistants we use keep a record of each session.',
+      'In our experience, it takes a few (&gt; 10-20) reasonably sized sessions to realize these benefits; we have not measured this.',
+    ]) assert.equal(html.split(sentence).length - 1, 1);
+  }
 });

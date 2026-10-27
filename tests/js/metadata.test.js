@@ -702,7 +702,7 @@ test('newsletter story tracking counts one tagged arrival and ignores arbitrary 
     vm.runInNewContext(source, {URLSearchParams, window: {location: {search}, gtag: (...args) => calls.push(args)}, document: documents.get('newsletter/issue-001-energy-street/index.html')});
     return calls;
   }
-  expect(events('?utm_campaign=issue-001&utm_content=specialists')).toEqual([['event', 'newsletter_story', {issue: 'issue-001', story: 'specialists'}]]);
+  expect(events('?utm_campaign=issue-001&utm_content=ambition')).toEqual([['event', 'newsletter_story', {issue: 'issue-001', story: 'ambition'}]]);
   expect(events('?utm_campaign=issue-001&utm_content=arbitrary-value')).toEqual([]);
-  expect(events('?utm_content=specialists')).toEqual([]);
+  expect(events('?utm_content=ambition')).toEqual([]);
 });

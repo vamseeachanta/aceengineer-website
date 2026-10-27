@@ -6,18 +6,18 @@ rootPath: "../../"
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Deckhand Chronicles — Energy Street · Issue 1</title>
-<meta name="description" content="The Deckhand Chronicles — Energy Street · Issue 1">
-<meta property="og:title" content="The Deckhand Chronicles — Energy Street · Issue 1">
-<meta property="og:description" content="The Deckhand Chronicles — Energy Street · Issue 1">
+<title>The Deckhand Chronicles: Energy Street, Issue 1</title>
+<meta name="description" content="A sloshing CFD check within about 0.30 % of linear theory, and a motion-forecast demo on synthetic data.">
+<meta property="og:title" content="The Deckhand Chronicles: Energy Street, Issue 1">
+<meta property="og:description" content="A sloshing CFD check within about 0.30 % of linear theory, and a motion-forecast demo on synthetic data.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="{{ canonicalUrl }}">
 <meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Deckhand Chronicles — Energy Street · Issue 1">
-<meta name="twitter:description" content="The Deckhand Chronicles — Energy Street · Issue 1">
+<meta name="twitter:title" content="The Deckhand Chronicles: Energy Street, Issue 1">
+<meta name="twitter:description" content="A sloshing CFD check within about 0.30 % of linear theory, and a motion-forecast demo on synthetic data.">
 <meta name="twitter:image" content="https://www.aceengineer.com/assets/img/logo.png">
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"The Deckhand Chronicles — Energy Street · Issue 1","name":"The Deckhand Chronicles — Energy Street · Issue 1","description":"The Deckhand Chronicles — Energy Street · Issue 1","datePublished":"2026-10-22","url":"https://www.aceengineer.com/newsletter/issue-001-energy-street/","inLanguage":"en-US","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Newsletter","item":"https://www.aceengineer.com/newsletter/"},{"@type":"ListItem","position":3,"name":"The Deckhand Chronicles — Energy Street · Issue 1","item":"https://www.aceengineer.com/newsletter/issue-001-energy-street/"}]}]</script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"The Deckhand Chronicles: Energy Street, Issue 1","name":"The Deckhand Chronicles: Energy Street, Issue 1","description":"A sloshing CFD check within about 0.30 % of linear theory, and a motion-forecast demo on synthetic data.","datePublished":"2026-10-27","url":"https://www.aceengineer.com/newsletter/issue-001-energy-street/","inLanguage":"en-US","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Newsletter","item":"https://www.aceengineer.com/newsletter/"},{"@type":"ListItem","position":3,"name":"The Deckhand Chronicles: Energy Street, Issue 1","item":"https://www.aceengineer.com/newsletter/issue-001-energy-street/"}]}]</script>
 <include src="partials/head-common.html"></include>
 <script defer src="../../assets/js/newsletter-story.js"></script>
 </head>
@@ -29,59 +29,287 @@ rootPath: "../../"
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:white;table-layout:fixed;"><tr><td style="padding:20px 28px;overflow-wrap:anywhere;">
 <p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">VOL. I · NO. 1 · Energy Street edition</p>
 <h1 style="font:700 30px/1.05 Georgia,serif;margin:4px 0 6px;color:#0b3d5c;">The Deck<span style="color:#2bb2a6">hand</span> Chronicles</h1>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">October 22, 2026 · Launch issue</p>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">I am sending this to a few people I have worked with or would like to. — Vamsee Achanta, P.E.</p>
+<p id="send-date" style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">October 27, 2026 · Launch issue</p>
+<p id="about-issue" style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">Energy Street is AceEngineer's edition for offshore and energy engineering. Deckhand is our AI-assisted way of working. This issue: one engineering calculation checked against theory and a published benchmark with a working demo.</p>
+<p id="ask-top" style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">To get each issue by e-mail, write to <a href="mailto:support@aceengineer.com?subject=Subscribe%20Energy%20Street" style="color:#0b3d5c;text-decoration:underline;">support@aceengineer.com</a> with the subject "Subscribe Energy Street". To stop, use the subject "Stop".</p>
+<div id="hero"><svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 1200 630" role="img" aria-label="Schematic: a partly filled tank tilts away from the Deckhand logo on a taut rope, its water sloshing in the first mode." style="display:block;width:100%;height:auto;margin:0 0 6px;" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+<title id="t">Tank sloshing</title>
+<desc id="d">Schematic of a two-dimensional rectangular tank in section, partly filled with water and rolled so that its top leans to the left, away from the Deckhand logo. A curved arrow shows the roll direction. The free surface is drawn in the first sloshing mode, higher at the low wall and lower at the high wall, with small arrows for the water motion and a dashed true-horizontal line for the still-water level. A straight, taut rope runs from a lug on the tank wall to the Deckhand bollard. Text: 2D tank, partial fill; OpenFOAM; first-mode frequency within about 0.30 % of theory, small amplitude. Schematic, not to scale.</desc>
+<!-- Sources reused: Deckhand icon (bollard, rope and hand groups) and Deckhand wordmark (Montserrat SIL OFL 1.1). Schematic of the first sloshing mode, not a CFD result; the rope is an artistic metaphor. -->
+<rect width="1200" height="630" fill="#eef4f8"/>
+<rect width="1200" height="4" fill="#2BB2A6"/>
+<text x="40" y="74" font-family="Georgia, 'Times New Roman', serif" font-size="44" font-weight="700" fill="#0b3d5c">Tank sloshing</text>
+<text x="40" y="112" font-size="22" fill="#26323a">2D tank, partial fill<tspan dx="12" fill="#5a6b76">|</tspan><tspan dx="12" font-weight="700" fill="#0d7680">OpenFOAM</tspan></text>
+<g id="tank" transform="rotate(-8.0 420.0 500.0)">
+<rect x="200.0" y="180.0" width="440.0" height="320.0" fill="#ffffff"/>
+<path d="M200.0 500.0 L200.0 295.1 L204.6 295.7 L209.2 296.4 L213.8 297.2 L218.3 297.9 L222.9 298.7 L227.5 299.5 L232.1 300.4 L236.7 301.3 L241.2 302.2 L245.8 303.1 L250.4 304.1 L255.0 305.1 L259.6 306.1 L264.2 307.2 L268.8 308.3 L273.3 309.4 L277.9 310.6 L282.5 311.7 L287.1 312.9 L291.7 314.2 L296.2 315.4 L300.8 316.7 L305.4 318.0 L310.0 319.3 L314.6 320.7 L319.2 322.0 L323.8 323.4 L328.3 324.9 L332.9 326.3 L337.5 327.7 L342.1 329.2 L346.7 330.7 L351.2 332.2 L355.8 333.7 L360.4 335.2 L365.0 336.8 L369.6 338.3 L374.2 339.9 L378.8 341.5 L383.3 343.1 L387.9 344.7 L392.5 346.3 L397.1 347.9 L401.7 349.5 L406.2 351.1 L410.8 352.7 L415.4 354.4 L420.0 356.0 L424.6 357.6 L429.2 359.3 L433.8 360.9 L438.3 362.5 L442.9 364.1 L447.5 365.7 L452.1 367.3 L456.7 368.9 L461.2 370.5 L465.8 372.1 L470.4 373.7 L475.0 375.2 L479.6 376.8 L484.2 378.3 L488.8 379.8 L493.3 381.3 L497.9 382.8 L502.5 384.3 L507.1 385.7 L511.7 387.1 L516.2 388.6 L520.8 390.0 L525.4 391.3 L530.0 392.7 L534.6 394.0 L539.2 395.3 L543.8 396.6 L548.3 397.8 L552.9 399.1 L557.5 400.3 L562.1 401.4 L566.7 402.6 L571.2 403.7 L575.8 404.8 L580.4 405.9 L585.0 406.9 L589.6 407.9 L594.2 408.9 L598.8 409.8 L603.3 410.7 L607.9 411.6 L612.5 412.5 L617.1 413.3 L621.7 414.1 L626.2 414.8 L630.8 415.6 L635.4 416.3 L640.0 416.9 L640.0 500.0Z" fill="#c6e2f5"/>
+<path d="M200.0 295.1 L204.6 295.7 L209.2 296.4 L213.8 297.2 L218.3 297.9 L222.9 298.7 L227.5 299.5 L232.1 300.4 L236.7 301.3 L241.2 302.2 L245.8 303.1 L250.4 304.1 L255.0 305.1 L259.6 306.1 L264.2 307.2 L268.8 308.3 L273.3 309.4 L277.9 310.6 L282.5 311.7 L287.1 312.9 L291.7 314.2 L296.2 315.4 L300.8 316.7 L305.4 318.0 L310.0 319.3 L314.6 320.7 L319.2 322.0 L323.8 323.4 L328.3 324.9 L332.9 326.3 L337.5 327.7 L342.1 329.2 L346.7 330.7 L351.2 332.2 L355.8 333.7 L360.4 335.2 L365.0 336.8 L369.6 338.3 L374.2 339.9 L378.8 341.5 L383.3 343.1 L387.9 344.7 L392.5 346.3 L397.1 347.9 L401.7 349.5 L406.2 351.1 L410.8 352.7 L415.4 354.4 L420.0 356.0 L424.6 357.6 L429.2 359.3 L433.8 360.9 L438.3 362.5 L442.9 364.1 L447.5 365.7 L452.1 367.3 L456.7 368.9 L461.2 370.5 L465.8 372.1 L470.4 373.7 L475.0 375.2 L479.6 376.8 L484.2 378.3 L488.8 379.8 L493.3 381.3 L497.9 382.8 L502.5 384.3 L507.1 385.7 L511.7 387.1 L516.2 388.6 L520.8 390.0 L525.4 391.3 L530.0 392.7 L534.6 394.0 L539.2 395.3 L543.8 396.6 L548.3 397.8 L552.9 399.1 L557.5 400.3 L562.1 401.4 L566.7 402.6 L571.2 403.7 L575.8 404.8 L580.4 405.9 L585.0 406.9 L589.6 407.9 L594.2 408.9 L598.8 409.8 L603.3 410.7 L607.9 411.6 L612.5 412.5 L617.1 413.3 L621.7 414.1 L626.2 414.8 L630.8 415.6 L635.4 416.3 L640.0 416.9" fill="none" stroke="#0b3d5c" stroke-width="3" stroke-linejoin="round"/>
+<rect x="200.0" y="180.0" width="440.0" height="320.0" fill="none" stroke="#0b3d5c" stroke-width="8"/>
+<line x1="238.0" y1="291.5" x2="238.0" y2="264.5" stroke="#b45309" stroke-width="4" stroke-linecap="round"/>
+<path d="M238.0 251.5 L245.2 264.5 L230.8 264.5Z" fill="#b45309"/>
+<line x1="602.0" y1="360.5" x2="602.0" y2="389.5" stroke="#b45309" stroke-width="4" stroke-linecap="round"/>
+<path d="M602.0 402.5 L594.9 389.5 L609.1 389.5Z" fill="#b45309"/>
+<line x1="486.0" y1="452.0" x2="367.0" y2="452.0" stroke="#b45309" stroke-width="4" stroke-linecap="round"/>
+<path d="M354.0 452.0 L367.0 444.9 L367.0 459.1Z" fill="#b45309"/>
+<rect x="644.0" y="270.0" width="9" height="12" fill="#0b3d5c"/>
+</g>
+<line x1="150" y1="357.4" x2="650" y2="357.4" stroke="#0b3d5c" stroke-width="1.5" stroke-dasharray="9 7"/>
+<text x="142" y="352.4" font-size="16" fill="#5a6b76" text-anchor="end">still-water</text>
+<text x="142" y="372.4" font-size="16" fill="#5a6b76" text-anchor="end">level</text>
+<path d="M444.7 146.9 A354.0 354.0 0 0 0 316.5 161.5" fill="none" stroke="#b45309" stroke-width="4" stroke-linecap="round"/>
+<line x1="316.5" y1="161.5" x2="310.2" y2="163.6" stroke="#b45309" stroke-width="4" stroke-linecap="round"/>
+<path d="M296.0 168.4 L307.6 155.8 L312.9 171.4Z" fill="#b45309"/>
+<g id="dh-icon" transform="translate(704.80,162.40) scale(0.56)">
+<g transform="translate(20 10)">
+      <path d="M0 10h130c58 0 100 42 100 100s-42 100-100 100H0z" fill="#0B3D91"/>
+      <path d="M38 72c20-32 64-32 84 0v76c-20 32-64 32-84 0z" fill="#2BB2A6" opacity=".85"/>
+      <!-- tail -->
+      <path d="M118 150c10 14 8 30 -6 40c-12 9 -16 18 -10 28" fill="none" stroke="#0B3D91" stroke-width="14" stroke-linecap="round"/>
+      <path d="M118 150c10 14 8 30 -6 40c-12 9 -16 18 -10 28" fill="none" stroke="#2BB2A6" stroke-width="11" stroke-linecap="round"/>
+      <path d="M30 80c12 16 31 26 55 26s43-10 55-26" fill="none" stroke="#0B3D91" stroke-width="15" stroke-linecap="round"/>
+      <path d="M30 80c12 16 31 26 55 26s43-10 55-26" fill="none" stroke="#2BB2A6" stroke-width="12" stroke-linecap="round"/>
+      <line x1="33.7" y1="76.5" x2="29.2" y2="87.1" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="36.3" y1="79.9" x2="32.6" y2="90.7" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="39.2" y1="83.0" x2="36.2" y2="94.1" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="42.2" y1="85.9" x2="40.1" y2="97.2" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="45.5" y1="88.6" x2="44.3" y2="100.0" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="49.1" y1="91.0" x2="48.6" y2="102.5" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="52.8" y1="93.3" x2="53.2" y2="104.7" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="56.7" y1="95.2" x2="58.0" y2="106.6" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="60.9" y1="96.9" x2="63.0" y2="108.2" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="65.3" y1="98.3" x2="68.2" y2="109.5" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="69.9" y1="99.5" x2="73.5" y2="110.4" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="74.7" y1="100.3" x2="79.1" y2="110.9" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="79.7" y1="100.8" x2="84.8" y2="111.1" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="84.9" y1="101.0" x2="90.6" y2="110.9" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="89.9" y1="100.8" x2="96.3" y2="110.4" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="94.8" y1="100.4" x2="101.8" y2="109.5" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="99.4" y1="99.6" x2="107.1" y2="108.2" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="103.9" y1="98.5" x2="112.2" y2="106.6" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="108.2" y1="97.2" x2="117.0" y2="104.6" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="112.4" y1="95.6" x2="121.6" y2="102.4" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="116.3" y1="93.7" x2="126.0" y2="99.8" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="120.0" y1="91.6" x2="130.2" y2="97.0" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="123.5" y1="89.3" x2="134.1" y2="93.8" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="126.9" y1="86.6" x2="137.7" y2="90.4" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="130.0" y1="83.8" x2="141.1" y2="86.8" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="132.9" y1="80.7" x2="144.2" y2="82.9" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="29.4" y1="79.8" x2="33.4" y2="83.8" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="32.4" y1="83.3" x2="36.4" y2="87.3" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="35.7" y1="86.5" x2="39.7" y2="90.5" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="39.2" y1="89.5" x2="43.2" y2="93.5" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="42.9" y1="92.3" x2="46.9" y2="96.3" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="46.8" y1="94.8" x2="50.8" y2="98.8" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="51.0" y1="97.0" x2="55.0" y2="101.0" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="55.4" y1="98.9" x2="59.4" y2="102.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="60.0" y1="100.6" x2="64.0" y2="104.6" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="64.7" y1="101.9" x2="68.7" y2="105.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="69.7" y1="102.9" x2="73.7" y2="106.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="74.9" y1="103.6" x2="78.9" y2="107.6" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="80.3" y1="104.0" x2="84.3" y2="108.0" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="85.7" y1="104.0" x2="89.7" y2="108.0" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="91.1" y1="103.6" x2="95.1" y2="107.6" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="96.3" y1="102.9" x2="100.3" y2="106.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="101.3" y1="101.9" x2="105.3" y2="105.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="106.0" y1="100.6" x2="110.0" y2="104.6" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="110.6" y1="98.9" x2="114.6" y2="102.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="115.0" y1="97.0" x2="119.0" y2="101.0" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="119.2" y1="94.8" x2="123.2" y2="98.8" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="123.1" y1="92.3" x2="127.1" y2="96.3" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="126.8" y1="89.5" x2="130.8" y2="93.5" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="130.3" y1="86.5" x2="134.3" y2="90.5" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="133.6" y1="83.3" x2="137.6" y2="87.3" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="136.6" y1="79.8" x2="140.6" y2="83.8" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M30 110c12 16 31 26 55 26s43-10 55-26" fill="none" stroke="#0B3D91" stroke-width="15" stroke-linecap="round"/>
+      <path d="M30 110c12 16 31 26 55 26s43-10 55-26" fill="none" stroke="#2BB2A6" stroke-width="12" stroke-linecap="round"/>
+      <line x1="33.7" y1="106.5" x2="29.2" y2="117.1" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="36.3" y1="109.9" x2="32.6" y2="120.7" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="39.2" y1="113.0" x2="36.2" y2="124.1" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="42.2" y1="115.9" x2="40.1" y2="127.2" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="45.5" y1="118.6" x2="44.3" y2="130.0" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="49.1" y1="121.0" x2="48.6" y2="132.5" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="52.8" y1="123.3" x2="53.2" y2="134.7" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="56.7" y1="125.2" x2="58.0" y2="136.6" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="60.9" y1="126.9" x2="63.0" y2="138.2" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="65.3" y1="128.3" x2="68.2" y2="139.5" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="69.9" y1="129.5" x2="73.5" y2="140.4" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="74.7" y1="130.3" x2="79.1" y2="140.9" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="79.7" y1="130.8" x2="84.8" y2="141.1" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="84.9" y1="131.0" x2="90.6" y2="140.9" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="89.9" y1="130.8" x2="96.3" y2="140.4" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="94.8" y1="130.4" x2="101.8" y2="139.5" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="99.4" y1="129.6" x2="107.1" y2="138.2" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="103.9" y1="128.5" x2="112.2" y2="136.6" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="108.2" y1="127.2" x2="117.0" y2="134.6" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="112.4" y1="125.6" x2="121.6" y2="132.4" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="116.3" y1="123.7" x2="126.0" y2="129.8" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="120.0" y1="121.6" x2="130.2" y2="127.0" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="123.5" y1="119.3" x2="134.1" y2="123.8" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="126.9" y1="116.6" x2="137.7" y2="120.4" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="130.0" y1="113.8" x2="141.1" y2="116.8" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="132.9" y1="110.7" x2="144.2" y2="112.9" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="29.4" y1="109.8" x2="33.4" y2="113.8" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="32.4" y1="113.3" x2="36.4" y2="117.3" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="35.7" y1="116.5" x2="39.7" y2="120.5" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="39.2" y1="119.5" x2="43.2" y2="123.5" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="42.9" y1="122.3" x2="46.9" y2="126.3" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="46.8" y1="124.8" x2="50.8" y2="128.8" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="51.0" y1="127.0" x2="55.0" y2="131.0" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="55.4" y1="128.9" x2="59.4" y2="132.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="60.0" y1="130.6" x2="64.0" y2="134.6" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="64.7" y1="131.9" x2="68.7" y2="135.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="69.7" y1="132.9" x2="73.7" y2="136.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="74.9" y1="133.6" x2="78.9" y2="137.6" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="80.3" y1="134.0" x2="84.3" y2="138.0" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="85.7" y1="134.0" x2="89.7" y2="138.0" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="91.1" y1="133.6" x2="95.1" y2="137.6" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="96.3" y1="132.9" x2="100.3" y2="136.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="101.3" y1="131.9" x2="105.3" y2="135.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="106.0" y1="130.6" x2="110.0" y2="134.6" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="110.6" y1="128.9" x2="114.6" y2="132.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="115.0" y1="127.0" x2="119.0" y2="131.0" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="119.2" y1="124.8" x2="123.2" y2="128.8" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="123.1" y1="122.3" x2="127.1" y2="126.3" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="126.8" y1="119.5" x2="130.8" y2="123.5" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="130.3" y1="116.5" x2="134.3" y2="120.5" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="133.6" y1="113.3" x2="137.6" y2="117.3" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="136.6" y1="109.8" x2="140.6" y2="113.8" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M30 140c12 16 31 26 55 26s43-10 55-26" fill="none" stroke="#0B3D91" stroke-width="15" stroke-linecap="round"/>
+      <path d="M30 140c12 16 31 26 55 26s43-10 55-26" fill="none" stroke="#2BB2A6" stroke-width="12" stroke-linecap="round"/>
+      <line x1="33.7" y1="136.5" x2="29.2" y2="147.1" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="36.3" y1="139.9" x2="32.6" y2="150.7" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="39.2" y1="143.0" x2="36.2" y2="154.1" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="42.2" y1="145.9" x2="40.1" y2="157.2" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="45.5" y1="148.6" x2="44.3" y2="160.0" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="49.1" y1="151.0" x2="48.6" y2="162.5" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="52.8" y1="153.3" x2="53.2" y2="164.7" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="56.7" y1="155.2" x2="58.0" y2="166.6" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="60.9" y1="156.9" x2="63.0" y2="168.2" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="65.3" y1="158.3" x2="68.2" y2="169.5" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="69.9" y1="159.5" x2="73.5" y2="170.4" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="74.7" y1="160.3" x2="79.1" y2="170.9" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="79.7" y1="160.8" x2="84.8" y2="171.1" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="84.9" y1="161.0" x2="90.6" y2="170.9" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="89.9" y1="160.8" x2="96.3" y2="170.4" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="94.8" y1="160.4" x2="101.8" y2="169.5" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="99.4" y1="159.6" x2="107.1" y2="168.2" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="103.9" y1="158.5" x2="112.2" y2="166.6" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="108.2" y1="157.2" x2="117.0" y2="164.6" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="112.4" y1="155.6" x2="121.6" y2="162.4" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="116.3" y1="153.7" x2="126.0" y2="159.8" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="120.0" y1="151.6" x2="130.2" y2="157.0" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="123.5" y1="149.3" x2="134.1" y2="153.8" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="126.9" y1="146.6" x2="137.7" y2="150.4" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="130.0" y1="143.8" x2="141.1" y2="146.8" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="132.9" y1="140.7" x2="144.2" y2="142.9" stroke="#0E7E88" stroke-width="3" stroke-linecap="round"/>
+      <line x1="29.4" y1="139.8" x2="33.4" y2="143.8" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="32.4" y1="143.3" x2="36.4" y2="147.3" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="35.7" y1="146.5" x2="39.7" y2="150.5" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="39.2" y1="149.5" x2="43.2" y2="153.5" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="42.9" y1="152.3" x2="46.9" y2="156.3" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="46.8" y1="154.8" x2="50.8" y2="158.8" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="51.0" y1="157.0" x2="55.0" y2="161.0" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="55.4" y1="158.9" x2="59.4" y2="162.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="60.0" y1="160.6" x2="64.0" y2="164.6" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="64.7" y1="161.9" x2="68.7" y2="165.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="69.7" y1="162.9" x2="73.7" y2="166.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="74.9" y1="163.6" x2="78.9" y2="167.6" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="80.3" y1="164.0" x2="84.3" y2="168.0" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="85.7" y1="164.0" x2="89.7" y2="168.0" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="91.1" y1="163.6" x2="95.1" y2="167.6" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="96.3" y1="162.9" x2="100.3" y2="166.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="101.3" y1="161.9" x2="105.3" y2="165.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="106.0" y1="160.6" x2="110.0" y2="164.6" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="110.6" y1="158.9" x2="114.6" y2="162.9" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="115.0" y1="157.0" x2="119.0" y2="161.0" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="119.2" y1="154.8" x2="123.2" y2="158.8" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="123.1" y1="152.3" x2="127.1" y2="156.3" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="126.8" y1="149.5" x2="130.8" y2="153.5" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="130.3" y1="146.5" x2="134.3" y2="150.5" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="133.6" y1="143.3" x2="137.6" y2="147.3" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <line x1="136.6" y1="139.8" x2="140.6" y2="143.8" stroke="#B9F5E6" stroke-width="1.6" stroke-linecap="round"/>
+      <rect x="18" y="48" width="20" height="120" fill="#0B3D91"/>
+      <path d="M16 52c0-6.6 5.4-12 12-12s12 5.4 12 12-5.4 12-12 12-12-5.4-12-12z" fill="#0B3D91"/>
+    </g>
+    <g transform="translate(165 118) rotate(235) scale(0.95)" fill="#FFFFFF" stroke="#0B3D91" stroke-width="2.5">
+      <rect x="-19" y="0" width="38" height="30" rx="11"/>
+      <rect x="-17" y="-24" width="9.5" height="28" rx="4.7"/>
+      <rect x="-6"  y="-29" width="9.5" height="33" rx="4.7"/>
+      <rect x="5"   y="-27" width="9.5" height="31" rx="4.7"/>
+      <rect x="16"  y="-19" width="9"   height="23" rx="4.5"/>
+      <rect x="-30" y="6" width="22" height="9.5" rx="4.7" transform="rotate(-26 -30 6)"/>
+    </g>
+</g>
+<g id="dh-wordmark" transform="translate(848.08,200.45) scale(0.265)">
+<g fill="#0B3D91">
+<path transform="translate(28.000,185.000) scale(0.214286,-0.214286)" d="M94.43973553002385 0V700H400.2586169520919Q513.7758508562757 700 599.7284305224366 656.1939627140689Q685.6810101885975 612.3879254281379 733.9396271406894 533.9525796661609Q782.1982440927812 455.51723390418385 782.1982440927812 350Q782.1982440927812 244.61207457186214 733.9396271406894 166.11207457186214Q685.6810101885975 87.61207457186212 599.7284305224366 43.80603728593106Q513.7758508562757 0 400.2586169520919 0ZM224.2153696076306 109.99122046390634H393.7413830479081Q472.4742033383915 109.99122046390634 530.0001083893344 139.8748645133319Q587.5260134402774 169.7585085627574 619.409657489703 223.80164751788422Q651.2933015391286 277.844786473011 651.2933015391286 350Q651.2933015391286 423.155213526989 619.409657489703 476.69835248211575Q587.5260134402774 530.2414914372425 530.0001083893344 560.1251354866681Q472.4742033383915 590.0087795360937 393.7413830479081 590.0087795360937H224.2153696076306Z"/>
+<path transform="translate(205.000,185.000) scale(0.214286,-0.214286)" d="M332.844786473011 -6.517233904183828Q244.16377628441361 -6.517233904183828 177.5 28.741383047908087Q110.83622371558639 64 74.1896813353566 125.88792542813788Q37.543138955126814 187.77585085627575 37.543138955126814 267.03446780836765Q37.543138955126814 346.5517017125515 73.25433557337958 408.3749729026664Q108.96553219163235 470.1982440927813 171.62930847604596 505.3275525688273Q234.29308476045958 540.4568610448732 313.58616952091916 540.4568610448732Q391.974094949057 540.4568610448732 453.07321699544764 506.28013223498806Q514.1723390418383 472.10340342510295 549.142152612183 409.97409494905696Q584.1119661825277 347.844786473011 584.1119661825277 263.5517017125515Q584.1119661825277 255.9051593323217 583.5473119445046 245.75861695209193Q582.9826577064816 235.61207457186214 581.9826577064816 227.0948406676783H137.4739865597225V309.974094949057H515.9655321916323L466.6638846737481 283.58616952091916Q467.53457619770217 329.51723390418385 447.7630067201387 364.64226100151745Q427.99143724257533 399.76728809885105 393.6250270973336 419.66816605246044Q359.2586169520919 439.5690440060698 313.844786473011 439.5690440060698Q268.4309559939302 439.5690440060698 233.56454584868848 419.66816605246044Q198.69813570344678 399.76728809885105 179.4265662258834 364.2069152395404Q160.15499674831997 328.6465423802298 160.15499674831997 280.974094949057V260.9051593323217Q160.15499674831997 212.84478647301106 181.99122046390636 176.0904508996315Q203.82744417949272 139.3361153262519 243.7585085627574 118.99989161066551Q283.6895729460221 98.66366789507913 336.3620203771949 98.66366789507913Q381.32755256882723 98.66366789507913 417.1465423802298 113.01712551484934Q452.96553219163235 127.37058313461955 480.8362237155864 156.94818989811404L548.3361153262518 79.74138304790809Q511.81888142206805 37.61207457186213 457.2369932798613 15.54742033383915Q402.65510513765446 -6.517233904183828 332.844786473011 -6.517233904183828Z"/>
+<path transform="translate(338.286,185.000) scale(0.214286,-0.214286)" d="M326.58616952091916 -6.517233904183828Q243.03446780836765 -6.517233904183828 177.43534576197703 28.61207457186213Q111.83622371558639 63.74138304790809 74.6896813353566 125.62930847604596Q37.543138955126814 187.51723390418383 37.543138955126814 267.03446780836765Q37.543138955126814 347.4223932365055 74.6896813353566 408.81031866464343Q111.83622371558639 470.1982440927813 177.43534576197703 505.3275525688273Q243.03446780836765 540.4568610448732 326.58616952091916 540.4568610448732Q404.81888142206805 540.4568610448732 464.4998916106655 508.7758508562757Q524.180901799263 477.0948406676783 554.6636678950791 415.89659657489705L458.89659657489705 359.5001083893345Q434.9310643832647 397.5001083893345 400.4181118577932 415.80614567526555Q365.9051593323217 434.1121829611966 325.58616952091916 434.1121829611966Q279.6895729460221 434.1121829611966 242.95247127682637 413.8406134836332Q206.2153696076306 393.5690440060698 185.00845436809016 356.1379796228051Q163.80153912854973 318.7069152395404 163.80153912854973 267.03446780836765Q163.80153912854973 215.36202037719488 185.00845436809016 177.86630175590722Q206.2153696076306 140.37058313461955 242.95247127682637 120.09901365705615Q279.6895729460221 99.82744417949274 325.58616952091916 99.82744417949274Q365.9051593323217 99.82744417949274 400.4181118577932 117.69813570344678Q434.9310643832647 135.56882722740082 458.89659657489705 174.43951875135485L554.6636678950791 118.04303056579232Q524.180901799263 57.7154779969651 464.4998916106655 25.599122046390637Q404.81888142206805 -6.517233904183828 326.58616952091916 -6.517233904183828Z"/>
+<path transform="translate(462.786,185.000) scale(0.214286,-0.214286)" d="M184.1464339908953 118.73282029048342 187.4050509429872 275.8963797962281 466.0862779102536 533.9396271406894H616.4136137004118L378.6032950357685 296.31898981140256L312.6206373292868 241.0173422935183ZM82.21558638629959 0V742H207.2153696076306V0ZM485.05181010188596 0 289.7758508562757 241.37079991328852 368.6981357034468 340.974094949057 637.025688272274 0Z"/>
+</g>
+<g fill="#2BB2A6">
+<path transform="translate(598.857,185.000) scale(0.214286,-0.214286)" d="M82.21558638629959 0V742H207.2153696076306V389.61207457186214L180.20680685020594 433.87069152395406Q207.85334923043573 485.4223932365055 261.4826577064817 512.9396271406894Q315.1119661825276 540.4568610448732 384.72404075438976 540.4568610448732Q449.46542380229783 540.4568610448732 499.5947322783438 515.3922068068503Q549.7240407543898 490.32755256882723 578.7886949924127 438.50428137871234Q607.8533492304357 386.68101018859744 607.8533492304357 305.9051593323217V0H482.8535660091047V289.54313895512684Q482.8535660091047 360.5690440060698 449.61646433990893 395.5647626273575Q416.3793626707132 430.56048124864515 355.7758508562757 430.56048124864515Q311.87925428137873 430.56048124864515 278.012844136137 412.65960329503577Q244.14643399089528 394.7587253414264 225.68090179926293 359.4397355300238Q207.2153696076306 324.12074571862127 207.2153696076306 270.06037285931063V0Z"/>
+<path transform="translate(745.643,185.000) scale(0.214286,-0.214286)" d="M410.60351181443747 0V108.31898981140256L404.18111857793195 130.83622371558639V320.06037285931063Q404.18111857793195 374.8621287665294 370.9742033383915 405.4397355300239Q337.76728809885105 436.0173422935183 270.5776067634945 436.0173422935183Q225.74138304790807 436.0173422935183 182.51723390418383 421.9052677216562Q139.29308476045958 407.79319314979404 108.8103186646434 383.4397355300238L60.31898981140256 474.10340342510295Q103.0948406676783 506.7154779969651 162.69396271406893 523.5861695209192Q222.29308476045958 540.4568610448732 286.2930847604596 540.4568610448732Q402.0430305657923 540.4568610448732 465.6119661825277 484.85773899848255Q529.180901799263 429.2586169520919 529.180901799263 313.155213526989V0ZM243.41383047908087 -6.517233904183828Q182.50867114675916 -6.517233904183828 137.50867114675916 13.870691523954042Q92.50867114675916 34.25861695209191 68.20263386082809 70.58188814220681Q43.89659657489703 106.9051593323217 43.89659657489703 153.03446780836765Q43.89659657489703 198.19824409278127 65.67244743117277 233.8922068068502Q87.44829828744852 269.58616952091916 136.41811185779318 290.76289833080426Q185.38792542813786 311.93962714068937 266.03446780836765 311.93962714068937H420.9569694342077V229.06037285931063H275.0430305657923Q211.18090179926295 229.06037285931063 189.02140689356168 208.41811185779318Q166.8619119878604 187.77585085627575 166.8619119878604 157.8103186646434Q166.8619119878604 124.00856275742467 193.98693908519402 104.1076848038153Q221.11196618252762 84.20680685020594 268.74994580533274 84.20680685020594Q315.2586169520919 84.20680685020594 351.7371016691958 104.97837632776935Q388.2155863862996 125.74994580533276 404.18111857793195 166.68101018859744L425.34489486234554 91.84478647301106Q407.12074571862127 44.77585085627574 360.76728809885105 19.129308476045956Q314.41383047908084 -6.517233904183828 243.41383047908087 -6.517233904183828Z"/>
+<path transform="translate(875.714,185.000) scale(0.214286,-0.214286)" d="M82.21558638629959 0V533.9396271406894H201.43951875135485V389.61207457186214L180.20680685020594 433.87069152395406Q207.85334923043573 485.4223932365055 261.4826577064817 512.9396271406894Q315.1119661825276 540.4568610448732 384.72404075438976 540.4568610448732Q449.46542380229783 540.4568610448732 499.5947322783438 515.3922068068503Q549.7240407543898 490.32755256882723 578.7886949924127 438.50428137871234Q607.8533492304357 386.68101018859744 607.8533492304357 305.9051593323217V0H482.8535660091047V289.54313895512684Q482.8535660091047 360.5690440060698 449.61646433990893 395.5647626273575Q416.3793626707132 430.56048124864515 355.7758508562757 430.56048124864515Q311.87925428137873 430.56048124864515 278.012844136137 412.65960329503577Q244.14643399089528 394.7587253414264 225.68090179926293 359.4397355300238Q207.2153696076306 324.12074571862127 207.2153696076306 270.06037285931063V0Z"/>
+<path transform="translate(1022.500,185.000) scale(0.214286,-0.214286)" d="M308.2845220030349 -6.517233904183828Q231.1896813353566 -6.517233904183828 169.81898981140256 27.547420333839153Q108.44829828744852 61.61207457186213 73.31898981140256 122.93534576197703Q38.189681335356596 184.25861695209193 38.189681335356596 267.03446780836765Q38.189681335356596 349.8103186646434 73.31898981140256 411.13358985475827Q108.44829828744852 472.45686104487316 169.81898981140256 506.4568610448732Q231.1896813353566 540.4568610448732 308.2845220030349 540.4568610448732Q375.06037285931063 540.4568610448732 428.025905050943 510.8275525688273Q480.99143724257533 481.1982440927813 512.1336982440928 420.8749729026664Q543.2759592456102 360.5517017125515 543.2759592456102 267.03446780836765Q543.2759592456102 174.25861695209193 513.1983524821158 113.43534576197703Q483.12074571862127 52.61207457186213 430.21986776501194 23.047420333839153Q377.31898981140256 -6.517233904183828 308.2845220030349 -6.517233904183828ZM323.10340342510295 99.82744417949274Q368.12930847604594 99.82744417949274 403.8017559072187 120.09901365705615Q439.4742033383915 140.37058313461955 460.61646433990893 178.36630175590722Q481.7587253414264 216.36202037719488 481.7587253414264 267.03446780836765Q481.7587253414264 318.7069152395404 460.61646433990893 356.1379796228051Q439.4742033383915 393.5690440060698 403.8017559072187 413.8406134836332Q368.12930847604594 434.1121829611966 323.10340342510295 434.1121829611966Q278.07749837416 434.1121829611966 242.4050509429872 413.8406134836332Q206.73260351181443 393.5690440060698 185.59034251029698 356.1379796228051Q164.44808150877952 318.7069152395404 164.44808150877952 267.03446780836765Q164.44808150877952 216.36202037719488 185.59034251029698 178.36630175590722Q206.73260351181443 140.37058313461955 242.4050509429872 120.09901365705615Q278.07749837416 99.82744417949274 323.10340342510295 99.82744417949274ZM485.27595924561024 0V126.24149143724257L489.5001083893345 267.9051593323217L479.5001083893345 409.5688272274008V742H604.4998916106655V0Z"/>
+</g>
+</g>
+<line x1="619.6" y1="245.8" x2="732.8" y2="229.6" stroke="#0b3d5c" stroke-width="10" stroke-linecap="round"/>
+<line x1="619.6" y1="245.8" x2="732.8" y2="229.6" stroke="#2BB2A6" stroke-width="6.5" stroke-linecap="round"/>
+<line x1="637.7" y1="231.0" x2="657.5" y2="228.2" stroke="#0b3d5c" stroke-width="2" stroke-linecap="round"/>
+<line x1="641.1" y1="254.8" x2="660.9" y2="252.0" stroke="#0b3d5c" stroke-width="2" stroke-linecap="round"/>
+<circle cx="619.6" cy="245.8" r="7.5" fill="#ffffff" stroke="#0b3d5c" stroke-width="3"/>
+<rect x="716" y="336" width="444" height="164" fill="#ffffff" stroke="#0b3d5c" stroke-width="1.5"/>
+<rect x="716" y="336" width="444" height="4" fill="#2BB2A6"/>
+<text x="740" y="382" font-size="22" font-weight="700" fill="#0b3d5c">First-mode frequency</text>
+<text x="740" y="426" font-size="32" font-weight="700" fill="#0d7680">within about 0.30 %</text>
+<text x="740" y="464" font-size="22" font-weight="700" fill="#0b3d5c">of theory, small amplitude</text>
+<text x="40" y="598" font-size="15" fill="#5a6b76">Schematic, not to scale.</text>
+</svg>
+<p id="hero-caption" style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:1.45;color:#5a6670;">Illustration: the rope is a metaphor for Deckhand supporting the engineer, not a model of tank damping.</p></div>
 <section id="ambition">
-<h2 style="margin:16px 0 8px;font:700 22px/1.2 Arial,Helvetica,sans-serif;color:#0b3d5c;">One result, then the work behind it</h2>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">The sloshing CFD study reproduced the tank's first-mode frequency within about 0.30 % of linear theory across the tested fill levels. <a href="https://vamseeachanta.github.io/digitalmodel/cfd/sloshing-cfd-study.html" style="color:#0b3d5c;text-decoration:underline;">Read the study</a>. It also includes a SPHERIC Test 10 impact-pressure check; frequency agreement alone does not establish accurate impact pressures. The result applies to the published two-dimensional tank cases. The analysis is reviewed against available public literature. A different tank, fill level or forcing will need its own inputs and checks. The report keeps the convergence evidence beside the result so the reader can inspect the basis.</p>
-<p id="contact-top" style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">If there are engineering needs, I am here to help.</p>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">In the coming issues, we will go into greater detail on engineering workflows and their automation, along with the use of AI agents.</p>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">Deckhand is the name of this newsletter and the AI assistant setup behind it.</p>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">What began as a feasibility study is now a working demo on a synthetic sea state, built toward a real-time monitoring use case.</p>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;"><a href="https://vamseeachanta.github.io/digitalmodel/hydro/short-horizon-motion-forecast.html" style="color:#0b3d5c;text-decoration:underline;">Demo: short-horizon motion forecast with a go / caution / no-go call</a></p>
+<h2 style="margin:16px 0 8px;font:700 22px/1.2 Arial,Helvetica,sans-serif;color:#0b3d5c;">Tank sloshing CFD study with open source software OpenFOAM</h2>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">The sloshing computational fluid dynamics (CFD) study reproduced the tank's small-amplitude first-mode frequency within about 0.30 % of linear theory across the tested fill levels. Sloshing matters in tanks on floating vessels. Near resonance, the liquid runs up the tank walls and strikes them. A partly filled tank tuned near a vessel's roll period can also act as an anti-roll damper. <a href="https://vamseeachanta.github.io/digitalmodel/cfd/sloshing-cfd-study.html" style="color:#0b3d5c;text-decoration:underline;">Read the study</a>.</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">The analysis results for the two-dimensional tank are compared to the available public literature to sense-check/benchmark the results. Parametric analysis for other tank dimensions, fill levels and forcing can be constructed and rerun by extending the same scripts.</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">This study is extended to assess a U-tube style anti-roll arrangement: two connected tanks with invented geometry. This study is an analytical screening model calibrated on CFD assessment. The calibration uses 35 archived computational fluid dynamics (CFD) cases, published as aggregate results only, on a different connected-tank geometry, so its transfer to the invented geometry is an assumption. Based on the benchmarked single tank analysis, analysis is extended to build the connected model.</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;"><a href="https://vamseeachanta.github.io/digitalmodel/cfd/dual-tank-sloshing-cfd-study.html" style="color:#0b3d5c;text-decoration:underline;">Read the dual-tank study</a></p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">A separate screening estimate, with a public U-tube reference tank, gives the roll of a generic hull. The result depends mainly on hull damping and on how large the tank's water moment is compared with the hull's own roll stiffness. That ratio is called alpha: the tank's quasi-static free-surface moment stiffness divided by the hull's roll restoring. At an 18 s hull roll period, alpha 0.05 and conduit area 6.8 m², peak roll reduction is 46.1 % at 2 % hull damping. At 5 % hull damping it is 23.3 %. Both cases lie below the 20 s band of the tank fit, and no real-vessel test backs them.</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;"><a href="https://vamseeachanta.github.io/digitalmodel/cfd/generic-hull-roll-screening.html" style="color:#0b3d5c;text-decoration:underline;">Read the roll estimate</a></p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">A working demo of vessel-motion forecasting on a simulated sea state is given below. This demo requires live motion-sensor input to provide useful go/no-go decisions.</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;"><a href="https://vamseeachanta.github.io/digitalmodel/hydro/short-horizon-motion-forecast.html" style="color:#0b3d5c;text-decoration:underline;">Demo: short-horizon motion forecast with an illustrative go / caution / no-go call</a></p>
 </section>
 <section id="short-read">
-<h2 style="margin:16px 0 8px;font:700 22px/1.2 Arial,Helvetica,sans-serif;color:#0b3d5c;">Ask big, then check the work</h2>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">Give your AI assistant an outcome, a bounded scope and a clear definition of done: define the must-have result. Start with one case. Check the inputs, units, first calculation and saved output before expanding the work. For a longer task, agree on a checkpoint and look for completed cases, recorded exceptions and results read back from the actual output. Check results against a hand calculation or a published benchmark, which gives a stronger quality assessment. Keep an engineer responsible for the assumptions and the decision. Ask for missing evidence when a claim cannot be checked. Fixed units, clear criteria, repeatable checks and an independent review keep the engineering precise. The aim is useful work that can be checked and repeated.</p>
-</section>
-<section id="specialists">
-<h2 style="margin:16px 0 8px;font:700 22px/1.2 Arial,Helvetica,sans-serif;color:#0b3d5c;">Engineering areas</h2>
-<ul style="padding-left:20px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">
-<li>Hydrodynamics and motions — <a href="https://vamseeachanta.github.io/digitalmodel/cfd/sloshing-cfd-study.html" style="color:#0b3d5c;text-decoration:underline;">tank-sloshing frequency and convergence example</a>.</li>
-<li>Structural and fatigue — <a href="https://vamseeachanta.github.io/digitalmodel/buckling/ship-plate-buckling.html" style="color:#0b3d5c;text-decoration:underline;">unstiffened plate-buckling worked example</a> (screening estimates).</li>
-</ul>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">More areas in coming issues.</p>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">The examples show their inputs, methods and limits; they provide a starting point for defining a study and help make operational decisions.</p>
-</section>
-<section id="repeatable-work">
-<h2 style="margin:16px 0 8px;font:700 22px/1.2 Arial,Helvetica,sans-serif;color:#0b3d5c;">Make repeat work easier</h2>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">Run new calculations from one input file format, faster. Measure the gain in elapsed time, rework and review findings. The repeatability and workflow automation benefits are most evident when there is a reanalysis or a parametric study.</p>
+<h2 style="margin:16px 0 8px;font:700 22px/1.2 Arial,Helvetica,sans-serif;color:#0b3d5c;">One place to work</h2>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">We now use AI assistants for many tasks: in a chat window or an app, on a phone, and on personal and work computers. AI assistants use language models that do not always give the same answer. We are running into the familiar territory of "the answer can change from one run to the next, and with the wording of the question."</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">When we dealt with IT and programmers, many a times, we faced a related frustration: "oh.. but it works on my machine." This answer was so familiar for administrative tasks such as opening a Microsoft word file or crash). Equally, the same experience when we ran a script not able to run let alone getting same result. We now meet a similar problem in everyday AI use: one person gets a result that another cannot repeat.</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">One of the solutions is to keep each job in one folder, with its files, its tools, its prompts and its record of changes. Let your AI assistant work through this created set environment. The AI assistants we use keep a record of each session. To check a result, or run it again, you need its prompt, its inputs and that record. So the home for this data matters.</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">The article shows how this grows from one engineer to a team and then to the company. In our experience, it takes a few (&gt; 10-20) reasonably sized sessions to realize these benefits; we have not measured this. Treating AI assistants as loyal team members who need help will get us a long way. Similar to training your employee team, training this single work storage place will make immense difference.</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;"><a href="https://www.aceengineer.com/newsletter/topics/one-place-to-work/" style="color:#0b3d5c;text-decoration:underline;">Read the full article</a></p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">Note: the dual-tank results are screening estimates on invented geometry, not design values; the statements on AI sessions are our experience, not measurements.</p>
 </section>
 <section id="engineering-offer">
-<h2 style="margin:16px 0 8px;font:700 22px/1.2 Arial,Helvetica,sans-serif;color:#0b3d5c;">Help with the next operation</h2>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">AceEngineer provides marine engineering analysis and calculation workflows for an operator or contractor; reply with the operation, available inputs and required decision to agree on the study scope.</p>
+<h2 style="margin:16px 0 8px;font:700 22px/1.2 Arial,Helvetica,sans-serif;color:#0b3d5c;">About AceEngineer</h2>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">AceEngineer provides engineering analysis and calculation workflows for an owner, operator, engineering firms or contractor. We plan later issues on engineering workflows, their automation and the use of AI assistants for everyday engineering.</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">The newsletter takes its name from Deckhand.</p>
 </section>
-<section id="next-two-issues">
-<h2 style="margin:16px 0 8px;font:700 22px/1.2 Arial,Helvetica,sans-serif;color:#0b3d5c;">The next two issues</h2>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">October 27 — Cathodic protection: anode design.</p>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">November 10 — Asset integrity.</p>
+<section id="future-issues">
+<h2 style="margin:16px 0 8px;font:700 22px/1.2 Arial,Helvetica,sans-serif;color:#0b3d5c;">Future issues</h2>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">Future issues are planned on cathodic protection and vessel diffraction analysis; asset integrity (fitness-for-purpose), riser and installation topics may follow.</p>
 </section>
 <section id="date-book">
 <h2 style="margin:16px 0 8px;font:700 22px/1.2 Arial,Helvetica,sans-serif;color:#0b3d5c;">The date book</h2>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;"><a href="https://www.adipec.com/visit/" style="color:#0b3d5c;text-decoration:underline;">ADIPEC</a>: November 2–5, 2026, Abu Dhabi.</p>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;"><a href="https://2027.otcnet.org/" style="color:#0b3d5c;text-decoration:underline;">OTC 2027</a>: Monday–Wednesday, May 3–5, 2027, Houston.</p>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">Dates checked October 20, 2026; confirm with the organizer before travel.</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;"><a href="https://www.adipec.com/" style="color:#0b3d5c;text-decoration:underline;">ADIPEC</a>: November 2–5, 2026, Abu Dhabi.</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;"><a href="https://www.otcnet.org/" style="color:#0b3d5c;text-decoration:underline;">OTC 2027</a>: Monday–Wednesday, May 3–5, 2027, Houston.</p>
+<p id="dates-footnote" style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:1.45;color:#5a6670;">Footnote: Dates checked October 22, 2026.</p>
 </section>
-<p id="contact" style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">If there are engineering needs, I am here to help.</p>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">In the coming issues, we will go into greater detail on engineering workflows and their automation, along with the use of AI agents.</p>
 <p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#26323a;">Vamsee Achanta, P.E.</p>
 </td></tr><tr><td bgcolor="#0b3d5c" style="padding:22px 28px;background:#0b3d5c;overflow-wrap:anywhere;">
 <footer>
-<p id="subscribe-stop" style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#ffffff;">Reply subscribe and name Energy Street, Main Street or both; reply stop to stop.</p>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#ffffff;"><a href="mailto:support@aceengineer.com" style="color:#ffffff;">support@aceengineer.com</a></p>
+<p id="subscribe-stop" style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#ffffff;">To subscribe, write to <a href="mailto:support@aceengineer.com?subject=Subscribe%20Energy%20Street" style="color:#ffffff;text-decoration:underline;">support@aceengineer.com</a> with the subject "Subscribe Energy Street"; to stop, use the subject "Stop".</p>
 <p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#ffffff;"><a href="https://www.aceengineer.com/" style="color:#ffffff;text-decoration:underline;">AceEngineer</a></p>
 <p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#ffffff;">© 2026 AceEngineer · Houston, Texas</p>
-<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#ffffff;">help engineers enjoy engineering again</p>
+<p id="postal-address" style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:13px;line-height:1.45;color:#ffffff;">11511 Piping Rock Dr., Houston, TX 77077</p>
+<p style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:#ffffff;">Deckhand: Make Engineering Enjoyable Again</p>
 </footer>
 </td></tr></table>
 </td></tr></table>

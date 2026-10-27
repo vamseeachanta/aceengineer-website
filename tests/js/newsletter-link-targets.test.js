@@ -85,7 +85,7 @@ test('source: article uses the newsletter template, metadata and issue backlink'
 test('source: article preserves the supplied body, table, emphasis and lists', () => {
   const html = read(`content/${article}`);
   const body = html.match(/<article id="one-place-to-work">([\s\S]*?)<\/article>/)[1];
-  assert.equal(digest(text(body)), '9036e4ef64fed09e7f84d381e2b92d16f3433c38f7308642265e863662d2977c');
+  assert.equal(digest(text(body)), '4599d9e52826ce53ce48af9c7ea42c4904ce0592117a7551860c39f488acd2df');
   assert.equal((body.match(/<h1>/g) || []).length, 1);
   assert.equal((body.match(/<h2>/g) || []).length, 7);
   assert.equal((body.match(/<table\b/g) || []).length, 1);

@@ -1,7 +1,30 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const { spawnSync } = require('child_process');
 const { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeSitemap, writeLlmsTxt, loadCopy, canonicalUrlFor, SITEMAP_EXCLUDE } = require('../../build');
+
+const newsletterPages = ['newsletter/issue-001-energy-street/index.html', 'newsletter/topics/one-place-to-work/index.html'];
+test.each(newsletterPages.flatMap(page => [
+  '<a href="TODO_NEW_LINK_2">Read</a>',
+  '<p id="send-date">[[ANOTHER DATE]]</p>',
+  '<p>CONTACT_EMAIL</p>',
+].map(html => [page, html])))('newsletter deployment build rejects placeholders in %s: %s', (page, html) => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'newsletter-build-'));
+  for (const file of newsletterPages) {
+    const target = path.join(tmp, 'content', file);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, file === page ? html : '<p>Ready</p>');
+  }
+  const result = spawnSync(process.execPath, [path.resolve(__dirname, '../../build.js')], {
+    cwd: tmp,
+    env: { ...process.env, NEWSLETTER_DEPLOY_CHECK: '1' },
+    encoding: 'utf8',
+  });
+  expect(result.status).toBe(1);
+  expect(result.stderr).toMatch(/Unfilled newsletter token/);
+  expect(fs.existsSync(path.join(tmp, 'dist'))).toBe(false);
+});
 
 test('newsletter web sources contain no e-mail campaign tracking tags', () => {
   const newsletterDir = path.join(__dirname, '../../content/newsletter');

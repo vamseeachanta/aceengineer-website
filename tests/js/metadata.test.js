@@ -79,6 +79,22 @@ test('every built JSON-LD block parses', () => {
   for (const page of pages) expect(() => nodesFor(page)).not.toThrow();
 });
 
+test('the model topic is indexed with its approved title and preview metadata', () => {
+  const page = 'newsletter/topics/why-the-model-you-use-matters/index.html';
+  const title = 'Why the model you use matters: test each new AI model on your own problems';
+  const description = 'A newer AI model can solve problems that an older one may get confidently wrong. Test each new model on problems you know.';
+  expect(destinations).toContain(page);
+  const doc = documents.get(page);
+  expect(doc.title).toBe(title);
+  expect(doc.querySelector('meta[property="og:title"]').content).toBe(title);
+  expect(doc.querySelector('meta[name="description"]').content).toBe(description);
+  expect(doc.querySelector('meta[property="og:description"]').content).toBe(description);
+  expect(nodesFor(page).find(node => node['@type'] === 'Article')).toMatchObject({
+    headline: title, name: title, description,
+    url: 'https://www.aceengineer.com/newsletter/topics/why-the-model-you-use-matters/',
+  });
+});
+
 test('destinations have one shared Organization with the required display name', () => {
   for (const page of destinations) {
     const full = nodesFor(page).filter(node => node['@type'] === 'Organization' && node.name);
@@ -280,7 +296,7 @@ test('source metadata meets the required coverage floors', () => {
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
   // Includes the newsletter archive and both automation pages; retired sources still count.
   // Keep the existing 107 floor: noindex exclusions do not require a reduction.
-  expect(sources).toHaveLength(129);
+  expect(sources).toHaveLength(130);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 107],
     ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],

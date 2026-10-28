@@ -4,7 +4,7 @@ const os = require('os');
 const { spawnSync } = require('child_process');
 const { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeSitemap, writeLlmsTxt, loadCopy, canonicalUrlFor, SITEMAP_EXCLUDE } = require('../../build');
 
-const newsletterPages = ['newsletter/issue-001-energy-street/index.html', 'newsletter/topics/one-place-to-work/index.html'];
+const newsletterPages = ['newsletter/issue-001-energy-street/index.html', 'newsletter/topics/one-place-to-work/index.html', 'newsletter/topics/why-the-model-you-use-matters/index.html'];
 test.each(newsletterPages.flatMap(page => [
   '<a href="TODO_NEW_LINK_2">Read</a>',
   '<p id="send-date">[[ANOTHER DATE]]</p>',

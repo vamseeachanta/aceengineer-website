@@ -17,7 +17,7 @@ function assertNewsletterDeployReady(html, deployCheck) {
 
 function assertNewsletterSourcesReady(contentRoot, deployCheck) {
   if (deployCheck !== '1') return;
-  for (const page of ['newsletter/issue-001-energy-street/index.html', 'newsletter/topics/one-place-to-work/index.html', 'newsletter/index.html', 'newsletter/feed.xml']) {
+  for (const page of ['newsletter/issue-001-energy-street/index.html', 'newsletter/topics/one-place-to-work/index.html', 'newsletter/topics/why-the-model-you-use-matters/index.html', 'newsletter/index.html', 'newsletter/feed.xml']) {
     assertNewsletterDeployReady(fs.readFileSync(path.join(contentRoot, page), 'utf8'), deployCheck);
   }
 }

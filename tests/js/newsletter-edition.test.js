@@ -5,6 +5,7 @@ const { JSDOM } = require('jsdom');
 const { SITEMAP_EXCLUDE } = require('../../build');
 require('./newsletter-link-targets.test');
 require('./newsletter-deploy.test');
+require('./newsletter-model-topic.test');
 
 const edition = 'newsletter/issue-001-energy-street/index.html';
 const retired = 'newsletter/issue-001/index.html';

@@ -10,7 +10,7 @@ const { assertNewsletterDeployReady } = require('../../scripts/check-newsletter-
 const issue = path.resolve(__dirname, '../../content/newsletter/issue-001-energy-street/index.html');
 const topic = path.resolve(__dirname, '../../content/newsletter/topics/one-place-to-work/index.html');
 const deployScript = path.resolve(__dirname, '../../scripts/check-newsletter-deploy.js');
-const pages = ['newsletter/issue-001-energy-street/index.html', 'newsletter/topics/one-place-to-work/index.html', 'newsletter/index.html', 'newsletter/feed.xml'];
+const pages = ['newsletter/issue-001-energy-street/index.html', 'newsletter/topics/one-place-to-work/index.html', 'newsletter/topics/why-the-model-you-use-matters/index.html', 'newsletter/index.html', 'newsletter/feed.xml'];
 const tokens = ['[[SEND DATE]]', 'TODO_ARTICLE_URL_A1', 'TODO_DUAL_TANK_URL', '[[ANOTHER DATE]]', 'TODO_NEW_LINK_2', 'CONTACT_EMAIL'];
 
 test('the release build enables newsletter source checks', () => {

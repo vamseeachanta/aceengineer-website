@@ -104,6 +104,7 @@ temporary_exceptions:
     follow_up: https://github.com/vamseeachanta/aceengineer-website/issues/13
     justification: Tracked competitor-analysis report artifacts are preserved as existing durable evidence until a dedicated generated-evidence migration classifies retention, relocation, or deletion.
     allowed_paths:
+      - reports/seo-audit.json
       - reports/competitor-analysis/2026-01-26.html
       - reports/competitor-analysis/2026-01-27.html
       - reports/competitor-analysis/2026-01-28.html

@@ -85,7 +85,7 @@ for (const prefix of ['content', 'dist']) {
     }
     assert.match(svg, /role="img" aria-labelledby="a2-step-title a2-step-desc"/);
     assert.match(svg, /<desc id="a2-step-desc">/);
-    const caption = text(svg.match(/<title id="a2-step-title">([\s\S]*?)<\/title>/)[1]);
+    const caption = 'Illustrative schematic, not data and not to scale. When many of your problems sit near the edge of what models can do, a small gain in capability can move a whole group of them from wrong to right.';
     assert.ok(body.includes(`<figcaption>${caption}</figcaption>`));
     assert.match(body, /The schematic shows the idea; it is not a measurement\.<\/p>\s*<figure>/);
     assert.equal((body.match(/id="a2-step-title"/g) || []).length, 1);

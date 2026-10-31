@@ -34,6 +34,13 @@
                 <if condition="service.codes.length">
                     <ul><each loop="citation in service.codes"><li>{{ citation }}</li></each></ul>
                 </if>
+                <if condition="service.pipeline.length">
+                    <ul data-pipeline><each loop="step in service.pipeline"><li>{{ step }}</li></each></ul>
+                </if>
+                <if condition="service.code_link.href">
+                    <p><a href="{{ service.code_link.href }}">{{ service.code_link.text }}</a></p>
+                </if>
+                <p><a href="{{ rootPath }}how-results-are-checked/">How results are checked</a></p>
             </section>
             <section data-sample>
                 <h2>{{ copy.home.work.sample }}</h2>

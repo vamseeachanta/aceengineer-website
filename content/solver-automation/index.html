@@ -1,0 +1,71 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OrcaFlex and Solver Automation | AceEngineer</title>
+<meta name="description" content="OrcaFlex, OrcaWave, AQWA, OpenFOAM and ANSYS runs prepared from scripted inputs, run in batches without the GUI and read back into tables for review.">
+<meta property="og:title" content="OrcaFlex and Solver Automation | AceEngineer">
+<meta property="og:description" content="OrcaFlex, OrcaWave, AQWA, OpenFOAM and ANSYS runs prepared from scripted inputs, run in batches without the GUI and read back into tables for review.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.aceengineer.com/solver-automation/">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OrcaFlex and Solver Automation | AceEngineer">
+<meta name="twitter:description" content="OrcaFlex, OrcaWave, AQWA, OpenFOAM and ANSYS runs prepared from scripted inputs, run in batches without the GUI and read back into tables for review.">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"OrcaFlex and Solver Automation | AceEngineer","description":"OrcaFlex, OrcaWave, AQWA, OpenFOAM and ANSYS runs prepared from scripted inputs, run in batches without the GUI and read back into tables for review.","url":"https://www.aceengineer.com/solver-automation/","inLanguage":"en","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Engineering workflows","item":"https://www.aceengineer.com/engineering.html"},{"@type":"ListItem","position":3,"name":"Solver automation","item":"https://www.aceengineer.com/solver-automation/"}]}]</script>
+<include src="partials/head-common.html">
+</include>
+</head>
+<body class="theme-page">
+<include src="partials/nav.html">
+</include>
+<main id="main" class="samples-page">
+<div class="container">
+<h1>Solver automation</h1>
+<p>Load cases are prepared from scripted inputs and run in batches without a person at the screen. The results are read back into tables, and the engineer reviews the governing cases.</p>
+
+<h2 id="batch">How an OrcaFlex batch runs</h2>
+<ul>
+<li>One YAML input file names the models, the analysis type and the run settings.</li>
+<li>Statics and dynamics run without the graphical interface, and each simulation is saved.</li>
+<li>A failed or incomplete case set stops the batch with a FAIL verdict and a non-zero exit code.</li>
+<li>A run without a solver licence is reported as skipped, never as a pass.</li>
+<li>Results are read back from the saved simulations into tables for the governing-case review.</li>
+</ul>
+<p><a href="https://github.com/vamseeachanta/digitalmodel/tree/main/src/digitalmodel/solvers/orcaflex">OrcaFlex automation code</a> · <a href="https://github.com/vamseeachanta/digitalmodel/blob/main/tests/workflows/test_orcaflex_batch_contract.py">Batch contract tests</a></p>
+
+<h2 id="solvers">Solvers and what is automated</h2>
+<div class="table-responsive">
+<table class="table">
+<thead><tr><th>Solver</th><th>What is automated</th><th>Public code</th></tr></thead>
+<tbody>
+<tr><td>OrcaFlex</td><td>Model generation from YAML, batch statics and dynamics, post-processing of results</td><td><a href="https://github.com/vamseeachanta/digitalmodel/tree/main/src/digitalmodel/solvers/orcaflex">solvers/orcaflex</a></td></tr>
+<tr><td>OrcaWave</td><td>Diffraction input from a vessel YAML file, geometry checks, conversion of results to OrcaFlex vessel data</td><td><a href="https://github.com/vamseeachanta/digitalmodel/tree/main/src/digitalmodel/solvers/orcawave">solvers/orcawave</a></td></tr>
+<tr><td>AQWA</td><td>Input file preparation, reading of listing files, response amplitude operators and damping post-processing</td><td><a href="https://github.com/vamseeachanta/digitalmodel/tree/main/src/digitalmodel/hydrodynamics/aqwa">hydrodynamics/aqwa</a></td></tr>
+<tr><td>OpenFOAM</td><td>Case set-up, meshing, parametric batch runs, grid-convergence checks and post-processing</td><td><a href="https://github.com/vamseeachanta/digitalmodel/tree/main/src/digitalmodel/solvers/openfoam">solvers/openfoam</a></td></tr>
+<tr><td>ANSYS Mechanical APDL</td><td>APDL input files are generated from Python and run by a batch script; result files are read back for post-processing</td><td><a href="https://github.com/vamseeachanta/digitalmodel/blob/main/src/digitalmodel/ansys/apdl_generator.py">ansys/apdl_generator.py</a></td></tr>
+</tbody>
+</table>
+</div>
+<p>Table 1: Solvers and the steps automated for each.</p>
+
+<h2 id="example">Published example: OpenFOAM sloshing tank batch runs</h2>
+<p>The tank sloshing study publishes 21 accepted OpenFOAM cases. Each case is listed with its inputs and results in the study's data tables. <a href="../reports/sloshing/">Read the tank sloshing study</a>.</p>
+
+<h2 id="checks">How the results are checked</h2>
+<p>Results are checked against an analytical value, a second solver or a cited standard clause before they are signed. <a href="../how-results-are-checked/">Read how results are checked</a>.</p>
+
+<p>OrcaFlex and OrcaWave are products of Orcina Ltd. AQWA and Mechanical APDL are products of Ansys, Inc. OpenFOAM is open-source software.</p>
+<p><a href="../engineering.html">Engineering workflows</a> · <a href="../reproducible-studies/">Reproducible studies</a></p>
+<include src="partials/scope-invitation.html">
+</include>
+</div>
+</main>
+<include src="partials/footer.html">
+</include>
+</body>
+</html>

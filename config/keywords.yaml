@@ -7,6 +7,10 @@ keywords:
     - "offshore engineering automation"
     - "fatigue analysis software"
     - "python engineering automation"
+    # PetaCAX review keyword list, 2026-10-30
+    - "offshore engineering analysis"
+    - "riser analysis"
+    - "agentic engineering workflows"
 
   secondary:
     - "S-N curve calculator"
@@ -19,6 +23,12 @@ keywords:
     - "vessel seakeeping analysis"
     - "decline curve analysis"
     - "field development economics"
+    # PetaCAX review keyword list, 2026-10-30
+    - "OrcaFlex batch runs"
+    - "AQWA automation"
+    - "checked engineering calculations"
+    - "reproducible engineering study"
+    - "BSEE data analysis"
 
   long_tail:
     - "orcaflex python scripting"
@@ -48,6 +58,12 @@ keywords:
     - "API 579 level 1"
     - "DNV-RP-B401 cathodic protection"
     - "DNV-RP-F110 global buckling"
+    # PetaCAX review keyword list, 2026-10-30
+    - "OrcaWave vs AQWA diffraction comparison"
+    - "drilling riser operability envelope API RP 16Q"
+    - "OpenFOAM sloshing tank batch runs"
+    - "ANSYS APDL batch automation with Python"
+    - "agentic workflow for offshore engineering analysis"
 
 # Competitor domains to monitor
 competitors:

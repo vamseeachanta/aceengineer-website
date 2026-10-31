@@ -27,6 +27,11 @@
         "testMatch": ["<rootDir>/tests/js/diffraction-provenance.test.js"]
       },
       {
+        "displayName": "petacax-additions",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/petacax-additions.test.js"]
+      },
+      {
         "displayName": "home-page",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/home-page.test.js"]

@@ -110,6 +110,12 @@ function validateSloshingRelease(repoRoot = path.resolve('.')) {
   };
 }
 
+// Optional service-page fields. The partial's <each>/<if> nodes need these present
+// even for services that do not use them, so every caller merges the same defaults.
+function serviceDefaults() {
+  return { problem: '', contents: '', codes: [], pipeline: [], code_link: { href: '', text: '' } };
+}
+
 // Load canonical firm-copy (brand/copy.yaml) — single source of truth (issue #9).
 // Exposed to every page as the `copy` template object, e.g. {{ copy.firm_lede }}.
 // Cached so each build only reads/parses once.
@@ -228,7 +234,7 @@ async function processFile(filePath) {
     const index = Number(locals.serviceIndex);
     locals.service = locals.copy.home.services[index];
     if (!locals.service) throw new Error('Unknown service index');
-    locals.service = { problem: '', contents: '', codes: [], ...locals.service, ...locals.copy.service_details[index] };
+    locals.service = { ...serviceDefaults(), ...locals.service, ...locals.copy.service_details[index] };
   }
 
   // Expose the rendered capability cards (C3) to any page that wants them
@@ -709,4 +715,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { formatLlmsPageLine, PAGE_DESCRIPTION_PATTERNS, renderHtml, processFile, buildCapabilityDetailPages, sourceFileFor, loadSamples, validateSamples, sampleLocals, buildSamplePages, parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeLlmsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, verifyVendoredAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };
+module.exports = { serviceDefaults, formatLlmsPageLine, PAGE_DESCRIPTION_PATTERNS, renderHtml, processFile, buildCapabilityDetailPages, sourceFileFor, loadSamples, validateSamples, sampleLocals, buildSamplePages, parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeLlmsTxt, loadCopy, loadCapabilities, loadHydratedCapabilities, validateSloshingRelease, writeSitemap, builtPages, buildCSS, copyAssets, verifyVendoredAssets, BUNDLE_INPUTS, CSS_NOT_COPIED, PURGE_SAFELIST, PURGE_REQUIRED, PURGE_MIN_REDUCTION, canonicalUrlFor, gitLastModified, gitHistoryAvailable, SITE_ORIGIN, SITEMAP_EXCLUDE };

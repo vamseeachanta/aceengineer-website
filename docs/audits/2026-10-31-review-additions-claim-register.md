@@ -1,13 +1,13 @@
-# Claim register: market-review website additions (N05)
+# Claim register: market-review website additions
 
-Date: 2026-10-31. Scope: the eight additions proposed in the 30 Oct 2026 market review (section 8). This register follows the N05 claim-register fields (page, claim, evidence, verdict, reviewer). Public evidence is pinned to a revision; private records are named by an opaque ID. Website base: `ffeef6a`. Evidence revisions: digitalmodel `63584454b62a`, worldenergydata `2398dd7f7c80`, workspace-hub `5fcee75ddff6`.
+Date: 2026-10-31. Scope: the eight additions proposed in the 30 Oct 2026 market review (section 8). This register follows the claim-register fields (page, claim, evidence, verdict, reviewer). Public evidence is pinned to a revision; private records are named by an opaque ID. Website base: `ffeef6a`. Evidence revisions: digitalmodel `63584454b62a`, worldenergydata `2398dd7f7c80`, workspace-hub `5fcee75ddff6`.
 
 Verdicts: keep (evidence supports the exact wording), qualify (wording narrowed to what the evidence supports), held (not published until the evidence exists). Reviewer for every row: Editor Deckhand. Approver: Vamsee Achanta, before merge.
 
 | ID | Page | Claim (short) | Evidence | Verdict |
 | --- | --- | --- | --- | --- |
 | P01 | `/how-results-are-checked/` | Three kinds of check: analytical value, second solver, standard edition and clause; published examples for the first and third, method only for the second | Sloshing report (`content/reports/sloshing/index.html`); diffraction reports index; digitalmodel `src/digitalmodel/citations/`, `tests/citations/` | keep |
-| P02 | `/how-results-are-checked/` | Analytical first-mode frequency 0.758054 Hz; difference 0.2964 % to 0.3264 % over seven free-decay cases; finest mesh 25,600 cells gives 0.755807 Hz | `content/reports/sloshing/index.html` (same values; asserted by `tests/js/review-additions.test.js`) | keep |
+| P02 | `/how-results-are-checked/` | Analytical first-mode frequency 0.758054 Hz; difference 0.30 % to 0.33 % over seven free-decay cases (report band 0.2964–0.3264 %, rounded to two decimals); finest mesh 25,600 cells gives 0.755807 Hz | `content/reports/sloshing/index.html` (same values; asserted by `tests/js/review-additions.test.js`) | keep |
 | P03 | `/how-results-are-checked/` | OrcaWave and AQWA compared case by case; numerical results under source review | `content/reports/diffraction/index.html` ("results withheld pending source review"); digitalmodel `src/digitalmodel/hydrodynamics/diffraction/` | qualify (method only, no numbers) |
 | P04 | `/how-results-are-checked/` | Modules with citation records store standard, edition and clause; calculation stops when the reference cannot be found | digitalmodel `src/digitalmodel/citations/resolver.py`, `tests/citations/` (7 files); workspace-hub `.claude/rules/calc-citation-contract.md` | qualify ("modules that carry citation records", not all modules) |
 | P05 | `/how-results-are-checked/` | 35 of 196 modules pass their cited checks (catalogue run 2026-10-17) | `assets/data/module-catalogue-summary.json` (already on the About page) | keep |
@@ -25,7 +25,7 @@ Verdicts: keep (evidence supports the exact wording), qualify (wording narrowed 
 | P17 | `/ai-automation/` | Agents plan, prepare inputs, run solvers, draft reports; independent reviewers check plans and results | workspace-hub `docs/standards/engineering-issue-workflow-skill.md`, `scripts/review/` (cited here, not linked from the page); writer charter (private record PR-TW-01) | keep |
 | P18 | `/services/offshore-energy-data.html` | BSEE well, lease, production and well activity filings collected, joined by API well number and lease; drilling and completion days per well | worldenergydata `packages/worldenergydata-bsee/` (`bsee/analysis/well_api12.py`, `production_api12.py`, `war_rig_days.py`, `annual_duration_summary.py`; 349 test files on BSEE paths) | keep |
 | P19 | every service page | Link to "How results are checked" | P01 to P07 | keep |
-| P20 | `/about.html#team` | Five roles named by profession plus Deckhand (Naval architect, Riser engineer, Corrosion, Analyst, Editor), with the approver | Team roster and role-naming rule (private records PR-ROSTER, PR-WP-L1.18); no public record | keep (private record only) |
+| P20 | `/about.html#team` | Five roles named by profession plus Deckhand (Naval architect, Riser engineer, Corrosion, Analyst, Editor), with the approver | Team roster and role-naming rule (private records PR-ROSTER, PR-WP-18); no public record | keep (private record only) |
 | P21 | `/newsletter/` | Series line "Is engineering cooked? ... On the way, we aim to make engineering enjoyable again." and Energy Street description | Approved newsletter series line, wording of 31 Oct 2026 (private record PR-TW-67); `content/newsletter/issue-001-energy-street/` links the full reports | keep |
 | H01 | none | Public rerun prompts ("How to repeat this analysis") | No published study carries one yet | held |
 | H02 | none | "Reproduced" for any study | No fresh-agent rerun record | held |

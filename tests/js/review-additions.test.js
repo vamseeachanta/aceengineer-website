@@ -1,8 +1,9 @@
 // Guards for the eight market-review website additions (checks page, solver
 // automation, reproducible studies, agentic workflows, offshore energy data,
-// public prompts held, team roles, newsletter series). Every visible claim on
-// these surfaces must trace to a public record; these tests pin the records and
-// keep unbacked wording off the pages. Run after `npm run build` (reads dist/).
+// public prompts held, team roles, newsletter series).
+// Every visible claim on these surfaces is in the claim register; these tests
+// pin the public records and keep unbacked wording off the pages.
+// Run after `npm run build` (reads dist/).
 const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
@@ -32,7 +33,7 @@ const TOUCHED = [
   'services/offshore-energy-data.html',
 ];
 
-// Kept off the site by the review (section 10) and the N05 programme.
+// Kept off the site by the review (section 10) and the website claims review.
 const BANNED = [
   /\bverified\b/i, /\bvalidated\b/i, /\bcertified\b/i, /\bproven\b/i, /\breproduced\b/i,
   /execution-verified/i, /computer-use/i, /demonstration data/i, /action trace/i, /training data/i,
@@ -105,15 +106,19 @@ describe('Item 1: how results are checked', () => {
     }
   });
 
-  test('the analytical-check example quotes the published sloshing report numbers exactly', () => {
+  test('the analytical-check example quotes the sloshing report, with the difference band rounded to two decimals', () => {
     const t = text(doc());
     const report = text(load('reports/sloshing/index.html'));
     for (const value of ['0.758054 Hz', '0.755807 Hz']) {
       expect(t).toContain(value);
       expect(report).toContain(value);
     }
-    expect(report).toMatch(/0\.2964–0\.3264\s*%/);
-    expect(t).toMatch(/0\.2964 % to 0\.3264 %/);
+    // The band is read from the report, not restated here; the page shows it to two decimals.
+    const band = report.match(/(\d+\.\d+)–(\d+\.\d+)\s*%/);
+    expect(band).not.toBeNull();
+    const [lo, hi] = [band[1], band[2]].map(v => Number(v).toFixed(2));
+    expect(t).toContain(`differs from the analytical value by ${lo} % to ${hi} %`);
+    expect(t).not.toMatch(/analytical value by \d+\.\d{3,}/);
     expect(doc().querySelector('a[href$="reports/sloshing/"]')).not.toBeNull();
   });
 
@@ -295,7 +300,7 @@ describe('Item 7: the team section on About', () => {
     const t = section.textContent.replace(/\s+/g, ' ');
     expect(t).not.toMatch(/\(agent\)|Checker/);
     expect(t).toMatch(/Vamsee Achanta, Principal Engineer, approves each deliverable\./);
-    // TW-81 as ruled: no licence wording and no AI wording in the body copy.
+    // Owner ruling, 30 Oct: no licence wording and no AI wording in the body copy.
     expect(t).not.toMatch(/P\.E\.|licensed|specialist agents|\bagents?\b|\bAI\b/);
   });
 });

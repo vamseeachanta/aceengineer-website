@@ -15,6 +15,8 @@ const text = html => html.replace(/<\/?em>/g, '').replace(/<[^>]*>/g, ' ')
   .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
   .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
 const bodyFor = html => html.match(/<article id="why-the-model-you-use-matters">([\s\S]*?)<\/article>/)[1];
+const directionLeadIn = '<p>In my view, a newer model may also take on more engineering itself, as more mathematics and physics are trained into it. Engineering that once had to be written out for a model then becomes something it knows unaided. In my experience, our code once had to spell out the catenary equation for a hanging line. A frontier model now knows that equation without being given it. The illustration shows this direction in three stages. Where the engineer keeps the check, the work is checked against a known answer at every stage and then signed. A problem set with known answers, described below, is that check.</p>';
+const directionCaption = 'How the next model may take in engineering: an illustration of a direction, not measured data. Stages are in order only. The catenary example is the author\'s experience. Hover a stage or the example for detail.';
 
 function assertMetadata(html, built) {
   assert.ok(html.includes(`<title>${title}</title>`));
@@ -51,7 +53,7 @@ for (const prefix of ['content', 'dist']) {
 
   test(`${prefix}: model topic preserves approved text, table and lists`, () => {
     const body = bodyFor(read(`${prefix}/${article}`));
-    const prose = body.replace(/<figure>[\s\S]*?<\/figure>/, '');
+    const prose = body.replace(/<figure>[\s\S]*?<\/figure>/g, '').replace(directionLeadIn, '');
     assert.equal(digest(text(prose)), '914ee57033979165ab9cfe98a0419cc5d6935e6062c91295b051a4542288cb24');
     assert.equal((body.match(/<h1>/g) || []).length, 1);
     assert.equal((body.match(/<h2>/g) || []).length, 9);
@@ -90,6 +92,34 @@ for (const prefix of ['content', 'dist']) {
     assert.match(body, /The schematic shows the idea; it is not a measurement\.<\/p>\s*<figure>/);
     assert.equal((body.match(/id="a2-step-title"/g) || []).length, 1);
     assert.equal((body.match(/id="a2-step-desc"/g) || []).length, 1);
+  });
+
+  test(`${prefix}: model topic carries the direction illustration after its lead-in`, () => {
+    const body = bodyFor(read(`${prefix}/${article}`));
+    assert.equal((body.match(/<figure>/g) || []).length, 2);
+    const svg = [...body.matchAll(/<svg\b[\s\S]*?<\/svg>/g)][1][0];
+    if (prefix === 'content') {
+      assert.equal(digest(svg), '4c9f204e959ecf647ab97ea2164d0fc71ddfacc9bbf4a99602e06064d8bb82fc');
+    } else {
+      const { JSDOM } = require('jsdom');
+      const sourceSvg = [...bodyFor(read(`content/${article}`)).matchAll(/<svg\b[\s\S]*?<\/svg>/g)][1][0];
+      const parsed = value => new JSDOM(value).window.document.querySelector('svg').outerHTML;
+      assert.equal(parsed(svg), parsed(sourceSvg));
+    }
+    assert.match(svg, /role="img" aria-labelledby="a2-model-title a2-model-desc"/);
+    assert.match(svg, />Illustration of a direction, not measured data<\/text>/);
+    assert.match(svg, />Where the engineer keeps the check, at every stage: checks against a known answer, and signs<\/text>/);
+    assert.match(svg, />Each new model generation may take in more mathematics and physics through further training<\/text>/);
+    assert.match(svg, />Example: the catenary equation \(hanging line\)<\/text>/);
+    assert.doesNotMatch(text(svg), /\d+(\.\d+)? ?%/);
+    assert.ok(body.includes(`<figcaption>${directionCaption}</figcaption>`));
+    const leadIn = body.indexOf(directionLeadIn);
+    assert.ok(leadIn > body.indexOf('<h2>A share of your problems, area by area</h2>'));
+    assert.ok(leadIn < body.indexOf('<h2>A worked example: a confident shortcut</h2>'));
+    assert.match(body.slice(leadIn), /^<p>[\s\S]*?<\/p>\s*<figure>\s*<svg\b[^>]*aria-labelledby="a2-model-title/);
+    for (const id of ['a2-model-title', 'a2-model-desc', 'a2-mx-head']) {
+      assert.equal((body.match(new RegExp(`id="${id}"`, 'g')) || []).length, 1);
+    }
   });
 
   test(`${prefix}: model topic links resolve to the relative about and contact pages`, () => {

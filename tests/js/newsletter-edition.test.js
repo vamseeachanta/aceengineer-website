@@ -166,13 +166,18 @@ test('discovery replaces the superseded route in navigation, archive, RSS and in
   }
   for (const prefix of ['content', 'dist']) {
     const feed = new JSDOM(read(prefix + '/newsletter/feed.xml'), { contentType: 'text/xml' }).window.document;
-    expect(feed.querySelectorAll('item')).toHaveLength(1);
-    expect(feed.querySelector('item description').textContent).toBe('Deckhand: Make Engineering Enjoyable Again');
-    expect(feed.querySelector('item title').textContent).toBe(expectedTitle);
-    expect(feed.querySelector('item pubDate').textContent).toBe('Tue, 27 Oct 2026 00:00:00 GMT');
-    expect(feed.querySelector('item link').textContent).toBe('https://www.aceengineer.com' + route);
-    expect(feed.querySelector('item guid').textContent).toBe('https://www.aceengineer.com' + route);
-    const archive = documentFor(prefix + '/newsletter/index.html').querySelector('article');
+    const items = [...feed.querySelectorAll('item')];
+    expect(items).toHaveLength(5);
+    const item = items.find(entry => entry.querySelector('link').textContent === 'https://www.aceengineer.com' + route);
+    expect(item).toBeDefined();
+    expect(item.querySelector('description').textContent).toBe('Deckhand: Make Engineering Enjoyable Again');
+    expect(item.querySelector('title').textContent).toBe(expectedTitle);
+    expect(item.querySelector('pubDate').textContent).toBe('Tue, 27 Oct 2026 00:00:00 GMT');
+    expect(item.querySelector('link').textContent).toBe('https://www.aceengineer.com' + route);
+    expect(item.querySelector('guid').textContent).toBe('https://www.aceengineer.com' + route);
+    const archive = [...documentFor(prefix + '/newsletter/index.html').querySelectorAll('article')]
+      .find(entry => new URL(entry.querySelector('a').getAttribute('href'), 'https://www.aceengineer.com/newsletter/').pathname === route);
+    expect(archive).toBeDefined();
     expect(archive.querySelector('a').textContent).toBe(expectedTitle);
     expect(new URL(archive.querySelector('a').getAttribute('href'), 'https://www.aceengineer.com/newsletter/').href)
       .toBe('https://www.aceengineer.com' + route);

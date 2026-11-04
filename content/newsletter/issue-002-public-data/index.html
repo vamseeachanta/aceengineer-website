@@ -1,0 +1,842 @@
+---
+rootPath: "../../"
+---
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gulf of Mexico well permits by rig type: a public US data file (Deckhand newsletter, issue 2)</title>
+<meta name="description" content="Counts from a raw data file of the US Bureau of Safety and Environmental Enforcement (BSEE): new-well permits in the US Gulf of Mexico by rig type, 2005 to 2026, with water depths.">
+<meta property="og:title" content="Gulf of Mexico well permits by rig type: a public US data file (Deckhand newsletter, issue 2)">
+<meta property="og:description" content="Counts from a raw data file of the US Bureau of Safety and Environmental Enforcement (BSEE): new-well permits in the US Gulf of Mexico by rig type, 2005 to 2026, with water depths.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ canonicalUrl }}">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gulf of Mexico well permits by rig type: a public US data file (Deckhand newsletter, issue 2)">
+<meta name="twitter:description" content="Counts from a raw data file of the US Bureau of Safety and Environmental Enforcement (BSEE): new-well permits in the US Gulf of Mexico by rig type, 2005 to 2026, with water depths.">
+<meta name="twitter:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Gulf of Mexico well permits by rig type: a public US data file (Deckhand newsletter, issue 2)", "name": "Gulf of Mexico well permits by rig type: a public US data file (Deckhand newsletter, issue 2)", "description": "Counts from a raw data file of the US Bureau of Safety and Environmental Enforcement (BSEE): new-well permits in the US Gulf of Mexico by rig type, 2005 to 2026, with water depths.", "datePublished": "2026-11-04", "url": "https://www.aceengineer.com/newsletter/issue-002-public-data/", "inLanguage": "en-US", "publisher": {"@id": "https://www.aceengineer.com/#organization"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.aceengineer.com/"}, {"@type": "ListItem", "position": 2, "name": "Newsletter", "item": "https://www.aceengineer.com/newsletter/"}, {"@type": "ListItem", "position": 3, "name": "Gulf of Mexico well permits by rig type: a public US data file (Deckhand newsletter, issue 2)", "item": "https://www.aceengineer.com/newsletter/issue-002-public-data/"}]}]</script>
+<include src="partials/head-common.html"></include>
+<style>
+/* AceEngineer house style 1.6 */
+
+/* 1. Tokens ---------------------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  /* brand palette: no other brand colours, no gradients */
+  --ace-mark-navy: #0B3D91;   /* the wordmark "Ace" only */
+  --ace-navy: #0b3d5c;        /* structure navy: headings, rules, outlines, dark grounds */
+  --ace-teal: #2BB2A6;        /* rules, square bullets, edges; never text */
+  --ace-teal-deep: #0e7e88;   /* kickers and small headings on white; never on tint */
+  --ace-teal-ink: #0d7680;    /* teal-deep 6 % darker: small teal type that sits on the tint ground too (4.83:1 on tint, 5.36:1 on white) */
+  --ace-teal-lift: #3FC4B8;   /* text and rules on navy */
+  --ace-ink: #26323a;         /* body text */
+  --ace-muted: #5a6b76;       /* notes, captions, bylines */
+  --ace-tint: #eef4f8;        /* boxes, table header ground, page ground */
+  --ace-hairline: #d0d7de;    /* thin dividers */
+  --ace-underline: #b8c9d4;   /* link underline, input outline */
+  --ace-paper: #ffffff;
+
+  /* typefaces: system stacks, nothing is downloaded */
+  --hs-font-ui: "Segoe UI", Helvetica, Arial, sans-serif;                    /* headings, labels, tables, controls */
+  --hs-font-body: Georgia, "Times New Roman", serif;                         /* running text: the newspaper voice */
+  --hs-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;  /* paths, code, identifiers */
+
+  /* type scale */
+  --hs-fs-xs: 11.5px;
+  --hs-fs-sm: 13px;
+  --hs-fs-md: 14.5px;
+  --hs-fs-body: 16px;
+  --hs-fs-lg: 18px;
+  --hs-fs-h3: 17px;
+  --hs-fs-h2: clamp(20px, 1.1vw + 14px, 24px);
+  --hs-fs-h1: clamp(24px, 1.8vw + 16px, 34px);
+  --hs-lh: 1.55;
+  --hs-lh-tight: 1.2;
+  --hs-track-kicker: .18em;
+
+  /* spacing in 4 px steps; page side margin 28 px, 16 px on phones */
+  --hs-s1: 4px; --hs-s2: 8px; --hs-s3: 12px; --hs-s4: 16px; --hs-s5: 24px; --hs-s6: 32px; --hs-s7: 48px;
+  --hs-gutter: 28px;
+  --hs-gap: 20px;
+  --hs-max: 1240px;
+
+  /* shape: square corners as in the newsletter; 2 px only on small controls */
+  --hs-radius: 0;
+  --hs-radius-sm: 2px;
+  --hs-rule: 3px;            /* teal accent rule: top of a page, top of a box */
+  --hs-rule-section: 1.5px;  /* navy section rule */
+  --hs-sq: 6px;              /* square bullet */
+
+  /* depth: kept faint; the brand separates with rules, not shadows */
+  --hs-shadow-1: 0 1px 2px rgba(11, 61, 92, .08);
+  --hs-shadow-2: 0 6px 18px rgba(11, 61, 92, .14);
+
+  /* roles: components read only these, so dark mode swaps them in one place */
+  --hs-bg: var(--ace-tint);
+  --hs-surface: var(--ace-paper);
+  --hs-surface-2: var(--ace-tint);
+  --hs-text: var(--ace-ink);
+  --hs-text-muted: var(--ace-muted);
+  --hs-heading: var(--ace-navy);
+  --hs-kicker: var(--ace-teal-ink);
+  --hs-link: var(--ace-navy);
+  --hs-link-line: var(--ace-underline);
+  --hs-line: var(--ace-hairline);
+  --hs-line-mid: var(--ace-underline);
+  --hs-line-strong: var(--ace-navy);
+  --hs-accent: var(--ace-teal);
+  --hs-rule-alt: var(--ace-navy);
+  --hs-primary: var(--ace-navy);
+  --hs-on-primary: #ffffff;
+  --hs-select: var(--ace-tint);
+  --hs-code-bg: var(--ace-paper);
+  --hs-band: var(--ace-navy);
+  --hs-on-band: #ffffff;
+  --hs-band-accent: var(--ace-teal-lift);
+  --hs-focus: var(--ace-teal-deep);
+
+  /* chart series: two at most (validated: CVD and normal-vision separation pass in both modes; teal on white is
+     below 3:1, so every bar carries its value or the chart has a table view) */
+  --hs-chart-1: var(--ace-teal);
+  --hs-chart-2: var(--ace-navy);
+
+  /* status colours: for flags, checks and meters only; they are not brand colours (brand sheet section 4) */
+  --hs-ok: #1a6b34;   --hs-ok-bg: #e6f3ea;   --hs-ok-line: #2e8b57;
+  --hs-warn: #8a5300; --hs-warn-bg: #fff3dc; --hs-warn-line: #d99a2b;
+  --hs-crit: #b42318; --hs-crit-bg: #fdecea; --hs-crit-line: #d03b3b;
+}
+
+/* Dark: the newsletter's "on navy" treatment (navy grounds, white text, teal-lift accents and rules).
+   A page can force a theme with <html data-theme="light"> or <html data-theme="dark">. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --hs-bg: #061a28;
+    --hs-surface: #0b2638;
+    --hs-surface-2: #10324a;
+    --hs-text: #e4edf2;
+    --hs-text-muted: #9db2c0;
+    --hs-heading: #ffffff;
+    --hs-kicker: var(--ace-teal-lift);
+    --hs-link: #e4edf2;
+    --hs-link-line: var(--ace-teal-lift);
+    --hs-line: #21475f;
+    --hs-line-mid: #33607a;
+    --hs-line-strong: #4f7f99;
+    --hs-accent: var(--ace-teal-lift);
+    --hs-rule-alt: #9db2c0;
+    --hs-primary: var(--ace-teal-lift);
+    --hs-on-primary: #062233;
+    --hs-select: #123a52;
+    --hs-code-bg: #081f2f;
+    --hs-band: #04131e;
+    --hs-on-band: #e4edf2;
+    --hs-band-accent: var(--ace-teal-lift);
+    --hs-focus: var(--ace-teal-lift);
+    --hs-chart-1: var(--ace-teal-lift);
+    --hs-chart-2: #4f7f99;
+    --hs-shadow-1: 0 1px 2px rgba(0, 0, 0, .35);
+    --hs-shadow-2: 0 6px 18px rgba(0, 0, 0, .45);
+    --hs-ok: #7fd6a0;   --hs-ok-bg: #11301e;   --hs-ok-line: #3fae6a;
+    --hs-warn: #f2c46d; --hs-warn-bg: #33270f; --hs-warn-line: #c98f2a;
+    --hs-crit: #ff9d92; --hs-crit-bg: #3b1714; --hs-crit-line: #e5675c;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --hs-bg: #061a28;
+  --hs-surface: #0b2638;
+  --hs-surface-2: #10324a;
+  --hs-text: #e4edf2;
+  --hs-text-muted: #9db2c0;
+  --hs-heading: #ffffff;
+  --hs-kicker: var(--ace-teal-lift);
+  --hs-link: #e4edf2;
+  --hs-link-line: var(--ace-teal-lift);
+  --hs-line: #21475f;
+  --hs-line-mid: #33607a;
+  --hs-line-strong: #4f7f99;
+  --hs-accent: var(--ace-teal-lift);
+  --hs-rule-alt: #9db2c0;
+  --hs-primary: var(--ace-teal-lift);
+  --hs-on-primary: #062233;
+  --hs-select: #123a52;
+  --hs-code-bg: #081f2f;
+  --hs-band: #04131e;
+  --hs-on-band: #e4edf2;
+  --hs-band-accent: var(--ace-teal-lift);
+  --hs-focus: var(--ace-teal-lift);
+  --hs-chart-1: var(--ace-teal-lift);
+  --hs-chart-2: #4f7f99;
+  --hs-shadow-1: 0 1px 2px rgba(0, 0, 0, .35);
+  --hs-shadow-2: 0 6px 18px rgba(0, 0, 0, .45);
+  --hs-ok: #7fd6a0;   --hs-ok-bg: #11301e;   --hs-ok-line: #3fae6a;
+  --hs-warn: #f2c46d; --hs-warn-bg: #33270f; --hs-warn-line: #c98f2a;
+  --hs-crit: #ff9d92; --hs-crit-bg: #3b1714; --hs-crit-line: #e5675c;
+}
+
+/* 2. Base ------------------------------------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--hs-bg);
+  color: var(--hs-text);
+  font: 400 var(--hs-fs-body)/var(--hs-lh) var(--hs-font-body);
+  font-kerning: normal;
+  font-variant-numeric: lining-nums;   /* Georgia's default figures are old-style: 'P0' read as 'Po', '13:00Z' as '13:ooZ'.
+                                       A 'font:' shorthand resets this: set it again after any serif shorthand. */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+h1, h2, h3, h4 {
+  font-family: var(--hs-font-ui);
+  font-weight: 600;
+  line-height: var(--hs-lh-tight);
+  letter-spacing: -.01em;
+  color: var(--hs-heading);
+  margin: 0 0 var(--hs-s2);
+  text-wrap: balance;
+}
+h1 { font-size: var(--hs-fs-h1); }
+h2 { font-size: var(--hs-fs-h2); }
+h3 { font-size: var(--hs-fs-h3); }
+h4 { font-size: var(--hs-fs-body); }
+p { margin: 0 0 var(--hs-s3); }
+p, li { text-wrap: pretty; }     /* no single short word stranded on a last line (added 2026-10-18) */
+a {
+  color: var(--hs-link);
+  text-decoration: underline;
+  text-decoration-color: var(--hs-link-line);
+  text-underline-offset: 2px;
+}
+a:hover { text-decoration-color: currentColor; }
+code, kbd, pre, samp { font-family: var(--hs-font-mono); font-size: .9em; }
+hr { border: 0; border-top: 1px solid var(--hs-line); margin: var(--hs-s5) 0; }
+img, video { max-width: 100%; height: auto; }
+button, input, select, textarea { font: inherit; color: inherit; }
+input[type="radio"], input[type="checkbox"] { accent-color: var(--hs-primary); }
+:focus-visible { outline: 2px solid var(--hs-focus); outline-offset: 2px; }
+::selection { background: rgba(43, 178, 166, .3); }
+
+/* 3. Layout: container, grid, 12 columns ---------------------------------------------------------- */
+.hs-container {
+  width: 100%;
+  max-width: calc(var(--hs-max) + 2 * var(--hs-gutter));
+  margin-inline: auto;
+  padding-inline: var(--hs-gutter);
+}
+.hs-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--hs-gap); align-items: start; }
+.hs-grid > * { min-width: 0; }
+.hs-grid-auto { grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+@media (min-width: 900px) {
+  .hs-grid-2, .hs-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1200px) {
+  .hs-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.hs-row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--hs-gap); }
+.hs-row > * { grid-column: 1 / -1; min-width: 0; }      /* phones: every column is full width */
+@media (min-width: 768px) {
+  .hs-col-2 { grid-column: span 2; }  .hs-col-3 { grid-column: span 3; }  .hs-col-4 { grid-column: span 4; }
+  .hs-col-5 { grid-column: span 5; }  .hs-col-6 { grid-column: span 6; }  .hs-col-7 { grid-column: span 7; }
+  .hs-col-8 { grid-column: span 8; }  .hs-col-9 { grid-column: span 9; }  .hs-col-12 { grid-column: span 12; }
+}
+.hs-stack > * + * { margin-top: var(--hs-s3); }
+.hs-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--hs-s2); }
+.hs-spread { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--hs-s2) var(--hs-s4); }
+
+/* 4. Type helpers ---------------------------------------------------------------------------------- */
+.hs-kicker {
+  font: 700 var(--hs-fs-xs)/1.3 var(--hs-font-ui);
+  letter-spacing: var(--hs-track-kicker);
+  text-transform: uppercase;
+  color: var(--hs-kicker);
+  margin: 0 0 var(--hs-s1);
+}
+.hs-masthead {                       /* newsletter masthead and lead headline: Georgia bold, navy */
+  font: 700 var(--hs-fs-h1)/1.08 var(--hs-font-body);
+  font-variant-numeric: lining-nums;
+  letter-spacing: -.015em;
+  color: var(--hs-heading);
+  margin: 0;
+}
+.hs-masthead .hi { color: var(--hs-kicker); }
+.hs-deck { font: italic var(--hs-fs-lg)/1.45 var(--hs-font-body); font-variant-numeric: lining-nums; color: var(--hs-text); }
+.hs-muted { color: var(--hs-text-muted); }
+.hs-small { font: var(--hs-fs-sm)/1.45 var(--hs-font-ui); color: var(--hs-text-muted); }
+.hs-ui { font-family: var(--hs-font-ui); }
+.hs-num { font-family: var(--hs-font-ui); font-variant-numeric: tabular-nums lining-nums; }
+.hs-mono { font-family: var(--hs-font-mono); font-size: .9em; }
+
+/* 5. Sections: navy section rule, square navy step number, small-capital sub-heading -------------- */
+.hs-section {
+  margin-top: var(--hs-s6);
+  padding-top: var(--hs-s4);
+  border-top: var(--hs-rule-section) solid var(--hs-line-strong);
+}
+.hs-section-head { display: flex; align-items: flex-start; gap: var(--hs-s3); margin: 0 0 var(--hs-s3); }
+.hs-section-head h2 { margin: 0; }
+.hs-section-head .hs-kicker { margin-bottom: 2px; }
+.hs-step {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  background: var(--hs-primary);
+  color: var(--hs-on-primary);
+  font: 700 13px/1 var(--hs-font-ui);
+  border-radius: var(--hs-radius);
+}
+.hs-subhead {
+  display: flex;
+  align-items: center;
+  gap: var(--hs-s3);
+  margin: var(--hs-s5) 0 var(--hs-s3);
+  font: 700 var(--hs-fs-xs)/1.3 var(--hs-font-ui);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hs-heading);
+}
+.hs-subhead::after { content: ""; flex: 1 1 auto; border-top: 1px solid var(--hs-line); }
+
+/* 6. Cards: white box, hairline outline, 3 px teal top rule ---------------------------------------- */
+.hs-card {
+  min-width: 0;
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line);
+  border-top: var(--hs-rule) solid var(--hs-accent);
+  border-radius: var(--hs-radius);
+  box-shadow: var(--hs-shadow-1);
+  padding: var(--hs-s4);
+  overflow-wrap: break-word;
+}
+.hs-card-outline { border-color: var(--hs-line-strong); border-top-color: var(--hs-accent); }  /* newsletter box */
+.hs-card-plain { border-top-width: 1px; border-top-color: var(--hs-line); }
+.hs-card-title { font: 600 var(--hs-fs-h3)/1.3 var(--hs-font-ui); color: var(--hs-heading); margin: 0 0 var(--hs-s2); }
+.hs-card-meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--hs-s1) var(--hs-s2);
+  margin: 0 0 var(--hs-s2);
+  font: var(--hs-fs-sm)/1.4 var(--hs-font-ui);
+  color: var(--hs-text-muted);
+}
+
+/* 7. Badges, chips and tags ------------------------------------------------------------------------ */
+.hs-badge {
+  display: inline-block;
+  padding: 0 7px;
+  font: 700 var(--hs-fs-xs)/1.6 var(--hs-font-ui);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hs-on-primary);
+  background: var(--hs-primary);
+  border: 1px solid var(--hs-primary);
+  border-radius: var(--hs-radius-sm);
+}
+.hs-badge-outline { color: var(--hs-heading); background: transparent; border-color: var(--hs-line-strong); }
+.hs-chip {
+  display: inline-block;
+  padding: 0 8px;
+  font: 400 var(--hs-fs-sm)/1.55 var(--hs-font-ui);
+  white-space: nowrap;
+  color: var(--hs-text-muted);
+  background: var(--hs-surface-2);
+  border: 1px solid var(--hs-line);
+  border-radius: var(--hs-radius-sm);
+}
+.hs-chip-ok   { color: var(--hs-ok);   background: var(--hs-ok-bg);   border-color: transparent; font-weight: 600; }
+.hs-chip-warn { color: var(--hs-warn); background: var(--hs-warn-bg); border-color: transparent; font-weight: 600; }
+.hs-chip-crit { color: var(--hs-crit); background: var(--hs-crit-bg); border-color: transparent; font-weight: 600; }
+.hs-tag {                            /* the newsletter's "You choose" tag: kicker type, square teal-deep outline */
+  display: inline-block;
+  padding: 0 5px;
+  font: 600 var(--hs-fs-xs)/1.5 var(--hs-font-ui);
+  font-style: normal;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hs-kicker);
+  background: var(--hs-surface);
+  border: 1px solid currentColor;
+  border-radius: 0;
+}
+
+/* 8. Buttons --------------------------------------------------------------------------------------- */
+.hs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 14px;
+  font: 600 var(--hs-fs-md)/1.2 var(--hs-font-ui);
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--hs-heading);
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line-strong);
+  border-radius: var(--hs-radius-sm);
+  cursor: pointer;
+}
+.hs-btn:hover { background: var(--hs-surface-2); }
+.hs-btn-primary { color: var(--hs-on-primary); background: var(--hs-primary); border-color: var(--hs-primary); }
+.hs-btn-primary:hover { background: var(--hs-primary); filter: brightness(1.15); }
+.hs-btn-sm { min-height: 28px; padding: 2px 10px; font-size: var(--hs-fs-sm); }
+.hs-btn-quiet { color: var(--hs-text-muted); border-color: var(--hs-line-mid); font-weight: 400; }
+/* Phones: buttons and answer rows at least 44 px tall, the usual minimum touch target (added 2026-10-17). */
+@media (max-width: 600px) {
+  .hs-btn, .hs-btn-sm { min-height: 44px; }
+  .hs-option { min-height: 44px; padding: 10px 12px; }
+  details.hs-disclosure > summary { min-height: 44px; }   /* fold toggles were 18 px tall on phones */
+}
+
+/* 9. Tables: horizontal rules only (brand sheet section 7) ------------------------------------------ */
+.hs-table-wrap { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.hs-table, .hs-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font: var(--hs-fs-sm)/1.45 var(--hs-font-ui);
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--hs-text);
+  border-top: 1.5px solid var(--hs-line-strong);
+  border-bottom: 1px solid var(--hs-line-strong);
+}
+.hs-table caption, .hs-prose table caption {
+  caption-side: top; text-align: left; padding: 0 0 6px;
+  font: var(--hs-fs-sm)/1.4 var(--hs-font-ui); color: var(--hs-text-muted);
+}
+.hs-table thead th, .hs-prose table thead th {
+  padding: 7px 10px;
+  text-align: left;
+  white-space: nowrap;
+  font-weight: 600;
+  color: var(--hs-heading);
+  background: var(--hs-surface-2);
+  border-bottom: 1px solid var(--hs-line-strong);
+}
+.hs-table td, .hs-table tbody th, .hs-prose table td, .hs-prose table tbody th {
+  padding: 7px 10px; text-align: left; vertical-align: top; border-top: 1px solid var(--hs-line);
+}
+.hs-table .num, .hs-prose table .num { text-align: right; }
+
+/* 10. Callouts: tint box with a 4 px teal left edge -------------------------------------------------- */
+.hs-callout {
+  padding: var(--hs-s3) var(--hs-s4);
+  color: var(--hs-text);
+  background: var(--hs-surface-2);
+  border-left: 4px solid var(--hs-accent);
+  border-radius: var(--hs-radius);
+}
+.hs-callout > :last-child { margin-bottom: 0; }
+.hs-callout-title {
+  margin: 0 0 var(--hs-s1);
+  font: 700 var(--hs-fs-xs)/1.3 var(--hs-font-ui);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hs-heading);           /* navy, never teal-deep, on a tint ground */
+}
+.hs-callout-ok   { background: var(--hs-ok-bg);   border-left-color: var(--hs-ok-line); }
+.hs-callout-warn { background: var(--hs-warn-bg); border-left-color: var(--hs-warn-line); }
+.hs-callout-crit { background: var(--hs-crit-bg); border-left-color: var(--hs-crit-line); }
+
+/* 11. Collapsible sections: a panel, and a small inline disclosure; + and minus as in the newsletter -- */
+details.hs-panel {
+  min-width: 0;
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line);
+  border-top: var(--hs-rule) solid var(--hs-accent);
+  border-radius: var(--hs-radius);
+  box-shadow: var(--hs-shadow-1);
+}
+details.hs-panel > summary {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--hs-s3);
+  padding: var(--hs-s3) var(--hs-s4);
+  list-style: none;
+  cursor: pointer;
+  font: 600 var(--hs-fs-lg)/1.3 var(--hs-font-ui);
+  color: var(--hs-heading);
+}
+details.hs-panel > summary::-webkit-details-marker { display: none; }
+details.hs-panel > summary::after {
+  content: "+";
+  margin-left: auto;
+  padding-left: var(--hs-s3);
+  font: 700 22px/1 var(--hs-font-ui);
+  color: var(--hs-kicker);
+}
+details.hs-panel[open] > summary { border-bottom: 1px solid var(--hs-line); }
+details.hs-panel[open] > summary::after { content: "\2212"; }
+.hs-panel-body { padding: var(--hs-s4); }
+details.hs-disclosure > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  cursor: pointer;
+  font: 600 var(--hs-fs-sm)/1.4 var(--hs-font-ui);
+  color: var(--hs-link);
+}
+details.hs-disclosure > summary::-webkit-details-marker { display: none; }
+details.hs-disclosure > summary::before {
+  content: "+";
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  font: 700 12px/1 var(--hs-font-ui);
+  color: var(--hs-heading);
+  border: 1px solid var(--hs-line-strong);
+}
+details.hs-disclosure[open] > summary::before { content: "\2212"; }
+
+/* 12. Lists: square teal bullets, never round ------------------------------------------------------- */
+.hs-list-square { list-style: none; margin: 0 0 var(--hs-s3); padding: 0; }
+.hs-list-square > li { position: relative; margin: 0 0 var(--hs-s1); padding-left: 16px; }
+.hs-list-square > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .6em;
+  width: var(--hs-sq);
+  height: var(--hs-sq);
+  background: var(--hs-accent);
+}
+
+/* 13. Forms: fields and option rows ---------------------------------------------------------------- */
+.hs-field {
+  width: 100%;
+  min-width: 0;
+  padding: 7px 9px;
+  font: var(--hs-fs-md)/1.4 var(--hs-font-ui);
+  color: var(--hs-text);
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line-mid);
+  border-radius: var(--hs-radius-sm);
+}
+.hs-field::placeholder { color: var(--hs-text-muted); }
+.hs-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  font: var(--hs-fs-md)/1.4 var(--hs-font-ui);
+  color: var(--hs-text);
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line);
+  border-radius: var(--hs-radius-sm);
+  cursor: pointer;
+}
+.hs-option:hover { border-color: var(--hs-line-mid); }
+.hs-option:has(input:checked) {
+  background: var(--hs-select);
+  border-color: var(--hs-line-strong);
+  box-shadow: inset 4px 0 0 var(--hs-accent);
+}
+
+/* 14. Bars, bands and notices ---------------------------------------------------------------------- */
+.hs-topbar {                         /* sticky page header: teal rule on top, as every newsletter page */
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--hs-surface);
+  border-top: var(--hs-rule) solid var(--hs-accent);
+  border-bottom: 1px solid var(--hs-line);
+  box-shadow: var(--hs-shadow-1);
+}
+.hs-footer {                         /* navy band, white text, teal-lift headings */
+  margin-top: var(--hs-s7);
+  padding: var(--hs-s5) 0 var(--hs-s6);
+  font: var(--hs-fs-sm)/1.55 var(--hs-font-ui);
+  color: var(--hs-on-band);
+  background: var(--hs-band);
+  border-top: var(--hs-rule) solid var(--hs-band-accent);
+}
+.hs-footer a { color: var(--hs-on-band); text-decoration-color: var(--hs-band-accent); }
+.hs-footer .hs-kicker { color: var(--hs-band-accent); }
+.hs-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  z-index: 50;
+  transform: translateX(-50%);
+  max-width: min(92vw, 640px);
+  padding: 10px 16px;
+  font: 600 var(--hs-fs-md)/1.4 var(--hs-font-ui);
+  color: var(--hs-on-band);
+  background: var(--hs-band);
+  border-top: var(--hs-rule) solid var(--hs-band-accent);
+  box-shadow: var(--hs-shadow-2);
+}
+
+/* 15. Prose: plain HTML from Markdown (guides, notes) takes the style inside .hs-prose ------------- */
+.hs-prose { max-width: 780px; }
+.hs-prose p, .hs-prose li { line-height: 1.58; }
+.hs-prose h2 {
+  margin-top: var(--hs-s6);
+  padding-top: var(--hs-s3);
+  border-top: var(--hs-rule-section) solid var(--hs-line-strong);
+}
+.hs-prose h3 { margin-top: var(--hs-s5); }
+.hs-prose ul { list-style: none; padding-left: 0; }
+.hs-prose ul > li { position: relative; padding-left: 16px; margin-bottom: var(--hs-s1); }
+.hs-prose ul > li::before {
+  content: ""; position: absolute; left: 0; top: .62em;
+  width: var(--hs-sq); height: var(--hs-sq); background: var(--hs-accent);
+}
+.hs-prose ol { padding-left: 1.5em; }
+.hs-prose ol > li::marker { font: 700 var(--hs-fs-sm) var(--hs-font-ui); color: var(--hs-heading); }
+.hs-prose blockquote {
+  margin: var(--hs-s4) 0; padding: var(--hs-s3) var(--hs-s4);
+  background: var(--hs-surface-2); border-left: 4px solid var(--hs-accent);
+}
+.hs-prose code { padding: 1px 4px; background: var(--hs-surface-2); border: 1px solid var(--hs-line); }
+.hs-prose pre { padding: var(--hs-s3); overflow-x: auto; background: var(--hs-code-bg); border: 1px solid var(--hs-line); }
+.hs-prose pre code { padding: 0; border: 0; background: none; }
+
+/* 16. Charts: inline SVG, one axis, at most two series; keys are squares ------------------------------ */
+svg.hs-chart { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--hs-font-ui); }
+.hs-ch-axis { stroke: var(--hs-line-mid); stroke-width: 1; }
+.hs-ch-grid { stroke: var(--hs-line); stroke-width: 1; }
+.hs-ch-s1 { fill: var(--hs-chart-1); }
+.hs-ch-s2 { fill: var(--hs-chart-2); }
+.hs-ch-value { font-size: 12px; font-weight: 600; fill: var(--hs-text); }
+.hs-ch-label { font-size: 11px; font-weight: 600; fill: var(--hs-text); }
+.hs-ch-note { font-size: 11px; fill: var(--hs-text-muted); }
+.hs-ch-hit { fill: transparent; }
+.hs-ch-col:hover .hs-ch-bar, .hs-ch-col:focus .hs-ch-bar { fill-opacity: .8; }
+.hs-ch-col:focus { outline: none; }
+.hs-ch-col:focus .hs-ch-hit { stroke: var(--hs-focus); stroke-width: 1.5; }
+.hs-key { display: inline-block; width: 9px; height: 9px; margin-right: 6px; background: var(--hs-line-mid); }
+.hs-key-1 { background: var(--hs-chart-1); }
+.hs-key-2 { background: var(--hs-chart-2); }
+
+/* 17. Phones and print ----------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  :root { --hs-gutter: 16px; --hs-gap: 14px; }
+  .hs-card { padding: var(--hs-s3); }
+  .hs-panel-body { padding: var(--hs-s3); }
+  details.hs-panel > summary { padding: var(--hs-s3); font-size: var(--hs-fs-body); }
+}
+@media print {
+  .hs-topbar { position: static; box-shadow: none; }
+  .hs-card, details.hs-panel { box-shadow: none; break-inside: avoid; }
+  .hs-toast { display: none !important; }
+  /* Paper and PDF copies (added 2026-10-17): controls do nothing on paper, so they are left out;
+     headings stay with the text that follows them; no single stranded lines. .hs-no-print hides anything else. */
+  @page { margin: 14mm 12mm; }
+  button, .hs-btn, .hs-btn-sm, .hs-no-print { display: none !important; }
+  h1, h2, h3, h4 { break-after: avoid; }
+  p, li { orphans: 3; widows: 3; }
+}
+
+/* 18. Document reading mode: <body class="hs-doc"> (added 2026-10-19, version 1.6) -------------------
+   For guides and reports read end to end, on a computer or a phone. One sans-serif system stack for text
+   and headings (close to the company website's look; nothing is downloaded), 17 px running text (16 px on
+   phones) at line-height 1.6, text lines held to about 70 characters, a calm heading scale (h1 2.0x, h2 1.5x,
+   h3 1.2x of body), 15 px tables with roomier rows, and nothing smaller than 13 px. Same tokens and colours.
+   The rules use :where(.hs-doc) so they win over the house rules above by order, while a page's own rules
+   (its <style id="page-style">, read after this file) still win over them. Pages without the class keep
+   the look above: the dashboard and the newsletter do not use it. */
+.hs-doc {
+  --hs-font-ui: "Segoe UI", system-ui, -apple-system, Roboto, Ubuntu, Helvetica, Arial, sans-serif;
+  --hs-font-body: var(--hs-font-ui);
+  --hs-fs-xs: 13px;                      /* kickers, badges, tags, reference marks */
+  --hs-fs-sm: 15px;                      /* tables, notes, meta lines, footer */
+  --hs-fs-body: 17px;
+  --hs-fs-md: var(--hs-fs-body);         /* lists and contents read at body size */
+  --hs-fs-lg: 20px;                      /* lead paragraph */
+  --hs-fs-h1: calc(var(--hs-fs-body) * 2);
+  --hs-fs-h2: calc(var(--hs-fs-body) * 1.5);
+  --hs-fs-h3: calc(var(--hs-fs-body) * 1.2);
+  --hs-lh: 1.6;
+  --hs-lh-tight: 1.25;
+  --hs-track-kicker: .12em;
+  --hs-measure: 66ch;                    /* about 70 characters of running text per line */
+  --hs-max: 920px;                       /* one centred reading column; tables and boxes may use all of it */
+}
+@media (max-width: 640px) {
+  .hs-doc {
+    --hs-fs-body: 16px;
+    --hs-fs-lg: 18px;
+    --hs-fs-h1: calc(var(--hs-fs-body) * 1.75);   /* 28 px: the long titles stay on two lines */
+    --hs-fs-h2: calc(var(--hs-fs-body) * 1.4);
+    --hs-fs-h3: calc(var(--hs-fs-body) * 1.15);
+  }
+}
+:where(.hs-doc) h1 { font-weight: 700; line-height: 1.2; letter-spacing: -.015em; margin-bottom: var(--hs-s3); }
+:where(.hs-doc) h2 { font-weight: 600; line-height: 1.25; margin-bottom: var(--hs-s4); }
+:where(.hs-doc) h3 { font-weight: 600; line-height: 1.3; letter-spacing: 0; margin-bottom: var(--hs-s3); }
+:where(.hs-doc) h4 { font-weight: 600; line-height: 1.4; letter-spacing: 0; }
+:where(.hs-doc) p { margin: 0 0 1em; }
+:where(.hs-doc) :is(p, li, dd, blockquote) { max-width: var(--hs-measure); }
+:where(.hs-doc) .hs-deck { font-style: normal; line-height: 1.5; max-width: var(--hs-measure); }
+:where(.hs-doc) .hs-callout { max-width: calc(var(--hs-measure) + 2 * var(--hs-s4) + 4px); padding: var(--hs-s4) var(--hs-s4); }
+:where(.hs-doc) .hs-callout-title { margin-bottom: var(--hs-s2); }
+:where(.hs-doc) .hs-section { margin-top: var(--hs-s7); padding-top: var(--hs-s5); }
+:where(.hs-doc) .hs-section-head { margin-bottom: var(--hs-s4); align-items: center; }
+:where(.hs-doc) .hs-step { min-width: 30px; height: 30px; font-size: 15px; }
+:where(.hs-doc) .hs-list-square > li { margin-bottom: var(--hs-s2); }
+:where(.hs-doc) .hs-list-square > li::before, :where(.hs-doc) .hs-prose ul > li::before { top: .68em; }
+:where(.hs-doc) :is(.hs-table, .hs-prose table) { line-height: 1.5; }
+:where(.hs-doc) :is(.hs-table, .hs-prose table) caption { padding-bottom: var(--hs-s2); font-size: 14px; }
+:where(.hs-doc) .hs-table td, :where(.hs-doc) .hs-table th, :where(.hs-doc) .hs-prose table td,
+:where(.hs-doc) .hs-prose table th { padding: 10px; }       /* same specificity as the house rule: a page's own cell rules still win */
+:where(.hs-doc) .hs-table thead th, :where(.hs-doc) .hs-prose table thead th { padding: 10px; }
+:where(.hs-doc) .hs-footer { line-height: 1.6; }
+:where(.hs-doc) .hs-footer p { max-width: var(--hs-measure); }
+/* Phones: links that stand alone in a contents list are full 44 px touch targets. */
+@media (max-width: 640px) {
+  :where(.hs-doc) nav li > a { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
+/* 2026-10-23: long bare web addresses in running text wrap instead of forcing a sideways scroll at phone width
+   (same fault as the 23 Oct review-copy change panel). Words stay whole; only unbroken strings such as URLs break. */
+p a, li a, td a, dd a { overflow-wrap: anywhere; }
+
+/* 2026-10-23 16Z (dash1): table cells keep whole words. The comment-mode script marks every cell .rv-block, whose
+   overflow-wrap:anywhere also shrinks a column's minimum width to one letter, so in an auto-width table a short column
+   split its words ("Diffrac tion", "manage r"). break-word still breaks a string too long for its cell, but sizes
+   columns by whole words. Selector outranks .rv-block whatever the order. */
+table td.rv-block, table th.rv-block { overflow-wrap: break-word; }
+
+</style>
+<style>
+body.hs-doc{background:var(--hs-bg);color:var(--hs-text);margin:0}
+.nl-wrap{max-width:760px;margin:0 auto;padding:var(--hs-s5) 16px var(--hs-s7);background:var(--hs-surface);
+ border-top:var(--hs-rule) solid var(--hs-accent);box-sizing:border-box}
+.nl-kicker{font-family:var(--hs-font-ui);font-size:var(--hs-fs-sm);letter-spacing:var(--hs-track-kicker);
+ text-transform:uppercase;color:var(--hs-kicker);margin:0 0 var(--hs-s2)}
+.nl-wrap h1{color:var(--hs-heading);margin:0 0 var(--hs-s4)}
+.nl-wrap h2{color:var(--hs-heading);border-top:var(--hs-rule-section) solid var(--hs-line-strong);padding-top:var(--hs-s3);
+ margin-top:var(--hs-s6)}
+.nl-wrap h3{color:var(--hs-heading);margin-top:var(--hs-s5)}
+.nl-cap{font-family:var(--hs-font-ui);font-size:var(--hs-fs-md);color:var(--hs-heading);margin:var(--hs-s4) 0 var(--hs-s2)}
+.nl-tablewrap{overflow-x:auto;max-width:100%;margin:0 0 var(--hs-s4)}
+.nl-tablewrap table{border-collapse:collapse;font-family:var(--hs-font-ui);font-size:15px;min-width:100%}
+.nl-tablewrap th,.nl-tablewrap td{border:1px solid var(--hs-line);padding:8px 10px;text-align:left;vertical-align:top}
+.nl-tablewrap thead th{background:var(--hs-surface-2);color:var(--hs-heading)}
+.nl-wrap a{color:var(--hs-link);text-decoration-color:var(--hs-link-line);overflow-wrap:anywhere}
+details.provenance{margin-top:var(--hs-s6);border:1px solid var(--hs-line);background:var(--hs-surface-2);
+ padding:var(--hs-s3) var(--hs-s4);font-family:var(--hs-font-ui);font-size:var(--hs-fs-md);overflow-wrap:anywhere}
+details.provenance summary{cursor:pointer;color:var(--hs-heading)}
+details.provenance h3{margin-top:var(--hs-s4)}
+.ph{font-family:var(--hs-font-mono);font-size:.82em;background:var(--hs-warn-bg);color:var(--hs-text);
+ outline:1.5px dashed var(--hs-warn-line);outline-offset:1px;padding:0 .3em;overflow-wrap:anywhere;word-break:break-word}
+.nl-prompt{white-space:pre-wrap;font-family:var(--hs-font-mono);font-size:14px;line-height:1.5;background:var(--hs-code-bg);
+ border:1px solid var(--hs-line);padding:var(--hs-s3) var(--hs-s4);overflow-wrap:anywhere;max-width:100%;box-sizing:border-box}
+.hs-callout pre.panel{white-space:pre-wrap;font-family:var(--hs-font-mono);font-size:13px;overflow-wrap:anywhere;margin:0}
+.hs-callout ul{margin:0 0 var(--hs-s2) 18px;padding:0}
+
+.nl-sample{margin:var(--hs-s4) 0 var(--hs-s5)}
+.nl-sample svg.hs-chart{border:1px solid var(--hs-line);background:var(--hs-surface)}
+.nl-sample-tag{display:inline-block;font-family:var(--hs-font-ui);font-size:var(--hs-fs-xs);font-weight:700;
+ letter-spacing:var(--hs-track-kicker);color:var(--hs-warn);border:1.5px solid var(--hs-warn-line);
+ background:var(--hs-warn-bg);padding:0 .4em;margin-left:.4em}
+.nl-sample .nl-prod{font-family:var(--hs-font-ui);font-size:var(--hs-fs-xs);color:var(--hs-text-muted);margin:0}
+.nl-sample-row td{background:var(--hs-warn-bg);color:var(--hs-warn);font-weight:700;font-size:var(--hs-fs-xs);
+ letter-spacing:var(--hs-track-kicker)}
+.nl-sample .nl-key{font-family:var(--hs-font-ui);font-size:var(--hs-fs-xs);margin:var(--hs-s2) 0 0}
+.nl-sample .nl-key span{margin-right:12px;white-space:nowrap}
+.nl-sample .nl-key i{display:inline-block;width:9px;height:9px;margin-right:5px;vertical-align:baseline}
+
+.qp-box{border:2px solid var(--hs-warn-line);background:var(--hs-warn-bg);padding:12px 16px;margin:0 0 24px;
+ font-family:var(--hs-font-ui);font-size:14.5px}
+.qp-box h2{border:0;margin:0 0 6px;padding:0;font-size:17px}
+.qp-box ul{margin:0 0 0 18px;padding:0}.qp-box li{margin:0 0 6px}
+.qp-st{display:inline-block;min-width:104px;font-weight:700;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+.qp-done{color:var(--hs-ok)}.qp-part{color:var(--hs-warn)}.qp-not{color:var(--hs-crit)}
+.street{font-family:var(--hs-font-ui);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--hs-kicker);
+ border-top:3px solid var(--hs-accent);padding-top:10px;margin:40px 0 4px}
+.nl-wrap h2.street-h{border:0;padding:0;margin-top:0}
+.dc{font-family:var(--hs-font-ui);font-size:13px;color:var(--hs-text-muted);margin:0 0 16px}
+.viz{border:1px solid var(--hs-line);background:var(--hs-surface);margin:16px 0 6px}
+.viz-ctl{font-family:var(--hs-font-ui);font-size:13px;margin:6px 0}
+.viz-ctl button{font:inherit;border:1px solid var(--hs-line-mid);background:var(--hs-surface-2);color:var(--hs-text);
+ padding:3px 10px;margin-right:6px;cursor:pointer}
+.viz-ctl button[aria-pressed=true]{background:var(--hs-primary);color:var(--hs-on-primary);border-color:var(--hs-primary)}
+figcaption{font-family:var(--hs-font-ui);font-size:13px;color:var(--hs-text-muted);margin:6px 0 18px}
+.prompt1{font-family:var(--hs-font-ui);font-size:15px;background:var(--hs-surface-2);border-left:4px solid var(--hs-accent);
+ padding:10px 14px;margin:12px 0}
+.series{font-style:italic}
+.foot{font-family:var(--hs-font-ui);font-size:13px;color:var(--hs-text-muted);border-top:1px solid var(--hs-line);
+ margin-top:32px;padding-top:12px}
+.lead{font-size:18px}
+details.tbl summary{cursor:pointer;font-family:var(--hs-font-ui);font-size:14px;color:var(--hs-heading)}
+
+.nl-wrap .hs-callout{border:2px solid var(--hs-warn-line);background:var(--hs-warn-bg);padding:12px 16px;margin:0 0 24px;
+ font-family:var(--hs-font-ui);font-size:14.5px;max-width:none}
+.nl-wrap .hs-callout ul{margin:4px 0 8px 18px;padding:0}.nl-wrap .hs-callout p{margin:0 0 6px;max-width:none}
+.rv-flag{color:var(--hs-crit);font-weight:700}
+p.q{font-style:italic}
+p.prompt1{font-family:var(--hs-font-ui);font-size:14px;color:var(--hs-text-muted);border-left:3px solid var(--hs-accent);padding-left:10px}
+.nl-wrap ol li,.nl-wrap ul li{margin-bottom:6px}
+.fignote{font-family:var(--hs-font-ui);font-size:14px;color:var(--hs-text-muted)}
+</style>
+
+</head>
+<body class="hs-doc">
+<include src="partials/nav.html"></include>
+<main id="main">
+<div class="nl-wrap">
+<p class="nl-kicker" id="top">The Deckhand newsletter &middot; Issue 2 &middot; Public data</p>
+<h1>Gulf of Mexico well permits by rig type: a public US data file</h1>
+<p class="dc">Prepared: Analyst Deckhand (AI assistant) &middot; Checked: Editor Deckhand &middot; Approved: Vamsee Achanta &middot; 3 November 2026</p>
+<p class="lead">In 2005, 234 of the 322 permits to drill a new well in US federal waters of the Gulf of Mexico named a jack-up rig and 15 a drillship (Application for Permit to Drill raw data of the US Bureau of Safety and Environmental Enforcement, BSEE). In 2025, 44 of the 47 named a drillship and 1 a jack-up.</p>
+<p>The BSEE Data Center is the bureau's public data service. This page counts the records in one of its raw data files, the Application for Permit to Drill file, and sets out what it holds. The file is listed as updated daily. The counts here are from the file of 2 November 2026.</p>
+
+<h2>Well permits by rig type</h2>
+<p>The permit file holds each application for a permit to drill in US federal waters. Each record gives the permit type, the requested spud date (the date drilling is to start), the water depth, the rig name and the rig type. Here each well is counted once, at its first New Well permit in the Gulf of Mexico region. It is counted in the year of its requested spud date, with the rig type that permit names. From 2005 to 2026, 2,895 wells are counted this way. The rule leaves out each well's later permits, and the 10 wells whose first New Well permit gives no requested spud date. The year 2026 runs only to the file of 2 November 2026; later files can differ, because BSEE updates the files daily.</p>
+<p>The counting script names six rig types: jack-up, drillship, semisubmersible, DP semisubmersible (dynamically positioned, held on station by its thrusters), platform rig and submersible. Barge, barge rig and well intervention vessel (19 permits) are grouped as other. Figure 1 shows the new-well permits each year by rig type.</p>
+<figure>
+<div id="fig-permits" class="viz" style="height:380px" role="img" aria-label="New-well permits each year in US federal waters of the Gulf of Mexico, 2005 to 2026, stacked by rig type: jack-up, drillship, semisubmersible, DP semisubmersible, platform rig, submersible and other."></div>
+<figcaption>Figure 1 - New-well permits by rig type, Gulf of Mexico, 2005 to 2026, by year of requested spud date. One permit per well. 2026 runs to the file of 2 November 2026. Source: BSEE Application for Permit to Drill raw data. Data: <a href="../../assets/data/newsletter/issue-002/fig-p1-new-well-permits-by-rig-type.csv">fig-p1-new-well-permits-by-rig-type.csv</a>.</figcaption>
+</figure>
+<p>Every permit counted records a water depth. Table 1 gives the permits of each rig type from 2005 to 2026 with the water depths they record.</p>
+<div class="nl-tablewrap"><table><thead><tr><th scope="col">Rig type</th><th scope="col">New-well permits, 2005 to 2026 (-)</th><th scope="col">Median water depth, ft (m)</th><th scope="col">Water depth range (ft)</th></tr></thead><tbody><tr><td>Jack-up</td><td>1,333</td><td>101 (31)</td><td>9 to 395</td></tr><tr><td>Drillship</td><td>758</td><td>5,187 (1,581)</td><td>1,296 to 9,808</td></tr><tr><td>Semisubmersible</td><td>282</td><td>3,233 (985)</td><td>407 to 9,356</td></tr><tr><td>DP semisubmersible</td><td>260</td><td>5,263.5<sup>a</sup> (1,604)</td><td>470 to 10,139</td></tr><tr><td>Platform rig</td><td>162</td><td>392 (119)</td><td>11 to 4,428</td></tr><tr><td>Submersible</td><td>81</td><td>40 (12)</td><td>12 to 72</td></tr><tr><td>Other</td><td>19</td><td>12 (4)</td><td>10 to 5,422</td></tr><tr><td>All</td><td>2,895</td><td></td><td></td></tr></tbody></table></div>
+<p class="dc">Table 1 - New-well permits and water depths by rig type, Gulf of Mexico, 2005 to 2026. Source: BSEE Application for Permit to Drill raw data, file of 2 November 2026.</p>
+<p class="dc">a. The 260 permits are an even number, so the median is the mean of the two middle water depths.</p>
+<p class="q">Each count here takes the rig type named in a well's first permit. This page leaves open how often a different type of rig drilled the well.</p>
+
+<h2>Reusable prompts</h2>
+<p class="prompt1">Recount the new-well permits by rig type from the BSEE Application for Permit to Drill raw data file, and redraw Figure 1 and Table 1.</p>
+<p>Data: the public data set for this page is one file from the <a href="https://www.data.bsee.gov/Main/RawData.aspx">BSEE Data Center raw data page</a> (US Department of the Interior). It is US federal government data, listed as updated daily and dated 2 November 2026 on that page, and was downloaded on 3 November 2026.</p>
+<ul>
+<li>Application for Permit to Drill, <a href="https://www.data.bsee.gov/Well/Files/APDRawData.zip">APDRawData.zip</a>, SHA-256 <span style="overflow-wrap:anywhere">b4ab66063de5a95c78d0e4d33d220ea806ef07f114bd2add6efa9e8561d299c0</span>: permits with permit type, requested spud date, water depth, rig name and rig type.</li>
+</ul>
+<p>Code: <a href="https://github.com/vamseeachanta/worldenergydata/tree/f5af5b6da87710bb395552f9cda5e34d1f324479/examples/bsee/rawdata_fact_check">the counting script on GitHub</a> (worldenergydata, examples/bsee/rawdata_fact_check). It applies the counting rule above and prints the counts; its README sets out the rule and the values to check against.</p>
+<p>Readers are welcome to share their own counts at support@aceengineer.com.</p>
+
+<div class="foot"><p>Questions: <a href="mailto:support@aceengineer.com">support@aceengineer.com</a> &middot; <a href="https://www.aceengineer.com/">AceEngineer</a> &middot; &copy; 2026 AceEngineer &middot; 11511 Piping Rock Dr., Houston, TX 77077</p>
+<p>Deckhand: Make Engineering Enjoyable Again</p></div>
+</div>
+<script src="../../assets/js/plotly-2.32.0.min.js" charset="utf-8"></script>
+<script>
+(function(){
+const P=[{"year": 2005, "total": 322, "Jack-up": 234, "Drillship": 15, "Semisubmersible": 29, "DP semisubmersible": 9, "Platform rig": 10, "Submersible": 22, "Other": 3}, {"year": 2006, "total": 377, "Jack-up": 245, "Drillship": 27, "Semisubmersible": 45, "DP semisubmersible": 17, "Platform rig": 20, "Submersible": 20, "Other": 3}, {"year": 2007, "total": 340, "Jack-up": 192, "Drillship": 11, "Semisubmersible": 77, "DP semisubmersible": 14, "Platform rig": 24, "Submersible": 18, "Other": 4}, {"year": 2008, "total": 274, "Jack-up": 167, "Drillship": 8, "Semisubmersible": 39, "DP semisubmersible": 22, "Platform rig": 21, "Submersible": 14, "Other": 3}, {"year": 2009, "total": 163, "Jack-up": 74, "Drillship": 10, "Semisubmersible": 43, "DP semisubmersible": 25, "Platform rig": 6, "Submersible": 5, "Other": 0}, {"year": 2010, "total": 106, "Jack-up": 66, "Drillship": 13, "Semisubmersible": 15, "DP semisubmersible": 9, "Platform rig": 1, "Submersible": 2, "Other": 0}, {"year": 2011, "total": 122, "Jack-up": 69, "Drillship": 21, "Semisubmersible": 8, "DP semisubmersible": 16, "Platform rig": 7, "Submersible": 0, "Other": 1}, {"year": 2012, "total": 171, "Jack-up": 58, "Drillship": 62, "Semisubmersible": 12, "DP semisubmersible": 28, "Platform rig": 11, "Submersible": 0, "Other": 0}, {"year": 2013, "total": 133, "Jack-up": 58, "Drillship": 20, "Semisubmersible": 7, "DP semisubmersible": 30, "Platform rig": 18, "Submersible": 0, "Other": 0}, {"year": 2014, "total": 127, "Jack-up": 44, "Drillship": 39, "Semisubmersible": 2, "DP semisubmersible": 22, "Platform rig": 18, "Submersible": 0, "Other": 2}, {"year": 2015, "total": 83, "Jack-up": 7, "Drillship": 44, "Semisubmersible": 4, "DP semisubmersible": 22, "Platform rig": 6, "Submersible": 0, "Other": 0}, {"year": 2016, "total": 74, "Jack-up": 10, "Drillship": 53, "Semisubmersible": 0, "DP semisubmersible": 9, "Platform rig": 2, "Submersible": 0, "Other": 0}, {"year": 2017, "total": 63, "Jack-up": 12, "Drillship": 40, "Semisubmersible": 1, "DP semisubmersible": 8, "Platform rig": 2, "Submersible": 0, "Other": 0}, {"year": 2018, "total": 84, "Jack-up": 16, "Drillship": 53, "Semisubmersible": 0, "DP semisubmersible": 7, "Platform rig": 8, "Submersible": 0, "Other": 0}, {"year": 2019, "total": 85, "Jack-up": 22, "Drillship": 53, "Semisubmersible": 0, "DP semisubmersible": 6, "Platform rig": 3, "Submersible": 0, "Other": 1}, {"year": 2020, "total": 66, "Jack-up": 12, "Drillship": 49, "Semisubmersible": 0, "DP semisubmersible": 5, "Platform rig": 0, "Submersible": 0, "Other": 0}, {"year": 2021, "total": 51, "Jack-up": 16, "Drillship": 35, "Semisubmersible": 0, "DP semisubmersible": 0, "Platform rig": 0, "Submersible": 0, "Other": 0}, {"year": 2022, "total": 52, "Jack-up": 6, "Drillship": 40, "Semisubmersible": 0, "DP semisubmersible": 3, "Platform rig": 3, "Submersible": 0, "Other": 0}, {"year": 2023, "total": 59, "Jack-up": 12, "Drillship": 43, "Semisubmersible": 0, "DP semisubmersible": 3, "Platform rig": 1, "Submersible": 0, "Other": 0}, {"year": 2024, "total": 49, "Jack-up": 6, "Drillship": 37, "Semisubmersible": 0, "DP semisubmersible": 4, "Platform rig": 0, "Submersible": 0, "Other": 2}, {"year": 2025, "total": 47, "Jack-up": 1, "Drillship": 44, "Semisubmersible": 0, "DP semisubmersible": 1, "Platform rig": 1, "Submersible": 0, "Other": 0}, {"year": 2026, "total": 47, "Jack-up": 6, "Drillship": 41, "Semisubmersible": 0, "DP semisubmersible": 0, "Platform rig": 0, "Submersible": 0, "Other": 0}], K=["Jack-up", "Drillship", "Semisubmersible", "DP semisubmersible", "Platform rig", "Submersible", "Other"], C=["#0b3d5c", "#2BB2A6", "#E69F00", "#56B4E9", "#CC79A7", "#D55E00", "#8a8985"];
+if(!window.Plotly){document.querySelectorAll('.viz').forEach(d=>{d.style.height='auto';d.innerHTML='<p style="padding:8px">The interactive chart needs the plotly script; the CSV file named in the caption holds the same values.</p>';});return;}
+const css=getComputedStyle(document.documentElement);const v=n=>css.getPropertyValue(n).trim();
+const INK=v('--hs-text')||'#26323a',MUTED=v('--hs-text-muted')||'#5a6b76',LINE=v('--hs-line')||'#d0d7de',SURF=v('--hs-surface')||'#fff';
+const font={family:'Segoe UI, Helvetica, Arial, sans-serif',size:13,color:INK};
+const tr=K.map((k,i)=>({type:'bar',name:k,x:P.map(p=>p.year),y:P.map(p=>p[k]),marker:{color:C[i]},
+  customdata:P.map(p=>[p.total]),
+  hovertemplate:'%{x}<br>'+k+': %{y} of %{customdata[0]} new-well permits<extra></extra>'}));
+const L={font,barmode:'stack',paper_bgcolor:SURF,plot_bgcolor:SURF,margin:{l:64,r:16,t:16,b:56},legend:{orientation:'h',y:1.2,x:0,traceorder:'normal'},
+ xaxis:{title:{text:'year of requested spud date'},dtick:2,gridcolor:LINE,linecolor:MUTED},
+ yaxis:{title:{text:'new-well permits (-)'},dtick:50,gridcolor:LINE,linecolor:MUTED,rangemode:'tozero'}};
+Plotly.react('fig-permits',tr,L,{displayModeBar:false,responsive:true});
+})();
+</script>
+</main>
+<include src="partials/footer.html"></include>
+</body>
+</html>

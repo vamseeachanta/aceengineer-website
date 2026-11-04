@@ -1,0 +1,843 @@
+---
+rootPath: "../../"
+---
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engineering evolution with AI (Deckhand newsletter, issue 2, Main Street)</title>
+<meta name="description" content="What AI has taken in law, radiology, customer support and coding, and a good and a bad scenario for engineering.">
+<meta property="og:title" content="Engineering evolution with AI (Deckhand newsletter, issue 2, Main Street)">
+<meta property="og:description" content="What AI has taken in law, radiology, customer support and coding, and a good and a bad scenario for engineering.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ canonicalUrl }}">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Engineering evolution with AI (Deckhand newsletter, issue 2, Main Street)">
+<meta name="twitter:description" content="What AI has taken in law, radiology, customer support and coding, and a good and a bad scenario for engineering.">
+<meta name="twitter:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Engineering evolution with AI (Deckhand newsletter, issue 2, Main Street)", "name": "Engineering evolution with AI (Deckhand newsletter, issue 2, Main Street)", "description": "What AI has taken in law, radiology, customer support and coding, and a good and a bad scenario for engineering.", "datePublished": "2026-11-04", "url": "https://www.aceengineer.com/newsletter/issue-002-main-street/", "inLanguage": "en-US", "publisher": {"@id": "https://www.aceengineer.com/#organization"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.aceengineer.com/"}, {"@type": "ListItem", "position": 2, "name": "Newsletter", "item": "https://www.aceengineer.com/newsletter/"}, {"@type": "ListItem", "position": 3, "name": "Engineering evolution with AI (Deckhand newsletter, issue 2, Main Street)", "item": "https://www.aceengineer.com/newsletter/issue-002-main-street/"}]}]</script>
+<include src="partials/head-common.html"></include>
+<style>
+
+/* 1. Tokens ---------------------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  /* brand palette: no other brand colours, no gradients */
+  --ace-mark-navy: #0B3D91;   /* the wordmark "Ace" only */
+  --ace-navy: #0b3d5c;        /* structure navy: headings, rules, outlines, dark grounds */
+  --ace-teal: #2BB2A6;        /* rules, square bullets, edges; never text */
+  --ace-teal-deep: #0e7e88;   /* kickers and small headings on white; never on tint */
+  --ace-teal-ink: #0d7680;    /* teal-deep 6 % darker: small teal type that sits on the tint ground too (4.83:1 on tint, 5.36:1 on white) */
+  --ace-teal-lift: #3FC4B8;   /* text and rules on navy */
+  --ace-ink: #26323a;         /* body text */
+  --ace-muted: #5a6b76;       /* notes, captions, bylines */
+  --ace-tint: #eef4f8;        /* boxes, table header ground, page ground */
+  --ace-hairline: #d0d7de;    /* thin dividers */
+  --ace-underline: #b8c9d4;   /* link underline, input outline */
+  --ace-paper: #ffffff;
+
+  /* typefaces: system stacks, nothing is downloaded */
+  --hs-font-ui: "Segoe UI", Helvetica, Arial, sans-serif;                    /* headings, labels, tables, controls */
+  --hs-font-body: Georgia, "Times New Roman", serif;                         /* running text: the newspaper voice */
+  --hs-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;  /* paths, code, identifiers */
+
+  /* type scale */
+  --hs-fs-xs: 11.5px;
+  --hs-fs-sm: 13px;
+  --hs-fs-md: 14.5px;
+  --hs-fs-body: 16px;
+  --hs-fs-lg: 18px;
+  --hs-fs-h3: 17px;
+  --hs-fs-h2: clamp(20px, 1.1vw + 14px, 24px);
+  --hs-fs-h1: clamp(24px, 1.8vw + 16px, 34px);
+  --hs-lh: 1.55;
+  --hs-lh-tight: 1.2;
+  --hs-track-kicker: .18em;
+
+  /* spacing in 4 px steps; page side margin 28 px, 16 px on phones */
+  --hs-s1: 4px; --hs-s2: 8px; --hs-s3: 12px; --hs-s4: 16px; --hs-s5: 24px; --hs-s6: 32px; --hs-s7: 48px;
+  --hs-gutter: 28px;
+  --hs-gap: 20px;
+  --hs-max: 1240px;
+
+  /* shape: square corners as in the newsletter; 2 px only on small controls */
+  --hs-radius: 0;
+  --hs-radius-sm: 2px;
+  --hs-rule: 3px;            /* teal accent rule: top of a page, top of a box */
+  --hs-rule-section: 1.5px;  /* navy section rule */
+  --hs-sq: 6px;              /* square bullet */
+
+  /* depth: kept faint; the brand separates with rules, not shadows */
+  --hs-shadow-1: 0 1px 2px rgba(11, 61, 92, .08);
+  --hs-shadow-2: 0 6px 18px rgba(11, 61, 92, .14);
+
+  /* roles: components read only these, so dark mode swaps them in one place */
+  --hs-bg: var(--ace-tint);
+  --hs-surface: var(--ace-paper);
+  --hs-surface-2: var(--ace-tint);
+  --hs-text: var(--ace-ink);
+  --hs-text-muted: var(--ace-muted);
+  --hs-heading: var(--ace-navy);
+  --hs-kicker: var(--ace-teal-ink);
+  --hs-link: var(--ace-navy);
+  --hs-link-line: var(--ace-underline);
+  --hs-line: var(--ace-hairline);
+  --hs-line-mid: var(--ace-underline);
+  --hs-line-strong: var(--ace-navy);
+  --hs-accent: var(--ace-teal);
+  --hs-rule-alt: var(--ace-navy);
+  --hs-primary: var(--ace-navy);
+  --hs-on-primary: #ffffff;
+  --hs-select: var(--ace-tint);
+  --hs-code-bg: var(--ace-paper);
+  --hs-band: var(--ace-navy);
+  --hs-on-band: #ffffff;
+  --hs-band-accent: var(--ace-teal-lift);
+  --hs-focus: var(--ace-teal-deep);
+
+  /* chart series: two at most (validated: CVD and normal-vision separation pass in both modes; teal on white is
+     below 3:1, so every bar carries its value or the chart has a table view) */
+  --hs-chart-1: var(--ace-teal);
+  --hs-chart-2: var(--ace-navy);
+
+  /* status colours: for flags, checks and meters only; they are not brand colours (brand sheet section 4) */
+  --hs-ok: #1a6b34;   --hs-ok-bg: #e6f3ea;   --hs-ok-line: #2e8b57;
+  --hs-warn: #8a5300; --hs-warn-bg: #fff3dc; --hs-warn-line: #d99a2b;
+  --hs-crit: #b42318; --hs-crit-bg: #fdecea; --hs-crit-line: #d03b3b;
+}
+
+/* Dark: the newsletter's "on navy" treatment (navy grounds, white text, teal-lift accents and rules).
+   A page can force a theme with <html data-theme="light"> or <html data-theme="dark">. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --hs-bg: #061a28;
+    --hs-surface: #0b2638;
+    --hs-surface-2: #10324a;
+    --hs-text: #e4edf2;
+    --hs-text-muted: #9db2c0;
+    --hs-heading: #ffffff;
+    --hs-kicker: var(--ace-teal-lift);
+    --hs-link: #e4edf2;
+    --hs-link-line: var(--ace-teal-lift);
+    --hs-line: #21475f;
+    --hs-line-mid: #33607a;
+    --hs-line-strong: #4f7f99;
+    --hs-accent: var(--ace-teal-lift);
+    --hs-rule-alt: #9db2c0;
+    --hs-primary: var(--ace-teal-lift);
+    --hs-on-primary: #062233;
+    --hs-select: #123a52;
+    --hs-code-bg: #081f2f;
+    --hs-band: #04131e;
+    --hs-on-band: #e4edf2;
+    --hs-band-accent: var(--ace-teal-lift);
+    --hs-focus: var(--ace-teal-lift);
+    --hs-chart-1: var(--ace-teal-lift);
+    --hs-chart-2: #4f7f99;
+    --hs-shadow-1: 0 1px 2px rgba(0, 0, 0, .35);
+    --hs-shadow-2: 0 6px 18px rgba(0, 0, 0, .45);
+    --hs-ok: #7fd6a0;   --hs-ok-bg: #11301e;   --hs-ok-line: #3fae6a;
+    --hs-warn: #f2c46d; --hs-warn-bg: #33270f; --hs-warn-line: #c98f2a;
+    --hs-crit: #ff9d92; --hs-crit-bg: #3b1714; --hs-crit-line: #e5675c;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --hs-bg: #061a28;
+  --hs-surface: #0b2638;
+  --hs-surface-2: #10324a;
+  --hs-text: #e4edf2;
+  --hs-text-muted: #9db2c0;
+  --hs-heading: #ffffff;
+  --hs-kicker: var(--ace-teal-lift);
+  --hs-link: #e4edf2;
+  --hs-link-line: var(--ace-teal-lift);
+  --hs-line: #21475f;
+  --hs-line-mid: #33607a;
+  --hs-line-strong: #4f7f99;
+  --hs-accent: var(--ace-teal-lift);
+  --hs-rule-alt: #9db2c0;
+  --hs-primary: var(--ace-teal-lift);
+  --hs-on-primary: #062233;
+  --hs-select: #123a52;
+  --hs-code-bg: #081f2f;
+  --hs-band: #04131e;
+  --hs-on-band: #e4edf2;
+  --hs-band-accent: var(--ace-teal-lift);
+  --hs-focus: var(--ace-teal-lift);
+  --hs-chart-1: var(--ace-teal-lift);
+  --hs-chart-2: #4f7f99;
+  --hs-shadow-1: 0 1px 2px rgba(0, 0, 0, .35);
+  --hs-shadow-2: 0 6px 18px rgba(0, 0, 0, .45);
+  --hs-ok: #7fd6a0;   --hs-ok-bg: #11301e;   --hs-ok-line: #3fae6a;
+  --hs-warn: #f2c46d; --hs-warn-bg: #33270f; --hs-warn-line: #c98f2a;
+  --hs-crit: #ff9d92; --hs-crit-bg: #3b1714; --hs-crit-line: #e5675c;
+}
+
+/* 2. Base ------------------------------------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--hs-bg);
+  color: var(--hs-text);
+  font: 400 var(--hs-fs-body)/var(--hs-lh) var(--hs-font-body);
+  font-kerning: normal;
+  font-variant-numeric: lining-nums;   /* Georgia's default figures are old-style: 'P0' read as 'Po', '13:00Z' as '13:ooZ'.
+                                       A 'font:' shorthand resets this: set it again after any serif shorthand. */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+h1, h2, h3, h4 {
+  font-family: var(--hs-font-ui);
+  font-weight: 600;
+  line-height: var(--hs-lh-tight);
+  letter-spacing: -.01em;
+  color: var(--hs-heading);
+  margin: 0 0 var(--hs-s2);
+  text-wrap: balance;
+}
+h1 { font-size: var(--hs-fs-h1); }
+h2 { font-size: var(--hs-fs-h2); }
+h3 { font-size: var(--hs-fs-h3); }
+h4 { font-size: var(--hs-fs-body); }
+p { margin: 0 0 var(--hs-s3); }
+p, li { text-wrap: pretty; }     /* no single short word stranded on a last line (added 2026-10-18) */
+a {
+  color: var(--hs-link);
+  text-decoration: underline;
+  text-decoration-color: var(--hs-link-line);
+  text-underline-offset: 2px;
+}
+a:hover { text-decoration-color: currentColor; }
+code, kbd, pre, samp { font-family: var(--hs-font-mono); font-size: .9em; }
+hr { border: 0; border-top: 1px solid var(--hs-line); margin: var(--hs-s5) 0; }
+img, video { max-width: 100%; height: auto; }
+button, input, select, textarea { font: inherit; color: inherit; }
+input[type="radio"], input[type="checkbox"] { accent-color: var(--hs-primary); }
+:focus-visible { outline: 2px solid var(--hs-focus); outline-offset: 2px; }
+::selection { background: rgba(43, 178, 166, .3); }
+
+/* 3. Layout: container, grid, 12 columns ---------------------------------------------------------- */
+.hs-container {
+  width: 100%;
+  max-width: calc(var(--hs-max) + 2 * var(--hs-gutter));
+  margin-inline: auto;
+  padding-inline: var(--hs-gutter);
+}
+.hs-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--hs-gap); align-items: start; }
+.hs-grid > * { min-width: 0; }
+.hs-grid-auto { grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+@media (min-width: 900px) {
+  .hs-grid-2, .hs-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1200px) {
+  .hs-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.hs-row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--hs-gap); }
+.hs-row > * { grid-column: 1 / -1; min-width: 0; }      /* phones: every column is full width */
+@media (min-width: 768px) {
+  .hs-col-2 { grid-column: span 2; }  .hs-col-3 { grid-column: span 3; }  .hs-col-4 { grid-column: span 4; }
+  .hs-col-5 { grid-column: span 5; }  .hs-col-6 { grid-column: span 6; }  .hs-col-7 { grid-column: span 7; }
+  .hs-col-8 { grid-column: span 8; }  .hs-col-9 { grid-column: span 9; }  .hs-col-12 { grid-column: span 12; }
+}
+.hs-stack > * + * { margin-top: var(--hs-s3); }
+.hs-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--hs-s2); }
+.hs-spread { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--hs-s2) var(--hs-s4); }
+
+/* 4. Type helpers ---------------------------------------------------------------------------------- */
+.hs-kicker {
+  font: 700 var(--hs-fs-xs)/1.3 var(--hs-font-ui);
+  letter-spacing: var(--hs-track-kicker);
+  text-transform: uppercase;
+  color: var(--hs-kicker);
+  margin: 0 0 var(--hs-s1);
+}
+.hs-masthead {                       /* newsletter masthead and lead headline: Georgia bold, navy */
+  font: 700 var(--hs-fs-h1)/1.08 var(--hs-font-body);
+  font-variant-numeric: lining-nums;
+  letter-spacing: -.015em;
+  color: var(--hs-heading);
+  margin: 0;
+}
+.hs-masthead .hi { color: var(--hs-kicker); }
+.hs-deck { font: italic var(--hs-fs-lg)/1.45 var(--hs-font-body); font-variant-numeric: lining-nums; color: var(--hs-text); }
+.hs-muted { color: var(--hs-text-muted); }
+.hs-small { font: var(--hs-fs-sm)/1.45 var(--hs-font-ui); color: var(--hs-text-muted); }
+.hs-ui { font-family: var(--hs-font-ui); }
+.hs-num { font-family: var(--hs-font-ui); font-variant-numeric: tabular-nums lining-nums; }
+.hs-mono { font-family: var(--hs-font-mono); font-size: .9em; }
+
+/* 5. Sections: navy section rule, square navy step number, small-capital sub-heading -------------- */
+.hs-section {
+  margin-top: var(--hs-s6);
+  padding-top: var(--hs-s4);
+  border-top: var(--hs-rule-section) solid var(--hs-line-strong);
+}
+.hs-section-head { display: flex; align-items: flex-start; gap: var(--hs-s3); margin: 0 0 var(--hs-s3); }
+.hs-section-head h2 { margin: 0; }
+.hs-section-head .hs-kicker { margin-bottom: 2px; }
+.hs-step {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  background: var(--hs-primary);
+  color: var(--hs-on-primary);
+  font: 700 13px/1 var(--hs-font-ui);
+  border-radius: var(--hs-radius);
+}
+.hs-subhead {
+  display: flex;
+  align-items: center;
+  gap: var(--hs-s3);
+  margin: var(--hs-s5) 0 var(--hs-s3);
+  font: 700 var(--hs-fs-xs)/1.3 var(--hs-font-ui);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hs-heading);
+}
+.hs-subhead::after { content: ""; flex: 1 1 auto; border-top: 1px solid var(--hs-line); }
+
+/* 6. Cards: white box, hairline outline, 3 px teal top rule ---------------------------------------- */
+.hs-card {
+  min-width: 0;
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line);
+  border-top: var(--hs-rule) solid var(--hs-accent);
+  border-radius: var(--hs-radius);
+  box-shadow: var(--hs-shadow-1);
+  padding: var(--hs-s4);
+  overflow-wrap: break-word;
+}
+.hs-card-outline { border-color: var(--hs-line-strong); border-top-color: var(--hs-accent); }  /* newsletter box */
+.hs-card-plain { border-top-width: 1px; border-top-color: var(--hs-line); }
+.hs-card-title { font: 600 var(--hs-fs-h3)/1.3 var(--hs-font-ui); color: var(--hs-heading); margin: 0 0 var(--hs-s2); }
+.hs-card-meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--hs-s1) var(--hs-s2);
+  margin: 0 0 var(--hs-s2);
+  font: var(--hs-fs-sm)/1.4 var(--hs-font-ui);
+  color: var(--hs-text-muted);
+}
+
+/* 7. Badges, chips and tags ------------------------------------------------------------------------ */
+.hs-badge {
+  display: inline-block;
+  padding: 0 7px;
+  font: 700 var(--hs-fs-xs)/1.6 var(--hs-font-ui);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hs-on-primary);
+  background: var(--hs-primary);
+  border: 1px solid var(--hs-primary);
+  border-radius: var(--hs-radius-sm);
+}
+.hs-badge-outline { color: var(--hs-heading); background: transparent; border-color: var(--hs-line-strong); }
+.hs-chip {
+  display: inline-block;
+  padding: 0 8px;
+  font: 400 var(--hs-fs-sm)/1.55 var(--hs-font-ui);
+  white-space: nowrap;
+  color: var(--hs-text-muted);
+  background: var(--hs-surface-2);
+  border: 1px solid var(--hs-line);
+  border-radius: var(--hs-radius-sm);
+}
+.hs-chip-ok   { color: var(--hs-ok);   background: var(--hs-ok-bg);   border-color: transparent; font-weight: 600; }
+.hs-chip-warn { color: var(--hs-warn); background: var(--hs-warn-bg); border-color: transparent; font-weight: 600; }
+.hs-chip-crit { color: var(--hs-crit); background: var(--hs-crit-bg); border-color: transparent; font-weight: 600; }
+.hs-tag {                            /* the newsletter's "You choose" tag: kicker type, square teal-deep outline */
+  display: inline-block;
+  padding: 0 5px;
+  font: 600 var(--hs-fs-xs)/1.5 var(--hs-font-ui);
+  font-style: normal;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hs-kicker);
+  background: var(--hs-surface);
+  border: 1px solid currentColor;
+  border-radius: 0;
+}
+
+/* 8. Buttons --------------------------------------------------------------------------------------- */
+.hs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 14px;
+  font: 600 var(--hs-fs-md)/1.2 var(--hs-font-ui);
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--hs-heading);
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line-strong);
+  border-radius: var(--hs-radius-sm);
+  cursor: pointer;
+}
+.hs-btn:hover { background: var(--hs-surface-2); }
+.hs-btn-primary { color: var(--hs-on-primary); background: var(--hs-primary); border-color: var(--hs-primary); }
+.hs-btn-primary:hover { background: var(--hs-primary); filter: brightness(1.15); }
+.hs-btn-sm { min-height: 28px; padding: 2px 10px; font-size: var(--hs-fs-sm); }
+.hs-btn-quiet { color: var(--hs-text-muted); border-color: var(--hs-line-mid); font-weight: 400; }
+/* Phones: buttons and answer rows at least 44 px tall, the usual minimum touch target (added 2026-10-17). */
+@media (max-width: 600px) {
+  .hs-btn, .hs-btn-sm { min-height: 44px; }
+  .hs-option { min-height: 44px; padding: 10px 12px; }
+  details.hs-disclosure > summary { min-height: 44px; }   /* fold toggles were 18 px tall on phones */
+}
+
+/* 9. Tables: horizontal rules only (brand sheet section 7) ------------------------------------------ */
+.hs-table-wrap { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.hs-table, .hs-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font: var(--hs-fs-sm)/1.45 var(--hs-font-ui);
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--hs-text);
+  border-top: 1.5px solid var(--hs-line-strong);
+  border-bottom: 1px solid var(--hs-line-strong);
+}
+.hs-table caption, .hs-prose table caption {
+  caption-side: top; text-align: left; padding: 0 0 6px;
+  font: var(--hs-fs-sm)/1.4 var(--hs-font-ui); color: var(--hs-text-muted);
+}
+.hs-table thead th, .hs-prose table thead th {
+  padding: 7px 10px;
+  text-align: left;
+  white-space: nowrap;
+  font-weight: 600;
+  color: var(--hs-heading);
+  background: var(--hs-surface-2);
+  border-bottom: 1px solid var(--hs-line-strong);
+}
+.hs-table td, .hs-table tbody th, .hs-prose table td, .hs-prose table tbody th {
+  padding: 7px 10px; text-align: left; vertical-align: top; border-top: 1px solid var(--hs-line);
+}
+.hs-table .num, .hs-prose table .num { text-align: right; }
+
+/* 10. Callouts: tint box with a 4 px teal left edge -------------------------------------------------- */
+.hs-callout {
+  padding: var(--hs-s3) var(--hs-s4);
+  color: var(--hs-text);
+  background: var(--hs-surface-2);
+  border-left: 4px solid var(--hs-accent);
+  border-radius: var(--hs-radius);
+}
+.hs-callout > :last-child { margin-bottom: 0; }
+.hs-callout-title {
+  margin: 0 0 var(--hs-s1);
+  font: 700 var(--hs-fs-xs)/1.3 var(--hs-font-ui);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hs-heading);           /* navy, never teal-deep, on a tint ground */
+}
+.hs-callout-ok   { background: var(--hs-ok-bg);   border-left-color: var(--hs-ok-line); }
+.hs-callout-warn { background: var(--hs-warn-bg); border-left-color: var(--hs-warn-line); }
+.hs-callout-crit { background: var(--hs-crit-bg); border-left-color: var(--hs-crit-line); }
+
+/* 11. Collapsible sections: a panel, and a small inline disclosure; + and minus as in the newsletter -- */
+details.hs-panel {
+  min-width: 0;
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line);
+  border-top: var(--hs-rule) solid var(--hs-accent);
+  border-radius: var(--hs-radius);
+  box-shadow: var(--hs-shadow-1);
+}
+details.hs-panel > summary {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--hs-s3);
+  padding: var(--hs-s3) var(--hs-s4);
+  list-style: none;
+  cursor: pointer;
+  font: 600 var(--hs-fs-lg)/1.3 var(--hs-font-ui);
+  color: var(--hs-heading);
+}
+details.hs-panel > summary::-webkit-details-marker { display: none; }
+details.hs-panel > summary::after {
+  content: "+";
+  margin-left: auto;
+  padding-left: var(--hs-s3);
+  font: 700 22px/1 var(--hs-font-ui);
+  color: var(--hs-kicker);
+}
+details.hs-panel[open] > summary { border-bottom: 1px solid var(--hs-line); }
+details.hs-panel[open] > summary::after { content: "\2212"; }
+.hs-panel-body { padding: var(--hs-s4); }
+details.hs-disclosure > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  cursor: pointer;
+  font: 600 var(--hs-fs-sm)/1.4 var(--hs-font-ui);
+  color: var(--hs-link);
+}
+details.hs-disclosure > summary::-webkit-details-marker { display: none; }
+details.hs-disclosure > summary::before {
+  content: "+";
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  font: 700 12px/1 var(--hs-font-ui);
+  color: var(--hs-heading);
+  border: 1px solid var(--hs-line-strong);
+}
+details.hs-disclosure[open] > summary::before { content: "\2212"; }
+
+/* 12. Lists: square teal bullets, never round ------------------------------------------------------- */
+.hs-list-square { list-style: none; margin: 0 0 var(--hs-s3); padding: 0; }
+.hs-list-square > li { position: relative; margin: 0 0 var(--hs-s1); padding-left: 16px; }
+.hs-list-square > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .6em;
+  width: var(--hs-sq);
+  height: var(--hs-sq);
+  background: var(--hs-accent);
+}
+
+/* 13. Forms: fields and option rows ---------------------------------------------------------------- */
+.hs-field {
+  width: 100%;
+  min-width: 0;
+  padding: 7px 9px;
+  font: var(--hs-fs-md)/1.4 var(--hs-font-ui);
+  color: var(--hs-text);
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line-mid);
+  border-radius: var(--hs-radius-sm);
+}
+.hs-field::placeholder { color: var(--hs-text-muted); }
+.hs-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  font: var(--hs-fs-md)/1.4 var(--hs-font-ui);
+  color: var(--hs-text);
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line);
+  border-radius: var(--hs-radius-sm);
+  cursor: pointer;
+}
+.hs-option:hover { border-color: var(--hs-line-mid); }
+.hs-option:has(input:checked) {
+  background: var(--hs-select);
+  border-color: var(--hs-line-strong);
+  box-shadow: inset 4px 0 0 var(--hs-accent);
+}
+
+/* 14. Bars, bands and notices ---------------------------------------------------------------------- */
+.hs-topbar {                         /* sticky page header: teal rule on top, as every newsletter page */
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--hs-surface);
+  border-top: var(--hs-rule) solid var(--hs-accent);
+  border-bottom: 1px solid var(--hs-line);
+  box-shadow: var(--hs-shadow-1);
+}
+.hs-footer {                         /* navy band, white text, teal-lift headings */
+  margin-top: var(--hs-s7);
+  padding: var(--hs-s5) 0 var(--hs-s6);
+  font: var(--hs-fs-sm)/1.55 var(--hs-font-ui);
+  color: var(--hs-on-band);
+  background: var(--hs-band);
+  border-top: var(--hs-rule) solid var(--hs-band-accent);
+}
+.hs-footer a { color: var(--hs-on-band); text-decoration-color: var(--hs-band-accent); }
+.hs-footer .hs-kicker { color: var(--hs-band-accent); }
+.hs-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  z-index: 50;
+  transform: translateX(-50%);
+  max-width: min(92vw, 640px);
+  padding: 10px 16px;
+  font: 600 var(--hs-fs-md)/1.4 var(--hs-font-ui);
+  color: var(--hs-on-band);
+  background: var(--hs-band);
+  border-top: var(--hs-rule) solid var(--hs-band-accent);
+  box-shadow: var(--hs-shadow-2);
+}
+
+/* 15. Prose: plain HTML from Markdown (guides, notes) takes the style inside .hs-prose ------------- */
+.hs-prose { max-width: 780px; }
+.hs-prose p, .hs-prose li { line-height: 1.58; }
+.hs-prose h2 {
+  margin-top: var(--hs-s6);
+  padding-top: var(--hs-s3);
+  border-top: var(--hs-rule-section) solid var(--hs-line-strong);
+}
+.hs-prose h3 { margin-top: var(--hs-s5); }
+.hs-prose ul { list-style: none; padding-left: 0; }
+.hs-prose ul > li { position: relative; padding-left: 16px; margin-bottom: var(--hs-s1); }
+.hs-prose ul > li::before {
+  content: ""; position: absolute; left: 0; top: .62em;
+  width: var(--hs-sq); height: var(--hs-sq); background: var(--hs-accent);
+}
+.hs-prose ol { padding-left: 1.5em; }
+.hs-prose ol > li::marker { font: 700 var(--hs-fs-sm) var(--hs-font-ui); color: var(--hs-heading); }
+.hs-prose blockquote {
+  margin: var(--hs-s4) 0; padding: var(--hs-s3) var(--hs-s4);
+  background: var(--hs-surface-2); border-left: 4px solid var(--hs-accent);
+}
+.hs-prose code { padding: 1px 4px; background: var(--hs-surface-2); border: 1px solid var(--hs-line); }
+.hs-prose pre { padding: var(--hs-s3); overflow-x: auto; background: var(--hs-code-bg); border: 1px solid var(--hs-line); }
+.hs-prose pre code { padding: 0; border: 0; background: none; }
+
+/* 16. Charts: inline SVG, one axis, at most two series; keys are squares ------------------------------ */
+svg.hs-chart { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--hs-font-ui); }
+.hs-ch-axis { stroke: var(--hs-line-mid); stroke-width: 1; }
+.hs-ch-grid { stroke: var(--hs-line); stroke-width: 1; }
+.hs-ch-s1 { fill: var(--hs-chart-1); }
+.hs-ch-s2 { fill: var(--hs-chart-2); }
+.hs-ch-value { font-size: 12px; font-weight: 600; fill: var(--hs-text); }
+.hs-ch-label { font-size: 11px; font-weight: 600; fill: var(--hs-text); }
+.hs-ch-note { font-size: 11px; fill: var(--hs-text-muted); }
+.hs-ch-hit { fill: transparent; }
+.hs-ch-col:hover .hs-ch-bar, .hs-ch-col:focus .hs-ch-bar { fill-opacity: .8; }
+.hs-ch-col:focus { outline: none; }
+.hs-ch-col:focus .hs-ch-hit { stroke: var(--hs-focus); stroke-width: 1.5; }
+.hs-key { display: inline-block; width: 9px; height: 9px; margin-right: 6px; background: var(--hs-line-mid); }
+.hs-key-1 { background: var(--hs-chart-1); }
+.hs-key-2 { background: var(--hs-chart-2); }
+
+/* 17. Phones and print ----------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  :root { --hs-gutter: 16px; --hs-gap: 14px; }
+  .hs-card { padding: var(--hs-s3); }
+  .hs-panel-body { padding: var(--hs-s3); }
+  details.hs-panel > summary { padding: var(--hs-s3); font-size: var(--hs-fs-body); }
+}
+@media print {
+  .hs-topbar { position: static; box-shadow: none; }
+  .hs-card, details.hs-panel { box-shadow: none; break-inside: avoid; }
+  .hs-toast { display: none !important; }
+  /* Paper and PDF copies (added 2026-10-17): controls do nothing on paper, so they are left out;
+     headings stay with the text that follows them; no single stranded lines. .hs-no-print hides anything else. */
+  @page { margin: 14mm 12mm; }
+  button, .hs-btn, .hs-btn-sm, .hs-no-print { display: none !important; }
+  h1, h2, h3, h4 { break-after: avoid; }
+  p, li { orphans: 3; widows: 3; }
+}
+
+/* 18. Document reading mode: <body class="hs-doc"> (added 2026-10-19, version 1.6) -------------------
+   For guides and reports read end to end, on a computer or a phone. One sans-serif system stack for text
+   and headings (close to the company website's look; nothing is downloaded), 17 px running text (16 px on
+   phones) at line-height 1.6, text lines held to about 70 characters, a calm heading scale (h1 2.0x, h2 1.5x,
+   h3 1.2x of body), 15 px tables with roomier rows, and nothing smaller than 13 px. Same tokens and colours.
+   The rules use :where(.hs-doc) so they win over the house rules above by order, while a page's own rules
+   (its <style id="page-style">, read after this file) still win over them. Pages without the class keep
+   the look above: the dashboard and the newsletter do not use it. */
+.hs-doc {
+  --hs-font-ui: "Segoe UI", system-ui, -apple-system, Roboto, Ubuntu, Helvetica, Arial, sans-serif;
+  --hs-font-body: var(--hs-font-ui);
+  --hs-fs-xs: 13px;                      /* kickers, badges, tags, reference marks */
+  --hs-fs-sm: 15px;                      /* tables, notes, meta lines, footer */
+  --hs-fs-body: 17px;
+  --hs-fs-md: var(--hs-fs-body);         /* lists and contents read at body size */
+  --hs-fs-lg: 20px;                      /* lead paragraph */
+  --hs-fs-h1: calc(var(--hs-fs-body) * 2);
+  --hs-fs-h2: calc(var(--hs-fs-body) * 1.5);
+  --hs-fs-h3: calc(var(--hs-fs-body) * 1.2);
+  --hs-lh: 1.6;
+  --hs-lh-tight: 1.25;
+  --hs-track-kicker: .12em;
+  --hs-measure: 66ch;                    /* about 70 characters of running text per line */
+  --hs-max: 920px;                       /* one centred reading column; tables and boxes may use all of it */
+}
+@media (max-width: 640px) {
+  .hs-doc {
+    --hs-fs-body: 16px;
+    --hs-fs-lg: 18px;
+    --hs-fs-h1: calc(var(--hs-fs-body) * 1.75);   /* 28 px: the long titles stay on two lines */
+    --hs-fs-h2: calc(var(--hs-fs-body) * 1.4);
+    --hs-fs-h3: calc(var(--hs-fs-body) * 1.15);
+  }
+}
+:where(.hs-doc) h1 { font-weight: 700; line-height: 1.2; letter-spacing: -.015em; margin-bottom: var(--hs-s3); }
+:where(.hs-doc) h2 { font-weight: 600; line-height: 1.25; margin-bottom: var(--hs-s4); }
+:where(.hs-doc) h3 { font-weight: 600; line-height: 1.3; letter-spacing: 0; margin-bottom: var(--hs-s3); }
+:where(.hs-doc) h4 { font-weight: 600; line-height: 1.4; letter-spacing: 0; }
+:where(.hs-doc) p { margin: 0 0 1em; }
+:where(.hs-doc) :is(p, li, dd, blockquote) { max-width: var(--hs-measure); }
+:where(.hs-doc) .hs-deck { font-style: normal; line-height: 1.5; max-width: var(--hs-measure); }
+:where(.hs-doc) .hs-callout { max-width: calc(var(--hs-measure) + 2 * var(--hs-s4) + 4px); padding: var(--hs-s4) var(--hs-s4); }
+:where(.hs-doc) .hs-callout-title { margin-bottom: var(--hs-s2); }
+:where(.hs-doc) .hs-section { margin-top: var(--hs-s7); padding-top: var(--hs-s5); }
+:where(.hs-doc) .hs-section-head { margin-bottom: var(--hs-s4); align-items: center; }
+:where(.hs-doc) .hs-step { min-width: 30px; height: 30px; font-size: 15px; }
+:where(.hs-doc) .hs-list-square > li { margin-bottom: var(--hs-s2); }
+:where(.hs-doc) .hs-list-square > li::before, :where(.hs-doc) .hs-prose ul > li::before { top: .68em; }
+:where(.hs-doc) :is(.hs-table, .hs-prose table) { line-height: 1.5; }
+:where(.hs-doc) :is(.hs-table, .hs-prose table) caption { padding-bottom: var(--hs-s2); font-size: 14px; }
+:where(.hs-doc) .hs-table td, :where(.hs-doc) .hs-table th, :where(.hs-doc) .hs-prose table td,
+:where(.hs-doc) .hs-prose table th { padding: 10px; }       /* same specificity as the house rule: a page's own cell rules still win */
+:where(.hs-doc) .hs-table thead th, :where(.hs-doc) .hs-prose table thead th { padding: 10px; }
+:where(.hs-doc) .hs-footer { line-height: 1.6; }
+:where(.hs-doc) .hs-footer p { max-width: var(--hs-measure); }
+/* Phones: links that stand alone in a contents list are full 44 px touch targets. */
+@media (max-width: 640px) {
+  :where(.hs-doc) nav li > a { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
+/* 2026-10-23: long bare web addresses in running text wrap instead of forcing a sideways scroll at phone width
+   (same fault as the 23 Oct review-copy change panel). Words stay whole; only unbroken strings such as URLs break. */
+p a, li a, td a, dd a { overflow-wrap: anywhere; }
+
+/* 2026-10-23 16Z (dash1): table cells keep whole words. The comment-mode script marks every cell .rv-block, whose
+   overflow-wrap:anywhere also shrinks a column's minimum width to one letter, so in an auto-width table a short column
+   split its words ("Diffrac tion", "manage r"). break-word still breaks a string too long for its cell, but sizes
+   columns by whole words. Selector outranks .rv-block whatever the order. */
+table td.rv-block, table th.rv-block { overflow-wrap: break-word; }
+
+.tok{background:var(--hs-warn-bg,#fff4d6);border:1px dashed var(--hs-warn-line,#c98a00);padding:0 4px;border-radius:3px;font-size:.92em}
+.meta{color:var(--hs-text-muted,#59636e);font-size:var(--hs-fs-sm);margin-bottom:var(--hs-s4,16px)}
+pre.prompt{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.5;background:#f6f8fa;border:1px solid #d0d7de;
+ border-radius:6px;padding:12px 14px;max-width:var(--hs-measure)}
+pre.panel{white-space:pre-wrap;font-size:13px;line-height:1.45;margin:0 0 .6em}
+main{padding-top:24px;padding-bottom:48px}
+
+.dek{font-size:1.1em;color:var(--hs-text-muted);margin-top:-.3em}
+.fig{margin:1.4em 0 1.8em;max-width:100%}.plot{width:100%}
+.fig figcaption{font-size:var(--hs-fs-sm,15px);color:var(--hs-heading);margin-top:.4em;font-weight:600}
+.fignote{font-size:var(--hs-fs-xs,13px);color:var(--hs-text-muted);margin:.2em 0 0}
+.changed{border-top:3px solid #2BB2A6;background:#eef4f8;padding:12px 16px;margin:0 0 24px}
+.changed h2{font-size:17px;margin:0 0 6px}.changed li{margin:3px 0}
+.st{display:inline-block;font:600 12px/1.6 'Segoe UI',sans-serif;padding:0 6px;margin-right:6px;border:1px solid}
+.st-done{color:#1d6b3a;border-color:#1d6b3a}.st-part{color:#8a5a00;border-color:#8a5a00}.st-not{color:#a12a1f;border-color:#a12a1f}
+.forksvg{width:100%;max-width:640px;display:block;margin:0 auto}.fk-t{font:600 14px 'Segoe UI',sans-serif;fill:#0b3d5c}
+.fk-row{display:grid;grid-template-columns:9em 1fr 1fr;gap:8px;margin:6px 0}
+.fk-driver{font:600 14px 'Segoe UI',sans-serif;color:#0b3d5c;padding-top:8px}
+.fk-cell{padding:8px 10px;font-size:15px;transition:opacity .2s}.fk-cell p{margin:0}
+.fk-good{border-left:4px solid #1f6fa8;background:#eef5fb}.fk-bad{border-left:4px dashed #c2410c;background:#fdf1ec}
+.fk-h{font:600 14px 'Segoe UI',sans-serif;padding:6px 10px}
+.fk-seen{font-size:13px;color:#5a6b76;margin-top:4px!important}
+.fk-ctl{display:flex;gap:6px;margin-bottom:6px}.fk-ctl button{font:13px 'Segoe UI',sans-serif;padding:4px 10px;border:1px solid #0b3d5c;background:#fff;cursor:pointer}
+.fk-ctl button[aria-pressed=true]{background:#0b3d5c;color:#fff}
+#fork[data-show=good] .fk-bad,#fork[data-show=bad] .fk-good{opacity:.15}
+@media (max-width:640px){.fk-row{grid-template-columns:1fr}.fk-headrow{display:none}}
+
+.hs-callout{border:2px solid var(--hs-warn-line);background:var(--hs-warn-bg);padding:12px 16px;margin:0 0 24px;font-family:var(--hs-font-ui);font-size:14.5px;max-width:none}
+.hs-callout ul{margin:4px 0 8px 18px;padding:0}.hs-callout p{margin:0 0 6px;max-width:none}
+.dc{font-family:var(--hs-font-ui);font-size:14px;color:var(--hs-text-muted)}
+p.q{font-style:italic}
+p.prompt1{font-family:var(--hs-font-ui);font-size:14px;color:var(--hs-text-muted);border-left:3px solid var(--hs-accent);padding-left:10px}
+
+.mx-svg{max-width:720px;display:block;margin:8px 0}
+.mx-box{fill:var(--hs-surface-2);stroke:var(--hs-line-strong);stroke-width:1.5}
+.mx-band{fill:var(--hs-surface-2);stroke:var(--hs-accent);stroke-width:1.5}
+.mx-h{font:600 14px var(--hs-font-ui);fill:var(--hs-heading)}
+.mx-t{font:13px var(--hs-font-ui);fill:var(--hs-text)}
+.mx-tag{font:600 12px var(--hs-font-ui);fill:var(--hs-warn);letter-spacing:.06em}
+.mx-arrow,.mx-trail{stroke:var(--hs-accent);stroke-width:2.5}
+.mx-trail{stroke-dasharray:6 4}
+.mx-headfill{fill:var(--hs-accent)}
+.mx-dot{fill:var(--hs-chart-2)}.mx-dot-old{fill:none;stroke:var(--hs-chart-2);stroke-width:2}
+</style>
+<script src="../../assets/js/plotly-2.32.0.min.js" charset="utf-8"></script>
+</head>
+<body class="hs-doc">
+<include src="partials/nav.html"></include>
+<main id="main" class="hs-container hs-prose">
+<p class="hs-kicker">The Deckhand newsletter &middot; Issue 2 &middot; Main Street</p>
+<h1>Engineering evolution with AI</h1>
+<p class="dek">In law, radiology, customer support and coding, AI takes the first-pass work and a named person still signs. On 15 public simulation problems, the best AI agent came within 10 % of the known answer on one.</p>
+<p class="dc">Prepared: Analyst Deckhand (AI assistant) &middot; Checked: Editor Deckhand &middot; Approved: Vamsee Achanta &middot; 3 November 2026</p>
+<p>In FEABench, a test of AI agents on physics problems in a commercial simulation tool, 88 % of the best agent's commands to the solver ran, yet only one of 15 problems with known correct answers was solved within 10 %, and the authors doubt even that one (Google Research and Harvard, April 2025). NCEES, the US body that sets the engineering licensing exams, says the licensed engineer keeps responsibility and must check AI output independently (Position Statement 6.10, 2025). AI takes the drafting, searching and first-pass work. People keep the decision wherever a court, a regulator or a signature holds a named person to account.</p>
+<p>Our hypothesis: AI has cooked coding, and it is now cooking many other areas, such as finance and legal. In each of them, AI has democratised the work, so that more people can now do it. Engineering will be democratised in the same way: with a basic understanding, anyone will be able to take on engineering problems. The future of the engineer then lies in engineering judgement. The question is whether engineering is pretty much cooked. We test it here, on the Deckhand journey, our series that takes real-world cases, builds the engineering behind them and gives it to the industry to reuse and build on.</p>
+<p>On today's evidence, engineering work still needs the engineer. This article sets out that evidence, field by field, then two ways it could go for engineering. They are scenarios to argue about.</p>
+<h2>Law, radiology and customer support</h2>
+<p>In law, AI drafts and searches, but lawyers must review its output before relying on it (American Bar Association, Formal Opinion 512, July 2024). A public database lists 2,231 court decisions involving AI-invented content, 880 of them involving lawyers (Charlotin, 28 October 2026). The lawyer signs the filing.</p>
+<p>In 2016, Geoffrey Hinton predicted that radiologists would be replaced. Today 76.2 % of the AI-enabled devices on the US Food and Drug Administration list are for radiology (Complizen count, September 2026), yet US radiologist numbers have grown about 10 % over the past ten years (Fortune, May 2026). The physician still signs the report.</p>
+<p>In customer support, Klarna said in 2024 that its AI assistant did the work of 700 agents (Klarna, February 2024). In May 2025, Klarna's chief executive cited lower quality and the company began hiring people again (Bloomberg, via Entrepreneur, May 2025).</p>
+<h2>Coding: jobs, AI use, speed and code review</h2>
+<p>Coding is where AI arrived first and where the change is loudest. US tech companies cut more than 191,000 jobs in 2023, about 127,000 in 2025 and at least 94,046 from January to August 2026 (Crunchbase, October 2026). The reason given has changed. AI was cited in 33 % of tech layoff events in 2026, up from 1 % in 2024 (Layoffs.fyi, via Crunchbase News, September 2026).</p>
+<figure class="fig"><div id="f1" class="plot" style="height:340px" role="img" aria-label="Figure 1. US tech jobs cut each year, 2022 to August 2026"></div><figcaption>Figure 1. US tech jobs cut each year, 2022 to August 2026</figcaption><p class="fignote">Crunchbase count of US-based tech companies (tracker updated 28 October 2026; 2026 to August from Crunchbase News, 25 September 2026). 2022 and 2023 are given as "more than", 2025 as "around". Data: <a href="../../assets/data/newsletter/issue-002/fig1-us-tech-layoffs.csv">fig1-us-tech-layoffs.csv</a>.</p></figure>
+<p>Use is now near universal, and trust is not. In Google's DORA (DevOps Research and Assessment) survey of nearly 5,000 technology professionals, 90 % use AI at work and 30 % have little or no trust in the code it writes (Google Cloud, September 2025). In the Stack Overflow survey, 84 % of developers use or plan to use AI tools; 45.7 % distrust its accuracy and 32.7 % trust it (Stack Overflow, July 2025).</p>
+<p>The speed gain depends on who measures it. On one simple lab task, developers with an AI assistant finished 55.8 % faster (Peng and others, February 2023). Across three company field experiments, developers completed 26 % more tasks, with the largest gains for less experienced staff (Cui and others, 2025). In a randomised trial, experienced open-source developers took 19 % longer with AI while believing they were about 20 % faster (METR, Model Evaluation and Threat Research, a non-profit research group, July 2025).</p>
+<figure class="fig"><div id="f2" class="plot" style="height:320px" role="img" aria-label="Figure 2. Measured and believed change in developer speed with AI, by study"></div><figcaption>Figure 2. Measured and believed change in developer speed with AI, by study</figcaption><p class="fignote">Measures differ by study: time on one set task (lab), tasks completed (field), time on real tasks (randomised trial). The diamond is what the trial's developers believed. Sources: Peng and others 2023; Cui and others 2025; METR 2025. Data: <a href="../../assets/data/newsletter/issue-002/fig2-ai-coding-speed.csv">fig2-ai-coding-speed.csv</a>.</p></figure>
+<p>Review is still the bottleneck. In over 456,000 GitHub pull requests, a pull request being a proposed code change, people merged 76.8 % of human changes but 38 % to 65 % of those from five coding agents (Li and others, July 2025).</p>
+<p>The jobs picture is upheaval, not collapse. US software postings rose almost 15 % from February 2025 to June 2026 while all postings fell about 7 %, yet they remain about 27.5 % below February 2020 (Indeed Hiring Lab, July 2026). The US Bureau of Labor Statistics (BLS) splits the outlook by task, not by field. It projects jobs for computer programmers to fall 7 % from 2025 to 2035, and jobs for software developers, quality assurance analysts and testers to grow 10 % (Figure 3).</p>
+<figure class="fig"><div id="f3" class="plot" style="height:260px" role="img" aria-label="Figure 3. US employment projections for 2025 to 2035 split by task, not by field"></div><figcaption>Figure 3. US employment projections for 2025 to 2035 split by task, not by field</figcaption><p class="fignote">US Bureau of Labor Statistics, Occupational Outlook Handbook, pages modified 27 August 2026. The BLS cites AI automation for computer programmers. Data: <a href="../../assets/data/newsletter/issue-002/fig3-us-job-projections.csv">fig3-us-job-projections.csv</a>.</p></figure>
+<h2>What AI takes and who still signs, by field</h2>
+<div class="hs-table-wrap"><table><thead><tr><th scope="col">Field</th><th scope="col">What AI takes</th><th scope="col">Who still signs</th><th scope="col">Evidence</th></tr></thead><tbody><tr><td>Law</td><td>Drafting and search</td><td>The lawyer, on the filing</td><td>880 court decisions on lawyers' AI-invented content</td></tr><tr><td>Radiology</td><td>Image screening</td><td>The physician, on the report</td><td>Radiologists up about 10 % in ten years</td></tr><tr><td>Customer support</td><td>First-line chats</td><td>A person, again, after a quality drop</td><td>Klarna rehired in 2025</td></tr><tr><td>Coding</td><td>Writing and changing code</td><td>The reviewer who merges the change</td><td>Agent changes merged less often than human ones</td></tr><tr><td>Engineering</td><td>Set-up, runs, first drafts</td><td>The licensed engineer, on the seal</td><td>See below</td></tr></tbody></table></div>
+<h2>Engineering: the evidence so far</h2>
+<p>On today's evidence, engineering is not cooked, for three reasons.</p>
+<ul><li>Results on problems with known answers. FEABench, at the top of this article, shows that code that runs is not the same as a right answer. Its 15 problems and their target values are public as FEABench Gold (Google Research on GitHub, Apache 2.0 licence, retrieved 29 October 2026); details are in Reusable prompts at the end. EngDesign, a set of 101 engineering design tasks, saw the best model pass about a third (NeurIPS conference, 2025). Both used 2024 to 2025 models, so we keep measuring.</li><li>Codes and the seal. NCEES Position Statement 6.10, at the top of this article, keeps responsibility with the licensed engineer. The North Carolina board adds that the engineer must be "capable of reproducing the output independently from any AI program" (July 2025). The BLS notes that a licensed Professional Engineer (P.E.) may approve design plans and sign off on projects, and it projects civil engineering jobs to grow 6 % from 2025 to 2035 (BLS, Civil Engineers, August 2026).</li><li>Poor data. Project data such as metocean (wind, wave and current) records, vessel motions and soil data is often scarce, or held by the client or under confidentiality terms. Training data that does not represent the real case is one of the named challenges for machine-learning models in structural engineering (Zaker Esteghamati and others, April 2024). In NSPE Case 24-2, putting a client's information into an open AI tool without the client's permission was found unethical. A model trained on cases unlike the project, and not given the project's own site data, cannot check a design against that site, so finding and judging that data stays with the engineer.</li></ul>
+<p>Our own team is one case. Its members include AI assistants, such as the Analyst Deckhand and the Editor Deckhand named at the top; they prepare and queue solver runs, check each other's work and draft reports. The analysts do the heavy specialist work, thus providing resource for the engineer to review; the engineer sets the method and the acceptance criteria, judges the results and signs. This article is one example. Vamsee Achanta set its question. The assistants found the sources, checked each figure against its source, built the charts and drafted the text. He reviewed the drafts, changed the title and approves the article.</p>
+<p>That first pass is where young engineers have always learned. Across the wider economy, the first rung is narrowing. In payroll data, employment for workers aged 22 to 25 in the most AI-exposed jobs is 19 % below where it would be had it kept pace with less-exposed peers (Stanford, August 2026). Only 4.5 % of Indeed US software postings in the first quarter of 2026 were entry level (Indeed Hiring Lab, July 2026).</p>
+<h2>Two scenarios for engineering</h2>
+<p>The other professions show two paths, and engineering could take either. Each step below is drawn from something already seen in another field. The scenarios are ours, to argue about.</p>
+<figure class="fig" id="fork"><div class="fk-ctl" role="group" aria-label="Show a scenario"><button type="button" data-show="both" aria-pressed="true">Both paths</button><button type="button" data-show="good" aria-pressed="false">Good path</button><button type="button" data-show="bad" aria-pressed="false">Bad path</button></div><svg viewBox="0 0 640 70" class="forksvg" aria-hidden="true"><text x="320" y="16" text-anchor="middle" class="fk-t">Engineering today</text><path d="M320 24 V36 H160 V62" fill="none" stroke="#1f6fa8" stroke-width="2.5"/><path d="M320 36 H480 V62" fill="none" stroke="#c2410c" stroke-width="2.5" stroke-dasharray="6 4"/></svg><div class="fk-row fk-headrow"><div></div><div class="fk-h fk-good">Good path: engineers who check</div><div class="fk-h fk-bad">Bad path: output nobody can check</div></div><div class="fk-row"><div class="fk-driver">First-pass work</div><div class="fk-cell fk-good"><p>AI drafts, sets up and runs; engineers check more options per study.</p><p class="fk-seen">Drawn from: Radiology: 76.2 % of AI devices, radiologists up about 10 %.</p></div><div class="fk-cell fk-bad"><p>Firms cut the people who did the first pass, then quality drops.</p><p class="fk-seen">Drawn from: Customer support: Klarna&#x27;s 700 agents, then rehiring in 2025.</p></div></div><div class="fk-row"><div class="fk-driver">The entry rung</div><div class="fk-cell fk-good"><p>Juniors learn by checking AI first passes against hand calculations.</p><p class="fk-seen">Drawn from: Field experiments: largest gains for less experienced staff.</p></div><div class="fk-cell fk-bad"><p>Entry hiring dries up, so few people learn to check.</p><p class="fk-seen">Drawn from: Software: 4.5 % of postings entry level; ages 22 to 25 down 19 %.</p></div></div><div class="fk-row"><div class="fk-driver">The seal</div><div class="fk-cell fk-good"><p>The named engineer checks and can reproduce the work.</p><p class="fk-seen">Drawn from: NCEES 6.10 and the North Carolina board require independent checks.</p></div><div class="fk-cell fk-bad"><p>Plans are sealed after a cursory look at AI output.</p><p class="fk-seen">Drawn from: NSPE Case 24-2, where the Board found it unethical to seal AI-drafted plans after a cursory review; 880 court decisions on lawyers&#x27; AI-invented content.</p></div></div><div class="fk-row"><div class="fk-driver">Right answers</div><div class="fk-cell fk-good"><p>Problems with known answers become the routine check.</p><p class="fk-seen">Drawn from: FEABench Gold: 15 public problems with target values.</p></div><div class="fk-cell fk-bad"><p>Code that runs is taken as a right answer.</p><p class="fk-seen">Drawn from: FEABench: 88 % of commands ran, 1 of 15 within 10 %.</p></div></div><div class="fk-row"><div class="fk-driver">Speed</div><div class="fk-cell fk-good"><p>Measured gains go into harder problems and more checking.</p><p class="fk-seen">Drawn from: Field study: 26 % more tasks completed.</p></div><div class="fk-cell fk-bad"><p>Felt speed replaces measured speed; delivery stability (how often changes fail and must be fixed) slips.</p><p class="fk-seen">Drawn from: METR: 19 % slower while feeling 20 % faster; DORA 2025: lower delivery stability with AI use.</p></div></div><figcaption>Figure 4. Two scenarios for engineering, each step drawn from something that has already happened in another profession</figcaption><p class="fignote">Our scenarios. Each "Drawn from" line names a source in the list at the end.</p></figure>
+<p>The difference between the two paths is who learns to check. In the good path, the first pass becomes training. In the bad path, it becomes a gap that shows only when the senior engineers retire.</p>
+<p>The models change too. Each new model may do more of the engineering well, as advances in mathematics and physics are taken into the main model through further training. Engineering that once had to be written out for a model then becomes something it knows unaided. In our own work, the code once had to spell out the catenary equation for a hanging line; a frontier model (one of the most capable AI models of the day) now knows that equation without being given it. Figure 5 shows this direction in three stages. In the good path above, the check stays with the engineer at every stage.</p>
+<figure class="fig" id="f-model"><svg viewBox="0 0 720 330" width="100%" role="img" aria-label="Illustration: engineering moves from the engineer's own code, to files given to the model, to knowledge inside the model, as each new model is trained further; in the good path, the engineer checks at every stage. Example: the catenary equation, once written out in our code, now known to a frontier model." class="mx-svg">
+<defs><marker id="mx-head" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="mx-headfill"/></marker></defs>
+<text x="360" y="22" class="mx-tag" text-anchor="middle">Illustration of a direction, not measured data</text>
+<g><title>Stage 1: Written out in your own code. The engineer's files spell out the method and its equations.</title><rect x="20" y="40" width="200" height="120" class="mx-box"/><text x="120" y="66" class="mx-h" text-anchor="middle">Stage 1</text><text x="120" y="90" class="mx-t" text-anchor="middle">Written out in your own </text><text x="120" y="108" class="mx-t" text-anchor="middle">code</text></g><g><title>Stage 2: Given to the model in files. The model knows the method; the design code's edition and clauses, and the firm's own choices, come from files.</title><rect x="260" y="40" width="200" height="120" class="mx-box"/><text x="360" y="66" class="mx-h" text-anchor="middle">Stage 2</text><text x="360" y="90" class="mx-t" text-anchor="middle">Given to the model in </text><text x="360" y="108" class="mx-t" text-anchor="middle">files</text></g><g><title>Stage 3: Known to the model unaided. The model knows the method itself; the engineer still checks it against a known answer.</title><rect x="500" y="40" width="200" height="120" class="mx-box"/><text x="600" y="66" class="mx-h" text-anchor="middle">Stage 3</text><text x="600" y="90" class="mx-t" text-anchor="middle">Known to the model </text><text x="600" y="108" class="mx-t" text-anchor="middle">unaided</text></g>
+<g><title>Next model generation: further training may take in more mathematics and physics.</title><line x1="224" y1="100" x2="254" y2="100" class="mx-arrow" marker-end="url(#mx-head)"/></g><g><title>Next model generation: further training may take in more mathematics and physics.</title><line x1="464" y1="100" x2="494" y2="100" class="mx-arrow" marker-end="url(#mx-head)"/></g>
+<text x="360" y="186" class="mx-t" text-anchor="middle">Each new model generation may take in more mathematics and physics through further training</text>
+<g><title>Example: the catenary equation for a hanging line. Our code once had to spell it out; a frontier model now knows it unaided (from our own work).</title>
+<circle cx="540" cy="232" r="9" class="mx-dot"/><line x1="140" y1="232" x2="528" y2="232" class="mx-trail" marker-end="url(#mx-head)"/>
+<circle cx="120" cy="232" r="9" class="mx-dot-old"/>
+<text x="120" y="258" class="mx-t" text-anchor="middle">once written out in our code</text>
+<text x="540" y="258" class="mx-t" text-anchor="middle">now known to a frontier model</text>
+<text x="330" y="222" class="mx-h" text-anchor="middle">Example: the catenary equation (hanging line)</text></g>
+<g><title>In the good path of Figure 4, the engineer checks the work against a known answer and signs it at every stage.</title>
+<rect x="20" y="284" width="680" height="34" class="mx-band"/>
+<text x="360" y="306" class="mx-t" text-anchor="middle">Good path, at every stage: the engineer checks against a known answer, and signs</text></g>
+</svg><figcaption>Figure 5. How the next model may take in engineering: an illustration of a direction, not measured data</figcaption><p class="fignote">Stages are in order only. The catenary example is from our own work. Hover a stage or the example for detail.</p></figure>
+
+<p class="q">AI does the first-pass work that once trained engineers thus democratizing engineering. If so, engineers likely will evolve the judgement part.</p>
+<h2>Sources</h2>
+<ul><li>American Bar Association, Formal Opinion 512, "Generative Artificial Intelligence Tools", 29 July 2024. <a href="https://www.americanbar.org/content/dam/aba/administrative/professional_responsibility/ethics-opinions/aba-formal-opinion-512.pdf">https://www.americanbar.org/content/dam/aba/administrative/professional_responsibility/ethics-opinions/aba-formal-opinion-512.pdf</a></li><li>Brynjolfsson, Chandar and Chen, "Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of AI", Stanford Digital Economy Lab, revised 12 August 2026. <a href="https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine">https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine</a></li><li>Charlotin, AI Hallucination Cases database, updated 28 October 2026. <a href="https://www.damiencharlotin.com/hallucinations/">https://www.damiencharlotin.com/hallucinations/</a></li><li>Complizen, "FDA has cleared 1,614 AI medical devices", count of the FDA AI-enabled device list, September 2026. <a href="https://www.complizen.ai/post/fda-has-cleared-1614-ai-medical-devices">https://www.complizen.ai/post/fda-has-cleared-1614-ai-medical-devices</a></li><li>Crunchbase News, "The Crunchbase Tech Layoffs Tracker", US-based tech companies, updated 28 October 2026. <a href="https://news.crunchbase.com/startups/tech-layoffs/">https://news.crunchbase.com/startups/tech-layoffs/</a></li><li>Crunchbase News (Azevedo), "Tech Layoffs Outpace 2025 As Big Companies Shift Spending To AI", citing Layoffs.fyi, 25 September 2026. <a href="https://news.crunchbase.com/?p=94113">https://news.crunchbase.com/?p=94113</a></li><li>Cui, Demirer, Jaffe, Musolff, Peng and Salz, "The Effects of Generative AI on High-Skilled Work", Management Science, 2025. <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.2025.00535">https://pubsonline.informs.org/doi/10.1287/mnsc.2025.00535</a></li><li>Entrepreneur, citing a Bloomberg interview, "Klarna is hiring customer service agents after AI couldn't cut it", May 2025. <a href="https://www.entrepreneur.com/business-news/klarna-ceo-reverses-course-by-hiring-more-humans-not-ai/491396">https://www.entrepreneur.com/business-news/klarna-ceo-reverses-course-by-hiring-more-humans-not-ai/491396</a></li><li>Fortune, on Geoffrey Hinton's 2016 radiology prediction, 4 May 2026. <a href="https://fortune.com/article/ai-godfather-radiologists-obsolete-salaries-up-to-571k-demand-growing/">https://fortune.com/article/ai-godfather-radiologists-obsolete-salaries-up-to-571k-demand-growing/</a></li><li>Google Cloud, "Announcing the 2025 DORA Report", 23 September 2025. <a href="https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report">https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report</a></li><li>Google Research, FEABench code and data release (FEABench Gold, 15 problems), Apache 2.0 licence, last updated 7 May 2025, retrieved 29 October 2026. <a href="https://github.com/google/feabench">https://github.com/google/feabench</a></li><li>Guo and others, "Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs" (EngDesign), NeurIPS 2025. <a href="https://arxiv.org/abs/2509.16204">https://arxiv.org/abs/2509.16204</a></li><li>Indeed Hiring Lab (Gallacher), "AI and Job Postings: From Destruction to Creation?", 8 July 2026. <a href="https://hiringlab.indeed.com/2026/07/08/ai-and-job-postings-from-destruction-to-creation/">https://hiringlab.indeed.com/2026/07/08/ai-and-job-postings-from-destruction-to-creation/</a></li><li>Indeed Hiring Lab, "The Labor Market Is Tilting Toward Seniority", 23 July 2026. <a href="https://hiringlab.indeed.com/2026/07/23/the-labor-market-is-tilting-toward-seniority/">https://hiringlab.indeed.com/2026/07/23/the-labor-market-is-tilting-toward-seniority/</a></li><li>Klarna, press release on its AI assistant, 27 February 2024. <a href="https://www.klarna.com/international/press/klarna-ai-assistant-handles-two-thirds-of-customer-service-chats-in-its-first-month/">https://www.klarna.com/international/press/klarna-ai-assistant-handles-two-thirds-of-customer-service-chats-in-its-first-month/</a></li><li>Li, Zhang and Hassan, "The Rise of AI Teammates in Software Engineering (SE) 3.0", Table 5, 20 July 2025. <a href="https://arxiv.org/abs/2507.15003">https://arxiv.org/abs/2507.15003</a></li><li>METR, "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity", 10 July 2025. <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/">https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/</a></li><li>Mudur and others (Google Research, Harvard), "FEABench: Evaluating Language Models on Multiphysics Reasoning Ability", 8 April 2025. <a href="https://arxiv.org/abs/2504.06260">https://arxiv.org/abs/2504.06260</a></li><li>NCEES, Position Statement 6.10, "Responsible Use of AI in Engineering and Surveying", 2025, as circulated by the Idaho licensing board, 23 January 2026. <a href="https://dopl.idaho.gov/wp-content/uploads/2026/01/IPELS-AI-Statement.pdf">https://dopl.idaho.gov/wp-content/uploads/2026/01/IPELS-AI-Statement.pdf</a></li><li>North Carolina Board of Examiners for Engineers and Surveyors, "Guidelines on the Use of AI in Engineering and Surveying Services", 16 July 2025. <a href="https://www.ncbels.org/wp-content/uploads/2025/07/Guidelines-on-the-Use-of-Artificial-Intelligence-in-Engineering-and-Surveying-Services-FINAL.pdf">https://www.ncbels.org/wp-content/uploads/2025/07/Guidelines-on-the-Use-of-Artificial-Intelligence-in-Engineering-and-Surveying-Services-FINAL.pdf</a></li><li>NSPE Board of Ethical Review, Case 24-2, "Use of AI in Engineering Practice". <a href="https://www.nspe.org/sites/default/files/24-2-Artificial-Intelligence-in-Engineering-Practice.pdf">https://www.nspe.org/sites/default/files/24-2-Artificial-Intelligence-in-Engineering-Practice.pdf</a></li><li>Peng, Kalliamvakou, Cihon and Demirer, "The Impact of AI on Developer Productivity: Evidence from GitHub Copilot", February 2023. <a href="https://arxiv.org/abs/2302.06590">https://arxiv.org/abs/2302.06590</a></li><li>Stack Overflow, Developer Survey 2025, AI section, July 2025. <a href="https://survey.stackoverflow.co/2025/ai">https://survey.stackoverflow.co/2025/ai</a></li><li>US Bureau of Labor Statistics, Occupational Outlook Handbook: Civil Engineers, modified 27 August 2026. <a href="https://www.bls.gov/ooh/architecture-and-engineering/civil-engineers.htm">https://www.bls.gov/ooh/architecture-and-engineering/civil-engineers.htm</a></li><li>US Bureau of Labor Statistics, Occupational Outlook Handbook: Computer Programmers, modified 27 August 2026. <a href="https://www.bls.gov/ooh/computer-and-information-technology/computer-programmers.htm">https://www.bls.gov/ooh/computer-and-information-technology/computer-programmers.htm</a></li><li>US Bureau of Labor Statistics, Occupational Outlook Handbook: Software Developers, Quality Assurance Analysts and Testers, modified 27 August 2026. <a href="https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm">https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm</a></li><li>Zaker Esteghamati, Bean, Burton and Naser, "Beyond development: Challenges in deploying machine learning models for structural engineering applications", 18 April 2024. <a href="https://arxiv.org/abs/2404.12544">https://arxiv.org/abs/2404.12544</a></li></ul>
+<h2>Reusable prompts</h2>
+<p class="prompt1">From the sources listed above, compare who does the first pass and who still signs in law, radiology, customer support and coding; test the engineering case against FEABench Gold and the licensing boards' statements; and write a short article that states the hypothesis, with the charts and the two scenarios shown here.</p>
+<p>Data: the public data set for this article is FEABench Gold. It holds 15 physics and engineering simulation problems, each with its target quantity, units, a plain-language model specification and the reference solution code for a commercial multiphysics solver. It is the set behind the "one of 15" result above. Source: Google Research, in the FEABench code and data release on GitHub (<a href="https://github.com/google/feabench">https://github.com/google/feabench</a>, file data/benchmark.zip). Public status: public, Apache 2.0 licence. Date: last updated 7 May 2025; retrieved 29 October 2026. A reader can pose any of the 15 problems to the tool of their choice and compare its answer with the target value. The numbers behind Figures 1 to 3 are in the CSV files named under each figure.</p>
+<p>Readers are welcome to share their own results with the FEABench Gold problems, or data that would improve this comparison, at support@aceengineer.com.</p>
+<p class="dc">Questions: <a href="mailto:support@aceengineer.com">support@aceengineer.com</a> &middot; <a href="https://www.aceengineer.com/">AceEngineer</a> &middot; &copy; 2026 AceEngineer &middot; 11511 Piping Rock Dr., Houston, TX 77077<br>Deckhand: Make Engineering Enjoyable Again</p>
+</main>
+<script>const D={"lay": {"x": [2022, 2023, 2024, 2025, 2026], "y": [93000, 191000, 95667, 127000, 94046], "t": ["more than 93,000 (full year)<br>Crunchbase Tech Layoffs Tracker, updated 28 Oct 2026", "more than 191,000 (full year)<br>Crunchbase Tech Layoffs Tracker, updated 28 Oct 2026", "at least 95,667 (full year)<br>Crunchbase Tech Layoffs Tracker, updated 28 Oct 2026", "around 127,000 (full year)<br>Crunchbase Tech Layoffs Tracker, updated 28 Oct 2026", "at least 94,046 (January to August)<br>Crunchbase News, 25 Sep 2026"]}, "spd": [{"y": "Lab task (GitHub Copilot), Feb 2023", "x": 55.8, "kind": "measured", "t": "faster on one set task: 55.8 %<br>Peng and others, arXiv 2302.06590"}, {"y": "Three company field experiments, 2025", "x": 26.0, "kind": "measured", "t": "more tasks completed: 26 %<br>Cui and others, Management Science 2025"}, {"y": "Randomised trial (experienced developers), Jul 2025", "x": 20.0, "kind": "believed", "t": "believed speed-up: 20 %<br>METR, 10 Jul 2025"}, {"y": "Randomised trial (experienced developers), Jul 2025", "x": -19.0, "kind": "measured", "t": "took 19 % longer (shown as -19): -19 %<br>METR, 10 Jul 2025"}], "job": {"y": ["Computer programmers", "Civil engineers", "Software developers, QA analysts and testers"], "x": [-7, 6, 10]}};
+
+const B='#1f6fa8',O='#c2410c',G='#8a99a3';
+const base={font:{family:'Segoe UI, Helvetica, Arial, sans-serif',size:13,color:'#26323a'},margin:{l:70,r:20,t:20,b:60},
+ paper_bgcolor:'#fff',plot_bgcolor:'#fff',hoverlabel:{bgcolor:'#fff',bordercolor:'#0b3d5c',font:{color:'#26323a'}},showlegend:false};
+const ax=(t,o)=>Object.assign({title:{text:t},gridcolor:'#e6ebef',zerolinecolor:'#5a6b76',linecolor:'#d0d7de'},o||{});
+const cfg={displayModeBar:false,responsive:true};
+Plotly.newPlot('f1',[{type:'bar',x:D.lay.x,y:D.lay.y,hovertext:D.lay.t,hovertemplate:'%{hovertext}<extra></extra>',
+ marker:{color:D.lay.x.map(x=>x===2026?'#9cc3e0':B),line:{color:'#fff',width:2}}}],
+ Object.assign({},base,{xaxis:ax('Year',{dtick:1}),yaxis:ax('US tech jobs cut (count)',{tickformat:',',dtick:50000}),
+ annotations:[{x:2026,y:D.lay.y[4],text:'Jan to Aug',showarrow:false,yshift:12,font:{size:12,color:'#5a6b76'}}]}),cfg);
+Plotly.newPlot('f2',['measured','believed'].map(k=>({type:'scatter',mode:'markers',name:k,
+ x:D.spd.filter(r=>r.kind===k).map(r=>r.x),y:D.spd.filter(r=>r.kind===k).map(r=>r.y),text:D.spd.filter(r=>r.kind===k).map(r=>r.t),
+ hovertemplate:'%{text}<extra></extra>',marker:{size:13,symbol:k==='measured'?'circle':'diamond-open',color:k==='measured'?B:O,line:{width:2,color:k==='measured'?'#fff':O}}})),
+ Object.assign({},base,{showlegend:true,legend:{orientation:'h',y:-0.28},margin:{l:290,r:20,t:20,b:80},
+ xaxis:ax('Change with AI (%); positive is faster or more output',{range:[-30,60],dtick:10,zeroline:true}),yaxis:ax('',{automargin:true})}),cfg);
+Plotly.newPlot('f3',[{type:'bar',orientation:'h',y:D.job.y,x:D.job.x,hovertemplate:'%{y}: %{x} % projected, 2025 to 2035<br>US BLS, Aug 2026<extra></extra>',
+ marker:{color:D.job.x.map(v=>v<0?O:B)},text:D.job.x.map(v=>(v>0?'+':'−')+Math.abs(v)+' %'),textposition:'outside',cliponaxis:false}],
+ Object.assign({},base,{margin:{l:270,r:40,t:20,b:60},xaxis:ax('Projected employment change, 2025 to 2035 (%)',{range:[-10,14],dtick:2,zeroline:true}),yaxis:ax('',{automargin:true})}),cfg);
+document.querySelectorAll('.fk-ctl button').forEach(b=>b.addEventListener('click',()=>{
+ const f=document.getElementById('fork');f.dataset.show=b.dataset.show;
+ document.querySelectorAll('.fk-ctl button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));}));
+</script>
+<include src="partials/footer.html"></include>
+</body>
+</html>

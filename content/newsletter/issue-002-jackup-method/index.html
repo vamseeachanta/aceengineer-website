@@ -1,0 +1,1014 @@
+---
+rootPath: "../../"
+---
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jack-up site-specific analysis (Deckhand newsletter, issue 2)</title>
+<meta name="description" content="What a site-specific assessment of a jack-up or liftboat checks, the site and unit data it needs, and the codes and US regulations that apply.">
+<meta property="og:title" content="Jack-up site-specific analysis (Deckhand newsletter, issue 2)">
+<meta property="og:description" content="What a site-specific assessment of a jack-up or liftboat checks, the site and unit data it needs, and the codes and US regulations that apply.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ canonicalUrl }}">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Jack-up site-specific analysis (Deckhand newsletter, issue 2)">
+<meta name="twitter:description" content="What a site-specific assessment of a jack-up or liftboat checks, the site and unit data it needs, and the codes and US regulations that apply.">
+<meta name="twitter:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Jack-up site-specific analysis (Deckhand newsletter, issue 2)", "name": "Jack-up site-specific analysis (Deckhand newsletter, issue 2)", "description": "What a site-specific assessment of a jack-up or liftboat checks, the site and unit data it needs, and the codes and US regulations that apply.", "datePublished": "2026-11-04", "url": "https://www.aceengineer.com/newsletter/issue-002-jackup-method/", "inLanguage": "en-US", "publisher": {"@id": "https://www.aceengineer.com/#organization"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.aceengineer.com/"}, {"@type": "ListItem", "position": 2, "name": "Newsletter", "item": "https://www.aceengineer.com/newsletter/"}, {"@type": "ListItem", "position": 3, "name": "Jack-up site-specific analysis (Deckhand newsletter, issue 2)", "item": "https://www.aceengineer.com/newsletter/issue-002-jackup-method/"}]}]</script>
+<include src="partials/head-common.html"></include>
+<style>
+/* AceEngineer house style 1.6 */
+
+/* 1. Tokens ---------------------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  /* brand palette: no other brand colours, no gradients */
+  --ace-mark-navy: #0B3D91;   /* the wordmark "Ace" only */
+  --ace-navy: #0b3d5c;        /* structure navy: headings, rules, outlines, dark grounds */
+  --ace-teal: #2BB2A6;        /* rules, square bullets, edges; never text */
+  --ace-teal-deep: #0e7e88;   /* kickers and small headings on white; never on tint */
+  --ace-teal-ink: #0d7680;    /* teal-deep 6 % darker: small teal type that sits on the tint ground too (4.83:1 on tint, 5.36:1 on white) */
+  --ace-teal-lift: #3FC4B8;   /* text and rules on navy */
+  --ace-ink: #26323a;         /* body text */
+  --ace-muted: #5a6b76;       /* notes, captions, bylines */
+  --ace-tint: #eef4f8;        /* boxes, table header ground, page ground */
+  --ace-hairline: #d0d7de;    /* thin dividers */
+  --ace-underline: #b8c9d4;   /* link underline, input outline */
+  --ace-paper: #ffffff;
+
+  /* typefaces: system stacks, nothing is downloaded */
+  --hs-font-ui: "Segoe UI", Helvetica, Arial, sans-serif;                    /* headings, labels, tables, controls */
+  --hs-font-body: Georgia, "Times New Roman", serif;                         /* running text: the newspaper voice */
+  --hs-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;  /* paths, code, identifiers */
+
+  /* type scale */
+  --hs-fs-xs: 11.5px;
+  --hs-fs-sm: 13px;
+  --hs-fs-md: 14.5px;
+  --hs-fs-body: 16px;
+  --hs-fs-lg: 18px;
+  --hs-fs-h3: 17px;
+  --hs-fs-h2: clamp(20px, 1.1vw + 14px, 24px);
+  --hs-fs-h1: clamp(24px, 1.8vw + 16px, 34px);
+  --hs-lh: 1.55;
+  --hs-lh-tight: 1.2;
+  --hs-track-kicker: .18em;
+
+  /* spacing in 4 px steps; page side margin 28 px, 16 px on phones */
+  --hs-s1: 4px; --hs-s2: 8px; --hs-s3: 12px; --hs-s4: 16px; --hs-s5: 24px; --hs-s6: 32px; --hs-s7: 48px;
+  --hs-gutter: 28px;
+  --hs-gap: 20px;
+  --hs-max: 1240px;
+
+  /* shape: square corners as in the newsletter; 2 px only on small controls */
+  --hs-radius: 0;
+  --hs-radius-sm: 2px;
+  --hs-rule: 3px;            /* teal accent rule: top of a page, top of a box */
+  --hs-rule-section: 1.5px;  /* navy section rule */
+  --hs-sq: 6px;              /* square bullet */
+
+  /* depth: kept faint; the brand separates with rules, not shadows */
+  --hs-shadow-1: 0 1px 2px rgba(11, 61, 92, .08);
+  --hs-shadow-2: 0 6px 18px rgba(11, 61, 92, .14);
+
+  /* roles: components read only these, so dark mode swaps them in one place */
+  --hs-bg: var(--ace-tint);
+  --hs-surface: var(--ace-paper);
+  --hs-surface-2: var(--ace-tint);
+  --hs-text: var(--ace-ink);
+  --hs-text-muted: var(--ace-muted);
+  --hs-heading: var(--ace-navy);
+  --hs-kicker: var(--ace-teal-ink);
+  --hs-link: var(--ace-navy);
+  --hs-link-line: var(--ace-underline);
+  --hs-line: var(--ace-hairline);
+  --hs-line-mid: var(--ace-underline);
+  --hs-line-strong: var(--ace-navy);
+  --hs-accent: var(--ace-teal);
+  --hs-rule-alt: var(--ace-navy);
+  --hs-primary: var(--ace-navy);
+  --hs-on-primary: #ffffff;
+  --hs-select: var(--ace-tint);
+  --hs-code-bg: var(--ace-paper);
+  --hs-band: var(--ace-navy);
+  --hs-on-band: #ffffff;
+  --hs-band-accent: var(--ace-teal-lift);
+  --hs-focus: var(--ace-teal-deep);
+
+  /* chart series: two at most (validated: CVD and normal-vision separation pass in both modes; teal on white is
+     below 3:1, so every bar carries its value or the chart has a table view) */
+  --hs-chart-1: var(--ace-teal);
+  --hs-chart-2: var(--ace-navy);
+
+  /* status colours: for flags, checks and meters only; they are not brand colours (brand sheet section 4) */
+  --hs-ok: #1a6b34;   --hs-ok-bg: #e6f3ea;   --hs-ok-line: #2e8b57;
+  --hs-warn: #8a5300; --hs-warn-bg: #fff3dc; --hs-warn-line: #d99a2b;
+  --hs-crit: #b42318; --hs-crit-bg: #fdecea; --hs-crit-line: #d03b3b;
+}
+
+/* Dark: the newsletter's "on navy" treatment (navy grounds, white text, teal-lift accents and rules).
+   A page can force a theme with <html data-theme="light"> or <html data-theme="dark">. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --hs-bg: #061a28;
+    --hs-surface: #0b2638;
+    --hs-surface-2: #10324a;
+    --hs-text: #e4edf2;
+    --hs-text-muted: #9db2c0;
+    --hs-heading: #ffffff;
+    --hs-kicker: var(--ace-teal-lift);
+    --hs-link: #e4edf2;
+    --hs-link-line: var(--ace-teal-lift);
+    --hs-line: #21475f;
+    --hs-line-mid: #33607a;
+    --hs-line-strong: #4f7f99;
+    --hs-accent: var(--ace-teal-lift);
+    --hs-rule-alt: #9db2c0;
+    --hs-primary: var(--ace-teal-lift);
+    --hs-on-primary: #062233;
+    --hs-select: #123a52;
+    --hs-code-bg: #081f2f;
+    --hs-band: #04131e;
+    --hs-on-band: #e4edf2;
+    --hs-band-accent: var(--ace-teal-lift);
+    --hs-focus: var(--ace-teal-lift);
+    --hs-chart-1: var(--ace-teal-lift);
+    --hs-chart-2: #4f7f99;
+    --hs-shadow-1: 0 1px 2px rgba(0, 0, 0, .35);
+    --hs-shadow-2: 0 6px 18px rgba(0, 0, 0, .45);
+    --hs-ok: #7fd6a0;   --hs-ok-bg: #11301e;   --hs-ok-line: #3fae6a;
+    --hs-warn: #f2c46d; --hs-warn-bg: #33270f; --hs-warn-line: #c98f2a;
+    --hs-crit: #ff9d92; --hs-crit-bg: #3b1714; --hs-crit-line: #e5675c;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --hs-bg: #061a28;
+  --hs-surface: #0b2638;
+  --hs-surface-2: #10324a;
+  --hs-text: #e4edf2;
+  --hs-text-muted: #9db2c0;
+  --hs-heading: #ffffff;
+  --hs-kicker: var(--ace-teal-lift);
+  --hs-link: #e4edf2;
+  --hs-link-line: var(--ace-teal-lift);
+  --hs-line: #21475f;
+  --hs-line-mid: #33607a;
+  --hs-line-strong: #4f7f99;
+  --hs-accent: var(--ace-teal-lift);
+  --hs-rule-alt: #9db2c0;
+  --hs-primary: var(--ace-teal-lift);
+  --hs-on-primary: #062233;
+  --hs-select: #123a52;
+  --hs-code-bg: #081f2f;
+  --hs-band: #04131e;
+  --hs-on-band: #e4edf2;
+  --hs-band-accent: var(--ace-teal-lift);
+  --hs-focus: var(--ace-teal-lift);
+  --hs-chart-1: var(--ace-teal-lift);
+  --hs-chart-2: #4f7f99;
+  --hs-shadow-1: 0 1px 2px rgba(0, 0, 0, .35);
+  --hs-shadow-2: 0 6px 18px rgba(0, 0, 0, .45);
+  --hs-ok: #7fd6a0;   --hs-ok-bg: #11301e;   --hs-ok-line: #3fae6a;
+  --hs-warn: #f2c46d; --hs-warn-bg: #33270f; --hs-warn-line: #c98f2a;
+  --hs-crit: #ff9d92; --hs-crit-bg: #3b1714; --hs-crit-line: #e5675c;
+}
+
+/* 2. Base ------------------------------------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--hs-bg);
+  color: var(--hs-text);
+  font: 400 var(--hs-fs-body)/var(--hs-lh) var(--hs-font-body);
+  font-kerning: normal;
+  font-variant-numeric: lining-nums;   /* Georgia's default figures are old-style: 'P0' read as 'Po', '13:00Z' as '13:ooZ'.
+                                       A 'font:' shorthand resets this: set it again after any serif shorthand. */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+h1, h2, h3, h4 {
+  font-family: var(--hs-font-ui);
+  font-weight: 600;
+  line-height: var(--hs-lh-tight);
+  letter-spacing: -.01em;
+  color: var(--hs-heading);
+  margin: 0 0 var(--hs-s2);
+  text-wrap: balance;
+}
+h1 { font-size: var(--hs-fs-h1); }
+h2 { font-size: var(--hs-fs-h2); }
+h3 { font-size: var(--hs-fs-h3); }
+h4 { font-size: var(--hs-fs-body); }
+p { margin: 0 0 var(--hs-s3); }
+p, li { text-wrap: pretty; }     /* no single short word stranded on a last line (added 2026-10-18) */
+a {
+  color: var(--hs-link);
+  text-decoration: underline;
+  text-decoration-color: var(--hs-link-line);
+  text-underline-offset: 2px;
+}
+a:hover { text-decoration-color: currentColor; }
+code, kbd, pre, samp { font-family: var(--hs-font-mono); font-size: .9em; }
+hr { border: 0; border-top: 1px solid var(--hs-line); margin: var(--hs-s5) 0; }
+img, video { max-width: 100%; height: auto; }
+button, input, select, textarea { font: inherit; color: inherit; }
+input[type="radio"], input[type="checkbox"] { accent-color: var(--hs-primary); }
+:focus-visible { outline: 2px solid var(--hs-focus); outline-offset: 2px; }
+::selection { background: rgba(43, 178, 166, .3); }
+
+/* 3. Layout: container, grid, 12 columns ---------------------------------------------------------- */
+.hs-container {
+  width: 100%;
+  max-width: calc(var(--hs-max) + 2 * var(--hs-gutter));
+  margin-inline: auto;
+  padding-inline: var(--hs-gutter);
+}
+.hs-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--hs-gap); align-items: start; }
+.hs-grid > * { min-width: 0; }
+.hs-grid-auto { grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+@media (min-width: 900px) {
+  .hs-grid-2, .hs-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1200px) {
+  .hs-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.hs-row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--hs-gap); }
+.hs-row > * { grid-column: 1 / -1; min-width: 0; }      /* phones: every column is full width */
+@media (min-width: 768px) {
+  .hs-col-2 { grid-column: span 2; }  .hs-col-3 { grid-column: span 3; }  .hs-col-4 { grid-column: span 4; }
+  .hs-col-5 { grid-column: span 5; }  .hs-col-6 { grid-column: span 6; }  .hs-col-7 { grid-column: span 7; }
+  .hs-col-8 { grid-column: span 8; }  .hs-col-9 { grid-column: span 9; }  .hs-col-12 { grid-column: span 12; }
+}
+.hs-stack > * + * { margin-top: var(--hs-s3); }
+.hs-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--hs-s2); }
+.hs-spread { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--hs-s2) var(--hs-s4); }
+
+/* 4. Type helpers ---------------------------------------------------------------------------------- */
+.hs-kicker {
+  font: 700 var(--hs-fs-xs)/1.3 var(--hs-font-ui);
+  letter-spacing: var(--hs-track-kicker);
+  text-transform: uppercase;
+  color: var(--hs-kicker);
+  margin: 0 0 var(--hs-s1);
+}
+.hs-masthead {                       /* newsletter masthead and lead headline: Georgia bold, navy */
+  font: 700 var(--hs-fs-h1)/1.08 var(--hs-font-body);
+  font-variant-numeric: lining-nums;
+  letter-spacing: -.015em;
+  color: var(--hs-heading);
+  margin: 0;
+}
+.hs-masthead .hi { color: var(--hs-kicker); }
+.hs-deck { font: italic var(--hs-fs-lg)/1.45 var(--hs-font-body); font-variant-numeric: lining-nums; color: var(--hs-text); }
+.hs-muted { color: var(--hs-text-muted); }
+.hs-small { font: var(--hs-fs-sm)/1.45 var(--hs-font-ui); color: var(--hs-text-muted); }
+.hs-ui { font-family: var(--hs-font-ui); }
+.hs-num { font-family: var(--hs-font-ui); font-variant-numeric: tabular-nums lining-nums; }
+.hs-mono { font-family: var(--hs-font-mono); font-size: .9em; }
+
+/* 5. Sections: navy section rule, square navy step number, small-capital sub-heading -------------- */
+.hs-section {
+  margin-top: var(--hs-s6);
+  padding-top: var(--hs-s4);
+  border-top: var(--hs-rule-section) solid var(--hs-line-strong);
+}
+.hs-section-head { display: flex; align-items: flex-start; gap: var(--hs-s3); margin: 0 0 var(--hs-s3); }
+.hs-section-head h2 { margin: 0; }
+.hs-section-head .hs-kicker { margin-bottom: 2px; }
+.hs-step {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  background: var(--hs-primary);
+  color: var(--hs-on-primary);
+  font: 700 13px/1 var(--hs-font-ui);
+  border-radius: var(--hs-radius);
+}
+.hs-subhead {
+  display: flex;
+  align-items: center;
+  gap: var(--hs-s3);
+  margin: var(--hs-s5) 0 var(--hs-s3);
+  font: 700 var(--hs-fs-xs)/1.3 var(--hs-font-ui);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hs-heading);
+}
+.hs-subhead::after { content: ""; flex: 1 1 auto; border-top: 1px solid var(--hs-line); }
+
+/* 6. Cards: white box, hairline outline, 3 px teal top rule ---------------------------------------- */
+.hs-card {
+  min-width: 0;
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line);
+  border-top: var(--hs-rule) solid var(--hs-accent);
+  border-radius: var(--hs-radius);
+  box-shadow: var(--hs-shadow-1);
+  padding: var(--hs-s4);
+  overflow-wrap: break-word;
+}
+.hs-card-outline { border-color: var(--hs-line-strong); border-top-color: var(--hs-accent); }  /* newsletter box */
+.hs-card-plain { border-top-width: 1px; border-top-color: var(--hs-line); }
+.hs-card-title { font: 600 var(--hs-fs-h3)/1.3 var(--hs-font-ui); color: var(--hs-heading); margin: 0 0 var(--hs-s2); }
+.hs-card-meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--hs-s1) var(--hs-s2);
+  margin: 0 0 var(--hs-s2);
+  font: var(--hs-fs-sm)/1.4 var(--hs-font-ui);
+  color: var(--hs-text-muted);
+}
+
+/* 7. Badges, chips and tags ------------------------------------------------------------------------ */
+.hs-badge {
+  display: inline-block;
+  padding: 0 7px;
+  font: 700 var(--hs-fs-xs)/1.6 var(--hs-font-ui);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hs-on-primary);
+  background: var(--hs-primary);
+  border: 1px solid var(--hs-primary);
+  border-radius: var(--hs-radius-sm);
+}
+.hs-badge-outline { color: var(--hs-heading); background: transparent; border-color: var(--hs-line-strong); }
+.hs-chip {
+  display: inline-block;
+  padding: 0 8px;
+  font: 400 var(--hs-fs-sm)/1.55 var(--hs-font-ui);
+  white-space: nowrap;
+  color: var(--hs-text-muted);
+  background: var(--hs-surface-2);
+  border: 1px solid var(--hs-line);
+  border-radius: var(--hs-radius-sm);
+}
+.hs-chip-ok   { color: var(--hs-ok);   background: var(--hs-ok-bg);   border-color: transparent; font-weight: 600; }
+.hs-chip-warn { color: var(--hs-warn); background: var(--hs-warn-bg); border-color: transparent; font-weight: 600; }
+.hs-chip-crit { color: var(--hs-crit); background: var(--hs-crit-bg); border-color: transparent; font-weight: 600; }
+.hs-tag {                            /* the newsletter's "You choose" tag: kicker type, square teal-deep outline */
+  display: inline-block;
+  padding: 0 5px;
+  font: 600 var(--hs-fs-xs)/1.5 var(--hs-font-ui);
+  font-style: normal;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hs-kicker);
+  background: var(--hs-surface);
+  border: 1px solid currentColor;
+  border-radius: 0;
+}
+
+/* 8. Buttons --------------------------------------------------------------------------------------- */
+.hs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 14px;
+  font: 600 var(--hs-fs-md)/1.2 var(--hs-font-ui);
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--hs-heading);
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line-strong);
+  border-radius: var(--hs-radius-sm);
+  cursor: pointer;
+}
+.hs-btn:hover { background: var(--hs-surface-2); }
+.hs-btn-primary { color: var(--hs-on-primary); background: var(--hs-primary); border-color: var(--hs-primary); }
+.hs-btn-primary:hover { background: var(--hs-primary); filter: brightness(1.15); }
+.hs-btn-sm { min-height: 28px; padding: 2px 10px; font-size: var(--hs-fs-sm); }
+.hs-btn-quiet { color: var(--hs-text-muted); border-color: var(--hs-line-mid); font-weight: 400; }
+/* Phones: buttons and answer rows at least 44 px tall, the usual minimum touch target (added 2026-10-17). */
+@media (max-width: 600px) {
+  .hs-btn, .hs-btn-sm { min-height: 44px; }
+  .hs-option { min-height: 44px; padding: 10px 12px; }
+  details.hs-disclosure > summary { min-height: 44px; }   /* fold toggles were 18 px tall on phones */
+}
+
+/* 9. Tables: horizontal rules only (brand sheet section 7) ------------------------------------------ */
+.hs-table-wrap { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.hs-table, .hs-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font: var(--hs-fs-sm)/1.45 var(--hs-font-ui);
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--hs-text);
+  border-top: 1.5px solid var(--hs-line-strong);
+  border-bottom: 1px solid var(--hs-line-strong);
+}
+.hs-table caption, .hs-prose table caption {
+  caption-side: top; text-align: left; padding: 0 0 6px;
+  font: var(--hs-fs-sm)/1.4 var(--hs-font-ui); color: var(--hs-text-muted);
+}
+.hs-table thead th, .hs-prose table thead th {
+  padding: 7px 10px;
+  text-align: left;
+  white-space: nowrap;
+  font-weight: 600;
+  color: var(--hs-heading);
+  background: var(--hs-surface-2);
+  border-bottom: 1px solid var(--hs-line-strong);
+}
+.hs-table td, .hs-table tbody th, .hs-prose table td, .hs-prose table tbody th {
+  padding: 7px 10px; text-align: left; vertical-align: top; border-top: 1px solid var(--hs-line);
+}
+.hs-table .num, .hs-prose table .num { text-align: right; }
+
+/* 10. Callouts: tint box with a 4 px teal left edge -------------------------------------------------- */
+.hs-callout {
+  padding: var(--hs-s3) var(--hs-s4);
+  color: var(--hs-text);
+  background: var(--hs-surface-2);
+  border-left: 4px solid var(--hs-accent);
+  border-radius: var(--hs-radius);
+}
+.hs-callout > :last-child { margin-bottom: 0; }
+.hs-callout-title {
+  margin: 0 0 var(--hs-s1);
+  font: 700 var(--hs-fs-xs)/1.3 var(--hs-font-ui);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hs-heading);           /* navy, never teal-deep, on a tint ground */
+}
+.hs-callout-ok   { background: var(--hs-ok-bg);   border-left-color: var(--hs-ok-line); }
+.hs-callout-warn { background: var(--hs-warn-bg); border-left-color: var(--hs-warn-line); }
+.hs-callout-crit { background: var(--hs-crit-bg); border-left-color: var(--hs-crit-line); }
+
+/* 11. Collapsible sections: a panel, and a small inline disclosure; + and minus as in the newsletter -- */
+details.hs-panel {
+  min-width: 0;
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line);
+  border-top: var(--hs-rule) solid var(--hs-accent);
+  border-radius: var(--hs-radius);
+  box-shadow: var(--hs-shadow-1);
+}
+details.hs-panel > summary {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--hs-s3);
+  padding: var(--hs-s3) var(--hs-s4);
+  list-style: none;
+  cursor: pointer;
+  font: 600 var(--hs-fs-lg)/1.3 var(--hs-font-ui);
+  color: var(--hs-heading);
+}
+details.hs-panel > summary::-webkit-details-marker { display: none; }
+details.hs-panel > summary::after {
+  content: "+";
+  margin-left: auto;
+  padding-left: var(--hs-s3);
+  font: 700 22px/1 var(--hs-font-ui);
+  color: var(--hs-kicker);
+}
+details.hs-panel[open] > summary { border-bottom: 1px solid var(--hs-line); }
+details.hs-panel[open] > summary::after { content: "\2212"; }
+.hs-panel-body { padding: var(--hs-s4); }
+details.hs-disclosure > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  cursor: pointer;
+  font: 600 var(--hs-fs-sm)/1.4 var(--hs-font-ui);
+  color: var(--hs-link);
+}
+details.hs-disclosure > summary::-webkit-details-marker { display: none; }
+details.hs-disclosure > summary::before {
+  content: "+";
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  font: 700 12px/1 var(--hs-font-ui);
+  color: var(--hs-heading);
+  border: 1px solid var(--hs-line-strong);
+}
+details.hs-disclosure[open] > summary::before { content: "\2212"; }
+
+/* 12. Lists: square teal bullets, never round ------------------------------------------------------- */
+.hs-list-square { list-style: none; margin: 0 0 var(--hs-s3); padding: 0; }
+.hs-list-square > li { position: relative; margin: 0 0 var(--hs-s1); padding-left: 16px; }
+.hs-list-square > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .6em;
+  width: var(--hs-sq);
+  height: var(--hs-sq);
+  background: var(--hs-accent);
+}
+
+/* 13. Forms: fields and option rows ---------------------------------------------------------------- */
+.hs-field {
+  width: 100%;
+  min-width: 0;
+  padding: 7px 9px;
+  font: var(--hs-fs-md)/1.4 var(--hs-font-ui);
+  color: var(--hs-text);
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line-mid);
+  border-radius: var(--hs-radius-sm);
+}
+.hs-field::placeholder { color: var(--hs-text-muted); }
+.hs-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  font: var(--hs-fs-md)/1.4 var(--hs-font-ui);
+  color: var(--hs-text);
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line);
+  border-radius: var(--hs-radius-sm);
+  cursor: pointer;
+}
+.hs-option:hover { border-color: var(--hs-line-mid); }
+.hs-option:has(input:checked) {
+  background: var(--hs-select);
+  border-color: var(--hs-line-strong);
+  box-shadow: inset 4px 0 0 var(--hs-accent);
+}
+
+/* 14. Bars, bands and notices ---------------------------------------------------------------------- */
+.hs-topbar {                         /* sticky page header: teal rule on top, as every newsletter page */
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--hs-surface);
+  border-top: var(--hs-rule) solid var(--hs-accent);
+  border-bottom: 1px solid var(--hs-line);
+  box-shadow: var(--hs-shadow-1);
+}
+.hs-footer {                         /* navy band, white text, teal-lift headings */
+  margin-top: var(--hs-s7);
+  padding: var(--hs-s5) 0 var(--hs-s6);
+  font: var(--hs-fs-sm)/1.55 var(--hs-font-ui);
+  color: var(--hs-on-band);
+  background: var(--hs-band);
+  border-top: var(--hs-rule) solid var(--hs-band-accent);
+}
+.hs-footer a { color: var(--hs-on-band); text-decoration-color: var(--hs-band-accent); }
+.hs-footer .hs-kicker { color: var(--hs-band-accent); }
+.hs-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  z-index: 50;
+  transform: translateX(-50%);
+  max-width: min(92vw, 640px);
+  padding: 10px 16px;
+  font: 600 var(--hs-fs-md)/1.4 var(--hs-font-ui);
+  color: var(--hs-on-band);
+  background: var(--hs-band);
+  border-top: var(--hs-rule) solid var(--hs-band-accent);
+  box-shadow: var(--hs-shadow-2);
+}
+
+/* 15. Prose: plain HTML from Markdown (guides, notes) takes the style inside .hs-prose ------------- */
+.hs-prose { max-width: 780px; }
+.hs-prose p, .hs-prose li { line-height: 1.58; }
+.hs-prose h2 {
+  margin-top: var(--hs-s6);
+  padding-top: var(--hs-s3);
+  border-top: var(--hs-rule-section) solid var(--hs-line-strong);
+}
+.hs-prose h3 { margin-top: var(--hs-s5); }
+.hs-prose ul { list-style: none; padding-left: 0; }
+.hs-prose ul > li { position: relative; padding-left: 16px; margin-bottom: var(--hs-s1); }
+.hs-prose ul > li::before {
+  content: ""; position: absolute; left: 0; top: .62em;
+  width: var(--hs-sq); height: var(--hs-sq); background: var(--hs-accent);
+}
+.hs-prose ol { padding-left: 1.5em; }
+.hs-prose ol > li::marker { font: 700 var(--hs-fs-sm) var(--hs-font-ui); color: var(--hs-heading); }
+.hs-prose blockquote {
+  margin: var(--hs-s4) 0; padding: var(--hs-s3) var(--hs-s4);
+  background: var(--hs-surface-2); border-left: 4px solid var(--hs-accent);
+}
+.hs-prose code { padding: 1px 4px; background: var(--hs-surface-2); border: 1px solid var(--hs-line); }
+.hs-prose pre { padding: var(--hs-s3); overflow-x: auto; background: var(--hs-code-bg); border: 1px solid var(--hs-line); }
+.hs-prose pre code { padding: 0; border: 0; background: none; }
+
+/* 16. Charts: inline SVG, one axis, at most two series; keys are squares ------------------------------ */
+svg.hs-chart { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--hs-font-ui); }
+.hs-ch-axis { stroke: var(--hs-line-mid); stroke-width: 1; }
+.hs-ch-grid { stroke: var(--hs-line); stroke-width: 1; }
+.hs-ch-s1 { fill: var(--hs-chart-1); }
+.hs-ch-s2 { fill: var(--hs-chart-2); }
+.hs-ch-value { font-size: 12px; font-weight: 600; fill: var(--hs-text); }
+.hs-ch-label { font-size: 11px; font-weight: 600; fill: var(--hs-text); }
+.hs-ch-note { font-size: 11px; fill: var(--hs-text-muted); }
+.hs-ch-hit { fill: transparent; }
+.hs-ch-col:hover .hs-ch-bar, .hs-ch-col:focus .hs-ch-bar { fill-opacity: .8; }
+.hs-ch-col:focus { outline: none; }
+.hs-ch-col:focus .hs-ch-hit { stroke: var(--hs-focus); stroke-width: 1.5; }
+.hs-key { display: inline-block; width: 9px; height: 9px; margin-right: 6px; background: var(--hs-line-mid); }
+.hs-key-1 { background: var(--hs-chart-1); }
+.hs-key-2 { background: var(--hs-chart-2); }
+
+/* 17. Phones and print ----------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  :root { --hs-gutter: 16px; --hs-gap: 14px; }
+  .hs-card { padding: var(--hs-s3); }
+  .hs-panel-body { padding: var(--hs-s3); }
+  details.hs-panel > summary { padding: var(--hs-s3); font-size: var(--hs-fs-body); }
+}
+@media print {
+  .hs-topbar { position: static; box-shadow: none; }
+  .hs-card, details.hs-panel { box-shadow: none; break-inside: avoid; }
+  .hs-toast { display: none !important; }
+  /* Paper and PDF copies (added 2026-10-17): controls do nothing on paper, so they are left out;
+     headings stay with the text that follows them; no single stranded lines. .hs-no-print hides anything else. */
+  @page { margin: 14mm 12mm; }
+  button, .hs-btn, .hs-btn-sm, .hs-no-print { display: none !important; }
+  h1, h2, h3, h4 { break-after: avoid; }
+  p, li { orphans: 3; widows: 3; }
+}
+
+/* 18. Document reading mode: <body class="hs-doc"> (added 2026-10-19, version 1.6) -------------------
+   For guides and reports read end to end, on a computer or a phone. One sans-serif system stack for text
+   and headings (close to the company website's look; nothing is downloaded), 17 px running text (16 px on
+   phones) at line-height 1.6, text lines held to about 70 characters, a calm heading scale (h1 2.0x, h2 1.5x,
+   h3 1.2x of body), 15 px tables with roomier rows, and nothing smaller than 13 px. Same tokens and colours.
+   The rules use :where(.hs-doc) so they win over the house rules above by order, while a page's own rules
+   (its <style id="page-style">, read after this file) still win over them. Pages without the class keep
+   the look above: the dashboard and the newsletter do not use it. */
+.hs-doc {
+  --hs-font-ui: "Segoe UI", system-ui, -apple-system, Roboto, Ubuntu, Helvetica, Arial, sans-serif;
+  --hs-font-body: var(--hs-font-ui);
+  --hs-fs-xs: 13px;                      /* kickers, badges, tags, reference marks */
+  --hs-fs-sm: 15px;                      /* tables, notes, meta lines, footer */
+  --hs-fs-body: 17px;
+  --hs-fs-md: var(--hs-fs-body);         /* lists and contents read at body size */
+  --hs-fs-lg: 20px;                      /* lead paragraph */
+  --hs-fs-h1: calc(var(--hs-fs-body) * 2);
+  --hs-fs-h2: calc(var(--hs-fs-body) * 1.5);
+  --hs-fs-h3: calc(var(--hs-fs-body) * 1.2);
+  --hs-lh: 1.6;
+  --hs-lh-tight: 1.25;
+  --hs-track-kicker: .12em;
+  --hs-measure: 66ch;                    /* about 70 characters of running text per line */
+  --hs-max: 920px;                       /* one centred reading column; tables and boxes may use all of it */
+}
+@media (max-width: 640px) {
+  .hs-doc {
+    --hs-fs-body: 16px;
+    --hs-fs-lg: 18px;
+    --hs-fs-h1: calc(var(--hs-fs-body) * 1.75);   /* 28 px: the long titles stay on two lines */
+    --hs-fs-h2: calc(var(--hs-fs-body) * 1.4);
+    --hs-fs-h3: calc(var(--hs-fs-body) * 1.15);
+  }
+}
+:where(.hs-doc) h1 { font-weight: 700; line-height: 1.2; letter-spacing: -.015em; margin-bottom: var(--hs-s3); }
+:where(.hs-doc) h2 { font-weight: 600; line-height: 1.25; margin-bottom: var(--hs-s4); }
+:where(.hs-doc) h3 { font-weight: 600; line-height: 1.3; letter-spacing: 0; margin-bottom: var(--hs-s3); }
+:where(.hs-doc) h4 { font-weight: 600; line-height: 1.4; letter-spacing: 0; }
+:where(.hs-doc) p { margin: 0 0 1em; }
+:where(.hs-doc) :is(p, li, dd, blockquote) { max-width: var(--hs-measure); }
+:where(.hs-doc) .hs-deck { font-style: normal; line-height: 1.5; max-width: var(--hs-measure); }
+:where(.hs-doc) .hs-callout { max-width: calc(var(--hs-measure) + 2 * var(--hs-s4) + 4px); padding: var(--hs-s4) var(--hs-s4); }
+:where(.hs-doc) .hs-callout-title { margin-bottom: var(--hs-s2); }
+:where(.hs-doc) .hs-section { margin-top: var(--hs-s7); padding-top: var(--hs-s5); }
+:where(.hs-doc) .hs-section-head { margin-bottom: var(--hs-s4); align-items: center; }
+:where(.hs-doc) .hs-step { min-width: 30px; height: 30px; font-size: 15px; }
+:where(.hs-doc) .hs-list-square > li { margin-bottom: var(--hs-s2); }
+:where(.hs-doc) .hs-list-square > li::before, :where(.hs-doc) .hs-prose ul > li::before { top: .68em; }
+:where(.hs-doc) :is(.hs-table, .hs-prose table) { line-height: 1.5; }
+:where(.hs-doc) :is(.hs-table, .hs-prose table) caption { padding-bottom: var(--hs-s2); font-size: 14px; }
+:where(.hs-doc) .hs-table td, :where(.hs-doc) .hs-table th, :where(.hs-doc) .hs-prose table td,
+:where(.hs-doc) .hs-prose table th { padding: 10px; }       /* same specificity as the house rule: a page's own cell rules still win */
+:where(.hs-doc) .hs-table thead th, :where(.hs-doc) .hs-prose table thead th { padding: 10px; }
+:where(.hs-doc) .hs-footer { line-height: 1.6; }
+:where(.hs-doc) .hs-footer p { max-width: var(--hs-measure); }
+/* Phones: links that stand alone in a contents list are full 44 px touch targets. */
+@media (max-width: 640px) {
+  :where(.hs-doc) nav li > a { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
+/* 2026-10-23: long bare web addresses in running text wrap instead of forcing a sideways scroll at phone width
+   (same fault as the 23 Oct review-copy change panel). Words stay whole; only unbroken strings such as URLs break. */
+p a, li a, td a, dd a { overflow-wrap: anywhere; }
+
+/* 2026-10-23 16Z (dash1): table cells keep whole words. The comment-mode script marks every cell .rv-block, whose
+   overflow-wrap:anywhere also shrinks a column's minimum width to one letter, so in an auto-width table a short column
+   split its words ("Diffrac tion", "manage r"). break-word still breaks a string too long for its cell, but sizes
+   columns by whole words. Selector outranks .rv-block whatever the order. */
+table td.rv-block, table th.rv-block { overflow-wrap: break-word; }
+
+</style>
+<style>
+body.hs-doc{background:var(--hs-bg);color:var(--hs-text);margin:0}
+.nl-wrap{max-width:760px;margin:0 auto;padding:var(--hs-s5) 16px var(--hs-s7);background:var(--hs-surface);
+ border-top:var(--hs-rule) solid var(--hs-accent);box-sizing:border-box}
+.nl-kicker{font-family:var(--hs-font-ui);font-size:var(--hs-fs-sm);letter-spacing:var(--hs-track-kicker);
+ text-transform:uppercase;color:var(--hs-kicker);margin:0 0 var(--hs-s2)}
+.nl-wrap h1{color:var(--hs-heading);margin:0 0 var(--hs-s4)}
+.nl-wrap h2{color:var(--hs-heading);border-top:var(--hs-rule-section) solid var(--hs-line-strong);padding-top:var(--hs-s3);
+ margin-top:var(--hs-s6)}
+.nl-wrap h3{color:var(--hs-heading);margin-top:var(--hs-s5)}
+.nl-cap{font-family:var(--hs-font-ui);font-size:var(--hs-fs-md);color:var(--hs-heading);margin:var(--hs-s4) 0 var(--hs-s2)}
+.nl-tablewrap{overflow-x:auto;max-width:100%;margin:0 0 var(--hs-s4)}
+.nl-tablewrap table{border-collapse:collapse;font-family:var(--hs-font-ui);font-size:15px;min-width:100%}
+.nl-tablewrap th,.nl-tablewrap td{border:1px solid var(--hs-line);padding:8px 10px;text-align:left;vertical-align:top}
+.nl-tablewrap thead th{background:var(--hs-surface-2);color:var(--hs-heading)}
+.nl-wrap a{color:var(--hs-link);text-decoration-color:var(--hs-link-line);overflow-wrap:anywhere}
+details.provenance{margin-top:var(--hs-s6);border:1px solid var(--hs-line);background:var(--hs-surface-2);
+ padding:var(--hs-s3) var(--hs-s4);font-family:var(--hs-font-ui);font-size:var(--hs-fs-md);overflow-wrap:anywhere}
+details.provenance summary{cursor:pointer;color:var(--hs-heading)}
+details.provenance h3{margin-top:var(--hs-s4)}
+.ph{font-family:var(--hs-font-mono);font-size:.82em;background:var(--hs-warn-bg);color:var(--hs-text);
+ outline:1.5px dashed var(--hs-warn-line);outline-offset:1px;padding:0 .3em;overflow-wrap:anywhere;word-break:break-word}
+.nl-prompt{white-space:pre-wrap;font-family:var(--hs-font-mono);font-size:14px;line-height:1.5;background:var(--hs-code-bg);
+ border:1px solid var(--hs-line);padding:var(--hs-s3) var(--hs-s4);overflow-wrap:anywhere;max-width:100%;box-sizing:border-box}
+.hs-callout pre.panel{white-space:pre-wrap;font-family:var(--hs-font-mono);font-size:13px;overflow-wrap:anywhere;margin:0}
+.hs-callout ul{margin:0 0 var(--hs-s2) 18px;padding:0}
+
+.nl-sample{margin:var(--hs-s4) 0 var(--hs-s5)}
+.nl-sample svg.hs-chart{border:1px solid var(--hs-line);background:var(--hs-surface)}
+.nl-sample-tag{display:inline-block;font-family:var(--hs-font-ui);font-size:var(--hs-fs-xs);font-weight:700;
+ letter-spacing:var(--hs-track-kicker);color:var(--hs-warn);border:1.5px solid var(--hs-warn-line);
+ background:var(--hs-warn-bg);padding:0 .4em;margin-left:.4em}
+.nl-sample .nl-prod{font-family:var(--hs-font-ui);font-size:var(--hs-fs-xs);color:var(--hs-text-muted);margin:0}
+.nl-sample-row td{background:var(--hs-warn-bg);color:var(--hs-warn);font-weight:700;font-size:var(--hs-fs-xs);
+ letter-spacing:var(--hs-track-kicker)}
+.nl-sample .nl-key{font-family:var(--hs-font-ui);font-size:var(--hs-fs-xs);margin:var(--hs-s2) 0 0}
+.nl-sample .nl-key span{margin-right:12px;white-space:nowrap}
+.nl-sample .nl-key i{display:inline-block;width:9px;height:9px;margin-right:5px;vertical-align:baseline}
+
+.qp-box{border:2px solid var(--hs-warn-line);background:var(--hs-warn-bg);padding:12px 16px;margin:0 0 24px;
+ font-family:var(--hs-font-ui);font-size:14.5px}
+.qp-box h2{border:0;margin:0 0 6px;padding:0;font-size:17px}
+.qp-box ul{margin:0 0 0 18px;padding:0}.qp-box li{margin:0 0 6px}
+.qp-st{display:inline-block;min-width:104px;font-weight:700;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+.qp-done{color:var(--hs-ok)}.qp-part{color:var(--hs-warn)}.qp-not{color:var(--hs-crit)}
+.street{font-family:var(--hs-font-ui);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--hs-kicker);
+ border-top:3px solid var(--hs-accent);padding-top:10px;margin:40px 0 4px}
+.nl-wrap h2.street-h{border:0;padding:0;margin-top:0}
+.dc{font-family:var(--hs-font-ui);font-size:13px;color:var(--hs-text-muted);margin:0 0 16px}
+.viz{border:1px solid var(--hs-line);background:var(--hs-surface);margin:16px 0 6px}
+.viz-ctl{font-family:var(--hs-font-ui);font-size:13px;margin:6px 0}
+.viz-ctl button{font:inherit;border:1px solid var(--hs-line-mid);background:var(--hs-surface-2);color:var(--hs-text);
+ padding:3px 10px;margin-right:6px;cursor:pointer}
+.viz-ctl button[aria-pressed=true]{background:var(--hs-primary);color:var(--hs-on-primary);border-color:var(--hs-primary)}
+figcaption{font-family:var(--hs-font-ui);font-size:13px;color:var(--hs-text-muted);margin:6px 0 18px}
+.prompt1{font-family:var(--hs-font-ui);font-size:15px;background:var(--hs-surface-2);border-left:4px solid var(--hs-accent);
+ padding:10px 14px;margin:12px 0}
+.series{font-style:italic}
+.foot{font-family:var(--hs-font-ui);font-size:13px;color:var(--hs-text-muted);border-top:1px solid var(--hs-line);
+ margin-top:32px;padding-top:12px}
+.lead{font-size:18px}
+details.tbl summary{cursor:pointer;font-family:var(--hs-font-ui);font-size:14px;color:var(--hs-heading)}
+
+.nl-wrap .hs-callout{border:2px solid var(--hs-warn-line);background:var(--hs-warn-bg);padding:12px 16px;margin:0 0 24px;
+ font-family:var(--hs-font-ui);font-size:14.5px;max-width:none}
+.nl-wrap .hs-callout ul{margin:4px 0 8px 18px;padding:0}.nl-wrap .hs-callout p{margin:0 0 6px;max-width:none}
+.rv-flag{color:var(--hs-crit);font-weight:700}
+p.q{font-style:italic}
+p.prompt1{font-family:var(--hs-font-ui);font-size:14px;color:var(--hs-text-muted);border-left:3px solid var(--hs-accent);padding-left:10px}
+.nl-wrap ol li,.nl-wrap ul li{margin-bottom:6px}
+.fignote{font-family:var(--hs-font-ui);font-size:14px;color:var(--hs-text-muted)}
+.nl-wrap figure{margin:16px 0}
+</style>
+
+</head>
+<body class="hs-doc">
+<include src="partials/nav.html"></include>
+<main id="main">
+<div class="nl-wrap">
+<p class="nl-kicker" id="top">The Deckhand newsletter &middot; Issue 2 &middot; Energy Street</p>
+<h1>Jack-up site-specific analysis</h1>
+<p class="dc">Prepared: Analyst Deckhand (AI assistant) &middot; Checked: Editor Deckhand &middot; Approved: Vamsee Achanta &middot; 3 November 2026</p>
+<p class="lead">On 24 October 2026, a jack-up drilling unit sank offshore Gabon. Of the 115 people on board, 110 were accounted for and brought ashore [1, 2]. Press reports of the dead and missing differ and await official confirmation [1, 2]. Our thoughts are with everyone affected, and with their families and colleagues.</p>
+<p>Gabon's Ministry of Petroleum and Gas has ordered a technical investigation [1, 2]. The rig owner, Borr Drilling, said on 25 October 2026 that "preliminary information indicates that the rig experienced a punch through event during preload activities" [18]. The investigation's findings are awaited. Apart from the rig owner's statement, nothing in this piece bears on the cause of the loss. This piece is to demonstrate and progress complex engineering methods and workflows. We would like to use this opportunity to develop reusable engineering for the jack-up and the liftboat, in a bid to learn and also to help with future site studies for similar structures.</p>
+
+<h2>1 Public facts on the loss offshore Gabon</h2>
+<p>Each statement on the loss is entered in a register with its source and date (Table 1). The register is checked against its sources again on the day the page is published.</p>
+<div class="nl-tablewrap"><table><thead><tr><th scope="col">Id</th><th scope="col">Statement</th><th scope="col">Source</th></tr></thead><tbody>
+<tr><td>F1</td><td>A jack-up drilling unit sank offshore Gabon on 24 October 2026.</td><td>[1], [2]</td></tr>
+<tr><td>F2</td><td>115 people were on board; 110 were accounted for and brought ashore.</td><td>[1], [2]</td></tr>
+<tr><td>F3</td><td>Press reports of the dead and missing differ (World Oil, citing Reuters; Marine Insight, citing the Gabonese authorities) and await official confirmation.</td><td>[1], [2]</td></tr>
+<tr><td>F4</td><td>The Ministry of Petroleum and Gas ordered a technical investigation, to determine the circumstances of the sinking.</td><td>[1], [2]</td></tr>
+<tr><td>F5</td><td>The rig owner, Borr Drilling, said on 25 October 2026 that "preliminary information indicates that the rig experienced a punch through event during preload activities".</td><td>[18]</td></tr>
+</tbody></table></div>
+<p class="dc">Table 1 - Public facts register for the loss offshore Gabon. Sources dated 25 and 28 October 2026, read again on 3 November 2026; [18] read on 4 November 2026.</p>
+<p>Figure 1 shows where the loss happened, as reported. No position has been published, so the whole country is shaded.</p>
+<figure>
+<div id="fig-loc" class="viz" style="height:260px" role="img" aria-label="Locator map of the Gulf of Guinea coast with Gabon shaded: the October 2026 loss was offshore Gabon, as reported."></div>
+<figcaption>Figure 1 - October 2026, offshore Gabon (location as reported; cause under investigation) [1, 2].</figcaption>
+</figure>
+<p>The sections below use no data from this loss. They apply to any jack-up or liftboat at any site.</p>
+
+<h2>2 Jack-ups, liftboats and wind installation jack-ups all stand on legs</h2>
+<p>A drilling contractor's annual report counts 494 jack-ups in the global fleet at the end of 2025 [9]. On 1 August 2022, 77 US-flagged liftboats were in active service [10]. We found no public world count of liftboats or of wind installation jack-ups.</p>
+<p>The three types of unit work in the same way:</p>
+<ul>
+<li>A jack-up is a mobile unit with a floating hull and legs that it lowers to the seabed. It then raises the hull clear of the sea.</li>
+<li>A liftboat is an offshore supply vessel with movable legs capable of raising its hull above the surface of the sea [7]. It has three or four legs and its own propulsion, and it serves oil platforms and wind turbines [10].</li>
+<li>Wind installation jack-ups, or wind turbine installation vessels, are "self-propelled heavy-lift jack-up vessels designed for the installation of offshore wind turbines" [11].</li>
+<li>All three preload their legs to test the soil before they raise the hull to its working height [4; 12; 13, p. 77].</li>
+</ul>
+
+<h2>3 Serious jack-up and liftboat accidents, 1999 to 2022: 35 events in three public sources</h2>
+<p>Liftboats and wind installation jack-ups have an accident record like that of drilling jack-ups. A 2019 review of self-elevating platform incidents finds liftboat incidents "identical to Jack-up incidents" [12]. For wind installation jack-ups, the 2010 MMS report states: "Much can be anticipated about incidents and accidents by looking at the track record of jack-ups in the North Sea and liftboats in Gulf of Mexico" [13].</p>
+<p>Figure 2 shows all 35 serious accidents in three public sources, by year and initiating hazard [10, 13 to 17]. The MMS report lists 14 accidents of jack-up construction vessels (construction jack-ups below), mostly at wind farms, from 1999 to 2008. The 2021 review lists 17 of the worst drilling jack-up accidents from 2012 to mid-2021. Four NTSB reports cover one liftboat each.</p>
+<p>By our count of Table 2, 17 events are on drilling jack-ups, 13 on construction jack-ups and 5 on liftboats. By our hazard grouping (Note 1), 4 start with storm or weather, 11 with punch-through or foundation, and 4 with leg, jacking or structural failure. Another 4 happen in transit or tow, and 12 are other or not stated.</p>
+<figure>
+<div class="viz-ctl" role="group" aria-label="Figure 2 view"><button type="button" id="f-year" aria-pressed="true">By year</button><button type="button" id="f-haz" aria-pressed="false">By hazard</button></div>
+<div id="fig-acc" class="viz" style="height:360px" role="img" aria-label="Thirty-five past serious accidents of drilling jack-ups, construction jack-ups and liftboats from 1999 to 2022, plotted by year and initiating hazard, or counted by hazard and unit type."></div>
+<figcaption>Figure 2 - Serious accidents of jack-ups and liftboats in three public sources, 1999 to 2022, by year and initiating hazard, or counted by hazard. Filled markers: NTSB investigation reports. Open markers: compiled lists, not investigations. They are the MMS report, compiled from an industry database with some rows quoting press, and the 2021 review, from DNV's WREC accident database. Markers of the same year and hazard are set apart vertically. Data: <a href="../../assets/data/newsletter/issue-002/jackup-accidents.csv">jackup-accidents.csv</a> (Table 2).</figcaption>
+</figure>
+<p class="fignote">Note 1: the hazard groups are ours. An event under tow or in transport is transit or tow. Other events follow the source's cause code or wording; where the source states no hazard, the event is other or not stated.</p>
+<p>Each source covers its own scope and period, so the chart dates these events; the rates below come from the 2021 review. Over a longer span, that review counts 90 liftboat losses, with 56 deaths [14]. It puts the liftboat loss rate at 2 to 3 times that of drilling jack-ups [14]. On jack-ups, deaths per operating rig-year fell from 0.07 to 0.007 over 61 years of records [14].</p>
+<details class="tbl"><summary>Table 2 - the 35 accidents behind Figures 2 and 3, with the source of each</summary>
+<div class="nl-tablewrap"><table><thead><tr><th scope="col">Year</th><th scope="col">Unit</th><th scope="col">Unit type</th><th scope="col">Location</th><th scope="col">What happened (source wording, shortened)</th><th scope="col">Initiating hazard (our grouping)</th><th scope="col">Source</th></tr></thead><tbody>
+<tr><td>1999</td><td>Aarsleff Jack</td><td>construction jack-up</td><td>Horns Rev, Denmark (wind-farm centroid)</td><td>Overturned</td><td>other or not stated</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2000</td><td>Wijslift 6</td><td>construction jack-up</td><td>Blyth, UK (wind-farm centroid)</td><td>Hull dropped</td><td>other or not stated</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2003</td><td>Excalibur (ex Wijslift 6)</td><td>construction jack-up</td><td>North Hoyle, UK (wind-farm centroid)</td><td>Broken leg</td><td>leg, jacking or structural failure</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2003</td><td>MEG-JB1</td><td>construction jack-up</td><td>North Hoyle, UK (wind-farm centroid)</td><td>Crane collapse</td><td>other or not stated</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2003</td><td>Skate II</td><td>construction jack-up</td><td>Gunfleet, UK (wind-farm centroid)</td><td>Punch-through: hull dropped</td><td>punch-through or foundation</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2004</td><td>Skate III</td><td>construction jack-up</td><td>Brighton, UK (town anchor)</td><td>Wrecked</td><td>other or not stated</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2005</td><td>A2Sea Ocean Ady (now Sea Energy)</td><td>construction jack-up</td><td>Scroby Sands, UK (wind-farm centroid)</td><td>Leg damage</td><td>leg, jacking or structural failure</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2006</td><td>Octopus</td><td>construction jack-up</td><td>Orkney, UK (islands anchor)</td><td>Ran aground during tow</td><td>transit or tow</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2007</td><td>JB-104</td><td>construction jack-up</td><td>Milford Haven, UK (town anchor)</td><td>Capsize, 1 fatality; alongside the dock, not in wind farm service</td><td>other or not stated</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2007</td><td>Smit Lisa</td><td>construction jack-up</td><td>Robin Rigg, Solway Firth, UK (wind-farm centroid)</td><td>Punch-through: hull dropped</td><td>punch-through or foundation</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2008</td><td>Dredging barge</td><td>construction jack-up</td><td>Mallorca, Spain (island anchor)</td><td>Abandon ship by helicopter operations</td><td>other or not stated</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2008</td><td>Jakup</td><td>construction jack-up</td><td>Teesside, UK (town anchor)</td><td>Wrecked</td><td>other or not stated</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2008</td><td>Russell W. Peterson</td><td>liftboat</td><td>about 14 miles off Rehoboth Beach, Delaware, USA (town anchor)</td><td>Wrecked, 1 fatality, in a May 2008 nor&#x27;easter (press quoted in the report)</td><td>storm or weather</td><td>Compiled list: MMS report, Table 1 [13], quoting press; US Coast Guard report not found</td></tr>
+<tr><td>2008</td><td>Titan 1</td><td>construction jack-up</td><td>Atlantic (position not public)</td><td>Lost overboard from a heavy lift vessel</td><td>transit or tow</td><td>Compiled list: MMS report, Table 1 [13]</td></tr>
+<tr><td>2011</td><td>Trinity II</td><td>liftboat</td><td>Bay of Campeche, about 15 miles offshore, north of Frontera, Mexico, 84 ft water (position estimated from the NTSB text)</td><td>Elevated in hurricane-force conditions; stern jacking leg failed, vessel listed; 4 died</td><td>storm or weather</td><td>NTSB investigation report NTSB/MAR-13/01 [15]</td></tr>
+<tr><td>2012</td><td>Hercules 2502</td><td>drilling jack-up</td><td>Gulf of Mexico (position not public)</td><td>Under tow: mat badly damaged by poor cribbing alignment on the barge for a dry tow; rig retired, declared a total loss in 2019</td><td>transit or tow</td><td>Published review: 2021 review, Appendix A [14]; cause code S (structural)</td></tr>
+<tr><td>2013</td><td>Hercules 265</td><td>drilling jack-up</td><td>South Timbalier 220, Gulf of Mexico (position not public)</td><td>Gas blowout; fire in derrick; beams supporting derrick and rig floor collapsed</td><td>other or not stated</td><td>Published review: 2021 review, Appendix A [14]; cause code O (blowout)</td></tr>
+<tr><td>2013</td><td>Perro Negro 6</td><td>drilling jack-up</td><td>Congo River mouth, Angola, 40 m water (anchor: Soyo town)</td><td>Capsized after punch-through, with 103 on board</td><td>punch-through or foundation</td><td>Published review: 2021 review, Appendix A [14]; cause code B (punch-through)</td></tr>
+<tr><td>2013</td><td>Trident 15</td><td>drilling jack-up</td><td>Moragot 19, Thailand (position not public)</td><td>Port leg punch-through giving 7° list; many braces damaged</td><td>punch-through or foundation</td><td>Published review: 2021 review, Appendix A [14]; cause code B (punch-through)</td></tr>
+<tr><td>2014</td><td>Aquamarine Driller 5</td><td>drilling jack-up</td><td>off Miri, Sarawak, Malaysia (anchor: Miri town)</td><td>Serious punch-through (plus possible heavy-weather damage under tow)</td><td>punch-through or foundation</td><td>Published review: 2021 review, Appendix A [14]; cause code B (punch-through)</td></tr>
+<tr><td>2014</td><td>Ensco 104</td><td>drilling jack-up</td><td>Malaysia (position not public)</td><td>2 crew killed when a lifeboat fell 150 ft to the sea during maintenance</td><td>other or not stated</td><td>Published review: 2021 review, Appendix A [14]; cause code N (falling object)</td></tr>
+<tr><td>2014</td><td>Menadrill 1</td><td>drilling jack-up</td><td>Akal field, Gulf of Mexico (anchor: Cantarell field)</td><td>Fire in shale shakers or motor generator room</td><td>other or not stated</td><td>Published review: 2021 review, Appendix A [14]; cause code F (fire)</td></tr>
+<tr><td>2014</td><td>Rowan Louisiana</td><td>drilling jack-up</td><td>Vermilion 366, Gulf of Mexico (position not public)</td><td>Well control problem during wiper trip; all non-essential crew evacuated</td><td>other or not stated</td><td>Published review: 2021 review, Appendix A [14]; cause code O (blowout)</td></tr>
+<tr><td>2015</td><td>COSLGift</td><td>drilling jack-up</td><td>South-east Asia (position not public)</td><td>Serious punch-through</td><td>punch-through or foundation</td><td>Published review: 2021 review, Appendix A [14]; cause code B (punch-through)</td></tr>
+<tr><td>2015</td><td>Rigmar 152</td><td>drilling jack-up</td><td>South Atlantic (position not public)</td><td>Sank under tow from Brazil to Gabon</td><td>transit or tow</td><td>Published review: 2021 review, Appendix A [14]; cause code K (flooding)</td></tr>
+<tr><td>2015</td><td>Rumailah</td><td>drilling jack-up</td><td>Al Shaheen field, Qatar (field centroid)</td><td>Punch-through; 3 legs broken</td><td>punch-through or foundation</td><td>Published review: 2021 review, Appendix A [14]; cause code B (punch-through)</td></tr>
+<tr><td>2015</td><td>Troll Solution</td><td>drilling jack-up</td><td>Caan Alfa well, Gulf of Mexico (anchor: Cantarell field)</td><td>Probable punch-through and tilt when positioning for maintenance on a well</td><td>punch-through or foundation</td><td>Published review: 2021 review, Appendix A [14]; cause code B (punch-through)</td></tr>
+<tr><td>2016</td><td>SAR 201</td><td>drilling jack-up</td><td>beside Safaniya platform, Saudi Arabia (field centroid)</td><td>Punch-through (or jack failure) on port leg; deck at port stern dropped to nearly sea level; evacuated; 3 missing</td><td>punch-through or foundation</td><td>Published review: 2021 review, Appendix A [14]; cause code B/M (punch-through or jacking system)</td></tr>
+<tr><td>2017</td><td>Maersk Interceptor</td><td>drilling jack-up</td><td>Tambar field, Norway (field anchor)</td><td>Sling lifting a pump broke; 2 drilling staff injured, 1 then went overboard, was recovered and died</td><td>other or not stated</td><td>Published review: 2021 review, Appendix A [14]; cause code L (lifting)</td></tr>
+<tr><td>2017</td><td>West Titania</td><td>drilling jack-up</td><td>Manick 100-1A, Gulf of Mexico (position not public)</td><td>Jacking system failure; trim by stern and slight list; flooding of starboard stern main deck</td><td>leg, jacking or structural failure</td><td>Published review: 2021 review, Appendix A [14]; cause code M (jacking system)</td></tr>
+<tr><td>2018</td><td>KS Java Star</td><td>drilling jack-up</td><td>next to Camar Seagull jacket, SE of Bawean Island, Indonesia (anchor: Bawean)</td><td>Rapid penetration of starboard leg when preloading; gas well fire on adjacent platform</td><td>leg, jacking or structural failure</td><td>Published review: 2021 review, Appendix A [14]; cause code M (jacking system)</td></tr>
+<tr><td>2019</td><td>Kristin Faye</td><td>liftboat</td><td>Main Pass Block 64, about 18 nm east of Venice, Louisiana, USA, 35 ft water</td><td>Elevated liftboat overturned in under a minute after a crane boom was raised; NTSB: punch-through of one of three legs</td><td>punch-through or foundation</td><td>NTSB investigation report NTSB MAB-20/36 [16]</td></tr>
+<tr><td>2021</td><td>SEACOR Power</td><td>liftboat</td><td>about 7 nm off Port Fourchon, Louisiana, USA, about 50 ft water</td><td>Capsized while under way in a severe thunderstorm; 13 died</td><td>storm or weather</td><td>NTSB investigation report NTSB MIR-22/26 [10]</td></tr>
+<tr><td>2021</td><td>Velesto Naga 7</td><td>drilling jack-up</td><td>Salam-3 well, offshore Sarawak, Malaysia (anchor: Miri town)</td><td>Punch-through; fully submerged</td><td>punch-through or foundation</td><td>Published review: 2021 review, Appendix A [14]; cause code B (punch-through)</td></tr>
+<tr><td>2022</td><td>L/B Robert</td><td>liftboat</td><td>80 nm SE of Lake Charles, Louisiana, USA, 217 ft water</td><td>Unmanned and elevated: gale winds and waves above the air gap moved the vessel; a leg slid into an adjacent can hole; vessel tilted</td><td>storm or weather</td><td>NTSB investigation report NTSB MIR-23-28 [17]</td></tr>
+</tbody></table></div>
+<p class="dc">Table 2 - Serious jack-up and liftboat accidents in three public sources, 1999 to 2022, with the source of each. Locations in brackets give the reference point used on the map in Figure 3.</p>
+</details>
+
+<h2>4 Past accidents on the map: 26 of the 35 events</h2>
+<p>Figure 3 places the 26 accidents with a public reference position on a world map. They lie off northern Europe and Mallorca, the United States and Mexico, West Africa, Qatar and Saudi Arabia, and South-east Asia. The other 9 have no public position; Table 2 gives only a sea area, country, field, lease block or well for them.</p>
+<figure>
+<div class="viz-ctl" role="group" aria-label="Figure 3 view"><button type="button" id="m-world" aria-pressed="true">World</button><button type="button" id="m-eu" aria-pressed="false">Northern Europe</button><button type="button" id="m-gom" aria-pressed="false">Gulf of Mexico</button></div>
+<div id="fig-map" class="viz" style="height:330px" role="img" aria-label="World map of 26 past serious jack-up and liftboat accidents, by unit type."></div>
+<figcaption>Figure 3 - Locations of the past accidents of Figure 2, by unit type. NTSB positions are those of its reports. Other markers are reference points for the named field, wind farm, island or town; the Trinity II marker is estimated from the NTSB text. Drag to pan; scroll or pinch to zoom. Data: <a href="../../assets/data/newsletter/issue-002/jackup-accidents.csv">jackup-accidents.csv</a>.</figcaption>
+</figure>
+
+<h2>5 What a site-specific assessment covers</h2>
+<p>Before a jack-up works at a new location, a site-specific assessment checks the unit at that location [3, 4]. The assessment covers:</p>
+<ul>
+<li>The foundation: how the seabed at that location carries the footings at the foot of each leg (spudcans). SNAME 5-5A lists foundation hazards that include punch-through, settlement or bearing failure, sliding, scour and seafloor instability [4, Table 3.1]. In a punch-through, a leg breaks through a strong soil layer into weaker soil below and drops quickly.</li>
+<li>The structure: the strength of the legs, the hull and the holding system, the machinery that holds the hull at its height on the legs.</li>
+<li>Overturning and sliding: whether the whole unit stays upright and in place in the assessment storm, the extreme storm that the unit is checked against at that site.</li>
+<li>The air gap: the clearance between the hull and the highest wave crest.</li>
+<li>The moves: the stability of the unit while it floats, under tow or under its own power. For a jack-up, this follows the stability chapter of the IMO code for mobile offshore drilling units (MODUs) [6]; for a liftboat, the US Coast Guard rules [8].</li>
+</ul>
+<p>In US federal waters, Title 30 of the US Code of Federal Regulations (30 CFR) covers the use of a MODU in section 250.713 [5]. Under 250.713(a), the operator must show the unit's capability at the proposed location, including the minimum air gap. Under 250.713(b), the operator must also show that the site-specific soil and oceanographic conditions can support a bottom-founded unit, one that stands on the seabed [5].</p>
+<p>For a liftboat, we apply the foundation, structure and air gap checks as for a jack-up. Its overturning check must also meet the US Coast Guard's special rules for liftboats, sections 174.240 to 174.260 of Title 46 of the CFR [8]. For a liftboat in restricted service, 46 CFR 174.255(c) sets on-bottom stability: a continuous downward force on each footing under waves, currents and 70-knot winds in normal operation, and 100-knot winds in a severe storm [8]. The same sections set its stability afloat and its freeboard [8].</p>
+
+<h2>6 Site and unit data</h2>
+<p>A site study needs two groups of data: data on the site and data on the unit (Table 3).</p>
+<div class="nl-tablewrap"><table><thead><tr><th scope="col">Data group</th><th scope="col">What the study needs</th><th scope="col">Public sources</th></tr></thead><tbody>
+<tr><td>Water depth and seabed</td><td>Water depth at each leg position; a seabed survey for obstructions and debris</td><td>Regional bathymetry (charted water depths), for example the GEBCO grid (General Bathymetric Chart of the Oceans); the site survey is held by the operator</td></tr>
+<tr><td>Soil</td><td>Borings or cone penetration tests at the location, with the soil strength with depth</td><td>Rarely public; held by the operator or its survey contractor</td></tr>
+<tr><td>Metocean</td><td>Wind, waves, current and water level for the assessment storm, and for the weather windows of a move</td><td>Buoy records, for example the NOAA National Data Buoy Center; hindcasts (model reconstructions of past weather), for example ERA5</td></tr>
+<tr><td>Unit</td><td>Leg and hull geometry, spudcan size, weights, the capacity of the holding system, and the stability booklet</td><td>Rig data sheets and classification society records, in part; the full data are held by the rig owner</td></tr>
+</tbody></table></div>
+<p class="dc">Table 3 - Data for a jack-up or liftboat site study, and where public sources exist.</p>
+
+<h2>7 How the methods serve future site studies</h2>
+<ul>
+<li>Each site study starts from the same data list (Table 3). Each input is entered with its source and date, so a later study can see what was measured and what was assumed.</li>
+<li>Jack-ups and liftboats both raise their hulls on legs, so the checks of section 5 are set out for both; section 5 gives the checks that carry over to a liftboat and the US Coast Guard rules that add to them.</li>
+<li>The accident record of section 3 is kept beside the data list. Each new site study can then be read against the events seen on similar units.</li>
+<li>The inputs and results of each site study are kept with its prompt, for the next study of a similar structure.</li>
+</ul>
+<p>Try it out: for your next jack-up or liftboat move, list each input to the site assessment with its source and date.</p>
+
+<p class="q">This piece leaves open which checks of a jack-up site study need changes before they apply to a liftboat.</p>
+
+<h2>Reusable prompts</h2>
+<p class="prompt1">Set out a site-specific assessment of a jack-up or liftboat at a new location: list the site and unit data it needs (Table 3), set out each check of section 5 with the edition and clause of each code it uses, and mark every input with its source. Then count the jack-ups and liftboats in service from public operator filings and investigation reports. Chart past serious accidents of all kinds by year, initiating hazard and unit type, and on a world map, each with its source. Name no cause for any event still under investigation.</p>
+<p>Data: the public data sets for each input, such as the GEBCO grid, the NOAA National Data Buoy Center records and ERA5, are named in Table 3. The accident data set behind Figures 2 and 3 is <a href="../../assets/data/newsletter/issue-002/jackup-accidents.csv">jackup-accidents.csv</a>. It holds 35 public events, each with year, unit type, location, position, hazard group and source. The sources are the MMS report, the 2021 review and four NTSB investigation reports [10, 13 to 17]. The fleet counts are from [9] and [10].</p>
+<p>Readers are welcome to share their own site study results at support@aceengineer.com.</p>
+
+<h2>References</h2>
+<p class="dc">[1] World Oil, citing Reuters, 25 October 2026, <a href="https://www.worldoil.com/news/2026/10/25/one-dead-four-missing-after-borr-drilling-s-prospector-5-rig-sinks-offshore-gabon/">news report on the jack-up loss offshore Gabon</a>. [2] Marine Insight, 28 October 2026, <a href="https://www.marineinsight.com/search-rescue-continues-for-5-missing-workers-after-borr-drilling-rig-sinks-off-gabon/">news report on the search and rescue offshore Gabon</a>. [3] ISO 19905-1:2023, Site-specific assessment of mobile offshore units, Part 1: Jack-ups. [4] SNAME T&amp;R Bulletin 5-5A, Recommended Practice for Site Specific Assessment of Mobile Jack-Up Units, Rev 3, August 2008. [5] US Code of Federal Regulations, 30 CFR 250.713, "What must I provide if I plan to use a mobile offshore drilling unit (MODU) for well operations?", eCFR, current to 30 October 2026, <a href="https://www.ecfr.gov/current/title-30/section-250.713">ecfr.gov</a>. [6] IMO resolution A.1023(26), Code for the construction and equipment of mobile offshore drilling units, 2009 (2009 MODU Code), Chapter 3, stability. [7] 46 CFR 125.160, Definitions, "Liftboat", eCFR, current to 30 October 2026, <a href="https://www.ecfr.gov/current/title-46/section-125.160">ecfr.gov</a>. [8] 46 CFR Part 174, Subpart H, Special rules pertaining to liftboats, eCFR, current to 30 October 2026, <a href="https://www.ecfr.gov/current/title-46/part-174/subpart-H">ecfr.gov</a>.</p>
+<p class="dc">References [9] to [17] were read on 4 November 2026. [9] Valaris Ltd, Form 10-K for the year 2025, filed 20 February 2026, <a href="https://www.sec.gov/Archives/edgar/data/314808/000031480826000029/val-20251231.htm">sec.gov</a>. [10] NTSB, Marine Investigation Report MIR-22/26, capsizing of the liftboat SEACOR Power, adopted 18 October 2022, section 1.1.1, <a href="https://www.ntsb.gov/investigations/AccidentReports/Reports/MIR2226.pdf">ntsb.gov</a>. [11] NREL, Offshore Wind Market Report: 2024 Edition, NREL/TP-5000-90525, <a href="https://docs.nlr.gov/docs/fy24osti/90525.pdf">docs.nlr.gov</a>. [12] van der Kraan, "Self Elevating Platform (Incl. Liftboat) Incidents", Jack-up Conference 2019, <a href="https://jack-up.citystgeorges.ac.uk/wp-content/uploads/2025/09/Jackup-2019-12.pdf">conference paper</a>. [13] Sharples, "Damage and Critical Analysis of Accidents ... Offshore Wind Farms on the OCS", MMS TA&amp;R Project 633, May 2010, Table 1 and p. 77, <a href="https://www.bsee.gov/sites/bsee.gov/files/tap-technical-assessment-program/633ab.pdf">bsee.gov</a>. [14] Jack, Hoyle and Hunt, "Jack-up Accident Statistics - Yet Another Update", Jack-up Conference 2021, Appendix A, <a href="https://jack-up.citystgeorges.ac.uk/wp-content/uploads/2025/09/Jackup-2021-18.pdf">conference paper</a>. [15] NTSB, Marine Accident Report NTSB/MAR-13/01, liftboat Trinity II, <a href="https://www.ntsb.gov/investigations/AccidentReports/Reports/MAR1301.pdf">ntsb.gov</a>. [16] NTSB, Marine Accident Brief MAB-20/36, liftboat Kristin Faye, <a href="https://www.ntsb.gov/investigations/AccidentReports/Reports/MAB2036.pdf">ntsb.gov</a>. [17] NTSB, Marine Investigation Report MIR-23-28, liftboat L/B Robert, <a href="https://www.ntsb.gov/investigations/AccidentReports/Reports/MIR2328.pdf">ntsb.gov</a>.</p>
+<p class="dc">[18] Borr Drilling Limited, "Borr Drilling Limited - Prospector 5 Rig Incident", press release, Hamilton, Bermuda, 25 October 2026, distributed by PR Newswire, read 4 November 2026, <a href="https://www.prnewswire.com/news-releases/borr-drilling-limited--prospector-5-rig-incident-302918752.html">prnewswire.com</a>; copy at <a href="https://www.placera.se/pressmeddelanden/borr-drilling-borr-drilling-limited-prospector-5-rig-incident-20261025-1">placera.se</a>.</p>
+
+<div class="foot"><p>Questions: <a href="mailto:support@aceengineer.com">support@aceengineer.com</a> &middot; <a href="https://www.aceengineer.com/">AceEngineer</a> &middot; &copy; 2026 AceEngineer &middot; 11511 Piping Rock Dr., Houston, TX 77077</p>
+<p>Deckhand: Make Engineering Enjoyable Again</p></div>
+</div>
+<script src="../../assets/js/plotly-2.32.0.min.js" charset="utf-8"></script>
+<script>
+(function(){
+const EV=[{"y":1999,"u":"Aarsleff Jack","t":"cons","tt":"construction jack-up","loc":"Horns Rev, Denmark (wind-farm centroid)","ev":"Overturned","h":0,"hn":"other or not stated","lat":55.5297,"lon":7.9061,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2000,"u":"Wijslift 6","t":"cons","tt":"construction jack-up","loc":"Blyth, UK (wind-farm centroid)","ev":"Hull dropped","h":0,"hn":"other or not stated","lat":55.1358,"lon":-1.4903,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2003,"u":"Excalibur (ex Wijslift 6)","t":"cons","tt":"construction jack-up","loc":"North Hoyle, UK (wind-farm centroid)","ev":"Broken leg","h":2,"hn":"leg, jacking or structural failure","lat":53.3908,"lon":-3.4525,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2003,"u":"MEG-JB1","t":"cons","tt":"construction jack-up","loc":"North Hoyle, UK (wind-farm centroid)","ev":"Crane collapse","h":0,"hn":"other or not stated","lat":53.3908,"lon":-3.4525,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2003,"u":"Skate II","t":"cons","tt":"construction jack-up","loc":"Gunfleet, UK (wind-farm centroid)","ev":"Punch-through: hull dropped","h":3,"hn":"punch-through or foundation","lat":51.7394,"lon":1.1744,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2004,"u":"Skate III","t":"cons","tt":"construction jack-up","loc":"Brighton, UK (town anchor)","ev":"Wrecked","h":0,"hn":"other or not stated","lat":50.82083333,"lon":-0.1375,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2005,"u":"A2Sea Ocean Ady (now Sea Energy)","t":"cons","tt":"construction jack-up","loc":"Scroby Sands, UK (wind-farm centroid)","ev":"Leg damage","h":2,"hn":"leg, jacking or structural failure","lat":52.6489,"lon":1.7903,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2006,"u":"Octopus","t":"cons","tt":"construction jack-up","loc":"Orkney, UK (islands anchor)","ev":"Ran aground during tow","h":1,"hn":"transit or tow","lat":59.0,"lon":-3.0,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2007,"u":"JB-104","t":"cons","tt":"construction jack-up","loc":"Milford Haven, UK (town anchor)","ev":"Capsize, 1 fatality; alongside the dock, not in wind farm service","h":0,"hn":"other or not stated","lat":51.71418,"lon":-5.04274,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2007,"u":"Smit Lisa","t":"cons","tt":"construction jack-up","loc":"Robin Rigg, Solway Firth, UK (wind-farm centroid)","ev":"Punch-through: hull dropped","h":3,"hn":"punch-through or foundation","lat":54.75,"lon":-3.72,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2008,"u":"Dredging barge","t":"cons","tt":"construction jack-up","loc":"Mallorca, Spain (island anchor)","ev":"Abandon ship by helicopter operations","h":0,"hn":"other or not stated","lat":39.61666667,"lon":2.98333333,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2008,"u":"Jakup","t":"cons","tt":"construction jack-up","loc":"Teesside, UK (town anchor)","ev":"Wrecked","h":0,"hn":"other or not stated","lat":54.58888889,"lon":-1.1875,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2008,"u":"Russell W. Peterson","t":"lift","tt":"liftboat","loc":"about 14 miles off Rehoboth Beach, Delaware, USA (town anchor)","ev":"Wrecked, 1 fatality, in a May 2008 nor'easter (press quoted in the report)","h":4,"hn":"storm or weather","lat":38.7208,"lon":-75.0761,"src":"Compiled list: MMS report, Table 1 [13], quoting press; US Coast Guard report not found","c":"c"},{"y":2008,"u":"Titan 1","t":"cons","tt":"construction jack-up","loc":"Atlantic (position not public)","ev":"Lost overboard from a heavy lift vessel","h":1,"hn":"transit or tow","lat":null,"lon":null,"src":"Compiled list: MMS report, Table 1 [13]","c":"c"},{"y":2011,"u":"Trinity II","t":"lift","tt":"liftboat","loc":"Bay of Campeche, about 15 miles offshore, north of Frontera, Mexico, 84 ft water (position estimated from the NTSB text)","ev":"Elevated in hurricane-force conditions; stern jacking leg failed, vessel listed; 4 died","h":4,"hn":"storm or weather","lat":18.78,"lon":-92.65,"src":"NTSB investigation report NTSB/MAR-13/01 [15]","c":"n"},{"y":2012,"u":"Hercules 2502","t":"drill","tt":"drilling jack-up","loc":"Gulf of Mexico (position not public)","ev":"Under tow: mat badly damaged by poor cribbing alignment on the barge for a dry tow; rig retired, declared a total loss in 2019","h":1,"hn":"transit or tow","lat":null,"lon":null,"src":"Published review: 2021 review, Appendix A [14]; cause code S (structural)","c":"c"},{"y":2013,"u":"Hercules 265","t":"drill","tt":"drilling jack-up","loc":"South Timbalier 220, Gulf of Mexico (position not public)","ev":"Gas blowout; fire in derrick; beams supporting derrick and rig floor collapsed","h":0,"hn":"other or not stated","lat":null,"lon":null,"src":"Published review: 2021 review, Appendix A [14]; cause code O (blowout)","c":"c"},{"y":2013,"u":"Perro Negro 6","t":"drill","tt":"drilling jack-up","loc":"Congo River mouth, Angola, 40 m water (anchor: Soyo town)","ev":"Capsized after punch-through, with 103 on board","h":3,"hn":"punch-through or foundation","lat":-6.1333,"lon":12.3667,"src":"Published review: 2021 review, Appendix A [14]; cause code B (punch-through)","c":"c"},{"y":2013,"u":"Trident 15","t":"drill","tt":"drilling jack-up","loc":"Moragot 19, Thailand (position not public)","ev":"Port leg punch-through giving 7° list; many braces damaged","h":3,"hn":"punch-through or foundation","lat":null,"lon":null,"src":"Published review: 2021 review, Appendix A [14]; cause code B (punch-through)","c":"c"},{"y":2014,"u":"Aquamarine Driller 5","t":"drill","tt":"drilling jack-up","loc":"off Miri, Sarawak, Malaysia (anchor: Miri town)","ev":"Serious punch-through (plus possible heavy-weather damage under tow)","h":3,"hn":"punch-through or foundation","lat":4.3925,"lon":113.9861,"src":"Published review: 2021 review, Appendix A [14]; cause code B (punch-through)","c":"c"},{"y":2014,"u":"Ensco 104","t":"drill","tt":"drilling jack-up","loc":"Malaysia (position not public)","ev":"2 crew killed when a lifeboat fell 150 ft to the sea during maintenance","h":0,"hn":"other or not stated","lat":null,"lon":null,"src":"Published review: 2021 review, Appendix A [14]; cause code N (falling object)","c":"c"},{"y":2014,"u":"Menadrill 1","t":"drill","tt":"drilling jack-up","loc":"Akal field, Gulf of Mexico (anchor: Cantarell field)","ev":"Fire in shale shakers or motor generator room","h":0,"hn":"other or not stated","lat":19.7525,"lon":-92.5161,"src":"Published review: 2021 review, Appendix A [14]; cause code F (fire)","c":"c"},{"y":2014,"u":"Rowan Louisiana","t":"drill","tt":"drilling jack-up","loc":"Vermilion 366, Gulf of Mexico (position not public)","ev":"Well control problem during wiper trip; all non-essential crew evacuated","h":0,"hn":"other or not stated","lat":null,"lon":null,"src":"Published review: 2021 review, Appendix A [14]; cause code O (blowout)","c":"c"},{"y":2015,"u":"COSLGift","t":"drill","tt":"drilling jack-up","loc":"South-east Asia (position not public)","ev":"Serious punch-through","h":3,"hn":"punch-through or foundation","lat":null,"lon":null,"src":"Published review: 2021 review, Appendix A [14]; cause code B (punch-through)","c":"c"},{"y":2015,"u":"Rigmar 152","t":"drill","tt":"drilling jack-up","loc":"South Atlantic (position not public)","ev":"Sank under tow from Brazil to Gabon","h":1,"hn":"transit or tow","lat":null,"lon":null,"src":"Published review: 2021 review, Appendix A [14]; cause code K (flooding)","c":"c"},{"y":2015,"u":"Rumailah","t":"drill","tt":"drilling jack-up","loc":"Al Shaheen field, Qatar (field centroid)","ev":"Punch-through; 3 legs broken","h":3,"hn":"punch-through or foundation","lat":26.605,"lon":51.932,"src":"Published review: 2021 review, Appendix A [14]; cause code B (punch-through)","c":"c"},{"y":2015,"u":"Troll Solution","t":"drill","tt":"drilling jack-up","loc":"Caan Alfa well, Gulf of Mexico (anchor: Cantarell field)","ev":"Probable punch-through and tilt when positioning for maintenance on a well","h":3,"hn":"punch-through or foundation","lat":19.7525,"lon":-92.5161,"src":"Published review: 2021 review, Appendix A [14]; cause code B (punch-through)","c":"c"},{"y":2016,"u":"SAR 201","t":"drill","tt":"drilling jack-up","loc":"beside Safaniya platform, Saudi Arabia (field centroid)","ev":"Punch-through (or jack failure) on port leg; deck at port stern dropped to nearly sea level; evacuated; 3 missing","h":3,"hn":"punch-through or foundation","lat":28.28,"lon":48.75,"src":"Published review: 2021 review, Appendix A [14]; cause code B/M (punch-through or jacking system)","c":"c"},{"y":2017,"u":"Maersk Interceptor","t":"drill","tt":"drilling jack-up","loc":"Tambar field, Norway (field anchor)","ev":"Sling lifting a pump broke; 2 drilling staff injured, 1 then went overboard, was recovered and died","h":0,"hn":"other or not stated","lat":56.98275556,"lon":2.95878056,"src":"Published review: 2021 review, Appendix A [14]; cause code L (lifting)","c":"c"},{"y":2017,"u":"West Titania","t":"drill","tt":"drilling jack-up","loc":"Manick 100-1A, Gulf of Mexico (position not public)","ev":"Jacking system failure; trim by stern and slight list; flooding of starboard stern main deck","h":2,"hn":"leg, jacking or structural failure","lat":null,"lon":null,"src":"Published review: 2021 review, Appendix A [14]; cause code M (jacking system)","c":"c"},{"y":2018,"u":"KS Java Star","t":"drill","tt":"drilling jack-up","loc":"next to Camar Seagull jacket, SE of Bawean Island, Indonesia (anchor: Bawean)","ev":"Rapid penetration of starboard leg when preloading; gas well fire on adjacent platform","h":2,"hn":"leg, jacking or structural failure","lat":-5.7667,"lon":112.6667,"src":"Published review: 2021 review, Appendix A [14]; cause code M (jacking system)","c":"c"},{"y":2019,"u":"Kristin Faye","t":"lift","tt":"liftboat","loc":"Main Pass Block 64, about 18 nm east of Venice, Louisiana, USA, 35 ft water","ev":"Elevated liftboat overturned in under a minute after a crane boom was raised; NTSB: punch-through of one of three legs","h":3,"hn":"punch-through or foundation","lat":29.3017,"lon":-89.055,"src":"NTSB investigation report NTSB MAB-20/36 [16]","c":"n"},{"y":2021,"u":"SEACOR Power","t":"lift","tt":"liftboat","loc":"about 7 nm off Port Fourchon, Louisiana, USA, about 50 ft water","ev":"Capsized while under way in a severe thunderstorm; 13 died","h":4,"hn":"storm or weather","lat":29.0065,"lon":-90.1975,"src":"NTSB investigation report NTSB MIR-22/26 [10]","c":"n"},{"y":2021,"u":"Velesto Naga 7","t":"drill","tt":"drilling jack-up","loc":"Salam-3 well, offshore Sarawak, Malaysia (anchor: Miri town)","ev":"Punch-through; fully submerged","h":3,"hn":"punch-through or foundation","lat":4.3925,"lon":113.9861,"src":"Published review: 2021 review, Appendix A [14]; cause code B (punch-through)","c":"c"},{"y":2022,"u":"L/B Robert","t":"lift","tt":"liftboat","loc":"80 nm SE of Lake Charles, Louisiana, USA, 217 ft water","ev":"Unmanned and elevated: gale winds and waves above the air gap moved the vessel; a leg slid into an adjacent can hole; vessel tilted","h":4,"hn":"storm or weather","lat":28.274,"lon":-92.1042,"src":"NTSB investigation report NTSB MIR-23-28 [17]","c":"n"}];
+const LOSS='October 2026, offshore Gabon<br>(location as reported;<br>cause under investigation)';
+if(!window.Plotly){document.querySelectorAll('.viz').forEach(d=>{d.style.height='auto';d.innerHTML='<p style="padding:8px">The interactive chart needs the plotly script; the tables hold the same data.</p>';});return;}
+const css=getComputedStyle(document.documentElement);
+const v=n=>css.getPropertyValue(n).trim();
+const C1=v('--hs-chart-1')||'#2BB2A6', C2=v('--hs-chart-2')||'#0b3d5c', INK=v('--hs-text')||'#26323a',
+  MUTED=v('--hs-text-muted')||'#5a6b76', LINE=v('--hs-line')||'#d0d7de', LINEMID=v('--hs-line-mid')||'#b8c9d4',
+  SURF=v('--hs-surface')||'#ffffff', SURF2=v('--hs-surface-2')||'#eef4f8';
+const th=document.documentElement.dataset.theme;
+const DARK=th==='dark'||(th!=='light'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);
+const LAND=DARK?SURF2:'#e3e8ec';
+const font={family:'Segoe UI, Helvetica, Arial, sans-serif',size:13,color:INK};
+const hoverlabel={font:{family:font.family,size:12}};
+const cfg={displayModeBar:false,responsive:true,topojsonURL:'../../assets/data/topojson/'};
+// unit types: key, legend name, marker symbol, colour
+const TY=[['drill','drilling jack-up','circle',C2],['lift','liftboat','square',C1],['cons','construction jack-up','triangle-up',C1]];
+const HZ=['other or<br>not stated','transit<br>or tow','leg, jacking<br>or structural','punch-through<br>or foundation','storm or<br>weather'];
+const wrap=(s,n)=>{const out=[];let l='';String(s).split(' ').forEach(x=>{if(l&&(l+' '+x).length>n){out.push(l);l=x;}else{l=l?l+' '+x:x;}});if(l)out.push(l);return out.join('<br>');};
+const tip=p=>wrap(p.u+' ('+p.y+'), '+p.tt,42)+'<br>'+wrap(p.loc,42)+'<br>'+wrap(p.ev,42)+'<br>'+wrap('Hazard group (ours): '+p.hn,42)+'<br>'+wrap('Source: '+p.src,42);
+const open=p=>p.c!=='n';
+const geo=(lon,lat,res)=>({projection:{type:'natural earth'},resolution:res,lonaxis:{range:lon},lataxis:{range:lat},
+  showland:true,landcolor:LAND,showocean:true,oceancolor:SURF,showlakes:false,coastlinecolor:MUTED,coastlinewidth:0.6,
+  showcountries:true,countrycolor:LINE,showframe:false,bgcolor:SURF});
+
+function locator(){
+  Plotly.react('fig-loc',[{type:'choropleth',locationmode:'ISO-3',locations:['GAB'],z:[1],colorscale:[[0,LINEMID],[1,LINEMID]],
+    showscale:false,marker:{line:{color:INK,width:1.2}},customdata:[LOSS],hovertemplate:'%{customdata}<extra></extra>'}],
+    {font,paper_bgcolor:SURF,margin:{l:0,r:0,t:4,b:4},hoverlabel,geo:geo([-4,24],[-13,9],50)},cfg);
+}
+function byYear(){
+  const tr=TY.map(([k,nm,sym,col])=>{
+    const P=EV.filter(p=>p.t===k).sort((a,b)=>open(a)-open(b));
+    return {type:'scatter',mode:'markers',name:nm,x:P.map(p=>p.y),
+      y:P.map(p=>{const same=EV.filter(q=>q.y===p.y&&q.h===p.h);return p.h+(same.indexOf(p)-(same.length-1)/2)*0.24;}),
+      marker:{size:11,symbol:P.map(p=>open(p)?sym+'-open':sym),color:col,line:{width:P.map(p=>open(p)?2:1),color:P.map(p=>open(p)?col:SURF)}},
+      text:P.map(tip),hovertemplate:'%{text}<extra></extra>'};});
+  const L={font,paper_bgcolor:SURF,plot_bgcolor:SURF,margin:{l:108,r:12,t:44,b:52},hoverlabel,
+    showlegend:true,legend:{orientation:'h',x:0,y:1.02,yanchor:'bottom',font:{size:12}},
+    xaxis:{title:{text:'year of the accident'},range:[1997,2024],tick0:2000,dtick:5,tickangle:0,gridcolor:LINE,zeroline:false,linecolor:MUTED,fixedrange:true},
+    yaxis:{tickvals:[0,1,2,3,4],ticktext:HZ,range:[-0.6,4.6],gridcolor:LINE,zeroline:false,fixedrange:true,tickfont:{size:12}}};
+  Plotly.react('fig-acc',tr,L,cfg);
+}
+function byHazard(){
+  const tr=TY.map(([k,nm,sym,col])=>{const n=[0,1,2,3,4].map(h=>EV.filter(p=>p.t===k&&p.h===h));
+    return {type:'bar',orientation:'h',name:nm,y:HZ,x:n.map(a=>a.length),
+      marker:{color:col,line:{width:1,color:SURF},pattern:k==='cons'?{shape:'/',fillmode:'overlay',fgcolor:SURF,size:7,solidity:0.3}:{shape:''}},
+      customdata:n.map(a=>wrap(a.map(p=>p.u+' ('+p.y+')').join(', '),40)||'none'),
+      hovertemplate:'%{y}<br>'+nm+': %{x}<br>%{customdata}<extra></extra>'};});
+  const tot=[0,1,2,3,4].map(h=>EV.filter(p=>p.h===h).length);
+  const L={font,paper_bgcolor:SURF,plot_bgcolor:SURF,barmode:'stack',bargap:0.35,margin:{l:108,r:24,t:44,b:52},hoverlabel,
+    showlegend:true,legend:{orientation:'h',x:0,y:1.02,yanchor:'bottom',font:{size:12}},
+    xaxis:{title:{text:'accidents in this record (-)'},range:[0,14],dtick:2,gridcolor:LINE,zeroline:false,fixedrange:true},
+    yaxis:{linecolor:MUTED,fixedrange:true,tickfont:{size:12}},
+    annotations:HZ.map((h,i)=>({y:h,x:tot[i],text:String(tot[i]),showarrow:false,xanchor:'left',xshift:4,font:{size:12,color:INK}}))};
+  Plotly.react('fig-acc',tr,L,cfg);
+}
+function map(view){
+  const R={world:[[-125,150],[-35,68],110],eu:[[-12,16],[48.5,60.5],50],gom:[[-100,-72],[15,41],50]}[view];
+  const tr=TY.map(([k,nm,sym,col])=>{
+    const P=EV.filter(p=>p.t===k&&p.lat!==null), G={};
+    P.forEach(p=>{const key=p.lat+','+p.lon;(G[key]=G[key]||[]).push(p);});
+    const g=Object.values(G), allOpen=a=>a.every(open);
+    return {type:'scattergeo',mode:'markers',name:nm+' ('+P.length+')',lat:g.map(a=>a[0].lat),lon:g.map(a=>a[0].lon),
+      marker:{size:11,symbol:g.map(a=>allOpen(a)?sym+'-open':sym),color:col,line:{width:g.map(a=>allOpen(a)?2:1),color:g.map(a=>allOpen(a)?col:SURF)}},
+      text:g.map(a=>a.map(tip).join('<br><br>')),hovertemplate:'%{text}<extra></extra>'};});
+  const box=document.getElementById('fig-map');
+  box.style.height=Math.round(box.clientWidth*({world:0.52,eu:0.6,gom:0.95}[view])+90)+'px';
+  Plotly.react('fig-map',tr,{font,paper_bgcolor:SURF,margin:{l:0,r:0,t:4,b:4},hoverlabel,
+    showlegend:true,legend:{orientation:'h',x:0,y:0,yanchor:'top',font:{size:12}},geo:geo(R[0],R[1],R[2])},cfg);
+}
+const press=(ids,on)=>ids.forEach(i=>document.getElementById(i).setAttribute('aria-pressed',String(i===on)));
+locator(); byYear(); map('world');
+document.getElementById('f-year').onclick=()=>{press(['f-year','f-haz'],'f-year');Plotly.purge('fig-acc');byYear();};
+document.getElementById('f-haz').onclick=()=>{press(['f-year','f-haz'],'f-haz');Plotly.purge('fig-acc');byHazard();};
+[['m-world','world'],['m-eu','eu'],['m-gom','gom']].forEach(([id,vw])=>{document.getElementById(id).onclick=()=>{press(['m-world','m-eu','m-gom'],id);Plotly.purge('fig-map');map(vw);};});
+})();
+</script>
+</main>
+<include src="partials/footer.html"></include>
+</body>
+</html>

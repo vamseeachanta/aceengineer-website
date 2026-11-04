@@ -179,3 +179,11 @@ service_details:
   - sampleDiscipline: Offshore energy data and field analytics
     description: Well, lease and production analysis for the United States Gulf of Mexico from public regulatory filings.
     meta_description: 'Well, lease and production analysis for the United States Gulf of Mexico from public regulatory filings, with drilling and completion durations per well.'
+    pipeline:
+      - Public well, lease, production and well activity filings of the Bureau of Safety and Environmental Enforcement (BSEE) are collected for the Gulf of Mexico.
+      - Records are cleaned and joined by API well number and by lease.
+      - Drilling and completion days are counted per well from the well activity reports.
+      - Results are tabulated by well, lease and field for engineering review.
+    code_link:
+      href: https://github.com/vamseeachanta/worldenergydata/tree/main/packages/worldenergydata-bsee
+      text: BSEE data pipeline code

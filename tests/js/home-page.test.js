@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { JSDOM } = require('jsdom');
-const { loadCopy, renderHtml, canonicalUrlFor } = require('../../build');
+const { loadCopy, renderHtml, canonicalUrlFor, serviceDefaults } = require('../../build');
 const { sampleLocals } = require('../../scripts/render-samples');
 const html = fs.readFileSync('dist/index.html', 'utf8');
 const doc = new JSDOM(html).window.document;
@@ -220,7 +220,7 @@ test('service sections follow problem, received output, method, sample and scopi
 test('a published report is adjacent to its own service detail', async () => {
   const service = copy.home.services[4];
   const entry = { slug: 'published-analysis', title: 'Published analysis', summary: 'Installation analysis.', discipline: copy.service_details[4].sampleDiscipline, page: 'samples/published-analysis.html', status: 'published' };
-  const rendered = await renderHtml(fs.readFileSync('content/partials/service-page.html', 'utf8'), { rootPath: '../', service: { problem: '', contents: '', codes: [], ...service, ...copy.service_details[4] }, copy, canonicalUrl: canonicalUrlFor(service.page), metadataExcluded: false, ...sampleLocals({ samples: [entry] }) });
+  const rendered = await renderHtml(fs.readFileSync('content/partials/service-page.html', 'utf8'), { rootPath: '../', service: { ...serviceDefaults(), ...service, ...copy.service_details[4] }, copy, canonicalUrl: canonicalUrlFor(service.page), metadataExcluded: false, ...sampleLocals({ samples: [entry] }) });
   const page = new JSDOM(rendered).window.document;
   expect(page.querySelector('[data-sample] a').getAttribute('href')).toBe('../' + entry.page);
   expect(page.querySelector('[data-sample]').textContent).not.toContain('sample report in preparation');

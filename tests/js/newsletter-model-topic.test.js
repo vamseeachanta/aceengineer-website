@@ -15,6 +15,14 @@ const text = html => html.replace(/<\/?em>/g, '').replace(/<[^>]*>/g, ' ')
   .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
   .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
 const bodyFor = html => html.match(/<article id="why-the-model-you-use-matters">([\s\S]*?)<\/article>/)[1];
+const directionLeadIn = '<p>In my experience, our code once had to spell out the catenary equation for a hanging line. A frontier model now knows that equation without being given it. Our hypothesis: a newer model may also take on more engineering itself, as more mathematics and physics are trained into it. Engineering that once had to be written out for a model then becomes something it knows unaided. The illustration shows this direction in three stages. Where the engineer keeps the check, the work is checked against a known answer at every stage and then signed. A problem set with known answers, described below, is that check.</p>';
+const directionCaption = 'How the next model may take in engineering: an illustration of a direction, not measured data (note 1). Stages are in order only. The catenary example is the author\'s experience. Hover a stage or the example for detail.';
+const sourceLinks = [
+  'https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt',
+  'https://support.google.com/gemini/answer/13594961',
+  'https://www.anthropic.com/news/updates-to-our-consumer-terms',
+];
+const cells = row => (row.match(/<t[hd]\b/g) || []).length;
 
 function assertMetadata(html, built) {
   assert.ok(html.includes(`<title>${title}</title>`));
@@ -51,16 +59,52 @@ for (const prefix of ['content', 'dist']) {
 
   test(`${prefix}: model topic preserves approved text, table and lists`, () => {
     const body = bodyFor(read(`${prefix}/${article}`));
-    const prose = body.replace(/<figure>[\s\S]*?<\/figure>/, '');
-    assert.equal(digest(text(prose)), '914ee57033979165ab9cfe98a0419cc5d6935e6062c91295b051a4542288cb24');
+    const prose = body.replace(/<figure>[\s\S]*?<\/figure>/g, '').replace(directionLeadIn, '');
+    assert.equal(digest(text(prose)), 'c290c2d80e0b306f32cef23c9563d16064928d7a620beaca8c67a69e19961907');
     assert.equal((body.match(/<h1>/g) || []).length, 1);
-    assert.equal((body.match(/<h2>/g) || []).length, 9);
-    assert.equal((body.match(/<ol>/g) || []).length, 1);
+    assert.equal((body.match(/<h2>/g) || []).length, 10);
+    assert.equal((body.match(/<ol>/g) || []).length, 0);
     assert.equal((body.match(/<ul>/g) || []).length, 1);
-    assert.equal((body.match(/<tbody>[\s\S]*?<\/tbody>/)[0].match(/<tr>/g) || []).length, 5);
-    assert.equal((body.match(/<th scope="col">/g) || []).length, 3);
-    assert.match(body, /<div class="table-responsive">/);
-    assert.match(body, /<em>How this article was made:/);
+    assert.doesNotMatch(body, /Try it out/);
+    assert.match(body, /Prepared: Analyst Deckhand \(AI assistant\) (?:&middot;|·) Checked: Editor Deckhand (?:&middot;|·) Approved: Vamsee Achanta (?:&middot;|·) 4 November 2026/);
+    assert.match(body, /<p class="figure-note"><small>Note 1\. Three frontier labs state that/);
+    assert.ok(body.lastIndexOf('<h2>') === body.indexOf('<h2>Appendix A. Reusable prompts</h2>'));
+  });
+
+  test(`${prefix}: model topic tables are numbered, captioned, sourced and square`, () => {
+    const body = bodyFor(read(`${prefix}/${article}`));
+    const tables = [...body.matchAll(/<div class="table-responsive">\s*(<table class="table table-bordered">[\s\S]*?<\/table>)\s*<\/div>/g)].map(match => match[1]);
+    assert.equal(tables.length, 2);
+    const expected = [
+      { caption: 'Table 1. Frontier model against a model two releases behind (illustrative, not a measured test)', columns: 5, rows: 7,
+        header: ['No.', 'What to compare', 'Frontier model', 'Model two releases behind (N-2)', 'Source'] },
+      { caption: 'Table 2. Typical paths to a model, and what to check on each', columns: 4, rows: 6,
+        header: ['No.', 'Path', 'What you get', 'What to check with your problem set'] },
+    ];
+    tables.forEach((table, index) => {
+      const want = expected[index];
+      assert.ok(table.includes(`<caption>${want.caption}</caption>`));
+      const header = table.match(/<thead>[\s\S]*?<\/thead>/)[0];
+      assert.deepEqual([...header.matchAll(/<th scope="col"[^>]*>([\s\S]*?)<\/th>/g)].map(match => match[1]), want.header);
+      const rows = table.match(/<tbody>[\s\S]*?<\/tbody>/)[0].match(/<tr>[\s\S]*?<\/tr>/g);
+      assert.equal(rows.length, want.rows);
+      rows.forEach((row, n) => {
+        assert.equal(cells(row), want.columns);
+        assert.ok(row.startsWith(`<tr><td class="text-center">${n + 1}</td>`));
+      });
+    });
+    const sources = tables[0].match(/<tr>[\s\S]*?<\/tr>/g).slice(1).map(row => text(row.match(/<td>([^<]*)<\/td><\/tr>$/)[1]));
+    assert.deepEqual(sources, ['Worked example above (illustrative)', 'Worked example above (illustrative)', 'Worked example above (illustrative)',
+      "Author's experience", "Author's experience", 'Our hypothesis', "Author's experience"]);
+    assert.match(tables[0], /<td>Worked example: first sloshing frequency, f \(Hz\)<\/td><td>0\.586<\/td><td>0\.884<\/td>/);
+    assert.match(tables[0], /<td>Worked example: error against the full answer \(%\)<\/td><td>0<\/td><td>\+51<\/td>/);
+    assert.match(body, /<\/table>\s*<\/div>\s*<p class="table-note"><small>Note to Table 2\./);
+    for (const pointer of ['<p>Table 1 is illustrative.', 'Table 1 shows which answer is more likely', '<p>Table 2 lists the paths']) {
+      assert.ok(body.includes(pointer));
+    }
+    for (const stale of ['<p>The table is illustrative.', 'the table shows which answer is more likely', '<p>The table lists the paths']) {
+      assert.ok(!body.includes(stale));
+    }
   });
 
   test(`${prefix}: model topic preserves both preformatted worked examples`, () => {
@@ -92,10 +136,38 @@ for (const prefix of ['content', 'dist']) {
     assert.equal((body.match(/id="a2-step-desc"/g) || []).length, 1);
   });
 
-  test(`${prefix}: model topic links resolve to the relative about and contact pages`, () => {
+  test(`${prefix}: model topic carries the direction illustration after its lead-in`, () => {
+    const body = bodyFor(read(`${prefix}/${article}`));
+    assert.equal((body.match(/<figure>/g) || []).length, 2);
+    const svg = [...body.matchAll(/<svg\b[\s\S]*?<\/svg>/g)][1][0];
+    if (prefix === 'content') {
+      assert.equal(digest(svg), 'd1a283973890b66dc66c01a8a1de3877cee45dca0f1ea9b528431fb39cb31469');
+    } else {
+      const { JSDOM } = require('jsdom');
+      const sourceSvg = [...bodyFor(read(`content/${article}`)).matchAll(/<svg\b[\s\S]*?<\/svg>/g)][1][0];
+      const parsed = value => new JSDOM(value).window.document.querySelector('svg').outerHTML;
+      assert.equal(parsed(svg), parsed(sourceSvg));
+    }
+    assert.match(svg, /role="img" aria-labelledby="a2-model-title a2-model-desc"/);
+    assert.match(svg, />Illustration of a direction, not measured data<\/text>/);
+    assert.match(svg, />Where the engineer keeps the check, at every stage: checks against a known answer, and signs<\/text>/);
+    assert.match(svg, />Each new model generation may take in more mathematics and physics through further training<\/text>/);
+    assert.match(svg, />Example: the catenary equation \(hanging line\)<\/text>/);
+    assert.doesNotMatch(text(svg), /\d+(\.\d+)? ?%/);
+    assert.ok(body.includes(`<figcaption>${directionCaption}</figcaption>`));
+    const leadIn = body.indexOf(directionLeadIn);
+    assert.ok(leadIn > body.indexOf('<h2>A share of your problems, area by area</h2>'));
+    assert.ok(leadIn < body.indexOf('<h2>A worked example: a confident shortcut</h2>'));
+    assert.match(body.slice(leadIn), /^<p>[\s\S]*?<\/p>\s*<figure>\s*<svg\b[^>]*aria-labelledby="a2-model-title/);
+    for (const id of ['a2-model-title', 'a2-model-desc', 'a2-mx-head']) {
+      assert.equal((body.match(new RegExp(`id="${id}"`, 'g')) || []).length, 1);
+    }
+  });
+
+  test(`${prefix}: model topic links are the three cited sources, then the relative about and contact pages`, () => {
     const links = [...bodyFor(read(`${prefix}/${article}`)).matchAll(/<a href="([^"]+)"/g)].map(match => match[1]);
-    assert.deepEqual(links, ['/about.html', '/contact.html']);
-    for (const href of links) {
+    assert.deepEqual(links, [...sourceLinks, '/about.html', '/contact.html']);
+    for (const href of links.slice(sourceLinks.length)) {
       assert.ok(fs.existsSync(path.join(root, prefix, href.slice(1))));
     }
   });

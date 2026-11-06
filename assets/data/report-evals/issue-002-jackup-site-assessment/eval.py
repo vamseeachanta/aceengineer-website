@@ -73,7 +73,7 @@ def _counts(rows, values):
 
 
 def compute(args, values, notes, context):
-    local = args.repo_root / CSV_PATH
+    local = evalkit.repo_file(args, CSV_PATH)  # selected revision of the data set
     context.update(repo_root=str(args.repo_root), repo_head=evalkit.git_head(args.repo_root),
                    csv_sha256=evalkit.sha256_file(local))
     rows = list(csv.DictReader(open(local, encoding="utf-8")))

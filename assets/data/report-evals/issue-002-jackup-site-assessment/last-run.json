@@ -2,20 +2,21 @@
  "schema_version": "1.0",
  "report_id": "issue-002-jackup-site-assessment",
  "mode": "rebuild",
- "started_utc": "2026-11-06T16:06:19Z",
- "finished_utc": "2026-11-06T16:06:20Z",
+ "started_utc": "2026-11-06T16:56:18Z",
+ "finished_utc": "2026-11-06T16:56:19Z",
  "grade": "PASS",
  "pinned_commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
  "artifacts": {
   "results.json": "dd1768a53d14e5805484984612b4bfab1fa770cb6dd76667b1d00101d0a2d6be",
-  "eval.py": "2e1cf5637ffc78ce9b7d61f9b58ea66336e865a8e088bc5b590e17367f644feb",
-  "../evalkit.py": "44d2d922196abedc55bf807d2f757f7230bc455b4846a42f9ce083825e420f59"
+  "eval.py": "54347ab71bf7504e83659b6d1eb9d68d1e4bf27af144ad5835f9a1cd6cb7d741",
+  "../evalkit.py": "f8aa831c8f1da6977b8502d5246e34079c2f1246277539ea910df0dfbebc5fa5"
  },
  "python": "3.14.3",
  "platform": "Windows",
  "context": {
+  "revision": "candidate",
   "repo_root": "web-evals",
-  "repo_head": "681d82a72d3d34f25b2fdd9e7aeb7e0074713605",
+  "repo_head": "f85fa7ee1208f1e48a1c61e8cb741ee875a91824",
   "csv_sha256": "22dd0f17dca9f320e2202638b671a499d00bf554c219904d25c23b467301253e",
   "ntsb_mir2226": {
    "url": "https://www.ntsb.gov/investigations/AccidentReports/Reports/MIR2226.pdf",

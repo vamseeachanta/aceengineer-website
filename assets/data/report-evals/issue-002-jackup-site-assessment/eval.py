@@ -9,7 +9,8 @@ repository, and checks the two fleet counts against their public sources.
     python .../eval.py --sec-user-agent "Your Name your.address@example.com"
     python .../eval.py --compare my-results.json
 
-Standard library, plus pypdf for the NTSB report (optional). SEC EDGAR serves
+Standard library, plus pypdf with its AES extra for the NTSB report
+(optional: pip install "pypdf[crypto]"). SEC EDGAR serves
 filings only to requests that declare a contact in the User-Agent; without
 --sec-user-agent the jack-up fleet count is NOT_EVALUATED.
 
@@ -71,37 +72,48 @@ def _counts(rows, values):
     values["first_year"], values["last_year"] = min(years), max(years)
 
 
-def compute(args):
-    values, notes = {}, {}
+def compute(args, values, notes, context):
     local = args.repo_root / CSV_PATH
-    context = {"repo_root": str(args.repo_root), "repo_head": evalkit.git_head(args.repo_root),
-               "csv_sha256": evalkit.sha256_file(local)}
+    context.update(repo_root=str(args.repo_root), repo_head=evalkit.git_head(args.repo_root),
+                   csv_sha256=evalkit.sha256_file(local))
     rows = list(csv.DictReader(open(local, encoding="utf-8")))
     _counts(rows, values)
+    remote = ("served_csv_equals_repo", "us_liftboats_2022", "global_jackups_2025")
     if args.offline:
-        for rid in ("served_csv_equals_repo", "us_liftboats_2022", "global_jackups_2025"):
+        for rid in remote:
             notes[rid] = "--offline"
-        return values, notes, context
+        return
 
-    served = evalkit.fetch(CSV_URL, args.cache / "jackup-accidents.csv")
-    values["served_csv_equals_repo"] = served["sha256"] == context["csv_sha256"]
+    def served():
+        page = evalkit.fetch(CSV_URL, args.cache / "jackup-accidents.csv")
+        values["served_csv_equals_repo"] = page["sha256"] == context["csv_sha256"]
 
-    try:
-        from pypdf import PdfReader
-    except ImportError:
-        notes["us_liftboats_2022"] = "install pypdf to read the NTSB report"
-    else:
+    def ntsb():
+        try:
+            from pypdf import PdfReader
+        except ImportError:
+            notes["us_liftboats_2022"] = "pypdf not installed: pip install \"pypdf[crypto]\""
+            return
         pdf = evalkit.fetch(NTSB_URL, args.cache / "MIR2226.pdf")
         context["ntsb_mir2226"] = pdf
-        text = " ".join((p.extract_text() or "") for p in PdfReader(pdf["path"]).pages[:30])
+        try:
+            pages = PdfReader(pdf["path"]).pages[:30]
+            text = " ".join((pg.extract_text() or "") for pg in pages)
+        except Exception as exc:  # noqa: BLE001 (pypdf raises DependencyError without its AES extra)
+            if type(exc).__name__ == "DependencyError":
+                notes["us_liftboats_2022"] = f"pypdf needs its AES extra: pip install \"pypdf[crypto]\" ({exc})"
+                return
+            raise
         m = re.search(r"there were (\d+) US-flagged liftboats in active service", re.sub(r"\s+", " ", text))
-        values["us_liftboats_2022"] = int(m.group(1)) if m else None
-        if not m:
+        if m:
+            values["us_liftboats_2022"] = int(m.group(1))
+        else:
             notes["us_liftboats_2022"] = "sentence not found in MIR-22/26"
 
-    if not args.sec_user_agent:
-        notes["global_jackups_2025"] = "SEC EDGAR needs --sec-user-agent with your name and e-mail"
-    else:
+    def sec():
+        if not args.sec_user_agent:
+            notes["global_jackups_2025"] = "SEC EDGAR needs --sec-user-agent with your name and e-mail"
+            return
         page = evalkit.fetch(SEC_URL, args.cache / "val-20251231.htm",
                              headers={"User-Agent": args.sec_user_agent})
         context["valaris_10k"] = {k: page[k] for k in ("url", "sha256", "retrieved_utc")}
@@ -109,11 +121,15 @@ def compute(args):
         text = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", raw)))
         # 10-K, Market outlook: "as of December 31, 2025, there were 494 jackups in the global fleet"
         m = re.search(r"there were (\d+) jackups in the global fleet", text, re.IGNORECASE)
-        values["global_jackups_2025"] = int(m.group(1)) if m else None
-        context["valaris_10k_sentence"] = text[max(0, m.start() - 160):m.end() + 80] if m else None
-        if not m:
+        if m:
+            values["global_jackups_2025"] = int(m.group(1))
+            context["valaris_10k_sentence"] = text[max(0, m.start() - 160):m.end() + 80]
+        else:
             notes["global_jackups_2025"] = "jack-up fleet count not found in the 10-K text"
-    return values, notes, context
+
+    evalkit.guard(["served_csv_equals_repo"], values, notes, served)
+    evalkit.guard(["us_liftboats_2022"], values, notes, ntsb)
+    evalkit.guard(["global_jackups_2025"], values, notes, sec)
 
 
 if __name__ == "__main__":

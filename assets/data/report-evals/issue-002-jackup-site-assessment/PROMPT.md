@@ -4,7 +4,7 @@ Article: https://www.aceengineer.com/newsletter/issue-002-jackup-method/
 
 For decision makers: this prompt lets your team, or your AI assistant, set out a site study for a jack-up or liftboat with public data, and check the article's accident record. If you would rather have the site study done for you, use the contact link on the article page.
 
-For practitioners: paste the block below into an AI assistant that can run Python and use the internet. Part A needs only public data and about 10 minutes. Part B needs your site and unit data. The key results of Part A are in `results.json` next to this file. `eval.py` grades them.
+For practitioners: paste the block below into an AI assistant that can run Python and use the internet. Part A needs only public data. Part B needs your site and unit data. The key results of Part A are in `results.json` next to this file. `eval.py` grades them.
 
 ## Prompt (copy all of it)
 
@@ -36,8 +36,9 @@ Expected key results:
   investigation reports. 26 events have a position.
 - 77 US-flagged liftboats in active service on 1 August 2022 (MIR-22/26).
 - 494 jack-ups in the global fleet at 31 December 2025 (Valaris 10-K).
-- No public world count of liftboats or of wind installation jack-ups exists. Say so;
-  do not estimate one.
+- The cited sources give no world count of liftboats or of wind installation
+  jack-ups, and the article found none. Say that no count was found in the sources
+  you checked; do not estimate one, and do not claim that none exists.
 
 Part B: set out a site study for my unit at my site
 Ask me for these inputs before you start Part B, and say why each is needed:
@@ -63,7 +64,8 @@ Then:
 You cannot:
 - complete the checks without my unit and soil data: give them as a template;
 - name a cause for any event whose investigation is still open;
-- give a world count of liftboats or of wind installation jack-ups.
+- give a world count of liftboats or of wind installation jack-ups from the cited
+  sources.
 
 Output: the Part A counts against the expected values, the two charts, the Part B
 data list and check list, and a file my-results.json in this form, with the
@@ -81,7 +83,7 @@ python assets/data/report-evals/issue-002-jackup-site-assessment/eval.py --compa
 python assets/data/report-evals/issue-002-jackup-site-assessment/eval.py --sec-user-agent "Your Name you@example.com"
 ```
 
-The first line grades your own results. The second rebuilds every Part A key result itself. SEC EDGAR serves filings only to requests that name a contact, so the jack-up fleet count needs `--sec-user-agent`; without it that result is `NOT_EVALUATED`. The NTSB check needs `pip install pypdf`.
+The first line grades your own results against the Part A key results. The second rebuilds them itself and also checks that the data set served on aceengineer.com equals the repository copy (a rebuild-only check). SEC EDGAR serves filings only to requests that name a contact, so the jack-up fleet count needs `--sec-user-agent`; without it that result is `NOT_EVALUATED`. The NTSB report is AES-encrypted, so its check needs `pip install "pypdf[crypto]"`.
 
 ## Adapt it to your project
 

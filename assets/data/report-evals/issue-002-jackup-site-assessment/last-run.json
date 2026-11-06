@@ -2,14 +2,20 @@
  "schema_version": "1.0",
  "report_id": "issue-002-jackup-site-assessment",
  "mode": "rebuild",
- "started_utc": "2026-11-06T15:26:09Z",
- "finished_utc": "2026-11-06T15:26:10Z",
+ "started_utc": "2026-11-06T16:06:19Z",
+ "finished_utc": "2026-11-06T16:06:20Z",
  "grade": "PASS",
+ "pinned_commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+ "artifacts": {
+  "results.json": "dd1768a53d14e5805484984612b4bfab1fa770cb6dd76667b1d00101d0a2d6be",
+  "eval.py": "2e1cf5637ffc78ce9b7d61f9b58ea66336e865a8e088bc5b590e17367f644feb",
+  "../evalkit.py": "44d2d922196abedc55bf807d2f757f7230bc455b4846a42f9ce083825e420f59"
+ },
  "python": "3.14.3",
  "platform": "Windows",
  "context": {
   "repo_root": "web-evals",
-  "repo_head": "8168e1018173be9379a02d5c1aa519056c68d09e",
+  "repo_head": "681d82a72d3d34f25b2fdd9e7aeb7e0074713605",
   "csv_sha256": "22dd0f17dca9f320e2202638b671a499d00bf554c219904d25c23b467301253e",
   "ntsb_mir2226": {
    "url": "https://www.ntsb.gov/investigations/AccidentReports/Reports/MIR2226.pdf",
@@ -22,14 +28,17 @@
    "sha256": "579272a73b4e5a41f497c939635cf80ff9e5eddc36744432a36fe5f418a52d18",
    "retrieved_utc": "cached"
   },
-  "valaris_10k_sentence": " in the Middle East, which should further support the supply and demand balance of the global jackup fleet. From a supply perspective, as of December 31, 2025, there were 494 jackups in the global fleet, with 29% of the current jackup fleet being more than 40 years of age with limi"
+  "valaris_10k_sentence": " in the Middle East, which should further support the supply and demand balance of the global jackup fleet. From a supply perspective, as of December 31, 2025, there were 494 jackups in the global fleet, with 29% of the current jackup fleet being more than 40 years of age with limi",
+  "code_mode": "candidate"
  },
+ "errors": [],
  "results": [
   {
    "id": "events",
    "expected": 35,
    "got": 35,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -39,6 +48,7 @@
    "expected": 17,
    "got": 17,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -48,6 +58,7 @@
    "expected": 13,
    "got": 13,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -57,6 +68,7 @@
    "expected": 5,
    "got": 5,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -66,6 +78,7 @@
    "expected": 4,
    "got": 4,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -75,6 +88,7 @@
    "expected": 11,
    "got": 11,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -84,6 +98,7 @@
    "expected": 4,
    "got": 4,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -93,6 +108,7 @@
    "expected": 4,
    "got": 4,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -102,6 +118,7 @@
    "expected": 12,
    "got": 12,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -111,6 +128,7 @@
    "expected": 17,
    "got": 17,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -120,6 +138,7 @@
    "expected": 14,
    "got": 14,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -129,6 +148,7 @@
    "expected": 4,
    "got": 4,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -138,6 +158,7 @@
    "expected": 26,
    "got": 26,
    "unit": "events",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -147,6 +168,7 @@
    "expected": 1999,
    "got": 1999,
    "unit": "year",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -156,6 +178,7 @@
    "expected": 2022,
    "got": 2022,
    "unit": "year",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -165,6 +188,7 @@
    "expected": true,
    "got": true,
    "unit": "-",
+   "basis": "live",
    "status": "MATCH",
    "difference": "",
    "note": ""
@@ -174,6 +198,7 @@
    "expected": 77,
    "got": 77,
    "unit": "liftboats",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""
@@ -183,6 +208,7 @@
    "expected": 494,
    "got": 494,
    "unit": "jack-ups",
+   "basis": "fixed",
    "status": "MATCH",
    "difference": "+0 (+0 %)",
    "note": ""

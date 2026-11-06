@@ -23,6 +23,7 @@ from __future__ import annotations
 import collections
 import csv
 import html
+import json
 import re
 import sys
 import tempfile
@@ -73,12 +74,22 @@ def _counts(rows, values):
 
 
 def compute(args, values, notes, context):
-    local = evalkit.repo_file(args, CSV_PATH)  # selected revision of the data set
-    context.update(repo_root=str(args.repo_root), repo_head=evalkit.git_head(args.repo_root),
-                   csv_sha256=evalkit.sha256_file(local))
-    rows = list(csv.DictReader(open(local, encoding="utf-8")))
-    _counts(rows, values)
+    context.update(repo_root=str(args.repo_root), repo_head=evalkit.git_head(args.repo_root))
     remote = ("served_csv_equals_repo", "us_liftboats_2022", "global_jackups_2025")
+    ids = [r["id"] for r in json.loads((HERE / "results.json").read_text(encoding="utf-8"))["results"]]
+
+    def local_counts():
+        # Selected revision of the data set; offline, a pinned blob missing from the
+        # clone is not fetched and the counts are NOT_EVALUATED.
+        local = evalkit.repo_file(args, CSV_PATH)
+        context["csv_sha256"] = evalkit.sha256_file(local)
+        _counts(list(csv.DictReader(open(local, encoding="utf-8"))), values)
+
+    evalkit.guard([i for i in ids if i not in remote], values, notes, local_counts)
+    if "csv_sha256" not in context:
+        for rid in remote:
+            notes[rid] = "data set not available"
+        return
     if args.offline:
         for rid in remote:
             notes[rid] = "--offline"

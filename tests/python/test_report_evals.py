@@ -201,6 +201,49 @@ def test_failed_compute_still_writes_record(tmp_path):
     assert {r["status"] for r in record["results"][1:]} == {"ERROR"}
 
 
+def test_same_second_runs_keep_both_records(tmp_path, monkeypatch):
+    """Two runs started in the same second write two records; neither replaces the other."""
+    kit = _kit()
+    work = _demo_folder(tmp_path)
+    monkeypatch.setattr(kit, "utc_now", lambda: "2026-11-06T12:00:00Z")
+    results = _manifest(ALL[0])["results"]
+
+    def failing(args, values, notes, context):
+        raise ValueError("first run fails")
+
+    def passing(args, values, notes, context):
+        for r in results:
+            values[r["id"]] = r["value"]
+
+    runs = Path(tempfile.gettempdir()) / "report-evals-runs"
+    before = set(runs.glob("*.json")) if runs.exists() else set()
+    assert kit.main(work / "results.json", failing, argv=[]) == 1
+    kit.main(work / "results.json", passing, argv=[])
+    new = set(runs.glob("*.json")) - before
+    grades = sorted(json.loads(p.read_text(encoding="utf-8"))["grade"] for p in new)
+    assert len(new) == 2 and grades[0] == "FAIL", grades
+
+
+def test_offline_blob_lookup_never_fetches(tmp_path, monkeypatch):
+    """A pinned blob missing from the clone is unavailable offline; git fetch is not run."""
+    kit = _kit()
+    calls = []
+    real_run = kit.subprocess.run
+
+    def recording_run(cmd, *args, **kwargs):
+        calls.append(cmd)
+        return real_run(cmd, *args, **kwargs)
+
+    monkeypatch.setattr(kit.subprocess, "run", recording_run)
+    assert kit.git_blob(EVALS.parents[1], "0" * 40, "README.md", fetch=False) is None
+    assert calls and not any("fetch" in c for c in calls)
+    args = type("Args", (), {"repo_root": EVALS.parents[1], "pinned_commit": "0" * 40,
+                             "revision": "pinned", "offline": True})()
+    with pytest.raises(FileNotFoundError):
+        kit.repo_file(args, "README.md")
+    assert not any("fetch" in c for c in calls)
+
+
 FOLDER = "issue-002-jackup-site-assessment"
 
 
@@ -231,3 +274,15 @@ def test_jackup_unreachable_sources_keep_local_results(tmp_path):
     assert status["events"] == "MATCH"
     remote = ("served_csv_equals_repo", "us_liftboats_2022", "global_jackups_2025")
     assert {status[i] for i in remote} == {"NOT_EVALUATED"}
+
+
+def test_jackup_offline_pinned_blob_missing(tmp_path):
+    """Offline, a pinned data set missing from the clone is NOT_EVALUATED, without a fetch."""
+    spec = importlib.util.spec_from_file_location("_jackup_eval2", EVALS / FOLDER / "eval.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    args = type("Args", (), {"repo_root": EVALS.parents[2], "revision": "pinned", "pinned_commit": "0" * 40,
+                             "offline": True, "cache": tmp_path, "sec_user_agent": None})()
+    values, notes, context = {}, {}, {}
+    module.compute(args, values, notes, context)
+    assert not values and notes["events"].startswith("source unavailable")

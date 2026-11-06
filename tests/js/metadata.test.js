@@ -269,6 +269,16 @@ test('specified pages have their required schema type and copied metadata', () =
   }
 });
 
+const OG_BASE = 'https://www.aceengineer.com/assets/img/og/';
+const LOGO_URL = 'https://www.aceengineer.com/assets/img/logo.png';
+// Only these pages carry their own link-preview image; every other page must use the logo.
+const OWN_OG_IMAGES = {
+  'newsletter/issue-002-energy-street/index.html': `${OG_BASE}issue-002-energy-street.png`,
+  'newsletter/issue-002-jackup-method/index.html': `${OG_BASE}issue-002-jackup-method.png`,
+  'newsletter/issue-002-main-street/index.html': `${OG_BASE}issue-002-main-street.png`,
+  'newsletter/issue-002-public-data/index.html': `${OG_BASE}issue-002-public-data.png`,
+};
+
 test('destinations have canonical Open Graph metadata and the existing logo', () => {
   expect(fs.existsSync(path.join(distDir, 'assets/img/logo.png'))).toBe(true);
   for (const page of destinations) {
@@ -279,23 +289,31 @@ test('destinations have canonical Open Graph metadata and the existing logo', ()
     }
     expect(doc.querySelector('meta[property="og:url"]').content).toBe(doc.querySelector('link[rel="canonical"]').href);
     const image = doc.querySelector('meta[property="og:image"]').content;
-    if (image !== 'https://www.aceengineer.com/assets/img/logo.png') {
-      // A page may carry its own link-preview image: a 1200 x 627 PNG under assets/img/og/.
-      expect({ page, image }).toEqual({ page, image: expect.stringMatching(/^https:\/\/www\.aceengineer\.com\/assets\/img\/og\/[a-z0-9-]+\.png$/) });
-      expect({ page, twitter: doc.querySelector('meta[name="twitter:image"]').content }).toEqual({ page, twitter: image });
+    const expected = OWN_OG_IMAGES[page] || LOGO_URL;
+    expect({ page, image }).toEqual({ page, image: expected });
+    if (OWN_OG_IMAGES[page]) {
+      expect({ page, twitter: doc.querySelector('meta[name="twitter:image"]').content }).toEqual({ page, twitter: expected });
     }
   }
 });
 
-test('link-preview images under assets/img/og are 1200 x 627 PNG files used by a page', () => {
-  const ogDir = path.join(distDir, 'assets/img/og');
-  const files = fs.existsSync(ogDir) ? fs.readdirSync(ogDir).filter(f => f.endsWith('.png')) : [];
-  const used = new Set(destinations.map(page => documents.get(page).querySelector('meta[property="og:image"]')?.content));
-  for (const file of files) {
-    const png = fs.readFileSync(path.join(ogDir, file));
+test('referenced link-preview images exist and are 1200 x 627', () => {
+  for (const page of Object.keys(OWN_OG_IMAGES)) expect(destinations).toContain(page);
+  const referenced = new Set();
+  for (const page of destinations) {
+    const doc = documents.get(page);
+    for (const sel of ['meta[property="og:image"]', 'meta[name="twitter:image"]']) {
+      const url = doc.querySelector(sel)?.content;
+      if (url && url.startsWith(OG_BASE)) referenced.add(url);
+    }
+  }
+  expect(referenced.size).toBe(Object.keys(OWN_OG_IMAGES).length);
+  for (const url of referenced) {
+    const file = path.join(distDir, url.replace('https://www.aceengineer.com/', ''));
+    expect({ url, exists: fs.existsSync(file) }).toEqual({ url, exists: true });
+    const png = fs.readFileSync(file);
     // PNG IHDR: width at byte 16, height at byte 20 (big-endian)
-    expect({ file, w: png.readUInt32BE(16), h: png.readUInt32BE(20) }).toEqual({ file, w: 1200, h: 627 });
-    expect({ file, used: used.has(`https://www.aceengineer.com/assets/img/og/${file}`) }).toEqual({ file, used: true });
+    expect({ url, w: png.readUInt32BE(16), h: png.readUInt32BE(20) }).toEqual({ url, w: 1200, h: 627 });
   }
 });
 

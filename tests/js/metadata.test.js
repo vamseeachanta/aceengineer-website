@@ -278,7 +278,24 @@ test('destinations have canonical Open Graph metadata and the existing logo', ()
         .toEqual({ page, field, present: true });
     }
     expect(doc.querySelector('meta[property="og:url"]').content).toBe(doc.querySelector('link[rel="canonical"]').href);
-    expect(doc.querySelector('meta[property="og:image"]').content).toBe('https://www.aceengineer.com/assets/img/logo.png');
+    const image = doc.querySelector('meta[property="og:image"]').content;
+    if (image !== 'https://www.aceengineer.com/assets/img/logo.png') {
+      // A page may carry its own link-preview image: a 1200 x 627 PNG under assets/img/og/.
+      expect({ page, image }).toEqual({ page, image: expect.stringMatching(/^https:\/\/www\.aceengineer\.com\/assets\/img\/og\/[a-z0-9-]+\.png$/) });
+      expect({ page, twitter: doc.querySelector('meta[name="twitter:image"]').content }).toEqual({ page, twitter: image });
+    }
+  }
+});
+
+test('link-preview images under assets/img/og are 1200 x 627 PNG files used by a page', () => {
+  const ogDir = path.join(distDir, 'assets/img/og');
+  const files = fs.existsSync(ogDir) ? fs.readdirSync(ogDir).filter(f => f.endsWith('.png')) : [];
+  const used = new Set(destinations.map(page => documents.get(page).querySelector('meta[property="og:image"]')?.content));
+  for (const file of files) {
+    const png = fs.readFileSync(path.join(ogDir, file));
+    // PNG IHDR: width at byte 16, height at byte 20 (big-endian)
+    expect({ file, w: png.readUInt32BE(16), h: png.readUInt32BE(20) }).toEqual({ file, w: 1200, h: 627 });
+    expect({ file, used: used.has(`https://www.aceengineer.com/assets/img/og/${file}`) }).toEqual({ file, used: true });
   }
 });
 

@@ -20,7 +20,13 @@
     "test:visual:update": "playwright test --update-snapshots"
   },
   "jest": {
+    "globalSetup": "<rootDir>/tests/setup/build.js",
     "projects": [
+      {
+        "displayName": "test-build-setup",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/test-build-setup.test.js"]
+      },
       {
         "displayName": "diffraction-provenance",
         "testEnvironment": "node",

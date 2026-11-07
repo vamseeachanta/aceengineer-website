@@ -22,6 +22,41 @@
   "jest": {
     "projects": [
       {
+        "displayName": "test-discovery",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/test-discovery.test.js"]
+      },
+      {
+        "displayName": "dc-drilldown",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/dc-drilldown.test.js"]
+      },
+      {
+        "displayName": "phase1-claims",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/phase1-claims.test.js"]
+      },
+      {
+        "displayName": "retired-agent-copy",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/retired-agent-copy.test.js"]
+      },
+      {
+        "displayName": "newsletter-deploy",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/newsletter-deploy.test.js"]
+      },
+      {
+        "displayName": "newsletter-link-targets",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/newsletter-link-targets.test.js"]
+      },
+      {
+        "displayName": "newsletter-model-topic",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/newsletter-model-topic.test.js"]
+      },
+      {
         "displayName": "diffraction-provenance",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/diffraction-provenance.test.js"]

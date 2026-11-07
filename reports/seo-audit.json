@@ -1,0 +1,88 @@
+{
+  "status": "NOT_EVALUATED",
+  "sources": {
+    "contract": {
+      "document": "Issue #167 acceptance contract",
+      "year": 2026,
+      "section": "Unique metadata, one canonical, sitemap equality, one h1 and social coverage"
+    },
+    "titles": {
+      "url": "https://developers.google.com/search/docs/appearance/title-link",
+      "year": 2026,
+      "section": "Best practices for influencing title links",
+      "note": "Retrieved 2026-10-22; no fixed character limit; display truncation depends on device width."
+    },
+    "descriptions": {
+      "url": "https://developers.google.com/search/docs/appearance/snippet",
+      "year": 2026,
+      "section": "Best practices for creating quality meta descriptions",
+      "note": "Retrieved 2026-10-22; no fixed character limit; descriptions should differ by page."
+    },
+    "canonical": {
+      "url": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls",
+      "year": 2026,
+      "section": "Use absolute paths; include canonical URLs in a sitemap"
+    },
+    "sitemap": {
+      "url": "https://www.sitemaps.org/protocol.html",
+      "year": 2026,
+      "section": "XML tag definitions: loc; entity escaping",
+      "note": "Protocol 0.9; retrieved 2026-10-22. HTTPS and exact built-file equality are site policy, not protocol requirements."
+    },
+    "robots": {
+      "url": "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag",
+      "year": 2026,
+      "section": "noindex and none; conflicting rules use the more restrictive rule"
+    },
+    "schema": {
+      "url": "https://schema.org/docs/datamodel.html",
+      "year": 2026,
+      "section": "Types and properties",
+      "note": "Retrieved 2026-10-22. Schema.org is a vocabulary, not a universal required-property schema."
+    },
+    "dataset": {
+      "url": "https://developers.google.com/search/docs/appearance/structured-data/dataset",
+      "year": 2026,
+      "section": "Dataset: Required properties > name, description",
+      "note": "Description is between 50 and 5000 characters; creator is recommended, not required."
+    },
+    "breadcrumb": {
+      "url": "https://developers.google.com/search/docs/appearance/structured-data/breadcrumb",
+      "year": 2026,
+      "section": "BreadcrumbList and ListItem: Required properties",
+      "note": "At least two items; positions start at one; final item URL may be omitted; item.name can supply name."
+    },
+    "article": {
+      "url": "https://developers.google.com/search/docs/appearance/structured-data/article",
+      "year": 2026,
+      "section": "Structured data type definitions",
+      "note": "There are no required properties."
+    },
+    "og": {
+      "url": "https://ogp.me/",
+      "year": 2026,
+      "section": "Basic Metadata; Optional Metadata; Arrays",
+      "note": "Four required properties: title, type, image, url. Description is optional in the protocol and required by site policy. Arrays are allowed."
+    },
+    "twitter": {
+      "url": "https://developer.x.com/en/docs/x-for-websites/cards/overview/markup",
+      "year": 2026,
+      "status": "NOT_EVALUATED",
+      "note": "Retrieved 2026-10-22; redirects to a general documentation overview without card requirements. Completeness beyond the site's card-presence rule is not evaluated."
+    }
+  },
+  "pages": [],
+  "violations": [],
+  "unapproved": [],
+  "stale_allowlist": [],
+  "not_evaluated": [
+    {
+      "rule": "built-input",
+      "reason": "Built HTML is absent; run the site build before auditing."
+    }
+  ],
+  "inputs": {
+    "html_sha256": {},
+    "sitemap_sha256": null
+  }
+}

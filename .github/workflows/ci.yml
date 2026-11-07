@@ -43,6 +43,14 @@ jobs:
       - name: Check public claim boundaries
         run: npm run test:claims
 
+      - name: Set up uv for the metadata audit
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.11.28"
+
+      - name: Audit built-page SEO metadata
+        run: uv run --no-project python scripts/seo/audit.py --check
+
       - name: Run Jest suite
         run: npm test -- --runInBand
 

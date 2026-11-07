@@ -83,7 +83,10 @@ describe('lint:copy', () => {
         'forbidden_phrases:\n  - consultancy\n' +
         'targets:\n  about: content/about.html\n');
       fs.writeFileSync(path.join(tmp, 'content', 'about.html'),
-        '<p>lede</p><p>We are an offshore consultancy.</p>');
+        '<p>lede</p>');
+      fs.mkdirSync(path.join(tmp, 'content', 'nested'));
+      fs.writeFileSync(path.join(tmp, 'content', 'nested', 'page.html'),
+        '<p>We are an offshore consultancy.</p>');
       fs.copyFileSync(lintScript, path.join(tmp, 'scripts', 'lint-copy.js'));
       fs.symlinkSync(path.join(repoRoot, 'node_modules'), path.join(tmp, 'node_modules'));
 

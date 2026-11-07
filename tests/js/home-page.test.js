@@ -65,7 +65,7 @@ test('home has one shared Organization and a WebPage referencing it', () => {
   expect(page[0].description).toBe(doc.querySelector('meta[name="description"]').content);
 });
 test('home has specified Open Graph and Twitter metadata', () => {
-  expect(doc.title).toBe('AceEngineer | Engineering analysis and AI automation');
+  expect(doc.title).toBe('AceEngineer | Agentic engineering workflows');
   expect(doc.querySelector('meta[property="og:title"]').content).toBe(doc.title);
   expect(doc.querySelector('meta[property="og:image"]').content).toBe('https://www.aceengineer.com/assets/img/logo.png');
   expect(doc.querySelector('meta[property="og:site_name"]').content).toBe('AceEngineer');

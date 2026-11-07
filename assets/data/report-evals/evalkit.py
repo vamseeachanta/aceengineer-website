@@ -22,13 +22,25 @@ Comparison contract (also in the schema description):
   - A numeric result needs a finite int or float (a boolean is rejected); a
     boolean result needs a boolean; a string result needs an equal string.
   - abs tolerance t:     |got - expected| <= t
-    rel_pct tolerance r: |got - expected| <= r / 100 * |expected|; when the
-    expected value is 0 the comparison is exact.
-    Both bounds are inclusive, with a floating allowance of
-    1e-9 * max(1, |expected|).
+    rel_pct tolerance r: |got - expected| <= r / 100 * |expected|
+    Both bounds are inclusive. When both values are integers the comparison
+    is exact integer arithmetic. Otherwise a floating allowance of
+    1e-9 * |expected| is added for binary representation; it is zero when the
+    expected value is 0, so a zero reference is exact under a relative
+    tolerance or an absolute tolerance of 0.
   - Outside tolerance: DRIFT on a live basis, MISMATCH on a fixed basis.
-  - Grade: FAIL if any MISMATCH or ERROR; else PARTIAL if any DRIFT or
-    NOT_EVALUATED; else PASS.
+  - Grade: FAIL if any MISMATCH or ERROR, a reader-file structural error, or
+    an unexpected exception from compute() (even after every value was
+    filled); else PARTIAL if any DRIFT or NOT_EVALUATED; else PASS.
+  - Revision (rebuild mode): --revision candidate (default) uses the code and
+    repository inputs of the checkout; --revision pinned reads them from
+    code.commit through git (repo_file()). The record states which.
+  - The run record is always written: to --out, or to a new, uniquely named
+    file under <temp>/report-evals-runs/ (created exclusively, never replaced).
+    It is bound to the bytes of the files it graded;
+    --check-record reports a changed or missing file as stale.
+  - Scope: "both" (default) is graded in every mode; "rebuild" only when the
+    eval rebuilds; "pinned" only in a --revision pinned rebuild.
   - ``--compare FILE`` (prompt-level eval) grades only results whose scope is
     "both" (the default). Unknown or duplicate ids in the reader file make the
     grade FAIL; an empty file grades PARTIAL.
@@ -40,13 +52,16 @@ import argparse
 import hashlib
 import json
 import math
+import os
 import platform
+import shutil
 import subprocess
 import sys
 import tempfile
 import traceback
 import urllib.request
 from datetime import datetime, timezone
+from fractions import Fraction
 from pathlib import Path
 from typing import Any, Callable
 
@@ -98,33 +113,100 @@ def fetch(url: str, dest: Path, headers: dict[str, str] | None = None,
         tmp.write_bytes(data)
         tmp.replace(dest)
         retrieved = utc_now()
-    return {"url": url, "path": str(dest), "sha256": sha256_file(dest),
+    return {"url": url, "path": dest.as_posix(), "sha256": sha256_file(dest),
             "retrieved_utc": retrieved}
+
+
+# Variables that would make git ignore "-C <path>" and act on another repository.
+GIT_BINDINGS = ("GIT_DIR", "GIT_WORK_TREE", "GIT_COMMON_DIR", "GIT_INDEX_FILE",
+                "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_NAMESPACE")
+
+
+def git_env() -> dict[str, str]:
+    """Environment for git subprocesses, without the variables in GIT_BINDINGS."""
+    return {k: v for k, v in os.environ.items() if k.upper() not in GIT_BINDINGS}
 
 
 def git_head(path: Path) -> str | None:
     try:
         out = subprocess.run(["git", "-C", str(path), "rev-parse", "HEAD"],
-                             capture_output=True, text=True, timeout=30)
+                             capture_output=True, text=True, timeout=30, env=git_env())
         return out.stdout.strip() or None
     except (OSError, subprocess.SubprocessError):
         return None
 
 
-def git_blob(repo: Path, commit: str, path: str) -> bytes | None:
-    """Bytes of path at commit in the clone repo, fetching the commit if needed."""
+def git_blob(repo: Path, commit: str, path: str, fetch: bool = True) -> bytes | None:
+    """Bytes of path at commit in the clone repo, or None if the object is not available.
+
+    With fetch=True a missing commit is fetched from origin once; with
+    fetch=False (offline runs) no network access is attempted.
+    """
     def show():
         return subprocess.run(["git", "-C", str(repo), "show", f"{commit}:{path}"],
-                              capture_output=True, timeout=300)
+                              capture_output=True, timeout=300, env=git_env())
     try:
         out = show()
-        if out.returncode != 0:
+        if out.returncode != 0 and fetch:
             subprocess.run(["git", "-C", str(repo), "fetch", "-q", "origin", commit],
-                           capture_output=True, timeout=600)
+                           capture_output=True, timeout=600, env=git_env())
             out = show()
         return out.stdout if out.returncode == 0 else None
     except (OSError, subprocess.SubprocessError):
         return None
+
+
+def scratch_dir(args: argparse.Namespace) -> Path:
+    """A private temporary directory for this invocation; main() removes it when compute() ends."""
+    if getattr(args, "_scratch", None) is None:
+        args._scratch = Path(tempfile.mkdtemp(prefix="report-evals-pinned-"))
+    return args._scratch
+
+
+def artifacts_dirty(folder: Path, names: tuple[str, ...]) -> bool | None:
+    """Whether the bound files differ from the HEAD of the repository holding them.
+
+    True when any file is missing, not in HEAD (untracked, ignored or only
+    staged; also when the repository has no commit yet) or has bytes other
+    than its HEAD blob, which also covers skip-worktree and assume-unchanged
+    entries. None outside a repository.
+    """
+    def git(*cmd: str) -> subprocess.CompletedProcess:
+        return subprocess.run(["git", "-C", str(folder), *cmd], capture_output=True, text=True,
+                              timeout=30, env=git_env())
+    try:
+        if git("rev-parse", "--is-inside-work-tree").stdout.strip() != "true":
+            return None
+        for name in names:
+            if not (folder / name).is_file():
+                return True
+            at_head = git("rev-parse", "--verify", "-q", f"HEAD:./{name}")
+            on_disk = git("hash-object", "--", name)
+            if (at_head.returncode != 0 or on_disk.returncode != 0
+                    or at_head.stdout.strip() != on_disk.stdout.strip()):
+                return True
+        return False
+    except (OSError, subprocess.SubprocessError):
+        return None
+
+
+def repo_file(args: argparse.Namespace, rel: str) -> Path:
+    """Path of a repository file at the selected revision.
+
+    candidate: the file in the checkout (args.repo_root). pinned: the blob at
+    code.commit, written to a private temporary directory per invocation with the
+    same relative path, so scripts that load files beside them still work.
+    """
+    if getattr(args, "revision", "candidate") != "pinned":
+        return Path(args.repo_root) / rel
+    blob = git_blob(Path(args.repo_root), args.pinned_commit, rel,
+                    fetch=not getattr(args, "offline", False))
+    if blob is None:
+        raise FileNotFoundError(f"{rel} at {args.pinned_commit[:12]} is not readable from {args.repo_root}")
+    dest = scratch_dir(args) / rel
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(blob)
+    return dest
 
 
 def guard(ids: list[str], values: dict, notes: dict, fn: Callable[[], None]) -> None:
@@ -230,6 +312,9 @@ def validate(doc: dict[str, Any], schema: dict | None = None) -> list[str]:
         results = []
     seen = set()
     for i, r in enumerate(results):
+        if not isinstance(r, dict):
+            errors.append(f"results[{i}] must be an object")
+            continue
         errors += [f"results[{i}] missing {k}" for k in REQUIRED_RESULT if k not in r]
         rid = r.get("id")
         if rid in seen:
@@ -249,8 +334,8 @@ def validate(doc: dict[str, Any], schema: dict | None = None) -> list[str]:
             errors.append(f"results[{i}] value must be a number, string or boolean")
         if r.get("basis") not in ("fixed", "live"):
             errors.append(f"results[{i}] basis must be fixed or live")
-        if r.get("scope", "both") not in ("both", "rebuild"):
-            errors.append(f"results[{i}] scope must be both or rebuild")
+        if r.get("scope", "both") not in ("both", "rebuild", "pinned"):
+            errors.append(f"results[{i}] scope must be both, rebuild or pinned")
         if not r.get("limits"):
             errors.append(f"results[{i}] limits must list at least one limit")
         commit = str(r.get("commit", ""))
@@ -271,15 +356,23 @@ def compare_one(expected: dict[str, Any], got: Any) -> tuple[str, str]:
     elif _is_number(want):
         if not _is_number(got):
             return "MISMATCH", f"expected a number, got {type(got).__name__}"
-        if not math.isfinite(got):
-            return "MISMATCH", f"non-finite {got!r}"
-        diff = float(got) - float(want)
+        try:
+            if not math.isfinite(got):
+                return "MISMATCH", f"non-finite {got!r}"
+            diff = float(got) - float(want)
+        except OverflowError:  # an integer beyond the float range (for example 401 digits)
+            return "MISMATCH", "number outside the comparable range"
         tol = expected["tolerance"]
-        if "abs" in tol:
-            bound = float(tol["abs"])
+        both_int = isinstance(want, int) and isinstance(got, int)
+        if both_int:
+            bound = (Fraction(str(tol["abs"])) if "abs" in tol else
+                     Fraction(str(tol["rel_pct"])) / 100 * abs(want))
+            ok = abs(got - want) <= bound
         else:
-            bound = float(tol["rel_pct"]) / 100.0 * abs(float(want))
-        ok = abs(diff) <= bound + 1e-9 * max(1.0, abs(float(want)))
+            bound = (float(tol["abs"]) if "abs" in tol else
+                     float(tol["rel_pct"]) / 100.0 * abs(float(want)))
+            allowance = 1e-9 * abs(float(want))  # float representation only
+            ok = abs(diff) <= bound + allowance
         text = f"{diff:+.6g} ({diff / abs(float(want)) * 100:+.3g} %)" if want else f"{diff:+.6g}"
     else:
         if not isinstance(got, str):
@@ -313,6 +406,18 @@ def evaluate(results: list[dict[str, Any]], values: dict[str, Any],
                      "basis": r["basis"], "status": status, "difference": diff,
                      "note": notes.get(rid, "")})
     return rows
+
+
+def json_safe(value: Any) -> Any:
+    """Copy of value for a strict JSON record: a non-finite float becomes the string
+    "inf", "-inf" or "nan", so the record never holds Infinity or NaN."""
+    if isinstance(value, float) and not math.isfinite(value):
+        return repr(value)
+    if isinstance(value, dict):
+        return {k: json_safe(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [json_safe(v) for v in value]
+    return value
 
 
 def print_table(report_id: str, rows: list[dict[str, Any]], verdict: str,
@@ -362,6 +467,9 @@ def reader_values(path: Path, known: set[str]) -> tuple[dict[str, Any], list[str
             errors.append(f"reader results[{i}] needs id and value")
             continue
         rid = item["id"]
+        if not isinstance(rid, str):
+            errors.append(f"reader results[{i}] id must be a string")
+            continue
         if rid in values:
             errors.append(f"reader file repeats id {rid}")
         elif rid not in known:
@@ -370,8 +478,9 @@ def reader_values(path: Path, known: set[str]) -> tuple[dict[str, Any], list[str
     return values, errors
 
 
-def artifacts(folder: Path, names: tuple[str, ...]) -> dict[str, str]:
-    return {name: sha256_text(folder / name) for name in names if (folder / name).exists()}
+def artifacts(folder: Path, names: tuple[str, ...]) -> dict[str, str | None]:
+    """LF-normalized SHA-256 of each named file; None for a file that does not exist."""
+    return {name: sha256_text(folder / name) if (folder / name).is_file() else None for name in names}
 
 
 def check_record(folder: Path, record_path: Path) -> list[str]:
@@ -382,9 +491,12 @@ def check_record(folder: Path, record_path: Path) -> list[str]:
         return [f"run record unreadable: {exc}"]
     names = PROMPT_ARTIFACTS if record.get("mode", "").startswith("prompt") else REBUILD_ARTIFACTS
     bound = record.get("artifacts", {})
-    problems = [f"{n} not bound in the record" for n in names if n not in bound]
-    problems += [f"{n} changed since the run" for n, digest in artifacts(folder, names).items()
-                 if n in bound and bound[n] != digest]
+    problems = [f"{n} not bound in the record" for n in names if not bound.get(n)]
+    for name, digest in artifacts(folder, names).items():
+        if digest is None:
+            problems.append(f"{name} is missing")
+        elif bound.get(name) and bound[name] != digest:
+            problems.append(f"{name} changed since the run")
     return problems
 
 
@@ -395,7 +507,12 @@ def main(results_path: Path,
     folder = Path(results_path).resolve().parent
     doc = json.loads(Path(results_path).read_text(encoding="utf-8"))
     ap = argparse.ArgumentParser(description=f"Eval for {doc['report']['title']}")
-    ap.add_argument("--out", type=Path, help="write the run record (JSON) here")
+    ap.add_argument("--out", type=Path,
+                    help="write the run record (JSON) here; default: a new file under "
+                         "<temp>/report-evals-runs/ named by report, mode and time")
+    ap.add_argument("--revision", choices=("candidate", "pinned"), default="candidate",
+                    help="candidate: code and repository inputs of this checkout; "
+                         "pinned: code and repository inputs read from code.commit")
     ap.add_argument("--compare", type=Path,
                     help="grade a reader's results file instead of rebuilding")
     ap.add_argument("--validate-only", action="store_true",
@@ -405,6 +522,7 @@ def main(results_path: Path,
     if add_args:
         add_args(ap)
     args = ap.parse_args(argv)
+    args.pinned_commit = doc["code"]["commit"]
     try:
         sys.stdout.reconfigure(encoding="utf-8")
     except AttributeError:
@@ -436,25 +554,40 @@ def main(results_path: Path,
         mode = "prompt-level"
         graded = [r for r in doc["results"] if r.get("scope", "both") == "both"]
         values, structural = reader_values(args.compare, {r["id"] for r in graded})
-        context["reader_file_sha256"] = sha256_file(args.compare) if args.compare.exists() else None
+        try:
+            context["reader_file_sha256"] = sha256_file(args.compare) if args.compare.is_file() else None
+        except OSError:
+            context["reader_file_sha256"] = None
         names = PROMPT_ARTIFACTS
     else:
         mode = "rebuild"
-        graded = doc["results"]
+        # scope pinned: graded only in a pinned rebuild (for example code identity with the pin)
+        graded = [r for r in doc["results"]
+                  if r.get("scope", "both") != "pinned" or args.revision == "pinned"]
         names = REBUILD_ARTIFACTS
+        context["revision"] = args.revision
         try:
             compute(args, values, notes, context)
         except Exception as exc:  # noqa: BLE001 (record the failure, keep finished values)
-            context["compute_error"] = "".join(traceback.format_exception_only(type(exc), exc)).strip()
+            message = "".join(traceback.format_exception_only(type(exc), exc)).strip()
+            context["compute_error"] = message
+            # An unexpected failure fails the run even if every value was already filled.
+            structural.append(f"compute() raised: {message}"[:300])
             for r in graded:
                 if r["id"] not in values and r["id"] not in notes:
                     values[r["id"]] = exc
+        finally:
+            if getattr(args, "_scratch", None) is not None:
+                shutil.rmtree(args._scratch, ignore_errors=True)
+                args._scratch = None
     if "repo_root" in context:  # keep the folder name only, not the local path
         context["repo_root"] = Path(context["repo_root"]).name
+    context["artifacts_repo_head"] = git_head(folder)
+    context["artifacts_dirty"] = artifacts_dirty(folder, names)
     head = context.get("repo_head")
-    if head and "code_mode" not in context:
-        # historical: the code ran at the pinned commit; candidate: at another revision.
-        context["code_mode"] = ("historical" if head == doc["code"]["commit"]
+    if mode == "rebuild" and "code_mode" not in context:
+        # historical: code and repository inputs at the pinned commit; candidate: another revision.
+        context["code_mode"] = ("historical" if args.revision == "pinned" or head == doc["code"]["commit"]
                                 else "candidate")
     rows = evaluate(graded, values, notes)
     verdict = grade(rows, structural)
@@ -474,7 +607,18 @@ def main(results_path: Path,
         "errors": structural,
         "results": rows,
     }
-    if args.out:
-        args.out.parent.mkdir(parents=True, exist_ok=True)
-        args.out.write_text(json.dumps(record, indent=1, default=str) + "\n", encoding="utf-8")
+    text = json.dumps(json_safe(record), indent=1, default=str, allow_nan=False) + "\n"
+    if args.out:  # an explicit destination is replaced on purpose
+        out = args.out
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(text, encoding="utf-8")
+    else:  # a new, uniquely named file for every run, created exclusively
+        runs = Path(tempfile.gettempdir()) / "report-evals-runs"
+        runs.mkdir(parents=True, exist_ok=True)
+        tag = f"{doc['report']['id']}-{mode}-{context.get('revision', 'reader')}-{started.replace(':', '')}-"
+        handle, name = tempfile.mkstemp(prefix=tag, suffix=".json", dir=runs)
+        with os.fdopen(handle, "w", encoding="utf-8") as fh:
+            fh.write(text)
+        out = Path(name)
+    print(f"run record: {scrub(str(out))}")
     return EXIT[verdict]

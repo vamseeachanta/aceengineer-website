@@ -2,24 +2,25 @@
  "schema_version": "1.0",
  "report_id": "issue-002-jackup-site-assessment",
  "mode": "rebuild",
- "started_utc": "2026-11-06T16:06:19Z",
- "finished_utc": "2026-11-06T16:06:20Z",
+ "started_utc": "2026-11-07T04:49:13Z",
+ "finished_utc": "2026-11-07T04:49:15Z",
  "grade": "PASS",
  "pinned_commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
  "artifacts": {
   "results.json": "dd1768a53d14e5805484984612b4bfab1fa770cb6dd76667b1d00101d0a2d6be",
-  "eval.py": "2e1cf5637ffc78ce9b7d61f9b58ea66336e865a8e088bc5b590e17367f644feb",
-  "../evalkit.py": "44d2d922196abedc55bf807d2f757f7230bc455b4846a42f9ce083825e420f59"
+  "eval.py": "1056910e77be2378c1cab1b3bbb42731387fa6c8887603bf39122eac4a326575",
+  "../evalkit.py": "e52cd0ff12cd869c4e2f55ee6a5777800a4278828d28d8fc546cc7b69efe2eb3"
  },
  "python": "3.14.3",
  "platform": "Windows",
  "context": {
+  "revision": "candidate",
   "repo_root": "web-evals",
-  "repo_head": "681d82a72d3d34f25b2fdd9e7aeb7e0074713605",
+  "repo_head": "45e98e0b16d26cf06fa3aacd6ebe2cbd8ee83f72",
   "csv_sha256": "22dd0f17dca9f320e2202638b671a499d00bf554c219904d25c23b467301253e",
   "ntsb_mir2226": {
    "url": "https://www.ntsb.gov/investigations/AccidentReports/Reports/MIR2226.pdf",
-   "path": "<tmp>\\report-evals-cache\\2026-11-06\\MIR2226.pdf",
+   "path": "<tmp>/report-evals-cache/2026-11-06/MIR2226.pdf",
    "sha256": "2bac4c9ef5c39aa8ff53f5a8dd64a8e2567e85b08edb77d0a35cc336c99e66a2",
    "retrieved_utc": "cached"
   },
@@ -29,6 +30,8 @@
    "retrieved_utc": "cached"
   },
   "valaris_10k_sentence": " in the Middle East, which should further support the supply and demand balance of the global jackup fleet. From a supply perspective, as of December 31, 2025, there were 494 jackups in the global fleet, with 29% of the current jackup fleet being more than 40 years of age with limi",
+  "artifacts_repo_head": "45e98e0b16d26cf06fa3aacd6ebe2cbd8ee83f72",
+  "artifacts_dirty": false,
   "code_mode": "candidate"
  },
  "errors": [],

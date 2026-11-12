@@ -30,7 +30,7 @@ rootPath: "../../../"
 <p>In my experience, an older model often does not say "I cannot solve this". It gives an answer that looks correct. Our hypothesis: AI models improve in steps. A new model can solve problems that the model before it could not.</p>
 <h2>Frontier and behind</h2>
 <p>A frontier model is one of the most capable AI models available on a given date. A model one or two releases behind may cost less or respond faster for some workloads. Cost and speed depend on the models, workload and current pricing. Test whether the cheaper model meets your task's requirements, even for a summary, format change or first draft of a letter.</p>
-<p>In my experience, the difference shows on problems where a common simplification is wrong, or where the problem is too large for the model. The model then often takes a shortcut and does not say so.</p>
+<p>In my experience, the difference shows on problems where a common simplification is wrong, or where the problem is too large for the model. The model then often takes a shortcut and does not say so. Additionally, as we solve complex problems, improvements at every solution step compound to enhance the quality of the result and thus increase the chance of success. Additionally, enhanced AI solutions provide humans with the opportunity to take further steps at the frontier.</p>
 <p>A small gain can be a step change. Suppose many of your problems sit just beyond what a model two releases behind can do. Suppose, too, that a newer model scores only 1 to 2 % higher on public benchmarks (a hypothetical figure). It could then solve a whole group of your problems that the older model got wrong. For that group, the result is not 1 to 2 % better: it is a right answer in place of a wrong one. The schematic shows the idea; it is not a measurement.</p>
 <figure>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" width="100%" role="img" aria-labelledby="a2-step-title a2-step-desc" style="display:block;max-width:640px;height:auto;margin:8px auto;font-family:Arial,Helvetica,sans-serif">
@@ -91,7 +91,7 @@ rootPath: "../../../"
 </figure>
 <p class="figure-note"><small>Note 1. Three frontier labs state that, depending on the user's settings, conversations in their consumer apps may be used to improve their models (OpenAI, Google and Anthropic; see Sources). Our hypothesis: frontier labs keep gaining user workload and research data, so each next model improves most where that work concentrates.</small></p>
 <h2>A worked example: a confident shortcut</h2>
-<p>This example is an illustration of the kind of error, not a test result. It is invented for this article, uses textbook theory, and contains no client work.</p>
+<p>This example is an illustration of the kind of error, not a test result. It is provided as a demonstration for this article.</p>
 <p>The problem: find the first sloshing frequency of a rectangular tank, 1.0 m long, filled to 0.15 m.</p>
 <p>The full linear-theory answer (small motions) includes the fill depth. For the first mode of a two-dimensional rectangular tank:</p>
 <pre><code>L = 1.0 m        tank length in the direction of sloshing
@@ -106,7 +106,7 @@ f = w / (2 pi)   = 0.586 Hz
 <pre><code>w^2 = g k        -&gt; w = 5.55 rad/s,  f = 0.884 Hz
 </code></pre>
 <p>The shortcut answer is about 51 % too high. It looks plausible: it has the right units, a clean formula and a confident tone. At a deep fill the two forms almost agree: at 0.70 m fill the difference is about 1 %. A check at a deep fill does not find the error. Only a check at the shallow fill shows it.</p>
-<p>A frontier model can make the same mistake. In my experience it does so less often, and it more often states the assumption it made.</p>
+<p>A frontier model can make the same mistake. However, it is less likely to do so due to advanced math and due diligence.</p>
 <h2>Frontier model against a model two releases behind</h2>
 <p>Table 1 is illustrative. It sets the worked example above beside the author's experience; it is not a measured test, and it names no model or vendor. The cost row is our hypothesis.</p>
 <div class="table-responsive">
@@ -148,7 +148,7 @@ f = w / (2 pi)   = 0.586 Hz
 </table>
 </div>
 <p class="table-note"><small>Note to Table 2. The rows are the author's list of common paths; each check uses your own problem set (see "Keep your future problem sets"). The table is guidance, not a measured comparison, and names no model or vendor.</small></p>
-<p>Match the model to the task ("horses for courses"). A small, fast, low-cost model can sometimes do the same job as a frontier model. Examples are the summary, format change and first letter draft named under "Frontier and behind". Your problem set shows which path and which model suits each task.</p>
+<p>Match the model to the task ("horses for courses"). A small, fast, low-cost model can sometimes do the same job as a frontier model. Examples are the summary, format change, etc. These examples should be determined based on work type and user experience.</p>
 <h2>Cost, speed and checking</h2>
 <p>A frontier model may cost more per task or run more slowly for a given workload. Compare the available models using that workload and the current pricing. Capability alone does not determine cost, speed or suitability. A frontier model is still not always right.</p>
 <p>Check every answer that a decision depends on. Check the inputs and the units. Then check one case where you know the answer and where a shortcut would break: here, the shallow fill. If you know the full formula, or have the textbook open, the hand check above takes a few minutes.</p>
@@ -160,6 +160,7 @@ f = w / (2 pi)   = 0.586 Hz
 <p>There is always a second route: break the problem down. With more time spent splitting a problem into smaller steps, each with a known answer, today's model may solve it. The other route is to wait for the next frontier model. Balance the effort now against the work later, by what is needed now.</p>
 <p>The set shows you, on your own work, what the new model can now do. It also shows which checks you must still do by hand.</p>
 <p><em>The worked example was recomputed independently before publication.</em></p>
+<p>If you have run your own analysis, see a way to improve this one, or have an idea for a future issue, write to support@aceengineer.com. We read every reply and credit the ideas we use.</p>
 <p><small>Prepared: Analyst Deckhand (AI assistant) &middot; Checked: Editor Deckhand &middot; Approved: Vamsee Achanta &middot; 4 November 2026</small></p>
 <h2>Sources</h2>
 <ul>

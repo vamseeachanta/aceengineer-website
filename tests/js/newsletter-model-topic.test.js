@@ -60,32 +60,34 @@ for (const prefix of ['content', 'dist']) {
   test(`${prefix}: model topic preserves approved text, table and lists`, () => {
     const body = bodyFor(read(`${prefix}/${article}`));
     const prose = body.replace(/<figure>[\s\S]*?<\/figure>/g, '').replace(directionLeadIn, '');
-    assert.equal(digest(text(prose)), 'd6ba2ea5403c1b8814d6983f180166396c696b3397cde8f6ac7a32f63b53f416');
+    assert.equal(digest(text(prose)), 'dd90e3f14bb2fd2a6132a69b95ab9ae689714bdb5ebb4d1da9a2ff92bc985fde');
     assert.equal((body.match(/<h1>/g) || []).length, 1);
     assert.equal((body.match(/<h2>/g) || []).length, 10);
     assert.equal((body.match(/<ol>/g) || []).length, 0);
     assert.equal((body.match(/<ul>/g) || []).length, 1);
     assert.doesNotMatch(body, /Try it out/);
     assert.doesNotMatch(body, /Analyst Deckhand \(AI assistant\)/);
-    assert.match(body, /Prepared: Analyst Deckhand (?:&middot;|·) Checked: Editor Deckhand (?:&middot;|·) Approved: Vamsee Achanta (?:&middot;|·) 4 November 2026/);
+    assert.match(body, /Prepared: Analyst Deckhand (?:&middot;|·) Checked: Editor Deckhand (?:&middot;|·) Approved: Vamsee Achanta (?:&middot;|·) 12 November 2026/);
     assert.match(body, /<p class="figure-note"><small>Note 1\. Three frontier labs state that/);
     assert.ok(body.lastIndexOf('<h2>') === body.indexOf('<h2>Appendix A. Reusable prompts</h2>'));
     for (const line of [
-      'Additionally, as we solve complex problems, every solution step improvements compound to enhance the quality of the result and thus increasing the chance of success.',
-      'Additionally, enhanced AI solutions provide humans with opportunity to take further steps at the frontier.',
+      'Our hypothesis: on complex problems, improvements at each solution step can compound, raising the quality of the result and the chance of success.',
+      'Better AI solutions also give people the opportunity to take further steps at the frontier.',
       'It is provided as a demonstration for this article.',
-      'However, it is less likely to do so due to advanced math and due-diligence.',
+      'Our hypothesis: it is less likely to do so, because of stronger mathematics and more due diligence on its own work.',
       'Examples are the summary, format change etc. These examples should be determined based on work type and user experience.',
     ]) {
       assert.ok(body.includes(line), line);
     }
     for (const removed of ['It is invented for this article', 'In my experience it does so less often', 'named under "Frontier and behind"',
-      'Your problem set shows which path and which model suits each task']) {
+      'Your problem set shows which path and which model suits each task', 'every solution step improvements compound',
+      'due to advanced math and due-diligence', 'Approved: Vamsee Achanta &middot; 4 November 2026']) {
       assert.ok(!body.includes(removed), removed);
     }
     const invitation = 'If you have run your own analysis, see a way to improve this one, or have an idea for a future issue, write to support@aceengineer.com. We read every reply and credit the ideas we use and provide results we obtained.';
     assert.ok(body.includes(`<p>${invitation}</p>`));
     assert.ok(body.indexOf(invitation) < body.indexOf('Prepared: Analyst Deckhand'));
+    assert.ok(body.indexOf(invitation) < body.indexOf('<h2>Sources</h2>'));
     assert.ok(body.indexOf(invitation) < body.indexOf('<h2>Appendix A. Reusable prompts</h2>'));
   });
 

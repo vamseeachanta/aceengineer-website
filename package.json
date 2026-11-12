@@ -191,6 +191,11 @@
         "testMatch": ["<rootDir>/tests/js/cta-tracking.test.js"]
       },
       {
+        "displayName": "newsletter-article-01",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/newsletter-article-01.test.js"]
+      },
+      {
         "displayName": "commercial-copy",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/commercial-copy.test.js"]

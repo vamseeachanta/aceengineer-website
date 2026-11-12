@@ -792,6 +792,8 @@ p.prompt1{font-family:var(--hs-font-ui);font-size:14px;color:var(--hs-text-muted
  font-size:var(--hs-fs-lg)}
 .nl-takeaway p{margin:0}
 .nl-gif{display:block;max-width:100%;height:auto;border:1px solid var(--hs-line)}
+.nl-play{font-family:var(--hs-font-ui);font-size:var(--hs-fs-sm);margin:var(--hs-s2) 0 0;min-height:44px;padding:0 var(--hs-s4);border:1px solid var(--hs-line-mid);background:var(--hs-surface-2);color:var(--hs-text);cursor:pointer}
+.nl-play:focus-visible{outline:2px solid var(--hs-focus);outline-offset:2px}
 .nl-wrap ol.refs li{overflow-wrap:anywhere}
 main .nl-wrap a:not([class*="btn"]){color:var(--hs-link);text-decoration-color:var(--hs-link-line)}
 </style>
@@ -800,7 +802,7 @@ main .nl-wrap a:not([class*="btn"]){color:var(--hs-link);text-decoration-color:v
 <include src="partials/nav.html"></include>
 <main id="main">
 <div class="nl-wrap">
-<p class="nl-kicker" id="top">The Deckhand newsletter &middot; Issue 1 &middot; Energy Street</p>
+<p class="nl-kicker" id="top" data-site-only>The Deckhand newsletter &middot; Issue 1 &middot; Energy Street</p>
 <h1>Tank sloshing CFD study with open source software OpenFOAM</h1>
 <p><em>The Deckhand Chronicles is AceEngineer's newsletter. We help build AI into everyday engineering work.</em></p>
 <p>Energy Street · Tank sloshing. Energy Street covers offshore engineering.</p>
@@ -833,21 +835,25 @@ main .nl-wrap a:not([class*="btn"]){color:var(--hs-link);text-decoration-color:v
 <p>The first chart compares the CFD frequencies with linear theory. Its x-axis, labelled "fill / slenderness ratio h / L", is the fill depth h over the tank length L. The benchmark tank is square, so h/L equals the fill.</p>
 <figure>
 <div id="fig-cfd-vs-theory" class="viz" style="height:380px" role="img" aria-label="Chart of the non-dimensional first-mode sloshing frequency against the fill ratio h over L, from 0 to 1.5. A solid line shows linear theory, rising steeply to about 1.7 at h over L of 0.5 and levelling at about 1.77. Four CFD markers, at h over L of 0.15, 0.30, 0.50 and 0.70, sit on the line."></div>
-<figcaption><em>First-mode frequency, CFD against linear theory, two-dimensional tank. Differences, CFD minus theory: +0.28 % at 15 % fill, −0.30 % at 30 %, 0.00 % at 50 % and 70 %. Data: <a href="https://github.com/vamseeachanta/digitalmodel/blob/705857af62385a4567c96be99a129cdff3051a52/docs/api/structural/sloshing-cfd-benchmark.json">sloshing-cfd-benchmark.json</a> (Appendix A).</em> Chart values: <a href="../../assets/data/newsletter/issue-001/fig1-sloshing-cfd-vs-theory.csv">fig1-sloshing-cfd-vs-theory.csv</a>.</figcaption>
+<figcaption><em>First-mode frequency, CFD against linear theory, two-dimensional tank. Differences, CFD minus theory: +0.28 % at 15 % fill, −0.30 % at 30 %, 0.00 % at 50 % and 70 %. Data: <a href="https://github.com/vamseeachanta/digitalmodel/blob/705857af62385a4567c96be99a129cdff3051a52/docs/api/structural/sloshing-cfd-benchmark.json">sloshing-cfd-benchmark.json</a> (Appendix A).</em><span data-site-only> Chart values: <a href="../../assets/data/newsletter/issue-001/fig1-sloshing-cfd-vs-theory.csv">fig1-sloshing-cfd-vs-theory.csv</a>.</span></figcaption>
 </figure>
 <p>The second chart shows how far the resonance moves as roll grows, at three fills.</p>
 <figure>
 <div id="fig-resonance-shift" class="viz" style="height:380px" role="img" aria-label="Chart of the resonant-frequency shift, in percent of the linear first-mode frequency, against roll amplitude from 0 to 8 degrees. At h over L of 0.30 and 0.70 the markers fall below zero, to about minus 11 and minus 13 percent at 8 degrees. At h over L of 0.15 they sit above zero, from about plus 7.5 percent at 1 degree to about plus 1.2 percent at 8 degrees."></div>
-<figcaption><em>Resonant-frequency shift against roll amplitude, 0.9 m tank, OpenFOAM v2312. Data: <a href="https://github.com/vamseeachanta/digitalmodel/blob/705857af62385a4567c96be99a129cdff3051a52/docs/api/structural/sloshing-backbone.json">sloshing-backbone.json</a> and <a href="https://github.com/vamseeachanta/digitalmodel/blob/705857af62385a4567c96be99a129cdff3051a52/docs/api/cfd/sloshing-shallow-refine.json">sloshing-shallow-refine.json</a> (Appendix A).</em> Chart values: <a href="../../assets/data/newsletter/issue-001/fig3-resonance-shift-with-roll.csv">fig3-resonance-shift-with-roll.csv</a>.</figcaption>
+<figcaption><em>Resonant-frequency shift against roll amplitude, 0.9 m tank, OpenFOAM v2312. Data: <a href="https://github.com/vamseeachanta/digitalmodel/blob/705857af62385a4567c96be99a129cdff3051a52/docs/api/structural/sloshing-backbone.json">sloshing-backbone.json</a> and <a href="https://github.com/vamseeachanta/digitalmodel/blob/705857af62385a4567c96be99a129cdff3051a52/docs/api/cfd/sloshing-shallow-refine.json">sloshing-shallow-refine.json</a> (Appendix A).</em><span data-site-only> Chart values: <a href="../../assets/data/newsletter/issue-001/fig3-resonance-shift-with-roll.csv">fig3-resonance-shift-with-roll.csv</a>.</span></figcaption>
 </figure>
 <p>The animation shows one tank at 70 % fill, with forced roll on the left and none on the right.</p>
 <figure>
-<img class="nl-gif" src="../../assets/img/newsletter/issue-001/sloshing-effect-of-roll.gif" width="819" height="430" loading="lazy" alt="Animation of two CFD fields of the same tank at 70 % fill. On the left, with forced roll, the free surface piles up and sloshes from wall to wall. On the right, without roll, the surface stays flat.">
+<img class="nl-gif" src="../../assets/img/newsletter/issue-001/sloshing-effect-of-roll-still.png" data-still="../../assets/img/newsletter/issue-001/sloshing-effect-of-roll-still.png" data-anim="../../assets/img/newsletter/issue-001/sloshing-effect-of-roll.gif" width="819" height="430" loading="lazy" alt="Animation of two CFD fields of the same tank at 70 % fill. On the left, with forced roll, the free surface piles up and sloshes from wall to wall. On the right, without roll, the surface stays flat.">
+<button type="button" class="nl-play" data-site-only hidden>Play animation</button>
+<noscript><p data-site-only><a href="../../assets/img/newsletter/issue-001/sloshing-effect-of-roll.gif">Open the animation</a></p></noscript>
 <figcaption><em>Forced roll against no roll, OpenFOAM v2312 free-surface fields.</em></figcaption>
 </figure>
 <p>The motion-forecast demo runs in a browser. It forecasts vessel motion 65 s ahead on a simulated sea state and gives an illustrative go, caution, hold or no-go call; useful calls need live motion-sensor input. The animation steps the significant wave height from 1.0 to 4.0 m. Try the demo: <a href="https://vamseeachanta.github.io/digitalmodel/hydro/short-horizon-motion-forecast.html">https://vamseeachanta.github.io/digitalmodel/hydro/short-horizon-motion-forecast.html</a></p>
 <figure>
-<img class="nl-gif" src="../../assets/img/newsletter/issue-001/motion-forecast-demo.gif" width="960" height="440" loading="lazy" alt="Animation of the motion forecast demo for a heavy-lift vessel and a crane lift as the significant wave height steps from 1.0 to 4.0 m. At 1.0 m the operability panel reads GO through the 65-second horizon; at 4.0 m the call moves between HOLD and NO-GO. Panels show wave elevation, forecast heave, pitch and roll, crane-tip vertical velocity and the rolling go, caution or no-go bar.">
+<img class="nl-gif" src="../../assets/img/newsletter/issue-001/motion-forecast-demo-still.png" data-still="../../assets/img/newsletter/issue-001/motion-forecast-demo-still.png" data-anim="../../assets/img/newsletter/issue-001/motion-forecast-demo.gif" width="960" height="440" loading="lazy" alt="Animation of the motion forecast demo for a heavy-lift vessel and a crane lift as the significant wave height steps from 1.0 to 4.0 m. At 1.0 m the operability panel reads GO through the 65-second horizon; at 4.0 m the call moves between HOLD and NO-GO. Panels show wave elevation, forecast heave, pitch and roll, crane-tip vertical velocity and the rolling go, caution or no-go bar.">
+<button type="button" class="nl-play" data-site-only hidden>Play animation</button>
+<noscript><p data-site-only><a href="../../assets/img/newsletter/issue-001/motion-forecast-demo.gif">Open the animation</a></p></noscript>
 <figcaption><em>Motion forecast demo, crane lift, peak wave period 9.0 s, significant wave height 1.0 to 4.0 m. Illustrative calls.</em></figcaption>
 </figure>
 <p>To try it out or adapt the analysis, see <a href="#appendix-a-reusable-prompts">reusable prompt</a>.</p>
@@ -926,6 +932,16 @@ used.</pre>
 <div class="foot"><p>Questions: <a href="mailto:support@aceengineer.com">support@aceengineer.com</a> &middot; <a href="https://www.aceengineer.com/">AceEngineer</a> &middot; &copy; 2026 AceEngineer &middot; 11511 Piping Rock Dr., Houston, TX 77077</p>
 <p>Deckhand: Make Engineering Enjoyable Again</p></div>
 </div>
+<script>
+(function(){
+document.querySelectorAll('figure img.nl-gif[data-anim]').forEach(function(img){
+ var btn=img.parentNode.querySelector('button.nl-play');if(!btn)return;btn.hidden=false;
+ var on=false;btn.addEventListener('click',function(){on=!on;
+  img.src=on?img.dataset.anim:img.dataset.still;
+  btn.textContent=on?'Stop animation':'Play animation';});
+});
+})();
+</script>
 <script src="../../assets/js/plotly-2.32.0.min.js" charset="utf-8"></script>
 <script>
 (function(){

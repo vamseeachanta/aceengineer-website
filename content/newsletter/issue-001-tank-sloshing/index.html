@@ -1,0 +1,979 @@
+---
+rootPath: "../../"
+---
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tank sloshing CFD study with open source software OpenFOAM (Deckhand newsletter, issue 1)</title>
+<meta name="description" content="The closed-form formula for a tank's first sloshing frequency holds at small roll: our two-dimensional OpenFOAM model matches it within 0.30 % at four fill levels. At 8° roll, the resonance at 30 % and 70 % fill sits about 11 to 13 % or more below the formula.">
+<meta property="og:title" content="Tank sloshing CFD study with open source software OpenFOAM (Deckhand newsletter, issue 1)">
+<meta property="og:description" content="The closed-form formula for a tank's first sloshing frequency holds at small roll: our two-dimensional OpenFOAM model matches it within 0.30 % at four fill levels. At 8° roll, the resonance at 30 % and 70 % fill sits about 11 to 13 % or more below the formula.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ canonicalUrl }}">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/og/issue-001-tank-sloshing.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="AceEngineer mark with the title Tank sloshing CFD study with OpenFOAM and a chart of the first-mode sloshing frequency against the fill ratio">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tank sloshing CFD study with open source software OpenFOAM (Deckhand newsletter, issue 1)">
+<meta name="twitter:description" content="The closed-form formula for a tank's first sloshing frequency holds at small roll: our two-dimensional OpenFOAM model matches it within 0.30 % at four fill levels. At 8° roll, the resonance at 30 % and 70 % fill sits about 11 to 13 % or more below the formula.">
+<meta name="twitter:image" content="https://www.aceengineer.com/assets/img/og/issue-001-tank-sloshing.png">
+<meta name="twitter:image:alt" content="AceEngineer mark with the title Tank sloshing CFD study with OpenFOAM and a chart of the first-mode sloshing frequency against the fill ratio">
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Tank sloshing CFD study with open source software OpenFOAM (Deckhand newsletter, issue 1)", "name": "Tank sloshing CFD study with open source software OpenFOAM (Deckhand newsletter, issue 1)", "description": "The closed-form formula for a tank's first sloshing frequency holds at small roll: our two-dimensional OpenFOAM model matches it within 0.30 % at four fill levels. At 8° roll, the resonance at 30 % and 70 % fill sits about 11 to 13 % or more below the formula.", "datePublished": "2026-11-12", "url": "https://www.aceengineer.com/newsletter/issue-001-tank-sloshing/", "inLanguage": "en-US", "publisher": {"@id": "https://www.aceengineer.com/#organization"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.aceengineer.com/"}, {"@type": "ListItem", "position": 2, "name": "Newsletter", "item": "https://www.aceengineer.com/newsletter/"}, {"@type": "ListItem", "position": 3, "name": "Tank sloshing CFD study with open source software OpenFOAM (Deckhand newsletter, issue 1)", "item": "https://www.aceengineer.com/newsletter/issue-001-tank-sloshing/"}]}]</script>
+<include src="partials/head-common.html"></include>
+<style>
+/* AceEngineer house style 1.6 */
+
+/* 1. Tokens ---------------------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  /* brand palette: no other brand colours, no gradients */
+  --ace-mark-navy: #0B3D91;   /* the wordmark "Ace" only */
+  --ace-navy: #0b3d5c;        /* structure navy: headings, rules, outlines, dark grounds */
+  --ace-teal: #2BB2A6;        /* rules, square bullets, edges; never text */
+  --ace-teal-deep: #0e7e88;   /* kickers and small headings on white; never on tint */
+  --ace-teal-ink: #0d7680;    /* teal-deep 6 % darker: small teal type that sits on the tint ground too (4.83:1 on tint, 5.36:1 on white) */
+  --ace-teal-lift: #3FC4B8;   /* text and rules on navy */
+  --ace-ink: #26323a;         /* body text */
+  --ace-muted: #5a6b76;       /* notes, captions, bylines */
+  --ace-tint: #eef4f8;        /* boxes, table header ground, page ground */
+  --ace-hairline: #d0d7de;    /* thin dividers */
+  --ace-underline: #b8c9d4;   /* link underline, input outline */
+  --ace-paper: #ffffff;
+
+  /* typefaces: system stacks, nothing is downloaded */
+  --hs-font-ui: "Segoe UI", Helvetica, Arial, sans-serif;                    /* headings, labels, tables, controls */
+  --hs-font-body: Georgia, "Times New Roman", serif;                         /* running text: the newspaper voice */
+  --hs-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;  /* paths, code, identifiers */
+
+  /* type scale */
+  --hs-fs-xs: 11.5px;
+  --hs-fs-sm: 13px;
+  --hs-fs-md: 14.5px;
+  --hs-fs-body: 16px;
+  --hs-fs-lg: 18px;
+  --hs-fs-h3: 17px;
+  --hs-fs-h2: clamp(20px, 1.1vw + 14px, 24px);
+  --hs-fs-h1: clamp(24px, 1.8vw + 16px, 34px);
+  --hs-lh: 1.55;
+  --hs-lh-tight: 1.2;
+  --hs-track-kicker: .18em;
+
+  /* spacing in 4 px steps; page side margin 28 px, 16 px on phones */
+  --hs-s1: 4px; --hs-s2: 8px; --hs-s3: 12px; --hs-s4: 16px; --hs-s5: 24px; --hs-s6: 32px; --hs-s7: 48px;
+  --hs-gutter: 28px;
+  --hs-gap: 20px;
+  --hs-max: 1240px;
+
+  /* shape: square corners as in the newsletter; 2 px only on small controls */
+  --hs-radius: 0;
+  --hs-radius-sm: 2px;
+  --hs-rule: 3px;            /* teal accent rule: top of a page, top of a box */
+  --hs-rule-section: 1.5px;  /* navy section rule */
+  --hs-sq: 6px;              /* square bullet */
+
+  /* depth: kept faint; the brand separates with rules, not shadows */
+  --hs-shadow-1: 0 1px 2px rgba(11, 61, 92, .08);
+  --hs-shadow-2: 0 6px 18px rgba(11, 61, 92, .14);
+
+  /* roles: components read only these, so dark mode swaps them in one place */
+  --hs-bg: var(--ace-tint);
+  --hs-surface: var(--ace-paper);
+  --hs-surface-2: var(--ace-tint);
+  --hs-text: var(--ace-ink);
+  --hs-text-muted: var(--ace-muted);
+  --hs-heading: var(--ace-navy);
+  --hs-kicker: var(--ace-teal-ink);
+  --hs-link: var(--ace-navy);
+  --hs-link-line: var(--ace-underline);
+  --hs-line: var(--ace-hairline);
+  --hs-line-mid: var(--ace-underline);
+  --hs-line-strong: var(--ace-navy);
+  --hs-accent: var(--ace-teal);
+  --hs-rule-alt: var(--ace-navy);
+  --hs-primary: var(--ace-navy);
+  --hs-on-primary: #ffffff;
+  --hs-select: var(--ace-tint);
+  --hs-code-bg: var(--ace-paper);
+  --hs-band: var(--ace-navy);
+  --hs-on-band: #ffffff;
+  --hs-band-accent: var(--ace-teal-lift);
+  --hs-focus: var(--ace-teal-deep);
+
+  /* chart series: two at most (validated: CVD and normal-vision separation pass in both modes; teal on white is
+     below 3:1, so every bar carries its value or the chart has a table view) */
+  --hs-chart-1: var(--ace-teal);
+  --hs-chart-2: var(--ace-navy);
+
+  /* status colours: for flags, checks and meters only; they are not brand colours (brand sheet section 4) */
+  --hs-ok: #1a6b34;   --hs-ok-bg: #e6f3ea;   --hs-ok-line: #2e8b57;
+  --hs-warn: #8a5300; --hs-warn-bg: #fff3dc; --hs-warn-line: #d99a2b;
+  --hs-crit: #b42318; --hs-crit-bg: #fdecea; --hs-crit-line: #d03b3b;
+}
+
+/* Dark: the newsletter's "on navy" treatment (navy grounds, white text, teal-lift accents and rules).
+   A page can force a theme with <html data-theme="light"> or <html data-theme="dark">. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --hs-bg: #061a28;
+    --hs-surface: #0b2638;
+    --hs-surface-2: #10324a;
+    --hs-text: #e4edf2;
+    --hs-text-muted: #9db2c0;
+    --hs-heading: #ffffff;
+    --hs-kicker: var(--ace-teal-lift);
+    --hs-link: #e4edf2;
+    --hs-link-line: var(--ace-teal-lift);
+    --hs-line: #21475f;
+    --hs-line-mid: #33607a;
+    --hs-line-strong: #4f7f99;
+    --hs-accent: var(--ace-teal-lift);
+    --hs-rule-alt: #9db2c0;
+    --hs-primary: var(--ace-teal-lift);
+    --hs-on-primary: #062233;
+    --hs-select: #123a52;
+    --hs-code-bg: #081f2f;
+    --hs-band: #04131e;
+    --hs-on-band: #e4edf2;
+    --hs-band-accent: var(--ace-teal-lift);
+    --hs-focus: var(--ace-teal-lift);
+    --hs-chart-1: var(--ace-teal-lift);
+    --hs-chart-2: #4f7f99;
+    --hs-shadow-1: 0 1px 2px rgba(0, 0, 0, .35);
+    --hs-shadow-2: 0 6px 18px rgba(0, 0, 0, .45);
+    --hs-ok: #7fd6a0;   --hs-ok-bg: #11301e;   --hs-ok-line: #3fae6a;
+    --hs-warn: #f2c46d; --hs-warn-bg: #33270f; --hs-warn-line: #c98f2a;
+    --hs-crit: #ff9d92; --hs-crit-bg: #3b1714; --hs-crit-line: #e5675c;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --hs-bg: #061a28;
+  --hs-surface: #0b2638;
+  --hs-surface-2: #10324a;
+  --hs-text: #e4edf2;
+  --hs-text-muted: #9db2c0;
+  --hs-heading: #ffffff;
+  --hs-kicker: var(--ace-teal-lift);
+  --hs-link: #e4edf2;
+  --hs-link-line: var(--ace-teal-lift);
+  --hs-line: #21475f;
+  --hs-line-mid: #33607a;
+  --hs-line-strong: #4f7f99;
+  --hs-accent: var(--ace-teal-lift);
+  --hs-rule-alt: #9db2c0;
+  --hs-primary: var(--ace-teal-lift);
+  --hs-on-primary: #062233;
+  --hs-select: #123a52;
+  --hs-code-bg: #081f2f;
+  --hs-band: #04131e;
+  --hs-on-band: #e4edf2;
+  --hs-band-accent: var(--ace-teal-lift);
+  --hs-focus: var(--ace-teal-lift);
+  --hs-chart-1: var(--ace-teal-lift);
+  --hs-chart-2: #4f7f99;
+  --hs-shadow-1: 0 1px 2px rgba(0, 0, 0, .35);
+  --hs-shadow-2: 0 6px 18px rgba(0, 0, 0, .45);
+  --hs-ok: #7fd6a0;   --hs-ok-bg: #11301e;   --hs-ok-line: #3fae6a;
+  --hs-warn: #f2c46d; --hs-warn-bg: #33270f; --hs-warn-line: #c98f2a;
+  --hs-crit: #ff9d92; --hs-crit-bg: #3b1714; --hs-crit-line: #e5675c;
+}
+
+/* 2. Base ------------------------------------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--hs-bg);
+  color: var(--hs-text);
+  font: 400 var(--hs-fs-body)/var(--hs-lh) var(--hs-font-body);
+  font-kerning: normal;
+  font-variant-numeric: lining-nums;   /* Georgia's default figures are old-style: 'P0' read as 'Po', '13:00Z' as '13:ooZ'.
+                                       A 'font:' shorthand resets this: set it again after any serif shorthand. */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+h1, h2, h3, h4 {
+  font-family: var(--hs-font-ui);
+  font-weight: 600;
+  line-height: var(--hs-lh-tight);
+  letter-spacing: -.01em;
+  color: var(--hs-heading);
+  margin: 0 0 var(--hs-s2);
+  text-wrap: balance;
+}
+h1 { font-size: var(--hs-fs-h1); }
+h2 { font-size: var(--hs-fs-h2); }
+h3 { font-size: var(--hs-fs-h3); }
+h4 { font-size: var(--hs-fs-body); }
+p { margin: 0 0 var(--hs-s3); }
+p, li { text-wrap: pretty; }     /* no single short word stranded on a last line (added 2026-10-18) */
+a {
+  color: var(--hs-link);
+  text-decoration: underline;
+  text-decoration-color: var(--hs-link-line);
+  text-underline-offset: 2px;
+}
+a:hover { text-decoration-color: currentColor; }
+code, kbd, pre, samp { font-family: var(--hs-font-mono); font-size: .9em; }
+hr { border: 0; border-top: 1px solid var(--hs-line); margin: var(--hs-s5) 0; }
+img, video { max-width: 100%; height: auto; }
+button, input, select, textarea { font: inherit; color: inherit; }
+input[type="radio"], input[type="checkbox"] { accent-color: var(--hs-primary); }
+:focus-visible { outline: 2px solid var(--hs-focus); outline-offset: 2px; }
+::selection { background: rgba(43, 178, 166, .3); }
+
+/* 3. Layout: container, grid, 12 columns ---------------------------------------------------------- */
+.hs-container {
+  width: 100%;
+  max-width: calc(var(--hs-max) + 2 * var(--hs-gutter));
+  margin-inline: auto;
+  padding-inline: var(--hs-gutter);
+}
+.hs-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--hs-gap); align-items: start; }
+.hs-grid > * { min-width: 0; }
+.hs-grid-auto { grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+@media (min-width: 900px) {
+  .hs-grid-2, .hs-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1200px) {
+  .hs-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.hs-row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--hs-gap); }
+.hs-row > * { grid-column: 1 / -1; min-width: 0; }      /* phones: every column is full width */
+@media (min-width: 768px) {
+  .hs-col-2 { grid-column: span 2; }  .hs-col-3 { grid-column: span 3; }  .hs-col-4 { grid-column: span 4; }
+  .hs-col-5 { grid-column: span 5; }  .hs-col-6 { grid-column: span 6; }  .hs-col-7 { grid-column: span 7; }
+  .hs-col-8 { grid-column: span 8; }  .hs-col-9 { grid-column: span 9; }  .hs-col-12 { grid-column: span 12; }
+}
+.hs-stack > * + * { margin-top: var(--hs-s3); }
+.hs-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--hs-s2); }
+.hs-spread { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--hs-s2) var(--hs-s4); }
+
+/* 4. Type helpers ---------------------------------------------------------------------------------- */
+.hs-kicker {
+  font: 700 var(--hs-fs-xs)/1.3 var(--hs-font-ui);
+  letter-spacing: var(--hs-track-kicker);
+  text-transform: uppercase;
+  color: var(--hs-kicker);
+  margin: 0 0 var(--hs-s1);
+}
+.hs-masthead {                       /* newsletter masthead and lead headline: Georgia bold, navy */
+  font: 700 var(--hs-fs-h1)/1.08 var(--hs-font-body);
+  font-variant-numeric: lining-nums;
+  letter-spacing: -.015em;
+  color: var(--hs-heading);
+  margin: 0;
+}
+.hs-masthead .hi { color: var(--hs-kicker); }
+.hs-deck { font: italic var(--hs-fs-lg)/1.45 var(--hs-font-body); font-variant-numeric: lining-nums; color: var(--hs-text); }
+.hs-muted { color: var(--hs-text-muted); }
+.hs-small { font: var(--hs-fs-sm)/1.45 var(--hs-font-ui); color: var(--hs-text-muted); }
+.hs-ui { font-family: var(--hs-font-ui); }
+.hs-num { font-family: var(--hs-font-ui); font-variant-numeric: tabular-nums lining-nums; }
+.hs-mono { font-family: var(--hs-font-mono); font-size: .9em; }
+
+/* 5. Sections: navy section rule, square navy step number, small-capital sub-heading -------------- */
+.hs-section {
+  margin-top: var(--hs-s6);
+  padding-top: var(--hs-s4);
+  border-top: var(--hs-rule-section) solid var(--hs-line-strong);
+}
+.hs-section-head { display: flex; align-items: flex-start; gap: var(--hs-s3); margin: 0 0 var(--hs-s3); }
+.hs-section-head h2 { margin: 0; }
+.hs-section-head .hs-kicker { margin-bottom: 2px; }
+.hs-step {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  background: var(--hs-primary);
+  color: var(--hs-on-primary);
+  font: 700 13px/1 var(--hs-font-ui);
+  border-radius: var(--hs-radius);
+}
+.hs-subhead {
+  display: flex;
+  align-items: center;
+  gap: var(--hs-s3);
+  margin: var(--hs-s5) 0 var(--hs-s3);
+  font: 700 var(--hs-fs-xs)/1.3 var(--hs-font-ui);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hs-heading);
+}
+.hs-subhead::after { content: ""; flex: 1 1 auto; border-top: 1px solid var(--hs-line); }
+
+/* 6. Cards: white box, hairline outline, 3 px teal top rule ---------------------------------------- */
+.hs-card {
+  min-width: 0;
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line);
+  border-top: var(--hs-rule) solid var(--hs-accent);
+  border-radius: var(--hs-radius);
+  box-shadow: var(--hs-shadow-1);
+  padding: var(--hs-s4);
+  overflow-wrap: break-word;
+}
+.hs-card-outline { border-color: var(--hs-line-strong); border-top-color: var(--hs-accent); }  /* newsletter box */
+.hs-card-plain { border-top-width: 1px; border-top-color: var(--hs-line); }
+.hs-card-title { font: 600 var(--hs-fs-h3)/1.3 var(--hs-font-ui); color: var(--hs-heading); margin: 0 0 var(--hs-s2); }
+.hs-card-meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--hs-s1) var(--hs-s2);
+  margin: 0 0 var(--hs-s2);
+  font: var(--hs-fs-sm)/1.4 var(--hs-font-ui);
+  color: var(--hs-text-muted);
+}
+
+/* 7. Badges, chips and tags ------------------------------------------------------------------------ */
+.hs-badge {
+  display: inline-block;
+  padding: 0 7px;
+  font: 700 var(--hs-fs-xs)/1.6 var(--hs-font-ui);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hs-on-primary);
+  background: var(--hs-primary);
+  border: 1px solid var(--hs-primary);
+  border-radius: var(--hs-radius-sm);
+}
+.hs-badge-outline { color: var(--hs-heading); background: transparent; border-color: var(--hs-line-strong); }
+.hs-chip {
+  display: inline-block;
+  padding: 0 8px;
+  font: 400 var(--hs-fs-sm)/1.55 var(--hs-font-ui);
+  white-space: nowrap;
+  color: var(--hs-text-muted);
+  background: var(--hs-surface-2);
+  border: 1px solid var(--hs-line);
+  border-radius: var(--hs-radius-sm);
+}
+.hs-chip-ok   { color: var(--hs-ok);   background: var(--hs-ok-bg);   border-color: transparent; font-weight: 600; }
+.hs-chip-warn { color: var(--hs-warn); background: var(--hs-warn-bg); border-color: transparent; font-weight: 600; }
+.hs-chip-crit { color: var(--hs-crit); background: var(--hs-crit-bg); border-color: transparent; font-weight: 600; }
+.hs-tag {                            /* the newsletter's "You choose" tag: kicker type, square teal-deep outline */
+  display: inline-block;
+  padding: 0 5px;
+  font: 600 var(--hs-fs-xs)/1.5 var(--hs-font-ui);
+  font-style: normal;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--hs-kicker);
+  background: var(--hs-surface);
+  border: 1px solid currentColor;
+  border-radius: 0;
+}
+
+/* 8. Buttons --------------------------------------------------------------------------------------- */
+.hs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 14px;
+  font: 600 var(--hs-fs-md)/1.2 var(--hs-font-ui);
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--hs-heading);
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line-strong);
+  border-radius: var(--hs-radius-sm);
+  cursor: pointer;
+}
+.hs-btn:hover { background: var(--hs-surface-2); }
+.hs-btn-primary { color: var(--hs-on-primary); background: var(--hs-primary); border-color: var(--hs-primary); }
+.hs-btn-primary:hover { background: var(--hs-primary); filter: brightness(1.15); }
+.hs-btn-sm { min-height: 28px; padding: 2px 10px; font-size: var(--hs-fs-sm); }
+.hs-btn-quiet { color: var(--hs-text-muted); border-color: var(--hs-line-mid); font-weight: 400; }
+/* Phones: buttons and answer rows at least 44 px tall, the usual minimum touch target (added 2026-10-17). */
+@media (max-width: 600px) {
+  .hs-btn, .hs-btn-sm { min-height: 44px; }
+  .hs-option { min-height: 44px; padding: 10px 12px; }
+  details.hs-disclosure > summary { min-height: 44px; }   /* fold toggles were 18 px tall on phones */
+}
+
+/* 9. Tables: horizontal rules only (brand sheet section 7) ------------------------------------------ */
+.hs-table-wrap { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.hs-table, .hs-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font: var(--hs-fs-sm)/1.45 var(--hs-font-ui);
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--hs-text);
+  border-top: 1.5px solid var(--hs-line-strong);
+  border-bottom: 1px solid var(--hs-line-strong);
+}
+.hs-table caption, .hs-prose table caption {
+  caption-side: top; text-align: left; padding: 0 0 6px;
+  font: var(--hs-fs-sm)/1.4 var(--hs-font-ui); color: var(--hs-text-muted);
+}
+.hs-table thead th, .hs-prose table thead th {
+  padding: 7px 10px;
+  text-align: left;
+  white-space: nowrap;
+  font-weight: 600;
+  color: var(--hs-heading);
+  background: var(--hs-surface-2);
+  border-bottom: 1px solid var(--hs-line-strong);
+}
+.hs-table td, .hs-table tbody th, .hs-prose table td, .hs-prose table tbody th {
+  padding: 7px 10px; text-align: left; vertical-align: top; border-top: 1px solid var(--hs-line);
+}
+.hs-table .num, .hs-prose table .num { text-align: right; }
+
+/* 10. Callouts: tint box with a 4 px teal left edge -------------------------------------------------- */
+.hs-callout {
+  padding: var(--hs-s3) var(--hs-s4);
+  color: var(--hs-text);
+  background: var(--hs-surface-2);
+  border-left: 4px solid var(--hs-accent);
+  border-radius: var(--hs-radius);
+}
+.hs-callout > :last-child { margin-bottom: 0; }
+.hs-callout-title {
+  margin: 0 0 var(--hs-s1);
+  font: 700 var(--hs-fs-xs)/1.3 var(--hs-font-ui);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hs-heading);           /* navy, never teal-deep, on a tint ground */
+}
+.hs-callout-ok   { background: var(--hs-ok-bg);   border-left-color: var(--hs-ok-line); }
+.hs-callout-warn { background: var(--hs-warn-bg); border-left-color: var(--hs-warn-line); }
+.hs-callout-crit { background: var(--hs-crit-bg); border-left-color: var(--hs-crit-line); }
+
+/* 11. Collapsible sections: a panel, and a small inline disclosure; + and minus as in the newsletter -- */
+details.hs-panel {
+  min-width: 0;
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line);
+  border-top: var(--hs-rule) solid var(--hs-accent);
+  border-radius: var(--hs-radius);
+  box-shadow: var(--hs-shadow-1);
+}
+details.hs-panel > summary {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--hs-s3);
+  padding: var(--hs-s3) var(--hs-s4);
+  list-style: none;
+  cursor: pointer;
+  font: 600 var(--hs-fs-lg)/1.3 var(--hs-font-ui);
+  color: var(--hs-heading);
+}
+details.hs-panel > summary::-webkit-details-marker { display: none; }
+details.hs-panel > summary::after {
+  content: "+";
+  margin-left: auto;
+  padding-left: var(--hs-s3);
+  font: 700 22px/1 var(--hs-font-ui);
+  color: var(--hs-kicker);
+}
+details.hs-panel[open] > summary { border-bottom: 1px solid var(--hs-line); }
+details.hs-panel[open] > summary::after { content: "\2212"; }
+.hs-panel-body { padding: var(--hs-s4); }
+details.hs-disclosure > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  cursor: pointer;
+  font: 600 var(--hs-fs-sm)/1.4 var(--hs-font-ui);
+  color: var(--hs-link);
+}
+details.hs-disclosure > summary::-webkit-details-marker { display: none; }
+details.hs-disclosure > summary::before {
+  content: "+";
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  font: 700 12px/1 var(--hs-font-ui);
+  color: var(--hs-heading);
+  border: 1px solid var(--hs-line-strong);
+}
+details.hs-disclosure[open] > summary::before { content: "\2212"; }
+
+/* 12. Lists: square teal bullets, never round ------------------------------------------------------- */
+.hs-list-square { list-style: none; margin: 0 0 var(--hs-s3); padding: 0; }
+.hs-list-square > li { position: relative; margin: 0 0 var(--hs-s1); padding-left: 16px; }
+.hs-list-square > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .6em;
+  width: var(--hs-sq);
+  height: var(--hs-sq);
+  background: var(--hs-accent);
+}
+
+/* 13. Forms: fields and option rows ---------------------------------------------------------------- */
+.hs-field {
+  width: 100%;
+  min-width: 0;
+  padding: 7px 9px;
+  font: var(--hs-fs-md)/1.4 var(--hs-font-ui);
+  color: var(--hs-text);
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line-mid);
+  border-radius: var(--hs-radius-sm);
+}
+.hs-field::placeholder { color: var(--hs-text-muted); }
+.hs-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  font: var(--hs-fs-md)/1.4 var(--hs-font-ui);
+  color: var(--hs-text);
+  background: var(--hs-surface);
+  border: 1px solid var(--hs-line);
+  border-radius: var(--hs-radius-sm);
+  cursor: pointer;
+}
+.hs-option:hover { border-color: var(--hs-line-mid); }
+.hs-option:has(input:checked) {
+  background: var(--hs-select);
+  border-color: var(--hs-line-strong);
+  box-shadow: inset 4px 0 0 var(--hs-accent);
+}
+
+/* 14. Bars, bands and notices ---------------------------------------------------------------------- */
+.hs-topbar {                         /* sticky page header: teal rule on top, as every newsletter page */
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--hs-surface);
+  border-top: var(--hs-rule) solid var(--hs-accent);
+  border-bottom: 1px solid var(--hs-line);
+  box-shadow: var(--hs-shadow-1);
+}
+.hs-footer {                         /* navy band, white text, teal-lift headings */
+  margin-top: var(--hs-s7);
+  padding: var(--hs-s5) 0 var(--hs-s6);
+  font: var(--hs-fs-sm)/1.55 var(--hs-font-ui);
+  color: var(--hs-on-band);
+  background: var(--hs-band);
+  border-top: var(--hs-rule) solid var(--hs-band-accent);
+}
+.hs-footer a { color: var(--hs-on-band); text-decoration-color: var(--hs-band-accent); }
+.hs-footer .hs-kicker { color: var(--hs-band-accent); }
+.hs-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  z-index: 50;
+  transform: translateX(-50%);
+  max-width: min(92vw, 640px);
+  padding: 10px 16px;
+  font: 600 var(--hs-fs-md)/1.4 var(--hs-font-ui);
+  color: var(--hs-on-band);
+  background: var(--hs-band);
+  border-top: var(--hs-rule) solid var(--hs-band-accent);
+  box-shadow: var(--hs-shadow-2);
+}
+
+/* 15. Prose: plain HTML from Markdown (guides, notes) takes the style inside .hs-prose ------------- */
+.hs-prose { max-width: 780px; }
+.hs-prose p, .hs-prose li { line-height: 1.58; }
+.hs-prose h2 {
+  margin-top: var(--hs-s6);
+  padding-top: var(--hs-s3);
+  border-top: var(--hs-rule-section) solid var(--hs-line-strong);
+}
+.hs-prose h3 { margin-top: var(--hs-s5); }
+.hs-prose ul { list-style: none; padding-left: 0; }
+.hs-prose ul > li { position: relative; padding-left: 16px; margin-bottom: var(--hs-s1); }
+.hs-prose ul > li::before {
+  content: ""; position: absolute; left: 0; top: .62em;
+  width: var(--hs-sq); height: var(--hs-sq); background: var(--hs-accent);
+}
+.hs-prose ol { padding-left: 1.5em; }
+.hs-prose ol > li::marker { font: 700 var(--hs-fs-sm) var(--hs-font-ui); color: var(--hs-heading); }
+.hs-prose blockquote {
+  margin: var(--hs-s4) 0; padding: var(--hs-s3) var(--hs-s4);
+  background: var(--hs-surface-2); border-left: 4px solid var(--hs-accent);
+}
+.hs-prose code { padding: 1px 4px; background: var(--hs-surface-2); border: 1px solid var(--hs-line); }
+.hs-prose pre { padding: var(--hs-s3); overflow-x: auto; background: var(--hs-code-bg); border: 1px solid var(--hs-line); }
+.hs-prose pre code { padding: 0; border: 0; background: none; }
+
+/* 16. Charts: inline SVG, one axis, at most two series; keys are squares ------------------------------ */
+svg.hs-chart { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--hs-font-ui); }
+.hs-ch-axis { stroke: var(--hs-line-mid); stroke-width: 1; }
+.hs-ch-grid { stroke: var(--hs-line); stroke-width: 1; }
+.hs-ch-s1 { fill: var(--hs-chart-1); }
+.hs-ch-s2 { fill: var(--hs-chart-2); }
+.hs-ch-value { font-size: 12px; font-weight: 600; fill: var(--hs-text); }
+.hs-ch-label { font-size: 11px; font-weight: 600; fill: var(--hs-text); }
+.hs-ch-note { font-size: 11px; fill: var(--hs-text-muted); }
+.hs-ch-hit { fill: transparent; }
+.hs-ch-col:hover .hs-ch-bar, .hs-ch-col:focus .hs-ch-bar { fill-opacity: .8; }
+.hs-ch-col:focus { outline: none; }
+.hs-ch-col:focus .hs-ch-hit { stroke: var(--hs-focus); stroke-width: 1.5; }
+.hs-key { display: inline-block; width: 9px; height: 9px; margin-right: 6px; background: var(--hs-line-mid); }
+.hs-key-1 { background: var(--hs-chart-1); }
+.hs-key-2 { background: var(--hs-chart-2); }
+
+/* 17. Phones and print ----------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  :root { --hs-gutter: 16px; --hs-gap: 14px; }
+  .hs-card { padding: var(--hs-s3); }
+  .hs-panel-body { padding: var(--hs-s3); }
+  details.hs-panel > summary { padding: var(--hs-s3); font-size: var(--hs-fs-body); }
+}
+@media print {
+  .hs-topbar { position: static; box-shadow: none; }
+  .hs-card, details.hs-panel { box-shadow: none; break-inside: avoid; }
+  .hs-toast { display: none !important; }
+  /* Paper and PDF copies (added 2026-10-17): controls do nothing on paper, so they are left out;
+     headings stay with the text that follows them; no single stranded lines. .hs-no-print hides anything else. */
+  @page { margin: 14mm 12mm; }
+  button, .hs-btn, .hs-btn-sm, .hs-no-print { display: none !important; }
+  h1, h2, h3, h4 { break-after: avoid; }
+  p, li { orphans: 3; widows: 3; }
+}
+
+/* 18. Document reading mode: <body class="hs-doc"> (added 2026-10-19, version 1.6) -------------------
+   For guides and reports read end to end, on a computer or a phone. One sans-serif system stack for text
+   and headings (close to the company website's look; nothing is downloaded), 17 px running text (16 px on
+   phones) at line-height 1.6, text lines held to about 70 characters, a calm heading scale (h1 2.0x, h2 1.5x,
+   h3 1.2x of body), 15 px tables with roomier rows, and nothing smaller than 13 px. Same tokens and colours.
+   The rules use :where(.hs-doc) so they win over the house rules above by order, while a page's own rules
+   (its <style id="page-style">, read after this file) still win over them. Pages without the class keep
+   the look above: the dashboard and the newsletter do not use it. */
+.hs-doc {
+  --hs-font-ui: "Segoe UI", system-ui, -apple-system, Roboto, Ubuntu, Helvetica, Arial, sans-serif;
+  --hs-font-body: var(--hs-font-ui);
+  --hs-fs-xs: 13px;                      /* kickers, badges, tags, reference marks */
+  --hs-fs-sm: 15px;                      /* tables, notes, meta lines, footer */
+  --hs-fs-body: 17px;
+  --hs-fs-md: var(--hs-fs-body);         /* lists and contents read at body size */
+  --hs-fs-lg: 20px;                      /* lead paragraph */
+  --hs-fs-h1: calc(var(--hs-fs-body) * 2);
+  --hs-fs-h2: calc(var(--hs-fs-body) * 1.5);
+  --hs-fs-h3: calc(var(--hs-fs-body) * 1.2);
+  --hs-lh: 1.6;
+  --hs-lh-tight: 1.25;
+  --hs-track-kicker: .12em;
+  --hs-measure: 66ch;                    /* about 70 characters of running text per line */
+  --hs-max: 920px;                       /* one centred reading column; tables and boxes may use all of it */
+}
+@media (max-width: 640px) {
+  .hs-doc {
+    --hs-fs-body: 16px;
+    --hs-fs-lg: 18px;
+    --hs-fs-h1: calc(var(--hs-fs-body) * 1.75);   /* 28 px: the long titles stay on two lines */
+    --hs-fs-h2: calc(var(--hs-fs-body) * 1.4);
+    --hs-fs-h3: calc(var(--hs-fs-body) * 1.15);
+  }
+}
+:where(.hs-doc) h1 { font-weight: 700; line-height: 1.2; letter-spacing: -.015em; margin-bottom: var(--hs-s3); }
+:where(.hs-doc) h2 { font-weight: 600; line-height: 1.25; margin-bottom: var(--hs-s4); }
+:where(.hs-doc) h3 { font-weight: 600; line-height: 1.3; letter-spacing: 0; margin-bottom: var(--hs-s3); }
+:where(.hs-doc) h4 { font-weight: 600; line-height: 1.4; letter-spacing: 0; }
+:where(.hs-doc) p { margin: 0 0 1em; }
+:where(.hs-doc) :is(p, li, dd, blockquote) { max-width: var(--hs-measure); }
+:where(.hs-doc) .hs-deck { font-style: normal; line-height: 1.5; max-width: var(--hs-measure); }
+:where(.hs-doc) .hs-callout { max-width: calc(var(--hs-measure) + 2 * var(--hs-s4) + 4px); padding: var(--hs-s4) var(--hs-s4); }
+:where(.hs-doc) .hs-callout-title { margin-bottom: var(--hs-s2); }
+:where(.hs-doc) .hs-section { margin-top: var(--hs-s7); padding-top: var(--hs-s5); }
+:where(.hs-doc) .hs-section-head { margin-bottom: var(--hs-s4); align-items: center; }
+:where(.hs-doc) .hs-step { min-width: 30px; height: 30px; font-size: 15px; }
+:where(.hs-doc) .hs-list-square > li { margin-bottom: var(--hs-s2); }
+:where(.hs-doc) .hs-list-square > li::before, :where(.hs-doc) .hs-prose ul > li::before { top: .68em; }
+:where(.hs-doc) :is(.hs-table, .hs-prose table) { line-height: 1.5; }
+:where(.hs-doc) :is(.hs-table, .hs-prose table) caption { padding-bottom: var(--hs-s2); font-size: 14px; }
+:where(.hs-doc) .hs-table td, :where(.hs-doc) .hs-table th, :where(.hs-doc) .hs-prose table td,
+:where(.hs-doc) .hs-prose table th { padding: 10px; }       /* same specificity as the house rule: a page's own cell rules still win */
+:where(.hs-doc) .hs-table thead th, :where(.hs-doc) .hs-prose table thead th { padding: 10px; }
+:where(.hs-doc) .hs-footer { line-height: 1.6; }
+:where(.hs-doc) .hs-footer p { max-width: var(--hs-measure); }
+/* Phones: links that stand alone in a contents list are full 44 px touch targets. */
+@media (max-width: 640px) {
+  :where(.hs-doc) nav li > a { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
+/* 2026-10-23: long bare web addresses in running text wrap instead of forcing a sideways scroll at phone width
+   (same fault as the 23 Oct review-copy change panel). Words stay whole; only unbroken strings such as URLs break. */
+p a, li a, td a, dd a { overflow-wrap: anywhere; }
+
+/* 2026-10-23 16Z (dash1): table cells keep whole words. The comment-mode script marks every cell .rv-block, whose
+   overflow-wrap:anywhere also shrinks a column's minimum width to one letter, so in an auto-width table a short column
+   split its words ("Diffrac tion", "manage r"). break-word still breaks a string too long for its cell, but sizes
+   columns by whole words. Selector outranks .rv-block whatever the order. */
+table td.rv-block, table th.rv-block { overflow-wrap: break-word; }
+
+</style>
+<style>
+body.hs-doc{background:var(--hs-bg);color:var(--hs-text);margin:0}
+.nl-wrap{max-width:760px;margin:0 auto;padding:var(--hs-s5) 16px var(--hs-s7);background:var(--hs-surface);
+ border-top:var(--hs-rule) solid var(--hs-accent);box-sizing:border-box}
+.nl-kicker{font-family:var(--hs-font-ui);font-size:var(--hs-fs-sm);letter-spacing:var(--hs-track-kicker);
+ text-transform:uppercase;color:var(--hs-kicker);margin:0 0 var(--hs-s2)}
+.nl-wrap h1{color:var(--hs-heading);margin:0 0 var(--hs-s4)}
+.nl-wrap h2{color:var(--hs-heading);border-top:var(--hs-rule-section) solid var(--hs-line-strong);padding-top:var(--hs-s3);
+ margin-top:var(--hs-s6)}
+.nl-wrap h3{color:var(--hs-heading);margin-top:var(--hs-s5)}
+.nl-cap{font-family:var(--hs-font-ui);font-size:var(--hs-fs-md);color:var(--hs-heading);margin:var(--hs-s4) 0 var(--hs-s2)}
+.nl-tablewrap{overflow-x:auto;max-width:100%;margin:0 0 var(--hs-s4)}
+.nl-tablewrap table{border-collapse:collapse;font-family:var(--hs-font-ui);font-size:15px;min-width:100%}
+.nl-tablewrap th,.nl-tablewrap td{border:1px solid var(--hs-line);padding:8px 10px;text-align:left;vertical-align:top}
+.nl-tablewrap thead th{background:var(--hs-surface-2);color:var(--hs-heading)}
+.nl-wrap a{color:var(--hs-link);text-decoration-color:var(--hs-link-line);overflow-wrap:anywhere}
+details.provenance{margin-top:var(--hs-s6);border:1px solid var(--hs-line);background:var(--hs-surface-2);
+ padding:var(--hs-s3) var(--hs-s4);font-family:var(--hs-font-ui);font-size:var(--hs-fs-md);overflow-wrap:anywhere}
+details.provenance summary{cursor:pointer;color:var(--hs-heading)}
+details.provenance h3{margin-top:var(--hs-s4)}
+.ph{font-family:var(--hs-font-mono);font-size:.82em;background:var(--hs-warn-bg);color:var(--hs-text);
+ outline:1.5px dashed var(--hs-warn-line);outline-offset:1px;padding:0 .3em;overflow-wrap:anywhere;word-break:break-word}
+.nl-prompt{white-space:pre-wrap;font-family:var(--hs-font-mono);font-size:14px;line-height:1.5;background:var(--hs-code-bg);
+ border:1px solid var(--hs-line);padding:var(--hs-s3) var(--hs-s4);overflow-wrap:anywhere;max-width:100%;box-sizing:border-box}
+.hs-callout pre.panel{white-space:pre-wrap;font-family:var(--hs-font-mono);font-size:13px;overflow-wrap:anywhere;margin:0}
+.hs-callout ul{margin:0 0 var(--hs-s2) 18px;padding:0}
+
+.nl-sample{margin:var(--hs-s4) 0 var(--hs-s5)}
+.nl-sample svg.hs-chart{border:1px solid var(--hs-line);background:var(--hs-surface)}
+.nl-sample-tag{display:inline-block;font-family:var(--hs-font-ui);font-size:var(--hs-fs-xs);font-weight:700;
+ letter-spacing:var(--hs-track-kicker);color:var(--hs-warn);border:1.5px solid var(--hs-warn-line);
+ background:var(--hs-warn-bg);padding:0 .4em;margin-left:.4em}
+.nl-sample .nl-prod{font-family:var(--hs-font-ui);font-size:var(--hs-fs-xs);color:var(--hs-text-muted);margin:0}
+.nl-sample-row td{background:var(--hs-warn-bg);color:var(--hs-warn);font-weight:700;font-size:var(--hs-fs-xs);
+ letter-spacing:var(--hs-track-kicker)}
+.nl-sample .nl-key{font-family:var(--hs-font-ui);font-size:var(--hs-fs-xs);margin:var(--hs-s2) 0 0}
+.nl-sample .nl-key span{margin-right:12px;white-space:nowrap}
+.nl-sample .nl-key i{display:inline-block;width:9px;height:9px;margin-right:5px;vertical-align:baseline}
+
+.qp-box{border:2px solid var(--hs-warn-line);background:var(--hs-warn-bg);padding:12px 16px;margin:0 0 24px;
+ font-family:var(--hs-font-ui);font-size:14.5px}
+.qp-box h2{border:0;margin:0 0 6px;padding:0;font-size:17px}
+.qp-box ul{margin:0 0 0 18px;padding:0}.qp-box li{margin:0 0 6px}
+.qp-st{display:inline-block;min-width:104px;font-weight:700;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+.qp-done{color:var(--hs-ok)}.qp-part{color:var(--hs-warn)}.qp-not{color:var(--hs-crit)}
+.street{font-family:var(--hs-font-ui);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--hs-kicker);
+ border-top:3px solid var(--hs-accent);padding-top:10px;margin:40px 0 4px}
+.nl-wrap h2.street-h{border:0;padding:0;margin-top:0}
+.dc{font-family:var(--hs-font-ui);font-size:13px;color:var(--hs-text-muted);margin:0 0 16px}
+.viz{border:1px solid var(--hs-line);background:var(--hs-surface);margin:16px 0 6px}
+.viz-ctl{font-family:var(--hs-font-ui);font-size:13px;margin:6px 0}
+.viz-ctl button{font:inherit;border:1px solid var(--hs-line-mid);background:var(--hs-surface-2);color:var(--hs-text);
+ padding:3px 10px;margin-right:6px;cursor:pointer}
+.viz-ctl button[aria-pressed=true]{background:var(--hs-primary);color:var(--hs-on-primary);border-color:var(--hs-primary)}
+figcaption{font-family:var(--hs-font-ui);font-size:13px;color:var(--hs-text-muted);margin:6px 0 18px}
+.prompt1{font-family:var(--hs-font-ui);font-size:15px;background:var(--hs-surface-2);border-left:4px solid var(--hs-accent);
+ padding:10px 14px;margin:12px 0}
+.series{font-style:italic}
+.foot{font-family:var(--hs-font-ui);font-size:13px;color:var(--hs-text-muted);border-top:1px solid var(--hs-line);
+ margin-top:32px;padding-top:12px}
+.lead{font-size:18px}
+details.tbl summary{cursor:pointer;font-family:var(--hs-font-ui);font-size:14px;color:var(--hs-heading)}
+
+.nl-wrap .hs-callout{border:2px solid var(--hs-warn-line);background:var(--hs-warn-bg);padding:12px 16px;margin:0 0 24px;
+ font-family:var(--hs-font-ui);font-size:14.5px;max-width:none}
+.nl-wrap .hs-callout ul{margin:4px 0 8px 18px;padding:0}.nl-wrap .hs-callout p{margin:0 0 6px;max-width:none}
+.rv-flag{color:var(--hs-crit);font-weight:700}
+p.q{font-style:italic}
+p.prompt1{font-family:var(--hs-font-ui);font-size:14px;color:var(--hs-text-muted);border-left:3px solid var(--hs-accent);padding-left:10px}
+.nl-wrap ol li,.nl-wrap ul li{margin-bottom:6px}
+.fignote{font-family:var(--hs-font-ui);font-size:14px;color:var(--hs-text-muted)}
+</style>
+<style>
+.nl-takeaway{margin:0 0 var(--hs-s5);padding:var(--hs-s3) var(--hs-s4);border-left:4px solid var(--hs-accent);background:var(--hs-surface-2);
+ font-size:var(--hs-fs-lg)}
+.nl-takeaway p{margin:0}
+.nl-gif{display:block;max-width:100%;height:auto;border:1px solid var(--hs-line)}
+.nl-play{font-family:var(--hs-font-ui);font-size:var(--hs-fs-sm);margin:var(--hs-s2) 0 0;min-height:44px;padding:0 var(--hs-s4);border:1px solid var(--hs-line-mid);background:var(--hs-surface-2);color:var(--hs-text);cursor:pointer}
+.nl-play:focus-visible{outline:2px solid var(--hs-focus);outline-offset:2px}
+.nl-wrap ol.refs li{overflow-wrap:anywhere}
+main .nl-wrap a:not([class*="btn"]){color:var(--hs-link);text-decoration-color:var(--hs-link-line)}
+</style>
+</head>
+<body class="hs-doc">
+<include src="partials/nav.html"></include>
+<main id="main">
+<div class="nl-wrap">
+<p class="nl-kicker" id="top" data-site-only>The Deckhand newsletter &middot; Issue 1 &middot; Energy Street</p>
+<h1>Tank sloshing CFD study with open source software OpenFOAM</h1>
+<p><em>The Deckhand Chronicles is AceEngineer's newsletter. We help build AI into everyday engineering work.</em></p>
+<p>Energy Street · Tank sloshing. Energy Street covers offshore engineering.</p>
+<blockquote class="nl-takeaway"><p>The closed-form formula for a tank's first sloshing frequency holds at small roll: our two-dimensional OpenFOAM model matches it within 0.30 % at four fill levels. At 8° roll, the resonance at 30 % and 70 % fill sits about 11 to 13 % or more below the formula. An anti-roll tank tuned from the formula alone needs a check at the vessel's own roll angle and roll axis.</p></blockquote>
+<p class="dc">Version 1.2, prepared 12 Nov 2026, from issue 1 of 27 Oct 2026. Full study: <a href="https://vamseeachanta.github.io/digitalmodel/cfd/sloshing-cfd-study.html">https://vamseeachanta.github.io/digitalmodel/cfd/sloshing-cfd-study.html</a></p>
+<p>In this article:</p>
+<ul>
+<li><a href="#formula-and-cfd">The formula and the CFD agree at small roll</a></li>
+<li><a href="#roll-angle-and-axis">The resonance moves with roll angle and roll axis</a></li>
+<li><a href="#damping-optimum">Tank damping has an optimum</a></li>
+<li><a href="#run-time">Run time on one workstation</a></li>
+</ul>
+
+<h2 id="formula-and-cfd">The formula and the CFD agree at small roll</h2>
+<p>Sloshing matters in tanks on floating vessels. Near resonance, the liquid runs up the tank walls and strikes them. A partly filled tank tuned near a vessel's roll period can also act as an anti-roll damper. Both uses start from the tank's first sloshing frequency, the frequency at which the liquid swings most easily from wall to wall. This article gives that frequency from a closed-form formula and from open-source computational fluid dynamics (CFD). It shows how far the resonance moves at larger roll angles, and it names two checks, the roll angle and the roll axis, to apply to a sloshing study of your own tanks.</p>
+<p>The study ran two-dimensional cases in OpenFOAM v2312 (December 2023; interFoam, volume of fluid). The benchmark tank is rectangular, 1 m long and 1 m high. In each free-decay run, a small first-mode wave rings down in the still tank, and its frequency is read from the record. Fill is the still-water depth as a share of the tank height. The analysis results for the two-dimensional tank case are compared to the available public literature. At fills of 15, 30, 50 and 70 %, the largest difference from linear theory is 0.30 %, at 30 % fill, where CFD is below theory. Refining the mesh from 1,600 to 25,600 cells moves that difference only from 0.326 % to 0.296 %. It comes mainly from the finite height of the starting wave, not from the mesh.</p>
+
+<h2 id="roll-angle-and-axis">The resonance moves with roll angle and roll axis</h2>
+<p>Forced-roll runs drive a 0.9 m tank at 1 to 8° roll over a range of periods. They find the resonance from the phase of the tank's response (Bäuerlein and Avila 2021). At 30 % and 70 % fill, the resonant frequency falls as roll grows: about 1 to 4 % below the formula at 2°, and about 11 to 13 % below at 8°. These shifts come from runs of six roll cycles, which the study reads as lower bounds: a 12-cycle run gives a larger shift. At 15 % fill the resonance sits above the formula instead: 7.5 % above at 1°, and 1.2 % above at 8°, which is within the sweep's resolution. There the water crosses the tank as a breaking bore and runs up the wall to about three times its still depth at 8°.</p>
+<p>Where the roll axis sits below the tank, for example for a tank high in the hull, the tank is also pushed sideways as it rolls (Kapsenberg and Carette 2023). At 70 % fill and 4° roll, rolling the tank about its own floor puts the resonance about 10 % below the formula, in a 12-cycle run; the 6-cycle point for 70 % fill and 4° in the chart below reads 8 %. With the axis half a tank length below the floor, the resonance sits about 16 % below; with the axis one tank length below, about 20 % below. The study quotes these shifts to the nearest percent. Peak wall run-up is about 15 % higher with the axis below the floor.</p>
+
+<h2 id="damping-optimum">Tank damping has an optimum</h2>
+<p>The forced-roll runs at 4° also give each fill's equivalent damping ratio: 0.095 at 30 % fill, 0.18 at 50 % and 0.305 at 70 %. These feed a screening step with the classic tuned-absorber equations used for anti-roll tanks (Moaleji and Greig 2007), at a tank-to-vessel mass ratio of 0.05, with perfect tuning and no hull damping. The best damping ratio is then 0.13. At 30 % fill the tank is under-damped and splits the vessel's roll response into two peaks. At 70 % fill it is over-damped and the peak grows again. The 50 % fill gives the lowest roll peak of the three.</p>
+
+<h2 id="run-time">Run time on one workstation</h2>
+<p>Each case runs on one core. A batch of 48 forced-roll cases ran 14 at a time on one 32-core workstation in 34.7 min, against an estimated 247 to 336 min one at a time.</p>
+<p>Read the full study: <a href="https://vamseeachanta.github.io/digitalmodel/cfd/sloshing-cfd-study.html">https://vamseeachanta.github.io/digitalmodel/cfd/sloshing-cfd-study.html</a></p>
+
+<h2 id="charts-and-data">Charts and data</h2>
+<p>The first chart compares the CFD frequencies with linear theory. Its x-axis, labelled "fill / slenderness ratio h / L", is the fill depth h over the tank length L. The benchmark tank is square, so h/L equals the fill.</p>
+<figure>
+<div id="fig-cfd-vs-theory" class="viz" style="height:380px" role="img" aria-label="Chart of the non-dimensional first-mode sloshing frequency against the fill ratio h over L, from 0 to 1.5. A solid line shows linear theory, rising steeply to about 1.7 at h over L of 0.5 and levelling at about 1.77. Four CFD markers, at h over L of 0.15, 0.30, 0.50 and 0.70, sit on the line."></div>
+<figcaption><em>First-mode frequency, CFD against linear theory, two-dimensional tank. Differences, CFD minus theory: +0.28 % at 15 % fill, −0.30 % at 30 %, 0.00 % at 50 % and 70 %. Data: <a href="https://github.com/vamseeachanta/digitalmodel/blob/705857af62385a4567c96be99a129cdff3051a52/docs/api/structural/sloshing-cfd-benchmark.json">sloshing-cfd-benchmark.json</a> (Appendix A).</em><span data-site-only> Chart values: <a href="../../assets/data/newsletter/issue-001/fig1-sloshing-cfd-vs-theory.csv">fig1-sloshing-cfd-vs-theory.csv</a>.</span></figcaption>
+</figure>
+<p>The second chart shows how far the resonance moves as roll grows, at three fills.</p>
+<figure>
+<div id="fig-resonance-shift" class="viz" style="height:380px" role="img" aria-label="Chart of the resonant-frequency shift, in percent of the linear first-mode frequency, against roll amplitude from 0 to 8 degrees. At h over L of 0.30 and 0.70 the markers fall below zero, to about minus 11 and minus 13 percent at 8 degrees. At h over L of 0.15 they sit above zero, from about plus 7.5 percent at 1 degree to about plus 1.2 percent at 8 degrees."></div>
+<figcaption><em>Resonant-frequency shift against roll amplitude, 0.9 m tank, OpenFOAM v2312. Data: <a href="https://github.com/vamseeachanta/digitalmodel/blob/705857af62385a4567c96be99a129cdff3051a52/docs/api/structural/sloshing-backbone.json">sloshing-backbone.json</a> and <a href="https://github.com/vamseeachanta/digitalmodel/blob/705857af62385a4567c96be99a129cdff3051a52/docs/api/cfd/sloshing-shallow-refine.json">sloshing-shallow-refine.json</a> (Appendix A).</em><span data-site-only> Chart values: <a href="../../assets/data/newsletter/issue-001/fig3-resonance-shift-with-roll.csv">fig3-resonance-shift-with-roll.csv</a>.</span></figcaption>
+</figure>
+<p>The animation shows one tank at 70 % fill, with forced roll on the left and none on the right.</p>
+<figure>
+<img class="nl-gif" src="../../assets/img/newsletter/issue-001/sloshing-effect-of-roll-still.png" data-still="../../assets/img/newsletter/issue-001/sloshing-effect-of-roll-still.png" data-anim="../../assets/img/newsletter/issue-001/sloshing-effect-of-roll.gif" width="819" height="430" loading="lazy" alt="Animation of two CFD fields of the same tank at 70 % fill. On the left, with forced roll, the free surface piles up and sloshes from wall to wall. On the right, without roll, the surface stays flat.">
+<button type="button" class="nl-play" data-site-only hidden>Play animation</button>
+<noscript><p data-site-only><a href="../../assets/img/newsletter/issue-001/sloshing-effect-of-roll.gif">Open the animation</a></p></noscript>
+<figcaption><em>Forced roll against no roll, OpenFOAM v2312 free-surface fields.</em></figcaption>
+</figure>
+<p>The motion-forecast demo runs in a browser. It forecasts vessel motion 65 s ahead on a simulated sea state and gives an illustrative go, caution, hold or no-go call; useful calls need live motion-sensor input. The animation steps the significant wave height from 1.0 to 4.0 m. Try the demo: <a href="https://vamseeachanta.github.io/digitalmodel/hydro/short-horizon-motion-forecast.html">https://vamseeachanta.github.io/digitalmodel/hydro/short-horizon-motion-forecast.html</a></p>
+<figure>
+<img class="nl-gif" src="../../assets/img/newsletter/issue-001/motion-forecast-demo-still.png" data-still="../../assets/img/newsletter/issue-001/motion-forecast-demo-still.png" data-anim="../../assets/img/newsletter/issue-001/motion-forecast-demo.gif" width="960" height="440" loading="lazy" alt="Animation of the motion forecast demo for a heavy-lift vessel and a crane lift as the significant wave height steps from 1.0 to 4.0 m. At 1.0 m the operability panel reads GO through the 65-second horizon; at 4.0 m the call moves between HOLD and NO-GO. Panels show wave elevation, forecast heave, pitch and roll, crane-tip vertical velocity and the rolling go, caution or no-go bar.">
+<button type="button" class="nl-play" data-site-only hidden>Play animation</button>
+<noscript><p data-site-only><a href="../../assets/img/newsletter/issue-001/motion-forecast-demo.gif">Open the animation</a></p></noscript>
+<figcaption><em>Motion forecast demo, crane lift, peak wave period 9.0 s, significant wave height 1.0 to 4.0 m. Illustrative calls.</em></figcaption>
+</figure>
+<p>To try it out or adapt the analysis, see <a href="#appendix-a-reusable-prompts">reusable prompt</a>.</p>
+<p>If you have run your own analysis, see a way to improve this one, or have an idea for a future issue, write to <a href="mailto:support@aceengineer.com">support@aceengineer.com</a>. We read every reply and credit the ideas we use and provide results we obtained.</p>
+<p class="dc"><em>Prepared: Analyst Deckhand · Checked: Editor Deckhand · Approved: Vamsee Achanta (12 Nov 2026). Deckhand roles are AI assistants on the AceEngineer team: they ran the analysis and prepared and checked this edition. Version 1.2, prepared 12 Nov 2026.</em></p>
+
+<h2 id="references">References</h2>
+<p class="nl-cap">Project references</p>
+<ol class="refs">
+<li>AceEngineer, Tank sloshing CFD study with OpenFOAM, study page. <a href="https://vamseeachanta.github.io/digitalmodel/cfd/sloshing-cfd-study.html">https://vamseeachanta.github.io/digitalmodel/cfd/sloshing-cfd-study.html</a></li>
+<li>AceEngineer, The Deckhand Chronicles: Energy Street, Issue 1, 27 Oct 2026. <a href="../issue-001-energy-street/">https://www.aceengineer.com/newsletter/issue-001-energy-street/</a></li>
+</ol>
+<p class="nl-cap">External references</p>
+<ol class="refs" start="3">
+<li>Bäuerlein, B. and Avila, K. (2021), Phase lag predicts nonlinear response maxima in liquid-sloshing experiments. Journal of Fluid Mechanics 925, A22.</li>
+<li>Kapsenberg, G. and Carette, N. (2023), A consistent method to design and evaluate the performance of anti-roll tanks for ships. Ship Technology Research 70(2), 117-145 (online 21 Sep 2022). DOI <a href="https://doi.org/10.1080/09377255.2022.2117496">10.1080/09377255.2022.2117496</a>.</li>
+<li>Moaleji, R. and Greig, A.R. (2007), On the development of ship anti-roll tanks. Ocean Engineering 34(1), 103-121.</li>
+</ol>
+<p class="nl-cap">Web references</p>
+<ol class="refs" start="6">
+<li>OpenFOAM v2312 (December 2023), OpenCFD Ltd, GPL v3 licence. <a href="https://www.openfoam.com/">https://www.openfoam.com/</a></li>
+</ol>
+
+<h2 id="appendix-a-reusable-prompts">Appendix A Reusable prompts</h2>
+<p>This prompt lets your team, or any assistant, recompute the theory side of our sloshing benchmark, compare it with our published CFD values, and read the resonance shifts at 8° roll from our archived data. With OpenFOAM, it also reruns a CFD case. To have a study of your own tanks done for you instead, see below.</p>
+<h3>What you need to run this</h3>
+<ul>
+<li>Data required: None to reproduce the benchmark;</li>
+<li>Data required to adapt: tank length, fill depth and shape, your vessel's roll period, the roll angle of interest and the roll axis height.</li>
+<li>Paid or behind an account: nothing. OpenFOAM is free, open-source software.</li>
+<li>Changes over time: nothing. The CFD outputs are archived at a fixed commit.</li>
+</ul>
+<h3>Reproduce the published result</h3>
+<p>Give this prompt to your assistant:</p>
+<pre class="nl-prompt">Using the study at
+https://vamseeachanta.github.io/digitalmodel/cfd/sloshing-cfd-study.html
+and our public code repository https://github.com/vamseeachanta/digitalmodel
+at commit 705857af62385a4567c96be99a129cdff3051a52 (MIT licence),
+with Python 3.11:
+1. Recompute the theory side and compare with our published CFD values.
+   For a two-dimensional rectangular tank of length L and fill depth h,
+   linear theory gives the first-mode frequency as
+   Omega1 = omega1 * sqrt(L / g) = sqrt(pi * tanh(pi * h / L)).
+   Compute it at h/L = 0.15, 0.30, 0.50 and 0.70. Compare it with the
+   published CFD values 1.1779, 1.5164, 1.6974 and 1.7508, archived in
+   docs/api/structural/sloshing-cfd-benchmark.json at that commit.
+   Report each difference in %, signed: (CFD - theory) / theory.
+   Check: theory 1.1746, 1.5210, 1.6974 and 1.7508; differences +0.28 %,
+   -0.30 %, 0.00 % and 0.00 % (CFD is below theory at h/L = 0.30).
+2. Read docs/api/structural/sloshing-backbone.json at that commit.
+   Report detuning_pct at 8 deg roll for h/L = 0.30 and 0.70.
+   Check: -10.81 % and -13.25 %.
+3. Only if I have OpenFOAM v2312 on Linux, rerun the free-decay cases
+   (about 10 min per case) at that commit:
+     git clone --filter=blob:none https://github.com/vamseeachanta/digitalmodel
+     cd digitalmodel
+     git checkout 705857af62385a4567c96be99a129cdff3051a52
+     source /usr/lib/openfoam/openfoam2312/etc/bashrc
+     uv venv --python 3.11
+     uv pip install --no-sources -e .
+     .venv/bin/python scripts/cfd/run_sloshing_benchmark.py free-decay --work-dir ./sloshing-work
+   The run rewrites docs/api/structural/sloshing-cfd-benchmark.json, so
+   compare its new values with the step 1 check values above, not with the
+   file itself.</pre>
+<h3>Adapt it to your project</h3>
+<pre class="nl-prompt">Before you start, ask me for: my tank length, fill depth and shape; my
+vessel's roll period; the roll angle of interest; the roll axis height
+below the tank floor.
+These checks still apply when my result differs: the closed form holds for
+a rectangular tank at small amplitude; the four published cases still
+reproduce; any resonance is reported with the roll angle and roll axis
+used.</pre>
+<p>Public data set: the archived OpenFOAM v2312 outputs, <a href="https://github.com/vamseeachanta/digitalmodel/blob/705857af62385a4567c96be99a129cdff3051a52/docs/api/structural/sloshing-cfd-benchmark.json">sloshing-cfd-benchmark.json</a>, <a href="https://github.com/vamseeachanta/digitalmodel/blob/705857af62385a4567c96be99a129cdff3051a52/docs/api/structural/sloshing-backbone.json">sloshing-backbone.json</a> and <a href="https://github.com/vamseeachanta/digitalmodel/blob/705857af62385a4567c96be99a129cdff3051a52/docs/api/cfd/sloshing-shallow-refine.json">sloshing-shallow-refine.json</a>, at commit <a href="https://github.com/vamseeachanta/digitalmodel/tree/705857af62385a4567c96be99a129cdff3051a52">705857af</a> of our public code repositories (MIT licence, fixed). Code: our public code repositories, <a href="https://github.com/vamseeachanta/digitalmodel">https://github.com/vamseeachanta/digitalmodel</a> (MIT licence).</p>
+<p>To have a study of your own tanks done for you, write to <a href="mailto:support@aceengineer.com">support@aceengineer.com</a>.</p>
+
+<div class="foot"><p>Questions: <a href="mailto:support@aceengineer.com">support@aceengineer.com</a> &middot; <a href="https://www.aceengineer.com/">AceEngineer</a> &middot; &copy; 2026 AceEngineer &middot; 11511 Piping Rock Dr., Houston, TX 77077</p>
+<p>Deckhand: Make Engineering Enjoyable Again</p></div>
+</div>
+<script>
+(function(){
+document.querySelectorAll('figure img.nl-gif[data-anim]').forEach(function(img){
+ var btn=img.parentNode.querySelector('button.nl-play');if(!btn)return;btn.hidden=false;
+ var on=false;btn.addEventListener('click',function(){on=!on;
+  img.src=on?img.dataset.anim:img.dataset.still;
+  btn.textContent=on?'Stop animation':'Play animation';});
+});
+})();
+</script>
+<script src="../../assets/js/plotly-2.32.0.min.js" charset="utf-8"></script>
+<script>
+(function(){
+const CFD=[{h:0.15,cfd:1.17792,th:1.17464,d:'+0.28'},{h:0.3,cfd:1.51644,th:1.52097,d:'-0.30'},{h:0.5,cfd:1.69745,th:1.69744,d:'0.00'},{h:0.7,cfd:1.75075,th:1.75079,d:'0.00'}];
+const SHIFT={'0.15':[[1,7.49],[2,6.98],[4,5.96],[6,2.77],[8,1.23]],'0.30':[[2,-0.92],[4,-5.1],[6,-8.6],[8,-10.81]],'0.70':[[2,-4.38],[4,-8.06],[6,-10.89],[8,-13.25]]};
+if(!window.Plotly){document.querySelectorAll('.viz').forEach(d=>{d.style.height='auto';d.innerHTML='<p style="padding:8px">The interactive chart needs the plotly script; the CSV file named in the caption holds the same values.</p>';});return;}
+const css=getComputedStyle(document.documentElement);const v=n=>css.getPropertyValue(n).trim();
+const INK=v('--hs-text')||'#26323a',MUTED=v('--hs-text-muted')||'#5a6b76',LINE=v('--hs-line')||'#d0d7de',SURF=v('--hs-surface')||'#fff';
+const NAVY=v('--hs-chart-2')||'#0b3d5c',TEAL=v('--hs-chart-1')||'#2BB2A6',AMBER='#E69F00';
+const font={family:'Segoe UI, Helvetica, Arial, sans-serif',size:13,color:INK};
+const xs=[];for(let x=0.05;x<=1.5001;x+=0.01)xs.push(+x.toFixed(2));
+const theory={type:'scatter',mode:'lines',name:'linear theory',x:xs,y:xs.map(x=>Math.sqrt(Math.PI*Math.tanh(Math.PI*x))),
+ line:{color:NAVY,width:2.5},hovertemplate:'h/L %{x:.2f}<br>linear theory %{y:.4f}<extra></extra>'};
+const cfd={type:'scatter',mode:'markers',name:'CFD (OpenFOAM v2312)',x:CFD.map(p=>p.h),y:CFD.map(p=>p.cfd),
+ customdata:CFD.map(p=>[p.th,p.d]),marker:{color:TEAL,size:11,line:{color:NAVY,width:1.5}},
+ hovertemplate:'h/L %{x:.2f}<br>CFD %{y:.4f}<br>theory %{customdata[0]:.4f}<br>CFD minus theory %{customdata[1]} %<extra></extra>'};
+Plotly.react('fig-cfd-vs-theory',[theory,cfd],{font,paper_bgcolor:SURF,plot_bgcolor:SURF,margin:{l:64,r:16,t:16,b:56},
+ legend:{orientation:'h',y:1.15,x:0},
+ xaxis:{title:{text:'fill / slenderness ratio h / L'},range:[0,1.5],dtick:0.25,gridcolor:LINE,linecolor:MUTED},
+ yaxis:{title:{text:'Ω1 = ω1 √(L/g)'},range:[0,2],dtick:0.5,gridcolor:LINE,linecolor:MUTED}},{displayModeBar:false,responsive:true});
+const sym={'0.15':'triangle-up','0.30':'circle','0.70':'square'},col={'0.15':AMBER,'0.30':NAVY,'0.70':TEAL};
+const tr=Object.keys(SHIFT).map(k=>({type:'scatter',mode:'markers',name:'h/L = '+k,x:SHIFT[k].map(p=>p[0]),y:SHIFT[k].map(p=>p[1]),
+ marker:{symbol:sym[k],color:col[k],size:11},hovertemplate:'h/L = '+k+'<br>roll %{x}°<br>shift %{y:+.2f} %<extra></extra>'}));
+Plotly.react('fig-resonance-shift',tr,{font,paper_bgcolor:SURF,plot_bgcolor:SURF,margin:{l:64,r:16,t:16,b:56},
+ legend:{orientation:'h',y:1.15,x:0},
+ shapes:[{type:'line',xref:'paper',x0:0,x1:1,y0:0,y1:0,line:{color:MUTED,width:1,dash:'dash'}}],
+ annotations:[{xref:'paper',x:0.01,y:0,yanchor:'bottom',xanchor:'left',text:'linear first-mode frequency',showarrow:false,font:{size:12,color:MUTED}}],
+ xaxis:{title:{text:'roll amplitude (deg)'},range:[0,9],dtick:1,gridcolor:LINE,linecolor:MUTED},
+ yaxis:{title:{text:'resonant-frequency shift from linear theory (%)'},range:[-15,10],dtick:5,gridcolor:LINE,linecolor:MUTED,zeroline:false}},{displayModeBar:false,responsive:true});
+})();
+</script>
+</main>
+<include src="partials/footer.html"></include>
+</body>
+</html>

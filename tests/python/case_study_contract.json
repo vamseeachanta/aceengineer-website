@@ -1,0 +1,93 @@
+{
+  "basis": "Local consistency policy, hand-inventoried from the current source pages. No section count or wording is imposed by WCAG. New pages use the template unless an explicit deviation is reviewed.",
+  "section_template": [
+    "The challenge",
+    "Solution Approach",
+    "Related methods",
+    "Summary"
+  ],
+  "section_overrides": {
+    "case-studies/bsee-field-economics.html": {
+      "reason": "Illustrative example separates synthetic inputs, saved outputs and limitations.",
+      "headings": [
+        "Illustrative Example",
+        "Production and Financial Basis",
+        "Saved Deterministic Outputs",
+        "Limitations and Next Step",
+        "Related methods",
+        "Summary"
+      ]
+    },
+    "case-studies/index.html": {
+      "reason": "Collection index uses linked method headings and a report collection instead of method sections.",
+      "headings": [
+        "Illustrative Field Economics",
+        "Marine Safety Import Coverage",
+        "Multi-Code Wall Thickness Comparison",
+        "Offshore Platform Fatigue Assessment Methods",
+        "OrcaFlex Riser Sensitivity Automation",
+        "Pipeline On-Bottom Stability Assessment",
+        "Automated FEA Post-Processing Pipeline for Subsea Equipment Qualification",
+        "Wind Turbine Foundation Analysis Methods",
+        "Tank sloshing CFD reports"
+      ]
+    },
+    "case-studies/marine-safety-correlation.html": {
+      "reason": "Import record separates coverage, matching limitations, sample data and analysis basis.",
+      "headings": [
+        "Recorded Import Coverage",
+        "Identity and Matching Limitations",
+        "Sample Visualization Data",
+        "Basis for Further Analysis",
+        "Related methods",
+        "Summary"
+      ]
+    },
+    "case-studies/offshore-platform-fatigue-optimization.html": {
+      "reason": "Method-only assessment describes inputs, workflow and evidence needed for an outcome.",
+      "headings": [
+        "Assessment Challenge",
+        "Assessment Inputs",
+        "Assessment Workflow",
+        "Evidence Required for an Outcome",
+        "Further Reading",
+        "Related methods",
+        "Summary"
+      ]
+    },
+    "case-studies/orcaflex-riser-sensitivity-automation.html": {
+      "reason": "Existing automation method uses solution and technical-detail sections.",
+      "headings": [
+        "The challenge",
+        "Our Solution: OrcaFlex Batch Automation",
+        "Technical Details",
+        "Related methods",
+        "Summary"
+      ]
+    },
+    "case-studies/subsea-fea-automation.html": {
+      "reason": "Existing post-processing method separates approach, implementation and tools.",
+      "headings": [
+        "The challenge",
+        "Our Approach",
+        "Technical Implementation",
+        "Technologies & Tools",
+        "Related methods",
+        "Summary"
+      ]
+    },
+    "case-studies/wind-turbine-foundation-analysis.html": {
+      "reason": "Method-only assessment separates scope, inputs, workflow and evidence needed for design use.",
+      "headings": [
+        "Method Scope",
+        "Analysis Inputs",
+        "Assessment Workflow",
+        "Evidence Required for Design Use",
+        "Further Reading",
+        "Related methods",
+        "Summary"
+      ]
+    }
+  },
+  "name_deny_list": null
+}

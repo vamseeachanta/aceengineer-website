@@ -27,6 +27,7 @@ for (const prefix of ['content', 'dist']) {
     assert.ok(html.includes('<p class="dc">b. The counts here are from the file of 2 November 2026.</p>'));
     assert.ok(html.includes('Gulf of America (formerly the Gulf of Mexico)'));
     assert.equal((html.match(/<p>Our hypothesis: /g) || []).length, 2);
+    assert.ok(html.includes('Prepared: Analyst Deckhand &middot; Checked: Editor Deckhand'));
   });
 
   test(`${prefix}: every table row is square and its water-depth bands add up to its permits`, () => {

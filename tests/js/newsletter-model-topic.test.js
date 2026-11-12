@@ -60,13 +60,14 @@ for (const prefix of ['content', 'dist']) {
   test(`${prefix}: model topic preserves approved text, table and lists`, () => {
     const body = bodyFor(read(`${prefix}/${article}`));
     const prose = body.replace(/<figure>[\s\S]*?<\/figure>/g, '').replace(directionLeadIn, '');
-    assert.equal(digest(text(prose)), '4aa47621595858bd3277249dd61f64fdf69f73d529cea92f66302d93bce7d637');
+    assert.equal(digest(text(prose)), 'd6ba2ea5403c1b8814d6983f180166396c696b3397cde8f6ac7a32f63b53f416');
     assert.equal((body.match(/<h1>/g) || []).length, 1);
     assert.equal((body.match(/<h2>/g) || []).length, 10);
     assert.equal((body.match(/<ol>/g) || []).length, 0);
     assert.equal((body.match(/<ul>/g) || []).length, 1);
     assert.doesNotMatch(body, /Try it out/);
-    assert.match(body, /Prepared: Analyst Deckhand \(AI assistant\) (?:&middot;|·) Checked: Editor Deckhand (?:&middot;|·) Approved: Vamsee Achanta (?:&middot;|·) 4 November 2026/);
+    assert.doesNotMatch(body, /Analyst Deckhand \(AI assistant\)/);
+    assert.match(body, /Prepared: Analyst Deckhand (?:&middot;|·) Checked: Editor Deckhand (?:&middot;|·) Approved: Vamsee Achanta (?:&middot;|·) 4 November 2026/);
     assert.match(body, /<p class="figure-note"><small>Note 1\. Three frontier labs state that/);
     assert.ok(body.lastIndexOf('<h2>') === body.indexOf('<h2>Appendix A. Reusable prompts</h2>'));
     for (const line of [

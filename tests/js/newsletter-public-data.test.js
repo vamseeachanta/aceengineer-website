@@ -71,6 +71,13 @@ test('the opening trends hold in the per-year files', () => {
   depth.filter(since2015).forEach(r => assert.ok(2 * (r['500_to_1500_m'] + r['1500_m_and_deeper']) > r.permits, `${r.year} deep majority`));
   // most permits once named a jack-up: every year 2005 to 2008
   rig.filter(r => r.year <= 2008).forEach(r => assert.ok(2 * r['Jack-up'] > r.total, `${r.year} jack-up majority`));
+  // permits in under 100 m fell the most; those in 500 m or more changed far less (mean per year, 2005 to 2008 against 2015 on)
+  const mean = (rows, f) => rows.reduce((sum, r) => sum + f(r), 0) / rows.length;
+  const early = depth.filter(r => r.year <= 2008), late = depth.filter(since2015);
+  const drop = f => mean(early, f) - mean(late, f);
+  const shallow = drop(r => r.under_100_m), mid = drop(r => r['100_to_500_m']);
+  const deep = drop(r => r['500_to_1500_m'] + r['1500_m_and_deeper']);
+  assert.ok(shallow > mid && shallow > deep && shallow > 5 * deep, `drops ${shallow}, ${mid}, ${deep}`);
   // far fewer permits each year than in the mid-2000s: every year from 2015 is under a third of the 2005 to 2008 low
   const low = Math.min(...rig.filter(r => r.year <= 2008).map(r => r.total));
   rig.filter(since2015).forEach(r => assert.ok(3 * r.total < low, `${r.year} permits`));

@@ -10,7 +10,7 @@
 const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
-const { test } = require('node:test');
+const test = typeof jest === 'undefined' ? require('node:test') : global.test;
 
 const { toPayload, SNAPSHOT, TEMPLATE } = require('../../scripts/build-drilldown');
 

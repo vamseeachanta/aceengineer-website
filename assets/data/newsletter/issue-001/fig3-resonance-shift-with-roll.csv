@@ -1,0 +1,14 @@
+fill_h_over_L,roll_amplitude_deg,resonant_frequency_shift_pct,source_file_digitalmodel_705857af
+0.3,2.0,-0.92,sloshing-backbone.json
+0.3,4.0,-5.1,sloshing-backbone.json
+0.3,6.0,-8.6,sloshing-backbone.json
+0.3,8.0,-10.81,sloshing-backbone.json
+0.7,2.0,-4.38,sloshing-backbone.json
+0.7,4.0,-8.06,sloshing-backbone.json
+0.7,6.0,-10.89,sloshing-backbone.json
+0.7,8.0,-13.25,sloshing-backbone.json
+0.15,1.0,7.49,sloshing-shallow-refine.json
+0.15,2.0,6.98,sloshing-shallow-refine.json
+0.15,4.0,5.96,sloshing-shallow-refine.json
+0.15,6.0,2.77,sloshing-shallow-refine.json
+0.15,8.0,1.23,sloshing-shallow-refine.json

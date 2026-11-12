@@ -273,6 +273,7 @@ const OG_BASE = 'https://www.aceengineer.com/assets/img/og/';
 const LOGO_URL = 'https://www.aceengineer.com/assets/img/logo.png';
 // Only these pages carry their own link-preview image; every other page must use the logo.
 const OWN_OG_IMAGES = {
+  'newsletter/issue-001-tank-sloshing/index.html': `${OG_BASE}issue-001-tank-sloshing.png`,
   'newsletter/issue-002-energy-street/index.html': `${OG_BASE}issue-002-energy-street.png`,
   'newsletter/issue-002-jackup-method/index.html': `${OG_BASE}issue-002-jackup-method.png`,
   'newsletter/issue-002-main-street/index.html': `${OG_BASE}issue-002-main-street.png`,
@@ -331,7 +332,7 @@ test('source metadata meets the required coverage floors', () => {
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
   // Includes the newsletter archive and both automation pages; retired sources still count.
   // Keep the existing 107 floor: noindex exclusions do not require a reduction.
-  expect(sources).toHaveLength(134);
+  expect(sources).toHaveLength(135);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 107],
     ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],

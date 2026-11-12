@@ -14,59 +14,64 @@ const tables = html => [...html.matchAll(/<div class="nl-tablewrap"><table>([\s\
     .map(row => [...row.matchAll(/<td>([\s\S]*?)<\/td>/g)].map(m => m[1]));
   return { head, rows };
 });
-const csv = read('assets/data/newsletter/issue-002/new-well-permits-by-water-depth.csv').trim().split('\n')
-  .slice(1).map(line => line.split(','));
+const parse = file => {
+  const lines = read(file).trim().split('\n');
+  const head = lines[0].split(',');
+  return lines.slice(1).map(line => Object.fromEntries(line.split(',').map((v, i) => [head[i], Number(v)])));
+};
+const depth = parse('assets/data/newsletter/issue-002/new-well-permits-by-water-depth.csv');
+const rig = parse('assets/data/newsletter/issue-002/fig-p1-new-well-permits-by-rig-type.csv');
+const BANDS = ['under_100_m', '100_to_500_m', '500_to_1500_m', '1500_m_and_deeper'];
 
 for (const prefix of ['content', 'dist']) {
-  test(`${prefix}: public data page carries the r6 title, heading and table footnote`, () => {
+  test(`${prefix}: public data page carries the title, heading, both figures and the table footnote`, () => {
     const html = read(`${prefix}/${page}`);
     assert.ok(html.includes(`<h1>${title}</h1>`));
     assert.ok(html.includes(`<title>${title} (Deckhand newsletter, issue 2)</title>`));
     assert.ok(!html.includes('well permits by rig type: a public US data file'));
     assert.ok(html.includes('<h2>Well permits by rig type and water depth</h2>'));
-    assert.ok(html.includes('<p class="dc">b. The counts here are from the file of 2 November 2026.</p>'));
+    assert.ok(html.includes('<p class="dc">a. The counts here are from the file of 2 November 2026.</p>'));
     assert.ok(html.includes('Gulf of America (formerly the Gulf of Mexico)'));
+    assert.ok(html.includes('id="fig-permits"') && html.includes('id="fig-depth"'));
+    assert.ok(html.includes('<figcaption>Figure 2 - New-well permits by water depth'));
+    assert.equal(tables(html).length, 1, 'one table: Figure 2 carries the bands by year');
     assert.equal((html.match(/<p>Our hypothesis: /g) || []).length, 2);
     assert.ok(html.includes('Prepared: Analyst Deckhand &middot; Checked: Editor Deckhand'));
   });
 
-  test(`${prefix}: every table row is square and its water-depth bands add up to its permits`, () => {
-    const [t1, t2] = tables(read(`${prefix}/${page}`));
-    for (const t of [t1, t2]) {
-      t.rows.forEach(row => assert.equal(row.length, t.head.length));
-      t.rows.forEach(row => assert.equal(num(row[2]) + num(row[3]) + num(row[4]), num(row[1]), row[0]));
-      const all = t.rows.at(-1);
-      for (const col of [1, 2, 3, 4]) {
-        assert.equal(t.rows.slice(0, -1).reduce((sum, row) => sum + num(row[col]), 0), num(all[col]), `${t.head[col]} total`);
-      }
+  test(`${prefix}: Table 1 rows are square, the bands add up to the permits, and the totals match the per-year file`, () => {
+    const [t1] = tables(read(`${prefix}/${page}`));
+    t1.rows.forEach(row => assert.equal(row.length, t1.head.length));
+    t1.rows.forEach(row => assert.equal([2, 3, 4, 5].reduce((sum, c) => sum + num(row[c]), 0), num(row[1]), row[0]));
+    const all = t1.rows.at(-1);
+    for (const col of [1, 2, 3, 4, 5]) {
+      assert.equal(t1.rows.slice(0, -1).reduce((sum, row) => sum + num(row[col]), 0), num(all[col]), `${t1.head[col]} total`);
     }
-    assert.equal(num(t1.rows.at(-1)[1]), 2895);
-    assert.deepEqual(t1.rows.at(-1).slice(1, 5), t2.rows.at(-1).slice(1, 5));
-  });
-
-  test(`${prefix}: Table 2 periods are the sums of the published per-year water-depth file`, () => {
-    const [, t2] = tables(read(`${prefix}/${page}`));
-    const periods = [[2005, 2009], [2010, 2014], [2015, 2019], [2020, 2024], [2025, 2026]];
-    periods.forEach(([a, b], i) => {
-      const years = csv.filter(r => Number(r[0]) >= a && Number(r[0]) <= b);
-      const sums = [1, 2, 3, 4].map(col => years.reduce((sum, r) => sum + Number(r[col]), 0));
-      assert.deepEqual(sums, t2.rows[i].slice(1, 5).map(num), `${a} to ${b}`);
-    });
+    assert.equal(num(all[1]), 2895);
+    assert.deepEqual([2, 3, 4, 5].map(c => num(all[c])), BANDS.map(b => depth.reduce((sum, r) => sum + r[b], 0)));
   });
 }
 
-test('the opening counts agree with Table 2 and the per-year files', () => {
+test('the per-year water-depth file agrees with the per-year rig-type file', () => {
+  assert.deepEqual(depth.map(r => r.year), rig.map(r => r.year));
+  depth.forEach((r, i) => {
+    assert.equal(BANDS.reduce((sum, b) => sum + r[b], 0), r.permits, `${r.year} bands`);
+    assert.equal(r.permits, rig[i].total, `${r.year} permits`);
+  });
+});
+
+test('the opening trends hold in the per-year files', () => {
   const html = read(`content/${page}`);
   const lead = html.match(/<p class="lead">([\s\S]*?)<\/p>/)[1];
-  const [, t2] = tables(html);
-  // 2005 to 2009: 1,100 of 1,476 under 1,000 ft; 2020 to 2024: 104 + 116 = 220 of 277 at 1,000 ft or more
-  assert.match(lead, /1,100 of the 1,476 permits were in less than 1,000 ft/);
-  assert.equal(num(t2.rows[0][2]), 1100);
-  assert.equal(num(t2.rows[3][3]) + num(t2.rows[3][4]), 220);
-  assert.match(lead, /220 of the 277 were in 1,000 ft or more, 116 of them in 5,000 ft/);
-  const rig = read('assets/data/newsletter/issue-002/fig-p1-new-well-permits-by-rig-type.csv').trim().split('\n');
-  const head = rig[0].split(',');
-  const year = y => Object.fromEntries(rig.find(line => line.startsWith(`${y},`)).split(',').map((v, i) => [head[i], Number(v)]));
-  assert.deepEqual([year(2005).total, year(2005)['Jack-up'], year(2005).Drillship], [322, 234, 15]);
-  assert.deepEqual([year(2025).total, year(2025).Drillship, year(2025)['Jack-up']], [47, 44, 1]);
+  assert.match(lead, /\(Figure 1\)/);
+  assert.match(lead, /\(Figure 2\)/);
+  const since2015 = y => y.year >= 2015;
+  // since 2015, most permits each year name a drillship and are in 500 m of water or more
+  rig.filter(since2015).forEach(r => assert.ok(2 * r.Drillship > r.total, `${r.year} drillship majority`));
+  depth.filter(since2015).forEach(r => assert.ok(2 * (r['500_to_1500_m'] + r['1500_m_and_deeper']) > r.permits, `${r.year} deep majority`));
+  // most permits once named a jack-up: every year 2005 to 2008
+  rig.filter(r => r.year <= 2008).forEach(r => assert.ok(2 * r['Jack-up'] > r.total, `${r.year} jack-up majority`));
+  // far fewer permits each year than in the mid-2000s: every year from 2015 is under a third of the 2005 to 2008 low
+  const low = Math.min(...rig.filter(r => r.year <= 2008).map(r => r.total));
+  rig.filter(since2015).forEach(r => assert.ok(3 * r.total < low, `${r.year} permits`));
 });

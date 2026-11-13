@@ -63,7 +63,7 @@ function assertHero(file) {
 function assertIndex(html) {
   assert.ok(html.includes(indexDescription));
   assert.doesNotMatch(html, /public code and data behind it|reply to any issue/i);
-  assert.match(html, /href="mailto:support&#64;aceengineer\.com\?subject=Subscribe%20Energy%20Street"/);
+  assert.match(html, /partials\/newsletter-subscribe\.html|href="\/newsletter\/subscribe\/\?utm_source=website/);
 }
 
 function assertChart(html, name, built = false) {

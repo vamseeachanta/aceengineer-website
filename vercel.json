@@ -4,6 +4,16 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/subscribe",
+      "destination": "/newsletter/subscribe/",
+      "permanent": false
+    },
+    {
+      "source": "/unsubscribe",
+      "destination": "/newsletter/unsubscribe/",
+      "permanent": false
+    },
+    {
       "source": "/blog/drilling-technology-evolution-mpd-adoption.html",
       "destination": "/blog/",
       "permanent": false

@@ -332,7 +332,7 @@ test('source metadata meets the required coverage floors', () => {
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
   // Includes the newsletter archive and both automation pages; retired sources still count.
   // Keep the existing 107 floor: noindex exclusions do not require a reduction.
-  expect(sources).toHaveLength(135);
+  expect(sources).toHaveLength(142);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 107],
     ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],
@@ -721,7 +721,7 @@ test('approved archive and automation pages are indexed, linked and canonical', 
   const blog = documents.get('blog/index.html');
   expect(blog.querySelector('form')).toBeNull();
   expect(blog.querySelector('main a[href="../newsletter/"]')).not.toBeNull();
-  expect(blog.querySelector('main').textContent).toContain('reply to any issue to subscribe or stop');
+  expect(blog.querySelector('main .newsletter-subscribe').textContent).toContain('Subscribe to get each issue by e-mail.');
 });
 
 test('only the three retired Deckhand pages leave the index for this review', () => {

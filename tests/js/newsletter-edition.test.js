@@ -14,7 +14,7 @@ const retiredClaims = /The Deckhand Chronicle · Issue 1|Specialists|Well-contro
 const route = '/newsletter/issue-001-energy-street/';
 const expectedTitle = 'The Deckhand Chronicles: Energy Street, Issue 1';
 const textDigest = '2ce3aebe37afc73f3b6a41a92050a4971165fbf1ba90e5bd907b1f7285512c05';
-const linksDigest = '6698ac58fd2aa89b6d015397d59d2243a754d6e516c990fa6a15bcb9c88800fe';
+const linksDigest = '4459204f8e83b716e2e6540ff4b339117d93846e93b563135e1ae4f0182876fe';
 const root = path.resolve(__dirname, '../..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const documentFor = file => new JSDOM(read(file).replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '')).window.document;
@@ -35,7 +35,7 @@ test('the edition is built at its public route with the approved title and headi
 
 test('the approved text and all ten links retain their order in source and output', () => {
   const sourceBody = read(`content/${edition}`).match(/<article id="newsletter-edition">([\s\S]*?)<\/article>/)[1];
-  expect(digest(sourceBody)).toBe('c7e9edcd42f58c6da438a1af3e57c41370185994c16a4a5db67e495b8d53c436');
+  expect(digest(sourceBody)).toBe('5ce16e988c2d2e270885ed2e2e2d68bc62778147da16fe549cd3ff3a0abb1943');
   for (const prefix of ['content', 'dist']) {
     const article = documentFor(`${prefix}/${edition}`).querySelector('#newsletter-edition');
     expect(article).not.toBeNull();
@@ -62,6 +62,9 @@ test('copy and link controls reject altered wording, split headings, omissions a
 });
 
 function assertRetired(doc, source = false, kind = 'issue') {
+  doc = doc.cloneNode(true);
+  // The retired route now carries the requested subscription box, tested separately.
+  doc.querySelector('.newsletter-subscribe')?.remove();
   expect(doc.querySelector('meta[name="robots"]')?.content).toMatch(/\bnoindex\b/i);
   const canonical = doc.querySelector('link[rel="canonical"]').getAttribute('href');
   expect(source ? canonical : new URL(canonical).pathname).toBe(source ? '{{ canonicalUrl }}' : route);

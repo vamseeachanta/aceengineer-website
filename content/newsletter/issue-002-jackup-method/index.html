@@ -1,5 +1,6 @@
 ---
 rootPath: "../../"
+newsletterSlug: "issue-002-jackup-method"
 ---
 <!doctype html>
 <html lang="en-US">
@@ -1013,6 +1014,7 @@ document.getElementById('f-haz').onclick=()=>{press(['f-year','f-haz'],'f-haz');
 [['m-world','world'],['m-eu','eu'],['m-gom','gom']].forEach(([id,vw])=>{document.getElementById(id).onclick=()=>{press(['m-world','m-eu','m-gom'],id);Plotly.purge('fig-map');map(vw);};});
 })();
 </script>
+<include src="partials/newsletter-subscribe.html"></include>
 </main>
 <include src="partials/footer.html"></include>
 </body>

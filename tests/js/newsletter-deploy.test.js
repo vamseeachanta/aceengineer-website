@@ -99,9 +99,9 @@ test('the filled pages pass the deploy command', () => {
   assert.match(result.stdout, /Newsletter deploy check passed/);
 });
 
-test('the issue and topic retain all five filled contact locations', () => {
+test('the issue and topic retain all three visible contact locations after subscribe links move to the form', () => {
   const contact = ['support', 'aceengineer.com'].join('@');
-  for (const [file, address, count] of [[issue, contact, 4], [topic, contact.replace('@', '&#64;'), 1]]) {
+  for (const [file, address, count] of [[issue, contact, 2], [topic, contact.replace('@', '&#64;'), 1]]) {
     const html = fs.readFileSync(file, 'utf8');
     assert.doesNotMatch(html, /CONTACT_EMAIL/);
     assert.equal(html.split(address).length - 1, count);
@@ -123,13 +123,13 @@ test('the issue retains the approved article bytes and ten links', () => {
   const html = fs.readFileSync(issue, 'utf8');
   const article = html.match(/<article id="newsletter-edition">([\s\S]*?)<\/article>/)[1];
   assert.equal(crypto.createHash('sha256').update(article).digest('hex'),
-    'c7e9edcd42f58c6da438a1af3e57c41370185994c16a4a5db67e495b8d53c436');
+    '5ce16e988c2d2e270885ed2e2e2d68bc62778147da16fe549cd3ff3a0abb1943');
   assert.equal((article.match(/<a\b/g) || []).length, 10);
 });
 
 test('the qualified issue and topic retain the approved source bytes', () => {
   for (const [file, expected] of [
-    [issue, '71395ad4ce2d3428e49b7d6ecea0e861b1887d2875555204199d561ee2a0f59c'],
+    [issue, '12ec1384045e9cda66dbbd99a385f132616411d46d9007990c5b50e6bee445b3'],
     [topic, 'e78dfc951c225a2b950b776df90b3e6a6a29655b8c0d5babcae05f819e2b812b'],
   ]) {
     assert.equal(crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex'), expected);

@@ -1,0 +1,48 @@
+---
+rootPath: "../../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subscribe to the AceEngineer newsletter | AceEngineer</title>
+<meta name="description" content="Subscribe to the AceEngineer newsletter">
+<meta property="og:title" content="Subscribe to the AceEngineer newsletter | AceEngineer">
+<meta property="og:description" content="Subscribe to the AceEngineer newsletter">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.aceengineer.com/newsletter/subscribe/">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Subscribe to the AceEngineer newsletter | AceEngineer">
+<meta name="twitter:description" content="Subscribe to the AceEngineer newsletter">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"Subscribe to the AceEngineer newsletter | AceEngineer","description":"Subscribe to the AceEngineer newsletter","url":"https://www.aceengineer.com/newsletter/subscribe/","inLanguage":"en","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Subscribe to the AceEngineer newsletter","item":"https://www.aceengineer.com/newsletter/subscribe/"}]}]</script>
+<include src="partials/head-common.html"></include>
+</head>
+<body class="theme-page">
+<include src="partials/nav.html"></include>
+<main id="main" class="samples-page">
+<div class="container">
+<h1>Subscribe to the AceEngineer newsletter</h1>
+<p>The AceEngineer newsletter comes about every two weeks. Each issue has short pieces on offshore and energy engineering and on engineering with AI assistants. Each piece gives its result, its public data and a reusable prompt. Past issues are on the <a href="/newsletter/">newsletter page</a>.</p>
+<p id="subscribe-error" role="alert" hidden>Please enter a valid e-mail address and tick the box.</p>
+<form method="POST" action="/api/subscribe">
+<p><label for="email">E-mail address</label><input class="form-control" type="email" name="email" id="email" maxlength="254" autocomplete="email" required></p>
+<p><label for="first_name">First name</label><input class="form-control" name="first_name" id="first_name" autocomplete="given-name" aria-describedby="first-name-hint"><small id="first-name-hint">used in the greeting</small></p>
+<p><label for="company">Company</label><input class="form-control" name="company" id="company" autocomplete="organization"></p>
+<p><label for="consent"><input type="checkbox" name="consent" id="consent" required> Send me the AceEngineer newsletter by e-mail. I can unsubscribe at any time with the link in each issue.</label></p>
+<input type="hidden" name="source" value="website">
+<input type="hidden" name="campaign" value="">
+<input type="hidden" name="consent_text_v" value="subscribe-v1">
+<div hidden aria-hidden="true"><label for="website">Website</label><input type="text" name="website" id="website" tabindex="-1" autocomplete="off"></div>
+<button class="btn btn-primary" type="submit">Subscribe</button>
+</form>
+<p class="small">We send one e-mail to confirm your address. Your details are kept by our mailing service, Brevo, and used only for this newsletter.</p>
+<p><a href="/privacy/">Privacy notice</a></p>
+<script src="/assets/js/newsletter-subscribe.js" defer></script>
+</div>
+</main>
+<h2 class="sr-only">About AceEngineer</h2>
+<include src="partials/footer.html"></include>
+</body>
+</html>

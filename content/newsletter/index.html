@@ -1,5 +1,6 @@
 ---
 rootPath: "../"
+newsletterSlug: "newsletter"
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -27,55 +28,56 @@ rootPath: "../"
 <div class="container">
 <h1>The Deckhand Chronicles</h1>
 <p>Short issues on engineering analysis, open energy data, AI automation and agentic workflows, each linked to the public reports behind it.</p>
+<section class="newsletter-issues">
 <h2>Issues</h2>
 <article>
 <h3>
-<a href="issue-001-tank-sloshing/">Tank sloshing CFD study with open source software OpenFOAM (Deckhand newsletter, issue 1)</a>
+<a href="/newsletter/issue-001-tank-sloshing/">Tank sloshing CFD study with open source software OpenFOAM (Deckhand newsletter, issue 1)</a>
 </h3>
 <p>
 <time datetime="2026-11-12">12 November 2026</time> · Issue 1 · Energy Street · Version 1.2</p>
 </article>
 <article>
 <h3>
-<a href="issue-002-main-street/">Engineering evolution with AI (Deckhand newsletter, issue 2, Main Street)</a>
+<a href="/newsletter/issue-002-main-street/">Engineering evolution with AI (Deckhand newsletter, issue 2, Main Street)</a>
 </h3>
 <p>
 <time datetime="2026-11-04">4 November 2026</time> · Issue 2 · Main Street</p>
 </article>
 <article>
 <h3>
-<a href="issue-002-energy-street/">Sacrificial anodes needed for six offshore structures on each edition of DNV-RP-B401 and DNV-RP-F103 (Deckhand newsletter, issue 2)</a>
+<a href="/newsletter/issue-002-energy-street/">Sacrificial anodes needed for six offshore structures on each edition of DNV-RP-B401 and DNV-RP-F103 (Deckhand newsletter, issue 2)</a>
 </h3>
 <p>
 <time datetime="2026-11-04">4 November 2026</time> · Issue 2 · Energy Street</p>
 </article>
 <article>
 <h3>
-<a href="issue-002-public-data/">Gulf of Mexico well permits by rig type: a public US data file (Deckhand newsletter, issue 2)</a>
+<a href="/newsletter/issue-002-public-data/">Gulf of Mexico well permits by rig type: a public US data file (Deckhand newsletter, issue 2)</a>
 </h3>
 <p>
 <time datetime="2026-11-04">4 November 2026</time> · Issue 2 · Public data</p>
 </article>
 <article>
 <h3>
-<a href="issue-002-jackup-method/">Jack-up site-specific analysis (Deckhand newsletter, issue 2)</a>
+<a href="/newsletter/issue-002-jackup-method/">Jack-up site-specific analysis (Deckhand newsletter, issue 2)</a>
 </h3>
 <p>
 <time datetime="2026-11-04">4 November 2026</time> · Issue 2 · Energy Street</p>
 </article>
 <article>
 <h3>
-<a href="issue-001-energy-street/">The Deckhand Chronicles: Energy Street, Issue 1</a>
+<a href="/newsletter/issue-001-energy-street/">The Deckhand Chronicles: Energy Street, Issue 1</a>
 </h3>
 <p>
 <time datetime="2026-10-27">27 October 2026</time> · Deckhand: Make Engineering Enjoyable Again</p>
 </article>
+</section>
 <p>
 <a href="feed.xml">RSS feed</a>
 </p>
-<h2>Subscribe or stop</h2>
-<p><a href="mailto:support&#64;aceengineer.com?subject=Subscribe%20Energy%20Street">Subscribe to Energy Street</a>.</p>
-<p>Or write to <a href="mailto:support@aceengineer.com">support@aceengineer.com</a>.</p>
+<include src="partials/newsletter-subscribe.html"></include>
+<p>To stop: <a href="/newsletter/unsubscribe/">aceengineer.com/unsubscribe</a></p>
 <include src="partials/scope-invitation.html">
 </include>
 </div>

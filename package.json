@@ -22,6 +22,11 @@
   "jest": {
     "projects": [
       {
+        "displayName": "newsletter-lifecycle",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/newsletter-lifecycle-*.test.js"]
+      },
+      {
         "displayName": "diffraction-provenance",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/diffraction-provenance.test.js"]

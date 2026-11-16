@@ -200,6 +200,31 @@ def test_partial_skip_target_must_bind_to_source_main(site):
     assert row(site, "landmark_skip").status == "FAIL"
 
 
+def test_partial_is_checked_against_source_main_even_with_a_stale_build(site):
+    """The built page still has main#main; only the source main id changed."""
+    change(site, '<main id="main">', '<main id="content">')
+    assert row(site, "landmark_skip").status == "FAIL"
+    assert row(site, "landmark_skip", page="b.html").status == "PASS"
+
+
+def test_inline_markup_inside_a_word_does_not_hide_a_deny_list_phrase(site):
+    change(site, "<h1>Example</h1>", "<h1>Restr<em>icted</em> Fixture Token</h1>")
+    assert row(site, "copy_deny_list").status == "FAIL"
+
+
+def test_inline_markup_inside_a_word_does_not_hide_generic_link_text(site):
+    change(site, '<a href="#main">Method</a>', '<a href="#main">cl<b>ick</b> here</a>')
+    assert row(site, "link_text").status == "FAIL"
+
+
+def test_block_boundaries_still_separate_words(site):
+    """Two paragraphs ending and starting the phrase must not join into it."""
+    change(site, "<h1>Example</h1>", "<h1>Example</h1><p>restricted</p><p>fixture token</p>")
+    assert row(site, "copy_deny_list").status == "FAIL"
+    change(site, "<p>restricted</p><p>fixture token</p>", "<p>restrict</p><p>ed fixture token</p>")
+    assert row(site, "copy_deny_list").status == "PASS"
+
+
 def test_sitemap_must_parse_and_have_one_matching_location(site):
     path = site / "dist/sitemap.xml"
     original = path.read_text()

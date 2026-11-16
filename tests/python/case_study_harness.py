@@ -25,6 +25,14 @@ CONTRACT = Path(__file__).with_name("case_study_contract.json")
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta",
         "param", "source", "track", "wbr"}
 
+# Elements whose boundaries separate words (HTML Living Standard flow/grouping
+# content and table cells); every other element is joined inline.
+BLOCK = {"address", "article", "aside", "blockquote", "body", "caption", "dd", "details",
+         "dialog", "div", "dl", "dt", "fieldset", "figcaption", "figure", "footer", "form",
+         "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hr", "html", "li", "main",
+         "nav", "ol", "p", "pre", "section", "summary", "table", "tbody", "td", "tfoot",
+         "th", "thead", "title", "tr", "ul"}
+
 
 def norm(value):
     return " ".join(value.split()).casefold()
@@ -46,9 +54,21 @@ class Node:
                 yield from child.walk()
 
     def text(self):
+        # Inline children join without a separator ("Restr<em>icted</em>" reads
+        # "Restricted"); block boundaries, table cells and br add a space.
         if self.tag in {"script", "style", "template"}:
             return ""
-        return " ".join(c.text() if isinstance(c, Node) else c for c in self.children)
+        if self.tag == "br":
+            return " "
+        parts = []
+        for child in self.children:
+            if not isinstance(child, Node):
+                parts.append(child)
+            elif child.tag in BLOCK:
+                parts.append(f" {child.text()} ")
+            else:
+                parts.append(child.text())
+        return "".join(parts)
 
 
 class Document(HTMLParser):
@@ -345,8 +365,9 @@ def landmark_skip(ctx):
     included = any(n.attrs.get("src") == "partials/nav.html" for n in ctx.source.find("include"))
     partial = ctx.root / "content/partials/nav.html"
     mains = ctx.document.find("main")
+    source_mains = ctx.source.find("main")
     errors = []
-    if len(ctx.source.find("main")) != 1:
+    if len(source_mains) != 1:
         errors.append("Source: expected exactly one main landmark")
     if len(mains) != 1:
         errors.append("Expected exactly one main landmark")
@@ -354,14 +375,18 @@ def landmark_skip(ctx):
         errors.append("Shared navigation partial is not included")
     else:
         nav = read_html(partial)
-        for doc, label in [(nav, "Shared partial"), (ctx.document, "Page")]:
+        # The partial is checked against the source main, so a stale build cannot
+        # hide a source whose main id no longer matches; the built skip link is
+        # checked separately against the built main.
+        for doc, label, targets in [(nav, "Shared partial", source_mains),
+                                    (ctx.document, "Page", mains)]:
             if doc is ctx.source:  # Source has an include, not the expanded link.
                 continue
             skip = [n for n in doc.find("a")
                     if "skip-link" in (n.attrs.get("class") or "").split()]
             valid = any(n.attrs.get("href") == "#" + (m.attrs.get("id") or "")
                         and bool(m.attrs.get("id")) and bool(norm(n.text()))
-                        for n in skip for m in mains)
+                        for n in skip for m in targets)
             if not valid:
                 errors.append(f"{label}: skip link does not target main")
     return evaluated(errors)

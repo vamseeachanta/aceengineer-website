@@ -6,7 +6,19 @@ test('real Plotly hover contains the published value, unit, year and source', as
   await page.goto('/data/_example/');
   const root = page.locator('[data-chart-bundle]');
   await expect(root).toHaveAttribute('data-chart-ready', 'true');
-  await root.locator('.scatterlayer .point').last().hover();
+  // Plotly's drag rectangle (nsewdrag) sits above the points and intercepts
+  // locator.hover(), so the pointer is moved to the point's centre instead; the
+  // event reaches the plot exactly as a user's pointer does. On the narrow
+  // viewport the chart starts below the fold, so it is scrolled into view first.
+  // The plot area must not collapse: a 60 px plot area was observed when the
+  // container was 240 px tall (24rem at the site's root font size).
+  const area = await root.locator('.nsewdrag').first().boundingBox();
+  expect(area.height).toBeGreaterThan(150);
+  const last = root.locator('.scatterlayer .point').last();
+  await last.scrollIntoViewIfNeeded();
+  const point = await last.boundingBox();
+  expect(point).not.toBeNull();
+  await page.mouse.move(point.x + point.width / 2, point.y + point.height / 2);
   const label = root.locator('.hoverlayer');
   // BSEE Offshore Incident Statistics, 2024 CY, Injuries card: 223 injuries.
   await expect(label).toContainText('223 injuries');

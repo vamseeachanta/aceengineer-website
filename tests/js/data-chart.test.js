@@ -157,7 +157,7 @@ test('build expands only registered local bundles and rejects duplicate chart ID
 test('committed sample matches the cited BSEE calendar-year cards', () => {
   // BSEE, Offshore Incident Statistics, 2023 CY and 2024 CY, Injuries cards.
   // Independently transcribed: 203 and 223 injuries; subtraction: 223 - 203 = 20.
-  // This is an OCS-wide illustration, not a GoM-only export or exposure rate.
+  // The cards state no geographic scope; this is not an exposure rate.
   const bundles = loadChartBundles();
   const data = bundles.get('/assets/data/charts/bsee-injuries.json');
   expect(data.series).toEqual([{ x: 2023, value: 203, year: 2023 }, { x: 2024, value: 223, year: 2024 }]);

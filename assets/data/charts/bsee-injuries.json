@@ -1,6 +1,6 @@
 {
   "id": "bsee-injuries",
-  "headline": "Reported OCS injuries rose from 2023 to 2024",
+  "headline": "Reported injuries rose from 2023 to 2024",
   "quantity": "Reported injuries",
   "unit": "injuries",
   "x": {
@@ -29,5 +29,5 @@
   },
   "limits": [],
   "csv": "bsee-injuries.csv",
-  "text_alternative": "The BSEE calendar-year cards list 203 reported injuries in 2023 and 223 in 2024 across the Outer Continental Shelf (OCS). These counts are not a GoM-only subset or an exposure-adjusted risk rate. No reference limit was supplied."
+  "text_alternative": "The BSEE calendar-year Injuries cards list 203 reported injuries in 2023 and 223 in 2024. BSEE states that, based on investigation findings, these totals may change on an annual basis. These counts are not an exposure-adjusted risk rate. No reference limit was supplied."
 }

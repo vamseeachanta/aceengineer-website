@@ -72,14 +72,15 @@ never copied into the built assets or page.
 
 Source: [BSEE Offshore Incident Statistics](https://www.bsee.gov/stats-facts/offshore-incident-statistics),
 calendar-year Injuries cards for 2023 and 2024, retrieved 2026-10-22T17:01:13Z.
-The observed cards list 203 and 223 injuries respectively. These are OCS-wide
-totals; no GoM-only filtering is represented. The sample JSON records the input
+The observed cards list 203 and 223 injuries respectively. The cards do not
+state a geographic scope, so none is claimed; BSEE states that, based on
+investigation findings, these totals may change on an annual basis. The sample JSON records the input
 HTML SHA-256, and the raw response is retained outside the repository. The
 source date is the end of the last reporting year, 2024-12-31. Publication date
 is not supplied by the cards.
 
 The method is literal transcription to CSV and JSON and direct rendering.
-The independent hand calculation is `223 - 203 = 20.0 injuries`. The answer is an
+The independent hand calculation is `223 - 203 = 20 injuries`. The answer is an
 increase in the reported count; no inference about exposure-adjusted risk is
 supported. The renderer does not compute that difference. Acceptance is
 `NOT_EVALUATED`: the source supplies no acceptance limit or exposure denominator.

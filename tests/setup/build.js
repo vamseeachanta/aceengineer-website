@@ -8,13 +8,18 @@ module.exports = async function buildBeforeTests(
   _projectConfig,
   { rootDir = path.resolve(__dirname, '../..') } = {},
 ) {
+  const options = {
+    cwd: rootDir,
+    // build.js selects live fetching only for '1'; tests use committed snapshots.
+    env: { ...process.env, HF_FETCH: '0' },
+    stdio: 'inherit',
+  };
   await new Promise((resolve, reject) => {
-    const child = spawn('npm', ['run', 'build'], {
-      cwd: rootDir,
-      // build.js selects live fetching only for '1'; tests use committed snapshots.
-      env: { ...process.env, HF_FETCH: '0' },
-      stdio: 'inherit',
-    });
+    // On Windows npm is a .cmd shim, which Node starts only through a shell.
+    // The command is a fixed string, so no caller input reaches the shell.
+    const child = process.platform === 'win32'
+      ? spawn('npm run build', { ...options, shell: true })
+      : spawn('npm', ['run', 'build'], options);
     child.once('error', reject);
     child.once('close', (code, signal) => {
       if (code === 0) resolve(); // Node success exit convention.

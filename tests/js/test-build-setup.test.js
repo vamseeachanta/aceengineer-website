@@ -18,7 +18,7 @@ function runFixture({ fails = false } = {}) {
     fs.appendFileSync('invocations', 'build\\n');
     // The prescribed failure status is an independent fixture input.
     if (${fails}) process.exit(23);
-    fs.promises.writeFile('completed', process.env.HF_FETCH);
+    fs.writeFileSync('completed', process.env.HF_FETCH);
   `);
   fs.writeFileSync(path.join(root, 'setup.cjs'), `
     const setup = require(${JSON.stringify(SETUP)});
@@ -87,3 +87,33 @@ test('test_build_setup_failure_prevents_collection', () => {
   expect(fs.existsSync(path.join(root, 'collected'))).toBe(false);
   expect(fs.existsSync(path.join(root, 'results.json'))).toBe(false);
 }, CHILD_TIMEOUT);
+
+// CI runs on Linux, so this pins the Windows branch without a Windows runner.
+test('test_build_setup_starts_npm_through_a_shell_on_windows', async () => {
+  const mockCalls = [];
+  const platform = Object.getOwnPropertyDescriptor(process, 'platform');
+  let setup;
+  jest.isolateModules(() => {
+    jest.doMock('node:child_process', () => ({
+      spawn: (...args) => {
+        mockCalls.push(args);
+        const child = new (require('node:events').EventEmitter)();
+        process.nextTick(() => child.emit('close', 0, null)); // Successful build.
+        return child;
+      },
+    }));
+    setup = require(SETUP);
+  });
+  Object.defineProperty(process, 'platform', { ...platform, value: 'win32' });
+  try {
+    await setup({}, {}, { rootDir: os.tmpdir() });
+  } finally {
+    Object.defineProperty(process, 'platform', platform);
+    jest.dontMock('node:child_process');
+  }
+  expect(mockCalls).toHaveLength(1); // One build per setup call.
+  const [command, options] = mockCalls[0];
+  expect(command).toBe('npm run build');
+  expect(options.shell).toBe(true);
+  expect(options.env.HF_FETCH).toBe('0');
+});

@@ -54,7 +54,9 @@ Replace the example URL with an existing published file before use. The renderer
 checks the destination in `content/` or `assets/`, excluding partials, traversal
 and non-file paths. Unresolved URLs render the unavailable state without a link.
 
-A public repository file must use an HTTPS GitHub file URL pinned to a commit.
+A public repository file must use an HTTPS GitHub file URL pinned to a full
+40-character commit ID; short or hexadecimal-looking refs are refused because a
+branch can carry such a name.
 Its `verification` record must contain the same `url`, a `checkedAt` date and
 `publicFile: true`. Before adding that record, open the public file without
 authentication and retain the response and request details for review. The

@@ -26,7 +26,9 @@ test('slice 1: the shared partial renders the labelled summary and escapes text'
   const data = fixture();
   data.summary.what = 'A <sample> & "quoted" method.';
   const html = renderSummary(data);
-  for (const label of ['What was done', 'Inputs', 'Result', 'Data basis']) assert.ok(html.includes(label));
+  // "Scope", not "What was done": method-only pages report no completed assessment.
+  for (const label of ['Scope:', 'Inputs', 'Result', 'Data basis']) assert.ok(html.includes(label));
+  assert.ok(!html.includes('What was done'));
   assert.ok(html.includes('A &lt;sample&gt; &amp; &quot;quoted&quot; method.'));
   assert.ok(!html.includes('{{'));
 });
@@ -60,11 +62,17 @@ test('slice 2: an existing site report renders a link', () => {
 
 test('slice 2: public repository files require a matching recorded confirmation', () => {
   // Synthetic URL and date, not a claim that a remote file exists.
-  const url = 'https://github.com/example/reports/blob/abcdef/report.md';
+  const commit = '0123456789abcdef0123456789abcdef01234567';
+  const url = `https://github.com/example/reports/blob/${commit}/report.md`;
+  const confirmed = target => ({ url: target, verification: { url: target, checkedAt: '2026-10-22', publicFile: true } });
   assert.equal(reportHref({ url }), null);
-  assert.equal(reportHref({ url, verification: { url, checkedAt: '2026-10-22', publicFile: true } }), url);
+  assert.equal(reportHref(confirmed(url)), url);
   assert.equal(reportHref({ url, verification: { url: url + 'x', checkedAt: '2026-10-22', publicFile: true } }), null);
-  assert.equal(reportHref({ url: url.replace('/blob/abcdef/', '/blob/main/'), verification: { url, checkedAt: '2026-10-22', publicFile: true } }), null);
+  // Branch refs are refused even when the verification record matches them exactly.
+  for (const ref of ['main', 'abcdef', 'deadbeef', commit.slice(0, 39), `${commit}0`, commit.toUpperCase()]) {
+    const branchUrl = url.replace(`/blob/${commit}/`, `/blob/${ref}/`);
+    assert.equal(reportHref(confirmed(branchUrl)), null, ref);
+  }
 });
 
 test('slice 2: report validation rejects traversal, unpublished sources and non-file destinations', () => {
@@ -119,7 +127,9 @@ test('slices 4 and 5: every case study gains ordered parts without removing any 
   // riser sensitivity, stability, FEA and wind foundations are the eight studies in #165.
   const pages = fs.readdirSync(path.join(root, 'content/case-studies')).filter(name => name !== 'index.html');
   assert.equal(pages.length, 8);
-  assert.deepEqual(Object.keys(studies).sort(), pages.sort());
+  // Copy both lists into this context's arrays: under Jest, fs.readdirSync returns
+  // an array from another realm and node:assert's deepEqual rejects the prototype.
+  assert.deepEqual(Array.from(Object.keys(studies)).sort(), Array.from(pages).sort());
   for (const page of pages) {
     const before = read(`content/case-studies/${page}`);
     const after = addCaseStudyBlocks(before, `case-studies/${page}`);

@@ -37,7 +37,9 @@ function reportHref(report, root = ROOT) {
   if (siteFile(report.url, root)) return report.url;
   // External reports must be immutable public repository files with a matching
   // recorded, read-only existence check. The build never requests remote URLs.
-  if (!/^https:\/\/github\.com\/[^/?#]+\/[^/?#]+\/blob\/[a-f\d]+\/[^?#]+$/.test(report.url)) return null;
+  // Only a full 40-character commit ID is immutable: a short hexadecimal ref can
+  // be a branch name (for example "deadbeef") whose contents change later.
+  if (!/^https:\/\/github\.com\/[^/?#]+\/[^/?#]+\/blob\/[0-9a-f]{40}\/[^?#]+$/.test(report.url)) return null;
   const check = report.verification;
   if (!check || check.url !== report.url || check.publicFile !== true ||
     typeof check.checkedAt !== 'string' || !Number.isFinite(Date.parse(check.checkedAt))) return null;

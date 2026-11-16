@@ -4,6 +4,9 @@ const os = require('node:os');
 const path = require('node:path');
 const { createRequire } = require('node:module');
 const test = typeof jest === 'undefined' ? require('node:test') : global.test;
+// One fixture discovery takes about 3 s alone, near Jest's 5 s default under
+// parallel load; one minute = 60 * 1000 ms. node:test has no default timeout.
+if (typeof jest !== 'undefined') jest.setTimeout(60 * 1000);
 
 // Load Jest's discovery APIs outside the test sandbox; no test runner is started.
 const nativeRequire = createRequire(__filename);

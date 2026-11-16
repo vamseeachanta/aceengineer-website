@@ -22,6 +22,11 @@
   "jest": {
     "projects": [
       {
+        "displayName": "case-study-summary",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/case-study-summary.test.js", "<rootDir>/tests/js/case-study-build.test.js"]
+      },
+      {
         "displayName": "diffraction-provenance",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/diffraction-provenance.test.js"]

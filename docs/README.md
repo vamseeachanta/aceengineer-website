@@ -27,6 +27,9 @@ aceengineer-website issue work.
 
 For full routing detail, use `maps/aceengineer-website-operator-map.md`.
 
+For additive case-study blocks and a worked example, use
+[the case-study summary template](case-study-summary.md).
+
 ## Retired Navigation
 
 Historical product-doc and earlier deployment references are not active

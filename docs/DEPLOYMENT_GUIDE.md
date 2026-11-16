@@ -10,7 +10,7 @@ https://aceengineer.com.
 | Hosting | Vercel |
 | Production URL | https://aceengineer.com |
 | Source branch | `main` |
-| Build command | `npm run build` |
+| Build command | `NEWSLETTER_DEPLOY_CHECK=1 npm run build` |
 | Build output | `dist/` |
 | Vercel configuration | `vercel.json` |
 | Domain file | `CNAME` |
@@ -18,6 +18,11 @@ https://aceengineer.com.
 Vercel builds the site from committed source files and publishes `dist/`.
 The Vercel project configuration is captured in `vercel.json`, and the
 custom domain value is captured in `CNAME`.
+
+The release build enables the newsletter source check before creating output.
+Unfilled placeholders in either the issue or its topic page stop publication.
+Before a newsletter send, confirm that linked reports are final and available;
+a successful site build does not establish an external report's release status.
 
 ## Change Flow
 

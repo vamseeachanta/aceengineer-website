@@ -6,6 +6,7 @@ const expressions = require('posthtml-expressions');
 const yaml = require('js-yaml');
 const { PurgeCSS } = require('purgecss');
 const CleanCSS = require('clean-css');
+const { assertNewsletterSourcesReady } = require('./scripts/check-newsletter-deploy');
 const hf = require('./scripts/hf-fetch');
 const { renderCards, capabilityDetailDocument, detailFileName, detailHref, isReleaseBacked } = require('./scripts/render-capabilities');
 
@@ -563,6 +564,7 @@ function writeLlmsTxt(destDirArg = distDir, registry = loadCapabilities()) {
 async function build() {
   console.log('Building site...\n');
 
+  assertNewsletterSourcesReady(srcDir, process.env.NEWSLETTER_DEPLOY_CHECK);
   // Fail before rendering if provenance is absent or paired CSV values differ.
   _chartBundles = loadChartBundles();
 

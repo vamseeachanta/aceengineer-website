@@ -1,0 +1,5 @@
+fill_h_over_L,omega1_cfd,omega1_linear_theory,difference_cfd_minus_theory_pct,source_file_digitalmodel_705857af
+0.15,1.17792,1.17464,+0.28,sloshing-cfd-benchmark.json
+0.3,1.51644,1.52097,-0.30,sloshing-cfd-benchmark.json
+0.5,1.69745,1.69744,0.00,sloshing-cfd-benchmark.json
+0.7,1.75075,1.75079,0.00,sloshing-cfd-benchmark.json

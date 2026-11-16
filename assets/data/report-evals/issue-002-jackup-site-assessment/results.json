@@ -1,0 +1,482 @@
+{
+ "$schema": "https://www.aceengineer.com/assets/data/report-evals/results.schema.json",
+ "schema_version": "1.0",
+ "report": {
+  "id": "issue-002-jackup-site-assessment",
+  "title": "Jack-up site-specific analysis: the data list, the checks and the public accident record",
+  "url": "https://www.aceengineer.com/newsletter/issue-002-jackup-method/",
+  "published": "2026-11-03",
+  "family": "newsletter"
+ },
+ "code": {
+  "repo": "https://github.com/vamseeachanta/aceengineer-website",
+  "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+  "paths": [
+   "assets/data/newsletter/issue-002/jackup-accidents.csv"
+  ],
+  "python": "3.10 or later; pypdf with its AES extra for the NTSB check",
+  "install": "none for the counts; pip install \"pypdf[crypto]\" for the NTSB check"
+ },
+ "inputs": [
+  {
+   "id": "accident_data",
+   "description": "35 public events with year, unit type, location, position, hazard group and source",
+   "source": "aceengineer.com",
+   "url": "https://www.aceengineer.com/assets/data/newsletter/issue-002/jackup-accidents.csv",
+   "version_or_date": "2026-11-03",
+   "sha256_published": "22dd0f17dca9f320e2202638b671a499d00bf554c219904d25c23b467301253e",
+   "updates": "never",
+   "supplied_by": "public",
+   "required": true
+  },
+  {
+   "id": "ntsb_mir2226",
+   "description": "NTSB MIR-22/26, capsizing of the liftboat SEACOR Power",
+   "source": "US National Transportation Safety Board",
+   "url": "https://www.ntsb.gov/investigations/AccidentReports/Reports/MIR2226.pdf",
+   "licence": "US federal government data",
+   "version_or_date": "adopted 18 October 2022",
+   "updates": "never",
+   "supplied_by": "public",
+   "required": false
+  },
+  {
+   "id": "valaris_10k",
+   "description": "Valaris Ltd Form 10-K for 2025",
+   "source": "SEC EDGAR",
+   "url": "https://www.sec.gov/Archives/edgar/data/314808/000031480826000029/val-20251231.htm",
+   "version_or_date": "filed 20 February 2026",
+   "updates": "never",
+   "supplied_by": "public",
+   "required": false
+  },
+  {
+   "id": "us_regulations",
+   "description": "US Code of Federal Regulations quoted by the article: 46 CFR 174.240 to 174.260 (liftboats; 174.255 on-bottom stability) and 30 CFR 250.713 (air gap)",
+   "source": "eCFR, US Government Publishing Office",
+   "url": "https://www.ecfr.gov/",
+   "licence": "US federal government data",
+   "version_or_date": "current eCFR text",
+   "updates": "irregular",
+   "supplied_by": "public",
+   "required": false
+  },
+  {
+   "id": "site_and_unit",
+   "description": "For a site assessment: latitude, longitude, water depth, soil data and the unit's data (Table 3 of the article)",
+   "source": "the reader",
+   "updates": "never",
+   "supplied_by": "reader",
+   "required": false
+  }
+ ],
+ "missing_data": [
+  {
+   "id": "site_location",
+   "what": "The site: latitude, longitude and water depth",
+   "why": "The article sets out the method for any site; it assesses none.",
+   "how_to_supply": "Give the position in decimal degrees and the charted depth; the prompt then finds public metocean and bathymetry for it.",
+   "effect": "Without it, the prompt gives the data list and the checks as a template."
+  },
+  {
+   "id": "unit_data",
+   "what": "The unit: type (jack-up or liftboat), leg length, spudcan size, preload, lightship and variable load, air gap",
+   "why": "Unit data is not public for most units.",
+   "how_to_supply": "From the unit's operating manual or the owner of the unit.",
+   "effect": "The structural and overturning checks stay 'to be checked'."
+  },
+  {
+   "id": "soil_data",
+   "what": "Site soil data: borehole or CPT logs at the leg positions",
+   "why": "Not public for most sites.",
+   "how_to_supply": "From a site investigation report.",
+   "effect": "The punch-through check cannot be done."
+  },
+  {
+   "id": "paid_codes",
+   "what": "ISO 19905-1:2023, SNAME T&R 5-5A Rev 3 and the IMO MODU Code",
+   "why": "They are paid documents.",
+   "how_to_supply": "A reader with copies can supply the clause text.",
+   "effect": "Clauses of these codes are cited only as the article cites them, marked 'to be checked'."
+  },
+  {
+   "id": "era5_account",
+   "what": "A free Copernicus Climate Data Store account and API key, for ERA5 metocean data",
+   "why": "ERA5 downloads need a personal key.",
+   "how_to_supply": "Create the account and give the assistant the key in your own session.",
+   "effect": "Without it, use NOAA NDBC buoy records where a buoy is near the site."
+  },
+  {
+   "id": "investigation_status",
+   "what": "An open or closed investigation flag for each event",
+   "why": "The data set has no such column yet.",
+   "how_to_supply": "Not from the reader: a later revision of the data set adds it.",
+   "effect": "Whether an investigation is open is judged from the article text."
+  }
+ ],
+ "cannot_do": [
+  "Assess a site without the reader's location, unit and soil data.",
+  "Quote clauses of ISO 19905-1, SNAME 5-5A or the MODU Code without the paid documents.",
+  "Give a world count of liftboats or of wind installation jack-ups: none was found in the cited sources.",
+  "Name a cause for an event still under investigation."
+ ],
+ "eval": {
+  "command": "python assets/data/report-evals/issue-002-jackup-site-assessment/eval.py --sec-user-agent \"Your Name you@example.com\"",
+  "prompt": "assets/data/report-evals/issue-002-jackup-site-assessment/PROMPT.md",
+  "cadence": "weekly",
+  "runtime_s": 20,
+  "network": true,
+  "ref": "main"
+ },
+ "results": [
+  {
+   "id": "events",
+   "label": "Serious jack-up and liftboat accidents in the data set",
+   "page_ref": "Section 3, Table 2",
+   "value": 35,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate."
+   ]
+  },
+  {
+   "id": "events_drilling_jackup",
+   "label": "Events on drilling jack-ups",
+   "page_ref": "Section 3",
+   "value": 17,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate."
+   ]
+  },
+  {
+   "id": "events_construction_jackup",
+   "label": "Events on construction jack-ups",
+   "page_ref": "Section 3",
+   "value": 13,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate."
+   ]
+  },
+  {
+   "id": "events_liftboat",
+   "label": "Events on liftboats",
+   "page_ref": "Section 3",
+   "value": 5,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate."
+   ]
+  },
+  {
+   "id": "hazard_storm",
+   "label": "Events by initiating hazard: storm or weather",
+   "page_ref": "Section 3, Figure 2",
+   "value": 4,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate.",
+    "Initiating hazard grouped by us from each source's text; no cause is named for an event under investigation."
+   ]
+  },
+  {
+   "id": "hazard_punch_through",
+   "label": "Events by initiating hazard: punch-through or foundation",
+   "page_ref": "Section 3, Figure 2",
+   "value": 11,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate.",
+    "Initiating hazard grouped by us from each source's text; no cause is named for an event under investigation."
+   ]
+  },
+  {
+   "id": "hazard_leg_structural",
+   "label": "Events by initiating hazard: leg, jacking or structural failure",
+   "page_ref": "Section 3, Figure 2",
+   "value": 4,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate.",
+    "Initiating hazard grouped by us from each source's text; no cause is named for an event under investigation."
+   ]
+  },
+  {
+   "id": "hazard_transit_tow",
+   "label": "Events by initiating hazard: transit or tow",
+   "page_ref": "Section 3, Figure 2",
+   "value": 4,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate.",
+    "Initiating hazard grouped by us from each source's text; no cause is named for an event under investigation."
+   ]
+  },
+  {
+   "id": "hazard_other",
+   "label": "Events by initiating hazard: other or not stated",
+   "page_ref": "Section 3, Figure 2",
+   "value": 12,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate.",
+    "Initiating hazard grouped by us from each source's text; no cause is named for an event under investigation."
+   ]
+  },
+  {
+   "id": "source_review_2021",
+   "label": "Events from the 2021 review of drilling jack-up accidents",
+   "page_ref": "Section 3",
+   "value": 17,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate."
+   ]
+  },
+  {
+   "id": "source_mms_list",
+   "label": "Events from the MMS report list (construction jack-ups and one liftboat)",
+   "page_ref": "Section 3",
+   "value": 14,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate."
+   ]
+  },
+  {
+   "id": "source_ntsb_reports",
+   "label": "Events from NTSB investigation reports",
+   "page_ref": "Section 3",
+   "value": 4,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate."
+   ]
+  },
+  {
+   "id": "events_with_position",
+   "label": "Events with a public reference position, mapped in Figure 3",
+   "page_ref": "Section 4, Figure 3",
+   "value": 26,
+   "unit": "events",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate.",
+    "Positions other than NTSB positions are reference points for the named field, wind farm, island or town."
+   ]
+  },
+  {
+   "id": "first_year",
+   "label": "First year in the data set",
+   "page_ref": "Section 3 title",
+   "value": 1999,
+   "unit": "year",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate."
+   ]
+  },
+  {
+   "id": "last_year",
+   "label": "Last year in the data set",
+   "page_ref": "Section 3 title",
+   "value": 2022,
+   "unit": "year",
+   "period": "1999 to 2022",
+   "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "Three public sources with their own scope and period: a dated list of events, not a rate."
+   ]
+  },
+  {
+   "id": "served_csv_equals_repo",
+   "label": "The data set served on aceengineer.com equals the repository copy",
+   "page_ref": "Data note",
+   "value": true,
+   "unit": "-",
+   "period": "run date",
+   "source": "aceengineer.com and this repository",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); SHA-256 of both copies",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "live",
+   "limits": [
+    "Checks the published copy only."
+   ],
+   "scope": "rebuild"
+  },
+  {
+   "id": "us_liftboats_2022",
+   "label": "US-flagged liftboats in active service, 1 August 2022",
+   "page_ref": "Section 2, reference 10",
+   "value": 77,
+   "unit": "liftboats",
+   "period": "1 August 2022",
+   "source": "NTSB Marine Investigation Report MIR-22/26 (SEACOR Power), section 1.1.1",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); sentence search in the PDF text",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "US-flagged units only; the cited sources give no world count of liftboats."
+   ]
+  },
+  {
+   "id": "global_jackups_2025",
+   "label": "Jack-ups in the global fleet, end of 2025, as counted by a drilling contractor",
+   "page_ref": "Section 2, reference 9",
+   "value": 494,
+   "unit": "jack-ups",
+   "period": "end of 2025",
+   "source": "Valaris Ltd, Form 10-K for 2025, filed 20 February 2026 (SEC EDGAR)",
+   "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); number search in the 10-K text",
+   "repo": "https://github.com/vamseeachanta/aceengineer-website",
+   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "tolerance": {
+    "abs": 0
+   },
+   "basis": "fixed",
+   "limits": [
+    "One contractor's count of the global fleet, not a registry count."
+   ]
+  }
+ ]
+}

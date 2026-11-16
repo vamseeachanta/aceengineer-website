@@ -5,7 +5,7 @@ const path = require('node:path');
 const os = require('node:os');
 const vm = require('node:vm');
 const { spawnSync } = require('node:child_process');
-const { renderPage, generatePage } = require('../../scripts/generate-napkin-checks');
+const { renderPage, generatePage, checkPage } = require('../../scripts/generate-napkin-checks');
 const fixture = () => JSON.parse(fs.readFileSync(path.join(__dirname, '../fixtures/napkin-checks/synthetic.json'), 'utf8'));
 const root = path.resolve(__dirname, '../..');
 const source = 'content/data/napkin-checks.json';
@@ -320,4 +320,22 @@ test('invalid data leaves an existing output unchanged; CLI fails without a part
   assert.equal(fs.existsSync(cliOutput), false);
   fs.writeFileSync(input, JSON.stringify(fixture())); generatePage(input, output);
   assert.equal(fs.readFileSync(output, 'utf8'), renderPage(fixture()));
+});
+
+test('the build check never rewrites the page: it accepts a current page and refuses a stale one', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'napkin-checks-'));
+  const input = path.join(dir, 'data.json'); const output = path.join(dir, 'page.html');
+  fs.writeFileSync(input, JSON.stringify(fixture()));
+  fs.writeFileSync(output, renderPage(fixture()).replace(/\n/g, '\r\n'));
+  assert.equal(checkPage(input, output), renderPage(fixture()));
+  fs.writeFileSync(output, 'stale\n');
+  assert.throws(() => checkPage(input, output), /differs from the register/);
+  assert.equal(fs.readFileSync(output, 'utf8'), 'stale\n');
+  fs.rmSync(output);
+  assert.throws(() => checkPage(input, output), /differs from the register/);
+  assert.equal(fs.existsSync(output), false);
+  // The build uses the check, not the generator.
+  const build = fs.readFileSync(path.join(root, 'build.js'), 'utf8');
+  assert.match(build, /checkPage: checkNapkinChecks/);
+  assert.doesNotMatch(build, /generatePage/);
 });

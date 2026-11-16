@@ -248,8 +248,19 @@ function generatePage(input = dataFile, output = pageFile) {
   fs.writeFileSync(output, html, 'utf8');
   return html;
 }
+// Build-time check: the build must not edit tracked sources, so it validates the
+// register and requires the committed page to equal its rendering. Line endings
+// are compared after normalisation so a CRLF checkout does not fail the build.
+function checkPage(input = dataFile, output = pageFile) {
+  const html = renderPage(JSON.parse(fs.readFileSync(input, 'utf8')));
+  const committed = fs.existsSync(output) ? fs.readFileSync(output, 'utf8') : null;
+  if (committed === null || committed.replace(/\r\n/g, '\n') !== html.replace(/\r\n/g, '\n')) {
+    throw new Error(`napkin checks: ${path.basename(output)} differs from the register; run node scripts/generate-napkin-checks.js`);
+  }
+  return html;
+}
 if (require.main === module) {
   try { generatePage(process.argv[2], process.argv[3]); }
   catch (error) { console.error(error.message); process.exitCode = 1; }
 }
-module.exports = { validate, renderPage, generatePage };
+module.exports = { validate, renderPage, generatePage, checkPage };

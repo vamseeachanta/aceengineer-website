@@ -27,6 +27,10 @@ aceengineer-website issue work.
 
 For full routing detail, use `maps/aceengineer-website-operator-map.md`.
 
+For generated text guides, sitemap dates and the public reports register, see
+[Agent-readable site interface](agent-readable-site.md) and its
+[measured baseline](agent-readable-status.md).
+
 ## Retired Navigation
 
 Historical product-doc and earlier deployment references are not active

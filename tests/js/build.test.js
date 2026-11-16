@@ -4,6 +4,15 @@ const os = require('os');
 const { spawnSync } = require('child_process');
 const { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeSitemap, writeLlmsTxt, loadCopy, canonicalUrlFor, SITEMAP_EXCLUDE } = require('../../build');
 
+test('copied technical pages retain their canonical URLs, assets and forecast labels in the build', () => {
+  const { execFileSync } = require('child_process');
+  execFileSync(process.execPath, ['--test', path.join(__dirname, '../node/digitalmodel-build.test.js')], {
+    cwd: path.resolve(__dirname, '../..'),
+    env: { ...process.env, DIGITALMODEL_BUILD_DIR: path.resolve(__dirname, '../../dist') },
+    stdio: 'pipe',
+  });
+});
+
 const newsletterPages = ['newsletter/issue-001-energy-street/index.html', 'newsletter/issue-001-tank-sloshing/index.html', 'newsletter/issue-002-main-street/index.html', 'newsletter/issue-002-energy-street/index.html', 'newsletter/issue-002-public-data/index.html', 'newsletter/issue-002-jackup-method/index.html', 'newsletter/topics/one-place-to-work/index.html', 'newsletter/topics/why-the-model-you-use-matters/index.html'];
 test.each(newsletterPages.flatMap(page => [
   '<a href="TODO_NEW_LINK_2">Read</a>',
@@ -207,7 +216,11 @@ describe('ensureDir', () => {
 });
 
 describe('canonicalUrlFor', () => {
-  test('always emits the www origin — the apex 301s (vercel.json)', () => {
+  test('copied technical pages use the www origin like every other page', () => {
+    const { COPIED_PAGES } = require('../../scripts/copy-digitalmodel-pages');
+    for (const page of COPIED_PAGES) expect(canonicalUrlFor(page)).toBe(`https://www.aceengineer.com/${page}`);
+  });
+  test('ordinary site pages emit the www origin — the apex redirects (vercel.json)', () => {
     expect(canonicalUrlFor('about.html')).toBe('https://www.aceengineer.com/about.html');
   });
 
@@ -406,6 +419,14 @@ describe('writeLlmsTxt', () => {
   test('release-backed capabilities use the existing report hub', () => {
     writeLlmsTxt(tmpDir, registry);
     expect(read()).toContain('- [Release Capability](https://www.aceengineer.com/reports/sloshing/): Release summary.');
+  });
+
+  test('copied technical pages remain listed without adding source descriptions', () => {
+    const page = 'digitalmodel/cfd/sloshing-cfd-study.html';
+    seed(page, 'Sloshing study', '');
+    writeLlmsTxt(tmpDir, registry);
+    expect(read()).toContain('- [Sloshing study](https://www.aceengineer.com/digitalmodel/cfd/sloshing-cfd-study.html)\n');
+    expect(writeSitemap(tmpDir)).toContain(page);
   });
   test('a forbidden registry summary rejects the output', () => {
     const forbidden = { capabilities: [{ ...registry.capabilities[0], summary: loadCopy().forbidden_phrases[0] }] };

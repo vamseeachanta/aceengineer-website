@@ -86,7 +86,7 @@ test('source: article preserves the supplied body, table, emphasis and lists', (
   const html = read(`content/${article}`);
   const body = html.match(/<article id="one-place-to-work">([\s\S]*?)<\/article>/)[1];
   const approvedBody = body.replace(/<figure class="ladder-flow">[\s\S]*?<\/figure>/, '');
-  assert.equal(digest(text(approvedBody)), '9036e4ef64fed09e7f84d381e2b92d16f3433c38f7308642265e863662d2977c');
+  assert.equal(digest(text(approvedBody)), '4599d9e52826ce53ce48af9c7ea42c4904ce0592117a7551860c39f488acd2df');
   assert.equal((body.match(/<h1>/g) || []).length, 1);
   assert.equal((body.match(/<h2>/g) || []).length, 7);
   assert.equal((body.match(/<table\b/g) || []).length, 1);
@@ -115,5 +115,13 @@ test('built: index describes public reports and offers web subscription', () => 
 for (const [slug, name] of Object.entries(charts)) {
   test(`built: ${slug} chart states retirement and preserves its redirect`, () => {
     assertChart(read(`dist/newsletter/charts/${slug}/index.html`), name, true);
+  });
+}
+
+for (const prefix of ['content', 'dist']) {
+  test(`${prefix}: issue 1 uses the exact newsletter tagline`, () => {
+    const html = read(`${prefix}${issueRoute}index.html`);
+    assert.match(html, /<p\b[^>]*>Deckhand: Make Engineering Enjoyable Again<\/p>/);
+    assert.doesNotMatch(html, /enjoy\s+engineering\s+again/i);
   });
 }

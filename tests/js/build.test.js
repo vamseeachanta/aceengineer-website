@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const { spawnSync } = require('child_process');
 const { parseFrontMatter, getHtmlFiles, ensureDir, copyRobotsTxt, writeSitemap, writeLlmsTxt, loadCopy, canonicalUrlFor, SITEMAP_EXCLUDE } = require('../../build');
 
 test('napkin checks use the register, shared chrome, and offline assets', async () => {
@@ -22,6 +23,28 @@ test('napkin checks use the register, shared chrome, and offline assets', async 
   expect(fs.readFileSync('dist/sitemap.xml', 'utf8')).toContain('/data/napkin-checks.html');
   expect(fs.readFileSync('dist/energy.html', 'utf8')).toContain('href="data/napkin-checks.html"');
   expect(sourceFileFor('data/napkin-checks.html')).toBe(path.join('content', 'data', 'napkin-checks.html'));
+});
+
+const newsletterPages = ['newsletter/issue-001-energy-street/index.html', 'newsletter/issue-001-tank-sloshing/index.html', 'newsletter/issue-002-main-street/index.html', 'newsletter/issue-002-energy-street/index.html', 'newsletter/issue-002-public-data/index.html', 'newsletter/issue-002-jackup-method/index.html', 'newsletter/topics/one-place-to-work/index.html', 'newsletter/topics/why-the-model-you-use-matters/index.html'];
+test.each(newsletterPages.flatMap(page => [
+  '<a href="TODO_NEW_LINK_2">Read</a>',
+  '<p id="send-date">[[ANOTHER DATE]]</p>',
+  '<p>CONTACT_EMAIL</p>',
+].map(html => [page, html])))('newsletter deployment build rejects placeholders in %s: %s', (page, html) => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'newsletter-build-'));
+  for (const file of newsletterPages) {
+    const target = path.join(tmp, 'content', file);
+    fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.writeFileSync(target, file === page ? html : '<p>Ready</p>');
+  }
+  const result = spawnSync(process.execPath, [path.resolve(__dirname, '../../build.js')], {
+    cwd: tmp,
+    env: { ...process.env, NEWSLETTER_DEPLOY_CHECK: '1' },
+    encoding: 'utf8',
+  });
+  expect(result.status).toBe(1);
+  expect(result.stderr).toMatch(/Unfilled newsletter token/);
+  expect(fs.existsSync(path.join(tmp, 'dist'))).toBe(false);
 });
 
 test('newsletter web sources contain no e-mail campaign tracking tags', () => {

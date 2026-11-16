@@ -45,9 +45,9 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">2</div>
             <div class="step-content">
-                <h3 class="h-size-h4">NASTRAN Parser Development</h3>
+                <h3 class="h-size-h4">Solver Output Parsing</h3>
                 <p>
-                    Built a robust Python parser for NASTRAN .f06 and .op2 output files. The parser handles multiple solution sequences (SOL 101, 103, 106), extracts element stresses, nodal displacements, and reaction forces with automatic unit handling.
+                    A Python parser reads the MYSTRAN .F06 text output (displacements, single-point constraint forces, element stresses and the epsilon error estimate) and, where pyNastran is installed, the .op2 binary. MYSTRAN is a NASTRAN-compatible open-source solver.
                 </p>
             </div>
         </div>
@@ -55,142 +55,47 @@ rootPath: "../"
         <div class="methodology-step">
             <div class="step-number">3</div>
             <div class="step-content">
-                <h3 class="h-size-h4">Code Check Engine Implementation</h3>
+                <h3 class="h-size-h4">Code Checks</h3>
                 <p>
-                    Implemented automated code checks for API 17D and DNV-OS-F101 requirements, including von Mises stress allowables, linearized stress calculations for pressure vessels, and fatigue screening assessments. All calculations are fully traceable with intermediate results documented.
-                </p>
-            </div>
-        </div>
-
-        <div class="methodology-step">
-            <div class="step-number">4</div>
-            <div class="step-content">
-                <h3 class="h-size-h4">Interactive Report Generation</h3>
-                <p>
-                    Developed HTML report templates with Plotly-based interactive stress contour plots, tabular results with conditional formatting, and executive summaries with pass/fail indicators. Reports include all calculation backup for regulatory review.
-                </p>
-            </div>
-        </div>
-
-        <div class="methodology-step">
-            <div class="step-number">5</div>
-            <div class="step-content">
-                <h3 class="h-size-h4">Integration &amp; Deployment</h3>
-                <p>
-                    The pipeline uses a command-line interface to read a NASTRAN output folder and assemble reports.
+                    Code checks exist as separate modules: subsea connector end-cap, combined axial and bending (von Mises) and seal preload checks to API 17R / ISO 13628-1; pipeline burst and collapse to DNV-ST-F101; and ASME Section VIII Division 1 shell and head thickness, with ANSYS APDL generation for stress classification line paths.
                 </p>
             </div>
         </div>
 
         <!-- Technical Details -->
 
-<h2 class="section-title">Technical Implementation</h2>
-
-        <h3>Pipeline Architecture</h3>
-        <p>
-            The automation pipeline follows a modular architecture designed for maintainability and extensibility:
-        </p>
-
-        <div class="code-block">
-            <code>
-subsea-fea-pipeline/<br>
--- parsers/<br>
-|   -- nastran_f06.py      # Text output parser<br>
-|   -- nastran_op2.py      # Binary output parser<br>
-|   -- result_mapper.py    # Element-to-component mapping<br>
--- code_checks/<br>
-|   -- api_17d.py          # API 17D stress allowables<br>
-|   -- dnv_os_f101.py      # DNV pipeline code checks<br>
-|   -- linearization.py    # Stress linearization routines<br>
--- reporting/<br>
-|   -- html_generator.py   # Report assembly<br>
-|   -- plotly_viz.py       # Interactive plots<br>
-|   -- templates/          # Jinja2 report templates<br>
--- main.py                 # CLI entry point
-            </code>
-        </div>
-
-        <h3>Key Technical Features</h3>
-        <ul>
-            <li>
-<strong>Multi-format support:</strong> Handles both text (.f06) and binary (.op2) NASTRAN outputs for flexibility across different solver configurations</li>
-            <li>
-<strong>Automatic unit conversion:</strong> Detects input units and converts to consistent output units (SI or US customary) based on project settings</li>
-            <li>
-<strong>Component grouping:</strong> Maps finite elements to named components using property ID or element set definitions for organized reporting</li>
-            <li>
-<strong>Stress linearization:</strong> Implements through-thickness stress linearization per ASME Section VIII Division 2 for pressure vessel assessments</li>
-            <li>
-<strong>Batch processing:</strong> Processes multiple load cases and components in parallel using Python multiprocessing</li>
-        </ul>
-
-        <h3>Code Check Implementation</h3>
+<h2 class="section-title">Current Scope</h2>
         <div class="table-responsive-wrapper">
         <table class="table-results">
             <tbody>
 <tr>
-                <th>Standard</th>
-                <th>Check Type</th>
-                <th>Implementation</th>
+                <th>Part</th>
+                <th>Status</th>
             </tr>
             <tr>
-                <td>API 17D</td>
-                <td>Primary stress limits</td>
-                <td>von Mises vs. allowable based on material grade and temperature</td>
+                <td>MYSTRAN .F06 result parsing; .op2 through pyNastran</td>
+                <td>In the library</td>
             </tr>
             <tr>
-                <td>API 17D</td>
-                <td>Local stress limits</td>
-                <td>Peak stress evaluation at geometric discontinuities</td>
+                <td>Subsea connector checks (API 17R / ISO 13628-1)</td>
+                <td>In the library</td>
             </tr>
             <tr>
-                <td>DNV-OS-F101</td>
-                <td>Burst capacity</td>
-                <td>Hoop stress check with safety factors per location class</td>
+                <td>Pipeline burst and collapse (DNV-ST-F101)</td>
+                <td>In the library</td>
             </tr>
             <tr>
-                <td>DNV-OS-F101</td>
-                <td>Collapse capacity</td>
-                <td>External pressure check with ovality effects</td>
+                <td>ASME Section VIII Division 1 thickness; ANSYS APDL stress classification line paths</td>
+                <td>In the library</td>
             </tr>
             <tr>
-                <td>Combined</td>
-                <td>Fatigue screening</td>
-                <td>Stress range extraction for fatigue assessment triggering</td>
+                <td>Parser for commercial NASTRAN output, one pipeline joining parser and code checks, report templates</td>
+                <td>Not built</td>
             </tr>
         </tbody>
 </table>
         </div>
 
-        <h3>Report Features</h3>
-        <p>
-            Generated HTML reports include:
-        </p>
-        <ul>
-            <li>
-<strong>Executive summary:</strong> Pass/fail status for all code checks with critical locations highlighted</li>
-            <li>
-<strong>Interactive stress plots:</strong> Plotly-based contour plots with hover data and zoom capability</li>
-            <li>
-<strong>Tabular results:</strong> Maximum stresses per component with utilization ratios and conditional formatting</li>
-            <li>
-<strong>Calculation backup:</strong> Full calculation trail with intermediate values for regulatory review</li>
-            <li>
-<strong>Load case summary:</strong> Applied loads and boundary conditions for traceability</li>
-            <li>
-<strong>Material properties:</strong> Temperature-dependent allowables used in code checks</li>
-        </ul>
-
-        <h2 class="section-title">Technologies &amp; Tools</h2>
-<p>
-            <strong>FEA Software:</strong> MSC NASTRAN, NX NASTRAN<br>
-            <strong>Programming:</strong> Python 3.10+<br>
-            <strong>Data Processing:</strong> pandas, numpy, scipy<br>
-            <strong>Visualization:</strong> Plotly for interactive charts and contour plots<br>
-            <strong>Reporting:</strong> Jinja2 templates for HTML generation<br>
-            <strong>Binary Parsing:</strong> pyNastran for .op2 file handling<br>
-            <strong>Deployment:</strong> PyInstaller for standalone executable distribution
-        </p>
 <h2>Related methods</h2>
 <ul>
 <li><a href="offshore-platform-fatigue-optimization.html">Computational Fatigue Assessment for Offshore Platform</a></li>

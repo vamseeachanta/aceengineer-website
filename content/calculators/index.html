@@ -95,7 +95,7 @@ rootPath: "../"
                         "@id": "https://www.aceengineer.com/calculators/fatigue-sn-curve.html#calculator",
                         "name": "S-N Curve Fatigue Calculator",
                         "url": "https://www.aceengineer.com/calculators/fatigue-sn-curve.html",
-                        "description": "Calculate fatigue life using 40+ S-N curve classes from DNV-RP-C203, API RP 2A, BS 7608, and Eurocode 3 with interactive visualization",
+                        "description": "Calculate fatigue life using 40 S-N curve classes from DNV-RP-C203, API RP 2A, BS 7608, and Eurocode 3 with interactive visualization; regression tests cover the 15 DNV-RP-C203 classes only",
                         "applicationCategory": "Engineering Calculator",
                         "operatingSystem": "Any web browser",
                         "provider": { "@id": "https://www.aceengineer.com/#organization" }
@@ -237,7 +237,7 @@ rootPath: "../"
             <h2 class="h-size-h3"><a href="drilling-rig-selector.html">Drilling Rig Selector</a> <span style="background: #5cb85c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.6em; vertical-align: middle;">NEW</span></h2>
             <div class="calculator-meta">
                 <strong>Application:</strong> Rig Selection, Well Planning |
-                <strong>Data:</strong> 180 rigs — contractor spec sheets (Noble, Transocean, Valaris, Seadrill, Borr, Shelf)
+                <strong>Data:</strong> 223 rigs from 17 owners — published spec sheets, retrieved 2026-07-13
             </div>
             <p>Shortlist offshore drilling rigs by the numbers that decide selection: water depth
             rating, hookload, moonpool envelope, jackup leg length and cantilever reach. Sortable
@@ -373,7 +373,8 @@ rootPath: "../"
                 <strong>Method:</strong> S-N Curve Analysis with Interactive Plotting
             </div>
             <p>
-                Calculate fatigue life using 40+ S-N curve classes from four major standards.
+                Calculate fatigue life using 40 S-N curve classes from four standards. Regression tests cover the
+                15 DNV-RP-C203 classes; the 25 API RP 2A, BS 7608 and Eurocode 3 classes are not yet tested.
                 Interactive Plotly visualization, multiple environments (air/seawater), SCF support,
                 and real-time damage calculation. Our most comprehensive fatigue tool.
             </p>

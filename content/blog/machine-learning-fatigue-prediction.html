@@ -358,68 +358,24 @@ class FatigueNet(nn.Module):
                     <tr>
                         <th>Step</th>
                         <th>Activity</th>
-                        <th>Outcome</th>
                     </tr>
                     <tr>
                         <td>1. Data Integration</td>
                         <td>Combine operational, test, and inspection data</td>
-                        <td>50,000+ data points with 15 features</td>
                     </tr>
                     <tr>
                         <td>2. Feature Engineering</td>
                         <td>Create fatigue-relevant features (rainflow counts, load ratios)</td>
-                        <td>25 engineered features</td>
                     </tr>
                     <tr>
                         <td>3. Model Training</td>
                         <td>Train ensemble of XGBoost + Neural Network</td>
-                        <td>R² = 0.94 on validation set</td>
                     </tr>
                     <tr>
                         <td>4. Validation</td>
                         <td>Compare against known failures and inspections</td>
-                        <td>95% predictions within factor of 2</td>
                     </tr>
                 </table>
-
-                <h3>Results Comparison</h3>
-
-                <table class="comparison-table">
-                    <tr>
-                        <th>Metric</th>
-                        <th>Traditional S-N (DNV)</th>
-                        <th>ML Ensemble</th>
-                        <th>Improvement</th>
-                    </tr>
-                    <tr>
-                        <td>Prediction Accuracy (RMSE)</td>
-                        <td>0.45 log(cycles)</td>
-                        <td>0.18 log(cycles)</td>
-                        <td>60% reduction</td>
-                    </tr>
-                    <tr>
-                        <td>False Alarm Rate</td>
-                        <td>35%</td>
-                        <td>8%</td>
-                        <td>77% reduction</td>
-                    </tr>
-                    <tr>
-                        <td>Missed Detections</td>
-                        <td>2%</td>
-                        <td>1%</td>
-                        <td>50% reduction</td>
-                    </tr>
-                    <tr>
-                        <td>Inspection Cost Impact</td>
-                        <td>Baseline</td>
-                        <td>-40%</td>
-                        <td>Optimized scheduling</td>
-                    </tr>
-                </table>
-
-                <div class="key-insight">
-                    <strong>Business Impact:</strong> The ML model's improved accuracy enabled condition-based maintenance scheduling, reducing inspection costs by 40% while maintaining the same safety level. The reduced false alarm rate meant fewer unnecessary repairs and less unplanned downtime.
-                </div>
             </section>
 
             <!-- Validation -->

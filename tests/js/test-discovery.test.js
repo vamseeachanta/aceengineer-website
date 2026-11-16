@@ -88,20 +88,36 @@ test('test_discovery_accepts_complete_inventory', async () => {
   await assertCompleteInventory(root);
 });
 
-test('test_discovery_rejects_unregistered_suite', async () => {
+const rootManifest = () => JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+
+// Copies the Jest config and tests/js only, which is all discovery reads.
+function isolatedFixture(manifest) {
   const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'test-discovery-'));
   fs.mkdirSync(path.join(fixture, 'tests/js'), { recursive: true });
-  // Discovery needs only the project list. Root setup hooks name files outside
-  // tests/js, which jest-config resolves on read, so the copy omits them.
-  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
-  delete manifest.jest.globalSetup;
-  delete manifest.jest.globalTeardown;
-  fs.writeFileSync(path.join(fixture, 'package.json'), JSON.stringify(manifest, null, 2));
+  // Root setup hooks name files outside tests/js, and jest-config resolves
+  // them while reading the config, so the copy omits them.
+  const copy = JSON.parse(JSON.stringify(manifest));
+  delete copy.jest.globalSetup;
+  delete copy.jest.globalTeardown;
+  fs.writeFileSync(path.join(fixture, 'package.json'), JSON.stringify(copy, null, 2));
   // Dependencies resolve in the isolated copy without installing or running tests.
   fs.symlinkSync(path.join(root, 'node_modules'), path.join(fixture, 'node_modules'), 'junction');
   for (const file of inventory(root)) {
     fs.copyFileSync(file, path.join(fixture, 'tests/js', path.basename(file)));
   }
+  return fixture;
+}
+
+test('test_discovery_fixture_omits_root_setup_hooks', async () => {
+  const manifest = rootManifest();
+  // A root build prerequisite names a file the isolated copy does not carry.
+  manifest.jest.globalSetup = '<rootDir>/tests/setup/absent-from-fixture.js';
+  manifest.jest.globalTeardown = '<rootDir>/tests/setup/absent-from-fixture.js';
+  await assertCompleteInventory(isolatedFixture(manifest));
+});
+
+test('test_discovery_rejects_unregistered_suite', async () => {
+  const fixture = isolatedFixture(rootManifest());
   fs.writeFileSync(path.join(fixture, 'tests/js/synthetic-orphan.test.js'), '');
   const missing = missingTests(fixture, inventory(fixture), await discoveredTests(fixture));
   assert.deepEqual(missing, ['tests/js/synthetic-orphan.test.js']);

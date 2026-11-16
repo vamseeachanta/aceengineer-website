@@ -1,0 +1,220 @@
+{
+ "schema_version": "1.0",
+ "report_id": "issue-002-jackup-site-assessment",
+ "mode": "rebuild",
+ "started_utc": "2026-11-07T04:49:15Z",
+ "finished_utc": "2026-11-07T04:49:17Z",
+ "grade": "PASS",
+ "pinned_commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+ "artifacts": {
+  "results.json": "dd1768a53d14e5805484984612b4bfab1fa770cb6dd76667b1d00101d0a2d6be",
+  "eval.py": "1056910e77be2378c1cab1b3bbb42731387fa6c8887603bf39122eac4a326575",
+  "../evalkit.py": "e52cd0ff12cd869c4e2f55ee6a5777800a4278828d28d8fc546cc7b69efe2eb3"
+ },
+ "python": "3.14.3",
+ "platform": "Windows",
+ "context": {
+  "revision": "pinned",
+  "repo_root": "web-evals",
+  "repo_head": "45e98e0b16d26cf06fa3aacd6ebe2cbd8ee83f72",
+  "csv_sha256": "22dd0f17dca9f320e2202638b671a499d00bf554c219904d25c23b467301253e",
+  "ntsb_mir2226": {
+   "url": "https://www.ntsb.gov/investigations/AccidentReports/Reports/MIR2226.pdf",
+   "path": "<tmp>/report-evals-cache/2026-11-06/MIR2226.pdf",
+   "sha256": "2bac4c9ef5c39aa8ff53f5a8dd64a8e2567e85b08edb77d0a35cc336c99e66a2",
+   "retrieved_utc": "cached"
+  },
+  "valaris_10k": {
+   "url": "https://www.sec.gov/Archives/edgar/data/314808/000031480826000029/val-20251231.htm",
+   "sha256": "579272a73b4e5a41f497c939635cf80ff9e5eddc36744432a36fe5f418a52d18",
+   "retrieved_utc": "cached"
+  },
+  "valaris_10k_sentence": " in the Middle East, which should further support the supply and demand balance of the global jackup fleet. From a supply perspective, as of December 31, 2025, there were 494 jackups in the global fleet, with 29% of the current jackup fleet being more than 40 years of age with limi",
+  "artifacts_repo_head": "45e98e0b16d26cf06fa3aacd6ebe2cbd8ee83f72",
+  "artifacts_dirty": false,
+  "code_mode": "historical"
+ },
+ "errors": [],
+ "results": [
+  {
+   "id": "events",
+   "expected": 35,
+   "got": 35,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "events_drilling_jackup",
+   "expected": 17,
+   "got": 17,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "events_construction_jackup",
+   "expected": 13,
+   "got": 13,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "events_liftboat",
+   "expected": 5,
+   "got": 5,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "hazard_storm",
+   "expected": 4,
+   "got": 4,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "hazard_punch_through",
+   "expected": 11,
+   "got": 11,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "hazard_leg_structural",
+   "expected": 4,
+   "got": 4,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "hazard_transit_tow",
+   "expected": 4,
+   "got": 4,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "hazard_other",
+   "expected": 12,
+   "got": 12,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "source_review_2021",
+   "expected": 17,
+   "got": 17,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "source_mms_list",
+   "expected": 14,
+   "got": 14,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "source_ntsb_reports",
+   "expected": 4,
+   "got": 4,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "events_with_position",
+   "expected": 26,
+   "got": 26,
+   "unit": "events",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "first_year",
+   "expected": 1999,
+   "got": 1999,
+   "unit": "year",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "last_year",
+   "expected": 2022,
+   "got": 2022,
+   "unit": "year",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "served_csv_equals_repo",
+   "expected": true,
+   "got": true,
+   "unit": "-",
+   "basis": "live",
+   "status": "MATCH",
+   "difference": "",
+   "note": ""
+  },
+  {
+   "id": "us_liftboats_2022",
+   "expected": 77,
+   "got": 77,
+   "unit": "liftboats",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  },
+  {
+   "id": "global_jackups_2025",
+   "expected": 494,
+   "got": 494,
+   "unit": "jack-ups",
+   "basis": "fixed",
+   "status": "MATCH",
+   "difference": "+0 (+0 %)",
+   "note": ""
+  }
+ ]
+}

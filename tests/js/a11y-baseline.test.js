@@ -180,12 +180,10 @@ describe('a11y baseline (dist/)', () => {
     expect(bad).toEqual([]);
   });
 
-  test('only the specified copied-page canonicals use the apex host', () => {
+  test('no page, copied pages included, links to the apex host', () => {
     const bad = pages
       .filter(p => {
-        const html = COPIED_PAGES.includes(rel(p))
-          ? read(p).replace(`<link rel="canonical" href="https://aceengineer.com/${rel(p)}">`, '')
-          : read(p);
+        const html = read(p);
         return /https:\/\/aceengineer\.com(?!\w)/.test(html);
       })
       .map(rel);

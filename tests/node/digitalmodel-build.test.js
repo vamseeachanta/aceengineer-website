@@ -34,6 +34,26 @@ function localReferences(html) {
   return references.filter(ref => ref && !/^(?:[a-z][\w+.-]*:|\/\/|#)/i.test(ref));
 }
 
+// Relative navigation links in the copies must resolve inside the build output;
+// links to pages that are not copied point at their original public URLs.
+function navigationReferences(html) {
+  const markup = html.replace(/<!--[^]*?-->/g, '')
+    .replace(/<(script|style)\b([^>]*)>[^]*?<\/\1\s*>/gi, '<$1$2>');
+  return [...markup.matchAll(/<a\b[^>]*?\bhref\s*=\s*(?:"([^"]*)"|'([^']*)')/gi)]
+    .map(match => match[1] ?? match[2])
+    .filter(ref => ref && !/^(?:[a-z][\w+.-]*:|\/\/|#)/i.test(ref));
+}
+
+function checkNavigation(file) {
+  for (const ref of navigationReferences(fs.readFileSync(file, 'utf8'))) {
+    let urlPath = decodeURIComponent(ref.replace(/&amp;/g, '&').split(/[?#]/)[0]);
+    if (urlPath.endsWith('/')) urlPath += 'index.html';
+    const target = urlPath.startsWith('/') ? path.join(output, urlPath) : path.resolve(path.dirname(file), urlPath);
+    assert.ok(!path.relative(output, target).startsWith('..'), `link leaves the build output: ${ref}`);
+    assert.ok(fs.existsSync(target) && fs.statSync(target).isFile(), `broken link: ${ref}`);
+  }
+}
+
 function cssReferences(css) {
   const clean = css.replace(/\/\*[^]*?\*\//g, '');
   return [
@@ -64,8 +84,9 @@ for (const page of pages) {
     assert.equal(html, fs.readFileSync(path.join(root, 'content/digitalmodel', page), 'utf8'));
     const canonical = [...html.matchAll(/<link\b[^>]*\brel="canonical"[^>]*>/gi)];
     assert.equal(canonical.length, 1);
-    assert.ok(canonical[0][0].includes(`href="https://aceengineer.com/digitalmodel/${page}"`));
+    assert.ok(canonical[0][0].includes(`href="https://www.aceengineer.com/digitalmodel/${page}"`));
     checkAssets(file);
+    checkNavigation(file);
   });
 }
 
@@ -75,6 +96,41 @@ test('built forecast retains all four claim qualification labels', () => {
     assert.ok(html.includes(label), `missing forecast label: ${label}`);
   }
   assert.ok(!/epic #1356|child #1361|AQWA phase sign pending validation/.test(html));
+  // Horizons are fixed presets and thresholds carry no cited clause: the page says so.
+  assert.ok(html.includes('fixed illustrative horizons'));
+  assert.ok(html.includes('illustrative preset horizon of'));
+  assert.ok(html.includes('indicative screening values'));
+  assert.ok(!/group-velocity wedge|s wedge\./.test(html));
+});
+
+test('navigation discovery lists relative page links only', () => {
+  assert.deepEqual(navigationReferences('<script>const s = \'<a href="x.html">\';</script><a href="../other.html">A</a><a href="https://example.com/">B</a><a href="#top">C</a><a class="n" href="dir/">D</a>'),
+    ['../other.html', 'dir/']);
+});
+
+test('forecast canvases keep their size across repeated renders at DPR 1 and 2', () => {
+  const html = fs.readFileSync(path.join(root, 'content/digitalmodel', pages[1]), 'utf8');
+  const source = html.match(/function fitCanvas\(cv\)\{[^]*?return \{ctx,w,h\};\}/)[0];
+  for (const dpr of [1, 2]) {
+    const fitCanvas = new Function('window', `${source}; return fitCanvas;`)({ devicePixelRatio: dpr });
+    // Wave trace (112) and decision timeline (40) as declared in the page markup.
+    for (const declared of [112, 40]) {
+      const attrs = { height: String(declared) };
+      const cv = {
+        clientWidth: 300, dataset: {}, style: {},
+        getAttribute: name => attrs[name],
+        set height(value) { attrs.height = String(value); },
+        get height() { return Number(attrs.height); },
+        getContext: () => ({ setTransform() {} }),
+      };
+      for (let frame = 0; frame < 4; frame += 1) {
+        const { h } = fitCanvas(cv);
+        assert.equal(h, declared);
+        assert.equal(cv.height, declared * dpr);
+        assert.equal(cv.style.height, `${declared}px`);
+      }
+    }
+  }
 });
 
 test('asset discovery checks resources without treating navigation or script text as assets', () => {

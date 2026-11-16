@@ -85,7 +85,6 @@ const BUNDLE_INPUTS = [
 // one URL per page rather than two that serve identical bytes.
 function canonicalUrlFor(relPath) {
   let p = String(relPath).split(path.sep).join('/');
-  if (COPIED_PAGES.includes(p)) return `https://aceengineer.com/${p}`;
   if (p.endsWith('index.html')) p = p.slice(0, -'index.html'.length);
   return `${SITE_ORIGIN}/${p}`;
 }

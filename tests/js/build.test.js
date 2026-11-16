@@ -216,9 +216,9 @@ describe('ensureDir', () => {
 });
 
 describe('canonicalUrlFor', () => {
-  test('copied technical pages retain their specified apex URLs', () => {
+  test('copied technical pages use the www origin like every other page', () => {
     const { COPIED_PAGES } = require('../../scripts/copy-digitalmodel-pages');
-    for (const page of COPIED_PAGES) expect(canonicalUrlFor(page)).toBe(`https://aceengineer.com/${page}`);
+    for (const page of COPIED_PAGES) expect(canonicalUrlFor(page)).toBe(`https://www.aceengineer.com/${page}`);
   });
   test('ordinary site pages emit the www origin — the apex redirects (vercel.json)', () => {
     expect(canonicalUrlFor('about.html')).toBe('https://www.aceengineer.com/about.html');
@@ -425,7 +425,7 @@ describe('writeLlmsTxt', () => {
     const page = 'digitalmodel/cfd/sloshing-cfd-study.html';
     seed(page, 'Sloshing study', '');
     writeLlmsTxt(tmpDir, registry);
-    expect(read()).toContain('- [Sloshing study](https://aceengineer.com/digitalmodel/cfd/sloshing-cfd-study.html)\n');
+    expect(read()).toContain('- [Sloshing study](https://www.aceengineer.com/digitalmodel/cfd/sloshing-cfd-study.html)\n');
     expect(writeSitemap(tmpDir)).toContain(page);
   });
   test('a forbidden registry summary rejects the output', () => {

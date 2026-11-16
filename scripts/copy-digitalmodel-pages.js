@@ -1,6 +1,16 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
+// Source: the public digitalmodel repository, docs/api/<page> at commit
+// c13bd2b7ae8513f05c6d20772aa245255ce18f1d, published at
+// https://vamseeachanta.github.io/digitalmodel/<page>. Assets under _assets/ and
+// cfd/viz/ are byte-identical to that commit. Local edits to the three pages:
+// - one canonical link per page, on the www host;
+// - relative links to pages that are not copied point at their public URLs;
+// - forecast footer: tracking chip and the AQWA phase-sign clause removed; the
+//   horizon text states that the sea-type horizons are fixed illustrative
+//   presets; the helideck chip no longer quotes values, and the caution/limit
+//   values are labelled as indicative screening values.
 const COPIED_PAGES = [
   'digitalmodel/cfd/sloshing-cfd-study.html',
   'digitalmodel/hydro/short-horizon-motion-forecast.html',

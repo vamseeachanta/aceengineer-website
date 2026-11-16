@@ -1,0 +1,22 @@
+{
+  "id": "synthetic-counts",
+  "headline": "Synthetic counts increase between two test years",
+  "quantity": "Synthetic count",
+  "unit": "events",
+  "x": { "variable": "Calendar year", "unit": "year" },
+  "series": [
+    { "x": 2020, "value": 2, "year": 2020 },
+    { "x": 2021, "value": 5, "year": 2021 }
+  ],
+  "source": {
+    "name": "Synthetic test fixture; no observed data",
+    "url": "https://example.org/synthetic-test",
+    "date": "2021-12-31",
+    "date_kind": "reporting-period-end",
+    "retrieved_at": "2022-01-01T00:00:00Z",
+    "input_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "limits": [{ "value": 4, "label": "Synthetic reference", "citation": "Test definition only; no engineering criterion" }],
+  "csv": "synthetic-counts.csv",
+  "text_alternative": "Synthetic counts are 2 events in 2020 and 5 events in 2021. The synthetic reference is 4 events."
+}

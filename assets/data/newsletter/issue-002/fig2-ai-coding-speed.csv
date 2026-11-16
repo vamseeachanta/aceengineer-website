@@ -1,0 +1,5 @@
+study,kind,change_with_ai_pct,source
+"Lab task (GitHub Copilot), Feb 2023",measured,55.8,"faster on one set task: 55.8 %; Peng and others, arXiv 2302.06590"
+"Three company field experiments, 2025",measured,26.0,"more tasks completed: 26 %; Cui and others, Management Science 2025"
+"Randomised trial (experienced developers), Jul 2025",believed,20.0,"believed speed-up: 20 %; METR, 10 Jul 2025"
+"Randomised trial (experienced developers), Jul 2025",measured,-19.0,"took 19 % longer (shown as -19): -19 %; METR, 10 Jul 2025"

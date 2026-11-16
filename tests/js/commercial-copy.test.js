@@ -21,20 +21,29 @@ const { positioningFindings, bannedFindings } = require('../../scripts/lint-copy
 const distDir = path.join(__dirname, '..', '..', 'dist');
 const repoDir = path.join(__dirname, '..', '..');
 
-// Expected purpose and terms: issue #89 implementation brief (2026), not the renderer.
-const purpose = 'AceEngineer helps clients set up agentic engineering workflow processes suited to their needs, so that they become AI-native, and also does the engineering work.';
+// Order rule: issue #89, owner decisions of 2026-07-28 - capabilities-first, so
+// engineering analysis leads and workflow setup follows. The workflow wording is
+// an offer awaiting maintainer copy review, not the renderer's output.
+const purpose = "AceEngineer provides engineering analysis and calculation work, and sets up agentic engineering workflows suited to the needs of each client, aimed at helping engineering teams become AI-native.";
+const terms = ['engineering analysis', 'agentic engineering workflows', 'AI-native'];
 const brandCopy = yaml.load(fs.readFileSync(path.join(repoDir, 'brand/copy.yaml'), 'utf8'));
 const positioning = brandCopy.positioning;
 
 test('the positioning contract records the purpose, audience and three offer statements', () => {
   expect(positioning.purpose).toBe(purpose);
-  expect(positioning.primary_audience).toBe('Engineering teams that need workflow setup and engineering delivery.');
+  expect(positioning.primary_audience).toBe('Engineering teams that need engineering analysis, with workflow setup alongside it.');
   expect(positioning.supporting_claims.map(claim => claim.basis)).toEqual([
     'offer statement', 'offer statement', 'offer statement',
   ]);
-  expect(positioning.approved_key_terms).toEqual(expect.arrayContaining([
-    'agentic engineering workflow processes', 'AI-native', 'engineering work',
-  ]));
+  expect(positioning.approved_key_terms).toEqual(terms);
+});
+
+test('the purpose states engineering analysis before workflow setup', () => {
+  const at = terms.map(term => positioning.purpose.indexOf(term));
+  expect(at.every(index => index >= 0)).toBe(true);
+  expect(at).toEqual([...at].sort((a, b) => a - b)); // Capabilities first, then workflows.
+  // An offer, not a delivered outcome: no "so that they become" result clause.
+  expect(positioning.purpose).not.toMatch(/so that they become|helps clients become/);
 });
 
 test.each(['index.html', 'ai-automation/index.html', 'about.html'])('the %s lead states the purpose before supporting work', page => {
@@ -74,10 +83,11 @@ test('banned wording is decoded across tags and checked in metadata and links', 
   expect(bannedFindings('<p>AI-native engineering with a responsible engineer.</p>', banned)).toEqual([]);
 });
 
-test('newsletter source supports engineering workflows, automation and AI agents', () => {
+test('newsletter source supports engineering workflows, automation and AI assistants', () => {
   const doc = new JSDOM(fs.readFileSync(path.join(distDir, 'newsletter/issue-001-energy-street/index.html'), 'utf8')).window.document;
-  expect(doc.querySelector('main').textContent).toContain('engineering workflows and their automation, along with the use of AI agents');
-  expect(doc.querySelector('#engineering-offer').textContent).toContain('engineering analysis and calculation workflows');
+  const offer = doc.querySelector('#engineering-offer').textContent.replace(/\s+/g, ' ');
+  expect(offer).toContain('engineering analysis and calculation workflows');
+  expect(offer).toContain('engineering workflows, their automation and the use of AI assistants');
 });
 
 const RULES = {

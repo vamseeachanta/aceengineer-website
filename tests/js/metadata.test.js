@@ -452,9 +452,9 @@ test('home support lists both injected designation and product without hidden or
   expect(wholeToken(product.toLowerCase(), product)).toBe(true);
 });
 
-test('home positioning description agrees with structured data and the discovery header', () => {
+test('home services introduction and the three description texts agree', () => {
   const home = documents.get('index.html');
-  const sentence = yaml.load(fs.readFileSync(path.join(__dirname, '../../brand/copy.yaml'), 'utf8')).home.description;
+  const sentence = home.querySelector('#services > .container > p').textContent.trim().match(/^.*?\./)[0];
   const meta = home.querySelector('meta[name="description"]').content;
   const schema = nodesFor('index.html').find(node => node['@type'] === 'WebPage').description;
   const header = fs.readFileSync(path.join(distDir, 'llms.txt'), 'utf8').match(/^> (.*)$/m)[1];
@@ -462,12 +462,13 @@ test('home positioning description agrees with structured data and the discovery
 });
 
 const homeCopy = yaml.load(fs.readFileSync(path.join(__dirname, '../../brand/copy.yaml'), 'utf8'));
-// Rule source: issue #89 (2026), plus the Google Search Central title-link and
-// snippet guides linked in docs/positioning-claims.md. Neither sets a fixed
-// character limit; the overlapping SEO audit uses null bounds for that reason.
+// Rule source: issue #89, owner decisions of 2026-07-28 (capabilities-first; "AI"
+// permitted), plus the Google Search Central title-link and snippet guides linked
+// in docs/positioning-claims.md. Neither guide sets a fixed character limit; the
+// overlapping SEO audit uses null bounds for that reason. The home title, heading
+// and description stay as specified with the home page and are tested above.
 test.each([
-  ['index.html', 'home', 'AceEngineer | Agentic engineering workflows'],
-  ['about.html', 'about', 'About AceEngineer | Agentic engineering workflows'],
+  ['about.html', 'about', 'About AceEngineer | Engineering analysis and agentic workflows'],
   ['ai-automation/index.html', 'ai_automation', 'AI automation | Agentic engineering workflows'],
 ])('%s metadata and h1 match the positioning contract', (page, key, title) => {
   const doc = documents.get(page);
@@ -499,6 +500,7 @@ const supportedHomeCopy = [
   ['service_details.2.description'],
   ['home.services.5.receives'],
   ['service_details.4.description', 'home.services.4.receives'],
+  ['home.description'],
 ].map(keys => [keys.join(', '), keys]);
 test.each(supportedHomeCopy)('home wording follows existing page support: %s', (key, paths) => {
   for (const keyPath of paths) {

@@ -79,6 +79,22 @@ test('every built JSON-LD block parses', () => {
   for (const page of pages) expect(() => nodesFor(page)).not.toThrow();
 });
 
+test('the model topic is indexed with its approved title and preview metadata', () => {
+  const page = 'newsletter/topics/why-the-model-you-use-matters/index.html';
+  const title = 'Why the model you use matters: test each new AI model on your own problems';
+  const description = 'A newer AI model can solve problems that an older one may get confidently wrong. Test each new model on problems you know.';
+  expect(destinations).toContain(page);
+  const doc = documents.get(page);
+  expect(doc.title).toBe(title);
+  expect(doc.querySelector('meta[property="og:title"]').content).toBe(title);
+  expect(doc.querySelector('meta[name="description"]').content).toBe(description);
+  expect(doc.querySelector('meta[property="og:description"]').content).toBe(description);
+  expect(nodesFor(page).find(node => node['@type'] === 'Article')).toMatchObject({
+    headline: title, name: title, description,
+    url: 'https://www.aceengineer.com/newsletter/topics/why-the-model-you-use-matters/',
+  });
+});
+
 test('destinations have one shared Organization with the required display name', () => {
   for (const page of destinations) {
     const full = nodesFor(page).filter(node => node['@type'] === 'Organization' && node.name);
@@ -253,6 +269,17 @@ test('specified pages have their required schema type and copied metadata', () =
   }
 });
 
+const OG_BASE = 'https://www.aceengineer.com/assets/img/og/';
+const LOGO_URL = 'https://www.aceengineer.com/assets/img/logo.png';
+// Only these pages carry their own link-preview image; every other page must use the logo.
+const OWN_OG_IMAGES = {
+  'newsletter/issue-001-tank-sloshing/index.html': `${OG_BASE}issue-001-tank-sloshing.png`,
+  'newsletter/issue-002-energy-street/index.html': `${OG_BASE}issue-002-energy-street.png`,
+  'newsletter/issue-002-jackup-method/index.html': `${OG_BASE}issue-002-jackup-method.png`,
+  'newsletter/issue-002-main-street/index.html': `${OG_BASE}issue-002-main-street.png`,
+  'newsletter/issue-002-public-data/index.html': `${OG_BASE}issue-002-public-data.png`,
+};
+
 test('destinations have canonical Open Graph metadata and the existing logo', () => {
   expect(fs.existsSync(path.join(distDir, 'assets/img/logo.png'))).toBe(true);
   for (const page of destinations) {
@@ -262,7 +289,32 @@ test('destinations have canonical Open Graph metadata and the existing logo', ()
         .toEqual({ page, field, present: true });
     }
     expect(doc.querySelector('meta[property="og:url"]').content).toBe(doc.querySelector('link[rel="canonical"]').href);
-    expect(doc.querySelector('meta[property="og:image"]').content).toBe('https://www.aceengineer.com/assets/img/logo.png');
+    const image = doc.querySelector('meta[property="og:image"]').content;
+    const expected = OWN_OG_IMAGES[page] || LOGO_URL;
+    expect({ page, image }).toEqual({ page, image: expected });
+    if (OWN_OG_IMAGES[page]) {
+      expect({ page, twitter: doc.querySelector('meta[name="twitter:image"]').content }).toEqual({ page, twitter: expected });
+    }
+  }
+});
+
+test('referenced link-preview images exist and are 1200 x 627', () => {
+  for (const page of Object.keys(OWN_OG_IMAGES)) expect(destinations).toContain(page);
+  const referenced = new Set();
+  for (const page of destinations) {
+    const doc = documents.get(page);
+    for (const sel of ['meta[property="og:image"]', 'meta[name="twitter:image"]']) {
+      const url = doc.querySelector(sel)?.content;
+      if (url && url.startsWith(OG_BASE)) referenced.add(url);
+    }
+  }
+  expect(referenced.size).toBe(Object.keys(OWN_OG_IMAGES).length);
+  for (const url of referenced) {
+    const file = path.join(distDir, url.replace('https://www.aceengineer.com/', ''));
+    expect({ url, exists: fs.existsSync(file) }).toEqual({ url, exists: true });
+    const png = fs.readFileSync(file);
+    // PNG IHDR: width at byte 16, height at byte 20 (big-endian)
+    expect({ url, w: png.readUInt32BE(16), h: png.readUInt32BE(20) }).toEqual({ url, w: 1200, h: 627 });
   }
 });
 
@@ -280,7 +332,7 @@ test('source metadata meets the required coverage floors', () => {
     .map(file => new JSDOM(fs.readFileSync(file, 'utf8')).window.document);
   // Includes the newsletter archive and both automation pages; retired sources still count.
   // Keep the existing 107 floor: noindex exclusions do not require a reduction.
-  expect(sources).toHaveLength(128);
+  expect(sources).toHaveLength(135);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 107],
     ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],
@@ -491,7 +543,7 @@ test('retired newsletter charts carry only retirement metadata', () => {
   for (const page of pages.filter(page => page.startsWith('newsletter/charts/'))) {
     const doc = documents.get(page);
     const description = doc.querySelector('meta[name="description"]').content;
-    expect(description).toBe('Read the Energy Street edition at its new address.');
+    expect(description).toBe('This chart is no longer published.');
     expect(doc.querySelector('meta[name="robots"]')?.content).toBe('noindex');
     expect(doc.querySelector('meta[property="og:description"]')).toBeNull();
     expect(doc.querySelector('meta[name="twitter:description"]')).toBeNull();
@@ -504,7 +556,7 @@ test('retired chart pages point to the current newsletter edition', () => {
   expect(charts).toHaveLength(4);
   for (const page of charts) {
     const text = documents.get(page).querySelector('main').textContent;
-    expect(text).toContain('This chart has moved');
+    expect(text).toContain('This chart is no longer published');
     expect(text).not.toContain('An interactive version of this chart is planned.');
     expect(documents.get(page).querySelector('main a').getAttribute('href'))
       .toBe('/newsletter/issue-001-energy-street/');
@@ -702,7 +754,7 @@ test('newsletter story tracking counts one tagged arrival and ignores arbitrary 
     vm.runInNewContext(source, {URLSearchParams, window: {location: {search}, gtag: (...args) => calls.push(args)}, document: documents.get('newsletter/issue-001-energy-street/index.html')});
     return calls;
   }
-  expect(events('?utm_campaign=issue-001&utm_content=specialists')).toEqual([['event', 'newsletter_story', {issue: 'issue-001', story: 'specialists'}]]);
+  expect(events('?utm_campaign=issue-001&utm_content=ambition')).toEqual([['event', 'newsletter_story', {issue: 'issue-001', story: 'ambition'}]]);
   expect(events('?utm_campaign=issue-001&utm_content=arbitrary-value')).toEqual([]);
-  expect(events('?utm_content=specialists')).toEqual([]);
+  expect(events('?utm_content=ambition')).toEqual([]);
 });

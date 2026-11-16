@@ -2,15 +2,16 @@
 
 The audit reads built HTML and `sitemap.xml`, records the requested metadata,
 and reports every deviation, including accepted existing deviations. It does
-not fetch pages or execute scripts. Its output is `reports/seo-audit.json`.
-The current report is `NOT_EVALUATED` because built HTML is unavailable; it is
-not evidence that the site passes.
+not fetch pages or execute scripts. Its output is `reports/seo-audit.json`,
+which is regenerated from the build on every run and is not committed: a
+committed copy would carry page digests that change with every page edit.
 
 ## Revision history
 
 | Revision | Date | Change and reason |
 | --- | --- | --- |
 | Initial | 2026-10-22 | Add a reproducible metadata audit, sourced rules and an authoring example so new pages can be checked. |
+| 1 | 2026-11-16 | Order pages by path string, strip only a whole `index.html` component, match uniqueness exceptions on page and rule, refresh the allow-list against current main and stop committing the generated report, after review. |
 
 ## Run and interpret the audit
 
@@ -63,18 +64,23 @@ retrieval year for documentation that changes over time.
 
 The initial explicit allow-list records source-confirmed omissions, without
 rewriting page copy or shared metadata in overlapping work. Each entry identifies
-one page, one rule, an exact diagnostic and a reason. There are no wildcards or
+one page, one rule, an exact diagnostic and a reason. Uniqueness exceptions
+(`title-unique`, `description-unique`) match on page and rule only; the duplicate
+group stays in the report detail, so a page joining or leaving a group does not
+make the other exceptions in that group stale. There are no wildcards or
 automatic baseline updates. An exception cannot conceal a different diagnostic;
 an exception that no longer matches is a failure and must be removed.
 
 | Source-confirmed deviation | Entries | Evidence |
 | --- | ---: | --- |
 | Missing Twitter card | 50 | Individually listed source files, interactive templates, capability renderer and registry. |
-| Duplicate redirect description | 10 | Individually listed noindex newsletter and diffraction stubs. |
+| Duplicate redirect description | 9 | Individually listed noindex newsletter chart and diffraction stubs. |
 | Home breadcrumb has only its Home item | 1 | The single ListItem in the home source. |
 
-These counts are the tally of `config/seo-audit.json` entries, not a completed
-built-site measurement. Validate the list against a clean build before merging.
+These counts are the tally of `config/seo-audit.json` entries. Against a build
+of main at 3123a7a merged into this branch, `audit.py --check` reports 144 pages,
+60 deviations, 0 unapproved and 0 stale exceptions. Validate the list against a
+clean build before merging.
 Do not add entries just to make a new page pass. Fix plain defects in its source;
 refer substantial wording changes for copy review. An intended redirect can
 canonicalize to its replacement, so self-reference and sitemap membership do
@@ -133,11 +139,9 @@ synthetic inputs, not the live site's metadata.
 
 ## Report and remaining validation
 
-The committed report records absent built input as `NOT_EVALUATED`. The build
-could not start because its Node dependencies are unavailable. No built-page
-failure count or sitemap coverage count can be inferred from that report.
-Regenerate it after a successful build and review every unapproved deviation
-and stale exception. Later validation also needs citable Twitter guidance and
+The report is written by the CI step and by the Jest contract on every run;
+absent built input is recorded as `NOT_EVALUATED`, never as a pass. Review every
+unapproved deviation and stale exception it lists. Later validation also needs citable Twitter guidance and
 required-property profiles for additional structured-data types. This audit
 does not assert rich-result eligibility, image availability, rendered heading
 visibility, HTTP status or external structured-data validation.

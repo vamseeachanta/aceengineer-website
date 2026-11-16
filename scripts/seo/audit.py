@@ -112,8 +112,9 @@ def https_url(value):
 
 
 def page_url(page, origin):
-    # Directory indexes use the site's existing trailing-slash convention.
-    suffix = page.removesuffix("index.html")
+    # Directory indexes use the site's existing trailing-slash convention. Only a
+    # whole "index.html" path component is stripped: "myindex.html" stays a file.
+    suffix = page[: -len("index.html")] if page == "index.html" or page.endswith("/index.html") else page
     return origin + "/" + quote(suffix, safe="/")
 
 
@@ -237,7 +238,9 @@ def audit(built_root, config):
         return report
 
     origin = config["origin"].rstrip("/")
-    paths = {file.relative_to(built_root).as_posix(): file for file in files}
+    # Order by the relative path string, as the JavaScript build does; Path order
+    # compares components, which puts "a/index.html" before "a-b.html".
+    paths = dict(sorted((file.relative_to(built_root).as_posix(), file) for file in files))
     urls = []
     sitemap = built_root / "sitemap.xml"
     if not sitemap.is_file():
@@ -333,12 +336,19 @@ def audit(built_root, config):
                     add(page, f"{key}-unique", "duplicates: " + ", ".join(sorted(grouped_pages)))
 
     allowlist = config["allowlist"]
+
+    def matches(item, entry):
+        # Uniqueness exceptions match on page and rule: the duplicate group stays
+        # in the report detail, so a page joining or leaving a group does not
+        # make every other exception in that group stale.
+        keys = ["page", "rule"] if item["rule"].endswith("-unique") else ["page", "rule", "detail"]
+        return all(item[key] == entry.get(key) for key in keys)
+
     for item in violations:
-        item["allowed"] = any(all(item[key] == entry.get(key) for key in ["page", "rule", "detail"])
-                              and bool(entry.get("reason", "").strip()) for entry in allowlist)
+        item["allowed"] = any(matches(item, entry) and bool(entry.get("reason", "").strip())
+                              for entry in allowlist)
     report["stale_allowlist"] = [entry for entry in allowlist if not entry.get("reason", "").strip()
-                                or not any(all(item[key] == entry.get(key) for key in ["page", "rule", "detail"])
-                                           for item in violations)]
+                                or not any(matches(item, entry) for item in violations)]
     violations.sort(key=lambda item: (item["page"], item["rule"], item["detail"]))
     report["unapproved"] = [item for item in violations if not item["allowed"]]
     report["status"] = "FAIL" if report["unapproved"] or report["stale_allowlist"] else "PASS"

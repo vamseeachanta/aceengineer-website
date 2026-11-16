@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from scripts.seo.audit import audit, read_page, write_report
+from scripts.seo.audit import audit, page_url, read_page, write_report
 
 ROOT = Path(__file__).resolve().parents[2]
 CONFIG = json.loads((ROOT / "config/seo-audit.json").read_text())
@@ -227,6 +227,44 @@ def test_jsonld_array_rejects_scalar_entries_and_graph_needs_nodes(tmp_path):
         assert "jsonld-shape" in rules(audit(site(tmp_path, html(extra=ld(value))), settings()))
 
 
+def test_uniqueness_exceptions_survive_a_change_in_the_duplicate_group(tmp_path):
+    """Two pages share a title; a third joins the group. The two page+rule
+    exceptions still apply; the new page is unapproved; nothing is stale.
+    """
+    site(tmp_path, html(title="Same"), [URL, ORIGIN + "/b.html", ORIGIN + "/c.html"])
+    (tmp_path / "b.html").write_text(html(title="Same", description="B.", canonical=ORIGIN + "/b.html"))
+    (tmp_path / "c.html").write_text(html(title="Other", description="C.", canonical=ORIGIN + "/c.html"))
+    config = settings()
+    config["allowlist"] = [{"page": page, "rule": "title-unique", "reason": "Synthetic shared title."}
+                           for page in ["b.html", "guide/index.html"]]
+    assert audit(tmp_path, config)["status"] == "PASS"
+    (tmp_path / "c.html").write_text(html(title="Same", description="C.", canonical=ORIGIN + "/c.html"))
+    report = audit(tmp_path, config)
+    assert [(item["page"], item["rule"]) for item in report["unapproved"]] == [("c.html", "title-unique")]
+    assert report["stale_allowlist"] == []
+
+
+@pytest.mark.parametrize("page,url", [
+    ("index.html", ORIGIN + "/"),
+    ("guide/index.html", ORIGIN + "/guide/"),
+    ("myindex.html", ORIGIN + "/myindex.html"),
+    ("guide/myindex.html", ORIGIN + "/guide/myindex.html"),
+])
+def test_only_a_whole_index_component_maps_to_a_directory_url(page, url):
+    assert page_url(page, ORIGIN) == url
+
+
+def test_pages_follow_string_order_of_relative_paths(tmp_path):
+    """Hand-ordered by code point: '-' (U+002D) sorts before '/' (U+002F)."""
+    for page in ["a/index.html", "a-b.html", "b.html"]:
+        (tmp_path / page).parent.mkdir(parents=True, exist_ok=True)
+        (tmp_path / page).write_text(html())
+    (tmp_path / "sitemap.xml").write_text('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>')
+    report = audit(tmp_path, settings())
+    assert [row["page"] for row in report["pages"]] == ["a-b.html", "a/index.html", "b.html"]
+    assert list(report["inputs"]["html_sha256"]) == ["a-b.html", "a/index.html", "b.html"]
+
+
 def test_report_is_deterministic_and_cli_check_returns_failure(tmp_path):
     site(tmp_path, html(body=""))
     report = audit(tmp_path, settings())
@@ -263,10 +301,12 @@ def test_documented_worked_example_has_hand_counted_answer(tmp_path):
 
 def test_committed_allowlist_has_unique_exact_entries_and_evidence():
     # Independent source inventory tally, written out in the documentation:
-    # 50 card omissions + 10 repeated redirect descriptions + 1 home breadcrumb.
+    # 50 card omissions + 9 repeated redirect descriptions + 1 home breadcrumb.
+    # Uniqueness exceptions carry no detail: they match on page and rule.
     entries = CONFIG["allowlist"]
-    assert len(entries) == 61
-    assert len({(entry["page"], entry["rule"], entry["detail"]) for entry in entries}) == 61
+    assert len(entries) == 60
+    assert len({(entry["page"], entry["rule"], entry.get("detail")) for entry in entries}) == 60
+    assert all("detail" not in entry for entry in entries if entry["rule"].endswith("-unique"))
     assert all(entry["reason"].strip() and "*" not in entry["page"] for entry in entries)
     assert all(entry["source"] in CONFIG["sources"] for entry in CONFIG["structured_data"]["required"].values())
 

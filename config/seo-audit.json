@@ -299,31 +299,21 @@
     {
       "page": "newsletter/charts/completion-strata/index.html",
       "rule": "description-unique",
-      "detail": "duplicates: newsletter/charts/completion-strata/index.html, newsletter/charts/diffraction-heave/index.html, newsletter/charts/field-depth/index.html, newsletter/charts/hse-drilling/index.html, newsletter/issue-001/index.html",
       "reason": "Existing noindex redirect stubs share a destination description. Confirmed from source; retained pending copy review."
     },
     {
       "page": "newsletter/charts/diffraction-heave/index.html",
       "rule": "description-unique",
-      "detail": "duplicates: newsletter/charts/completion-strata/index.html, newsletter/charts/diffraction-heave/index.html, newsletter/charts/field-depth/index.html, newsletter/charts/hse-drilling/index.html, newsletter/issue-001/index.html",
       "reason": "Existing noindex redirect stubs share a destination description. Confirmed from source; retained pending copy review."
     },
     {
       "page": "newsletter/charts/field-depth/index.html",
       "rule": "description-unique",
-      "detail": "duplicates: newsletter/charts/completion-strata/index.html, newsletter/charts/diffraction-heave/index.html, newsletter/charts/field-depth/index.html, newsletter/charts/hse-drilling/index.html, newsletter/issue-001/index.html",
       "reason": "Existing noindex redirect stubs share a destination description. Confirmed from source; retained pending copy review."
     },
     {
       "page": "newsletter/charts/hse-drilling/index.html",
       "rule": "description-unique",
-      "detail": "duplicates: newsletter/charts/completion-strata/index.html, newsletter/charts/diffraction-heave/index.html, newsletter/charts/field-depth/index.html, newsletter/charts/hse-drilling/index.html, newsletter/issue-001/index.html",
-      "reason": "Existing noindex redirect stubs share a destination description. Confirmed from source; retained pending copy review."
-    },
-    {
-      "page": "newsletter/issue-001/index.html",
-      "rule": "description-unique",
-      "detail": "duplicates: newsletter/charts/completion-strata/index.html, newsletter/charts/diffraction-heave/index.html, newsletter/charts/field-depth/index.html, newsletter/charts/hse-drilling/index.html, newsletter/issue-001/index.html",
       "reason": "Existing noindex redirect stubs share a destination description. Confirmed from source; retained pending copy review."
     },
     {
@@ -353,19 +343,16 @@
     {
       "page": "reports/diffraction/analysis.html",
       "rule": "description-unique",
-      "detail": "duplicates: reports/diffraction/analysis.html, reports/diffraction/aqwa-analysis.html, reports/diffraction/comparison.html, reports/diffraction/orcawave-analysis.html, reports/diffraction/orcawave-aqwa-comparison.html",
       "reason": "Existing noindex redirect stubs share a destination description. Confirmed from source; retained pending copy review."
     },
     {
       "page": "reports/diffraction/aqwa-analysis.html",
       "rule": "description-unique",
-      "detail": "duplicates: reports/diffraction/analysis.html, reports/diffraction/aqwa-analysis.html, reports/diffraction/comparison.html, reports/diffraction/orcawave-analysis.html, reports/diffraction/orcawave-aqwa-comparison.html",
       "reason": "Existing noindex redirect stubs share a destination description. Confirmed from source; retained pending copy review."
     },
     {
       "page": "reports/diffraction/comparison.html",
       "rule": "description-unique",
-      "detail": "duplicates: reports/diffraction/analysis.html, reports/diffraction/aqwa-analysis.html, reports/diffraction/comparison.html, reports/diffraction/orcawave-analysis.html, reports/diffraction/orcawave-aqwa-comparison.html",
       "reason": "Existing noindex redirect stubs share a destination description. Confirmed from source; retained pending copy review."
     },
     {
@@ -377,13 +364,11 @@
     {
       "page": "reports/diffraction/orcawave-analysis.html",
       "rule": "description-unique",
-      "detail": "duplicates: reports/diffraction/analysis.html, reports/diffraction/aqwa-analysis.html, reports/diffraction/comparison.html, reports/diffraction/orcawave-analysis.html, reports/diffraction/orcawave-aqwa-comparison.html",
       "reason": "Existing noindex redirect stubs share a destination description. Confirmed from source; retained pending copy review."
     },
     {
       "page": "reports/diffraction/orcawave-aqwa-comparison.html",
       "rule": "description-unique",
-      "detail": "duplicates: reports/diffraction/analysis.html, reports/diffraction/aqwa-analysis.html, reports/diffraction/comparison.html, reports/diffraction/orcawave-analysis.html, reports/diffraction/orcawave-aqwa-comparison.html",
       "reason": "Existing noindex redirect stubs share a destination description. Confirmed from source; retained pending copy review."
     },
     {

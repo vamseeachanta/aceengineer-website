@@ -1,0 +1,9 @@
+{
+  "header": {
+    "title": "Napkin checks",
+    "purpose": "This page lists checks that use public data. Each run links to its full report. The maintainer adds runs after the source passes the publication checks.",
+    "what_this_page_does_not_do": "This page does not approve a design. It does not replace an engineering analysis. Read each report for its assumptions and limits.",
+    "last_updated": "2026-10-22"
+  },
+  "runs": []
+}

@@ -11,6 +11,7 @@ const hf = require('./scripts/hf-fetch');
 const { renderCards, capabilityDetailDocument, detailFileName, detailHref, isReleaseBacked } = require('./scripts/render-capabilities');
 
 const { loadSamples, validateSamples, sampleLocals, buildSamplePages } = require('./scripts/render-samples');
+const { checkPage: checkNapkinChecks } = require('./scripts/generate-napkin-checks');
 
 const srcDir = './content';
 const distDir = './dist';
@@ -562,6 +563,7 @@ async function build() {
   console.log('Building site...\n');
 
   assertNewsletterSourcesReady(srcDir, process.env.NEWSLETTER_DEPLOY_CHECK);
+  checkNapkinChecks(); // validates the register; never rewrites content/
 
   const samples = validateSamples(loadSamples(), { assetsRoot: './assets' });
   _sampleLocals = sampleLocals(samples, loadCopy());

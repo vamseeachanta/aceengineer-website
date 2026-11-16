@@ -1,0 +1,28 @@
+{
+  "header": {
+    "title": "SYNTHETIC napkin checks",
+    "purpose": "SYNTHETIC test data only. These values are not engineering results.",
+    "what_this_page_does_not_do": "This fixture does not support engineering decisions.",
+    "last_updated": "2026-10-22"
+  },
+  "runs": [
+    {
+      "run_id": "NC-CP-900",
+      "discipline": "CP",
+      "asset_type": "Synthetic plate",
+      "method": "Classical synthetic example",
+      "inputs": [{"name": "Area", "value": 2, "unit": "m²", "our_assumption": true}],
+      "outputs": [
+        {"name": "Current", "value": 3, "unit": "A"},
+        {"name": "Current check", "value": "pass", "unit": "1", "result": "pass", "criterion": "Current is at most 4 A.", "criterion_basis": "SYNTHETIC test limit."}
+      ],
+      "check_status": "hand-checked",
+      "source": {"name": "SYNTHETIC fixture", "url": "https://example.org/synthetic", "read_date": "2026-10-21"},
+      "tool_or_commit": "SYNTHETIC public test tool, PR #1",
+      "run_date": "2026-10-22",
+      "report_url": "/reports/synthetic-plate.html",
+      "public_data": true,
+      "status": "current"
+    }
+  ]
+}

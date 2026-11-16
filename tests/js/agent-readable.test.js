@@ -59,6 +59,17 @@ describe('agent-readable fixtures', () => {
     expect(mainText(fixture)).toBe('# Flow & Loads\n\nRead this first.\nThen continue.\n\n## Method\n\nCheck inputs.\nRead limits.\n\nItem State\nInput Known');
   });
 
+  test('superscripts keep exponents explicit instead of joining digits', () => {
+    // Hand transcription: 6.0×10^10 must not read as 6.0×1010.
+    expect(mainText('<main><p>a = 6.0&times;10<sup>10</sup>; N = S<sup>&minus;m</sup></p></main>'))
+      .toBe('a = 6.0×10^(10); N = S^(−m)');
+  });
+
+  test('preformatted blocks keep line breaks and indentation', () => {
+    const html = '<main><p>Example:</p><pre><code># Load the case\nfor x in xs:\n    run(x)\n</code></pre><p>After   text.</p></main>';
+    expect(mainText(html)).toBe('Example:\n\n# Load the case\nfor x in xs:\n    run(x)\n\nAfter text.');
+  });
+
   test('role main is supported and absent main content is reported', () => {
     expect(mainText('<div role="main"><h1>Method</h1><p>Read limits.</p></div>'))
       .toBe('# Method\n\nRead limits.');
@@ -143,6 +154,10 @@ describe('agent-readable fixtures', () => {
   test('duplicate report URLs are refused', () => {
     expect(() => renderReportRows([report, report])).toThrow(/duplicate/i);
   });
+  test('directory and index.html aliases of one report are refused as duplicates', () => {
+    const directory = { ...report, href: '/reports/example/' };
+    expect(() => renderReportRows([directory, { ...directory, href: '/reports/example/index.html' }])).toThrow(/duplicate/i);
+  });
   test('missing and excluded report targets are refused', () => {
     expect(() => validateReportTargets([report], dir, SITEMAP_EXCLUDE)).toThrow(/missing/i);
     seed('reports/example.html');
@@ -169,6 +184,12 @@ describe('built agent-readable surface', () => {
       const doc = new JSDOM(fs.readFileSync(path.join(dist, page), 'utf8')).window.document;
       expect(llms).toContain(`](${canonicalUrlFor(page)}): ${doc.querySelector('meta[name="description"]').content}`);
     }
+  });
+  test('calculator constants keep their exponents in the full-text export', () => {
+    const full = fs.readFileSync(path.join(dist, 'llms-full.txt'), 'utf8');
+    expect(full).toContain('6.0×10^(10)');
+    expect(full).toContain('S^(−m)');
+    expect(full).not.toContain('6.0×1010');
   });
   test('the documented worked example is a literal opening of the exported entry', () => {
     const documentation = fs.readFileSync(path.resolve(__dirname, '../../docs/agent-readable-site.md'), 'utf8');

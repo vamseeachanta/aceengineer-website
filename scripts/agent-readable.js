@@ -25,12 +25,30 @@ function mainText(html) {
     }
     return null;
   }
+  // Preformatted blocks keep their line breaks and indentation (WHATWG HTML, the
+  // pre element: a newline directly after the start tag is not content):
+  // https://html.spec.whatwg.org/multipage/grouping-content.html#the-pre-element
+  // Each block is held aside behind a placeholder so the whitespace collapse below
+  // cannot reach it.
+  const preformatted = [];
+  function rawText(node) {
+    if (typeof node === 'string') return node.replace(/<!--[\s\S]*?-->/g, '').replace(/\r\n?/g, '\n');
+    if (!node || omitted.has(node.tag) || hidden(node)) return '';
+    if (node.tag === 'br') return '\n';
+    return (node.content || []).map(rawText).join('');
+  }
   function text(node) {
     if (typeof node === 'string') return node.replace(/<!--[\s\S]*?-->/g, '').replace(/\s+/g, ' ');
     if (!node || omitted.has(node.tag) || hidden(node)) return '';
+    if (node.tag === 'pre') {
+      preformatted.push(rawText(node).replace(/^\n/, '').replace(/\s+$/, ''));
+      return `\n\n\u0000${preformatted.length - 1}\u0000\n\n`;
+    }
     const content = (node.content || []).map(text).join('');
     if (/^h[1-6]$/.test(node.tag)) return `\n\n${'#'.repeat(Number(node.tag.slice(1)))} ${content.trim()}\n\n`;
     if (node.tag === 'br') return '\n';
+    // Exponents stay explicit: 10<sup>10</sup> is written 10^(10), never 1010.
+    if (node.tag === 'sup') return content.trim() ? `^(${content.trim()})` : '';
     if (node.tag === 'td' || node.tag === 'th') return `${content.trim()} `;
     if (node.tag === 'li' || node.tag === 'tr') return `${content.trim()}\n`;
     return blocks.has(node.tag) ? `\n\n${content.trim()}\n\n` : content;
@@ -39,7 +57,8 @@ function mainText(html) {
   if (!main) throw new Error('llms-full.txt: missing main content');
   return (main.content || []).map(text).join('')
     .split('\n').map(line => line.replace(/[\t \u00a0]+/g, ' ').trim()).join('\n')
-    .replace(/\n\n\n+/g, '\n\n').trim();
+    .replace(/\n\n\n+/g, '\n\n').trim()
+    .replace(/\u0000(\d+)\u0000/g, (_, index) => preformatted[Number(index)]);
 }
 
 function escapeHtml(value) {
@@ -64,8 +83,10 @@ function renderReportRows(reports) {
       throw new Error('Public report link must be a local report destination');
     }
     if (href === '/reports/' || href === '/reports/index.html') throw new Error('Report index cannot list itself');
-    if (seen.has(href)) throw new Error('Duplicate public report link');
-    seen.add(href);
+    // /reports/x/ and /reports/x/index.html name one page: compare the directory form.
+    const target = href.replace(/(^|\/)index\.html$/, '$1');
+    if (seen.has(target)) throw new Error('Duplicate public report link');
+    seen.add(target);
     return `<tr><td><a href="${escapeHtml(href)}">${escapeHtml(title)}</a></td>` +
       `<td><time datetime="${date}">${date}</time></td><td>${escapeHtml(format)}</td></tr>`;
   }).join('\n');

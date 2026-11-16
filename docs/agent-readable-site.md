@@ -49,7 +49,10 @@ cells are separated by spaces. It excludes scripts, styles, templates, comments,
 navigation, footers, `hidden` elements and `aria-hidden="true"` subtrees. Heading
 markers follow the HTML heading elements described in [WHATWG HTML, sections
 (2026)](https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements).
-Whitespace is normalized; the output is UTF-8 text with Markdown heading markers.
+Whitespace is normalized outside `pre` elements; `pre` blocks keep their line
+breaks and indentation, so code examples stay runnable. Superscripts are written
+with an explicit exponent marker: `10<sup>10</sup>` exports as `10^(10)`.
+The output is UTF-8 text with Markdown heading markers.
 
 Each entry contains a title, a canonical `URL:`, a `Description:` and the main
 text. The canonical URL and description come from the existing build logic and

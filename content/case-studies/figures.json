@@ -175,8 +175,8 @@
     "figure_text": "47,385",
     "value": "47385",
     "unit": "count",
-    "source_name": "Pinned marine safety import record",
-    "source_location": "content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts",
+    "source_name": "Marine safety Phase 2 import record (worldenergydata, commit 7493f543)",
+    "source_location": "https://github.com/vamseeachanta/worldenergydata/blob/7493f54316cc1d1ee5b5813afe69c90c873c04e7/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md line 26 (TSB Canada imported incidents)",
     "status": "SOURCED"
   },
   {
@@ -185,8 +185,8 @@
     "figure_text": "5,876",
     "value": "5876",
     "unit": "count",
-    "source_name": "Pinned marine safety import record",
-    "source_location": "content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts",
+    "source_name": "Marine safety Phase 2 import record (worldenergydata, commit 7493f543)",
+    "source_location": "https://github.com/vamseeachanta/worldenergydata/blob/7493f54316cc1d1ee5b5813afe69c90c873c04e7/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md line 58 (MAIB UK imported incidents)",
     "status": "SOURCED"
   },
   {
@@ -195,8 +195,8 @@
     "figure_text": "53,261",
     "value": "53261",
     "unit": "count",
-    "source_name": "Pinned marine safety import record",
-    "source_location": "content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts; sum of the two cited agency counts",
+    "source_name": "Marine safety Phase 2 import record (worldenergydata, commit 7493f543)",
+    "source_location": "https://github.com/vamseeachanta/worldenergydata/blob/7493f54316cc1d1ee5b5813afe69c90c873c04e7/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md lines 26 and 58 (agency imported incidents); sum of the two cited agency counts",
     "status": "DERIVED"
   },
   {
@@ -205,8 +205,8 @@
     "figure_text": "47,385",
     "value": "47385",
     "unit": "count",
-    "source_name": "Pinned marine safety import record",
-    "source_location": "content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts",
+    "source_name": "Marine safety Phase 2 import record (worldenergydata, commit 7493f543)",
+    "source_location": "https://github.com/vamseeachanta/worldenergydata/blob/7493f54316cc1d1ee5b5813afe69c90c873c04e7/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md line 26 (TSB Canada imported incidents)",
     "status": "SOURCED"
   },
   {
@@ -215,8 +215,8 @@
     "figure_text": "5,876",
     "value": "5876",
     "unit": "count",
-    "source_name": "Pinned marine safety import record",
-    "source_location": "content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts",
+    "source_name": "Marine safety Phase 2 import record (worldenergydata, commit 7493f543)",
+    "source_location": "https://github.com/vamseeachanta/worldenergydata/blob/7493f54316cc1d1ee5b5813afe69c90c873c04e7/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md line 58 (MAIB UK imported incidents)",
     "status": "SOURCED"
   },
   {

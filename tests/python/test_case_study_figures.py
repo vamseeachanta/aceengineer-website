@@ -257,6 +257,50 @@ def test_physical_range_is_not_a_calendar_range():
     ]
 
 
+def test_four_digit_count_and_currency_ranges_are_not_calendar_ranges():
+    """Hand count: a count range (two counts), a currency range (two amounts)
+    and one calendar range (no figures). An empty register reports both counts
+    as missing, so an unregistered count range cannot pass.
+    """
+    counts = extract_figures("<body><p>Imported 1000-1500 records.</p></body>", "x.html")
+    assert [f["value"] for f in counts] == ["1000", "1500"]
+    assert sum("missing" in e for e in validate_register(counts, [])) == 2
+    cost = extract_figures("<body><p>Cost $1000-1500.</p></body>", "x.html")
+    assert [f["value"] for f in cost] == ["1000", "1500"]
+    assert extract_figures("<body><p>Period 2018–2024.</p></body>", "x.html") == []
+
+
+def test_spanned_header_labels_follow_their_columns():
+    """A measured column spanning two cells cannot inherit the illustrative
+    label of the third column; the third value can.
+    """
+    html = (
+        "<body><table><tr><th colspan=\"2\">Measured</th><th>Illustrative</th></tr>"
+        "<tr><td>10%</td><td>20%</td><td>30%</td></tr></table></body>"
+    )
+    figures = extract_figures(html, "x.html")
+    assert [f["value"] for f in figures] == ["10", "20", "30"]
+    rejected = {
+        f["value"]
+        for f in figures
+        if validate_register([f], [entry(f, status="ILLUSTRATIVE")])
+    }
+    assert rejected == {"10", "20"}
+
+
+@pytest.mark.parametrize(
+    "table",
+    [
+        "<tr><th rowspan=\"2\">Case</th><th>Value</th></tr><tr><td>25%</td></tr>",
+        "<tr><th>Case</th><th>Illustrative</th></tr><tr><th>A</th><td>25%</td></tr>",
+        "<tr><th>Measured</th></tr><tr><th>Illustrative</th></tr><tr><td>25%</td></tr>",
+    ],
+)
+def test_tables_whose_labels_cannot_be_placed_are_refused(table):
+    with pytest.raises(ValueError):
+        extract_figures(f"<body><table>{table}</table></body>", "x.html")
+
+
 def test_recursive_page_discovery_and_empty_page_report(tmp_path):
     nested = tmp_path / "nested"
     nested.mkdir()

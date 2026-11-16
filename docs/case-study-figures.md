@@ -63,7 +63,9 @@ limits or engineering equations in the extractor.
   Explicit ratio labels supply `ratio`; other bare figures use `count`.
   `count` is a conservative inventory category, not proof of a measured total.
 - Ignore calendar date forms (year-month-day, slash dates, written day-month-year)
-  and year ranges. Ignore unqualified four-digit year labels and years following
+  and year ranges. A four-digit range is a year range only when it has no unit,
+  no currency on either endpoint and no count noun after it (`1000-1500 records`
+  and `$1000-1500` are quantities). Ignore unqualified four-digit year labels and years following
   calendar words, while retaining explicit quantities and table counts. The
   supported forms and counterexamples are tested independently.
 - Ignore section, equation, table, figure, phase and division identifiers;
@@ -109,7 +111,10 @@ the extractor, so merely retaining an old ID cannot hide an edited quantity.
 
 ILLUSTRATIVE requires a case-insensitive text match in the figure's sentence or
 its table-column header. A heading elsewhere on the page, a different sentence
-or a different column does not qualify. Negated labels such as `not illustrative`
+or a different column does not qualify. Column headers come from the single
+header row of `th` cells, with `colspan` expanded to the columns it covers. A
+table with `rowspan`, a row header (`th` beside `td`) or a second header row is
+refused, because its labels cannot be placed by column. Negated labels such as `not illustrative`
 and `non-illustrative` do not qualify. A source may still be recorded for an
 illustrative figure. These statuses are exclusive; source name and location
 retain the evidence when the status is ILLUSTRATIVE.

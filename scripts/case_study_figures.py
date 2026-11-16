@@ -35,6 +35,10 @@ UNIT = re.compile(
     r"mm|cm|km|m|MPa|kPa|Pa|psi|kN|MN|N|kg|tonnes?|MW|kW|W|Hz|USD|bbl|%|°C))"
     r"(?![\w])"
 )
+# Quantity nouns that make a four-digit number a count, not a calendar year.
+COUNT_NOUNS = r"(?:count|records?|incidents?|models?|items?)"
+COUNT_NOUN = re.compile(rf"\b{COUNT_NOUNS}\b", re.IGNORECASE)
+COUNT_NOUN_AFTER = re.compile(rf"\s+{COUNT_NOUNS}\b", re.IGNORECASE)
 SCALE = re.compile(r"\s*(billion|million|thousand|[KMB])\b")
 PER = re.compile(r"/(?:bbl|hr|day)\b")
 BLOCKS = {
@@ -149,6 +153,51 @@ class VisibleHTML(HTMLParser):
         self.current.children.append(data)
 
 
+def column_span(node, name):
+    value = node.attrs.get(name) or "1"
+    if not re.fullmatch(r"\s*\d+\s*", value) or int(value) < 1:
+        raise ValueError(f"unsupported {name}={value!r} in a table cell")
+    return int(value)
+
+
+def header_columns(table):
+    """Column labels from the header rows only (rows made of th cells).
+
+    colspan is expanded so that each label sits over the columns it spans.
+    Tables whose labels cannot be placed by column are refused rather than
+    guessed: any rowspan, or a th inside a row that also has td cells (a row
+    header), raises ValueError so that a status check cannot pass on a label
+    taken from the wrong column.
+    """
+    rows = []
+
+    def collect_rows(n):
+        if hidden(n):
+            return
+        if n.tag == "tr":
+            rows.append(n)
+            return
+        for child in n.children:
+            if isinstance(child, Node):
+                collect_rows(child)
+
+    collect_rows(table)
+    headers = []
+    for row in rows:
+        cells = [c for c in row.children if isinstance(c, Node) and c.tag in {"th", "td"}]
+        if any("rowspan" in c.attrs for c in cells):
+            raise ValueError("unsupported rowspan in a figure table")
+        kinds = {c.tag for c in cells}
+        if kinds == {"th", "td"}:
+            raise ValueError("unsupported row header (th beside td) in a figure table")
+        if kinds == {"th"} and not headers:
+            for cell in cells:
+                headers.extend([normalize(visible_text(cell))] * column_span(cell, "colspan"))
+        elif kinds == {"th"}:
+            raise ValueError("unsupported second header row in a figure table")
+    return headers
+
+
 def hidden(node):
     style = re.sub(r"\s+", "", node.attrs.get("style", "")).lower()
     return (
@@ -185,29 +234,21 @@ def blocks(html):
             table = node.parent
             while table and table.tag != "table":
                 table = table.parent
-            headers = []
-
-            def collect_headers(n):
-                if hidden(n):
-                    return
-                if n.tag == "th":
-                    headers.append(normalize(visible_text(n)))
-                else:
-                    for child in n.children:
-                        if isinstance(child, Node):
-                            collect_headers(child)
-
-            if table:
-                collect_headers(table)
-            cells = [
-                normalize(visible_text(c)) for c in node.children if isinstance(c, Node)
-            ]
+            headers = header_columns(table) if table else []
+            elements = [c for c in node.children if isinstance(c, Node)]
+            cells = [normalize(visible_text(c)) for c in elements]
             labelled_spans = []
             offset = 0
-            for index, cell in enumerate(cells):
-                label = headers[index] if index < len(headers) else ""
+            column = 0
+            for element, cell in zip(elements, cells):
+                # A cell spanning several columns takes a label only when every
+                # spanned column carries the same header.
+                width = column_span(element, "colspan")
+                spanned = set(headers[column : column + width])
+                label = spanned.pop() if len(spanned) == 1 else ""
                 labelled_spans.append((offset, offset + len(cell), label))
                 offset += len(cell) + len(" | ")
+                column += width
             yield " | ".join(cells), labelled_spans, node.tag
             return
         pending = []
@@ -248,11 +289,15 @@ def extract_figures(html, page):
         ignored = [
             (m.start(), m.end()) for pattern in IGNORE for m in pattern.finditer(text)
         ]
-        # A physical range with an explicit trailing unit is not a year range.
+        # A four-digit range is a calendar range only when it has no physical
+        # unit, no currency on either endpoint and no count noun after it:
+        # "2000–2500 m", "$1000-1500" and "1000-1500 records" are quantities.
         ignored.extend(
             m.span()
-            for m in re.finditer(r"\b\d{4}\s*[-–]\s*\d{4}\b", text)
+            for m in re.finditer(r"(?P<cur1>[$£€])?\b\d{4}\s*[-–]\s*(?P<cur2>[$£€])?\d{4}\b", text)
             if not UNIT.match(text, m.end())
+            and not (m["cur1"] or m["cur2"])
+            and not COUNT_NOUN_AFTER.match(text, m.end())
         )
         if tag in {"h1", "h2", "h3", "h4", "h5", "h6"}:
             heading = re.match(r"\d+(?:\.\d+)*[.)]?\s", text)
@@ -298,12 +343,7 @@ def extract_figures(html, page):
                     or re.search(r"\d{4}\s*[-–]\s*\d{4}\s+and\s+$", prefix)
                 )
                 count_label = any(
-                    a <= match.start() < b
-                    and re.search(
-                        r"\b(?:count|records?|incidents?|models?|items?)\b",
-                        label,
-                        re.IGNORECASE,
-                    )
+                    a <= match.start() < b and COUNT_NOUN.search(label)
                     for a, b, label in labels
                 )
                 if calendar_context and not count_label:

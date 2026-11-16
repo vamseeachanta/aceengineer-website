@@ -61,11 +61,11 @@ No numeric quantities detected under the documented rules.
 
 | Occurrence | Figure | Unit | Status | Source location |
 | --- | --- | --- | --- | --- |
-| marine-safety-correlation.html:b6:n48 | 47,385 | count | SOURCED | content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts |
-| marine-safety-correlation.html:b6:n122 | 5,876 | count | SOURCED | content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts |
-| marine-safety-correlation.html:b6:n221 | 53,261 | count | DERIVED | content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts; sum of the two cited agency counts |
-| marine-safety-correlation.html:b9:n13 | 47,385 | count | SOURCED | content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts |
-| marine-safety-correlation.html:b10:n10 | 5,876 | count | SOURCED | content/case-studies/marine-safety-correlation.html:31 (pinned import-record link); agency import counts |
+| marine-safety-correlation.html:b6:n48 | 47,385 | count | SOURCED | https://github.com/vamseeachanta/worldenergydata/blob/7493f54316cc1d1ee5b5813afe69c90c873c04e7/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md line 26 (TSB Canada imported incidents) |
+| marine-safety-correlation.html:b6:n122 | 5,876 | count | SOURCED | https://github.com/vamseeachanta/worldenergydata/blob/7493f54316cc1d1ee5b5813afe69c90c873c04e7/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md line 58 (MAIB UK imported incidents) |
+| marine-safety-correlation.html:b6:n221 | 53,261 | count | DERIVED | https://github.com/vamseeachanta/worldenergydata/blob/7493f54316cc1d1ee5b5813afe69c90c873c04e7/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md lines 26 and 58 (agency imported incidents); sum of the two cited agency counts |
+| marine-safety-correlation.html:b9:n13 | 47,385 | count | SOURCED | https://github.com/vamseeachanta/worldenergydata/blob/7493f54316cc1d1ee5b5813afe69c90c873c04e7/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md line 26 (TSB Canada imported incidents) |
+| marine-safety-correlation.html:b10:n10 | 5,876 | count | SOURCED | https://github.com/vamseeachanta/worldenergydata/blob/7493f54316cc1d1ee5b5813afe69c90c873c04e7/docs/data-sources/PHASE_2_IMPORT_COMPLETE.md line 58 (MAIB UK imported incidents) |
 
 ### multi-code-wall-thickness-comparison.html
 

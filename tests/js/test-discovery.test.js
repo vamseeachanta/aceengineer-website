@@ -91,7 +91,12 @@ test('test_discovery_accepts_complete_inventory', async () => {
 test('test_discovery_rejects_unregistered_suite', async () => {
   const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'test-discovery-'));
   fs.mkdirSync(path.join(fixture, 'tests/js'), { recursive: true });
-  fs.copyFileSync(path.join(root, 'package.json'), path.join(fixture, 'package.json'));
+  // Discovery needs only the project list. Root setup hooks name files outside
+  // tests/js, which jest-config resolves on read, so the copy omits them.
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+  delete manifest.jest.globalSetup;
+  delete manifest.jest.globalTeardown;
+  fs.writeFileSync(path.join(fixture, 'package.json'), JSON.stringify(manifest, null, 2));
   // Dependencies resolve in the isolated copy without installing or running tests.
   fs.symlinkSync(path.join(root, 'node_modules'), path.join(fixture, 'node_modules'), 'junction');
   for (const file of inventory(root)) {

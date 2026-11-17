@@ -21,8 +21,8 @@
   },
   "revised": {
    "label": "revised",
-   "name": "Revised since sent",
-   "tip": "Revised since sent: this article changed after it first went out; its version history says what changed and why."
+   "name": "Revised since first sent or published",
+   "tip": "Revised: this article changed after it was first sent or published; its version history says what changed and why."
   },
   "data_over_time": {
    "label": "data over time",
@@ -177,8 +177,7 @@
    "first_sent": null,
    "last_updated": "2026-11-04T17:24:20Z",
    "features": [
-    "prompt",
-    "data"
+    "prompt"
    ],
    "source": {
     "repo": "aceengineer-website",

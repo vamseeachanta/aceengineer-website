@@ -98,6 +98,10 @@
 .la-mark[aria-expanded="true"] > .la-tip {
   display: block;
 }
+/* Escape or a second tap dismisses the tooltip even while the mark is hovered or focused. */
+.la-mark[data-la-dismissed] > .la-tip {
+  display: none;
+}
 
 /* Legend line: the same descriptions in words, under the list (always printed in static channels). */
 .la-legend {

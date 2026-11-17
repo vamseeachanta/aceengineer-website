@@ -180,6 +180,7 @@ function fakeDom(html) {
       handlers: {},
       getAttribute(k) { return k in this.attrs ? this.attrs[k] : null; },
       setAttribute(k, v) { this.attrs[k] = String(v); },
+      removeAttribute(k) { delete this.attrs[k]; },
       querySelector(s) { return kids[s]; },
       addEventListener(t, f) { this.handlers[t] = f; },
       kids,
@@ -211,4 +212,29 @@ test("enhance computes the live age from the reader's now, and taps toggle the t
   assert.equal(tap.getAttribute("aria-expanded"), "true");
   tap.handlers.keydown({ key: "Escape" });
   assert.equal(tap.getAttribute("aria-expanded"), "false");
+  assert.equal(tap.getAttribute("data-la-dismissed"), "1", "Escape dismisses even while hovered or focused");
+  tap.handlers.mouseleave();
+  assert.equal(tap.getAttribute("data-la-dismissed"), null, "leaving the mark clears the dismissal");
+  tap.handlers.click({ preventDefault() {} });
+  tap.handlers.click({ preventDefault() {} });
+  assert.equal(tap.getAttribute("data-la-dismissed"), "1", "a second tap dismisses");
+});
+
+test("label in name: each accessible name starts with the mark's visible text, in every form", () => {
+  for (const form of ["words", "tminus", "cycle"]) {
+    const d = fakeDom(T.renderList(["01", "05"], registry, { channel: "web", form }));
+    LA.enhance(d.doc, new Date("2026-11-15T12:00:00Z"));
+    for (const m of d.marks.filter((x) => x.getAttribute("data-la-updated"))) {
+      assert.ok(m.getAttribute("aria-label").startsWith(m.kids[".la-age-text"].textContent), form);
+      assert.match(m.getAttribute("aria-label"), /\(updated \d+ days? ago, on /, form);
+    }
+  }
+  for (const [k, f] of Object.entries(registry.features)) {
+    if (k === "age") continue;
+    assert.ok(f.tip.toLowerCase().startsWith(f.label.toLowerCase()) || f.tip.toLowerCase().includes(f.label.toLowerCase()), k);
+  }
+  const css = fs.readFileSync(path.join(ROOT, "assets/css/living-article.css"), "utf8");
+  const open = css.indexOf('.la-mark[aria-expanded="true"] > .la-tip');
+  const dismissed = css.indexOf(".la-mark[data-la-dismissed] > .la-tip");
+  assert.ok(dismissed > open, "the dismissed rule comes after the open rules, so it wins at equal specificity");
 });

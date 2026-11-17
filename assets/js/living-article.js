@@ -109,9 +109,11 @@
       const updated = m.getAttribute("data-la-updated");
       const form = m.getAttribute("data-la-form") || "words";
       const days = ageDays(updated, n);
+      const visible = formatAge(days, form);
       const text = m.querySelector(".la-age-text");
-      if (text) text.textContent = formatAge(days, form);
-      const description = spokenAge(days) + ", on " + formatDate(updated) + ". " +
+      if (text) text.textContent = visible;
+      // The accessible name starts with the visible text (WCAG 2.5.3), then the age in full words.
+      const description = visible + " (" + spokenAge(days) + ", on " + formatDate(updated) + "). " +
         (m.getAttribute("data-la-tip") || "");
       m.setAttribute("aria-label", description.trim());
       const tip = m.querySelector(".la-tip");
@@ -123,18 +125,28 @@
       if (b.getAttribute("data-la-wired") === "1") continue;
       b.setAttribute("data-la-wired", "1");
       b.setAttribute("aria-expanded", "false");
+      // data-la-dismissed hides the tooltip even while hovered or focused (CSS), so Escape and a
+      // second tap really close it (WCAG 1.4.13); leaving the mark clears it for next time.
       b.addEventListener("click", function (ev) {
         ev.preventDefault();
         const open = b.getAttribute("aria-expanded") === "true";
         closeAll(doc, b);
         b.setAttribute("aria-expanded", open ? "false" : "true");
+        if (open) b.setAttribute("data-la-dismissed", "1");
+        else b.removeAttribute("data-la-dismissed");
       });
       b.addEventListener("keydown", function (ev) {
-        if (ev.key === "Escape") b.setAttribute("aria-expanded", "false");
+        if (ev.key === "Escape") {
+          b.setAttribute("aria-expanded", "false");
+          b.setAttribute("data-la-dismissed", "1");
+        }
       });
-      b.addEventListener("blur", function () {
+      const reset = function () {
         b.setAttribute("aria-expanded", "false");
-      });
+        b.removeAttribute("data-la-dismissed");
+      };
+      b.addEventListener("blur", reset);
+      b.addEventListener("mouseleave", reset);
     }
     return marks.length;
   }

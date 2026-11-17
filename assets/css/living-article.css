@@ -76,9 +76,8 @@
 .la-tip {
   position: absolute;
   z-index: 20;
-  left: 50%;
+  left: 0;
   bottom: calc(100% + 8px);
-  transform: translateX(-50%);
   width: max-content;
   max-width: min(18rem, 80vw);
   padding: 6px 8px;
@@ -91,19 +90,13 @@
   border: 1px solid var(--hs-line-strong, #0b3d5c);
   border-top: var(--hs-rule, 3px) solid var(--hs-accent, #2BB2A6);
   box-shadow: 0 2px 8px rgba(11, 61, 92, .18);
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity .12s ease-in;
+  display: none;          /* closed tooltips take no layout, so they never widen the page */
   pointer-events: none;
 }
 .la-mark:hover > .la-tip,
 .la-mark:focus-visible > .la-tip,
 .la-mark[aria-expanded="true"] > .la-tip {
-  visibility: visible;
-  opacity: 1;
-}
-@media (prefers-reduced-motion: reduce) {
-  .la-tip { transition: none; }
+  display: block;
 }
 
 /* Legend line: the same descriptions in words, under the list (always printed in static channels). */

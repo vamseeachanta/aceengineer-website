@@ -69,7 +69,7 @@ test("every link in the rendered list carries a side tag, on every channel", () 
   }
   const text = T.renderList(ids, registry, { channel: "linkedin", sentAt: SENT });
   for (const a of registry.articles) {
-    assert.ok(text.includes(`- ${a.title} (updated `), `linkedin line for ${a.id}`);
+    assert.ok(text.includes(`- ${a.title}: updated `), `linkedin line for ${a.id}`);
   }
 });
 

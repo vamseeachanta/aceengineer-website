@@ -134,7 +134,7 @@ function renderList(ids, registry, opts) {
   const legendKeys = ["age"].concat(Object.keys(registry.features).filter((k) => used.has(k)));
   const heading = o.heading || "Earlier articles";
   if (channel === "linkedin") {
-    const lines = entries.map((e) => "- " + e.title + " (" + renderTag(e, registry, o) + ")\n  " + e.url);
+    const lines = entries.map((e) => "- " + e.title + ": " + renderTag(e, registry, o) + "\n  " + e.url);
     return heading + "\n" + lines.join("\n") + "\n" + legendText(registry, legendKeys) + "\n";
   }
   const items = entries
@@ -229,7 +229,7 @@ function main(argv) {
   const cmd = args._[0];
   if (cmd === "list") {
     const ids = String(args.ids || "").split(",").map((s) => s.trim()).filter(Boolean);
-    process.stdout.write(renderList(ids, registry, { channel: args.channel || "web", sentAt: args.sent, form: args.form }) + "\n");
+    process.stdout.write(renderList(ids, registry, { channel: args.channel || "web", sentAt: args.sent, form: args.form, heading: args.heading }) + "\n");
     return 0;
   }
   if (cmd === "check") {

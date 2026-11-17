@@ -2,7 +2,7 @@
  "schema": "articles-registry/1",
  "revision": "r1",
  "about": "Published articles, their revision history and features, for the living-article tags. Generated from the articles registry; edit the registry, not this file. Ages are never stored.",
- "default_form": "words",
+ "default_form": "cycle",
  "features": {
   "age": {
    "label": "updated",

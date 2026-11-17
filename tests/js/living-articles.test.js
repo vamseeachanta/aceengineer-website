@@ -69,7 +69,7 @@ test("every link in the rendered list carries a side tag, on every channel", () 
   }
   const text = T.renderList(ids, registry, { channel: "linkedin", sentAt: SENT });
   for (const a of registry.articles) {
-    assert.ok(text.includes(`- ${a.title}: updated `), `linkedin line for ${a.id}`);
+    assert.ok(text.includes(`- ${a.title}: ↻ `), `linkedin line for ${a.id}`);
   }
 });
 
@@ -149,15 +149,17 @@ test("ages need an explicit now or send time", () => {
   assert.throws(() => LA.ageDays("2026-11-12T18:46:13Z"), /now is required/);
   const a = registry.articles.find((x) => x.id === "01");
   assert.throws(() => T.renderTag(a, registry, { channel: "email" }), /send time/);
-  assert.equal(LA.staticAge(a.last_updated, "2026-11-15T09:00:00Z"), "updated 12 Nov 2026 (3 d before sending)");
-  assert.equal(LA.staticAge(a.last_updated, "2026-12-12T09:00:00Z"), "updated 12 Nov 2026 (30 d before sending)");
+  assert.equal(LA.staticAge(a.last_updated, "2026-11-15T09:00:00Z"), "↻ 12 Nov 2026 (3 d before sending)");
+  assert.equal(LA.staticAge(a.last_updated, "2026-11-15T09:00:00Z", "words"), "updated 12 Nov 2026 (3 d before sending)");
+  assert.equal(LA.staticAge(a.last_updated, "2026-12-12T09:00:00Z"), "↻ 12 Nov 2026 (30 d before sending)");
 });
 
 test("the three tag forms", () => {
   assert.equal(LA.formatAge(3, "words"), "updated 3 d ago");
   assert.equal(LA.formatAge(1000, "tminus"), "T−1,000");
   assert.equal(LA.formatAge(10, "cycle"), "↻ 10 d");
-  assert.equal(LA.formatAge(0), "updated today");
+  assert.equal(LA.formatAge(0, "words"), "updated today");
+  assert.equal(LA.formatAge(3), "↻ 3 d", "the default form is the compact mark (owner choice, 17 Nov 2026)");
   assert.equal(LA.spokenAge(1), "updated 1 day ago");
   assert.throws(() => LA.formatAge(3, "other"));
 });
@@ -207,11 +209,12 @@ test("enhance computes the live age from the reader's now, and taps toggle the t
   const a = fakeDom(html);
   LA.enhance(a.doc, new Date("2026-11-15T12:00:00Z"));
   const age = a.marks.find((x) => x.getAttribute("data-la-updated"));
-  assert.equal(age.kids[".la-age-text"].textContent, "updated 3 d ago");
+  assert.equal(age.kids[".la-age-text"].textContent, "↻ 3 d");
   assert.equal(age.getAttribute("aria-label"), age.kids[".la-tip"].textContent);
+  assert.match(age.getAttribute("aria-label"), /^updated 3 days ago, on 12 Nov 2026\. /, "the compact mark is named in words");
   const b = fakeDom(html);
   LA.enhance(b.doc, new Date("2029-08-08T12:00:00Z"));
-  assert.equal(b.marks.find((x) => x.getAttribute("data-la-updated")).kids[".la-age-text"].textContent, "updated 1,000 d ago");
+  assert.equal(b.marks.find((x) => x.getAttribute("data-la-updated")).kids[".la-age-text"].textContent, "↻ 1,000 d");
   const tap = a.marks[1];
   tap.handlers.click({ preventDefault() {} });
   assert.equal(tap.getAttribute("aria-expanded"), "true");
@@ -231,13 +234,17 @@ test("enhance computes the live age from the reader's now, and taps toggle the t
   assert.equal(hov.getAttribute("data-la-dismissed"), "1", "document Escape closes a hovered tooltip");
 });
 
-test("label in name: each accessible name starts with the mark's visible text, in every form", () => {
+test("accessible names: the words forms start with the visible text; the compact mark is named in words", () => {
   for (const form of ["words", "tminus", "cycle"]) {
     const d = fakeDom(T.renderList(["01", "05"], registry, { channel: "web", form }));
     LA.enhance(d.doc, new Date("2026-11-15T12:00:00Z"));
     for (const m of d.marks.filter((x) => x.getAttribute("data-la-updated"))) {
-      assert.ok(m.getAttribute("aria-label").startsWith(m.kids[".la-age-text"].textContent), form);
-      assert.match(m.getAttribute("aria-label"), /\(updated \d+ days? ago, on /, form);
+      if (form === "cycle") {
+        assert.match(m.getAttribute("aria-label"), /^updated \d+ days? ago, on /, form);
+      } else {
+        assert.ok(m.getAttribute("aria-label").startsWith(m.kids[".la-age-text"].textContent), form);
+        assert.match(m.getAttribute("aria-label"), /\(updated \d+ days? ago, on /, form);
+      }
     }
   }
   for (const [k, f] of Object.entries(registry.features)) {

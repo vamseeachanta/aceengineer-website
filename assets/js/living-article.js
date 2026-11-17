@@ -4,7 +4,7 @@
  * - ageDays(updatedIso, now): whole days from the last update to `now`. `now` is always passed
  *   in; nothing here holds a fixed "today".
  * - formatAge(days, form): the visible tag text in one of three forms
- *   ("words": "updated 3 d ago", the team default; "tminus": "T−3"; "cycle": "↻ 3 d").
+ *   ("cycle": "↻ 3 d", the default chosen by the owner on 17 Nov 2026; "words": "updated 3 d ago"; "tminus": "T−3").
  * - staticAge(updatedIso, sentIso, form): the text for static channels (e-mail, LinkedIn):
  *   the absolute date plus the age on the day of sending, which stays true after sending.
  * - enhance(root, now): on the web, rewrites each age mark to the live age and wires the
@@ -67,7 +67,7 @@
   }
 
   function formatAge(days, form) {
-    const f = form || "words";
+    const f = form || "cycle";
     if (FORMS.indexOf(f) < 0) throw new RangeError("unknown tag form: " + f);
     const n = groupThousands(days);
     if (f === "tminus") return "T−" + n;
@@ -84,7 +84,7 @@
   function staticAge(updated, sentAt, form) {
     const days = ageDays(updated, sentAt);
     const when = formatDate(updated);
-    const f = form || "words";
+    const f = form || "cycle";
     if (FORMS.indexOf(f) < 0) throw new RangeError("unknown tag form: " + f);
     const ago = days === 0 ? "on the day of sending" : groupThousands(days) + " d before sending";
     if (f === "tminus") return "T−" + groupThousands(days) + " at sending (" + when + ")";
@@ -107,14 +107,17 @@
     for (let i = 0; i < marks.length; i++) {
       const m = marks[i];
       const updated = m.getAttribute("data-la-updated");
-      const form = m.getAttribute("data-la-form") || "words";
+      const form = m.getAttribute("data-la-form") || "cycle";
       const days = ageDays(updated, n);
       const visible = formatAge(days, form);
       const text = m.querySelector(".la-age-text");
       if (text) text.textContent = visible;
-      // The accessible name starts with the visible text (WCAG 2.5.3), then the age in full words.
-      const description = visible + " (" + spokenAge(days) + ", on " + formatDate(updated) + "). " +
-        (m.getAttribute("data-la-tip") || "");
+      // The accessible name starts with the visible text (WCAG 2.5.3), then the age in full words; for the compact mark it is the age in full words.
+      // The compact mark has no words of its own, so its name is the spoken age first; the other forms keep the visible text first.
+      const lead = form === "cycle"
+        ? spokenAge(days) + ", on " + formatDate(updated) + ". "
+        : visible + " (" + spokenAge(days) + ", on " + formatDate(updated) + "). ";
+      const description = lead + (m.getAttribute("data-la-tip") || "");
       m.setAttribute("aria-label", description.trim());
       const tip = m.querySelector(".la-tip");
       if (tip) tip.textContent = description.trim();

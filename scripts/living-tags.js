@@ -104,7 +104,7 @@ function requireSent(opts) {
 function renderTag(entry, registry, opts) {
   const o = opts || {};
   const channel = o.channel || "web";
-  const form = o.form || registry.default_form || "words";
+  const form = o.form || registry.default_form || "cycle";
   if (CHANNELS.indexOf(channel) < 0) throw new Error("unknown channel: " + channel);
   const keys = entryFeatures(entry, registry);
   if (channel === "web") {

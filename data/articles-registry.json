@@ -12,12 +12,12 @@
   "prompt": {
    "label": "prompt",
    "name": "Reusable prompt",
-   "tip": "Reusable prompt: copy the prompt at the end of this article to rerun the analysis yourself."
+   "tip": "Prompt: copy the reusable prompt at the end of this article to rerun the analysis yourself."
   },
   "data": {
    "label": "data",
    "name": "Data set",
-   "tip": "Data set: the public data behind this article is attached, with its source and date."
+   "tip": "Data: the public data set behind this article is attached, with its source and date."
   },
   "revised": {
    "label": "revised",

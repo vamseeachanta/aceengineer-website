@@ -148,6 +148,18 @@
       b.addEventListener("blur", reset);
       b.addEventListener("mouseleave", reset);
     }
+    // Escape anywhere closes a tooltip opened by hover too, wherever focus is (WCAG 1.4.13).
+    if (doc.addEventListener && !doc.__laEscape) {
+      doc.__laEscape = true;
+      doc.addEventListener("keydown", function (ev) {
+        if (ev.key !== "Escape") return;
+        const open = doc.querySelectorAll('.la-mark:hover, .la-mark:focus, .la-mark[aria-expanded="true"]');
+        for (let i = 0; i < open.length; i++) {
+          open[i].setAttribute("aria-expanded", "false");
+          open[i].setAttribute("data-la-dismissed", "1");
+        }
+      });
+    }
     return marks.length;
   }
 

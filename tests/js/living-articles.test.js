@@ -191,8 +191,13 @@ function fakeDom(html) {
       if (sel === ".la-mark[data-la-updated]") return marks.filter((x) => x.getAttribute("data-la-updated"));
       if (sel === ".la-mark") return marks;
       if (sel === '.la-mark[aria-expanded="true"]') return marks.filter((x) => x.getAttribute("aria-expanded") === "true");
+      if (sel === '.la-mark:hover, .la-mark:focus, .la-mark[aria-expanded="true"]') {
+        return marks.filter((x) => x.hovered || x.focused || x.getAttribute("aria-expanded") === "true");
+      }
       return [];
     },
+    handlers: {},
+    addEventListener(t, f) { this.handlers[t] = f; },
   };
   return { doc, marks };
 }
@@ -218,6 +223,12 @@ test("enhance computes the live age from the reader's now, and taps toggle the t
   tap.handlers.click({ preventDefault() {} });
   tap.handlers.click({ preventDefault() {} });
   assert.equal(tap.getAttribute("data-la-dismissed"), "1", "a second tap dismisses");
+  // Hover-opened tooltip with focus elsewhere: Escape on the document closes it.
+  const hov = a.marks[2];
+  hov.handlers.mouseleave();
+  hov.hovered = true;
+  a.doc.handlers.keydown({ key: "Escape" });
+  assert.equal(hov.getAttribute("data-la-dismissed"), "1", "document Escape closes a hovered tooltip");
 });
 
 test("label in name: each accessible name starts with the mark's visible text, in every form", () => {
@@ -231,7 +242,7 @@ test("label in name: each accessible name starts with the mark's visible text, i
   }
   for (const [k, f] of Object.entries(registry.features)) {
     if (k === "age") continue;
-    assert.ok(f.tip.toLowerCase().startsWith(f.label.toLowerCase()) || f.tip.toLowerCase().includes(f.label.toLowerCase()), k);
+    assert.ok(f.tip.toLowerCase().startsWith(f.label.toLowerCase()), `${k}: the tooltip and accessible name start with the visible word`);
   }
   const css = fs.readFileSync(path.join(ROOT, "assets/css/living-article.css"), "utf8");
   const open = css.indexOf('.la-mark[aria-expanded="true"] > .la-tip');

@@ -43,6 +43,9 @@ jobs:
       - name: Check public claim boundaries
         run: npm run test:claims
 
+      - name: Check living-article tags (registry dates against git history)
+        run: npm run test:living
+
       - name: Set up uv for the metadata audit
         uses: astral-sh/setup-uv@v6
         with:

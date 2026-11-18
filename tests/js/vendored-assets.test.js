@@ -89,10 +89,28 @@ describe('vendored assets (dist/)', () => {
     expect(shipped).toEqual(expected);
   });
 
-  test('each Plotly exception is loaded by its named page and by no other page', () => {
+  test('every shipped Plotly build has a .sha256 sidecar that matches it', () => {
+    // The sidecar scan below only checks sidecars that exist; this makes a missing one fail.
+    for (const file of [...new Set([PLOTLY, ...Object.values(PLOTLY_EXCEPTIONS)])]) {
+      const target = path.join(ROOT, 'assets', 'js', file);
+      const sidecar = `${target}.sha256`;
+      expect({ file, sidecar: fs.existsSync(sidecar) }).toEqual({ file, sidecar: true });
+      const expected = read(sidecar).trim().split(/\s+/)[0].toLowerCase();
+      const actual = crypto.createHash('sha256').update(fs.readFileSync(target)).digest('hex');
+      expect({ file, actual }).toEqual({ file, actual: expected });
+    }
+  });
+
+  test('each Plotly exception is loaded by its named page, at the site path, and by no other page', () => {
+    // Resolve each script src against its page URL, so a wrong relative depth
+    // (for example ../assets/js/... from a page two levels down) cannot pass.
+    const resolved = p => scriptSrcs(p).map(s => new URL(s, `https://www.aceengineer.com/${rel(p)}`).pathname);
     for (const [page, file] of Object.entries(PLOTLY_EXCEPTIONS)) {
-      const users = pages.filter(p => scriptSrcs(p).some(s => s.endsWith(`assets/js/${file}`))).map(rel);
+      const want = `/assets/js/${file}`;
+      const users = pages.filter(p => scriptSrcs(p).some(s => s.endsWith(file))).map(rel);
       expect({ file, users }).toEqual({ file, users: [page] });
+      const own = pages.find(p => rel(p) === page);
+      expect({ page, loads: resolved(own).filter(s => /plotly/i.test(s)) }).toEqual({ page, loads: [want] });
     }
   });
 

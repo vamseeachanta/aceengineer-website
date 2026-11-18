@@ -12,7 +12,7 @@ rootPath: "../../"
 <meta property="og:description" content="Counts from raw data files of the US Bureau of Safety and Environmental Enforcement (BSEE): new-well permits in the US Gulf of Mexico by rig type and water depth, 2005 to 2026, and a map of new wells by water depth beside the oil price.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="{{ canonicalUrl }}">
-<meta property="og:image" content="https://www.aceengineer.com/assets/img/og/issue-002-public-data.png">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/og/issue-002-public-data-2026-11-18.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="627">
@@ -20,7 +20,7 @@ rootPath: "../../"
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Gulf of Mexico well permits: a public US data file (Deckhand newsletter, issue 2)">
 <meta name="twitter:description" content="Counts from raw data files of the US Bureau of Safety and Environmental Enforcement (BSEE): new-well permits in the US Gulf of Mexico by rig type and water depth, 2005 to 2026, and a map of new wells by water depth beside the oil price.">
-<meta name="twitter:image" content="https://www.aceengineer.com/assets/img/og/issue-002-public-data.png">
+<meta name="twitter:image" content="https://www.aceengineer.com/assets/img/og/issue-002-public-data-2026-11-18.png">
 <meta name="twitter:image:alt" content="Deckhand and AceEngineer marks with the title Gulf of Mexico well permits: a public US data file, beside a map of new Gulf wells by water depth">
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Gulf of Mexico well permits: a public US data file (Deckhand newsletter, issue 2)", "name": "Gulf of Mexico well permits: a public US data file (Deckhand newsletter, issue 2)", "description": "Counts from raw data files of the US Bureau of Safety and Environmental Enforcement (BSEE): new-well permits in the US Gulf of Mexico by rig type and water depth, 2005 to 2026, and a map of new wells by water depth beside the oil price.", "datePublished": "2026-11-04", "dateModified": "2026-11-18", "url": "https://www.aceengineer.com/newsletter/issue-002-public-data/", "inLanguage": "en-US", "publisher": {"@id": "https://www.aceengineer.com/#organization"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.aceengineer.com/"}, {"@type": "ListItem", "position": 2, "name": "Newsletter", "item": "https://www.aceengineer.com/newsletter/"}, {"@type": "ListItem", "position": 3, "name": "Gulf of Mexico well permits: a public US data file (Deckhand newsletter, issue 2)", "item": "https://www.aceengineer.com/newsletter/issue-002-public-data/"}]}]</script>
 <include src="partials/head-common.html"></include>
@@ -1040,9 +1040,9 @@ let timer=null;
 const show=i=>{link.i=i;link.frame=c.frames[i];const p=pick(i);
 Plotly.restyle(el,{x:p.map(q=>q.x),y:p.map(q=>q.y),customdata:p.map(q=>q.cd),name:names(i)},ids);
 range.value=String(i);out.textContent=c.frames[i].label;link.subs.forEach(f=>f(c.frames[i]));};
-const stop=()=>{if(timer){clearInterval(timer);timer=null;}btn.textContent='Play';btn.setAttribute('aria-label','Play the five-year windows');
+const stop=()=>{if(timer){clearInterval(timer);timer=null;}out.setAttribute('aria-live','polite');btn.textContent='Play';btn.setAttribute('aria-label','Play the five-year windows');
 hint.textContent='Stopped. Drag the slider, or click a year in panel b, to choose a window; Play runs the windows again.';};
-const play=()=>{if(timer)return;timer=setInterval(()=>show((link.i+1)%n),c.step_ms);btn.textContent='Pause';btn.setAttribute('aria-label','Pause on this window');
+const play=()=>{if(timer)return;out.setAttribute('aria-live','off');timer=setInterval(()=>show((link.i+1)%n),c.step_ms);btn.textContent='Pause';btn.setAttribute('aria-label','Pause on this window');
 hint.textContent='Playing every five-year window, one year apart. Click the map, the slider or a year in panel b to stop and choose.';};
 link.stop=stop;link.show=show;
 btn.addEventListener('click',()=>{if(timer)stop();else play();});

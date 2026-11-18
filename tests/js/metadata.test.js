@@ -325,7 +325,7 @@ const OWN_OG_IMAGES = {
   'newsletter/issue-002-energy-street/index.html': `${OG_BASE}issue-002-energy-street.png`,
   'newsletter/issue-002-jackup-method/index.html': `${OG_BASE}issue-002-jackup-method.png`,
   'newsletter/issue-002-main-street/index.html': `${OG_BASE}issue-002-main-street.png`,
-  'newsletter/issue-002-public-data/index.html': `${OG_BASE}issue-002-public-data.png`,
+  'newsletter/issue-002-public-data/index.html': `${OG_BASE}issue-002-public-data-2026-11-18.png`,
 };
 
 test('destinations have canonical Open Graph metadata and the existing logo', () => {

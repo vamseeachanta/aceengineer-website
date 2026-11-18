@@ -22,6 +22,14 @@ const DIST = path.join(ROOT, 'dist');
 // The single version the whole site is allowed to load.
 const PLOTLY = 'plotly-2.32.0.min.js';
 
+// Named exceptions: a published newsletter page whose charts were built and approved on
+// another Plotly release ships those same bytes (with a .sha256 sidecar) and loads only
+// that file. Each entry is one page; nothing else may load the exception version.
+const PLOTLY_EXCEPTIONS = {
+  'newsletter/issue-002-public-data/index.html': 'plotly-2.35.2.min.js',
+};
+const allowedPlotly = page => PLOTLY_EXCEPTIONS[page] || PLOTLY;
+
 function walk(dir, ext, out = []) {
   if (!fs.existsSync(dir)) return out;
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -66,17 +74,26 @@ describe('vendored assets (dist/)', () => {
     for (const p of pages) {
       for (const src of scriptSrcs(p)) {
         if (!/plotly/i.test(src)) continue;
-        if (!src.endsWith(`assets/js/${PLOTLY}`)) bad.push([rel(p), src]);
+        if (!src.endsWith(`assets/js/${allowedPlotly(rel(p))}`)) bad.push([rel(p), src]);
       }
     }
     expect(bad).toEqual([]);
   });
 
-  test('exactly one Plotly build ships in dist/assets/js', () => {
+  test('only the site Plotly build and the named exceptions ship in dist/assets/js', () => {
     const shipped = walk(path.join(DIST, 'assets', 'js'), '.js')
       .map(p => path.basename(p))
-      .filter(n => /^plotly.*\.js$/.test(n));
-    expect(shipped).toEqual([PLOTLY]);
+      .filter(n => /^plotly.*\.js$/.test(n))
+      .sort();
+    const expected = [...new Set([PLOTLY, ...Object.values(PLOTLY_EXCEPTIONS)])].sort();
+    expect(shipped).toEqual(expected);
+  });
+
+  test('each Plotly exception is loaded by its named page and by no other page', () => {
+    for (const [page, file] of Object.entries(PLOTLY_EXCEPTIONS)) {
+      const users = pages.filter(p => scriptSrcs(p).some(s => s.endsWith(`assets/js/${file}`))).map(rel);
+      expect({ file, users }).toEqual({ file, users: [page] });
+    }
   });
 
   test('the vendored Plotly is actually referenced by at least one page', () => {

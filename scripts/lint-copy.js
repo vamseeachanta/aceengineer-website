@@ -20,6 +20,7 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
+const { JSDOM } = require('jsdom');
 
 const repoRoot = path.resolve(__dirname, '..');
 const copyFile = path.join(repoRoot, 'brand', 'copy.yaml');
@@ -45,18 +46,62 @@ function resolveRendered(rel) {
   return rel;
 }
 
-// List rendered visible pages: top-level dist/*.html, falling back to content/*.html.
+// Include nested pages and redirect stubs; sitemap exclusion is not an exemption.
 function listVisiblePages() {
   for (const base of ['dist', 'content']) {
     const dir = path.join(repoRoot, base);
     if (fs.existsSync(dir)) {
-      const pages = fs.readdirSync(dir)
-        .filter(f => f.endsWith('.html'))
-        .map(f => path.join(base, f));
+      function walk(folder) {
+        return fs.readdirSync(folder, { withFileTypes: true }).flatMap(entry => {
+          const file = path.join(folder, entry.name);
+          if (entry.isDirectory()) return walk(file);
+          return /\.html$/i.test(entry.name) ? [path.relative(repoRoot, file)] : [];
+        });
+      }
+      const pages = walk(dir);
       if (pages.length) return pages;
     }
   }
   return [];
+}
+
+function bannedFindings(html, phrases) {
+  const doc = new JSDOM(html).window.document;
+  const metadata = [...doc.querySelectorAll('meta[content], a[href]')]
+    .map(node => node.getAttribute('content') || node.getAttribute('href'));
+  const structured = [...doc.querySelectorAll('script[type="application/ld+json"]')]
+    .map(node => node.textContent);
+  doc.querySelectorAll('script, style, template, noscript').forEach(node => node.remove());
+  const text = norm([doc.title, doc.body.textContent, ...metadata, ...structured].join(' '));
+  return [...new Set(phrases)].filter(phrase => text.includes(norm(phrase)));
+}
+
+// Rule source: issue #89 (2026), one visible purpose lead per target page.
+function positioningFindings(html, positioning, page) {
+  const selector = positioning.leads[page];
+  if (!selector) return [];
+  const doc = new JSDOM(html).window.document;
+  const leads = [...doc.querySelectorAll(selector)];
+  if (leads.length !== 1) return ['purpose lead missing or repeated'];
+  const lead = leads[0];
+  function hidden(node) {
+    const style = doc.defaultView.getComputedStyle(node);
+    return node.hidden || node.getAttribute('aria-hidden') === 'true' ||
+      style.display === 'none' || ['hidden', 'collapse'].includes(style.visibility);
+  }
+  for (let node = lead; node; node = node.parentElement) {
+    if (hidden(node)) return ['purpose lead is hidden'];
+  }
+  for (const node of [...lead.querySelectorAll('*')]) {
+    if (hidden(node) || ['SCRIPT', 'STYLE', 'TEMPLATE'].includes(node.tagName)) node.remove();
+  }
+  const text = norm(lead.textContent);
+  const errors = [];
+  if (text !== norm(positioning.purpose)) errors.push('purpose lead differs from contract');
+  for (const term of positioning.approved_key_terms) {
+    if (!text.includes(norm(term))) errors.push(`purpose lead omits approved term: ${term}`);
+  }
+  return errors;
 }
 
 function lint() {
@@ -116,16 +161,28 @@ function lint() {
     }
   }
 
-  // 2) Forbidden phrases must not appear on any visible source page.
-  const forbidden = Array.isArray(copy.forbidden_phrases) ? copy.forbidden_phrases : [];
+  // 2) Purpose belongs in the lead, before the showcase; metadata cannot supply it.
+  if (copy.positioning) {
+    for (const page of Object.keys(copy.positioning.leads)) {
+      const rel = resolveRendered('content/' + page);
+      const html = readPage(rel);
+      if (html === null) errors.push(`target page missing: ${rel}`);
+      else for (const error of positioningFindings(html, copy.positioning, page)) {
+        errors.push(`POSITIONING: ${rel}: ${error}`);
+      }
+    }
+  }
+
+  // 3) Both banned lists apply throughout the published HTML tree.
+  const forbidden = [
+    ...(Array.isArray(copy.forbidden_phrases) ? copy.forbidden_phrases : []),
+    ...(copy.positioning?.banned_wording || []),
+  ];
   if (forbidden.length) {
     const pages = listVisiblePages();
     for (const rel of pages) {
-      const body = norm(readPage(rel) || '');
-      for (const phrase of forbidden) {
-        if (body.includes(norm(phrase))) {
-          errors.push(`FORBIDDEN: "${phrase}" appears in ${rel}`);
-        }
+      for (const phrase of bannedFindings(readPage(rel) || '', forbidden)) {
+        errors.push(`FORBIDDEN: "${phrase}" appears in ${rel}`);
       }
     }
   }
@@ -144,4 +201,4 @@ if (require.main === module) {
   process.exit(lint());
 }
 
-module.exports = { lint, norm };
+module.exports = { lint, norm, positioningFindings, bannedFindings, listVisiblePages };

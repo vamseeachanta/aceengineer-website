@@ -25,10 +25,63 @@ names:
   legal: Achanta AceEngineer Inc.
   retired_acronym: A&CE
 
-tagline: Engineering analysis and AI automation
+# Positioning authority: issue #89, owner decisions of 2026-07-28 - the primary
+# story is capabilities-first, and "AI" (including "AI-native") is permitted in
+# visible copy. The purpose therefore leads with engineering analysis; workflow
+# setup follows it. The workflow-setup wording is new copy in this change and is
+# recorded in no issue; it needs maintainer copy review before merge.
+# Contract and claims checklist: docs/positioning-claims.md.
+# Newsletter context: content/newsletter/issue-001-energy-street/index.html,
+# engineering-offer section (2026, as revised in #179 and #181). These are offers, not
+# measured outcomes. Finished work supports the purpose below the lead.
+positioning:
+  purpose: &purpose >-
+    AceEngineer provides engineering analysis and calculation work, and sets up agentic engineering workflows suited to the needs of each client, aimed at helping engineering teams become AI-native.
+  primary_audience: Engineering teams that need engineering analysis, with workflow setup alongside it.
+  supporting_claims:
+    - sentence: Engineering analysis and calculation work is available, with workflow setup alongside it.
+      basis: offer statement
+    - sentence: Workflow setup is scoped to the client's engineering needs.
+      basis: offer statement
+    - sentence: Public code and samples support discussion of the agreed scope.
+      basis: offer statement
+  # Listed in the order the purpose must state them (capabilities first).
+  approved_key_terms:
+    - engineering analysis
+    - agentic engineering workflows
+    - AI-native
+  banned_wording:
+    - fully autonomous engineering
+    - guaranteed results
+    - no engineering review needed
+  leads:
+    index.html: main .home-hero .home-lead
+    ai-automation/index.html: main .positioning-lead
+    about.html: main .about-hero .lead
+  # Google Search Central, title links and snippets guides, accessed 2026-10-22:
+  # https://developers.google.com/search/docs/appearance/title-link
+  # https://developers.google.com/search/docs/appearance/snippet
+  # No fixed character limits; truncation depends on display width. The SEO
+  # audit in PR #170 also uses null bounds. Do not invent numeric thresholds.
+  metadata_length:
+    status: NOT_EVALUATED
+    title_max: null
+    description_max: null
 
-firm_lede: >-
-  AceEngineer is a Houston engineering firm that runs its analysis as automated, checked workflows. AI automation and agentic workflows are topics for discussion under a separately agreed scope. The engineering code is public: of 196 modules in digitalmodel, worldenergydata and assetutilities, 35 pass their cited checks (catalogue run 2026-10-17). The pinned catalogue records the evidence available for its classifications.
+about:
+  title: About AceEngineer | Engineering analysis and agentic workflows
+  heading: &positioning_heading Engineering analysis and agentic engineering workflows
+  description: Learn how AceEngineer provides engineering analysis and sets up agentic engineering workflows, aimed at helping engineering teams become AI-native.
+
+ai_automation:
+  title: AI automation | Agentic engineering workflows
+  heading: AI automation for agentic engineering workflows
+  description: AceEngineer sets up agentic engineering workflows suited to your needs, aimed at helping engineering teams become AI-native, alongside its engineering analysis.
+  lead: *purpose
+
+tagline: *positioning_heading
+
+firm_lede: *purpose
 
 founding: >-
   Analytical &amp; Computational Engineering was founded in 2010 in Houston, Texas,
@@ -93,8 +146,7 @@ home:
   description: AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms, EPC contractors and drilling contractors.
   kicker: Engineering analysis, AI automation and agentic workflows | Houston, Texas
   heading: Engineering analysis that is practical, dependable and repeatable.
-  lead: >-
-    AI automation and agentic workflows are topics for discussion under a separately agreed scope.
+  lead: *purpose
   discuss: Contact us
   facts:
     - heading: Founded 2010

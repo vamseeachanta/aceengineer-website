@@ -513,6 +513,36 @@ test('home services introduction and the three description texts agree', () => {
 });
 
 const homeCopy = yaml.load(fs.readFileSync(path.join(__dirname, '../../brand/copy.yaml'), 'utf8'));
+// Rule source: issue #89, owner decisions of 2026-07-28 (capabilities-first; "AI"
+// permitted), plus the Google Search Central title-link and snippet guides linked
+// in docs/positioning-claims.md. Neither guide sets a fixed character limit; the
+// overlapping SEO audit uses null bounds for that reason. The home title, heading
+// and description stay as specified with the home page and are tested above.
+test.each([
+  ['about.html', 'about', 'About AceEngineer | Engineering analysis and agentic workflows'],
+  ['ai-automation/index.html', 'ai_automation', 'AI automation | Agentic engineering workflows'],
+])('%s metadata and h1 match the positioning contract', (page, key, title) => {
+  const doc = documents.get(page);
+  const copy = homeCopy[key];
+  expect(doc.title).toBe(title);
+  expect(doc.querySelectorAll('main h1')).toHaveLength(1);
+  expect(doc.querySelector('main h1').textContent.trim()).toBe(copy.heading);
+  expect(copy.heading.toLowerCase()).toContain('agentic engineering workflows');
+  for (const selector of ['meta[property="og:title"]', 'meta[name="twitter:title"]']) {
+    expect(doc.querySelector(selector).content).toBe(title);
+  }
+  for (const selector of ['meta[name="description"]', 'meta[property="og:description"]', 'meta[name="twitter:description"]']) {
+    expect(doc.querySelector(selector).content).toBe(copy.description);
+    expect(doc.querySelector(selector).content).toMatch(/AI-native/);
+    expect(doc.querySelector(selector).content).toMatch(/engineering (?:analysis|work)/);
+  }
+  for (const node of nodesFor(page).filter(node => node['@type'] === 'WebPage')) {
+    expect(node).toMatchObject({ name: title, description: copy.description });
+  }
+  expect(homeCopy.positioning.metadata_length.status).toBe('NOT_EVALUATED');
+  expect(homeCopy.positioning.metadata_length.title_max).toBeNull();
+  expect(homeCopy.positioning.metadata_length.description_max).toBeNull();
+});
 const supportedHomeCopy = [
   ['home.lead'],
   ['home.services.3.heading', 'service_details.3.description', 'home.services.3.receives'],

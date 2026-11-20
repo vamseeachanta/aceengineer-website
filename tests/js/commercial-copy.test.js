@@ -15,9 +15,80 @@ const os = require('os');
 const path = require('path');
 const { JSDOM } = require('jsdom');
 const { builtPages, SITEMAP_EXCLUDE } = require('../../build');
+const yaml = require('js-yaml');
+const { positioningFindings, bannedFindings } = require('../../scripts/lint-copy');
 
 const distDir = path.join(__dirname, '..', '..', 'dist');
 const repoDir = path.join(__dirname, '..', '..');
+
+// Order rule: issue #89, owner decisions of 2026-07-28 - capabilities-first, so
+// engineering analysis leads and workflow setup follows. The workflow wording is
+// an offer awaiting maintainer copy review, not the renderer's output.
+const purpose = "AceEngineer provides engineering analysis and calculation work, and sets up agentic engineering workflows suited to the needs of each client, aimed at helping engineering teams become AI-native.";
+const terms = ['engineering analysis', 'agentic engineering workflows', 'AI-native'];
+const brandCopy = yaml.load(fs.readFileSync(path.join(repoDir, 'brand/copy.yaml'), 'utf8'));
+const positioning = brandCopy.positioning;
+
+test('the positioning contract records the purpose, audience and three offer statements', () => {
+  expect(positioning.purpose).toBe(purpose);
+  expect(positioning.primary_audience).toBe('Engineering teams that need engineering analysis, with workflow setup alongside it.');
+  expect(positioning.supporting_claims.map(claim => claim.basis)).toEqual([
+    'offer statement', 'offer statement', 'offer statement',
+  ]);
+  expect(positioning.approved_key_terms).toEqual(terms);
+});
+
+test('the purpose states engineering analysis before workflow setup', () => {
+  const at = terms.map(term => positioning.purpose.indexOf(term));
+  expect(at.every(index => index >= 0)).toBe(true);
+  expect(at).toEqual([...at].sort((a, b) => a - b)); // Capabilities first, then workflows.
+  // An offer, not a delivered outcome: no "so that they become" result clause.
+  expect(positioning.purpose).not.toMatch(/so that they become|helps clients become/);
+});
+
+test.each(['index.html', 'ai-automation/index.html', 'about.html'])('the %s lead states the purpose before supporting work', page => {
+  const html = fs.readFileSync(path.join(distDir, page), 'utf8');
+  expect(positioningFindings(html, positioning, page)).toEqual([]);
+  const doc = new JSDOM(html).window.document;
+  expect(doc.querySelector(positioning.leads[page]).textContent.trim()).toBe(purpose);
+});
+
+test('positioning rejects purpose in metadata, hidden text, another section or a shortened lead', () => {
+  const contract = { ...positioning, leads: { 'fixture.html': 'main .lead' } };
+  for (const html of [
+    `<meta name="description" content="${purpose}"><main><p class="lead">Engineering work.</p></main>`,
+    `<main><p class="lead" hidden>${purpose}</p></main>`,
+    `<main><p class="lead" style="display:none">${purpose}</p></main>`,
+    `<main hidden><p class="lead">${purpose}</p></main>`,
+    `<style>.lead { display: none; }</style><main><p class="lead">${purpose}</p></main>`,
+    `<main><p class="lead">Engineering work.</p><section>${purpose}</section></main>`,
+    '<main><p class="lead">We help clients become AI-native.</p></main>',
+  ]) expect(positioningFindings(html, contract, 'fixture.html').length).toBeGreaterThan(0);
+  expect(positioningFindings(`<main><p class="lead">${purpose}</p></main>`, contract, 'fixture.html')).toEqual([]);
+});
+
+test('both banned lists apply to all built and checked-in pages, including nested pages', () => {
+  const banned = [...brandCopy.forbidden_phrases, ...positioning.banned_wording];
+  for (const [root, pages] of [[distDir, builtPages(distDir)], [repoDir, outsideContentPages(repoDir)]]) {
+    const failures = pages.flatMap(page => bannedFindings(fs.readFileSync(path.join(root, page), 'utf8'), banned)
+      .map(phrase => ({ page, phrase })));
+    expect(failures).toEqual([]);
+  }
+});
+
+test('banned wording is decoded across tags and checked in metadata and links', () => {
+  const banned = ['Open Deck', 't.me/', 'fully autonomous engineering'];
+  const fixture = '<meta property="og:title" content="Fully autonomous engineering"><main><p>Open <b>Deck</b></p><a href="https://t.me/example">Contact</a></main>';
+  expect(bannedFindings(fixture, banned)).toEqual(banned);
+  expect(bannedFindings('<p>AI-native engineering with a responsible engineer.</p>', banned)).toEqual([]);
+});
+
+test('newsletter source supports engineering workflows, automation and AI assistants', () => {
+  const doc = new JSDOM(fs.readFileSync(path.join(distDir, 'newsletter/issue-001-energy-street/index.html'), 'utf8')).window.document;
+  const offer = doc.querySelector('#engineering-offer').textContent.replace(/\s+/g, ' ');
+  expect(offer).toContain('engineering analysis and calculation workflows');
+  expect(offer).toContain('engineering workflows, their automation and the use of AI assistants');
+});
 
 const RULES = {
   price: [

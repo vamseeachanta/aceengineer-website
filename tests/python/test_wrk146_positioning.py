@@ -5,11 +5,12 @@ be tested against the retired AI-native homepage in a legacy root HTML copy.
 Rendered homepage behavior is also covered by tests/js/home-page.test.js.
 """
 
+import re
+from html import unescape
 from pathlib import Path
 
 import pytest
 import yaml
-
 
 # ---------------------------------------------------------------------------
 # Shared helpers
@@ -64,7 +65,9 @@ class TestHomepagePositioning:
     def test_homepage_explains_engineering_delivery(self):
         content = read_page("index.html")
         assert "{{ copy.home.lead }}" in content
-        assert "AI automation and agentic workflows" in HOME["lead"]
+        lead = HOME["lead"]
+        assert "engineering analysis" in lead
+        assert lead.index("engineering analysis") < lead.index("agentic engineering workflows")
 
     def test_homepage_firm_facts_present(self):
         content = read_page("index.html")
@@ -369,3 +372,128 @@ class TestConsistentPositioning:
             content = read_page(page)
             assert "contact.html" in content or '<include src="partials/scope-invitation.html">' in content
         assert "contact.html" in read_page("partials/scope-invitation.html")
+
+
+class TestPositioningContract:
+    """Source checks supplement the rendered-page JavaScript checks.
+
+    Order rule: issue #89, owner decisions of 2026-07-28 - capabilities-first,
+    so engineering analysis leads and workflow setup follows. The workflow
+    wording is an offer awaiting maintainer copy review; no issue records it.
+    No performance figure or length limit is assumed.
+    """
+
+    PURPOSE = (
+        "AceEngineer provides engineering analysis and calculation work, and sets "
+        "up agentic engineering workflows suited to the needs of each client, aimed at "
+        "helping engineering teams become AI-native."
+    )
+    TERMS = ("engineering analysis", "agentic engineering workflows", "AI-native")
+
+    def test_purpose_and_supporting_claims_are_offer_statements(self):
+        positioning = COPY["positioning"]
+        assert positioning["purpose"] == self.PURPOSE
+        assert positioning["primary_audience"] == (
+            "Engineering teams that need engineering analysis, with workflow setup alongside it."
+        )
+        assert [claim["basis"] for claim in positioning["supporting_claims"]] == [
+            "offer statement", "offer statement", "offer statement"
+        ]
+        assert positioning["approved_key_terms"] == list(self.TERMS)
+
+    def test_purpose_states_capabilities_before_workflow_setup(self):
+        positions = [self.PURPOSE.index(term) for term in self.TERMS]
+        assert positions == sorted(positions)
+        assert "so that they become" not in self.PURPOSE
+
+    def test_lead_selectors_match_the_source_containers(self):
+        assert COPY["positioning"]["leads"] == {
+            "index.html": "main .home-hero .home-lead",
+            "ai-automation/index.html": "main .positioning-lead",
+            "about.html": "main .about-hero .lead",
+        }
+        assert '<section class="home-hero">' in read_page("index.html")
+        assert '<section class="about-hero">' in read_page("about.html")
+        assert '<p class="positioning-lead">' in read_page("ai-automation/index.html")
+
+    def test_both_banned_lists_are_absent_from_all_source_pages(self):
+        phrases = COPY["forbidden_phrases"] + COPY["positioning"]["banned_wording"]
+        failures = []
+        for page in SITE_ROOT.rglob("*.html"):
+            source = page.read_text(encoding="utf-8")
+            source = re.sub(r"<!--.*?-->|<(script|style)\b[^>]*>.*?</\1>", "", source, flags=re.DOTALL)
+            text = re.sub(r"\s+", " ", unescape(re.sub(r"<[^>]+>", "", source))).lower()
+            raw = unescape(source).lower()
+            for phrase in phrases:
+                if phrase.lower() in text or phrase.lower() in raw:
+                    failures.append((str(page.relative_to(SITE_ROOT)), phrase))
+        assert failures == []
+
+    @pytest.mark.parametrize(
+        ("page", "key"),
+        [("index.html", "home"), ("about.html", "about"), ("ai-automation/index.html", "ai_automation")],
+    )
+    def test_metadata_templates_use_contract_fields(self, page, key):
+        source = read_page(page)
+        title = "{{ copy." + key + ".title }}"
+        description = "{{ copy." + key + ".description }}"
+        assert "<title>" + title + "</title>" in source
+        for attribute, name, field in [
+            ("name", "description", description),
+            ("property", "og:title", title),
+            ("property", "og:description", description),
+            ("name", "twitter:title", title),
+            ("name", "twitter:description", description),
+        ]:
+            assert f'<meta {attribute}="{name}" content="{field}">' in source
+
+    @pytest.mark.parametrize(
+        ("page", "lead", "heading"),
+        [
+            ("index.html", "home.lead", "home.heading"),
+            ("about.html", "firm_lede", "tagline"),
+            ("ai-automation/index.html", "ai_automation.lead", "ai_automation.heading"),
+        ],
+    )
+    def test_lead_and_heading_use_canonical_fields(self, page, lead, heading):
+        source = read_page(page)
+        assert re.search(r"<p\b[^>]*>\s*\{\{\{? copy\." + re.escape(lead), source)
+        assert "<h1>{{ copy." + heading + " }}</h1>" in source
+        value = COPY
+        for part in lead.split("."):
+            value = value[part]
+        assert value == self.PURPOSE
+
+    @pytest.mark.parametrize(
+        ("key", "expected", "length"),
+        [
+            ("about", "About AceEngineer | Engineering analysis and agentic workflows", 62),
+            ("ai_automation", "AI automation | Agentic engineering workflows", 45),
+        ],
+    )
+    def test_metadata_title_examples_have_independent_counts(self, key, expected, length):
+        """Hand count. About: prefix 5+1+11+3 = 20; suffix 11+1+8+1+3+1+7+1+9 = 42;
+        total 62. Automation: prefix 2+1+10+3 = 16; suffix 7+1+11+1+9 = 29;
+        total 45. These are counts, not limits. The home title stays as
+        specified with the home page and is checked in TestConsistentPositioning.
+        """
+        assert COPY[key]["title"] == expected
+        assert len(COPY[key]["title"]) == length
+        assert "AI-native" in COPY[key]["description"]
+        assert "agentic engineering workflows" in COPY[key]["description"]
+
+    def test_length_limits_remain_unevaluated(self):
+        assert COPY["positioning"]["metadata_length"] == {
+            "status": "NOT_EVALUATED", "title_max": None, "description_max": None
+        }
+
+    def test_claims_checklist_covers_every_new_sentence(self):
+        report = (SITE_ROOT.parent / "docs/positioning-claims.md").read_text(encoding="utf-8")
+        sentences = [self.PURPOSE, *(claim["sentence"] for claim in COPY["positioning"]["supporting_claims"])]
+        for key in ["about", "ai_automation"]:
+            sentences.extend(part.rstrip(".") + "." for part in COPY[key]["description"].split(". "))
+        for sentence in sentences:
+            assert sentence in report
+        assert report.index("## Revision history") < report.index("## Contract")
+        assert "## Worked example" in report
+        assert "## Before and after" in report

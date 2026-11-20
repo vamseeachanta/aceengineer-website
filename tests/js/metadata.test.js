@@ -327,6 +327,7 @@ const OWN_OG_IMAGES = {
   'newsletter/issue-002-main-street/index.html': `${OG_BASE}issue-002-main-street.png`,
   'newsletter/issue-002-public-data/index.html': `${OG_BASE}issue-002-public-data-2026-11-18.png`,
   'newsletter/rod-pump-dynamometer-cards/index.html': `${OG_BASE}rod-pump-dynamometer-cards.png`,
+  'newsletter/deckhand-open-studies/index.html': `${OG_BASE}deckhand-open-studies.png`,
 };
 
 test('destinations have canonical Open Graph metadata and the existing logo', () => {
@@ -382,8 +383,8 @@ test('source metadata meets the required coverage floors', () => {
   // Includes the newsletter archive and both automation pages; retired sources still count.
   // Keep the existing 107 floor: noindex exclusions do not require a reduction.
   // Main's hand-counted source set (135) plus the public reports directory index
-  // and the rod pump dynamometer card article.
-  expect(sources).toHaveLength(137);
+  // and the rod pump dynamometer card article, and the Deckhand open studies article.
+  expect(sources).toHaveLength(138);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 107],
     ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],

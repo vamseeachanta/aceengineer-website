@@ -1,0 +1,255 @@
+---
+rootPath: "../../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deckhand studies now published with its data, code and prompt</title>
+<meta name="description" content="Each Deckhand study is published with its data set, pinned code, reusable prompt and the values a rerun must match, so it stays traceable as AI models and prompts change.">
+<meta property="og:title" content="Deckhand studies now published with its data, code and prompt">
+<meta property="og:description" content="Each Deckhand study is published with its data set, pinned code, reusable prompt and the values a rerun must match, so it stays traceable as AI models and prompts change.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ canonicalUrl }}">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/og/deckhand-open-studies.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="AceEngineer mark with the title Deckhand studies now published with its data, code and prompt, beside four labels: data set, pinned code, reusable prompt and values to match">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Deckhand studies now published with its data, code and prompt">
+<meta name="twitter:description" content="Each Deckhand study is published with its data set, pinned code, reusable prompt and the values a rerun must match, so it stays traceable as AI models and prompts change.">
+<meta name="twitter:image" content="https://www.aceengineer.com/assets/img/og/deckhand-open-studies.png">
+<meta name="twitter:image:alt" content="AceEngineer mark with the title Deckhand studies now published with its data, code and prompt, beside four labels: data set, pinned code, reusable prompt and values to match">
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Article", "headline": "Deckhand studies now published with its data, code and prompt", "name": "Deckhand studies now published with its data, code and prompt", "description": "Each Deckhand study is published with its data set, pinned code, reusable prompt and the values a rerun must match, so it stays traceable as AI models and prompts change.", "datePublished": "2026-11-20", "dateModified": "2026-11-20", "url": "https://www.aceengineer.com/newsletter/deckhand-open-studies/", "inLanguage": "en", "publisher": {"@id": "https://www.aceengineer.com/#organization"}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.aceengineer.com/"}, {"@type": "ListItem", "position": 2, "name": "Newsletter", "item": "https://www.aceengineer.com/newsletter/"}, {"@type": "ListItem", "position": 3, "name": "Deckhand studies now published with its data, code and prompt", "item": "https://www.aceengineer.com/newsletter/deckhand-open-studies/"}]}]</script>
+<include src="partials/head-common.html"></include>
+<style>
+:root{--ink:#0b0b0b;--ink2:#52514e;--muted:#6f6e69;--line:#e4e3de;--surface:#fcfcfb;--bg:#ffffff;--navy:#1d3557;--teal:#1b7a7f;
+--note-bg:#f3f8f8;--link:#1d5fa8}
+*{box-sizing:border-box}
+.page{color:var(--ink);font:17px/1.6 Georgia,'Times New Roman',serif}
+.page a{color:var(--link)}
+.page{max-width:1180px;margin:0 auto;padding:24px 16px 60px;display:grid;grid-template-columns:minmax(0,760px) 220px;gap:40px;justify-content:center}
+main{min-width:0;grid-column:1;grid-row:1}
+.contents{grid-column:2;grid-row:1;position:sticky;top:20px;align-self:start;font:14px/1.5 system-ui,sans-serif;color:var(--ink2);
+border-left:2px solid var(--line);padding-left:14px}
+.contents p{margin:0 0 6px;font-weight:600}.contents ol{margin:0;padding-left:18px}
+@media(max-width:1060px){.page{display:block;max-width:800px}.contents{position:static;margin-bottom:16px}}
+.label{font:600 13px system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:var(--teal);margin:0}
+.page h1{font-size:30px;line-height:1.25;margin:6px 0 10px;color:var(--navy)}
+.page h2{font-size:22px;line-height:1.3;color:var(--navy);margin:36px 0 10px}
+.page h3{font:600 16px/1.4 system-ui,sans-serif;margin:18px 0 6px;color:var(--ink)}
+.masthead{font:14px/1.5 system-ui,sans-serif;color:var(--ink2);margin:0 0 18px}
+.page figure{margin:18px 0}
+.page figcaption{font:13px/1.45 system-ui,sans-serif;color:var(--ink2);margin-top:6px}
+figcaption ol{margin:6px 0 2px;padding-left:18px}figcaption .fig-title{margin:2px 0 0;font-weight:600;color:var(--ink)}
+.table-wrap{overflow-x:auto;max-width:100%}
+.page table{border-collapse:collapse;width:100%;font:14px/1.45 system-ui,sans-serif;color:var(--ink)}
+.page th,.page td{border-bottom:1px solid var(--line);padding:6px 7px;text-align:left;vertical-align:top;overflow-wrap:break-word}
+.page th{color:var(--ink2);font-weight:600}
+figure.objective table{border-top:2px solid var(--teal)}
+figure.objective th{width:6.5em}
+@media(max-width:560px){figure.objective th,figure.objective td{display:block;width:auto;border-bottom:0;padding:4px 2px}
+figure.objective tr{display:block;border-bottom:1px solid var(--line);padding:4px 0}}
+.page .intro h2{font:600 16px/1.4 system-ui,sans-serif;margin:18px 0 6px;color:var(--teal)}
+.hyp{border-left:4px solid var(--teal);background:var(--note-bg);padding:10px 16px;margin:18px 0}
+.hyp p{margin:0}
+blockquote.prompt{margin:10px 0;padding:10px 16px;border-left:4px solid var(--line);background:var(--surface);font:15px/1.55 system-ui,sans-serif}
+.small{font:13px/1.5 system-ui,sans-serif;color:var(--ink2)}
+.signoff{font:12px/1.5 system-ui,sans-serif;color:var(--muted);margin-top:22px}
+ol.refs{font-size:15px;padding-left:22px}ol.refs li{margin:0 0 6px;overflow-wrap:anywhere}
+.page ul,.page ol{padding-left:22px}.page li{margin:0 0 4px}
+.appx{font-size:16px}
+/* Site stylesheet: restore the approved look where its base rules differ */
+.page a:hover,.page a:focus{color:var(--link);text-decoration:revert}
+main p,main ul,main ol{margin:revert}
+.page section{padding:revert}
+.page h1,.page h2{font-family:inherit;font-weight:revert}
+.page h2,.page h3{line-height:revert}.page h3{font-weight:revert}
+.page .label{display:block;padding:0;white-space:normal;text-align:left;border:0;border-radius:0;vertical-align:baseline}
+</style>
+</head>
+<body>
+<include src="partials/nav.html"></include>
+<div class="page">
+<nav class="contents" aria-label="Contents"><p>Contents</p><ol>
+<li><a href="#data">The data set is named and dated</a></li>
+<li><a href="#code">The code is fixed at one version</a></li>
+<li><a href="#prompt">The prompt carries the values to match</a></li>
+<li><a href="#figures">Every figure carries its own data file</a></li>
+<li><a href="#checks">Each report states its checks and misses</a></li>
+<li><a href="#references">References</a></li>
+<li><a href="#appendix-a">A Method and data</a></li>
+<li><a href="#appendix-b">B Reusable prompts</a></li>
+</ol></nav>
+<main id="main">
+
+<p class="label">Main Street · How we use AI</p>
+<h1>Deckhand studies now published with its data, code and prompt</h1>
+<p class="masthead">The Deckhand Chronicles is AceEngineer's newsletter. We help build AI into everyday engineering work.</p>
+
+<figure class="objective">
+<div class="table-wrap"><table>
+<tbody>
+<tr><th scope="row">Objective</th><td>Make each Deckhand study traceable and repeatable, so its result holds as AI models and prompts change.</td></tr>
+<tr><th scope="row">Inputs</th><td>Three of our studies: rod pump cards, Gulf well permits and a corroded pipeline section.</td></tr>
+<tr><th scope="row">Method</th><td>For each, check the published data set, code version, prompt and the values a rerun must match.</td></tr>
+<tr><th scope="row">Output</th><td>A record any reader can rerun and compare.</td></tr>
+<tr><th scope="row">Result</th><td>All three publish all four. The pipeline study reruns in about 10 minutes.</td></tr>
+</tbody>
+</table></div>
+<figcaption>At a glance: the objective, inputs, method, output and result. Sources: the three studies listed in Appendix A. Deckhand · AceEngineer</figcaption>
+</figure>
+
+<div class="intro">
+<h2>What we did</h2>
+<p>AI models and prompts will keep changing. We want our articles and analysis to stay traceable through those changes. So every Deckhand study is published with its data set, its code at one fixed version, a reusable prompt and the values to match. Our Deckhand team of AI assistants runs each study on public data, in code we publish.</p>
+<h2>Why it matters</h2>
+<p>AI work has its own form of a classic programmer complaint: "I ran what you ran but I did not get the same result." Or: "I can make the model get me the result I want." A published record answers both. Anyone can rerun the study against values fixed before the run. As models and prompts change, we expect the engineering results only to improve, and every change shows against the record.</p>
+<h2>What is inside</h2>
+<p>Three studies are the examples: rod pump cards, Gulf well permits and a corroded pipeline section. For each, the body shows the data set, the code, the prompt and the values a rerun must match. Appendix A lists each file and version; Appendix B holds this article's own prompt.</p>
+</div>
+
+<p class="small">In this article: <a href="#data">the data set</a>; <a href="#code">the code</a>; <a href="#prompt">the prompt</a>; <a href="#figures">the figure data</a>; <a href="#checks">the checks</a>.</p>
+
+<h2 id="data">The data set is named and dated</h2>
+<p>Every study starts from a data set a reader can download, named with its publisher, its date and its licence.</p>
+<p>Some of the observations are as follows:</p>
+<ul>
+<li>Rod pump: one anonymised field well in our public code library, under the MIT licence, and a public diagnostic plate of ten labelled pump card shapes, a data set published on Mendeley Data in 2020 under CC0 1.0 [5].</li>
+<li>Well permits: two raw data files of the US Bureau of Safety and Environmental Enforcement (BSEE), the permit file of 2 November 2026 and the borehole file of 12 November 2026, free to download with no account [6].</li>
+<li>Corroded pipeline: a worked example of 15 wall readings on a 5 by 3 grid, held at one fixed version of our public code library.</li>
+<li>BSEE lists its files as updated daily, so the file dates fix the published values. The prompt records each file's SHA-256 hash, a fingerprint that changes if the file does.</li>
+</ul>
+
+<h2 id="code">The code is fixed at one version</h2>
+<p>The method lives in our public code. Every link points to one fixed version, a pinned commit, so a later change to the code cannot change what the article cites.</p>
+<p>Some of the observations are as follows:</p>
+<ul>
+<li>Rod pump: the pump card is computed from the surface card with the wave equation [4]. Two numerical methods are kept side by side; on the example well their pump cards differ by 0.26 % of the load range.</li>
+<li>Rod pump: the data links are pinned, and the prompt runs the library's latest analysis code. A script grades each rerun against the published values, so newer code is held to the same result.</li>
+<li>Well permits: the counting script needs only the Python standard library, and the counting rules are written down: each well is counted once, at its first New Well permit.</li>
+<li>Corroded pipeline: one script rebuilds the assessment from the pinned inputs, with five published strength methods side by side: B31G, Modified B31G, RSTRENG, RSTRENG-2D and DNV-RP-F101. Package versions can drift, so the prompt asks for the versions used to be recorded.</li>
+<li>Where a method is simplified, the article says so: the pipeline rating uses a simplified form of the local metal-loss route of API 579-1/ASME FFS-1 [7], and the section is referred to a formal evaluation before the rating is adopted.</li>
+</ul>
+
+<h2 id="prompt">The prompt carries the values to match</h2>
+<p>Our Deckhand assistants ran each analysis. The reusable prompt gives the same work to a reader's own assistant, in plain instructions, with the values the rerun must match (Table 1). It names no model: the values, not the model, decide whether a rerun agrees.</p>
+<figure>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Study</th><th scope="col">What the reader runs</th><th scope="col">Values the rerun must match</th></tr></thead>
+<tbody>
+<tr><td>Rod pump cards</td><td>The prompt on the public example well, graded by a script beside it</td><td>Surface stroke 53.99 in; pump stroke 39.57 in; fluid load 3,310 lbf; fillage 60.08 %</td></tr>
+<tr><td>Gulf of Mexico well permits</td><td>The counting prompt on the dated BSEE files</td><td>2,895 wells: 1,476 under 100 m; 175 at 100 to 500 m; 589 at 500 to 1,500 m; 655 at 1,500 m and deeper</td></tr>
+<tr><td>Corroded pipeline section</td><td>The prompt that installs the pinned code and rebuilds the assessment</td><td>Reduced rating 7.046 MPa [1,022 psi]; life 23.1, 11.5 and 5.8 years at three corrosion rates</td></tr>
+</tbody>
+</table></div>
+<figcaption>
+<ol>
+<li>Values as published in each study's prompt file, at the versions listed in Appendix A.</li>
+<li>Rod pump: finite-difference method. Well permits: water depth in bands; each well counted once. Pipeline: corrosion rates of 0.0635, 0.127 and 0.254 mm/year; agreement to 4 significant figures.</li>
+</ol>
+<p class="fig-title">Table 1. Values a rerun must match, by study</p>
+</figcaption>
+</figure>
+<p>Some of the observations are as follows:</p>
+<ul>
+<li>None of the three needs a paid account to run. The pipeline study cites paid standards, and its code needs no copy of them.</li>
+<li>The rod pump prompt is graded by a script, so the rerun is scored, not just described.</li>
+<li>The pipeline prompt has the rerun rewrite the results file and compare it with the published one; a faithful rerun shows no numerical change. It needs about 10 minutes and 3.5 GB of disk.</li>
+<li>Each prompt has a second part that adapts it: a reader's own card, another region or depth band, or a reader's own wall readings.</li>
+</ul>
+
+<h2 id="figures">Every figure carries its own data file</h2>
+<p>The numbers behind each figure are published as a file beside it, so a reader can replot them or check one value without rerunning anything.</p>
+<p>Some of the observations are as follows:</p>
+<ul>
+<li>Rod pump: the two cards of Figure 1 are one CSV file at a fixed version, and each of the ten examples of Figure 2 has its own file.</li>
+<li>Well permits: every figure and table links a CSV file, including the map windows, the yearly counts and the annual oil price.</li>
+<li>Corroded pipeline: each of the three figures has its CSV file: life by corrosion rate, strength by method and the wall map.</li>
+</ul>
+
+<h2 id="checks">Each report states its checks and misses</h2>
+<p>An engineering-quality report gives the reader what is needed to judge it: the checks run, the inputs that matter most and where the method falls short.</p>
+<p>Some of the observations are as follows:</p>
+<ul>
+<li>Rod pump: the shape model names 6 of the 10 reference conditions, and the article lists the four it misses, each read as a traveling valve leak.</li>
+<li>Rod pump: the inputs that matter most are stated. A 1 % larger rod diameter lowers the maximum pump load by about 3.2 %; a 1 % load-cell gain error raises it by about 2.6 %.</li>
+<li>Well permits: what is left out is counted, such as the 10 wells whose first New Well permit gives no requested spud date. The oil price is shown beside the counts, and no cause is fitted.</li>
+<li>Corroded pipeline: the five methods give four different pressures, and the article explains why. The highest allowable pressure is 21.6 % above the lowest.</li>
+</ul>
+<p>Published misses matter as much as published values. A rerun steered toward a wanted answer still has to match the same check values and account for the same misses.</p>
+<div class="hyp"><p>Our hypothesis: with the record published, a rerun that disagrees is a finding to trace, not an argument over whose run was right. Models and prompts will change, but the record stays. Each new run is measured against the last, and we expect the engineering results only to improve.</p></div>
+
+<p>To try it out or adapt the analysis, see <a href="#appendix-b">reusable prompt</a>.</p>
+<p>If you have run your own analysis, see a way to improve this one, or have an idea for a future issue, write to support@aceengineer.com. We read every reply and credit the ideas we use and provide results we obtained.</p>
+
+<p class="signoff">Prepared: Technical Writer Deckhand &middot; Checked: Editor Deckhand &middot; Approved: Vamsee Achanta &middot; 20 November 2026</p>
+
+<h2 id="references">References</h2>
+<ol class="refs">
+<li>AceEngineer, Dynamometer card analysis: from the surface card to the pump card and a diagnosis, The Deckhand Chronicles, revision 4.4, 19 Nov 2026. <a href="https://www.aceengineer.com/newsletter/rod-pump-dynamometer-cards/">aceengineer.com/newsletter/rod-pump-dynamometer-cards</a>. Full study: <a href="https://github.com/vamseeachanta/digitalmodel/blob/7d02ae07248b038dcdec5e7097565c02fcd152f8/docs/domains/artificial_lift/dynacard-pump-card-report.md">digitalmodel on GitHub, dynacard-pump-card-report.md</a> (version of 12 Nov 2026).</li>
+<li>AceEngineer, Gulf of Mexico well permits: a public US data file, The Deckhand Chronicles, revision 12, 18 Nov 2026. <a href="https://www.aceengineer.com/newsletter/issue-002-public-data/">aceengineer.com/newsletter/issue-002-public-data</a>.</li>
+<li>AceEngineer, Fitness for service of corroded pipelines: strength and remaining useful life (RUL), revision 5, 19 Nov 2026. Full study: <a href="https://vamseeachanta.github.io/digitalmodel/ffs/pipeline-ffs-assessment.html">pipeline fitness-for-service assessment, study page</a> (October 2026).</li>
+<li>Gibbs, S. G. (1963). Predicting the Behavior of Sucker-Rod Pumping Systems. SPE-588-PA. <a href="https://doi.org/10.2118/588-PA">doi:10.2118/588-PA</a>.</li>
+<li>Rod-pump diagnostic plate data set: Zhang, R. (2020). Data for: Real time and intelligent diagnosis method of working condition in rod pumping well based on multi-dimensional data coupling of reservoir-wellbore-surface. Mendeley Data, version 1, CC0 1.0. <a href="https://doi.org/10.17632/hnfwm9mjs6.1">doi:10.17632/hnfwm9mjs6.1</a>, retrieved 11 Oct 2026.</li>
+<li>US Bureau of Safety and Environmental Enforcement, Data Center, raw data files. <a href="https://www.data.bsee.gov/Main/RawData.aspx">data.bsee.gov/Main/RawData.aspx</a>.</li>
+<li>API 579-1/ASME FFS-1, Fitness-For-Service, 2021; Part 2, Fitness-For-Service Engineering Assessment Procedure; Part 5, Assessment of Local Metal Loss. <a href="https://www.asme.org/codes-standards/find-codes-standards/fitness-for-service">asme.org</a>.</li>
+</ol>
+
+<section class="appx">
+<h2 id="appendix-a">Appendix A Method and data</h2>
+<p>The three studies and the files each one publishes are listed in Table A1. Every value in this article is quoted from a study at the version listed; the reruns themselves are made with each study's own prompt.</p>
+<figure>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Study and version</th><th scope="col">Data set</th><th scope="col">Code and prompt</th><th scope="col">Figure data</th></tr></thead>
+<tbody>
+<tr><td>Rod pump cards [1], revision 4.4, 19 Nov 2026</td>
+<td>Example well <a href="https://github.com/vamseeachanta/digitalmodel/blob/f5c0009c6dd9e009cdac636d3dfbd7ae0ec1f79c/tests/marine_ops/artificial_lift/test_data/cleansed_well_001.json">cleansed_well_001.json</a>, digitalmodel, MIT licence, version of 14 Nov 2026; diagnostic plate [5], CC0 1.0</td>
+<td><a href="https://github.com/vamseeachanta/digitalmodel/blob/6766dfca9e1cd2854e651dce1ab97442eac14a53/docs/domains/artificial_lift/dynacard-article/reusable-prompts.md">reusable-prompts.md</a> at commit 6766dfca; web page <a href="https://github.com/vamseeachanta/digitalmodel/blob/f5c0009c6dd9e009cdac636d3dfbd7ae0ec1f79c/docs/apps/dynacard/README.md">guide</a>, version of 14 Nov 2026</td>
+<td><a href="https://github.com/vamseeachanta/digitalmodel/blob/242f931efefa8facbe337502a2cdb4cebe08fd78/docs/domains/artificial_lift/dynacard-article/figure-1-cards.csv">figure-1-cards.csv</a>; one CSV per example in the <a href="https://github.com/vamseeachanta/digitalmodel/blob/f5c0009c6dd9e009cdac636d3dfbd7ae0ec1f79c/docs/domains/artificial_lift/dynacard-examples/README.md">worked examples</a></td></tr>
+<tr><td>Gulf of Mexico well permits [2], revision 12, 18 Nov 2026</td>
+<td>BSEE <a href="https://www.data.bsee.gov/Well/Files/APDRawData.zip">APDRawData.zip</a>, file of 2 Nov 2026; BSEE <a href="https://www.data.bsee.gov/Well/Files/BoreholeRawData.zip">BoreholeRawData.zip</a>, file of 12 Nov 2026; US federal government data</td>
+<td><a href="https://github.com/vamseeachanta/worldenergydata/tree/8f23e662eaf25511b3d671b5d82bb2ab7254edf0/examples/bsee/issue2_public_data_r12/prompts">prompts</a> and <a href="https://github.com/vamseeachanta/worldenergydata/blob/8f23e662eaf25511b3d671b5d82bb2ab7254edf0/examples/bsee/issue2_public_data_r12/counting-rules.md">counting-rules.md</a> at commit 8f23e662, worldenergydata</td>
+<td>A CSV under every figure and Table 1 of the article page [2]</td></tr>
+<tr><td>Corroded pipeline section [3], revision 5, 19 Nov 2026</td>
+<td><a href="https://github.com/vamseeachanta/digitalmodel/tree/09089a121a16069c4b657d1a320a630a23ab1dd5/examples/workflows/pipeline-ffs-assessment">Worked example</a>, digitalmodel, MIT licence, commit 09089a12</td>
+<td><a href="https://github.com/vamseeachanta/digitalmodel/blob/40f188ae311127c196216e2aa0206213479228d2/docs/articles/fitness-for-service-corroded-pipelines/reusable-prompts.md">reusable-prompts.md</a> and <a href="https://github.com/vamseeachanta/digitalmodel/blob/40f188ae311127c196216e2aa0206213479228d2/docs/articles/fitness-for-service-corroded-pipelines/method-and-data.md">method-and-data.md</a> at commit 40f188ae</td>
+<td>fig1-life-by-corrosion-rate.csv, fig2-strength-by-method.csv, fig3-wall-map.csv, under the figures of the article [3]</td></tr>
+</tbody>
+</table></div>
+<figcaption>
+<ol>
+<li>Links pinned to the commits shown; version dates as given in each study. The rod pump prompt runs the library's latest analysis code and grades it against the published values.</li>
+<li>Check values of Table 1 are taken from the "Reproduce the published result" part of each prompt file.</li>
+</ol>
+<p class="fig-title">Table A1. The three studies and what each publishes</p>
+</figcaption>
+</figure>
+<p>This article is for a reader deciding how to check a Deckhand study, and for a firm deciding how to publish its own. Its values hold at the versions listed: the permit counts change with each new BSEE file, and the rod pump readings come from one example well and ten reference card shapes.</p>
+
+<h2 id="appendix-b">Appendix B Reusable prompts</h2>
+<p>This prompt lets your team, or your assistant, check a Deckhand study the way this article describes: find its data set, its code and its prompt, rerun it, and compare the values. To have a study of your own engineering question done for you instead, see below.</p>
+<h3>What you need to run this</h3>
+<ul>
+<li>Data required: none beyond the public data sets the three studies name (Appendix A).</li>
+<li>Data required to adapt: a published study you want to check, with its data set, code and check values.</li>
+<li>Paid or behind an account: none to run the three studies. The pipeline study cites paid standards; its code needs no copy of them.</li>
+<li>Changes over time: the prompts and data links are pinned to commits; the rod pump prompt runs the latest analysis code against fixed check values. BSEE lists its files as updated daily, so the permit counts hold for the file dates given. Record the assistant, the model and the package versions you used, so your own run is traceable too.</li>
+</ul>
+<h3>Reproduce the published result</h3>
+<p>Give this prompt to your assistant:</p>
+<blockquote class="prompt">Check the article "Fitness for service of corroded pipelines: strength and remaining useful life (RUL)", revision 5 of 19 Nov 2026. Open its prompt file at https://github.com/vamseeachanta/digitalmodel/blob/40f188ae311127c196216e2aa0206213479228d2/docs/articles/fitness-for-service-corroded-pipelines/reusable-prompts.md and follow "Reproduce the published result" step by step. Give me a table with each check value the file lists, the value you got, and whether they agree to 4 significant figures. Then list the study's data set, the code version and each figure data file, each with its link, and mark any you could not open. Say which assistant and model you used, and the package versions installed.</blockquote>
+<p>Check values: reduced rating 1,022 psi [7.046 MPa], 127.7 % of the 800 psi design pressure; remaining strength factor 0.5896 against 0.90; life 23.1, 11.5 and 5.8 years at 0.0025, 0.005 and 0.01 in/year. Allow about 10 minutes and 3.5 GB of disk.</p>
+<h3>Adapt it to your project</h3>
+<p>Give the same prompt the title and prompt file of another study. For the rod pump study [1], the prompt file grades the rerun with its own script. For the well permits study [2], the prompt reruns on the latest BSEE files, and the counts change with the file date. For a study of your own team, the checks that still apply are: one named data set with its date; code at one fixed version; a prompt with values to match; and a data file beside every figure.</p>
+<p>Public data set: the data sets of the three studies, as listed in Table A1: the rod pump example well and diagnostic plate, the BSEE permit and borehole files of 2 and 12 November 2026, and the corroded-pipeline worked example.</p>
+<p>To have a study of your own engineering question done for you, write to support@aceengineer.com.</p>
+</section>
+
+</main>
+</div>
+<include src="partials/footer.html"></include>
+</body>
+</html>

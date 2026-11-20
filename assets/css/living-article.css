@@ -1,0 +1,123 @@
+/* Living article component: "Last updated" stamp, version history, and the side tag on
+   every link to an earlier article (age plus feature marks, each with a tooltip).
+   Uses the house-style tokens (--hs-*) when the page defines them; the fallbacks keep the
+   component readable on a page without them. Light and dark follow the page's tokens.
+   Markup is written by scripts/living-tags.js; live ages come from assets/js/living-article.js. */
+
+.la-stamp {
+  font-family: var(--hs-font-ui, "Segoe UI", Helvetica, Arial, sans-serif);
+  font-size: var(--hs-fs-sm, 13px);
+  color: var(--hs-text-muted, #5a6b76);
+  margin: 4px 0 12px;
+}
+.la-stamp a { color: inherit; }
+
+.la-list {
+  list-style: none;
+  margin: 8px 0 4px;
+  padding: 0;
+  border-top: 1px solid var(--hs-line, #d0d7de);
+}
+.la-list > li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--hs-line, #d0d7de);
+}
+.la-list > li > a {
+  flex: 1 1 18em;
+  color: var(--hs-link, #0b3d5c);
+  text-decoration-color: var(--hs-link-line, #b8c9d4);
+  text-underline-offset: 2px;
+}
+
+/* The side tag: small, muted, never colour alone (every mark carries a word). */
+.la-tag {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 6px;
+  font-family: var(--hs-font-ui, "Segoe UI", Helvetica, Arial, sans-serif);
+  font-size: var(--hs-fs-xs, 11.5px);
+  line-height: 1.4;
+  color: var(--hs-text-muted, #5a6b76);
+  white-space: nowrap;
+}
+
+.la-mark {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  padding: 0 5px;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--hs-line-mid, #b8c9d4);
+  border-radius: var(--hs-radius-sm, 2px);
+  cursor: help;
+}
+.la-mark.la-age {
+  border-color: transparent;
+  padding-left: 0;
+  font-variant-numeric: tabular-nums;
+}
+.la-mark.la-revised {
+  border-color: var(--hs-accent, #2BB2A6);
+}
+.la-mark:focus-visible {
+  outline: 2px solid var(--hs-focus, #0e7e88);
+  outline-offset: 2px;
+}
+
+/* Tooltip: opens on hover, on keyboard focus, and on tap (the script sets aria-expanded). */
+.la-tip {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  bottom: calc(100% + 8px);
+  width: max-content;
+  max-width: min(18rem, 80vw);
+  padding: 6px 8px;
+  white-space: normal;
+  text-align: left;
+  font-size: var(--hs-fs-sm, 13px);
+  line-height: 1.4;
+  color: var(--hs-text, #26323a);
+  background: var(--hs-surface, #ffffff);
+  border: 1px solid var(--hs-line-strong, #0b3d5c);
+  border-top: var(--hs-rule, 3px) solid var(--hs-accent, #2BB2A6);
+  box-shadow: 0 2px 8px rgba(11, 61, 92, .18);
+  display: none;          /* closed tooltips take no layout, so they never widen the page */
+  pointer-events: none;
+}
+.la-mark:hover > .la-tip,
+.la-mark:focus-visible > .la-tip,
+.la-mark[aria-expanded="true"] > .la-tip {
+  display: block;
+}
+/* Escape or a second tap dismisses the tooltip even while the mark is hovered or focused. */
+.la-mark[data-la-dismissed] > .la-tip {
+  display: none;
+}
+
+/* Legend line: the same descriptions in words, under the list (always printed in static channels). */
+.la-legend {
+  margin: 6px 0 16px;
+  font-family: var(--hs-font-ui, "Segoe UI", Helvetica, Arial, sans-serif);
+  font-size: var(--hs-fs-xs, 11.5px);
+  line-height: 1.5;
+  color: var(--hs-text-muted, #5a6b76);
+}
+
+/* Version history table. */
+.la-history { width: 100%; border-collapse: collapse; font-size: var(--hs-fs-sm, 13px); }
+.la-history caption { text-align: left; font-weight: 600; padding: 4px 0; color: var(--hs-heading, #0b3d5c); }
+.la-history th, .la-history td { text-align: left; vertical-align: top; padding: 4px 8px 4px 0; border-bottom: 1px solid var(--hs-line, #d0d7de); }
+.la-history th { color: var(--hs-text-muted, #5a6b76); font-weight: 600; }
+
+@media print {
+  .la-tip { display: none; }
+}

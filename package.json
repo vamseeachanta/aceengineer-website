@@ -15,6 +15,8 @@
     "publish:sloshing-enrichment": "node scripts/publish-sloshing-enrichment.js",
     "test": "jest",
     "test:claims": "node --test tests/js/phase1-claims.test.js tests/js/retired-agent-copy.test.js",
+    "test:living": "node --test tests/js/living-articles.test.js",
+    "living:tags": "node scripts/living-tags.js",
     "test:coverage": "jest --coverage",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots"

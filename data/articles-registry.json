@@ -1,0 +1,357 @@
+{
+ "schema": "articles-registry/1",
+ "revision": "r1",
+ "about": "Published articles, their revision history and features, for the living-article tags. Generated from the articles registry; edit the registry, not this file. Ages are never stored.",
+ "default_form": "cycle",
+ "features": {
+  "age": {
+   "label": "updated",
+   "name": "Last updated",
+   "tip": "Last updated: the date this article last changed. We revise an article when its data, its method or a reader's correction changes it."
+  },
+  "prompt": {
+   "label": "prompt",
+   "name": "Reusable prompt",
+   "tip": "Prompt: copy the reusable prompt at the end of this article to rerun the analysis yourself."
+  },
+  "data": {
+   "label": "data",
+   "name": "Data set",
+   "tip": "Data: the public data set behind this article is attached, with its source and date."
+  },
+  "revised": {
+   "label": "revised",
+   "name": "Revised since first sent or published",
+   "tip": "Revised: this article changed after it was first sent or published; its version history says what changed and why."
+  },
+  "data_over_time": {
+   "label": "data over time",
+   "name": "Data over time",
+   "tip": "Data over time: the data set grows with each refresh and keeps a dated history of every release."
+  }
+ },
+ "articles": [
+  {
+   "id": "issue-1",
+   "title": "The Deckhand Chronicles: Energy Street, Issue 1",
+   "url": "https://www.aceengineer.com/newsletter/issue-001-energy-street/",
+   "category": null,
+   "series": null,
+   "first_published": "2026-10-18T03:55:15Z",
+   "first_sent": "2026-10-27T19:04:00Z",
+   "last_updated": "2026-10-27T10:32:33Z",
+   "features": [],
+   "source": {
+    "repo": "aceengineer-website",
+    "path": "content/newsletter/issue-001-energy-street/index.html"
+   },
+   "revisions": [
+    {
+     "rev": "r1",
+     "date": "2026-10-18T03:55:15Z",
+     "repo": "aceengineer-website",
+     "commit": "dda116bc2431220e3e41941f3d7183f4bfd27997",
+     "path": "content/newsletter/issue-001/index.html",
+     "change": "First web edition of issue 1, with four chart pages.",
+     "reason": "Issue 1 reviewed for the web."
+    },
+    {
+     "rev": "r2",
+     "date": "2026-10-22T05:32:46Z",
+     "repo": "aceengineer-website",
+     "commit": "21dff6519755593fabd3fac7d298621d02815dba",
+     "path": "content/newsletter/issue-001-energy-street/index.html",
+     "change": "Published as the Energy Street edition at its own address; the first address redirects to it.",
+     "reason": "The launch issue became the Energy Street edition."
+    },
+    {
+     "rev": "r3",
+     "date": "2026-10-25T17:38:40Z",
+     "repo": "aceengineer-website",
+     "commit": "b13721bcf32936b20b725c52159b9f3715611ac4",
+     "path": "content/newsletter/issue-001-energy-street/index.html",
+     "change": "Footer tagline: \"Deckhand: Make Engineering Enjoyable Again\".",
+     "reason": "Approved tagline."
+    },
+    {
+     "rev": "r4",
+     "date": "2026-10-27T10:32:33Z",
+     "repo": "aceengineer-website",
+     "commit": "604246933d4fe250da9cc95989d160e0f7728633",
+     "path": "content/newsletter/issue-001-energy-street/index.html",
+     "change": "Reviewed release of issue 1, with its archive and feed.",
+     "reason": "Release for sending on 27 Oct 2026."
+    }
+   ],
+   "non_content": [
+    {
+     "repo": "aceengineer-website",
+     "commit": "3fcd2cf6571fdbb94ef477c675b71e2dceea7a59",
+     "path": "content/newsletter/issue-001/index.html",
+     "reason": "Page metadata and the archive link only."
+    }
+   ]
+  },
+  {
+   "id": "01",
+   "title": "Tank sloshing CFD study with open source software OpenFOAM",
+   "url": "https://www.aceengineer.com/newsletter/issue-001-tank-sloshing/",
+   "category": "eng_study",
+   "series": null,
+   "first_published": "2026-10-22T05:32:46Z",
+   "first_sent": "2026-10-27T19:04:00Z",
+   "last_updated": "2026-11-12T18:46:13Z",
+   "features": [
+    "prompt",
+    "data"
+   ],
+   "source": {
+    "repo": "aceengineer-website",
+    "path": "content/newsletter/issue-001-tank-sloshing/index.html"
+   },
+   "revisions": [
+    {
+     "rev": "issue 1",
+     "date": "2026-10-22T05:32:46Z",
+     "repo": "aceengineer-website",
+     "commit": "21dff6519755593fabd3fac7d298621d02815dba",
+     "path": "content/newsletter/issue-001-energy-street/index.html",
+     "change": "Published inside the issue 1 Energy Street edition.",
+     "reason": "Issue 1 article."
+    },
+    {
+     "rev": "1.2",
+     "date": "2026-11-12T18:46:13Z",
+     "repo": "aceengineer-website",
+     "commit": "d00f474c3eea6e5af160774f3f7a12fdc8caf5cb",
+     "path": "content/newsletter/issue-001-tank-sloshing/index.html",
+     "change": "Own page as version 1.2, with two interactive charts, two animations and the data files.",
+     "reason": "Approved version 1.2, set in the issue 2 article format."
+    }
+   ],
+   "non_content": []
+  },
+  {
+   "id": "A1",
+   "title": "One place to work",
+   "url": "https://www.aceengineer.com/newsletter/topics/one-place-to-work/",
+   "category": "ai_use",
+   "series": "ai-use",
+   "first_published": "2026-10-23T13:41:57Z",
+   "first_sent": "2026-10-27T19:04:00Z",
+   "last_updated": "2026-10-27T10:32:33Z",
+   "features": [],
+   "source": {
+    "repo": "aceengineer-website",
+    "path": "content/newsletter/topics/one-place-to-work/index.html"
+   },
+   "revisions": [
+    {
+     "rev": "r1",
+     "date": "2026-10-23T13:41:57Z",
+     "repo": "aceengineer-website",
+     "commit": "e8ebe9cec013c6c96603e670029615f3430f765a",
+     "path": "content/newsletter/topics/one-place-to-work/index.html",
+     "change": "Topic page with the article and its image.",
+     "reason": "Link target for the issue 1 article."
+    },
+    {
+     "rev": "r2",
+     "date": "2026-10-27T10:32:33Z",
+     "repo": "aceengineer-website",
+     "commit": "604246933d4fe250da9cc95989d160e0f7728633",
+     "path": "content/newsletter/topics/one-place-to-work/index.html",
+     "change": "Reviewed text for the issue 1 release.",
+     "reason": "Release for sending on 27 Oct 2026."
+    }
+   ],
+   "non_content": []
+  },
+  {
+   "id": "C1",
+   "title": "Why the model you use matters: test each new AI model on your own problems",
+   "url": "https://www.aceengineer.com/newsletter/topics/why-the-model-you-use-matters/",
+   "category": "ai_models",
+   "series": "ai-models",
+   "first_published": "2026-10-28T03:45:43Z",
+   "first_sent": null,
+   "last_updated": "2026-11-04T17:24:20Z",
+   "features": [
+    "prompt"
+   ],
+   "source": {
+    "repo": "aceengineer-website",
+    "path": "content/newsletter/topics/why-the-model-you-use-matters/index.html"
+   },
+   "revisions": [
+    {
+     "rev": "r1",
+     "date": "2026-10-28T03:45:43Z",
+     "repo": "aceengineer-website",
+     "commit": "ffeef6a51a437e96eb6c57b22c1a9933657a7a62",
+     "path": "content/newsletter/topics/why-the-model-you-use-matters/index.html",
+     "change": "Topic page with the approved article.",
+     "reason": "Approved article."
+    },
+    {
+     "rev": "r2",
+     "date": "2026-11-04T17:24:20Z",
+     "repo": "aceengineer-website",
+     "commit": "980fd06e2b8b2fbf62970de8e98e1e02277600bd",
+     "path": "content/newsletter/topics/why-the-model-you-use-matters/index.html",
+     "change": "A second illustration, a note on how consumer chats may train models, and a new section with Table 2.",
+     "reason": "Approved revision."
+    }
+   ],
+   "non_content": []
+  },
+  {
+   "id": "04",
+   "title": "Engineering evolution with AI",
+   "url": "https://www.aceengineer.com/newsletter/issue-002-main-street/",
+   "category": "ai_models",
+   "series": "ai-models",
+   "first_published": "2026-11-04T20:06:59Z",
+   "first_sent": "2026-11-04T21:14:00Z",
+   "last_updated": "2026-11-04T20:06:59Z",
+   "features": [
+    "prompt",
+    "data"
+   ],
+   "source": {
+    "repo": "aceengineer-website",
+    "path": "content/newsletter/issue-002-main-street/index.html"
+   },
+   "revisions": [
+    {
+     "rev": "r5",
+     "date": "2026-11-04T20:06:59Z",
+     "repo": "aceengineer-website",
+     "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+     "path": "content/newsletter/issue-002-main-street/index.html",
+     "change": "Published in issue 2 as reviewed revision 5.",
+     "reason": "Issue 2 release."
+    }
+   ],
+   "non_content": [
+    {
+     "repo": "aceengineer-website",
+     "commit": "a67f94b880947323c06f757feed83d5f3ecdd6c6",
+     "path": "content/newsletter/issue-002-main-street/index.html",
+     "reason": "Link-preview image and its metadata only; the article text is unchanged."
+    }
+   ]
+  },
+  {
+   "id": "02",
+   "title": "Sacrificial anodes needed for six offshore structures on each edition of DNV-RP-B401 and DNV-RP-F103",
+   "url": "https://www.aceengineer.com/newsletter/issue-002-energy-street/",
+   "category": "eng_study",
+   "series": "code-editions",
+   "first_published": "2026-11-04T20:06:59Z",
+   "first_sent": "2026-11-04T21:14:00Z",
+   "last_updated": "2026-11-04T20:06:59Z",
+   "features": [
+    "prompt",
+    "data"
+   ],
+   "source": {
+    "repo": "aceengineer-website",
+    "path": "content/newsletter/issue-002-energy-street/index.html"
+   },
+   "revisions": [
+    {
+     "rev": "r5",
+     "date": "2026-11-04T20:06:59Z",
+     "repo": "aceengineer-website",
+     "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+     "path": "content/newsletter/issue-002-energy-street/index.html",
+     "change": "Published in issue 2 as reviewed revision 5.",
+     "reason": "Issue 2 release."
+    }
+   ],
+   "non_content": [
+    {
+     "repo": "aceengineer-website",
+     "commit": "a67f94b880947323c06f757feed83d5f3ecdd6c6",
+     "path": "content/newsletter/issue-002-energy-street/index.html",
+     "reason": "Link-preview image and its metadata only; the article text is unchanged."
+    }
+   ]
+  },
+  {
+   "id": "05",
+   "title": "Gulf of Mexico well permits by rig type: a public US data file",
+   "url": "https://www.aceengineer.com/newsletter/issue-002-public-data/",
+   "category": "public_data",
+   "series": "gulf-well-life",
+   "first_published": "2026-11-04T20:06:59Z",
+   "first_sent": "2026-11-04T21:14:00Z",
+   "last_updated": "2026-11-04T20:06:59Z",
+   "features": [
+    "prompt",
+    "data"
+   ],
+   "source": {
+    "repo": "aceengineer-website",
+    "path": "content/newsletter/issue-002-public-data/index.html"
+   },
+   "revisions": [
+    {
+     "rev": "r5",
+     "date": "2026-11-04T20:06:59Z",
+     "repo": "aceengineer-website",
+     "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+     "path": "content/newsletter/issue-002-public-data/index.html",
+     "change": "Published in issue 2 as reviewed revision 5.",
+     "reason": "Issue 2 release."
+    }
+   ],
+   "non_content": [
+    {
+     "repo": "aceengineer-website",
+     "commit": "a67f94b880947323c06f757feed83d5f3ecdd6c6",
+     "path": "content/newsletter/issue-002-public-data/index.html",
+     "reason": "Link-preview image and its metadata only; the article text is unchanged."
+    }
+   ]
+  },
+  {
+   "id": "03",
+   "title": "Jack-up site-specific analysis",
+   "url": "https://www.aceengineer.com/newsletter/issue-002-jackup-method/",
+   "category": "eng_method",
+   "series": null,
+   "first_published": "2026-11-04T20:06:59Z",
+   "first_sent": "2026-11-04T21:14:00Z",
+   "last_updated": "2026-11-04T20:06:59Z",
+   "features": [
+    "prompt",
+    "data"
+   ],
+   "source": {
+    "repo": "aceengineer-website",
+    "path": "content/newsletter/issue-002-jackup-method/index.html"
+   },
+   "revisions": [
+    {
+     "rev": "r5",
+     "date": "2026-11-04T20:06:59Z",
+     "repo": "aceengineer-website",
+     "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+     "path": "content/newsletter/issue-002-jackup-method/index.html",
+     "change": "Published in issue 2 as reviewed revision 5.",
+     "reason": "Issue 2 release."
+    }
+   ],
+   "non_content": [
+    {
+     "repo": "aceengineer-website",
+     "commit": "a67f94b880947323c06f757feed83d5f3ecdd6c6",
+     "path": "content/newsletter/issue-002-jackup-method/index.html",
+     "reason": "Link-preview image and its metadata only; the article text is unchanged."
+    }
+   ]
+  }
+ ]
+}

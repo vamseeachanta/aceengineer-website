@@ -129,8 +129,8 @@ test('every built JSON-LD block parses', () => {
 
 test('the model topic is indexed with its approved title and preview metadata', () => {
   const page = 'newsletter/topics/why-the-model-you-use-matters/index.html';
-  const title = 'Why the model you use matters: test each new AI model on your own problems';
-  const description = 'A newer AI model can solve problems that an older one may get confidently wrong. Test each new model on problems you know.';
+  const title = 'The model we use matters';
+  const description = 'Two examples from our own work, a fender design calculation and project management, and a reusable prompt to test each new AI model on problems whose answers you know.';
   expect(destinations).toContain(page);
   const doc = documents.get(page);
   expect(doc.title).toBe(title);
@@ -327,6 +327,7 @@ const OWN_OG_IMAGES = {
   'newsletter/issue-002-main-street/index.html': `${OG_BASE}issue-002-main-street.png`,
   'newsletter/issue-002-public-data/index.html': `${OG_BASE}issue-002-public-data-2026-11-18.png`,
   'newsletter/rod-pump-dynamometer-cards/index.html': `${OG_BASE}rod-pump-dynamometer-cards.png`,
+  'newsletter/topics/why-the-model-you-use-matters/index.html': `${OG_BASE}why-the-model-you-use-matters-2026-11-19.png`,
 };
 
 test('destinations have canonical Open Graph metadata and the existing logo', () => {

@@ -6,17 +6,23 @@ rootPath: "../../../"
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Why the model you use matters: test each new AI model on your own problems</title>
-<meta name="description" content="A newer AI model can solve problems that an older one may get confidently wrong. Test each new model on problems you know.">
-<meta property="og:title" content="Why the model you use matters: test each new AI model on your own problems">
-<meta property="og:description" content="A newer AI model can solve problems that an older one may get confidently wrong. Test each new model on problems you know.">
+<title>The model we use matters</title>
+<meta name="description" content="Two examples from our own work, a fender design calculation and project management, and a reusable prompt to test each new AI model on problems whose answers you know.">
+<meta property="og:title" content="The model we use matters">
+<meta property="og:description" content="Two examples from our own work, a fender design calculation and project management, and a reusable prompt to test each new AI model on problems whose answers you know.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="{{ canonicalUrl }}">
-<meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/og/why-the-model-you-use-matters-2026-11-19.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="Deckhand and AceEngineer marks with the title The model we use matters, beside a rope that steps up from an older model with a simple formula to a newer one with a complex formula">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Why the model you use matters: test each new AI model on your own problems">
-<meta name="twitter:description" content="A newer AI model can solve problems that an older one may get confidently wrong. Test each new model on problems you know.">
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"Why the model you use matters: test each new AI model on your own problems","name":"Why the model you use matters: test each new AI model on your own problems","description":"A newer AI model can solve problems that an older one may get confidently wrong. Test each new model on problems you know.","url":"https://www.aceengineer.com/newsletter/topics/why-the-model-you-use-matters/","inLanguage":"en","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Newsletter","item":"https://www.aceengineer.com/newsletter/"},{"@type":"ListItem","position":3,"name":"Why the model you use matters: test each new AI model on your own problems","item":"https://www.aceengineer.com/newsletter/topics/why-the-model-you-use-matters/"}]}]</script>
+<meta name="twitter:title" content="The model we use matters">
+<meta name="twitter:description" content="Two examples from our own work, a fender design calculation and project management, and a reusable prompt to test each new AI model on problems whose answers you know.">
+<meta name="twitter:image" content="https://www.aceengineer.com/assets/img/og/why-the-model-you-use-matters-2026-11-19.png">
+<meta name="twitter:image:alt" content="Deckhand and AceEngineer marks with the title The model we use matters, beside a rope that steps up from an older model with a simple formula to a newer one with a complex formula">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"The model we use matters","name":"The model we use matters","description":"Two examples from our own work, a fender design calculation and project management, and a reusable prompt to test each new AI model on problems whose answers you know.","url":"https://www.aceengineer.com/newsletter/topics/why-the-model-you-use-matters/","inLanguage":"en","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Newsletter","item":"https://www.aceengineer.com/newsletter/"},{"@type":"ListItem","position":3,"name":"The model we use matters","item":"https://www.aceengineer.com/newsletter/topics/why-the-model-you-use-matters/"}]}]</script>
 <include src="partials/head-common.html">
 </include>
 </head>
@@ -26,153 +32,194 @@ rootPath: "../../../"
 <main id="main" class="samples-page">
 <div class="container">
 <article id="why-the-model-you-use-matters">
-<h1>Why the model you use matters</h1>
-<p>In my experience, an older model often does not say "I cannot solve this". It gives an answer that looks correct. Our hypothesis: AI models improve in steps. A new model can solve problems that the model before it could not.</p>
-<h2>Frontier and behind</h2>
-<p>A frontier model is one of the most capable AI models available on a given date. A model one or two releases behind may cost less or respond faster for some workloads. Cost and speed depend on the models, workload and current pricing. Test whether the cheaper model meets your task's requirements, even for a summary, format change or first draft of a letter.</p>
-<p>In my experience, the difference shows on problems where a common simplification is wrong, or where the problem is too large for the model. The model then often takes a shortcut and does not say so.</p>
-<p>A small gain can be a step change. Suppose many of your problems sit just beyond what a model two releases behind can do. Suppose, too, that a newer model scores only 1 to 2 % higher on public benchmarks (a hypothetical figure). It could then solve a whole group of your problems that the older model got wrong. For that group, the result is not 1 to 2 % better: it is a right answer in place of a wrong one. The schematic shows the idea; it is not a measurement.</p>
-<figure>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" width="100%" role="img" aria-labelledby="a2-step-title a2-step-desc" style="display:block;max-width:640px;height:auto;margin:8px auto;font-family:Arial,Helvetica,sans-serif">
-<title id="a2-step-title">A small capability gain can be a step change (illustrative schematic, not data, not to scale)</title>
-<desc id="a2-step-desc">Illustrative schematic with no measured values. The share of your problems a model solves correctly rises steeply where many of your problems sit just beyond what models can do. Two close vertical lines mark a model two releases behind and a frontier model, a hypothetical 1 to 2 % apart in capability; across that small gap the share of your problems solved jumps from low to high.</desc>
-<rect width="640" height="380" fill="#ffffff"/>
-<text x="70" y="26" font-size="15" font-weight="700" fill="#0b3d5c">A small capability gain can be a step change</text>
-<text x="70" y="43" font-size="12" fill="#b45309">Illustrative schematic, not data and not to scale</text>
-<rect x="372.4" y="50" width="64.8" height="250" fill="#2bb2a6" fill-opacity="0.12"/>
-<text x="404.8" y="64" font-size="11" text-anchor="middle" fill="#5a6b7b">where many of your</text>
-<text x="404.8" y="77" font-size="11" text-anchor="middle" fill="#5a6b7b">problems sit (difficulty)</text>
-<path d="M 70 50 V 300 H 610" fill="none" stroke="#26323a" stroke-width="1.5"/>
-<polyline points="70.0,285.0 72.7,285.0 75.4,285.0 78.1,285.0 80.8,285.0 83.5,285.0 86.2,285.0 88.9,285.0 91.6,285.0 94.3,285.0 97.0,285.0 99.7,285.0 102.4,285.0 105.1,285.0 107.8,285.0 110.5,285.0 113.2,285.0 115.9,285.0 118.6,285.0 121.3,285.0 124.0,285.0 126.7,285.0 129.4,285.0 132.1,285.0 134.8,285.0 137.5,285.0 140.2,285.0 142.9,285.0 145.6,285.0 148.3,285.0 151.0,285.0 153.7,285.0 156.4,285.0 159.1,285.0 161.8,285.0 164.5,285.0 167.2,285.0 169.9,285.0 172.6,285.0 175.3,285.0 178.0,285.0 180.7,285.0 183.4,285.0 186.1,285.0 188.8,285.0 191.5,285.0 194.2,285.0 196.9,285.0 199.6,285.0 202.3,285.0 205.0,285.0 207.7,285.0 210.4,285.0 213.1,285.0 215.8,285.0 218.5,285.0 221.2,285.0 223.9,285.0 226.6,285.0 229.3,285.0 232.0,285.0 234.7,285.0 237.4,285.0 240.1,285.0 242.8,285.0 245.5,285.0 248.2,285.0 250.9,285.0 253.6,285.0 256.3,285.0 259.0,285.0 261.7,285.0 264.4,285.0 267.1,285.0 269.8,285.0 272.5,285.0 275.2,285.0 277.9,285.0 280.6,285.0 283.3,285.0 286.0,285.0 288.7,285.0 291.4,285.0 294.1,284.9 296.8,284.9 299.5,284.9 302.2,284.9 304.9,284.9 307.6,284.8 310.3,284.8 313.0,284.8 315.7,284.7 318.4,284.6 321.1,284.6 323.8,284.5 326.5,284.3 329.2,284.2 331.9,284.0 334.6,283.8 337.3,283.5 340.0,283.2 342.7,282.8 345.4,282.3 348.1,281.7 350.8,281.0 353.5,280.2 356.2,279.1 358.9,277.9 361.6,276.4 364.3,274.6 367.0,272.4 369.7,269.8 372.4,266.7 375.1,263.1 377.8,258.8 380.5,253.8 383.2,248.0 385.9,241.5 388.6,234.1 391.3,225.8 394.0,216.8 396.7,207.0 399.4,196.7 402.1,186.0 404.8,175.0 407.5,164.0 410.2,153.3 412.9,143.0 415.6,133.2 418.3,124.2 421.0,115.9 423.7,108.5 426.4,102.0 429.1,96.2 431.8,91.2 434.5,86.9 437.2,83.3 439.9,80.2 442.6,77.6 445.3,75.4 448.0,73.6 450.7,72.1 453.4,70.9 456.1,69.8 458.8,69.0 461.5,68.3 464.2,67.7 466.9,67.2 469.6,66.8 472.3,66.5 475.0,66.2 477.7,66.0 480.4,65.8 483.1,65.7 485.8,65.5 488.5,65.4 491.2,65.4 493.9,65.3 496.6,65.2 499.3,65.2 502.0,65.2 504.7,65.1 507.4,65.1 510.1,65.1 512.8,65.1 515.5,65.1 518.2,65.0 520.9,65.0 523.6,65.0 526.3,65.0 529.0,65.0 531.7,65.0 534.4,65.0 537.1,65.0 539.8,65.0 542.5,65.0 545.2,65.0 547.9,65.0 550.6,65.0 553.3,65.0 556.0,65.0 558.7,65.0 561.4,65.0 564.1,65.0 566.8,65.0 569.5,65.0 572.2,65.0 574.9,65.0 577.6,65.0 580.3,65.0 583.0,65.0 585.7,65.0 588.4,65.0 591.1,65.0 593.8,65.0 596.5,65.0 599.2,65.0 601.9,65.0 604.6,65.0 607.3,65.0 610.0,65.0" fill="none" stroke="#0b3d5c" stroke-width="3"/>
-<path d="M 391.3 300 V 225.8 H 70" fill="none" stroke="#5a6b7b" stroke-width="1.5" stroke-dasharray="5 4"/>
-<path d="M 418.3 300 V 124.2 H 70" fill="none" stroke="#2bb2a6" stroke-width="1.5" stroke-dasharray="5 4"/>
-<circle cx="391.3" cy="225.8" r="5" fill="#ffffff" stroke="#5a6b7b" stroke-width="2"/>
-<circle cx="418.3" cy="124.2" r="5" fill="#2bb2a6"/>
-<text x="428.3" y="128.2" font-size="12" fill="#b45309">step change</text>
-<path d="M 84 221.8 V 130.2" stroke="#b45309" stroke-width="2"/>
-<path d="M 79 136.2 L 84 127.2 L 89 136.2" fill="none" stroke="#b45309" stroke-width="2"/>
-<text x="94" y="175.0" font-size="12" fill="#b45309">step change in</text>
-<text x="94" y="190.0" font-size="12" fill="#b45309">problems solved</text>
-<text x="385.3" y="318" font-size="11" text-anchor="end" fill="#5a6b7b">model two releases behind</text>
-<text x="424.3" y="318" font-size="11" fill="#2bb2a6">frontier model</text>
-<text x="404.8" y="334" font-size="11" text-anchor="middle" fill="#26323a">say, 1 to 2 % apart (hypothetical)</text>
-<text x="340.0" y="362" font-size="12" text-anchor="middle" fill="#26323a">Model capability on general tests (illustrative)</text>
-<text transform="translate(22 175.0) rotate(-90)" font-size="12" text-anchor="middle" fill="#26323a">Share of your problems solved (illustrative)</text>
-</svg>
-<figcaption>Illustrative schematic, not data and not to scale. When many of your problems sit near the edge of what models can do, a small gain in capability can move a whole group of them from wrong to right.</figcaption>
-</figure>
-<h2>A share of your problems, area by area</h2>
-<p>One way to think about a model: in each area of your work, it solves some share of your real problems correctly. Structural checks are one area. Report writing is another. A newer model can raise that share. Public league tables (benchmarks) test general problems, not yours. You can only find the share for your own work by testing the model on your own problems.</p>
-<p>In my experience, our code once had to spell out the catenary equation for a hanging line. A frontier model now knows that equation without being given it. Our hypothesis: a newer model may also take on more engineering itself, as more mathematics and physics are trained into it. Engineering that once had to be written out for a model then becomes something it knows unaided. The illustration shows this direction in three stages. Where the engineer keeps the check, the work is checked against a known answer at every stage and then signed. A problem set with known answers, described below, is that check.</p>
-<figure>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="100%" role="img" aria-labelledby="a2-model-title a2-model-desc" style="display:block;max-width:720px;height:auto;margin:8px auto;font-family:Arial,Helvetica,sans-serif">
-<title id="a2-model-title">How the next model may take in engineering (illustration of a direction, not measured data)</title>
-<desc id="a2-model-desc">Illustration: engineering moves from the engineer's own code, to files given to the model, to knowledge inside the model, as each new model may take in more through further training; where the engineer keeps the check, the engineer checks at every stage. Example: the catenary equation, once written out in our code, now known to a frontier model.</desc>
-<defs><marker id="a2-mx-head" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2bb2a6"/></marker></defs>
-<rect width="720" height="330" fill="#ffffff"/>
-<text x="360" y="22" font-size="12" font-weight="700" letter-spacing="0.7" fill="#b45309" text-anchor="middle">Illustration of a direction, not measured data</text>
-<g><title>Stage 1: Written out in your own code. The engineer's files spell out the method and its equations.</title><rect x="20" y="40" width="200" height="120" fill="#f4f7f9" stroke="#5a6b7b" stroke-width="1.5"/><text x="120" y="66" font-size="14" font-weight="700" fill="#0b3d5c" text-anchor="middle">Stage 1</text><text x="120" y="90" font-size="13" fill="#26323a" text-anchor="middle">Written out in your own</text><text x="120" y="108" font-size="13" fill="#26323a" text-anchor="middle">code</text></g>
-<g><title>Stage 2: Given to the model in files. The model knows the method; the design code's edition and clauses, and the firm's own choices, come from files.</title><rect x="260" y="40" width="200" height="120" fill="#f4f7f9" stroke="#5a6b7b" stroke-width="1.5"/><text x="360" y="66" font-size="14" font-weight="700" fill="#0b3d5c" text-anchor="middle">Stage 2</text><text x="360" y="90" font-size="13" fill="#26323a" text-anchor="middle">Given to the model in</text><text x="360" y="108" font-size="13" fill="#26323a" text-anchor="middle">files</text></g>
-<g><title>Stage 3: Known to the model unaided. The model knows the method itself; the engineer still checks it against a known answer.</title><rect x="500" y="40" width="200" height="120" fill="#f4f7f9" stroke="#5a6b7b" stroke-width="1.5"/><text x="600" y="66" font-size="14" font-weight="700" fill="#0b3d5c" text-anchor="middle">Stage 3</text><text x="600" y="90" font-size="13" fill="#26323a" text-anchor="middle">Known to the model</text><text x="600" y="108" font-size="13" fill="#26323a" text-anchor="middle">unaided</text></g>
-<g><title>Next model generation: further training may take in more mathematics and physics (our hypothesis).</title><line x1="224" y1="100" x2="254" y2="100" stroke="#2bb2a6" stroke-width="2.5" marker-end="url(#a2-mx-head)"/></g>
-<g><title>Next model generation: further training may take in more mathematics and physics (our hypothesis).</title><line x1="464" y1="100" x2="494" y2="100" stroke="#2bb2a6" stroke-width="2.5" marker-end="url(#a2-mx-head)"/></g>
-<text x="360" y="186" font-size="13" fill="#26323a" text-anchor="middle">Each new model generation may take in more mathematics and physics through further training</text>
-<g><title>Example: the catenary equation for a hanging line. Our code once had to spell it out; a frontier model now knows it unaided (the author's experience).</title>
-<circle cx="540" cy="232" r="9" fill="#2bb2a6"/><line x1="140" y1="232" x2="528" y2="232" stroke="#2bb2a6" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#a2-mx-head)"/>
-<circle cx="120" cy="232" r="9" fill="none" stroke="#5a6b7b" stroke-width="2"/>
-<text x="120" y="258" font-size="13" fill="#26323a" text-anchor="middle">once written out in our code</text>
-<text x="540" y="258" font-size="13" fill="#26323a" text-anchor="middle">now known to a frontier model</text>
-<text x="330" y="222" font-size="14" font-weight="700" fill="#0b3d5c" text-anchor="middle">Example: the catenary equation (hanging line)</text></g>
-<g><title>Where the engineer keeps the check, the work is checked against a known answer and signed at every stage.</title>
-<rect x="20" y="284" width="680" height="34" fill="#f4f7f9" stroke="#2bb2a6" stroke-width="1.5"/>
-<text x="360" y="306" font-size="13" fill="#26323a" text-anchor="middle">Where the engineer keeps the check, at every stage: checks against a known answer, and signs</text></g>
-</svg>
-<figcaption>How the next model may take in engineering: an illustration of a direction, not measured data (note 1). Stages are in order only. The catenary example is the author's experience. Hover a stage or the example for detail.</figcaption>
-</figure>
-<p class="figure-note"><small>Note 1. Three frontier labs state that, depending on the user's settings, conversations in their consumer apps may be used to improve their models (OpenAI, Google and Anthropic; see Sources). Our hypothesis: frontier labs keep gaining user workload and research data, so each next model improves most where that work concentrates.</small></p>
-<h2>A worked example: a confident shortcut</h2>
-<p>This example is an illustration of the kind of error, not a test result. It is invented for this article, uses textbook theory, and contains no client work.</p>
-<p>The problem: find the first sloshing frequency of a rectangular tank, 1.0 m long, filled to 0.15 m.</p>
-<p>The full linear-theory answer (small motions) includes the fill depth. For the first mode of a two-dimensional rectangular tank:</p>
-<pre><code>L = 1.0 m        tank length in the direction of sloshing
-h = 0.15 m       fill depth
-g = 9.81 m/s^2   gravity
-k = pi / L       = 3.14 per m              (wave number of the first mode)
-tanh(k h)        = tanh(0.471) = 0.439      (hyperbolic tangent; it tends to 1 for a deep fill)
-w^2 = g k tanh(k h)  -&gt; w = 3.68 rad/s     (w: angular frequency)
-f = w / (2 pi)   = 0.586 Hz
-</code></pre>
-<p>A shortcut drops the tanh term. That form is for deep liquid:</p>
-<pre><code>w^2 = g k        -&gt; w = 5.55 rad/s,  f = 0.884 Hz
-</code></pre>
-<p>The shortcut answer is about 51 % too high. It looks plausible: it has the right units, a clean formula and a confident tone. At a deep fill the two forms almost agree: at 0.70 m fill the difference is about 1 %. A check at a deep fill does not find the error. Only a check at the shallow fill shows it.</p>
-<p>A frontier model can make the same mistake. In my experience it does so less often, and it more often states the assumption it made.</p>
-<h2>Frontier model against a model two releases behind</h2>
-<p>Table 1 is illustrative. It sets the worked example above beside the author's experience; it is not a measured test, and it names no model or vendor. The cost row is our hypothesis.</p>
-<div class="table-responsive">
-<table class="table table-bordered">
-<caption>Table 1. Frontier model against a model two releases behind (illustrative, not a measured test)</caption>
-<thead>
-<tr><th scope="col" class="text-center">No.</th><th scope="col">What to compare</th><th scope="col">Frontier model</th><th scope="col">Model two releases behind (N-2)</th><th scope="col">Source</th></tr>
-</thead>
-<tbody>
-<tr><td class="text-center">1</td><td>Worked example: formula in the answer</td><td>Full answer, with tanh(k h)</td><td>Shortcut, without tanh(k h)</td><td>Worked example above (illustrative)</td></tr>
-<tr><td class="text-center">2</td><td>Worked example: first sloshing frequency, f (Hz)</td><td>0.586</td><td>0.884</td><td>Worked example above (illustrative)</td></tr>
-<tr><td class="text-center">3</td><td>Worked example: error against the full answer (%)</td><td>0</td><td>+51</td><td>Worked example above (illustrative)</td></tr>
-<tr><td class="text-center">4</td><td>Confident but wrong answers</td><td>Less often</td><td>More often</td><td>Author's experience</td></tr>
-<tr><td class="text-center">5</td><td>States the assumption it made</td><td>More often</td><td>Often does not say it took a shortcut</td><td>Author's experience</td></tr>
-<tr><td class="text-center">6</td><td>Cost per task</td><td>May be a bit more</td><td>May be less</td><td>Our hypothesis</td></tr>
-<tr><td class="text-center">7</td><td>Checking and rework</td><td>Fewer wrong answers to find</td><td>More answers to find and redo</td><td>Author's experience</td></tr>
-</tbody>
-</table>
+<figure id="deckhand-opening" style="margin:0 0 16px"><img src="../../../assets/img/newsletter/why-the-model-you-use-matters-opening.svg" alt="Deckhand opening picture: the Deckhand bollard icon and wordmark with the AceEngineer wordmark; a Deckhand icon holds the rope, which steps up from the n-1 model with a simple formula (hoop stress) to the n+1 model with a complex formula (von Mises stress); labelled as an illustration; the label Main Street · AI and engineering work and the title The model we use matters." width="1200" height="627" style="width:100%;height:auto;display:block"></figure>
+<h1>The model we use matters</h1>
+<p><em>The Deckhand Chronicles is AceEngineer's newsletter. We help build AI into everyday engineering work. By Vamsee Achanta, P.E., AceEngineer's founder; "my experience" below is his.</em></p>
+<p>Main Street · AI and engineering work. Main Street covers how engineering work is changing.</p>
+<figure id="infographic" aria-label="Infographic: Test each new AI model on problems whose answers you know.">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+<div style="border-top:3px solid #0e7e88;padding:8px 4px"><p style="margin:0 0 4px;font-weight:700">Objective</p><p style="margin:0">Test each new AI model on problems whose answers you know.</p></div>
+<div style="border-top:3px solid #0e7e88;padding:8px 4px"><p style="margin:0 0 4px;font-weight:700">Starting point</p><p style="margin:0">The model matters more as problems grow complex, and at every turn of a long task.</p></div>
+<div style="border-top:3px solid #0e7e88;padding:8px 4px"><p style="margin:0 0 4px;font-weight:700">What we did</p><p style="margin:0">Two examples from our own work: a fender design calculation, and a project manager shadowed hour by hour.</p></div>
+<div style="border-top:3px solid #0e7e88;padding:8px 4px"><p style="margin:0 0 4px;font-weight:700">Analysis findings</p><p style="margin:0">Codex caught a design energy 27 % low that Claude's own test had passed. In project management, Codex matched Claude's decisions at 0.00 to 0.43 per hour, below the 0.80 pass line.</p></div>
 </div>
-<p>Cost and speed depend on the models, the workload and current pricing. Either model can make the shortcut in the worked example; Table 1 shows which answer is more likely, in the author's experience.</p>
-<h2>Model, provider and harness: the paths a typical user takes</h2>
-<p>The same comparison applies to the provider. A model reaches you through a harness: the software around the model. The harness sets the model's instructions and the tools it may use, such as reading files, running code or searching. It also sets how much text the model keeps in view and how long it may work on a step. The same model can sit in a different harness at each provider.</p>
-<p>Our hypothesis: on the same model, a weak harness can leave you the equivalent of two releases behind.</p>
-<p>Table 2 lists the paths a typical user goes through, and what to check on each with your problem set.</p>
-<div class="table-responsive">
-<table class="table table-bordered">
-<caption>Table 2. Typical paths to a model, and what to check on each</caption>
-<thead>
-<tr><th scope="col" class="text-center">No.</th><th scope="col">Path</th><th scope="col">What you get</th><th scope="col">What to check with your problem set</th></tr>
-</thead>
-<tbody>
-<tr><td class="text-center">1</td><td>The model maker's own app or assistant, on its newest model</td><td>The model in the harness its maker built for it</td><td>Use it as the reference for the other paths</td></tr>
-<tr><td class="text-center">2</td><td>The same model through another provider: a cloud platform, an editor plug-in or a company chat tool</td><td>The same model; its instructions, tools, text kept in view and working time may differ</td><td>Run the same problems on both; a difference comes from the harness</td></tr>
-<tr><td class="text-center">3</td><td>A default or automatic choice: a free plan, a company default or an "auto" setting</td><td>A model chosen for you, which may be older or smaller</td><td>Which model answered, then the same problems</td></tr>
-<tr><td class="text-center">4</td><td>An older model kept on purpose, for cost, an approval or a fixed workflow</td><td>Known behaviour, which may cost less</td><td>The same problems at each new release</td></tr>
-<tr><td class="text-center">5</td><td>A small, fast, low-cost model</td><td>Quick answers at a low cost per task</td><td>Whether it passes the problems for this task</td></tr>
-<tr><td class="text-center">6</td><td>An open-weight model (its trained parameters are published), run on your own machines</td><td>Your data stays in-house; capability depends on the model and on the harness you build</td><td>The same problems, as for any provider</td></tr>
-</tbody>
-</table>
-</div>
-<p class="table-note"><small>Note to Table 2. The rows are the author's list of common paths; each check uses your own problem set (see "Keep your future problem sets"). The table is guidance, not a measured comparison, and names no model or vendor.</small></p>
-<p>Match the model to the task ("horses for courses"). A small, fast, low-cost model can sometimes do the same job as a frontier model. Examples are the summary, format change and first letter draft named under "Frontier and behind". Your problem set shows which path and which model suits each task.</p>
-<h2>Cost, speed and checking</h2>
-<p>A frontier model may cost more per task or run more slowly for a given workload. Compare the available models using that workload and the current pricing. Capability alone does not determine cost, speed or suitability. A frontier model is still not always right.</p>
-<p>Check every answer that a decision depends on. Check the inputs and the units. Then check one case where you know the answer and where a shortcut would break: here, the shallow fill. If you know the full formula, or have the textbook open, the hand check above takes a few minutes.</p>
-<h2>Conclusion: cost and the long term</h2>
-<p>Treat your AI workspace like a group of employees you are training. In my experience, a frontier model returns fewer wrong answers to find and redo. Our hypothesis: a frontier model may cost a bit more per task; depending on the situation it costs more in the long run or pays back over the long term, and using a model that is behind compromises the training of your workspace. Your problem set shows whether it pays back for your work.</p>
-<h2>Keep your future problem sets</h2>
+<figcaption><small>Source: AceEngineer, 20 Nov 2026.</small></figcaption>
+</figure>
+<h2 id="what-we-did">What we did</h2>
+<p>Benjamin Graham's Mr. Market names a stock price every day, and the investor is free to take it or leave it [4]. In our work, each new AI model has been an offer of that kind every other week that is too good to turn down. We work with AI models every day, and we keep improving everything around them. Many things play a role; we show them on two examples, a technical calculation and project management, from our own work, using below aspects:</p>
+<ul><li>The model itself.</li><li>The instructions we give, curated over time.</li><li>The data and context it gets: project files, earlier work and our rules.</li><li>The tools it can run, and the checks on its answers.</li><li>How we nudge and hand-hold it.</li></ul>
+<p>This is the first article of our series on working with AI models.</p>
+<h2 id="why-it-matters">Why it matters</h2>
+<ul><li>For a simple problem, a model from any provider may do the work.</li><li>As the problem grows more complex, the model, the context, and the nudging and hand-holding make a large difference.</li><li>The chosen model can make a bigger difference as it makes a better decision at every turn, and the cumulative good turns make an excellent result.</li><li>Reusable prompt to check the examples and test each new model on your own problems.</li></ul>
+<h2 id="what-is-inside">What is inside</h2>
+<p>It works through a fender design calculation where one model's answer is checked against a known answer, and a project manager role where a Codex model shadows a Claude desk hour by hour. The prompts in Appendix B turn your own problems into a test for each new model.</p>
+<p>In this article:</p>
+<ul><li><a href="#the-model-you-use">The model you use</a></li><li><a href="#simple-problems-and-complex-ones">Simple problems and complex ones</a></li><li><a href="#a-calculation-with-a-known-answer">A calculation with a known answer</a></li><li><a href="#project-management-decision-by-decision">Project management, decision by decision</a></li><li><a href="#keep-your-future-problem-sets">Keep your future problem sets</a></li><li><a href="#charts-and-data">Charts and data</a></li></ul>
+<h2 id="the-model-you-use">The model you use</h2>
+<blockquote><p>Our hypothesis: AI models improve in steps. A new model can solve problems that the model before it could not.</p></blockquote>
+<p>In my experience, an older model often does not say "I cannot solve this". It gives an answer that looks correct.</p>
+<p>One step from our own records: the same change to our engineering knowledge base, reviewed at the same commit by two generations of one model. The earlier model, Claude Fable 5.1, marked one finding to fix before merge. The next generation, Claude Fable 5.2, marked five, including that one (Figure 1). After this review and one other, we moved our technical reviewers to the newer model.</p>
+<h2 id="simple-problems-and-complex-ones">Simple problems and complex ones</h2>
+<p>In our experience, the model may matter less for simpler problems. As complexity increases, the model we choose and the context we provide matter more. The context is what the model is given with the task: the inputs and their units, the design code and edition, the checks to apply and a worked example.</p>
+<p>In my experience, a default set-up, such as a Sonnet model in GitHub Copilot, handles a unit conversion, a format change or a short script well. A frontier model, such as Claude Fable, earns its place when the work runs over many steps: reading a project, planning, calculating, checking and fixing.</p>
+<p>No single provider wins every task. In the examples below, each of the two providers we use, Claude (Anthropic) [2] and Codex (OpenAI) [3], is ahead on one kind of work. That is why we test each new model on our own problems, not on its reputation.</p>
+<h2 id="a-calculation-with-a-known-answer">A calculation with a known answer</h2>
+<p>A model can give a confident answer that is wrong, and a simple check may not find it. The wrong answer has the right units, a clean formula and a confident tone. A check written by the same model can repeat the same mistake, so it passes. Only a check against a known answer, worked from the source, finds it.</p>
+<p>The problem: the berthing energy that a fender must absorb when a ship comes alongside. We were adding the method of UFC 4-152-01 [1], a public US design code for piers and wharves, to our open-source fender design module. The module is under review and is not yet merged. Part of the energy is the water that moves with the hull, the added mass. Its factor F depends on a coefficient C<sub>b</sub>.</p>
+<ul><li>The code defines C<sub>b</sub> as the berthing coefficient, the product of four factors for eccentricity, geometry, softness and berth configuration (Eq. 5-2).</li><li>A ship's block coefficient, a measure of hull fullness, has its own symbol in the code.</li><li>Both look like "C<sub>b</sub>" in ordinary naval-architecture writing.</li></ul>
+<p>A Claude model wrote the module, and used the block coefficient. Its own hand-check test made the same substitution, so the test passed. A Codex model then reviewed the module as our second provider. It read the definition in the code's text, reproduced the case and asked for a change.</p>
+<p>The case: a ship 180 m long, 32 m beam, 12 m draught, in 14 m of water, block coefficient 0.40, berthing at midships at 0.10 m/s.</p>
+<pre><code>Mass               M  = 0.40 x 1.025 x 180 x 32 x 12      = 28,339 t
+Berthing coeff.    Cb = Ce Cg Cd Cc = 1.0 (&gt;= 0.6)        -&gt; F = 0.9
+Added mass factor  Cm = 3.876  (with F = 0.9)
+Design energy      E  = 0.5 x M x v^2 x Cm x 1.5          = 823.7 kNm
+
+With the block coefficient in its place (0.40 &lt; 0.6)      -&gt; F = 0.6
+                   Cm = 2.843                              -&gt; 604.2 kNm</code></pre>
+<p>The first answer, 604.2 kNm, is about 27 % low. A fender chosen for it would be too small. It had every sign of a right answer: a cited code, the right units and a passing test. The Claude author then checked the code's text, agreed that the reviewer was right, fixed the module, and added a new test worked by hand from the code's own equations: 823.7 kNm. Over nine reviews of the module, Codex raised 24 findings at its two highest priority levels, and all were fixed before its first pass. One of them disagreed with a vendor manual's printed worked example.</p>
+<blockquote><p>What it shows: a second model, given the source and asked to reproduce the case, found what the first model's own check could not. The check that counts is a known answer worked from the source.</p></blockquote>
+<h2 id="project-management-decision-by-decision">Project management, decision by decision</h2>
+<p>Project work is a long chain of small decisions: what to start, what to hold, what to leave to the owner. One wrong turn is cheap to fix. The same wrong turn, repeated every hour, is not.</p>
+<p>Our ecosystem runs work on several computers. Each hour, a fleet manager decides what to start, what to hold, what to collect and what to leave to the owner. A Claude desk holds that role: Claude Opus 5.5 on our main workstation.</p>
+<p>Since 15 Nov 2026, a Codex model has shadowed it. Each hour, the shadow gets a frozen copy of the same inputs and makes its own decisions. It runs in a closed sandbox: it writes files and posts nothing. On 19 Nov 2026 the shadow was GPT-6.2 Astra, the Codex model on all our computers since 17 Nov, at high reasoning effort.</p>
+<p>How it is scored:</p>
+<ul><li>Before reading the shadow's output, a Claude scorer writes down the desk's decisions for that hour. This is the reference.</li><li>Each reference decision is marked agree, disagree or missed.</li><li>Each extra proposal of the shadow is checked by hand and marked valid or invalid.</li><li>Score = agreed / (agreed + disagreed + missed + invalid extras).</li><li>A run passes at 0.80 or more, with no critical miss. A critical miss is, for example, a step the owner had held, or a red alarm left without action.</li></ul>
+<p>The scores on 19 Nov 2026, 24 hourly runs (Figure 2):</p>
+<ul><li>0.00 to 0.43, mean 0.21. No run passed.</li><li>Of the desk's 149 decisions, the shadow agreed on 42, disagreed on 8 and missed 99.</li><li>It made 58 invalid proposals. It also made 306 valid ones, which the score does not count for it.</li><li>Since 15 Nov, in more than 80 hourly runs on this model and the one before it, one run passed: a backtest on 16 Nov, at 0.88.</li></ul>
+<p>Three decisions, in plain words:</p>
+<ol><li>Agree. Fourteen pull requests were ready to merge. In our rules, merging is the owner's step. The desk left ten in the owner's merge step, left a rule change to his choice, and kept three that depended on an unmerged one waiting. The shadow agreed, for the first time in seven runs. In the six runs before, it proposed to merge them itself.</li><li>Disagree. A computer sat idle while the job feeder said it had nothing to send. The shadow proposed a regular refill. The desk traced the feeder and found three jobs reserved for a computer that was offline, where they could never be picked up. It released them and delivered two to the idle computer. A refill delivers nothing while the jobs sit reserved for the offline computer.</li><li>Invalid, repeated. In its eleventh run with the same item, the shadow proposed a disk clean-up diagnosis on the main workstation that needs the owner's administrator rights, against a standing rule. In the same run it missed a client fix that the owner had held until he says "resume": a critical miss.</li></ol>
+<p>To read these scores fairly:</p>
+<ul><li>The reference is the Claude desk's own decisions. The test asks how often Codex makes the same call; it does not prove each desk call was the best one.</li><li>Many misses were events after the shadow's inputs froze, such as an owner request a few minutes later. It could not see them.</li><li>The shadow was sometimes ahead. One hour before the desk did, it proposed moving a job off the offline computer to an idle one.</li><li>Most of its invalid items were repeats. Once a standing rule named a repeat, it mostly stopped.</li></ul>
+<p>In my experience, this is where the model makes a bigger difference: it makes a better decision at every turn, and the cumulative good turns make an excellent result. For project management, the Claude desk keeps the role.</p>
+<h2 id="keep-your-future-problem-sets">Keep your future problem sets</h2>
 <p>Keep your future problem sets: the problems you would most like a model to solve. They are your dreams for your work. Dream big.</p>
 <p>When you get access to a new model, run the set on the first day. Compare each answer with the known answer, or check it the way you planned. Keep some money or spare usage ready for this test. When a dream is not realised with this model, keep it for the next one. Raise the complexity of the set step by step as each model solves more.</p>
+<p>Keep two kinds of problem in the set:</p>
+<ul><li>Calculations with a known answer, worked from the source, like the fender case above.</li><li>Decisions with a known good call, recorded from your own past work, like the project management hours above.</li></ul>
 <p>There is always a second route: break the problem down. With more time spent splitting a problem into smaller steps, each with a known answer, today's model may solve it. The other route is to wait for the next frontier model. Balance the effort now against the work later, by what is needed now.</p>
 <p>The set shows you, on your own work, what the new model can now do. It also shows which checks you must still do by hand.</p>
-<p><em>The worked example was recomputed independently before publication.</em></p>
-<p><small>Prepared: Analyst Deckhand (AI assistant) &middot; Checked: Editor Deckhand &middot; Approved: Vamsee Achanta &middot; 4 November 2026</small></p>
-<h2>Sources</h2>
-<ul>
-<li>Faltinsen, O. M. and Timokha, A. N., <em>Sloshing</em>, Cambridge University Press, 2009, section to be confirmed: first-mode natural frequency of a rectangular tank, linear potential-flow theory.</li>
-<li>OpenAI, "Data controls in ChatGPT", OpenAI Help Center: <a href="https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt">https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt</a>, retrieved 4 November 2026 (note 1).</li>
-<li>Google, "Gemini Apps Privacy Hub", Gemini Apps Help: <a href="https://support.google.com/gemini/answer/13594961">https://support.google.com/gemini/answer/13594961</a>, retrieved 4 November 2026 (note 1).</li>
-<li>Anthropic, "Updates to Consumer Terms and Privacy Policy", 28 August 2025: <a href="https://www.anthropic.com/news/updates-to-our-consumer-terms">https://www.anthropic.com/news/updates-to-our-consumer-terms</a>, retrieved 4 November 2026 (note 1).</li>
-</ul>
-<h2>Appendix A. Reusable prompts</h2>
-<p>Prompt: "Here is my problem set, one problem per line, each with its known answer or the check I will apply. Solve each problem and state every assumption you make. Mark each problem you cannot solve, or solve only by a simplification, and name the simplification."</p>
-<p>Run the same prompt and set on each new model and each provider you use. Compare the answers with the known answers. Data set: your own problem set; the worked example uses the textbook in Sources.</p>
-<p>About the author: <a href="/about.html">https://www.aceengineer.com/about.html</a></p>
-<p>For help with automation, AI automation or workflows, use the contact page: <a href="/contact.html">https://www.aceengineer.com/contact.html</a></p>
+<h2 id="charts-and-data">Charts and data</h2>
+<p>Figure 1 shows one step between two generations of one model. Both reviewed the same change to our engineering knowledge base, at the same commit. The earlier model, Claude Fable 5.1, marked one finding to fix before merge. The newer model, Claude Fable 5.2, marked five, including that one.</p>
+<ol><li>The change held 26 files, with 15 new source pages drawn from public posts. Each model reviewed it once: Claude Fable 5.1 on 10 Nov 2026 and Claude Fable 5.2 on 11 Nov 2026, without access to the earlier reviews. The two prompts were not identical. Each review used about 190,000 to 220,000 tokens.</li><li>Each row is one of the five findings the newer model marked to fix before merge. The columns give how each model treated that finding. Besides these, the earlier model gave 8 minor notes and the newer model gave 9.</li><li>Finding 5: the earlier model noted that the post time had no stated basis; the newer model found that the date was about 20 hours from the time in the post's id.</li><li>A third review of the same commit, by Claude Opus 5.5, marked findings 1 and 4 to fix. The newer model's five include every finding the other two marked to fix.</li><li>Data: <a href="../../../assets/data/newsletter/why-the-model-you-use-matters/fig1-model-generations.csv">fig1-model-generations.csv</a>. Source: AceEngineer review records, 10 and 11 Nov 2026.</li></ol>
+<figure aria-label="Figure 1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 742" role="img" aria-labelledby="f2t f2d" style="font-family:Segoe UI,Helvetica,Arial,sans-serif">
+<title id="f2t">One review, two generations of one model</title>
+<desc id="f2d">Bubble chart in three columns: not found; noted as minor; marked to fix before merge. One row for each of the five findings the newer model, Claude Fable 5.2, marked to fix before merge; all five filled bubbles sit in the last column. Ring bubbles give the earlier model, Claude Fable 5.1: findings 1 and 4 not found, findings 3 and 5 noted as minor, finding 2 marked to fix before merge.</desc>
+<rect width="1200" height="742" fill="#ffffff"/>
+<circle cx="452" cy="40" r="14" fill="#d6eeeb" stroke="#0e7e88" stroke-width="3"/><text x="476" y="47" font-size="20" fill="#0b3d5c">Earlier model: Claude Fable 5.1</text><circle cx="832" cy="40" r="14" fill="#2bb2a6"/><text x="856" y="47" font-size="20" fill="#0b3d5c">Newer model: Claude Fable 5.2</text>
+<rect x="432" y="90" width="234" height="632" fill="#eef3f7"/>
+<text x="549.0" y="136" font-size="21" font-weight="700" text-anchor="middle" fill="#0b3d5c">Not found</text>
+<rect x="680" y="90" width="234" height="632" fill="#eef3f7"/>
+<text x="797.0" y="136" font-size="21" font-weight="700" text-anchor="middle" fill="#0b3d5c">Noted as minor</text>
+<rect x="928" y="90" width="234" height="632" fill="#eef3f7"/>
+<text x="1045.0" y="136" font-size="21" font-weight="700" text-anchor="middle" fill="#0b3d5c">Marked to fix before</text>
+<text x="1045.0" y="162" font-size="21" font-weight="700" text-anchor="middle" fill="#0b3d5c">merge</text>
+<text x="36" y="234" font-size="20" fill="#0b3d5c">1. A preprint recorded as</text>
+<text x="36" y="260" font-size="20" fill="#0b3d5c">published</text>
+<g><title>Finding 1, a preprint recorded as published: Claude Fable 5.1, not found.</title><circle cx="549.0" cy="240" r="20" fill="#d6eeeb" stroke="#0e7e88" stroke-width="3"/></g>
+<g><title>Finding 1, a preprint recorded as published: Claude Fable 5.2, marked to fix before merge.</title><circle cx="1045.0" cy="240" r="20" fill="#2bb2a6"/></g>
+<text x="36" y="338" font-size="20" fill="#0b3d5c">2. A cause relayed on an incident</text>
+<text x="36" y="364" font-size="20" fill="#0b3d5c">page</text>
+<g><title>Finding 2, a cause relayed on an incident page: Claude Fable 5.1, marked to fix before merge.</title><circle cx="1019.0" cy="344" r="20" fill="#d6eeeb" stroke="#0e7e88" stroke-width="3"/></g>
+<g><title>Finding 2, a cause relayed on an incident page: Claude Fable 5.2, marked to fix before merge.</title><circle cx="1071.0" cy="344" r="20" fill="#2bb2a6"/></g>
+<text x="36" y="429" font-size="20" fill="#0b3d5c">3. A paper cited with a wrong</text>
+<text x="36" y="455" font-size="20" fill="#0b3d5c">initial, marked unread though</text>
+<text x="36" y="481" font-size="20" fill="#0b3d5c">held</text>
+<g><title>Finding 3, a paper cited with a wrong initial, marked unread though held: Claude Fable 5.1, noted as minor.</title><circle cx="797.0" cy="448" r="20" fill="#d6eeeb" stroke="#0e7e88" stroke-width="3"/></g>
+<g><title>Finding 3, a paper cited with a wrong initial, marked unread though held: Claude Fable 5.2, marked to fix before merge.</title><circle cx="1045.0" cy="448" r="20" fill="#2bb2a6"/></g>
+<text x="36" y="533" font-size="20" fill="#0b3d5c">4. New records would reach a</text>
+<text x="36" y="559" font-size="20" fill="#0b3d5c">downstream brief under the wrong</text>
+<text x="36" y="585" font-size="20" fill="#0b3d5c">label</text>
+<g><title>Finding 4, new records would reach a downstream brief under the wrong label: Claude Fable 5.1, not found.</title><circle cx="549.0" cy="552" r="20" fill="#d6eeeb" stroke="#0e7e88" stroke-width="3"/></g>
+<g><title>Finding 4, new records would reach a downstream brief under the wrong label: Claude Fable 5.2, marked to fix before merge.</title><circle cx="1045.0" cy="552" r="20" fill="#2bb2a6"/></g>
+<text x="36" y="650" font-size="20" fill="#0b3d5c">5. A post date about 20 hours</text>
+<text x="36" y="676" font-size="20" fill="#0b3d5c">from its post id</text>
+<g><title>Finding 5, a post date about 20 hours from its post id: Claude Fable 5.1, noted as minor.</title><circle cx="797.0" cy="656" r="20" fill="#d6eeeb" stroke="#0e7e88" stroke-width="3"/></g>
+<g><title>Finding 5, a post date about 20 hours from its post id: Claude Fable 5.2, marked to fix before merge.</title><circle cx="1045.0" cy="656" r="20" fill="#2bb2a6"/></g>
+</svg>
+</figure>
+<p><em>Figure 1. One review, two generations of one model. Point to a bubble for the finding and how each model treated it.</em></p>
+<p>Figure 2 shows the project management scores in "Project management, decision by decision".</p>
+<ol><li>Each bar is one hourly run of the fleet manager shadow (GPT-6.2 Astra), scored against the Claude desk's decisions (Claude Opus 5.5) for the same hour.</li><li>Score = agreed / (agreed + disagreed + missed + invalid extras). Pass: 0.80 or more with no critical miss. No run passed.</li><li>Source: AceEngineer shadow training records, 19 Nov 2026.</li></ol>
+<figure aria-label="Figure 2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="fig1t fig1d" style="font-family:Segoe UI,Helvetica,Arial,sans-serif">
+<title id="fig1t">Codex shadow score for each hourly run, 19 Nov 2026</title>
+<desc id="fig1d">Twenty-four bars, one for each hourly run, between 0.00 and 0.43 (mean 0.21); a dashed pass line at 0.80; no bar reaches it.</desc>
+<rect x="0" y="0" width="720" height="300" fill="#ffffff"/>
+<line x1="44" x2="708" y1="260.0" y2="260.0" stroke="#e3e8ec" stroke-width="1"/>
+<text x="38" y="264.0" font-size="12" text-anchor="end" fill="#5a6b76">0.0</text>
+<line x1="44" x2="708" y1="211.2" y2="211.2" stroke="#e3e8ec" stroke-width="1"/>
+<text x="38" y="215.2" font-size="12" text-anchor="end" fill="#5a6b76">0.2</text>
+<line x1="44" x2="708" y1="162.4" y2="162.4" stroke="#e3e8ec" stroke-width="1"/>
+<text x="38" y="166.4" font-size="12" text-anchor="end" fill="#5a6b76">0.4</text>
+<line x1="44" x2="708" y1="113.6" y2="113.6" stroke="#e3e8ec" stroke-width="1"/>
+<text x="38" y="117.6" font-size="12" text-anchor="end" fill="#5a6b76">0.6</text>
+<line x1="44" x2="708" y1="64.8" y2="64.8" stroke="#e3e8ec" stroke-width="1"/>
+<text x="38" y="68.8" font-size="12" text-anchor="end" fill="#5a6b76">0.8</text>
+<line x1="44" x2="708" y1="16.0" y2="16.0" stroke="#e3e8ec" stroke-width="1"/>
+<text x="38" y="20.0" font-size="12" text-anchor="end" fill="#5a6b76">1.0</text>
+<path d="M46.0,260.0 V234.7 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>00:43 UTC: score 0.12, below the 0.80 pass line</title></path>
+<text x="57.8" y="276" font-size="12" text-anchor="middle" fill="#5a6b76">00h</text>
+<path d="M73.7,260.0 V234.7 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>01:42 UTC: score 0.12, below the 0.80 pass line</title></path>
+<path d="M101.3,260.0 V239.6 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>02:42 UTC: score 0.10, below the 0.80 pass line</title></path>
+<rect x="129.0" y="258.5" width="23.7" height="1.5" fill="#0e7e88"><title>03:43 UTC: score 0.00, below the 0.80 pass line</title></rect>
+<text x="140.8" y="276" font-size="12" text-anchor="middle" fill="#5a6b76">03h</text>
+<path d="M156.7,260.0 V242.0 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>04:43 UTC: score 0.09, below the 0.80 pass line</title></path>
+<path d="M184.3,260.0 V222.5 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>05:42 UTC: score 0.17, below the 0.80 pass line</title></path>
+<path d="M212.0,260.0 V215.2 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>06:42 UTC: score 0.20, below the 0.80 pass line</title></path>
+<text x="223.8" y="276" font-size="12" text-anchor="middle" fill="#5a6b76">06h</text>
+<path d="M239.7,260.0 V220.1 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>07:43 UTC: score 0.18, below the 0.80 pass line</title></path>
+<path d="M267.3,260.0 V215.2 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>08:43 UTC: score 0.20, below the 0.80 pass line</title></path>
+<path d="M295.0,260.0 V193.2 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>09:43 UTC: score 0.29, below the 0.80 pass line</title></path>
+<text x="306.8" y="276" font-size="12" text-anchor="middle" fill="#5a6b76">09h</text>
+<path d="M322.7,260.0 V215.2 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>10:42 UTC: score 0.20, below the 0.80 pass line</title></path>
+<path d="M350.3,260.0 V203.0 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>11:42 UTC: score 0.25, below the 0.80 pass line</title></path>
+<path d="M378.0,260.0 V190.8 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>12:42 UTC: score 0.30, below the 0.80 pass line</title></path>
+<text x="389.8" y="276" font-size="12" text-anchor="middle" fill="#5a6b76">12h</text>
+<path d="M405.7,260.0 V220.1 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>13:43 UTC: score 0.18, below the 0.80 pass line</title></path>
+<path d="M433.3,260.0 V190.8 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>14:42 UTC: score 0.30, below the 0.80 pass line</title></path>
+<path d="M461.0,260.0 V183.5 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>15:42 UTC: score 0.33, below the 0.80 pass line</title></path>
+<text x="472.8" y="276" font-size="12" text-anchor="middle" fill="#5a6b76">15h</text>
+<path d="M488.7,260.0 V171.3 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>16:42 UTC: score 0.38, below the 0.80 pass line</title></path>
+<path d="M516.3,260.0 V159.1 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>17:42 UTC: score 0.43, below the 0.80 pass line</title></path>
+<path d="M544.0,260.0 V203.0 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>18:43 UTC: score 0.25, below the 0.80 pass line</title></path>
+<text x="555.8" y="276" font-size="12" text-anchor="middle" fill="#5a6b76">18h</text>
+<path d="M571.7,260.0 V203.0 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>19:42 UTC: score 0.25, below the 0.80 pass line</title></path>
+<path d="M599.3,260.0 V234.7 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>20:42 UTC: score 0.12, below the 0.80 pass line</title></path>
+<path d="M627.0,260.0 V229.8 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>21:42 UTC: score 0.14, below the 0.80 pass line</title></path>
+<text x="638.8" y="276" font-size="12" text-anchor="middle" fill="#5a6b76">21h</text>
+<path d="M654.7,260.0 V229.8 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>22:42 UTC: score 0.14, below the 0.80 pass line</title></path>
+<path d="M682.3,260.0 V193.2 q0,-4 4,-4 h15.7 q4,0 4,4 V260.0 Z" fill="#0e7e88"><title>23:42 UTC: score 0.29, below the 0.80 pass line</title></path>
+<text x="528.2" y="149.1" font-size="12" text-anchor="middle" fill="#26323a">0.43</text>
+<line x1="44" x2="708" y1="64.8" y2="64.8" stroke="#0b3d5c" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="706" y="58.8" font-size="12" text-anchor="end" fill="#0b3d5c">Pass line 0.80</text>
+<line x1="44" x2="708" y1="260" y2="260" stroke="#5a6b76" stroke-width="1"/>
+<text x="376.0" y="294" font-size="12" text-anchor="middle" fill="#5a6b76">Time of the run, UTC, 19 Nov 2026</text>
+</svg></figure>
+<p><em>Figure 2. Codex shadow score for each hourly run, 19 Nov 2026</em></p>
+<p>Table 1 sets the two examples side by side.</p>
+<ol><li>Fender case: UFC 4-152-01, Eq. 5-2 [1]; hand check worked from the code's text. The model versions of the 15 Nov 2026 run were not recorded.</li><li>Project management: 24 hourly runs, 19 Nov 2026.</li><li>Source: AceEngineer, 20 Nov 2026.</li></ol>
+<div class="table-responsive">
+<table class="table table-bordered"><thead><tr><th></th><th>Fender calculation</th><th>Project management</th></tr></thead><tbody><tr><td>Task</td><td>Berthing energy by UFC 4-152-01</td><td>Hourly fleet manager decisions</td></tr><tr><td>Known answer</td><td>823.7 kNm, worked by hand from the code's text</td><td>The Claude desk's decisions, written down before the shadow's output was read</td></tr><tr><td>Claude</td><td>604.2 kNm, about 27 % low; its own test passed</td><td>The reference (Claude Opus 5.5)</td></tr><tr><td>Codex</td><td>823.7 kNm, from the code's definition</td><td>0.00 to 0.43 per run, mean 0.21 (GPT-6.2 Astra)</td></tr><tr><td>Ahead on this task</td><td>Codex</td><td>Claude</td></tr></tbody></table>
+</div>
+<p><em>Table 1. Two examples, two providers</em></p>
+<p>To try it out or adapt the analysis, see <a href="#appendix-b-reusable-prompts">reusable prompt</a>.</p>
+<p>If you have run your own analysis, see a way to improve this one, or have an idea for a future issue, write to support@aceengineer.com. We read every reply and credit the ideas we use and provide results we obtained.</p>
+<p><em>Prepared: Analyst Deckhand · Checked: Editor Deckhand · Approved: Vamsee Achanta (pending, C1 model article review copy r8). Deckhand roles are AI assistants on the AceEngineer team: they ran the analysis and prepared and checked this edition. Revision 8, 20 Nov 2026; first published 4 Nov 2026.</em></p>
+<p><small>Version history: revision 8, 20 Nov 2026, rewritten on two examples from our own work, with a chart of two generations of one model; first published 4 Nov 2026 as "Why the model you use matters".</small></p>
+<h2 id="references">References</h2>
+<ol><li>US Department of Defense, UFC 4-152-01 Design: Piers and Wharves, 2017, Change 1 2024: 5-2.1.1, Eq. 5-2, berthing energy and added mass. <a href="https://www.wbdg.org/ffc/dod/unified-facilities-criteria-ufc/ufc-4-152-01">https://www.wbdg.org/ffc/dod/unified-facilities-criteria-ufc/ufc-4-152-01</a></li><li>Anthropic, Models overview, Claude documentation, retrieved 20 Nov 2026. <a href="https://docs.anthropic.com/en/docs/about-claude/models">https://docs.anthropic.com/en/docs/about-claude/models</a></li><li>OpenAI, Codex, OpenAI developer documentation, retrieved 20 Nov 2026. <a href="https://developers.openai.com/codex">https://developers.openai.com/codex</a></li><li>Buffett, W. E., Chairman's letter, Berkshire Hathaway 1987 annual report: Benjamin Graham's Mr. Market, retrieved 19 Nov 2026. <a href="https://www.berkshirehathaway.com/letters/1987.html">https://www.berkshirehathaway.com/letters/1987.html</a></li></ol>
+<h2 id="appendix-a-method-and-data">Appendix A Method and data</h2>
+<p>The method and data behind the examples are summarised in this appendix.</p>
+<ul><li>Fender case: the UFC 4-152-01 berthing energy method [1], 5-2.1.1. The ship and berth inputs are a generic case, not a project. The hand check is worked from the code's text, not from the module; the module's test reruns it and also checks the 604.2 kNm of the superseded reading.</li><li>Project management: each hourly shadow run has its frozen inputs, its prompt, the reference written before the output was read, the marks and the score table. The records stay in our private repository because they name hosts and client work; the counts above are taken from them.</li><li>Model names are as recorded on each side. Where a record does not name the model, the article says so.</li></ul>
+<p>Hand check of the fender case, under review in an open pull request and not yet merged: <a href="https://github.com/vamseeachanta/digitalmodel/blob/319e3d45a45e621979ea3b22caa8df7db2f06ef6/tests/hydrodynamics/fender_design/test_methods_codes.py">digitalmodel on GitHub, test_methods_codes.py</a>.</p>
+<h2 id="appendix-b-reusable-prompts">Appendix B Reusable prompts</h2>
+<ul><li>Recompute the fender case by hand from the UFC text with your own assistant, once with the berthing coefficient and once with the block coefficient, and check both against the published values.</li><li>Then turn your own problems into a repeatable check of each model and provider: a calculation with a known answer, and a decision with a known good call from your own records.</li></ul>
+<pre><code>You are checking an AI model on problems whose answers I know.
+For each problem below: solve it, state every assumption and the source
+clause you used, and give the result with units. Do not look up my answers.
+Then I will compare your result with the known answer and mark it
+agree, disagree or missed.
+Problems: &lt;paste your problem set&gt;</code></pre>
+<p>Public data set: AceEngineer publishes the generic fender case inputs and the 19 Nov 2026 hourly scores (Figure 2 and Table 1) on the article page, 20 Nov 2026.</p>
 <hr>
 </article>
 <p><a href="/newsletter/issue-001-energy-street/">Read issue 1 of The Deckhand Chronicles, Energy Street edition.</a></p>

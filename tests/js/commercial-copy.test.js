@@ -67,13 +67,9 @@ const RULES = {
 };
 
 // Engineering economics in worked examples, not prices: each entry names the page, the exact
-// text and why it is not a commercial statement.
-const ECONOMICS = {
-  'blog/energy-data-automation-pipelines.html': [
-    '$100,800/year',   // the yearly cost of manual data collection in the worked example
-    'FTE @ $120k',     // the analyst salary assumed in that example
-  ],
-};
+// text and why it is not a commercial statement. The manual-collection cost table on
+// blog/energy-data-automation-pipelines.html had no source and was removed, so no entry remains.
+const ECONOMICS = {};
 
 function jsonStrings(value, out = []) {
   if (typeof value === 'string') out.push(value);

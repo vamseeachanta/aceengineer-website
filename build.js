@@ -125,6 +125,19 @@ function loadCopy(copyFile = './brand/copy.yaml') {
   return _copyCache;
 }
 
+// Load the public module-check count (assets/data/module-catalogue-summary.json) and
+// add the catalogue date in words, e.g. "17 October 2026". Cached like loadCopy.
+let _moduleSummaryCache;
+function loadModuleSummary(file = './assets/data/module-catalogue-summary.json') {
+  if (_moduleSummaryCache === undefined) {
+    const summary = JSON.parse(fs.readFileSync(file, 'utf8'));
+    const dateText = new Date(`${summary.date}T00:00:00Z`).toLocaleDateString('en-GB',
+      { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+    _moduleSummaryCache = { ...summary, dateText };
+  }
+  return _moduleSummaryCache;
+}
+
 // Load the capability registry (config/capabilities.yaml) — SSOT for the HF-backed
 // capability pages (docs/capabilities-registry.md, epic workspace-hub#3485). Returns
 // { version, capabilities: [...] } (or {} if absent). Cached like loadCopy. Consumed by
@@ -265,7 +278,8 @@ async function renderHtml(content, locals) {
   // Process includes first, then expressions (so included content gets variables expanded)
   const result = await posthtml([
     include({ root: srcDir }),
-    expressions({ locals })
+    // moduleSummary: the dated module-check count the home page cites (About uses the same file).
+    expressions({ locals: { moduleSummary: loadModuleSummary(), ...locals } })
   ]).process(content);
   return result.html;
 }

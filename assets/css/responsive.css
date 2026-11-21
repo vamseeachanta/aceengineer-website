@@ -486,6 +486,17 @@ img {
         hyphens: auto;
     }
 
+    /* Wide tables in articles scroll sideways inside their own box
+       once their columns can wrap no further; the page itself does
+       not scroll. Desktop layout is unchanged. */
+    article table,
+    .blog-content table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
     /* Data tables (demos, reports) hold identifiers and long numbers
        that cannot hyphenate, so their cells may break anywhere. */
     .dataframe th, .dataframe td,

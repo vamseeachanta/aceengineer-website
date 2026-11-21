@@ -43,7 +43,7 @@
                 <p class="kicker">{{ copy.home.kicker }}</p>
                 <h1>{{ copy.home.heading }}</h1>
                 <p class="home-lead">{{ copy.home.lead }}</p>
-                <p>Start with our public data and code: <a href="https://github.com/vamseeachanta/digitalmodel">digitalmodel</a>, <a href="https://github.com/vamseeachanta/worldenergydata">worldenergydata</a> and <a href="https://github.com/vamseeachanta/assetutilities">assetutilities</a> on GitHub, and our <a href="https://huggingface.co/aceengineer">datasets on Hugging Face</a>.</p>
+                <p>Public data and code: <a href="https://github.com/vamseeachanta/digitalmodel">digitalmodel</a>, <a href="https://github.com/vamseeachanta/worldenergydata">worldenergydata</a> and <a href="https://github.com/vamseeachanta/assetutilities">assetutilities</a> on GitHub, and the AceEngineer <a href="https://huggingface.co/aceengineer">datasets on Hugging Face</a>.</p>
                 <include src="partials/scope-invitation.html"></include>
                 <p><a href="newsletter/issue-001-energy-street/">Latest issue: The Deckhand Chronicles, issue 1</a> · <a href="newsletter/">Newsletter archive</a></p>
                 <div class="home-actions">
@@ -75,10 +75,10 @@
                             <include src="partials/service-samples.html"></include>
                         </article>
                     </each>
-                    <article class="home-service"><h3><a href="ai-automation/">AI automation and agentic workflows</a></h3><p>AI automation and agentic workflows for engineering and small-business administration. Contact us to discuss a separately agreed scope.</p></article>
+                    <article class="home-service"><h3><a href="ai-automation/">AI automation and agentic workflows</a></h3><p>AI automation and agentic workflows for engineering and small-business administration. A separately agreed scope can be discussed through the contact page.</p></article>
                     <article class="home-service"><h3><a href="small-business/">AI and automation help for small businesses</a></h3><p>From tax to analysis to contract negotiation to improvements, construction ideas or any administrative automation work.</p></article>
                 </div>
-                <p><a href="about.html#module-checks">Module count: catalogue date, criteria and revision</a></p>
+                <p><a href="about.html#module-checks">Module checks: {{ moduleSummary.outward }} of {{ moduleSummary.modules }} modules pass their cited checks (catalogue run {{ moduleSummary.dateText }})</a></p>
             </div>
         </section>
         <if condition="samplesPublished">

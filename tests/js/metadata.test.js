@@ -382,8 +382,9 @@ test('source metadata meets the required coverage floors', () => {
   // Includes the newsletter archive and both automation pages; retired sources still count.
   // Keep the existing 107 floor: noindex exclusions do not require a reduction.
   // Main's hand-counted source set (135) plus the public reports directory index
-  // and the rod pump dynamometer card article.
-  expect(sources).toHaveLength(137);
+  // and the rod pump dynamometer card article, minus the deleted
+  // newsletter/issue-001/index.html stub (that URL is now a 301 in vercel.json).
+  expect(sources).toHaveLength(136);
   for (const [selector, floor] of [
     ['script[type="application/ld+json"]', 107],
     ['meta[property="og:title"]', 107], ['meta[property="og:image"]', 107],
@@ -623,10 +624,10 @@ test('newsletter issue includes the shared site footer after its reviewed main c
   expect(sharedFooter.querySelector('.footer-legal')).not.toBeNull();
 });
 
-test('the superseded issue no longer carries the withdrawn decisions section', () => {
-  const doc = documents.get('newsletter/issue-001/index.html');
-  expect(doc.getElementById('maintainer-decisions')).toBeNull();
-  expect(doc.querySelector('main a').getAttribute('href')).toBe('/newsletter/issue-001-energy-street/');
+test('the superseded issue has no built document or withdrawn decisions section', () => {
+  expect(documents.has('newsletter/issue-001/index.html')).toBe(false);
+  expect(documents.get('newsletter/issue-001-energy-street/index.html')
+    .getElementById('maintainer-decisions')).toBeNull();
 });
 
 test('legal footer inherits copyright type and colour at a smaller size', () => {

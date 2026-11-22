@@ -76,11 +76,12 @@ an exception that no longer matches is a failure and must be removed.
 | Missing Twitter card | 50 | Individually listed source files, interactive templates, capability renderer and registry. |
 | Duplicate redirect description | 9 | Individually listed noindex newsletter chart and diffraction stubs. |
 | Home breadcrumb has only its Home item | 1 | The single ListItem in the home source. |
+| Byte-for-byte digitalmodel technical page copies | 21 | Three pages under `digitalmodel/` (buckling, CFD, hydro), each lacking a description (1), `og:title`, `og:type`, `og:image`, `og:url` and `og:description` (5) and a Twitter card (1). The copies keep their stable URLs and are not rewritten here. |
 
-These counts are the tally of `config/seo-audit.json` entries. Against a build
-of main at 3123a7a merged into this branch, `audit.py --check` reports 144 pages,
-60 deviations, 0 unapproved and 0 stale exceptions. Validate the list against a
-clean build before merging.
+These counts are the tally of `config/seo-audit.json` entries (81). Against a
+build of main merged into this branch at b9e2a64, CI's `audit.py --check` reports
+PASS on 148 pages with 0 unapproved deviations; a stale exception would have
+failed the check. Validate the list against a clean build before merging.
 Do not add entries just to make a new page pass. Fix plain defects in its source;
 refer substantial wording changes for copy review. An intended redirect can
 canonicalize to its replacement, so self-reference and sitemap membership do

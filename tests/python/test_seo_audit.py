@@ -301,11 +301,17 @@ def test_documented_worked_example_has_hand_counted_answer(tmp_path):
 
 def test_committed_allowlist_has_unique_exact_entries_and_evidence():
     # Independent source inventory tally, written out in the documentation:
-    # 50 card omissions + 9 repeated redirect descriptions + 1 home breadcrumb.
+    # 50 card omissions + 9 repeated redirect descriptions + 1 home breadcrumb,
+    # plus 21 for the three byte-for-byte digitalmodel copies (3 pages x
+    # 1 description + 5 Open Graph properties + 1 Twitter card).
     # Uniqueness exceptions carry no detail: they match on page and rule.
     entries = CONFIG["allowlist"]
-    assert len(entries) == 60
-    assert len({(entry["page"], entry["rule"], entry.get("detail")) for entry in entries}) == 60
+    assert len(entries) == 81
+    assert len({(entry["page"], entry["rule"], entry.get("detail")) for entry in entries}) == 81
+    copied = [entry for entry in entries if entry["page"].startswith("digitalmodel/")]
+    assert {(rule, sum(e["rule"] == rule for e in copied)) for rule in {e["rule"] for e in copied}} == {
+        ("description-count", 3), ("og-required", 15), ("twitter-card", 3)
+    }
     assert all("detail" not in entry for entry in entries if entry["rule"].endswith("-unique"))
     assert all(entry["reason"].strip() and "*" not in entry["page"] for entry in entries)
     assert all(entry["source"] in CONFIG["sources"] for entry in CONFIG["structured_data"]["required"].values())

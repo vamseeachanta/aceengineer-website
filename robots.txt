@@ -1,12 +1,13 @@
+# Public paths are allowed for every crawler, including the text guides and reports.
+# RFC 9309 (2022), sections 2.2.1 and 2.2.2: wildcard group and Allow matching.
+# https://www.rfc-editor.org/rfc/rfc9309.html
+# This file is crawl guidance, not access control or a licence to reuse content.
 User-agent: *
 Allow: /
 
 # Sitemap location
 Sitemap: https://www.aceengineer.com/sitemap.xml
 
-# Disallow admin/private areas (none currently, but good practice)
-# Disallow: /admin/
-# Disallow: /private/
-
-# Crawl-delay (optional, 1 second)
+# No blocked paths are introduced. Any future block needs a maintainer decision.
+# Existing crawl-delay retained; it is an extension outside RFC 9309, and support varies.
 Crawl-delay: 1

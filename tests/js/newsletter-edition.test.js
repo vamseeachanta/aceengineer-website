@@ -115,9 +115,7 @@ describe.each(retiredCharts)('retired chart %s', chart => {
   });
 
   test('negative controls reject indexing, wrong destinations, old links and hidden claims', () => {
-    const original = documentFor(`dist/${retired}`);
-    original.querySelector('h1').textContent = 'This chart is no longer published';
-    original.querySelector('main a').textContent = 'Read issue 1 of The Deckhand Chronicles, Energy Street edition.';
+    const original = documentFor(`dist/${page}`);
     assertRetired(original, false, 'chart');
     const missingNoindex = original.cloneNode(true);
     missingNoindex.querySelector('meta[name="robots"]').content = 'index';
@@ -143,18 +141,19 @@ describe.each(retiredCharts)('retired chart %s', chart => {
   });
 });
 
-test('the superseded issue is only a short noindex redirect to the edition', () => {
-  expect(read(`content/${retired}`)).toContain(`canonicalPath: "${edition}"`);
-  for (const prefix of ['content', 'dist']) assertRetired(documentFor(`${prefix}/${retired}`), prefix === 'content');
+test('the superseded issue has no source or built stub', () => {
+  for (const prefix of ['content', 'dist']) {
+    expect(fs.existsSync(path.join(root, prefix, retired))).toBe(false);
+  }
 });
 
 test('retirement controls reject old copy and an incorrect destination', () => {
-  const oldCopy = documentFor(`dist/${retired}`);
-  oldCopy.body.append('Specialists edition');
-  expect(() => assertRetired(oldCopy)).toThrow();
-  const wrongLink = documentFor(`dist/${retired}`);
+  const oldCopy = documentFor('dist/newsletter/charts/hse-drilling/index.html');
+  oldCopy.body.append('Unexpected copy');
+  expect(() => assertRetired(oldCopy, false, 'chart')).toThrow();
+  const wrongLink = documentFor('dist/newsletter/charts/hse-drilling/index.html');
   wrongLink.querySelector('main a').href = '/newsletter/';
-  expect(() => assertRetired(wrongLink)).toThrow();
+  expect(() => assertRetired(wrongLink, false, 'chart')).toThrow();
 });
 
 test('discovery replaces the superseded route in navigation, archive, RSS and indexes', () => {
@@ -191,7 +190,7 @@ test('discovery replaces the superseded route in navigation, archive, RSS and in
     expect(schemas.find(schema => schema['@type'] === 'Article').description)
       .toBe(issue.querySelector('meta[name="description"]').content);
   }
-  expect(SITEMAP_EXCLUDE[retired]).toBeDefined();
+  expect(SITEMAP_EXCLUDE[retired]).toBeUndefined();
   for (const file of ['dist/sitemap.xml', 'dist/llms.txt']) {
     expect(read(file)).toContain(route);
     expect(read(file)).not.toMatch(/https?:\/\/[^/]+\/newsletter\/issue-001\//);

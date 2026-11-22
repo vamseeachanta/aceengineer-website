@@ -4,6 +4,16 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/newsletter/issue-001/",
+      "destination": "/newsletter/issue-001-energy-street/",
+      "statusCode": 301
+    },
+    {
+      "source": "/newsletter/issue-001",
+      "destination": "/newsletter/issue-001-energy-street/",
+      "statusCode": 301
+    },
+    {
       "source": "/blog/drilling-technology-evolution-mpd-adoption.html",
       "destination": "/blog/",
       "permanent": false

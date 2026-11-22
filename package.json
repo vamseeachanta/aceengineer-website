@@ -57,6 +57,11 @@
         "testMatch": ["<rootDir>/tests/js/newsletter-model-topic.test.js"]
       },
       {
+        "displayName": "agent-readable",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/agent-readable.test.js"]
+      },
+      {
         "displayName": "diffraction-provenance",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/diffraction-provenance.test.js"]
@@ -224,6 +229,11 @@
         "displayName": "cta-tracking",
         "testEnvironment": "jsdom",
         "testMatch": ["<rootDir>/tests/js/cta-tracking.test.js"]
+      },
+      {
+        "displayName": "newsletter-article-01",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/newsletter-article-01.test.js"]
       },
       {
         "displayName": "commercial-copy",

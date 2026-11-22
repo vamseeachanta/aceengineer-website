@@ -22,6 +22,14 @@ const DIST = path.join(ROOT, 'dist');
 // The single version the whole site is allowed to load.
 const PLOTLY = 'plotly-2.32.0.min.js';
 
+// Named exceptions: a published newsletter page whose charts were built and approved on
+// another Plotly release ships those same bytes (with a .sha256 sidecar) and loads only
+// that file. Each entry is one page; nothing else may load the exception version.
+const PLOTLY_EXCEPTIONS = {
+  'newsletter/issue-002-public-data/index.html': 'plotly-2.35.2.min.js',
+};
+const allowedPlotly = page => PLOTLY_EXCEPTIONS[page] || PLOTLY;
+
 function walk(dir, ext, out = []) {
   if (!fs.existsSync(dir)) return out;
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -66,17 +74,44 @@ describe('vendored assets (dist/)', () => {
     for (const p of pages) {
       for (const src of scriptSrcs(p)) {
         if (!/plotly/i.test(src)) continue;
-        if (!src.endsWith(`assets/js/${PLOTLY}`)) bad.push([rel(p), src]);
+        if (!src.endsWith(`assets/js/${allowedPlotly(rel(p))}`)) bad.push([rel(p), src]);
       }
     }
     expect(bad).toEqual([]);
   });
 
-  test('exactly one Plotly build ships in dist/assets/js', () => {
+  test('only the site Plotly build and the named exceptions ship in dist/assets/js', () => {
     const shipped = walk(path.join(DIST, 'assets', 'js'), '.js')
       .map(p => path.basename(p))
-      .filter(n => /^plotly.*\.js$/.test(n));
-    expect(shipped).toEqual([PLOTLY]);
+      .filter(n => /^plotly.*\.js$/.test(n))
+      .sort();
+    const expected = [...new Set([PLOTLY, ...Object.values(PLOTLY_EXCEPTIONS)])].sort();
+    expect(shipped).toEqual(expected);
+  });
+
+  test('every shipped Plotly build has a .sha256 sidecar that matches it', () => {
+    // The sidecar scan below only checks sidecars that exist; this makes a missing one fail.
+    for (const file of [...new Set([PLOTLY, ...Object.values(PLOTLY_EXCEPTIONS)])]) {
+      const target = path.join(ROOT, 'assets', 'js', file);
+      const sidecar = `${target}.sha256`;
+      expect({ file, sidecar: fs.existsSync(sidecar) }).toEqual({ file, sidecar: true });
+      const expected = read(sidecar).trim().split(/\s+/)[0].toLowerCase();
+      const actual = crypto.createHash('sha256').update(fs.readFileSync(target)).digest('hex');
+      expect({ file, actual }).toEqual({ file, actual: expected });
+    }
+  });
+
+  test('each Plotly exception is loaded by its named page, at the site path, and by no other page', () => {
+    // Resolve each script src against its page URL, so a wrong relative depth
+    // (for example ../assets/js/... from a page two levels down) cannot pass.
+    const resolved = p => scriptSrcs(p).map(s => new URL(s, `https://www.aceengineer.com/${rel(p)}`).pathname);
+    for (const [page, file] of Object.entries(PLOTLY_EXCEPTIONS)) {
+      const want = `/assets/js/${file}`;
+      const users = pages.filter(p => scriptSrcs(p).some(s => s.endsWith(file))).map(rel);
+      expect({ file, users }).toEqual({ file, users: [page] });
+      const own = pages.find(p => rel(p) === page);
+      expect({ page, loads: resolved(own).filter(s => /plotly/i.test(s)) }).toEqual({ page, loads: [want] });
+    }
   });
 
   test('the vendored Plotly is actually referenced by at least one page', () => {

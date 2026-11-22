@@ -34,7 +34,7 @@ Analytical & Computational Engineering (A&CE) has developed a comprehensive engi
 
 **Engineering Standards:** DNV-RP-H103, DNV-ST-N001
 **Software Integrations:** OrcaFlex modular model generator, Excel workbook conversions (81-test validated)
-**Proven Accuracy:** 81/81 pytest tests matching Ballymore workbook to 6+ decimal places
+**Proven Accuracy:** 81/81 pytest tests matching Field A workbook to 6+ decimal places
 **GTM Value:** Reusable 60-80% time savings for jumper design — convert Excel to auditable Python
 
 

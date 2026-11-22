@@ -116,9 +116,10 @@ maintainer decision; issue #166 records no such decision.
 Question: does the illustrative field economics example import observed
 production records?
 
-Inputs are `content/case-studies/bsee-field-economics.html`, its built HTML and
-its own meta description. The method reads that description, maps the output
-path to the canonical URL and transcribes the main landmark. A hand transcription
+The build combines `content/case-studies/bsee-field-economics.html` with its entry
+in `content/data/case-study-summaries.json`. The export reads the built page's
+meta description, maps the output path to the canonical URL and transcribes
+the main landmark. A hand transcription
 of the opening of its resulting entry is:
 
 ```text
@@ -129,9 +130,15 @@ Description: Illustrative field economics with synthetic production and assumed 
 
 # Illustrative Field Economics
 
-## Illustrative Example
+## Summary of this analysis
 
-This example describes the field economics generator, its saved metrics and saved cash flows. The production profile is synthetic and the financial inputs are assumed. No BSEE records are imported by this generator, and no client engagement or investment decision is represented.
+Scope: The example describes a synthetic production profile and deterministic cash-flow calculation.
+
+Inputs: The inputs are an assumed production profile, oil price, operating cost, capital cost, royalty and discount rate.
+
+Result: The page presents saved illustrative outputs, with an IRR placeholder and a calibrated rebuild pending.
+
+Data basis: The production profile is synthetic and the financial inputs are assumed; the generator imports no BSEE records.
 ```
 
 Answer: the example uses synthetic production and assumed financial inputs; it

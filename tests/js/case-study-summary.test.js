@@ -125,7 +125,9 @@ test('slice 3: repeat actions and inputs have public calculator evidence', () =>
 test('slices 4 and 5: every case study gains ordered parts without removing any original bytes', () => {
   // Independent inventory: economics, safety, wall thickness, platform fatigue,
   // riser sensitivity, stability, FEA and wind foundations are the eight studies in #165.
-  const pages = fs.readdirSync(path.join(root, 'content/case-studies')).filter(name => name !== 'index.html');
+  // Only HTML studies: the directory also holds non-page data such as figures.json (#173).
+  const pages = fs.readdirSync(path.join(root, 'content/case-studies'))
+    .filter(name => name.endsWith('.html') && name !== 'index.html');
   assert.equal(pages.length, 8);
   // Copy both lists into this context's arrays: under Jest, fs.readdirSync returns
   // an array from another realm and node:assert's deepEqual rejects the prototype.

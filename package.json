@@ -20,6 +20,7 @@
     "test:visual:update": "playwright test --update-snapshots"
   },
   "jest": {
+    "globalSetup": "<rootDir>/tests/setup/build.js",
     "projects": [
       {
         "displayName": "test-discovery",
@@ -55,6 +56,11 @@
         "displayName": "newsletter-model-topic",
         "testEnvironment": "node",
         "testMatch": ["<rootDir>/tests/js/newsletter-model-topic.test.js"]
+      },
+      {
+        "displayName": "test-build-setup",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/test-build-setup.test.js"]
       },
       {
         "displayName": "agent-readable",

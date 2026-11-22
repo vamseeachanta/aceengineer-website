@@ -25,7 +25,14 @@ aceengineer-website issue work.
 | Scripts and generated data | `../scripts/`, `../config/`, and `../assets/data/` |
 | Tests | `../tests/python/` and `../tests/js/` |
 
+Page metadata rules, audit commands and an authoring example are in
+[the SEO metadata contract](seo-metadata.md).
+
 For full routing detail, use `maps/aceengineer-website-operator-map.md`.
+
+For generated text guides, sitemap dates and the public reports register, see
+[Agent-readable site interface](agent-readable-site.md) and its
+[measured baseline](agent-readable-status.md).
 
 ## Retired Navigation
 

@@ -166,7 +166,7 @@ test('discovery replaces the superseded route in navigation, archive, RSS and in
   for (const prefix of ['content', 'dist']) {
     const feed = new JSDOM(read(prefix + '/newsletter/feed.xml'), { contentType: 'text/xml' }).window.document;
     const items = [...feed.querySelectorAll('item')];
-    expect(items).toHaveLength(5);
+    expect(items).toHaveLength(6);
     const item = items.find(entry => entry.querySelector('link').textContent === 'https://www.aceengineer.com' + route);
     expect(item).toBeDefined();
     expect(item.querySelector('description').textContent).toBe('Deckhand: Make Engineering Enjoyable Again');

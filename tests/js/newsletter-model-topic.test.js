@@ -15,7 +15,7 @@ const text = html => html.replace(/<\/?em>/g, '').replace(/<[^>]*>/g, ' ')
   .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
   .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
 const bodyFor = html => html.match(/<article id="why-the-model-you-use-matters">([\s\S]*?)<\/article>/)[1];
-const directionLeadIn = '<p>In my experience, our code once had to spell out the catenary equation for a hanging line. A frontier model now knows that equation without being given it. Our hypothesis: a newer model may also take on more engineering itself, as more mathematics and physics are trained into it. Engineering that once had to be written out for a model then becomes something it knows unaided. The illustration shows this direction in three stages. Where the engineer keeps the check, the work is checked against a known answer at every stage and then signed. A problem set with known answers, described below, is that check.</p>';
+const directionLeadIn = '<p>The author\'s code once had to spell out the catenary equation for a hanging line. A frontier model now knows that equation without being given it. Hypothesis: a newer model may also take on more engineering itself, as more mathematics and physics are trained into it. Engineering that once had to be written out for a model then becomes something it knows unaided. The illustration shows this direction in three stages. Where the engineer keeps the check, the work is checked against a known answer at every stage and then signed. A problem set with known answers, described below, is that check.</p>';
 const directionCaption = 'How the next model may take in engineering: an illustration of a direction, not measured data (note 1). Stages are in order only. The catenary example is the author\'s experience. Hover a stage or the example for detail.';
 const sourceLinks = [
   'https://help.openai.com/en/articles/7730893-data-controls-in-chatgpt',
@@ -60,7 +60,7 @@ for (const prefix of ['content', 'dist']) {
   test(`${prefix}: model topic preserves approved text, table and lists`, () => {
     const body = bodyFor(read(`${prefix}/${article}`));
     const prose = body.replace(/<figure>[\s\S]*?<\/figure>/g, '').replace(directionLeadIn, '');
-    assert.equal(digest(text(prose)), 'c290c2d80e0b306f32cef23c9563d16064928d7a620beaca8c67a69e19961907');
+    assert.equal(digest(text(prose)), 'f6032f8ebd9ec189e70842473661b461f499e39167e1382d5205d8a196085bd7');
     assert.equal((body.match(/<h1>/g) || []).length, 1);
     assert.equal((body.match(/<h2>/g) || []).length, 10);
     assert.equal((body.match(/<ol>/g) || []).length, 0);
@@ -95,7 +95,7 @@ for (const prefix of ['content', 'dist']) {
     });
     const sources = tables[0].match(/<tr>[\s\S]*?<\/tr>/g).slice(1).map(row => text(row.match(/<td>([^<]*)<\/td><\/tr>$/)[1]));
     assert.deepEqual(sources, ['Worked example above (illustrative)', 'Worked example above (illustrative)', 'Worked example above (illustrative)',
-      "Author's experience", "Author's experience", 'Our hypothesis', "Author's experience"]);
+      "Author's experience", "Author's experience", 'Hypothesis', "Author's experience"]);
     assert.match(tables[0], /<td>Worked example: first sloshing frequency, f \(Hz\)<\/td><td>0\.586<\/td><td>0\.884<\/td>/);
     assert.match(tables[0], /<td>Worked example: error against the full answer \(%\)<\/td><td>0<\/td><td>\+51<\/td>/);
     assert.match(body, /<\/table>\s*<\/div>\s*<p class="table-note"><small>Note to Table 2\./);
@@ -141,7 +141,7 @@ for (const prefix of ['content', 'dist']) {
     assert.equal((body.match(/<figure>/g) || []).length, 2);
     const svg = [...body.matchAll(/<svg\b[\s\S]*?<\/svg>/g)][1][0];
     if (prefix === 'content') {
-      assert.equal(digest(svg), 'd1a283973890b66dc66c01a8a1de3877cee45dca0f1ea9b528431fb39cb31469');
+      assert.equal(digest(svg), '36eb3caadd60a1ecfbeef4920ebc054a47199fce41fbe3edfda94c540d7873db');
     } else {
       const { JSDOM } = require('jsdom');
       const sourceSvg = [...bodyFor(read(`content/${article}`)).matchAll(/<svg\b[\s\S]*?<\/svg>/g)][1][0];

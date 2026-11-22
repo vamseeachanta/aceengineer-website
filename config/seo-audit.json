@@ -472,6 +472,132 @@
       "rule": "twitter-card",
       "detail": "expected one nonempty twitter:card",
       "reason": "Existing source or shared service template omits the card tag. Confirmed from source; built output still needs review."
+    },
+    {
+      "page": "digitalmodel/buckling/ship-plate-buckling.html",
+      "rule": "description-count",
+      "detail": "expected 1 nonempty value; found 0",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/buckling/ship-plate-buckling.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:description",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/buckling/ship-plate-buckling.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:image",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/buckling/ship-plate-buckling.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:title",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/buckling/ship-plate-buckling.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:type",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/buckling/ship-plate-buckling.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:url",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/buckling/ship-plate-buckling.html",
+      "rule": "twitter-card",
+      "detail": "expected one nonempty twitter:card",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/cfd/sloshing-cfd-study.html",
+      "rule": "description-count",
+      "detail": "expected 1 nonempty value; found 0",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/cfd/sloshing-cfd-study.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:description",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/cfd/sloshing-cfd-study.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:image",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/cfd/sloshing-cfd-study.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:title",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/cfd/sloshing-cfd-study.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:type",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/cfd/sloshing-cfd-study.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:url",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/cfd/sloshing-cfd-study.html",
+      "rule": "twitter-card",
+      "detail": "expected one nonempty twitter:card",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/hydro/short-horizon-motion-forecast.html",
+      "rule": "description-count",
+      "detail": "expected 1 nonempty value; found 0",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/hydro/short-horizon-motion-forecast.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:description",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/hydro/short-horizon-motion-forecast.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:image",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/hydro/short-horizon-motion-forecast.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:title",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/hydro/short-horizon-motion-forecast.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:type",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/hydro/short-horizon-motion-forecast.html",
+      "rule": "og-required",
+      "detail": "missing nonempty og:url",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
+    },
+    {
+      "page": "digitalmodel/hydro/short-horizon-motion-forecast.html",
+      "rule": "twitter-card",
+      "detail": "expected one nonempty twitter:card",
+      "reason": "Copied byte for byte from the digitalmodel technical page so the stable site URL keeps the published content; the copy carries no site head metadata by design. Confirmed from the copy list in scripts/copy-digitalmodel-pages.js."
     }
   ]
 }

@@ -575,7 +575,11 @@ function writeLlmsFullTxt(destDirArg = distDir) {
   const sections = pages.map(page => {
     const html = fs.readFileSync(path.join(destDirArg, page), 'utf8');
     const { title, description } = readBuiltPageMetadata(html, page);
-    return `## ${title}\n\nURL: ${canonicalUrlFor(page)}\nDescription: ${description}\n\n${mainText(html)}`;
+    // Copied digitalmodel pages are published byte for byte and have no <main>
+    // element; their whole body is the page content.
+    const source = COPIED_PAGES.includes(page) ? html.replace(/<body\b/i, '<body role="main"') : html;
+    const describe = description ? `\nDescription: ${description}` : '';
+    return `## ${title}\n\nURL: ${canonicalUrlFor(page)}${describe}\n\n${mainText(source)}`;
   });
   const text = ['# Site page text',
     '> Static main content from the indexed pages. Follow each URL for interactive results and source references.',

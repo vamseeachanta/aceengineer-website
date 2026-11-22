@@ -45,3 +45,6 @@ test-results/
 playwright-report/
 blob-report/
 .playwright/
+
+# SEO audit output: regenerated from the build on every run, not committed
+reports/seo-audit.json

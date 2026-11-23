@@ -1,0 +1,4 @@
+interface:
+  display_name: "AceEngineer Capability Reports"
+  short_description: "Build evidence-backed capability report systems"
+  default_prompt: "Use $aceengineer-capability-reports to build or refine a browsable, evidence-backed capability report."

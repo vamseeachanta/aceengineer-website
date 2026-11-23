@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Historical engineering workflow catalog retained for reference. The former service is not currently offered and is being reworked; these records do not establish current service availability.">
+    <meta name="keywords" content="historical engineering catalog, engineering API paths, domain-workflows, mooring screening, wall thickness screening, standards-traceable report, deterministic engineering">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Historical workflow catalog | AceEngineer">
+    <meta name="twitter:description" content="Historical engineering workflow catalog retained for reference. The former service is not currently offered and is being reworked; these records do not establish current service availability.">
+
+    <title>Historical workflow catalog | AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <style>
+        .catalog-table { width:100%; border-collapse:collapse; margin:8px 0 16px; background:#fff; }
+        .catalog-table th, .catalog-table td { text-align:left; padding:12px 12px; border-bottom:1px solid #eceff2; vertical-align:top; font-size:0.93em; }
+        .catalog-table th { color:#2c3e50; background:#f8f9fa; }
+        .catalog-table code { background:rgba(0,0,0,0.06); padding:1px 5px; border-radius:4px; font-size:0.92em; }
+        .catalog-table .inputs code { display:inline-block; margin:1px 2px; }
+        .table-wrap { overflow-x:auto; border:1px solid #e6e8eb; border-radius:10px; }
+        .status-badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.8em; font-weight:700; }
+        .status-live { background:#e3f4ea; color:#1f8a4c; }
+        .status-onboarding { background:#fdf3e0; color:#b3791a; }
+        .catalog-note { background:#f8f9fa; border-left:4px solid #2c3e50; padding:14px 18px; margin:18px 0; color:#52606d; }
+        .roadmap-row { background:#f8f9fa; padding:56px 0; }
+        .domain-block { margin:0 0 40px; }
+        .domain-block h3 { color:#2c3e50; margin:0 0 4px; }
+        .domain-block .domain-blurb { color:#52606d; margin:0 0 14px; }
+        .workflow-chips { margin:6px 0 4px; line-height:2.1; }
+        .workflow-chips code { background:rgba(0,0,0,0.06); padding:2px 7px; border-radius:5px; font-size:0.85em; margin:1px 3px 1px 0; display:inline-block; color:#3a4756; }
+        .workflow-chips .eng-wed code { background:#eef3fb; color:#2b557a; }
+        details.workflows { margin:4px 0 0; }
+        details.workflows summary { cursor:pointer; color:#2c5aa0; font-weight:600; font-size:0.95em; padding:6px 0; }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <main id="main">
+
+    <section class="hero-section" style="padding-bottom:36px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-md-offset-1 text-center">
+                    <h1 class="hero-title">Historical workflow catalog</h1>
+                    <p class="hero-subtitle">The former service is not currently offered; it is being reworked, and this page will be updated if it returns. The tables and example links below are retained as historical reference records and do not establish current API or automated-delivery availability. See published capability pages for current scope.</p>
+                    <div class="hero-cta">
+                        <a href="deckhand-api.html" class="btn btn-default btn-lg">Deckhand status</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Historical paths -->
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-11 col-md-offset-1">
+                    <h2 class="section-title">Historical paths <span class="status-badge status-live">HISTORICAL</span></h2>
+                    <p class="section-subtitle" style="text-align:left;">Historical records are retained for reference; availability and project-use qualification are not established by this catalog.</p>
+
+                    <!-- floating-marine -->
+                    <div class="domain-block">
+                        <h3>floating-marine <span class="status-badge status-live">HISTORICAL</span></h3>
+                        <p class="domain-blurb">FPSO/floater hydrodynamics, mooring, riser, marine installation and vessel screening on the open-source <strong>digitalmodel</strong> engine.</p>
+                        <div class="table-wrap">
+                            <table class="catalog-table">
+                                <thead>
+                                    <tr>
+                                        <th>ref (screen)</th>
+                                        <th>subdomain</th>
+                                        <th>required inputs</th>
+                                        <th>deliverable</th>
+                                        <th>example report URL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>floating_marine_hydrodynamics_screen</code></td>
+                                        <td><code>hydrodynamics</code></td>
+                                        <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>data_available</code> <code>deadline</code></td>
+                                        <td>Historical summary + dated example run directory (stress-RAO spectral fatigue, wave spectra, diffraction prep).</td>
+                                        <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">gallery</a> &rarr; <code>/domains/floating-marine/deckhand-deliverables/&lt;run-id&gt;/report.html</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>floating_marine_mooring_screen</code></td>
+                                        <td><code>mooring</code></td>
+                                        <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>line_material</code> <code>data_available</code> <code>deadline</code></td>
+                                        <td>Summary-first reply + dated sandbox run dir. Metallic-line screen; non-metallic escalates honestly.</td>
+                                        <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">gallery</a> &rarr; <code>/domains/floating-marine/deckhand-deliverables/&lt;run-id&gt;/report.html</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>floating_marine_riser_screen</code></td>
+                                        <td><code>riser</code></td>
+                                        <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>data_available</code> <code>deadline</code></td>
+                                        <td>Summary-first reply + dated sandbox run dir (riser LRFD/utilisation code checks, drilling-riser stack-up, stack-up parametric sweep).</td>
+                                        <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">gallery</a> &rarr; <code>/domains/floating-marine/deckhand-deliverables/&lt;run-id&gt;/report.html</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>floating_marine_installation_screen</code></td>
+                                        <td><code>installation</code></td>
+                                        <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>data_available</code> <code>deadline</code></td>
+                                        <td>Summary-first reply + dated sandbox run dir (lifting-lug/padeye strength, rigid-jumper installation, rigging, lift modelling).</td>
+                                        <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">gallery</a> &rarr; <code>/domains/floating-marine/deckhand-deliverables/&lt;run-id&gt;/report.html</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>floating_marine_vessels_screen</code></td>
+                                        <td><code>vessels</code></td>
+                                        <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>data_available</code> <code>deadline</code></td>
+                                        <td>Summary-first reply + dated sandbox run dir (seakeeping operability, stability, resistance, mooring loads).</td>
+                                        <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">gallery</a> &rarr; <code>/domains/floating-marine/deckhand-deliverables/&lt;run-id&gt;/report.html</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <details class="workflows">
+                            <summary>Workflows these screens surface (44)</summary>
+                            <div class="workflow-chips">
+                                <code>fpso-spread-mooring</code> <code>mooring-fatigue</code> <code>mooring-fatigue-atlas-query</code> <code>fpso-mooring-full</code> <code>fpso-mooring-atlas-query</code> <code>api-2sk-mooring</code> <code>synthetic-rope-mooring-fatigue</code> <code>synthetic-rope-atlas-query</code> <code>catenary</code> <code>viv-analysis</code> <code>viv-atlas-query</code> <code>api-rp-2rd-riser</code> <code>code-check-atlas-query</code> <code>dnv-os-f201-riser</code> <code>riser-stackup</code> <code>riser-stackup-parametric</code> <code>tsj-sizing</code> <code>spectral-fatigue</code> <code>spectral-fatigue-atlas-query</code> <code>riser-fatigue</code> <code>riser-fatigue-atlas-query</code> <code>orcawave-input-prep</code> <code>aqwa-diffraction-deck-prep</code> <code>hydro-coefficients</code> <code>wave-spectra</code> <code>rao-tabulation</code> <code>rao-atlas-query</code> <code>passing-ship</code> <code>rao-spectral-fatigue</code> <code>ocimf-tanker-loads</code> <code>naval-arch-yaw-moment</code> <code>damage-stability</code> <code>platform-stability</code> <code>hull-resistance</code> <code>hull-seakeeping</code> <code>propeller-rudder-interaction</code> <code>rudder-stock-torque</code> <code>vessel-seakeeping</code> <code>orcaflex-6dbuoy-dnvrph103</code> <code>rigging</code> <code>jumper-installation</code> <code>lifting-lug-design</code> <code>weather-window</code> <span class="eng-wed"><code>marine-safety-stats</code></span>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- subsea-pipelines-integrity -->
+                    <div class="domain-block">
+                        <h3>subsea-pipelines-integrity <span class="status-badge status-live">HISTORICAL</span></h3>
+                        <p class="domain-blurb">Pipeline wall-thickness, asset-integrity (API 579 fitness-for-service), structural and geotechnical screening on <strong>digitalmodel</strong>.</p>
+                        <div class="table-wrap">
+                            <table class="catalog-table">
+                                <thead>
+                                    <tr>
+                                        <th>ref (screen)</th>
+                                        <th>subdomain</th>
+                                        <th>required inputs</th>
+                                        <th>deliverable</th>
+                                        <th>example report URL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>subsea_pipeline_wall_thickness_screen</code></td>
+                                        <td><code>pipeline</code></td>
+                                        <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>design_pressure_rating</code> <code>buckle_arrestors</code> <code>data_available</code> <code>deadline</code></td>
+                                        <td>Summary-first reply + standards-traceable HTML report package in a dated sandbox run dir whose manifest carries the branch-basis fields (DNV-ST-F101).</td>
+                                        <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">gallery</a> &rarr; <code>/domains/subsea-pipelines-integrity/deckhand-deliverables/&lt;run-id&gt;/report.html</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>subsea_asset_integrity_screen</code></td>
+                                        <td><code>asset-integrity</code></td>
+                                        <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>data_available</code> <code>deadline</code></td>
+                                        <td>Summary-first reply + dated sandbox run dir (API 579 fitness-for-service from wall-thickness readings, B31.4/B31.8).</td>
+                                        <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">gallery</a> &rarr; <code>/domains/subsea-pipelines-integrity/deckhand-deliverables/&lt;run-id&gt;/report.html</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>subsea_structural_screen</code></td>
+                                        <td><code>structural</code></td>
+                                        <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>data_available</code> <code>deadline</code></td>
+                                        <td>Summary-first reply + dated sandbox run dir (jacket member/joint capacity, plate &amp; elastic buckling, tubular design envelope, Von Mises, stress-strain).</td>
+                                        <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">gallery</a> &rarr; <code>/domains/subsea-pipelines-integrity/deckhand-deliverables/&lt;run-id&gt;/report.html</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>subsea_geotechnical_screen</code></td>
+                                        <td><code>geotechnical</code></td>
+                                        <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>data_available</code> <code>deadline</code></td>
+                                        <td>Summary-first reply + dated sandbox run dir (pile axial capacity, scour, liquefaction triggering, mudmat bearing capacity).</td>
+                                        <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">gallery</a> &rarr; <code>/domains/subsea-pipelines-integrity/deckhand-deliverables/&lt;run-id&gt;/report.html</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <details class="workflows">
+                            <summary>Workflows these screens surface (38)</summary>
+                            <div class="workflow-chips">
+                                <code>pipe-capacity</code> <code>wall-thickness-quickcheck</code> <code>on-bottom-stability-f109</code> <code>free-span-f105</code> <code>free-span-atlas-query</code> <code>pipeline-lateral-buckling</code> <code>pipeline-upheaval-buckling</code> <code>span-rectification</code> <code>pipe-ovality</code> <code>fatigue-analysis</code> <code>plate-buckling</code> <code>time-series</code> <code>jacket-member-joint-checks</code> <code>rao-spectral-fatigue</code> <code>elastic-buckling</code> <code>tubular-design-envelope</code> <code>von-mises</code> <code>stress-strain</code> <code>stress-strain-parametric</code> <code>anchor-capacity</code> <code>anchor-capacity-atlas-query</code> <code>pile-axial-capacity</code> <code>pile-capacity</code> <code>pile-capacity-atlas-query</code> <code>scour-assessment</code> <code>mudmat-bearing-capacity</code> <code>mudmat-bearing-atlas-query</code> <code>liquefaction-triggering</code> <code>cathodic-protection</code> <code>cathodic-protection-pipeline</code> <code>cathodic-protection-jacket</code> <code>cathodic-protection-manifold</code> <code>cathodic-protection-monopile</code> <code>cathodic-protection-fpso</code> <code>api579-pipe-ffs-b314</code> <code>api579-pipe-ffs-b318</code> <code>inspection-planning</code> <span class="eng-wed"><code>pipeline-safety-ffs</code></span>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- wells-subsurface -->
+                    <div class="domain-block">
+                        <h3>wells-subsurface <span class="status-badge status-live">HISTORICAL</span></h3>
+                        <p class="domain-blurb">Well production/nodal analysis, drilling &amp; well hydraulics, wellbore/tubular design, and concept-level field-development economics on <strong>digitalmodel</strong> plus public production data from <strong>worldenergydata</strong>.</p>
+                        <div class="table-wrap">
+                            <table class="catalog-table">
+                                <thead>
+                                    <tr>
+                                        <th>ref (screen)</th>
+                                        <th>subdomain</th>
+                                        <th>required inputs</th>
+                                        <th>deliverable</th>
+                                        <th>example report URL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>wells_subsurface_wells_screen</code></td>
+                                        <td><code>wells</code></td>
+                                        <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>data_available</code> <code>deadline</code></td>
+                                        <td>Summary-first reply + dated sandbox run dir (production nodal analysis, well/drilling hydraulics, wellbore &amp; tubular design, directional well path, artificial-lift health, ESP &amp; coiled-tubing hydraulics, public production data).</td>
+                                        <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">gallery</a> &rarr; <code>/domains/wells-subsurface/deckhand-deliverables/&lt;run-id&gt;/report.html</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>wells_subsurface_field_development_screen</code></td>
+                                        <td><code>field-development</code></td>
+                                        <td class="inputs"><code>objective</code> <code>configuration</code> <code>environment</code> <code>data_available</code> <code>deadline</code></td>
+                                        <td>Summary-first reply + dated sandbox run dir (concept-level CAPEX/OPEX estimates, host-concept selection and scoring, run/dataset comparison) using generic digitalmodel economics only.</td>
+                                        <td><a href="https://vamseeachanta.github.io/deckhand-sandbox/" target="_blank" rel="noopener">gallery</a> &rarr; <code>/domains/wells-subsurface/deckhand-deliverables/&lt;run-id&gt;/report.html</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <details class="workflows">
+                            <summary>Workflows these screens surface (21)</summary>
+                            <div class="workflow-chips">
+                                <code>dynacard-diagnostics</code> <code>well-bore-design</code> <code>well-hydraulics</code> <code>rop-analysis</code> <code>tubular-design-envelope</code> <code>nodal-analysis</code> <code>nodal-analysis-ipr-vlp</code> <code>vlp-correlations</code> <code>ct-hydraulics</code> <code>artificial-lift-field-health</code> <code>wellpath</code> <code>esp-pump-hydraulics</code> <code>capex-estimate</code> <code>opex-estimate</code> <code>concept-selection</code> <code>compare-tool</code> <span class="eng-wed"><code>bsee-production-summary</code> <code>bsee-well-comparison</code> <code>production-forecast-arps</code> <code>sodir-field-summary</code> <code>texas-rrc-production-summary</code></span>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="catalog-note">Historical reference only. Current availability, input qualification and project acceptance require separate verification.</div>
+
+                    <p style="color:#6b7785;">For current project enquiries, <a href="contact.html">contact AceEngineer</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap / onboarding -->
+    <section class="roadmap-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-11 col-md-offset-1">
+                    <h2 class="section-title">Historical domain records <span class="status-badge status-onboarding">HISTORICAL</span></h2>
+                    <p class="section-subtitle" style="text-align:left;">Historical records are retained for reference; availability and project-use qualification are not established by this catalog.</p>
+
+                    <div class="table-wrap">
+                        <table class="catalog-table">
+                            <thead>
+                                <tr>
+                                    <th>domain</th>
+                                    <th>subdomains (planned)</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>cad</code></td><td><code>cad</code></td><td>Historical record; availability not established</td></tr>
+                                <tr><td><code>manufacturing</code></td><td><code>manufacturing</code></td><td>Historical record; availability not established</td></tr>
+                                <tr><td><code>electrical</code></td><td><code>electrical</code></td><td>Historical record; availability not established</td></tr>
+                                <tr><td><code>codes-standards-maritime-law</code></td><td>&mdash;</td><td>Historical record; availability not established</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="catalog-note">Historical reference only. Current availability, input qualification and project acceptance require separate verification.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Machine-readable -->
+    <section style="padding:48px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-11 col-md-offset-1">
+                    <h2 class="section-title">Machine-readable</h2>
+                    <p class="section-subtitle" style="text-align:left;">Historical records are retained for reference; availability and project-use qualification are not established by this catalog.</p>
+
+                    <ul style="line-height:2; font-size:1.02em;">
+                        <li>
+                            <a href="https://vamseeachanta.github.io/deckhand-sandbox/api/api-catalog.json" target="_blank" rel="noopener"><strong>Catalog JSON</strong></a>
+                            &mdash; <code>api-catalog.json</code>: a historical catalog reference.
+                        </li>
+                        <li>
+                            <a href="https://vamseeachanta.github.io/deckhand-sandbox/api/openapi.json" target="_blank" rel="noopener"><strong>OpenAPI spec</strong></a>
+                            &mdash; <code>openapi.json</code>: a historical OpenAPI 3.1 reference.
+                        </li>
+                    </ul>
+
+                    <div class="catalog-note">Historical reference only. Current availability, input qualification and project acceptance require separate verification.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h2>Review published capabilities</h2>
+                    <p>Published capability pages describe current assessment scope and limitations.</p>
+                    <a href="/capabilities/" class="btn btn-primary btn-lg" data-cta="capabilities" data-src="src_web_catalog_footer">Explore capabilities &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+# Build artifacts
+dist/
+node_modules/
+
+# Python virtual environments
+.venv/
+venv/
+
+# Backup files
+*.backup*
+*.backup-*
+CLAUDE.md.backup*
+
+# Blog output (generated)
+blog_output/
+
+# Editor
+*.swp
+*.swo
+.DS_Store
+
+# Logs (written by cron jobs)
+logs/
+
+# Environment
+.env
+.env.local
+
+# Claude settings (local overrides)
+.claude/settings.local.json
+__pycache__/
+*.pyc
+
+# Test coverage artifacts
+.coverage
+coverage.xml
+
+# Package manager
+uv.lock
+specs/
+
+# Playwright visual-regression (#101) — run output only; the committed baselines
+# under tests/visual/__screenshots__/ are NOT ignored, they are the contract.
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
+# SEO audit output: regenerated from the build on every run, not committed
+reports/seo-audit.json

@@ -1,0 +1,298 @@
+const fs = require('fs');
+const path = require('path');
+const {
+  escapeHtml, renderCard, renderCards, hfDatasetUrl,
+  renderTable, pickChartKeys, renderChartFor, renderBarChart,
+  capabilityDetailDocument, detailFileName, orderedColumns, humanizeColumn,
+} = require('../../scripts/render-capabilities');
+
+const repoRoot = path.resolve(__dirname, '..', '..');
+
+// A hydrated-registry fixture (shape produced by C2's hydrateRegistry).
+function liveCap(over = {}) {
+  return {
+    id: 'field-explorer', title: 'World Energy Field Explorer', domain: 'worldenergy',
+    summary: 'Global offshore field drill-down.', hf_dataset: 'aceengineer/worldenergydata-explorer',
+    provenance_url: 'https://github.com/vamseeachanta/worldenergydata', status: 'live',
+    data_limits: 'Coverage is primarily US Gulf of Mexico.',
+    tables: [
+      { config: 'fields', label: 'Fields', data: { total_rows: 10, rows: [{ a: 1 }] }, data_source: 'snapshot' },
+      { config: 'wells', label: 'Wells', data: { total_rows: 56, rows: [{ a: 1 }] }, data_source: 'snapshot' },
+    ],
+    ...over,
+  };
+}
+
+describe('escapeHtml', () => {
+  test('escapes HTML-significant characters', () => {
+    expect(escapeHtml('<a href="x">&</a>')).toBe('&lt;a href=&quot;x&quot;&gt;&amp;&lt;/a&gt;');
+  });
+});
+
+describe('renderCard (live)', () => {
+  const html = renderCard(liveCap());
+  test('links to the internal detail page and, secondarily, the HF dataset', () => {
+    expect(html).toContain('World Energy Field Explorer');
+    expect(html).toContain('World Energy');
+    expect(html).toContain('href="/capabilities/field-explorer.html"');
+    expect(html).toContain('View capability');
+    expect(html).toContain(hfDatasetUrl('aceengineer/worldenergydata-explorer'));
+  });
+  test('shows per-table stat counts and the data-limits note', () => {
+    expect(html).toContain('>10<');
+    expect(html).toContain('>56<');
+    expect(html).toContain('Coverage is primarily US Gulf of Mexico.');
+  });
+});
+
+describe('renderCard (pending / no data)', () => {
+  test('renders a placeholder linking to provenance, not an HF explore link', () => {
+    const html = renderCard(liveCap({ status: 'pending', tables: [{ config: 'x', label: 'X', data: null, data_source: 'unavailable' }] }));
+    expect(html).toContain('data pending');
+    expect(html).toContain('Follow progress');
+    expect(html).toContain('github.com/vamseeachanta/worldenergydata');
+    expect(html).not.toContain('Explore data on Hugging Face');
+  });
+});
+
+describe('renderCards', () => {
+  test('filters out withheld capabilities', () => {
+    const reg = { capabilities: [liveCap(), liveCap({ id: 'secret', title: 'Secret', status: 'withheld' })] };
+    const html = renderCards(reg);
+    expect(html).toContain('World Energy Field Explorer');
+    expect(html).not.toContain('Secret');
+  });
+  test('handles an empty registry', () => {
+    expect(renderCards({ capabilities: [] })).toContain('No capabilities');
+  });
+});
+
+// A table fixture in the hydrated shape (columns carry dtypes; rows are objects).
+function tableFixture(over = {}) {
+  return {
+    config: 'countries', label: 'Countries', viz: 'bar',
+    highlight_columns: ['country', 'fields', 'facilities'],
+    data: {
+      columns: [
+        { name: 'country', dtype: 'string' },
+        { name: 'fields', dtype: 'int64' },
+        { name: 'facilities', dtype: 'int64' },
+        { name: 'badge', dtype: 'string' },
+      ],
+      rows: [
+        { country: 'USA', fields: 30, facilities: 12, badge: 'x' },
+        { country: 'Norway', fields: 18, facilities: 9, badge: 'y' },
+      ],
+      total_rows: 84,
+    },
+    ...over,
+  };
+}
+
+describe('renderTable', () => {
+  test('orders highlight columns first, then the rest', () => {
+    expect(orderedColumns(tableFixture())).toEqual(['country', 'fields', 'facilities', 'badge']);
+  });
+  test('renders cells and a truncation note when rows exceed the cap', () => {
+    const html = renderTable(tableFixture());
+    expect(html).toContain('USA');
+    expect(html).toContain('Showing 2 of 84 rows');
+  });
+  test('escapes cell content', () => {
+    const t = tableFixture();
+    t.data.rows = [{ country: '<script>', fields: 1, facilities: 1, badge: '' }];
+    expect(renderTable(t)).toContain('&lt;script&gt;');
+    expect(renderTable(t)).not.toContain('<script>');
+  });
+  test('renders friendly display labels in the <th> headers, not raw column names', () => {
+    const t = tableFixture({
+      highlight_columns: ['npv_mm', 'breakeven_wti', 'wells_count'],
+      data: {
+        columns: [
+          { name: 'npv_mm', dtype: 'float64' },
+          { name: 'breakeven_wti', dtype: 'float64' },
+          { name: 'wells_count', dtype: 'int64' },
+        ],
+        rows: [{ npv_mm: 1200, breakeven_wti: 42, wells_count: 5 }],
+        total_rows: 1,
+      },
+    });
+    const html = renderTable(t);
+    expect(html).toContain('<th');
+    expect(html).toContain('NPV ($MM)');
+    expect(html).toContain('Breakeven WTI ($/bbl)');
+    expect(html).toContain('Wells');
+    // Raw snake_case names must not leak into the header text.
+    expect(html).not.toContain('>npv_mm<');
+    expect(html).not.toContain('>wells_count<');
+  });
+});
+
+describe('humanizeColumn', () => {
+  test('uses explicit overrides for known columns', () => {
+    expect(humanizeColumn('npv_mm')).toBe('NPV ($MM)');
+    expect(humanizeColumn('cum_oil_mmbbl')).toBe('Cum oil (MMbbl)');
+    expect(humanizeColumn('field_id')).toBe('Field');
+    expect(humanizeColumn('uptime_pct')).toBe('Uptime %');
+  });
+  test('falls back to Title-Case with acronym/unit tokens preserved', () => {
+    expect(humanizeColumn('tree_type')).toBe('Tree Type');
+    expect(humanizeColumn('tvd_ft')).toBe('TVD ft');
+    expect(humanizeColumn('effective_tension_kN')).toBe('Effective Tension kN');
+  });
+  test('handles nullish input', () => {
+    expect(humanizeColumn(null)).toBe('');
+  });
+});
+
+describe('charts', () => {
+  test('pickChartKeys chooses a string label and a numeric value', () => {
+    expect(pickChartKeys(tableFixture())).toEqual({ labelKey: 'country', valueKey: 'fields' });
+  });
+  test('renderChartFor emits an SVG bar chart for viz:bar', () => {
+    const html = renderChartFor(tableFixture());
+    expect(html).toContain('<svg');
+    expect(html).toContain('<rect');
+    expect(html).toContain('fields by country');
+  });
+  test('renderChartFor returns empty for viz:table', () => {
+    expect(renderChartFor(tableFixture({ viz: 'table' }))).toBe('');
+  });
+  test('renderBarChart sorts by value and caps bars', () => {
+    const svg = renderBarChart([{ label: 'a', value: 1 }, { label: 'b', value: 5 }]);
+    expect(svg).toContain('<svg');
+    expect(svg).toContain('>a<');
+    expect(svg).toContain('>b<');
+  });
+});
+
+describe('capabilityDetailDocument', () => {
+  const cap = {
+    id: 'field-explorer', title: 'World Energy Field Explorer', domain: 'worldenergy',
+    summary: 'Global drill-down.', hf_dataset: 'aceengineer/worldenergydata-explorer',
+    provenance_url: 'https://github.com/vamseeachanta/worldenergydata', status: 'live',
+    data_limits: 'GoM-focused.', tables: [tableFixture()],
+  };
+  const doc = capabilityDetailDocument(cap);
+  test('is a full document with chrome includes and the title', () => {
+    expect(doc).toContain('<!DOCTYPE html>');
+    expect(doc).toContain('partials/nav.html');
+    expect(doc).toContain('partials/footer.html');
+    expect(doc).toContain('World Energy Field Explorer — AceEngineer Capabilities');
+  });
+  test('includes the table, chart, back-link, and provenance', () => {
+    expect(doc).toContain('All capabilities');
+    expect(doc).toContain('<svg');
+    expect(doc).toContain('<table');
+    expect(doc).toContain('aceengineer/worldenergydata-explorer');
+    expect(doc).toContain('Data limits');
+  });
+  test('detailFileName is <id>.html', () => {
+    expect(detailFileName(cap)).toBe('field-explorer.html');
+  });
+
+  // Cross-nav: siblings reachable without going back to the index, and exactly one
+  // "you are here" marker. Degrades to the plain back-link when no siblings are passed.
+  const siblings = [
+    cap,
+    { id: 'atlas-explorer', title: 'Atlas Explorer' },
+    { id: 'dc-days-qaqc', title: 'Field D&C Days QA/QC' },
+  ];
+  const navDoc = capabilityDetailDocument(cap, siblings);
+
+  test('reaches every sibling capability', () => {
+    for (const s of siblings) expect(navDoc).toContain(`href="/capabilities/${s.id}.html"`);
+    expect(navDoc).toContain('href="/capabilities/"');
+  });
+
+  test('marks exactly one page as current, and it is this page', () => {
+    expect(navDoc.match(/aria-current="page"/g)).toHaveLength(1);
+    expect(navDoc).toContain(`href="/capabilities/${cap.id}.html" aria-current="page"`);
+  });
+
+  test('escapes sibling titles rather than emitting raw markup', () => {
+    const hostile = capabilityDetailDocument(cap, [cap, { id: 'x', title: '<script>bad()</script>' }]);
+    expect(hostile).not.toContain('<script>bad()');
+    expect(hostile).toContain('&lt;script&gt;');
+  });
+
+  test('falls back to the back-link when no siblings are supplied', () => {
+    expect(doc).toContain('← All capabilities');
+    expect(doc).not.toContain('aria-current="page"');
+  });
+});
+
+describe('release-backed capability rendering', () => {
+  const cap = {
+    id: 'tank-sloshing-cfd', title: 'Tank Sloshing CFD', domain: 'digitalmodel',
+    summary: 'VOF sloshing analysis.', hf_dataset: 'aceengineer/digitalmodel-sloshing',
+    provenance_url: 'https://www.aceengineer.com/reports/sloshing/validation.html',
+    status: 'live', data_limits: 'Source-neutral geometry only.', backing: 'release',
+    release: {
+      hub_url: '/reports/sloshing/', digest: 'a'.repeat(64), revision: 'b'.repeat(40),
+      stats: [{ count: 24, label: 'accepted cases' }],
+    },
+  };
+  const html = renderCard(cap);
+
+  test('is not mistaken for pending data despite having no tables', () => {
+    expect(html).not.toContain('data pending publication');
+    expect(html).toContain('View capability →');
+  });
+
+  test('points at its hub, not a generated detail page', () => {
+    expect(html).toContain('href="/reports/sloshing/"');
+    expect(html).not.toContain('/capabilities/tank-sloshing-cfd.html');
+  });
+
+  test('cites the pinned digest instead of linking a private dataset', () => {
+    expect(html).toContain('Immutable release');
+    expect(html).toContain('a'.repeat(12));
+    expect(html).not.toContain('huggingface.co');
+  });
+
+  test('renders registry-declared stats', () => {
+    expect(html).toContain('24');
+    expect(html).toContain('accepted cases');
+  });
+});
+
+describe('snapshot stamp', () => {
+  const withSource = source => ({
+    id: 'x', title: 'X', domain: 'worldenergy', summary: 's', hf_dataset: 'a/b',
+    provenance_url: 'u', status: 'live', data_limits: 'd',
+    tables: [{ ...tableFixture(), data_source: source }],
+  });
+
+  test('states a live build fetch', () => {
+    expect(capabilityDetailDocument(withSource('live'), [], { renderedAt: '2026-07-26' }))
+      .toContain('Rendered from a live datasets-server fetch on 2026-07-26');
+  });
+
+  test('warns that a cached snapshot may have moved', () => {
+    expect(capabilityDetailDocument(withSource('snapshot'), [], { renderedAt: '2026-07-26' }))
+      .toContain('cached snapshot on 2026-07-26');
+  });
+
+  test('flags an unreachable dataset rather than implying fresh data', () => {
+    const doc = capabilityDetailDocument(withSource('unavailable'), [], { renderedAt: '2026-07-26' });
+    expect(doc).toContain('could not be reached at build time');
+  });
+
+  test('is omitted when no table declares a source', () => {
+    expect(capabilityDetailDocument(withSource(undefined))).not.toContain('<strong>Snapshot:</strong>');
+  });
+});
+
+describe('page wiring', () => {
+  test('content/capabilities/index.html injects the capabilitiesCards local', () => {
+    const src = fs.readFileSync(path.join(repoRoot, 'content', 'capabilities', 'index.html'), 'utf8');
+    expect(src).toContain('{{{ capabilitiesCards }}}');
+  });
+  test('Services retains the capabilities target, also linked from engineering', () => {
+    const nav = fs.readFileSync(path.join(repoRoot, 'content', 'partials', 'nav.html'), 'utf8');
+    expect(nav).toContain('href="{{ rootPath }}capabilities/">Services</a>');
+    const engineering = fs.readFileSync(path.join(repoRoot, 'content', 'engineering.html'), 'utf8');
+    expect(engineering).toMatch(/href="capabilities\/"/);
+  });
+});

@@ -1,0 +1,283 @@
+{
+  "name": "aceengineer-website",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "npx serve dist",
+    "lint:copy": "node scripts/lint-copy.js",
+    "validate:capabilities": "node scripts/validate-capabilities.js",
+    "validate:capabilities:online": "node scripts/verify-capabilities-online.js",
+    "build:wordmark": "node scripts/build-wordmark.js",
+    "validate:registry": "npm run validate:capabilities && npm run validate:capabilities:online",
+    "scaffold:capability": "node scripts/scaffold-capability-entry.js",
+    "refresh:hf": "node scripts/refresh-hf-data.js",
+    "refresh:sloshing": "node scripts/refresh-sloshing-data.js",
+    "publish:sloshing-enrichment": "node scripts/publish-sloshing-enrichment.js",
+    "test": "jest",
+    "test:claims": "node --test tests/js/phase1-claims.test.js tests/js/retired-agent-copy.test.js",
+    "test:coverage": "jest --coverage",
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test --update-snapshots"
+  },
+  "jest": {
+    "globalSetup": "<rootDir>/tests/setup/build.js",
+    "projects": [
+      {
+        "displayName": "case-study-summary",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/case-study-summary.test.js", "<rootDir>/tests/js/case-study-build.test.js"]
+      },
+      {
+        "displayName": "test-discovery",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/test-discovery.test.js"]
+      },
+      {
+        "displayName": "dc-drilldown",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/dc-drilldown.test.js"]
+      },
+      {
+        "displayName": "phase1-claims",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/phase1-claims.test.js"]
+      },
+      {
+        "displayName": "retired-agent-copy",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/retired-agent-copy.test.js"]
+      },
+      {
+        "displayName": "newsletter-deploy",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/newsletter-deploy.test.js"]
+      },
+      {
+        "displayName": "newsletter-link-targets",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/newsletter-link-targets.test.js"]
+      },
+      {
+        "displayName": "newsletter-model-topic",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/newsletter-model-topic.test.js"]
+      },
+      {
+        "displayName": "test-build-setup",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/test-build-setup.test.js"]
+      },
+      {
+        "displayName": "agent-readable",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/agent-readable.test.js"]
+      },
+      {
+        "displayName": "diffraction-provenance",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/diffraction-provenance.test.js"]
+      },
+      {
+        "displayName": "home-page",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/home-page.test.js"]
+      },
+      {
+        "displayName": "samples-build",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/samples-build.test.js"]
+      },
+      {
+        "displayName": "newsletter-edition",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/newsletter-edition.test.js"]
+      },
+      {
+        "displayName": "metadata",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/metadata.test.js"]
+      },
+      {
+        "displayName": "node",
+        "testMatch": ["<rootDir>/tests/js/build.test.js"]
+      },
+      {
+        "displayName": "copy-lint",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/copy-lint.test.js"]
+      },
+      {
+        "displayName": "capabilities-registry",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/capabilities-registry.test.js"]
+      },
+      {
+        "displayName": "hf-fetch",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/hf-fetch.test.js"]
+      },
+      {
+        "displayName": "sloshing-build",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/sloshing-build.test.js"]
+      },
+      {
+        "displayName": "sloshing-refresh",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/sloshing-refresh.test.js"]
+      },
+      {
+        "displayName": "sloshing-reports",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/sloshing-reports.test.js"]
+      },
+      {
+        "displayName": "capabilities-online",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/capabilities-online.test.js"]
+      },
+      {
+        "displayName": "render-capabilities",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/render-capabilities.test.js"]
+      },
+      {
+        "displayName": "capabilities-refresh",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/capabilities-refresh.test.js"]
+      },
+      {
+        "displayName": "jsdom",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/navbar-toggle.test.js"]
+      },
+      {
+        "displayName": "hse-dashboard",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/hse-risk-dashboard.test.js"]
+      },
+      {
+        "displayName": "npv-calculator",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/npv-calculator.test.js"]
+      },
+      {
+        "displayName": "npv-render",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/npv-render.test.js"]
+      },
+      {
+        "displayName": "npv-parity",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/npv-parity.test.js"]
+      },
+      {
+        "displayName": "npv-browser",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/npv-browser.test.js"]
+      },
+      {
+        "displayName": "hse-render",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/hse-render.test.js"]
+      },
+      {
+        "displayName": "html-sinks",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/html-sinks.test.js"]
+      },
+      {
+        "displayName": "obs-calculator",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/obs-calculator.test.js"]
+      },
+      {
+        "displayName": "a11y-baseline",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/a11y-baseline.test.js"]
+      },
+      {
+        "displayName": "vendored-assets",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/vendored-assets.test.js"]
+      },
+      {
+        "displayName": "brand-assets",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/brand-assets.test.js"]
+      },
+      {
+        "displayName": "wall-thickness",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/wall-thickness.test.js"]
+      },
+      {
+        "displayName": "mooring-fatigue",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/mooring-fatigue.test.js"]
+      },
+      {
+        "displayName": "fatigue-sn-dnv-curves",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/fatigue-sn-dnv-curves.test.js"]
+      },
+      {
+        "displayName": "decline-curve",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/decline-curve.test.js"]
+      },
+      {
+        "displayName": "dynacard",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/dynacard.test.js"]
+      },
+      {
+        "displayName": "demo-links",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/demo-links.test.js"]
+      },
+      {
+        "displayName": "cta-tracking",
+        "testEnvironment": "jsdom",
+        "testMatch": ["<rootDir>/tests/js/cta-tracking.test.js"]
+      },
+      {
+        "displayName": "newsletter-article-01",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/newsletter-article-01.test.js"]
+      },
+      {
+        "displayName": "commercial-copy",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/tests/js/commercial-copy.test.js"]
+      }
+    ],
+    "collectCoverageFrom": [
+      "build.js",
+      "scripts/hf-fetch.js",
+      "scripts/render-capabilities.js",
+      "scripts/verify-capabilities-online.js",
+      "scripts/refresh-sloshing-data.js",
+      "assets/js/sloshing-reports.js",
+      "assets/js/navbar-toggle.js",
+      "assets/js/cta-tracking.js",
+      "assets/js/capabilities-refresh.js",
+      "assets/js/npv-calculator-engine.js",
+      "assets/js/mooring-fatigue-engine.js",
+      "assets/js/dnv-c203-sn-engine.js",
+      "assets/js/decline-curve-engine.js",
+      "assets/js/dynacard-engine.js",
+      "demos/hse-risk-dashboard-data.js"
+    ]
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.0",
+    "clean-css": "^5.3.3",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "posthtml": "^0.16.6",
+    "posthtml-expressions": "^1.11.3",
+    "posthtml-include": "^2.0.1",
+    "purgecss": "^8.0.0"
+  }
+}

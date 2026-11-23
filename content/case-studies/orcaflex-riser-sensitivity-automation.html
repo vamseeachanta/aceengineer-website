@@ -1,0 +1,144 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OrcaFlex Riser Sensitivity Automation | AceEngineer</title>
+<meta name="description" content="Analysis method: OrcaFlex Riser Sensitivity Automation. Workflow, calculation steps and technical references for a separately agreed scope.">
+<meta property="og:title" content="OrcaFlex Riser Sensitivity Automation | AceEngineer">
+<meta property="og:description" content="Analysis method: OrcaFlex Riser Sensitivity Automation. Workflow, calculation steps and technical references for a separately agreed scope.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.aceengineer.com/case-studies/orcaflex-riser-sensitivity-automation.html">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OrcaFlex Riser Sensitivity Automation | AceEngineer">
+<meta name="twitter:description" content="Analysis method: OrcaFlex Riser Sensitivity Automation. Workflow, calculation steps and technical references for a separately agreed scope.">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"OrcaFlex Riser Sensitivity Automation | AceEngineer","description":"Analysis method: OrcaFlex Riser Sensitivity Automation. Workflow, calculation steps and technical references for a separately agreed scope.","url":"https://www.aceengineer.com/case-studies/orcaflex-riser-sensitivity-automation.html","inLanguage":"en","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Case Studies","item":"https://www.aceengineer.com/case-studies/"},{"@type":"ListItem","position":3,"name":"OrcaFlex Riser Sensitivity Automation","item":"https://www.aceengineer.com/case-studies/orcaflex-riser-sensitivity-automation.html"}]}]</script>
+<include src="partials/head-common.html">
+</include>
+</head>
+<body class="theme-page">
+<include src="partials/nav.html">
+</include>
+<main id="main" class="samples-page">
+<div class="container">
+<nav aria-label="Breadcrumb"><ol class="breadcrumb"><li><a href="../">Home</a></li><li><a href="./">Case Studies</a></li><li aria-current="page">OrcaFlex Riser Sensitivity Automation</li></ol></nav>
+<h1>OrcaFlex Riser Sensitivity Automation</h1>
+<p>Method notes for engineering and data workflows.</p>
+<h2>The challenge</h2>
+<p>Organise the inputs, calculations and reporting into a repeatable workflow with checks.</p>
+<section style="padding: 50px 0;">
+<div class="container">
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+<h2>Our Solution: OrcaFlex Batch Automation</h2>
+
+                    <div class="solution-item">
+                        <h3 class="h-size-h4">Parametric Model Generation</h3>
+                        <p>Python scripts read the design matrix Excel file and automatically generated all 50 OrcaFlex
+                        model files with correct geometry, buoyancy distribution, and environmental loading combinations.</p>
+                    </div>
+
+                    <div class="solution-item">
+                        <h3 class="h-size-h4">Batch Processing</h3>
+                        <p>Simulations are queued for batch execution.</p>
+                    </div>
+
+                    <div class="solution-item">
+                        <h3 class="h-size-h4">Automated Results Extraction</h3>
+                        <p>Post-processing scripts extracted all required outputs (max stress, fatigue damage, effective
+                        tension, curvature) and populated standardized comparison tables automatically.</p>
+                    </div>
+
+                    <div class="solution-item">
+                        <h3 class="h-size-h4">Report Generation</h3>
+                        <p>Final deliverable compiled automatically with sensitivity plots, optimization recommendations,
+                        and configuration comparison matrix ready for client review.</p>
+                    </div>
+
+                    <!-- Code Example -->
+                    <h3 class="h-size-h4" style="margin-top: 40px;">Automation Workflow</h3>
+                    <div class="code-block">
+<pre># Batch OrcaFlex Sensitivity Analysis
+import orcaflex_batch as ofx
+
+# Load design matrix from Excel
+design_matrix = ofx.load_matrix("sensitivity_matrix.xlsx")
+
+# Generate model configurations
+for config in design_matrix:
+    model = ofx.generate_model(
+        base_model="SCR_baseline.dat",
+        tdp_offset=config['tdp_offset'],
+        hangoff_angle=config['hangoff_angle'],
+        buoyancy_length=config['buoyancy_length'],
+        current_profile=config['current']
+    )
+    ofx.queue_simulation(model)
+
+# Run overnight batch
+ofx.run_batch(parallel_jobs=8)
+
+# Extract results and generate report
+results = ofx.extract_all_results()
+ofx.generate_sensitivity_report(results)</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section style="padding: 50px 0;">
+<div class="container">
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+<h2>Technical Details</h2>
+
+
+
+
+                    <h3 class="h-size-h4" style="margin-top: 30px;">Output Parameters Extracted</h3>
+                    <ul>
+                        <li>Maximum von Mises stress at critical locations</li>
+                        <li>Effective tension envelope along riser length</li>
+                        <li>Minimum bend radius and curvature</li>
+                        <li>Dynamic amplification factors</li>
+                        <li>Touch-down point excursion range</li>
+                        <li>Hang-off angle variation</li>
+                        <li>Fatigue damage at welds (per DNV-RP-C203)</li>
+                    </ul>
+
+                    <h3 class="h-size-h4" style="margin-top: 30px;">Technical References</h3>
+                    <div style="margin-top: 15px;">
+                        <span class="compliance-tag" style="background: #28a745; color: white; padding: 5px 15px; border-radius: 15px; margin-right: 10px;">API RP 2RD</span>
+                        <span class="compliance-tag" style="background: #28a745; color: white; padding: 5px 15px; border-radius: 15px; margin-right: 10px;">DNV-OS-F201</span>
+                        <span class="compliance-tag" style="background: #28a745; color: white; padding: 5px 15px; border-radius: 15px; margin-right: 10px;">DNV-RP-C203</span>
+                        <span class="compliance-tag" style="background: #28a745; color: white; padding: 5px 15px; border-radius: 15px;">API 17B</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<h2>Related methods</h2>
+<ul>
+<li><a href="pipeline-on-bottom-stability-assessment.html">Pipeline On-Bottom Stability Assessment</a></li>
+<li><a href="offshore-platform-fatigue-optimization.html">Computational Fatigue Assessment for Offshore Platform</a></li>
+</ul>
+<h2>Summary</h2>
+<p>Review the inputs, assumptions and calculation results for the stated scope.</p>
+<p>
+<a href="../engineering.html">Engineering workflows</a> · <a href="../blog/">Technical articles</a>
+</p>
+<include src="partials/scope-invitation.html">
+</include>
+</div>
+</main>
+<include src="partials/footer.html">
+</include>
+</body>
+</html>

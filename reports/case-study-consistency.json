@@ -1,0 +1,1302 @@
+{
+  "checks": [
+    {
+      "check": "h1",
+      "source": "Local structure contract; WCAG 2.2 SC 1.3.1 and 2.4.6"
+    },
+    {
+      "check": "heading_order",
+      "source": "WAI Page Structure Tutorial: Heading ranks"
+    },
+    {
+      "check": "title",
+      "source": "Local metadata contract; WCAG 2.2 SC 2.4.2"
+    },
+    {
+      "check": "description",
+      "source": "Local metadata contract"
+    },
+    {
+      "check": "canonical_sitemap",
+      "source": "RFC 6596 section 3; sitemaps.org protocol"
+    },
+    {
+      "check": "json_ld",
+      "source": "schema.org WebPage, CollectionPage and BreadcrumbList"
+    },
+    {
+      "check": "sections",
+      "source": "Declared section template and exact deviation inventory"
+    },
+    {
+      "check": "href_format",
+      "source": "Local HTTPS policy; RFC 3986 sections 3 and 4"
+    },
+    {
+      "check": "internal_links",
+      "source": "RFC 3986 sections 5.2 and 3.5"
+    },
+    {
+      "check": "report_links",
+      "source": "Local report-link policy; RFC 3986"
+    },
+    {
+      "check": "image_alt",
+      "source": "WCAG 2.2 SC 1.1.1"
+    },
+    {
+      "check": "landmark_skip",
+      "source": "WCAG 2.2 SC 2.4.1; shared navigation partial"
+    },
+    {
+      "check": "link_text",
+      "source": "Local link-text policy; WCAG 2.2 SC 2.4.4"
+    },
+    {
+      "check": "table_headers",
+      "source": "WCAG 2.2 SC 1.3.1"
+    },
+    {
+      "check": "copy_deny_list",
+      "source": "Existing scripts/lint-copy.js and brand/copy.yaml"
+    },
+    {
+      "check": "private_names",
+      "source": "Existing legal/copy-lint configuration, if supplied"
+    },
+    {
+      "check": "browser_accessibility",
+      "source": "WCAG 2.2; package.json dependency inventory"
+    }
+  ],
+  "summary": {
+    "NOT_EVALUATED": 54,
+    "PASS": 99
+  },
+  "results": [
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "h1",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "heading_order",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "title",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "description",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "canonical_sitemap",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "json_ld",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "sections",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "href_format",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "internal_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "report_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "image_alt",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "landmark_skip",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "link_text",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "table_headers",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "copy_deny_list",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "private_names",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No private-name deny-list exists in the copy-lint configuration"
+      ]
+    },
+    {
+      "page": "case-studies/bsee-field-economics.html",
+      "check": "browser_accessibility",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No axe dependency declared in package.json; browser analysis not evaluated"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "h1",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "heading_order",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "title",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "description",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "canonical_sitemap",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "json_ld",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "sections",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "href_format",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "internal_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "report_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "image_alt",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "landmark_skip",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "link_text",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "table_headers",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "copy_deny_list",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "private_names",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No private-name deny-list exists in the copy-lint configuration"
+      ]
+    },
+    {
+      "page": "case-studies/index.html",
+      "check": "browser_accessibility",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No axe dependency declared in package.json; browser analysis not evaluated"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "h1",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "heading_order",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "title",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "description",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "canonical_sitemap",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "json_ld",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "sections",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "href_format",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "internal_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "report_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "image_alt",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "landmark_skip",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "link_text",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "table_headers",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "copy_deny_list",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "private_names",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No private-name deny-list exists in the copy-lint configuration"
+      ]
+    },
+    {
+      "page": "case-studies/marine-safety-correlation.html",
+      "check": "browser_accessibility",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No axe dependency declared in package.json; browser analysis not evaluated"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "h1",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "heading_order",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "title",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "description",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "canonical_sitemap",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "json_ld",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "sections",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "href_format",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "internal_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "report_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "image_alt",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "landmark_skip",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "link_text",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "table_headers",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "copy_deny_list",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "private_names",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No private-name deny-list exists in the copy-lint configuration"
+      ]
+    },
+    {
+      "page": "case-studies/multi-code-wall-thickness-comparison.html",
+      "check": "browser_accessibility",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No axe dependency declared in package.json; browser analysis not evaluated"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "h1",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "heading_order",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "title",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "description",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "canonical_sitemap",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "json_ld",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "sections",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "href_format",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "internal_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "report_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "image_alt",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "landmark_skip",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "link_text",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "table_headers",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "copy_deny_list",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "private_names",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No private-name deny-list exists in the copy-lint configuration"
+      ]
+    },
+    {
+      "page": "case-studies/offshore-platform-fatigue-optimization.html",
+      "check": "browser_accessibility",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No axe dependency declared in package.json; browser analysis not evaluated"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "h1",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "heading_order",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "title",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "description",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "canonical_sitemap",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "json_ld",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "sections",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "href_format",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "internal_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "report_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "image_alt",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "landmark_skip",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "link_text",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "table_headers",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "copy_deny_list",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "private_names",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No private-name deny-list exists in the copy-lint configuration"
+      ]
+    },
+    {
+      "page": "case-studies/orcaflex-riser-sensitivity-automation.html",
+      "check": "browser_accessibility",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No axe dependency declared in package.json; browser analysis not evaluated"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "h1",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "heading_order",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "title",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "description",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "canonical_sitemap",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "json_ld",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "sections",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "href_format",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "internal_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "report_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "image_alt",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "landmark_skip",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "link_text",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "table_headers",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "copy_deny_list",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "private_names",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No private-name deny-list exists in the copy-lint configuration"
+      ]
+    },
+    {
+      "page": "case-studies/pipeline-on-bottom-stability-assessment.html",
+      "check": "browser_accessibility",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No axe dependency declared in package.json; browser analysis not evaluated"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "h1",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "heading_order",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "title",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "description",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "canonical_sitemap",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "json_ld",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "sections",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "href_format",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "internal_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "report_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "image_alt",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "landmark_skip",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "link_text",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "table_headers",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "copy_deny_list",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "private_names",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No private-name deny-list exists in the copy-lint configuration"
+      ]
+    },
+    {
+      "page": "case-studies/subsea-fea-automation.html",
+      "check": "browser_accessibility",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No axe dependency declared in package.json; browser analysis not evaluated"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "h1",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "heading_order",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "title",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "description",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "canonical_sitemap",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "json_ld",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "sections",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "href_format",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "internal_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "report_links",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "Built page unavailable; run npm run build"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "image_alt",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "landmark_skip",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "link_text",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "table_headers",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "copy_deny_list",
+      "status": "PASS",
+      "details": [
+        "Rule satisfied"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "private_names",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No private-name deny-list exists in the copy-lint configuration"
+      ]
+    },
+    {
+      "page": "case-studies/wind-turbine-foundation-analysis.html",
+      "check": "browser_accessibility",
+      "status": "NOT_EVALUATED",
+      "details": [
+        "No axe dependency declared in package.json; browser analysis not evaluated"
+      ]
+    }
+  ]
+}

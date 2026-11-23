@@ -1,0 +1,145 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  javascript:
+    name: Build and JS tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          # Full history so the generated sitemap's <lastmod> reflects when each page
+          # actually changed. On a shallow clone build.js omits lastmod entirely
+          # rather than emitting a misleading partial set (#85).
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      # C7 going-forward gate (#54): the registry must be structurally valid AND true
+      # against Hugging Face — every live capability's dataset/config/columns resolve, no
+      # withheld column is surfaced. Genuine "not found" fails here; a transient HF outage
+      # only warns (see scripts/verify-capabilities-online.js), so this never flakes a PR.
+      - name: Validate capabilities registry (schema + live HF resolution)
+        run: npm run validate:registry
+
+      - name: Check public claim boundaries
+        run: npm run test:claims
+
+      - name: Set up uv for the metadata audit
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.11.28"
+
+      - name: Audit built-page SEO metadata
+        run: uv run --no-project python scripts/seo/audit.py --check
+
+      - name: Run Jest suite
+        run: npm test -- --runInBand
+
+  python:
+    name: Python and docs tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          # Full history so the generated sitemap's <lastmod> reflects when each page
+          # actually changed. On a shallow clone build.js omits lastmod entirely
+          # rather than emitting a misleading partial set (#85).
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build site for dist-backed tests
+        run: npm run build
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.11.28"
+
+      - name: Install Python dependencies
+        run: uv sync --extra dev
+
+      - name: Run repo-structure contract checker
+        run: uv run python scripts/maintenance/verify_repo_structure.py
+
+      - name: Run docs and Python tests
+        run: uv run pytest tests/python tests/docs
+
+  visual:
+    # Visual-regression suite (#101). DELIBERATELY non-blocking while the suite earns
+    # trust — a flaky screenshot must not gate a green build. Promote to blocking by
+    # deleting `continue-on-error` once it has run clean for a while.
+    name: Visual regression
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    # Baselines are generated and compared INSIDE Playwright's official image. Font
+    # rendering differs between a dev machine and a bare runner, so a baseline captured
+    # anywhere else fails here for reasons that have nothing to do with the change.
+    # This container is the single place a baseline is allowed to come from.
+    container:
+      image: mcr.microsoft.com/playwright:v1.62.0-noble
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      - name: Run visual regression suite
+        run: npm run test:visual
+
+      - name: Upload diffs and report
+        # `always()` matters: the artifact is the only way to see what changed, and it
+        # is needed precisely when the step above failed.
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-regression-report
+          path: |
+            playwright-report/
+            test-results/
+            tests/visual/__screenshots__/
+          retention-days: 14
+          if-no-files-found: warn

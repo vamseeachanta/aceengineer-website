@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480">
+  <rect width="800" height="480" fill="#1e2430"/>
+  <!-- Title bar -->
+  <rect width="800" height="48" fill="#252d3d"/>
+  <text x="20" y="32" font-family="sans-serif" font-size="16" font-weight="bold" fill="#e0e4ec">
+    GoM Field Production Dashboard — Oil &amp; Gas Output by Field (2018–2022)
+  </text>
+  <!-- Y-axis label -->
+  <text transform="rotate(-90,18,260)" x="18" y="260" font-family="sans-serif" font-size="11" fill="#8899aa" text-anchor="middle">
+    Annual Oil Production (M bbl)
+  </text>
+  <!-- Chart area background -->
+  <rect x="60" y="60" width="680" height="320" fill="#161c28" rx="4"/>
+  <!-- Grid lines -->
+  <line x1="60" y1="140" x2="740" y2="140" stroke="#2a3548" stroke-width="1"/>
+  <line x1="60" y1="220" x2="740" y2="220" stroke="#2a3548" stroke-width="1"/>
+  <line x1="60" y1="300" x2="740" y2="300" stroke="#2a3548" stroke-width="1"/>
+  <text x="44" y="144" font-family="sans-serif" font-size="10" fill="#8899aa" text-anchor="end">30M</text>
+  <text x="44" y="224" font-family="sans-serif" font-size="10" fill="#8899aa" text-anchor="end">20M</text>
+  <text x="44" y="304" font-family="sans-serif" font-size="10" fill="#8899aa" text-anchor="end">10M</text>
+  <!-- Thunder Horse bars (blue) -->
+  <rect x="72" y="92" width="26" height="248" fill="#4e8ef7" rx="2"/>
+  <rect x="208" y="101" width="26" height="239" fill="#4e8ef7" rx="2"/>
+  <rect x="344" y="130" width="26" height="210" fill="#4e8ef7" rx="2"/>
+  <rect x="480" y="144" width="26" height="216" fill="#4e8ef7" rx="2"/>
+  <rect x="616" y="118" width="26" height="222" fill="#4e8ef7" rx="2"/>
+  <!-- Mars bars (orange) -->
+  <rect x="102" y="115" width="26" height="225" fill="#f79c42" rx="2"/>
+  <rect x="238" y="122" width="26" height="218" fill="#f79c42" rx="2"/>
+  <rect x="374" y="153" width="26" height="187" fill="#f79c42" rx="2"/>
+  <rect x="510" y="140" width="26" height="200" fill="#f79c42" rx="2"/>
+  <rect x="646" y="128" width="26" height="212" fill="#f79c42" rx="2"/>
+  <!-- Atlantis bars (green) -->
+  <rect x="132" y="152" width="26" height="188" fill="#4ec97e" rx="2"/>
+  <rect x="268" y="160" width="26" height="180" fill="#4ec97e" rx="2"/>
+  <rect x="404" y="182" width="26" height="158" fill="#4ec97e" rx="2"/>
+  <rect x="540" y="170" width="26" height="170" fill="#4ec97e" rx="2"/>
+  <rect x="676" y="156" width="26" height="184" fill="#4ec97e" rx="2"/>
+  <!-- X-axis labels -->
+  <text x="148" y="398" font-family="sans-serif" font-size="11" fill="#8899aa" text-anchor="middle">2018</text>
+  <text x="284" y="398" font-family="sans-serif" font-size="11" fill="#8899aa" text-anchor="middle">2019</text>
+  <text x="420" y="398" font-family="sans-serif" font-size="11" fill="#8899aa" text-anchor="middle">2020</text>
+  <text x="556" y="398" font-family="sans-serif" font-size="11" fill="#8899aa" text-anchor="middle">2021</text>
+  <text x="692" y="398" font-family="sans-serif" font-size="11" fill="#8899aa" text-anchor="middle">2022</text>
+  <!-- Legend -->
+  <rect x="60" y="418" width="14" height="14" fill="#4e8ef7" rx="2"/>
+  <text x="80" y="430" font-family="sans-serif" font-size="12" fill="#ccd0d9">Thunder Horse</text>
+  <rect x="210" y="418" width="14" height="14" fill="#f79c42" rx="2"/>
+  <text x="230" y="430" font-family="sans-serif" font-size="12" fill="#ccd0d9">Mars</text>
+  <rect x="310" y="418" width="14" height="14" fill="#4ec97e" rx="2"/>
+  <text x="330" y="430" font-family="sans-serif" font-size="12" fill="#ccd0d9">Atlantis</text>
+  <!-- Source note -->
+  <text x="740" y="462" font-family="sans-serif" font-size="10" fill="#556677" text-anchor="end">
+    Source: BSEE public production data | aceengineer.com
+  </text>
+</svg>

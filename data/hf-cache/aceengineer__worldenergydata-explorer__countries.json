@@ -1,0 +1,619 @@
+{
+  "dataset": "aceengineer/worldenergydata-explorer",
+  "config": "countries",
+  "columns": [
+    {
+      "name": "badge",
+      "dtype": "large_string"
+    },
+    {
+      "name": "country",
+      "dtype": "large_string"
+    },
+    {
+      "name": "facilities",
+      "dtype": "int64"
+    },
+    {
+      "name": "fields",
+      "dtype": "int64"
+    },
+    {
+      "name": "module",
+      "dtype": "large_string"
+    }
+  ],
+  "rows": [
+    {
+      "badge": "SAMPLE",
+      "country": "Albania",
+      "facilities": 0,
+      "fields": 2,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Angola",
+      "facilities": 24,
+      "fields": 75,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Argentina",
+      "facilities": 3,
+      "fields": 3,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Australia",
+      "facilities": 50,
+      "fields": 192,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Azerbaijan",
+      "facilities": 9,
+      "fields": 3,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Bangladesh",
+      "facilities": 1,
+      "fields": 4,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "ROADMAP",
+      "country": "Brazil",
+      "facilities": 58,
+      "fields": 98,
+      "module": "brazil_anp"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Brunei Darussalam",
+      "facilities": 0,
+      "fields": 5,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Bulgaria",
+      "facilities": 3,
+      "fields": 5,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Cameroon",
+      "facilities": 0,
+      "fields": 4,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "ROADMAP",
+      "country": "Canada",
+      "facilities": 8,
+      "fields": 22,
+      "module": "canada"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "China",
+      "facilities": 32,
+      "fields": 29,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Colombia",
+      "facilities": 0,
+      "fields": 2,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Congo",
+      "facilities": 5,
+      "fields": 12,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Congo, The Demo. Rep. of the",
+      "facilities": 1,
+      "fields": 3,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Croatia",
+      "facilities": 2,
+      "fields": 1,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Cuba",
+      "facilities": 0,
+      "fields": 1,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Cyprus",
+      "facilities": 0,
+      "fields": 1,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Denmark",
+      "facilities": 15,
+      "fields": 33,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Egypt",
+      "facilities": 20,
+      "fields": 29,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Equatorial Guinea",
+      "facilities": 7,
+      "fields": 16,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Falkland Islands (Malvinas)",
+      "facilities": 0,
+      "fields": 21,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Faroe Islands",
+      "facilities": 0,
+      "fields": 4,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "French Guiana",
+      "facilities": 0,
+      "fields": 1,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Gabon",
+      "facilities": 8,
+      "fields": 17,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Gambia",
+      "facilities": 0,
+      "fields": 1,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Ghana",
+      "facilities": 2,
+      "fields": 22,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Greece",
+      "facilities": 2,
+      "fields": 3,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Greenland",
+      "facilities": 0,
+      "fields": 4,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Guinea",
+      "facilities": 0,
+      "fields": 3,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Guinea-Bissau",
+      "facilities": 0,
+      "fields": 3,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Guyana",
+      "facilities": 0,
+      "fields": 2,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "India",
+      "facilities": 6,
+      "fields": 12,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Indonesia",
+      "facilities": 30,
+      "fields": 62,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Iran",
+      "facilities": 1,
+      "fields": 2,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Ireland",
+      "facilities": 4,
+      "fields": 39,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Israel",
+      "facilities": 2,
+      "fields": 14,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Italy",
+      "facilities": 4,
+      "fields": 10,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Japan",
+      "facilities": 1,
+      "fields": 1,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Kazakhstan",
+      "facilities": 4,
+      "fields": 2,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Kenya",
+      "facilities": 0,
+      "fields": 11,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Liberia",
+      "facilities": 0,
+      "fields": 8,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Libya",
+      "facilities": 6,
+      "fields": 5,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Madagascar",
+      "facilities": 0,
+      "fields": 1,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Malaysia",
+      "facilities": 48,
+      "fields": 65,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Malta",
+      "facilities": 0,
+      "fields": 1,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Mauritania",
+      "facilities": 1,
+      "fields": 6,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "ROADMAP",
+      "country": "Mexico",
+      "facilities": 6,
+      "fields": 15,
+      "module": "mexico_cnh"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Morocco",
+      "facilities": 0,
+      "fields": 13,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Mozambique",
+      "facilities": 0,
+      "fields": 13,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Myanmar",
+      "facilities": 9,
+      "fields": 10,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Namibia",
+      "facilities": 0,
+      "fields": 11,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Netherlands",
+      "facilities": 10,
+      "fields": 10,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "New Zealand",
+      "facilities": 7,
+      "fields": 24,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Nicaragua",
+      "facilities": 0,
+      "fields": 1,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Niger",
+      "facilities": 1,
+      "fields": 1,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Nigeria",
+      "facilities": 24,
+      "fields": 28,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "ROADMAP",
+      "country": "Norway",
+      "facilities": 82,
+      "fields": 302,
+      "module": "sodir"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Oman",
+      "facilities": 2,
+      "fields": 5,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Palestinian Territory, occupied",
+      "facilities": 0,
+      "fields": 1,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Papua New Guinea",
+      "facilities": 0,
+      "fields": 4,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Peru",
+      "facilities": 3,
+      "fields": 5,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Philippines",
+      "facilities": 5,
+      "fields": 23,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Qatar",
+      "facilities": 19,
+      "fields": 7,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Romania",
+      "facilities": 0,
+      "fields": 5,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Russian Federation",
+      "facilities": 14,
+      "fields": 14,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Sao Tome and Principe",
+      "facilities": 0,
+      "fields": 3,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Saudi Arabia",
+      "facilities": 0,
+      "fields": 1,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Senegal",
+      "facilities": 0,
+      "fields": 6,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Sierra Leone",
+      "facilities": 0,
+      "fields": 4,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "South Africa",
+      "facilities": 3,
+      "fields": 9,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Spain",
+      "facilities": 1,
+      "fields": 3,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Sri Lanka",
+      "facilities": 0,
+      "fields": 2,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Tanzania, United Republic of",
+      "facilities": 1,
+      "fields": 20,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Thailand",
+      "facilities": 25,
+      "fields": 30,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Trin. & Tobago",
+      "facilities": 10,
+      "fields": 19,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Tunisia",
+      "facilities": 7,
+      "fields": 16,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Turkey",
+      "facilities": 2,
+      "fields": 3,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Turkmenistan",
+      "facilities": 5,
+      "fields": 2,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "UAE",
+      "facilities": 9,
+      "fields": 7,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "ROADMAP",
+      "country": "UK",
+      "facilities": 124,
+      "fields": 308,
+      "module": "ukcs"
+    },
+    {
+      "badge": "RICH",
+      "country": "USA",
+      "facilities": 88,
+      "fields": 333,
+      "module": "bsee"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Venezuela",
+      "facilities": 1,
+      "fields": 2,
+      "module": "offshore_assets (reference)"
+    },
+    {
+      "badge": "SAMPLE",
+      "country": "Viet nam",
+      "facilities": 21,
+      "fields": 29,
+      "module": "offshore_assets (reference)"
+    }
+  ],
+  "total_rows": 84,
+  "fetched": 84,
+  "truncated": false
+}

@@ -1,0 +1,44 @@
+# Schema: samples entries require slug, title, discipline, summary, revision,
+# page (samples/<slug>.html), pdf (assets/samples/<slug>-<revision>.pdf), and
+# status (draft or published). Only published entries render; their PDF must exist.
+samples:
+  - slug: mudmat-installation-analysis
+    title: Mudmat installation analysis
+    discipline: Marine installation screening
+    summary: Installation analysis of a subsea mudmat.
+    revision: r1
+    page: samples/mudmat-installation-analysis.html
+    pdf: assets/samples/mudmat-installation-analysis-r1.pdf
+    status: draft
+  - slug: barge-motion-response-analysis
+    title: Barge motion response analysis
+    discipline: Hydrodynamics and vessel motions
+    summary: Motion response analysis of box barges in waves.
+    revision: r1
+    page: samples/barge-motion-response-analysis.html
+    pdf: assets/samples/barge-motion-response-analysis-r1.pdf
+    status: draft
+  - slug: cathodic-protection-analysis-jacket
+    title: Cathodic protection analysis of a jacket
+    discipline: Cathodic protection design
+    summary: Cathodic protection analysis of a steel jacket structure.
+    revision: r1
+    page: samples/cathodic-protection-analysis-jacket.html
+    pdf: assets/samples/cathodic-protection-analysis-jacket-r1.pdf
+    status: draft
+  - slug: drilling-riser-screening-analysis
+    title: Drilling riser screening analysis
+    discipline: Drilling riser and riser analysis
+    summary: Screening analysis of a drilling riser.
+    revision: r1
+    page: samples/drilling-riser-screening-analysis.html
+    pdf: assets/samples/drilling-riser-screening-analysis-r1.pdf
+    status: draft
+  - slug: semi-submersible-diffraction-screening-analysis
+    title: Semi-submersible diffraction screening analysis
+    discipline: Hydrodynamics and vessel motions
+    summary: Diffraction screening analysis of a semi-submersible hull.
+    revision: r1
+    page: samples/semi-submersible-diffraction-screening-analysis.html
+    pdf: assets/samples/semi-submersible-diffraction-screening-analysis-r1.pdf
+    status: draft

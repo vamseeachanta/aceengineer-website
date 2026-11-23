@@ -1,0 +1,106 @@
+{
+  "bsee-field-economics.html": {
+    "summary": {
+      "what": "The example describes a synthetic production profile and deterministic cash-flow calculation.",
+      "inputs": "The inputs are an assumed production profile, oil price, operating cost, capital cost, royalty and discount rate.",
+      "result": "The page presents saved illustrative outputs, with an IRR placeholder and a calibrated rebuild pending.",
+      "basis": "The production profile is synthetic and the financial inputs are assumed; the generator imports no BSEE records."
+    },
+    "evidence": [{ "path": "content/case-studies/bsee-field-economics.html", "section": "Illustrative Example" }, { "path": "content/case-studies/bsee-field-economics.html", "section": "Saved Deterministic Outputs" }],
+    "report": null,
+    "workflow": null
+  },
+  "marine-safety-correlation.html": {
+    "summary": {
+      "what": "The page describes recorded marine safety import coverage and identity limitations.",
+      "inputs": "The cited import record covers TSB Canada and MAIB UK incident records.",
+      "result": "The source counts do not establish incident matches or matching accuracy.",
+      "basis": "The basis is the cited import record; the separate visualization data are fixed examples."
+    },
+    "evidence": [{ "path": "content/case-studies/marine-safety-correlation.html", "section": "Recorded Import Coverage" }, { "path": "content/case-studies/marine-safety-correlation.html", "section": "Sample Visualization Data" }],
+    "report": null,
+    "workflow": null
+  },
+  "multi-code-wall-thickness-comparison.html": {
+    "summary": {
+      "what": "The page describes a wall-thickness parameter sweep and governing-code comparison.",
+      "inputs": "The described inputs include pipe diameters, candidate wall thicknesses, design pressures and water depths.",
+      "result": "The described output identifies the governing code for each pipe diameter and water depth.",
+      "basis": "The basis is the parameter-sweep and tool description on this page."
+    },
+    "evidence": [{ "path": "content/case-studies/multi-code-wall-thickness-comparison.html", "section": "Systematic Parameter Sweep" }, { "path": "content/calculators/wall-thickness.html", "section": "Calculate Wall Thickness" }],
+    "report": null,
+    "workflow": {
+      "inputs": ["Pipe outer diameter, wall thickness and corrosion allowance", "Internal and external pressure, yield strength and design factor", "Young's modulus and Poisson's ratio"],
+      "method": "Use the linked calculator for the burst and collapse checks described on its page.",
+      "toolLabel": "Wall thickness calculator",
+      "toolUrl": "/calculators/wall-thickness.html",
+      "action": "Enter the inputs in the displayed units and select Calculate Wall Thickness.",
+      "output": "Burst and collapse results for the entered pipe and pressure inputs.",
+      "limitation": "This is the single-code educational demo linked on the page; it does not repeat the full multi-code parameter sweep."
+    }
+  },
+  "offshore-platform-fatigue-optimization.html": {
+    "summary": {
+      "what": "The page describes fatigue assessment methods for structural connections.",
+      "inputs": "The assessment would require structural geometry, material properties, loading, operating history and inspection records.",
+      "result": "The page describes the method and reports no assessment outcome.",
+      "basis": "An outcome would require retained load histories, fatigue calculations and independent comparisons against acceptance criteria."
+    },
+    "evidence": [{ "path": "content/case-studies/offshore-platform-fatigue-optimization.html", "section": "Assessment Inputs" }, { "path": "content/case-studies/offshore-platform-fatigue-optimization.html", "section": "Evidence Required for an Outcome" }],
+    "report": null,
+    "workflow": null
+  },
+  "orcaflex-riser-sensitivity-automation.html": {
+    "summary": {
+      "what": "The page describes parametric model generation, batch processing and results extraction for riser sensitivity analysis.",
+      "inputs": "The described scripts read a design matrix from an Excel file.",
+      "result": "The described outputs include stress, tension, bend radius and fatigue damage with a sensitivity report.",
+      "basis": "The basis is the automation workflow and output-parameter description on this page."
+    },
+    "evidence": [{ "path": "content/case-studies/orcaflex-riser-sensitivity-automation.html", "section": "Parametric Model Generation" }, { "path": "content/case-studies/orcaflex-riser-sensitivity-automation.html", "section": "Output Parameters Extracted" }],
+    "report": null,
+    "workflow": null
+  },
+  "pipeline-on-bottom-stability-assessment.html": {
+    "summary": {
+      "what": "The page describes comparison of pipeline hydrodynamic loads with soil resistance.",
+      "inputs": "The described inputs include pipe and coating properties, environmental conditions and soil friction.",
+      "result": "The described route sweep produces a stability map and classifies utilisation results.",
+      "basis": "The basis is the method and input description on this page."
+    },
+    "evidence": [{ "path": "content/case-studies/pipeline-on-bottom-stability-assessment.html", "section": "Parameter Definition" }, { "path": "content/calculators/on-bottom-stability.html", "section": "Calculate Stability" }],
+    "report": null,
+    "workflow": {
+      "inputs": ["Pipe diameter and wall thickness, coating thickness and material densities", "Current velocity, wave acceleration and hydrodynamic coefficients", "Soil friction coefficient"],
+      "method": "Use the linked calculator to compare hydrodynamic loads with available frictional resistance.",
+      "toolLabel": "On-bottom stability calculator",
+      "toolUrl": "/calculators/on-bottom-stability.html",
+      "action": "Enter the inputs in the displayed units and select Calculate Stability.",
+      "output": "Utilisation, hydrodynamic forces, submerged weight, resistance and stability status for the entered inputs.",
+      "limitation": "This is the single-point educational demo linked on the page; it does not repeat the route sweep."
+    }
+  },
+  "subsea-fea-automation.html": {
+    "summary": {
+      "what": "The page describes a finite-element output parser, code checks and report generation.",
+      "inputs": "The described parser reads NASTRAN output files and maps results to components.",
+      "result": "The described outputs include stress and displacement results, code checks and HTML reports.",
+      "basis": "The basis is the parser and reporting workflow described on this page."
+    },
+    "evidence": [{ "path": "content/case-studies/subsea-fea-automation.html", "section": "NASTRAN Parser Development" }, { "path": "content/case-studies/subsea-fea-automation.html", "section": "Report Features" }],
+    "report": null,
+    "workflow": null
+  },
+  "wind-turbine-foundation-analysis.html": {
+    "summary": {
+      "what": "The page describes inputs and checks for offshore wind foundation analysis.",
+      "inputs": "The assessment would require foundation geometry, material properties, geotechnical data, environmental conditions and turbine load cases.",
+      "result": "The page describes the method and reports no design results.",
+      "basis": "Design use would require source loads, model configuration, calculation outputs, validation cases and acceptance criteria."
+    },
+    "evidence": [{ "path": "content/case-studies/wind-turbine-foundation-analysis.html", "section": "Analysis Inputs" }, { "path": "content/case-studies/wind-turbine-foundation-analysis.html", "section": "Evidence Required for Design Use" }],
+    "report": null,
+    "workflow": null
+  }
+}

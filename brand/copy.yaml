@@ -1,0 +1,181 @@
+# brand/copy.yaml — Canonical firm-copy (single source of truth)
+#
+# Issue #9 (Option 2). This file is the ONE place to edit reusable firm-description
+# text. build.js loads it and exposes the values to pages as the `copy` template
+# object (e.g. {{ copy.firm_lede }}). `npm run lint:copy` fails if a target page's
+# firm-copy drifts from the canonical wording here, or if any forbidden phrase
+# reappears on a visible page (the negative constraints that triggered #6).
+#
+# Brand-name hierarchy is locked by brand/BRAND.md — keep names below in sync with it.
+#
+# Schema:
+#   names.*            scalar brand names (mirror brand/BRAND.md "Locked hierarchy")
+#   tagline            short positioning line (About hero <h1>)
+#   firm_lede          one-paragraph firm lede (About hero .lead)
+#   founding           founding sentence (About story, paragraph 1)
+#   service_model      "firm not consultancy" framing line (About "How We Work" lede)
+#   capabilities[]     CAP spans cap_01..cap_03 — each {id, heading, blurb}
+#   credentials[]      reusable proof points (free strings, asserted to appear on About)
+#   forbidden_phrases[] visible-surface negative constraints (lint fails if any appears)
+#   targets{}          which page each canonical string must appear in (drives the lint)
+
+names:
+  firm: AceEngineer
+  seo: Analytical & Computational Engineering
+  legal: Achanta AceEngineer Inc.
+  retired_acronym: A&CE
+
+tagline: Engineering analysis and AI automation
+
+firm_lede: >-
+  AceEngineer is a Houston engineering firm that runs its analysis as automated, checked workflows. AI automation and agentic workflows are topics for discussion under a separately agreed scope. The engineering code is public: of 196 modules in digitalmodel, worldenergydata and assetutilities, 35 pass their cited checks (catalogue run 2026-10-17). The pinned catalogue records the evidence available for its classifications.
+
+founding: >-
+  Analytical &amp; Computational Engineering was founded in 2010 in Houston, Texas,
+  with a clear mission: eliminate the repetitive manual work that consumes offshore
+  engineering teams.
+
+service_model: "AI and agentic workflows: contact us to discuss a separately agreed scope."
+
+capabilities:
+  - id: cap_01
+    heading: Offshore Engineering Firms
+    blurb: >-
+      Mid-market firms (10-50 engineers) who run OrcaFlex and AQWA manually for every
+      project. We eliminate the repetitive analysis bottleneck so your senior engineers
+      focus on engineering judgment.
+  - id: cap_02
+    heading: EPC Contractors
+    blurb: >-
+      Installation and fabrication contractors who need rapid weather window analysis,
+      lift studies, and installation pre-engineering without dedicated in-house
+      scripting capability.
+  - id: cap_03
+    heading: Who We Serve
+    blurb: >-
+      The result: engineering firms send a design matrix and receive batch results
+      with recorded inputs for engineering review.
+
+credentials:
+  - 25+ years
+  - 35 of 196 modules
+  - founded in 2010 in Houston, Texas
+
+# Visible-surface negative constraints (#6). Lint fails if any of these appears in a
+# target page's body. Brand names retired for visible surfaces also live here.
+forbidden_phrases:
+  - consultancy
+  - consulting practice
+  # Owner decisions, 2026-07-28 (#89). These are the load-bearing half of that
+  # decision: without them the drift simply returns, which is how it got here.
+  #
+  # Open Deck / Telegram was removed from the site entirely — /capabilities/ is the
+  # sole destination. 67 CTAs across 36 pages were replaced or removed.
+  - Open Deck
+  - t.me/
+  # The homepage claimed custom work was unavailable while contact.html,
+  # pricing.html and engineering.html all sold it. Custom work IS available.
+  - custom work is currently unavailable
+  # "AI" itself is permitted (the theme.css comment banning it was deleted; this
+  # file's firm_lede says "AI-native" and is asserted on About). What #21 actually
+  # rules out is the breathless register.
+  - revolutionary
+  - cutting-edge AI
+
+# Which page each canonical string must be present in (case-insensitive substring).
+# Keys map to copy fields above; the lint reads this to know what to assert where.
+targets:
+  about: content/about.html
+  home: content/index.html
+
+home:
+  title: AceEngineer | Engineering analysis and AI automation
+  description: AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms, EPC contractors and drilling contractors.
+  kicker: Engineering analysis, AI automation and agentic workflows | Houston, Texas
+  heading: Engineering analysis that is practical, dependable and repeatable.
+  lead: >-
+    AI automation and agentic workflows are topics for discussion under a separately agreed scope.
+  discuss: Contact us
+  facts:
+    - heading: Founded 2010
+      detail: Houston, Texas
+    - heading: 25+ years of experience
+      detail: Principal engineer, offshore and marine
+    - heading: Public, checked code
+      detail: 35 of 196 modules pass their cited checks (catalogue run 2026-10-17)
+  services_heading: Services
+  services:
+    - heading: Asset integrity and fitness-for-service
+      page: services/asset-integrity.html
+      receives: 'Client receives: a remaining-strength calculation report with a stated decision: accept, re-rate, take more measurements, or escalate'
+      context: ''
+    - heading: Riser analysis
+      page: services/riser-analysis.html
+      receives: 'Client receives: an operability envelope and a riser analysis calculation report'
+      context: Riser analysis and operability envelopes for drilling risers.
+    - heading: Hydrodynamics and vessel motions
+      page: services/hydrodynamics.html
+      receives: 'Client receives: a vessel motions calculation report'
+      context: Wave diffraction and radiation analysis, with diffraction results compared between two solvers.
+    - heading: Cathodic protection screening
+      page: services/cathodic-protection.html
+      receives: 'Client receives: screening calculations, subject to qualified inputs and an engineer-of-record check'
+      context: Sacrificial-anode screening to DNV-RP-B401 and DNV-RP-F103.
+    - heading: Marine installation screening
+      page: services/marine-installation.html
+      receives: 'Client receives: utilisation by phase and an operability limit on significant wave height'
+      context: Lifting and lowering operations screened by phase.
+    - heading: Offshore energy data and field analytics
+      page: services/offshore-energy-data.html
+      receives: 'Client receives: drilling and completion durations; per-well drilling and completion-day listings'
+      context: Well, lease and production analysis for the United States Gulf of Mexico.
+  work:
+    fact:
+      heading: Public samples
+      detail: Public data and synthetic inputs
+    button: See selected work
+    heading: Selected work
+    description: The samples are prepared from public data and published standards, or from synthetic inputs where stated, and contain no client information.
+    sample: Sample
+    demonstrates: What it demonstrates
+    open: Open
+    all: All samples
+  contact:
+    heading: Contact
+    principal: Vamsee Achanta, P.E., Principal Engineer
+    email: support@aceengineer.com
+    phone: +1 713-306-9029
+    phone_href: tel:+17133069029
+
+services_intro: >-
+  AceEngineer provides riser, hydrodynamic, asset integrity, cathodic protection and marine installation analysis for offshore engineering firms, EPC contractors and drilling contractors. We run that work as automated, checked workflows, with AI agents doing the repeat steps and an engineer signing the result, and we bring the same approach to independent contractors and small and medium-sized businesses (SMBs).
+
+service_details:
+  - sampleDiscipline: Asset integrity and fitness-for-service
+    description: Remaining-strength assessment of corroded components to API 579-1 and B31G.
+    meta_description: 'Remaining-strength assessment of corroded components to API 579-1 and B31G, with a stated decision: accept, re-rate, take more measurements, or escalate.'
+    problem: Whether equipment with damage is still fit to operate.
+    contents: Remaining strength and the allowable pressure, with the assumptions traced.
+    codes:
+      - API 579-1
+  - sampleDiscipline: Drilling riser and riser analysis
+    description: Riser analysis and operability envelopes for drilling risers to API RP 16Q. Analysis against API STD 2RD, and vortex-induced vibration screening with fatigue on DNV-RP-C203 curves.
+    meta_description: 'Riser analysis and operability envelopes for drilling risers to API RP 16Q and API STD 2RD, with vortex-induced vibration screening and DNV-RP-C203 fatigue.'
+    codes:
+      - API RP 16Q — Design, Selection, Operation, and Maintenance of Marine Drilling Riser Systems
+      - DNV-RP-C203 — Fatigue design of offshore steel structures
+  - sampleDiscipline: Hydrodynamics and vessel motions
+    description: Wave diffraction and radiation analysis, with diffraction results compared between two solvers.
+    meta_description: 'Wave diffraction and radiation analysis of floating hulls, compared between two solvers and delivered as a vessel motions calculation report.'
+    problem: How a floating hull responds to waves.
+  - sampleDiscipline: Cathodic protection design
+    description: Sacrificial-anode screening to DNV-RP-B401 and DNV-RP-F103.
+    meta_description: 'Sacrificial-anode cathodic protection screening to DNV-RP-B401 and DNV-RP-F103, subject to qualified inputs and an engineer-of-record check.'
+    codes:
+      - DNV-RP-B401
+  - sampleDiscipline: Marine installation screening
+    description: Lifting and lowering operations screened by phase, reported as utilisation by phase and an operability limit on significant wave height.
+    meta_description: 'Lifting and lowering operations screened by phase, reported as utilisation by phase and an operability limit on significant wave height.'
+  - sampleDiscipline: Offshore energy data and field analytics
+    description: Well, lease and production analysis for the United States Gulf of Mexico from public regulatory filings.
+    meta_description: 'Well, lease and production analysis for the United States Gulf of Mexico from public regulatory filings, with drilling and completion durations per well.'

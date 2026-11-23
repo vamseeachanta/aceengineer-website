@@ -1,0 +1,148 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hull diffraction: Hull hydrodynamics — diffraction, radiation and RAOs. Engineering reference scope and assessment topics.">
+    <meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+    <meta name="keywords" content="Diffraction, OrcaWave, AQWA, Added mass / damping, Wave spectra, Hull diffraction calculator, offshore engineering reference">
+
+    <meta property="og:title" content="Hull diffraction — Hull hydrodynamics — diffraction, radiation and RAOs | AceEngineer">
+    <meta property="og:description" content="Hull diffraction: Hull hydrodynamics — diffraction, radiation and RAOs. Engineering reference scope and assessment topics.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aceengineer.com/standards/hull-hydrodynamics-diffraction.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Hull diffraction — Hull hydrodynamics — diffraction, radiation and RAOs">
+    <meta name="twitter:description" content="Hull diffraction: Hull hydrodynamics — diffraction, radiation and RAOs. Engineering reference scope and assessment topics.">
+
+    <title>Hull diffraction — Hull hydrodynamics — diffraction, radiation and RAOs | AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Standards",
+      "item": "https://www.aceengineer.com/standards/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Hull diffraction",
+      "item": "https://www.aceengineer.com/standards/hull-hydrodynamics-diffraction.html"
+    }
+  ]
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a diffraction analysis for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It computes how a floating hull responds to waves \u2014 added mass, damping, wave loads and the motion RAOs \u2014 the foundation for mooring, seakeeping and operability work."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which modelling tools are referenced?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It sets up the input for boundary-element diffraction solvers (OrcaWave or AQWA) and checks the resulting coefficients and RAOs."
+      }
+    }
+  ]
+}
+    </script>
+
+    <!-- shared component styles: assets/css/components.css -->
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <main id="main">
+
+    <section class="hero-section" style="padding-bottom:36px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9 col-md-offset-1">
+                    <p style="text-transform:uppercase;letter-spacing:.08em;color:#6b7785;font-size:.85em;"><a href="index.html" style="color:#6b7785;">Standards</a> &rsaquo; Hydrodynamics</p>
+                    <h1 class="hero-title" style="text-align:left;">Hull diffraction</h1>
+                    <p style="font-size:1.05em;color:#52606d;margin:-6px 0 14px;">Hull hydrodynamics — diffraction, radiation and RAOs</p>
+                    <p class="hero-subtitle" style="text-align:left;margin-left:0;">This page describes hull hydrodynamics — diffraction, radiation and raos and the associated engineering assessment topics. Project use requires qualified inputs and engineering review.</p>
+                    <div class="hero-cta" style="text-align:left;">
+                        <a href="../capabilities/" class="btn btn-primary btn-lg" data-cta="capabilities" data-src="src_web_std_hull-hydrodynamics-diffraction">Published capabilities</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding:56px 0;background:#f8f9fa;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 class="section-title text-center">Assessment topics</h2>
+                    <ul class="ask-list">
+                        <li>Prepare a diffraction and radiation model for a floating hull (OrcaWave / AQWA).</li>
+                        <li>Check added-mass and damping coefficients and their causality.</li>
+                        <li>Build the wave spectrum and tabulate the motion RAOs across frequency.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding:48px 0;text-align:center;">
+        <div class="container">
+            <h2 class="section-title">Related standards</h2>
+            <div style="margin:18px 0;">
+                <span class="domain-chip">Diffraction</span>
+                <span class="domain-chip">OrcaWave</span>
+                <span class="domain-chip">AQWA</span>
+                <span class="domain-chip">Added mass / damping</span>
+                <span class="domain-chip">Wave spectra</span>
+            </div>
+            <p>Part of <a href="../solutions/floating-marine.html">Floating &amp; Marine Systems</a> &middot; <a href="../platform.html">see the platform engine</a></p>
+        </div>
+    </section>
+
+    <section style="padding:40px 0;">
+        <div class="container">
+            <div class="row"><div class="col-md-10 col-md-offset-1">
+                <h2 class="section-title text-center">Questions</h2>
+                    <details class="faq"><summary>What is a diffraction analysis for?</summary><p>It computes how a floating hull responds to waves — added mass, damping, wave loads and the motion RAOs — the foundation for mooring, seakeeping and operability work.</p></details>
+                    <details class="faq"><summary>Which modelling tools are referenced?</summary><p>It sets up the input for boundary-element diffraction solvers (OrcaWave or AQWA) and checks the resulting coefficients and RAOs.</p></details>
+            </div></div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container"><div class="row"><div class="col-md-8 col-md-offset-2 text-center">
+            <h2>Discuss a Hull diffraction assessment</h2>
+            <p>Contact AceEngineer to discuss inputs, assessment scope and project requirements.</p>
+            <a href="../contact.html" class="btn btn-primary btn-lg">Contact AceEngineer</a>
+        </div></div></div>
+    </section>
+
+    </main>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

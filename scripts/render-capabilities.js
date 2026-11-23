@@ -1,0 +1,530 @@
+#!/usr/bin/env node
+/**
+ * render-capabilities.js — render the capability registry into HTML for the website.
+ *
+ * C3 (aceengineer-website#51), epic workspace-hub#3485. Pure functions (no I/O) so they
+ * are unit-testable; build.js injects the output into content/capabilities/index.html as
+ * the `capabilitiesCards` template local. Cards use inline styles + existing container
+ * classes so PurgeCSS can't strip them.
+ *
+ * Each card links to the capability's data on Hugging Face (a real, live target today).
+ * When the per-capability detail pages land (C4, #52), the primary link flips to the
+ * internal /capabilities/<id>.html page.
+ *
+ * Data comes from the hydrated registry (C2): each table carries `data` (columns/rows/
+ * total_rows) + `data_source` ('live' | 'snapshot' | 'unavailable').
+ */
+
+// Canonical origin — vercel.json 301s the apex to www, so self-referencing URLs
+// (og:url, JSON-LD) must already be on www. Kept in sync with build.js SITE_ORIGIN.
+const SITE_ORIGIN = 'https://www.aceengineer.com';
+
+const DOMAIN_LABELS = {
+  worldenergy: 'World Energy',
+  digitalmodel: 'Digital Model',
+};
+const DOMAIN_COLORS = {
+  worldenergy: '#0e7e88',   /* teal-deep (theme accent) */
+  digitalmodel: '#0b3d5c',  /* navy (theme structure) */
+};
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function hfDatasetUrl(dataset) {
+  return `https://huggingface.co/datasets/${dataset}`;
+}
+
+// Per-table row counts for the little stat strip, e.g. [{count: 10, label: 'fields'}].
+function tableStats(cap) {
+  return (cap.tables || []).map(t => ({
+    count: t.data && typeof t.data.total_rows === 'number' ? t.data.total_rows : null,
+    label: t.label || t.config,
+    truncated: !!(t.data && t.data.truncated),
+  }));
+}
+
+// True when at least one table actually has data to show.
+function hasData(cap) {
+  return (cap.tables || []).some(t => t.data && Array.isArray(t.data.rows) && t.data.rows.length);
+}
+
+// Release-backed capabilities are pinned to an immutable release published by this site
+// instead of live datasets-server tables (see validate-capabilities.js). They have no
+// `tables`, so they must not be mistaken for "data pending publication".
+function isReleaseBacked(cap) {
+  return cap && cap.backing === 'release' && !!cap.release;
+}
+
+// Stat strip figures for a release-backed capability, declared in the registry.
+function releaseStats(cap) {
+  return ((cap.release && cap.release.stats) || [])
+    .filter(s => s && typeof s.count === 'number')
+    .map(s => ({ count: s.count, label: s.label, truncated: false }));
+}
+
+function renderStats(stats) {
+  if (!stats.length) return '';
+  const items = stats.map(s =>
+    `<span style="display:inline-block;margin-right:18px;">` +
+    `<strong style="font-size:1.4rem;color:#111;">${s.count.toLocaleString('en-US')}</strong> ` +
+    `<span style="color:#555;">${escapeHtml(s.label)}</span></span>`
+  ).join('');
+  return `<div style="margin:14px 0 10px;">${items}</div>`;
+}
+
+function renderStatStrip(cap) {
+  return renderStats(tableStats(cap).filter(s => s.count != null));
+}
+
+function renderCard(cap) {
+  const domainLabel = DOMAIN_LABELS[cap.domain] || cap.domain;
+  const domainColor = DOMAIN_COLORS[cap.domain] || '#444';
+  const released = isReleaseBacked(cap);
+  const pending = !released && (cap.status === 'pending' || !hasData(cap));
+
+  const badge =
+    `<span style="display:inline-block;background:${domainColor};color:#fff;font-size:.72rem;` +
+    `font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:999px;">` +
+    `${escapeHtml(domainLabel)}</span>`;
+
+  // Live vs pending body
+  let body;
+  let cta;
+  if (pending) {
+    body =
+      `<p style="color:#555;margin:12px 0 6px;">${escapeHtml(cap.summary)}</p>` +
+      `<p style="color:#a15c00;font-size:.9rem;margin:8px 0;">— data pending publication</p>`;
+    cta =
+      `<a href="${escapeHtml(cap.provenance_url)}" style="font-weight:600;color:${domainColor};">` +
+      `Follow progress →</a>`;
+  } else if (released) {
+    // The pinned digest is the checkable claim here — not a Hugging Face link, whose
+    // upstream dataset is private and would 401 for a visitor.
+    body =
+      `<p style="color:#555;margin:12px 0 4px;">${escapeHtml(cap.summary)}</p>` +
+      renderStats(releaseStats(cap)) +
+      `<p style="color:#777;font-size:.82rem;margin:6px 0 0;">${escapeHtml(cap.data_limits || '')}</p>`;
+    cta =
+      `<a href="${escapeHtml(detailHref(cap))}" ` +
+      `style="font-weight:600;color:${domainColor};">View capability →</a>` +
+      `<span style="margin-left:18px;color:#666;font-size:.9rem;">Immutable release ` +
+      `<code>${escapeHtml(String(cap.release.digest).slice(0, 12))}</code></span>`;
+  } else {
+    body =
+      `<p style="color:#555;margin:12px 0 4px;">${escapeHtml(cap.summary)}</p>` +
+      renderStatStrip(cap) +
+      `<p style="color:#5a6b76;font-size:.82rem;margin:6px 0 0;">${escapeHtml(cap.data_limits || '')}</p>`;
+    // Optional interactive surfaces (e.g. a drill-down or report hub) are listed
+    // ahead of the table view — they are the richer way into the same data.
+    const experiences = (cap.experiences || [])
+      .map(x => `<a href="${escapeHtml(x.url)}" ` +
+        `style="font-weight:600;color:${domainColor};margin-right:18px;">` +
+        `${escapeHtml(x.label)} →</a>`)
+      .join('');
+    cta =
+      experiences +
+      `<a href="${escapeHtml(detailHref(cap))}" ` +
+      `style="font-weight:600;color:${domainColor};">View capability →</a>` +
+      `<a href="${escapeHtml(hfDatasetUrl(cap.hf_dataset))}" rel="noopener" ` +
+      `style="margin-left:18px;color:#666;font-size:.9rem;">Dataset on Hugging Face ↗</a>`;
+  }
+
+  return (
+    `<article style="background:#fff;border:1px solid #e6e8eb;border-radius:12px;padding:24px;` +
+    `box-shadow:0 1px 3px rgba(0,0,0,.05);display:flex;flex-direction:column;height:100%;">` +
+    `<div style="margin-bottom:8px;">${badge}</div>` +
+    `<h3 style="margin:6px 0 0;font-size:1.35rem;color:#111;">${escapeHtml(cap.title)}</h3>` +
+    `<div style="flex:1 1 auto;">${body}</div>` +
+    `<div style="margin-top:16px;">${cta}</div>` +
+    `</article>`
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Detail-page rendering (C4, #52): per-capability page with a data table + an
+// inline-SVG chart. SVG is generated at build time — no chart library, so it's
+// CSP-clean, SEO-indexable, and deterministic.
+// ---------------------------------------------------------------------------
+
+const MAX_TABLE_ROWS = 50;
+const MAX_BARS = 15;
+
+// Cross-navigation between capability pages. A detail page previously offered only a
+// "← All capabilities" back-link, so the sibling capabilities were reachable exclusively
+// by going back to the index — and nothing marked which page you were on. `siblings` is
+// the surfaced (non-withheld) capability list; passing none degrades to the back-link.
+function renderCapabilityNav(cap, siblings = []) {
+  const link = (href, label, current) =>
+    `<a href="${escapeHtml(href)}"` +
+    (current ? ' aria-current="page"' : '') +
+    ` style="text-decoration:none;color:${current ? '#111' : '#666'};` +
+    `font-weight:${current ? '600' : '400'};` +
+    (current ? 'border-bottom:2px solid #111;padding-bottom:2px;' : '') +
+    `">${escapeHtml(label)}</a>`;
+
+  const others = siblings.filter(s => s && s.id);
+  if (!others.length) return link('/capabilities/', '← All capabilities', false);
+
+  const items = others.map(s => link(detailHref(s), s.title || s.id, s.id === cap.id));
+  return (
+    `<nav aria-label="Capabilities" style="display:flex;flex-wrap:wrap;gap:6px 18px;` +
+    `align-items:baseline;font-size:.92rem;margin-bottom:14px;padding-bottom:12px;` +
+    `border-bottom:1px solid #e6e8eb;">` +
+    link('/capabilities/', 'All capabilities', false) +
+    `<span aria-hidden="true" style="color:#c7ccd1;">|</span>` +
+    items.join(`<span aria-hidden="true" style="color:#c7ccd1;">·</span>`) +
+    `</nav>`
+  );
+}
+
+// What the reader is actually looking at. These pages are baked at build time and then
+// optionally re-fetched client-side via "Refresh to latest", so — unlike the immutable
+// sloshing release — the honest claim is a dated snapshot, not a pinned digest. Says
+// which mode the build got its rows from, so a stale or degraded render is visible
+// rather than silently indistinguishable from a live one.
+function dataSourceMode(cap) {
+  const sources = (cap.tables || []).map(t => t.data_source).filter(Boolean);
+  if (!sources.length) return null;
+  if (sources.some(s => s === 'unavailable')) return 'unavailable';
+  if (sources.every(s => s === 'live')) return 'live';
+  return 'snapshot';
+}
+
+function renderSnapshotStamp(cap, renderedAt) {
+  const mode = dataSourceMode(cap);
+  if (!mode) return '';
+  const when = renderedAt ? ` on ${escapeHtml(renderedAt)}` : '';
+  const text = {
+    live: `Rendered from a live datasets-server fetch${when}. Use “Refresh to latest” for current data.`,
+    snapshot: `Rendered from a cached snapshot${when}; the upstream dataset may have moved since. Use “Refresh to latest” for current data.`,
+    unavailable: `The dataset could not be reached at build time${when}; figures below may be incomplete. Use “Refresh to latest” to retry.`,
+  }[mode];
+  const color = mode === 'unavailable' ? '#a15c00' : '#555';
+  return `<p style="margin:0 0 6px;color:${color};font-size:.9rem;">` +
+    `<strong>Snapshot:</strong> ${text}</p>`;
+}
+
+function detailFileName(cap) {
+  return `${cap.id}.html`;
+}
+
+// Absolute, root-relative link to a capability's detail page — works whether the card
+// is rendered on the homepage (root) or on /capabilities/. Release-backed capabilities
+// have no generated detail page; their hub on this site is the canonical destination.
+function detailHref(cap) {
+  if (isReleaseBacked(cap)) return cap.release.hub_url;
+  return `/capabilities/${cap.id}.html`;
+}
+
+function isNumericDtype(dtype) {
+  return /int|float|double|decimal|number/i.test(String(dtype || ''));
+}
+
+function formatCell(v) {
+  if (v === null || v === undefined || v === '') return '—';
+  if (typeof v === 'number') {
+    return Number.isInteger(v) ? v.toLocaleString('en-US') : v.toLocaleString('en-US', { maximumFractionDigits: 2 });
+  }
+  return escapeHtml(v);
+}
+
+// Human-friendly display labels for raw dataset column names. Only the DISPLAYED header
+// text changes — the raw snake_case name is still used for data lookup everywhere.
+// COLUMN_LABELS holds explicit overrides; anything else falls back to Title-Case of the
+// snake_case name, with COLUMN_TOKENS keeping domain acronyms/units correctly cased.
+// Mirror any change here in assets/js/capabilities-refresh.js (humanizeColumn) so a live
+// "Refresh to latest" re-render matches the baked page.
+const COLUMN_LABELS = {
+  npv_mm: 'NPV ($MM)',
+  breakeven_wti: 'Breakeven WTI ($/bbl)',
+  economics_basis: 'Basis',
+  sens_mm_per_dollar: 'NPV sensitivity ($MM/$)',
+  wells_count: 'Wells',
+  api_gravity: 'API°',
+  cum_oil_mmbbl: 'Cum oil (MMbbl)',
+  eur_mmbbl: 'EUR (MMbbl)',
+  avg_uptime_pct: 'Uptime %',
+  uptime_pct: 'Uptime %',
+  field_id: 'Field',
+};
+
+const COLUMN_TOKENS = {
+  api: 'API', eur: 'EUR', wti: 'WTI', npv: 'NPV', id: 'ID', mbl: 'MBL',
+  smys: 'SMYS', sn: 'S-N', tvd: 'TVD', hpht: 'HPHT',
+  kn: 'kN', knm: 'kN·m', mpa: 'MPa', psi: 'psi', ppg: 'ppg', ft: 'ft', mm: 'MM',
+};
+
+function humanizeColumn(name) {
+  if (name == null) return '';
+  const key = String(name);
+  if (Object.prototype.hasOwnProperty.call(COLUMN_LABELS, key)) return COLUMN_LABELS[key];
+  return key.split('_').map(w => {
+    if (!w) return w;
+    const lower = w.toLowerCase();
+    if (Object.prototype.hasOwnProperty.call(COLUMN_TOKENS, lower)) return COLUMN_TOKENS[lower];
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
+  }).join(' ');
+}
+
+// Column display order: highlight_columns first (in declared order), then the rest.
+function orderedColumns(table) {
+  const cols = (table.data && table.data.columns || []).map(c => c.name);
+  const hi = (table.highlight_columns || []).filter(c => cols.includes(c));
+  const rest = cols.filter(c => !hi.includes(c));
+  return [...hi, ...rest];
+}
+
+// Pick (labelKey, valueKey) for a chart: first non-numeric highlight col as label,
+// first numeric highlight col as value. Falls back across all columns.
+function pickChartKeys(table) {
+  const columns = table.data && table.data.columns || [];
+  const dtypeOf = name => (columns.find(c => c.name === name) || {}).dtype;
+  const pool = (table.highlight_columns && table.highlight_columns.length)
+    ? table.highlight_columns.filter(c => columns.some(col => col.name === c))
+    : columns.map(c => c.name);
+  const valueKey = pool.find(c => isNumericDtype(dtypeOf(c)));
+  const labelKey = pool.find(c => c !== valueKey && !isNumericDtype(dtypeOf(c))) || pool.find(c => c !== valueKey);
+  return { labelKey, valueKey };
+}
+
+function renderTable(table) {
+  const rows = (table.data && table.data.rows) || [];
+  const cols = orderedColumns(table);
+  if (!rows.length || !cols.length) {
+    return `<p style="color:#5a6b76;">No rows to display.</p>`;
+  }
+  const shown = rows.slice(0, MAX_TABLE_ROWS);
+  const head = cols.map(c => `<th style="text-align:left;padding:8px 12px;border-bottom:2px solid #dde1e5;white-space:nowrap;">${escapeHtml(humanizeColumn(c))}</th>`).join('');
+  const body = shown.map(r =>
+    `<tr>` + cols.map(c => `<td style="padding:7px 12px;border-bottom:1px solid #eef1f3;">${formatCell(r[c])}</td>`).join('') + `</tr>`
+  ).join('\n');
+  const total = table.data.total_rows != null ? table.data.total_rows : rows.length;
+  const note = shown.length < total
+    ? `<p style="color:#5a6b76;font-size:.85rem;margin:8px 0 0;">Showing ${shown.length} of ${total.toLocaleString('en-US')} rows — full table on Hugging Face.</p>`
+    : '';
+  return (
+    `<div style="overflow-x:auto;">` +
+    `<table style="border-collapse:collapse;width:100%;font-size:.92rem;">` +
+    `<thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>${note}`
+  );
+}
+
+// Inline-SVG horizontal bar chart. `data` = [{label, value}].
+function renderBarChart(data, opts = {}) {
+  const { color = '#1d4e89' } = opts;
+  const items = data.filter(d => typeof d.value === 'number' && !Number.isNaN(d.value)).slice(0, MAX_BARS);
+  if (!items.length) return '';
+  const max = Math.max(...items.map(d => d.value), 0) || 1;
+  const rowH = 26, gap = 8, labelW = 160, chartW = 460, pad = 8;
+  const width = labelW + chartW + pad * 2;
+  const height = items.length * (rowH + gap) + pad * 2;
+  const bars = items.map((d, i) => {
+    const y = pad + i * (rowH + gap);
+    const w = Math.max(1, Math.round((d.value / max) * chartW));
+    const val = Number.isInteger(d.value) ? d.value.toLocaleString('en-US') : d.value.toLocaleString('en-US', { maximumFractionDigits: 2 });
+    return (
+      `<text x="${labelW - 6}" y="${y + rowH / 2 + 4}" text-anchor="end" font-size="12" fill="#333">${escapeHtml(String(d.label))}</text>` +
+      `<rect x="${labelW}" y="${y}" width="${w}" height="${rowH}" rx="3" fill="${color}"></rect>` +
+      `<text x="${labelW + w + 6}" y="${y + rowH / 2 + 4}" font-size="12" fill="#333">${val}</text>`
+    );
+  }).join('');
+  return (
+    `<svg viewBox="0 0 ${width} ${height}" width="100%" role="img" ` +
+    `style="max-width:${width}px;height:auto;font-family:inherit;" preserveAspectRatio="xMinYMin meet">${bars}</svg>`
+  );
+}
+
+// Inline-SVG line chart across the row order. `data` = [{label, value}].
+function renderLineChart(data, opts = {}) {
+  const { color = '#0b6e4f' } = opts;
+  const items = data.filter(d => typeof d.value === 'number' && !Number.isNaN(d.value));
+  if (items.length < 2) return renderBarChart(data, opts);
+  const max = Math.max(...items.map(d => d.value));
+  const min = Math.min(...items.map(d => d.value));
+  const span = (max - min) || 1;
+  const w = 640, h = 220, pad = 30;
+  const step = (w - pad * 2) / (items.length - 1);
+  const pts = items.map((d, i) => {
+    const x = pad + i * step;
+    const y = h - pad - ((d.value - min) / span) * (h - pad * 2);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  return (
+    `<svg viewBox="0 0 ${w} ${h}" width="100%" role="img" style="max-width:${w}px;height:auto;" preserveAspectRatio="xMinYMin meet">` +
+    `<polyline fill="none" stroke="${color}" stroke-width="2" points="${pts}"></polyline>` +
+    `<text x="${pad}" y="16" font-size="12" fill="#666">max ${max.toLocaleString('en-US')}</text></svg>`
+  );
+}
+
+function renderChartFor(table) {
+  const viz = table.viz;
+  if (viz !== 'bar' && viz !== 'line') return '';
+  const { labelKey, valueKey } = pickChartKeys(table);
+  if (!labelKey || !valueKey) return '';
+  const rows = (table.data && table.data.rows) || [];
+  let data = rows.map(r => ({ label: r[labelKey], value: r[valueKey] }))
+    .filter(d => typeof d.value === 'number' && !Number.isNaN(d.value));
+  if (!data.length) return '';
+  if (viz === 'bar') {
+    data = data.sort((a, b) => b.value - a.value);
+    return `<div style="margin:10px 0 6px;">${renderBarChart(data)}</div>` +
+      `<p style="color:#5a6b76;font-size:.82rem;margin:0 0 4px;">${escapeHtml(valueKey)} by ${escapeHtml(labelKey)} (top ${Math.min(MAX_BARS, data.length)})</p>`;
+  }
+  return `<div style="margin:10px 0 6px;">${renderLineChart(data)}</div>` +
+    `<p style="color:#5a6b76;font-size:.82rem;margin:0 0 4px;">${escapeHtml(valueKey)} across ${escapeHtml(labelKey)}</p>`;
+}
+
+// The inner body of a capability detail page (no chrome).
+function capabilityDetailBody(cap, siblings = [], options = {}) {
+  const domainLabel = DOMAIN_LABELS[cap.domain] || cap.domain;
+  const domainColor = DOMAIN_COLORS[cap.domain] || '#444';
+  const badge =
+    `<span style="display:inline-block;background:${domainColor};color:#fff;font-size:.72rem;font-weight:600;` +
+    `letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:999px;">${escapeHtml(domainLabel)}</span>`;
+
+  const tables = (cap.tables || []).map(t => {
+    const chart = renderChartFor(t);
+    // Data attributes let the optional client-side "Refresh to latest" (C6,
+    // assets/js/capabilities-refresh.js) re-fetch this exact table and re-render into
+    // [data-cap-render]. Inert without JS — the baked chart+table below is the default.
+    const attrs =
+      ` data-cap-table data-hf-dataset="${escapeHtml(cap.hf_dataset)}" data-hf-config="${escapeHtml(t.config)}"` +
+      ` data-hf-split="train" data-viz="${escapeHtml(t.viz)}"` +
+      ` data-highlight="${escapeHtml(JSON.stringify(t.highlight_columns || []))}"`;
+    return (
+      `<section style="margin:28px 0;"${attrs}>` +
+      `<h2 style="font-size:1.3rem;color:#111;">${escapeHtml(t.label || t.config)}</h2>` +
+      `<div data-cap-render>` + chart + renderTable(t) + `</div>` +
+      `</section>`
+    );
+  }).join('\n');
+
+  // Progressive-enhancement affordance — only where there is live data to refresh.
+  const refresh = hasData(cap)
+    ? `<div style="margin:14px 0 4px;">` +
+      `<button type="button" data-refresh-capabilities ` +
+      `style="background:${domainColor};color:#fff;border:none;border-radius:6px;padding:8px 16px;` +
+      `font-size:.9rem;font-weight:600;letter-spacing:.02em;cursor:pointer;">Refresh to latest</button>` +
+      `<span data-refresh-status role="status" aria-live="polite" ` +
+      `style="margin-left:12px;font-size:.9rem;color:#5a6b76;"></span>` +
+      `</div>`
+    : '';
+
+  const provenance =
+    `<div style="margin-top:32px;padding:18px 20px;background:#f8f9fa;border-radius:8px;">` +
+    `<p style="margin:0 0 6px;"><strong>Source:</strong> ` +
+    `<a href="${escapeHtml(hfDatasetUrl(cap.hf_dataset))}" rel="noopener">${escapeHtml(cap.hf_dataset)}</a> on Hugging Face` +
+    (cap.provenance_url ? ` · <a href="${escapeHtml(cap.provenance_url)}" rel="noopener">pipeline</a>` : '') + `</p>` +
+    renderSnapshotStamp(cap, options.renderedAt) +
+    (cap.data_limits ? `<p style="margin:0;color:#555;font-size:.9rem;"><strong>Data limits:</strong> ${escapeHtml(cap.data_limits)}</p>` : '') +
+    `</div>`;
+
+  return (
+    renderCapabilityNav(cap, siblings) +
+    `<div style="margin:10px 0 6px;">${badge}</div>` +
+    `<h1 style="margin:4px 0 8px;">${escapeHtml(cap.title)}</h1>` +
+    `<p style="font-size:1.12rem;color:#444;max-width:760px;">${escapeHtml(cap.summary)}</p>` +
+    refresh +
+    `<div data-capability-detail>` + tables + `</div>` +
+    provenance
+  );
+}
+
+// A full detail-page HTML document (with <include> chrome; rootPath resolved by build.js
+// via posthtml expressions). One page per capability, written to dist/capabilities/<id>.html.
+// schema.org Dataset markup for a capability (#85).
+//
+// These pages exist to say "this result is backed by a public dataset you can go and
+// check", which is exactly what Dataset expresses — so it is the highest-value
+// structured data available here. Every field comes from the registry; nothing is
+// invented. `data_limits` is carried into the description rather than dropped, because
+// the coverage caveat is part of the claim, not a footnote to it.
+function datasetJsonLd(cap) {
+  const url = `${SITE_ORIGIN}/capabilities/${cap.id}.html`;
+  const description = cap.data_limits
+    ? `${collapse(cap.summary)} Coverage and limitations: ${collapse(cap.data_limits)}`
+    : collapse(cap.summary);
+
+  const variables = [...new Set((cap.tables || []).flatMap(t => t.highlight_columns || []))]
+    .map(humanizeColumn);
+
+  const doc = {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: cap.title,
+    description,
+    url,
+    isAccessibleForFree: true,
+    creator: { '@id': `${SITE_ORIGIN}/#organization` },
+    distribution: {
+      '@type': 'DataDownload',
+      encodingFormat: 'application/json',
+      contentUrl: hfDatasetUrl(cap.hf_dataset),
+    },
+  };
+  if (variables.length) doc.variableMeasured = variables;
+  if (cap.provenance_url) doc.isBasedOn = cap.provenance_url;
+
+  return `<script type="application/ld+json">\n${JSON.stringify(doc, null, 2)}\n</script>\n`;
+}
+
+// Collapse whitespace so YAML block scalars don't put newlines inside JSON-LD strings.
+function collapse(s) {
+  return String(s == null ? '' : s).replace(/\s+/g, ' ').trim();
+}
+
+function capabilityDetailDocument(cap, siblings = [], options = {}) {
+  const title = `${cap.title} — AceEngineer Capabilities`;
+  return (
+    `<!DOCTYPE html>\n<html lang="en">\n<head>\n` +
+    `<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n` +
+    `<meta name="description" content="${escapeHtml(cap.summary)}">\n` +
+    `<meta property="og:image" content="${SITE_ORIGIN}/assets/img/logo.png">\n` +
+    `<meta property="og:title" content="${escapeHtml(title)}">\n` +
+    `<meta property="og:description" content="${escapeHtml(cap.summary)}">\n` +
+    `<meta property="og:type" content="website">\n` +
+    `<meta property="og:url" content="${SITE_ORIGIN}/capabilities/${escapeHtml(cap.id)}.html">\n` +
+    `<title>${escapeHtml(title)}</title>\n` +
+    datasetJsonLd(cap) +
+    `<include src="partials/head-common.html"></include>\n` +
+    `</head>\n<body class="theme-page">\n` +
+    `<include src="partials/nav.html"></include>\n` +
+    `<main id="main">\n` +
+    `<section style="padding:40px 0 56px;"><div class="container">\n` +
+    capabilityDetailBody(cap, siblings, options) +
+    `\n</div></section>\n` +
+    `</main>\n` +
+    `<include src="partials/footer.html"></include>\n` +
+    `<script src="/assets/js/capabilities-refresh.js" defer></script>\n` +
+    `</body>\n</html>\n`
+  );
+}
+
+// Render the full grid. `registry` is the hydrated { version, capabilities: [...] }.
+function renderCards(registry) {
+  const caps = (registry && registry.capabilities || []).filter(c => c.status !== 'withheld');
+  if (!caps.length) {
+    return `<p style="color:#5a6b76;">No capabilities published yet.</p>`;
+  }
+  const cards = caps.map(cap =>
+    `<div style="flex:1 1 340px;max-width:520px;">${renderCard(cap)}</div>`
+  ).join('\n');
+  return `<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:stretch;">\n${cards}\n</div>`;
+}
+
+module.exports = {
+  escapeHtml, hfDatasetUrl, tableStats, hasData,
+  renderStatStrip, renderCard, renderCards,
+  detailFileName, detailHref, formatCell, humanizeColumn, orderedColumns, pickChartKeys,
+  renderTable, renderBarChart, renderLineChart, renderChartFor,
+  capabilityDetailBody, capabilityDetailDocument, renderCapabilityNav,
+  isReleaseBacked, releaseStats, dataSourceMode, renderSnapshotStamp,
+  datasetJsonLd,
+  DOMAIN_LABELS, MAX_TABLE_ROWS, SITE_ORIGIN,
+};

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Houston engineering analysis and AI automation. Contact us to discuss a separately agreed scope; inspect the public code and pinned catalogue.">
+    <meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+    <meta name="keywords" content="offshore engineering, computational analysis, engineering automation, OrcaFlex automation, fatigue analysis, offshore wind, subsea engineering, Houston engineering firm">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="About AceEngineer | Engineering analysis and AI automation">
+    <meta property="og:description" content="Houston engineering analysis and AI automation. Contact us to discuss a separately agreed scope; inspect the public code and pinned catalogue.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aceengineer.com/about.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="About AceEngineer | Engineering analysis and AI automation">
+    <meta name="twitter:description" content="Houston engineering analysis and AI automation. Contact us to discuss a separately agreed scope; inspect the public code and pinned catalogue.">
+
+    <title>About AceEngineer | Engineering analysis and AI automation</title>
+
+    <include src="partials/head-common.html"></include>
+
+    <!-- JSON-LD Structured Data -->
+
+
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.aceengineer.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "About",
+      "item": "https://www.aceengineer.com/about.html"
+    }
+  ]
+}
+</script>
+
+    <!-- Service Schema -->
+    <script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Computational Engineering Services",
+    "provider": {
+      "@id": "https://www.aceengineer.com/#organization"
+    },
+    "areaServed": "Worldwide"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Engineering Automation Solutions",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Service",
+          "name": "OrcaFlex Batch Automation",
+          "description": "Automated riser, mooring, and marine operations analysis with overnight batch processing",
+          "provider": {
+            "@id": "https://www.aceengineer.com/#organization"
+          }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Service",
+          "name": "Fatigue Analysis Library",
+          "description": "S-N fatigue assessment workflows referencing DNV-RP-C203",
+          "provider": {
+            "@id": "https://www.aceengineer.com/#organization"
+          }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Service",
+          "name": "AQWA Integration",
+          "description": "Hydrodynamic model generation, RAO processing, and operability analysis",
+          "provider": {
+            "@id": "https://www.aceengineer.com/#organization"
+          }
+        }
+      }
+    ]
+  }
+]
+</script>
+
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #2d3436 0%, #4a5568 100%);
+            color: white;
+            padding: 80px 0 60px;
+        }
+        .about-hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .about-hero .lead {
+            font-size: 1.3em;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .numbers-section {
+            background: #f8f9fa;
+            padding: 50px 0;
+        }
+        .number-box {
+            text-align: center;
+            padding: 25px 15px;
+        }
+        .number-value {
+            font-size: 2.8em;
+            font-weight: 700;
+            color: #e95420;
+        }
+        .number-label {
+            font-size: 1em;
+            font-weight: 600;
+            color: #333;
+            margin-top: 5px;
+        }
+        .number-detail {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .story-section {
+            padding: 60px 0;
+        }
+        .story-section h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+        .story-section p {
+            font-size: 1.05em;
+            line-height: 1.8;
+            color: #444;
+        }
+        .how-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-left: 4px solid #e95420;
+        }
+        .how-card h4 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .serve-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s;
+        }
+        .serve-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .serve-card h4 {
+            margin-top: 0;
+            color: #e95420;
+        }
+        .founder-section {
+            background: #f8f9fa;
+            padding: 50px 0;
+        }
+        .standards-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .standard-tag {
+            background: #28a745;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <main id="main">
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container text-center">
+            <h1>{{ copy.tagline }}</h1>
+            <p class="lead">{{{ copy.firm_lede }}}</p>
+        </div>
+    </section>
+
+    <!-- By The Numbers -->
+    <section class="numbers-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="number-box">
+                        <div class="number-value">35 of 196</div>
+                        <div class="number-label">Modules passing cited checks</div>
+                        <div class="number-detail">Catalogue run 2026-10-17</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="number-box">
+                        <div class="number-value">15</div>
+                        <div class="number-label">DNV-RP-C203 classes</div>
+                        <div class="number-detail">Air, CP, free corrosion</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="number-box">
+                        <div class="number-value">8</div>
+                        <div class="number-label">Design Codes</div>
+                        <div class="number-detail">DNV, API, ABS, BS, Norsok</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="number-box">
+                        <div class="number-value">245</div>
+                        <div class="number-label">Curated Datasets</div>
+                        <div class="number-detail">BSEE, metocean, production, HSE</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The AceEngineer Story -->
+    <section class="story-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h2>The AceEngineer Story</h2>
+                    <p>
+                        Analytical &amp; Computational Engineering was founded in 2010 in Houston, Texas, with a clear mission: eliminate the repetitive manual work that consumes offshore engineering teams.
+                    </p>
+                    <p>
+                        {{ copy.credentials[0] }} of deepwater engineering&mdash;spanning the Gulf of Mexico, North Sea, and global projects&mdash;a pattern became clear. The same OrcaFlex sensitivity studies, the same fatigue calculations, the same standards lookups were being repeated project after project, consuming hundreds of engineer-hours that could be spent on actual engineering judgment.
+                    </p>
+                    <p>
+                        AceEngineer was built to solve this. The public repositories contain code for recurring engineering workflows. The catalogue records 35 of 196 modules passing their cited checks.
+                    </p>
+                    <p>
+                        The result: engineering firms send a design matrix and receive batch results with recorded inputs for engineering review.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How We Work -->
+    <section style="background: #f8f9fa; padding: 60px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h2 style="color: #2c3e50; margin-bottom: 30px;">How We Work</h2>
+                    <p style="font-size: 1.1em; color: #444; margin-bottom: 30px;">
+                        {{ copy.service_model }}
+                    </p>
+
+                    <div class="how-card">
+                        <h3 class="h-size-h4">1. You Define the Scope</h3>
+                        <p>Send your design matrix, baseline models, and analysis requirements. We establish the parameter space and acceptance criteria together.</p>
+                    </div>
+
+                    <div class="how-card">
+                        <h3 class="h-size-h4">2. We Automate the Execution</h3>
+                        <p>Our automation pipelines generate models, run batch analyses (50+ configurations overnight), extract results, and compile standardized deliverables with recorded analysis inputs.</p>
+                    </div>
+
+                    <div class="how-card">
+                        <h3 class="h-size-h4">3. You Review the Results</h3>
+                        <p>You receive results and recorded inputs for engineering review, with standards references and methodology documented where applicable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who We Serve -->
+    <section class="story-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h2 style="color: #2c3e50; margin-bottom: 30px; text-align: center;">Who We Serve</h2>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="serve-card">
+                                <h3 class="h-size-h4">Offshore Engineering Firms</h3>
+                                <p>Mid-market firms (10-50 engineers) who run OrcaFlex and AQWA manually for every project. We eliminate the repetitive analysis bottleneck so your senior engineers focus on engineering judgment.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="serve-card">
+                                <h3 class="h-size-h4">EPC Contractors</h3>
+                                <p>Installation and fabrication contractors who need rapid weather window analysis, lift studies, and installation pre-engineering without dedicated in-house scripting capability.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="serve-card">
+                                <h3 class="h-size-h4">Classification Societies</h3>
+                                <p>Organizations exploring digital verification services who need computational tools with documented inputs, standards references and methodology for engineering review.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="serve-card">
+                                <h3 class="h-size-h4">Drilling Contractors</h3>
+                                <p>Riser analysis and operability envelopes for drilling risers are provided for drilling contractors. The client receives the riser analysis and operability envelope for the stated scope.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section style="background: #f8f9fa; padding: 60px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h2 style="color: #2c3e50; margin-bottom: 25px;">Technology</h2>
+                    <p style="font-size: 1.05em; line-height: 1.8; color: #444;">
+                        AceEngineer's engineering platform is built on industry-standard tools: OrcaFlex API for marine dynamic analysis, AQWA for hydrodynamics, Python and Polars for high-performance data processing, and open-source computational libraries for reproducible engineering.
+                    </p>
+                    <p style="font-size: 1.05em; line-height: 1.8; color: #444;">
+                        The public repositories contain engineering analysis, data processing and reporting workflows. The catalogue distinguishes the checks recorded for each module.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="module-checks" class="home-section"><div class="container">
+        <h2>Module checks</h2>
+        <p>35 of 196 modules pass their cited checks (catalogue run 2026-10-17). OUTWARD requires source class CHECKED, an original clean module run and a passed cited-file receipt. These catalogue classifications do not establish a service qualification or delivery commitment.</p>
+        <p>Source: specialists catalogue, criteria revision <code>2026-10-17-third-review-engineering-reference</code>, pinned revision <code>ba4f4bd3fd0eec07281643d4c8accbed923945a4</code>, preserved by the merged catalogue update. <a href="assets/data/module-catalogue-summary.json">Count and source summary</a>.</p>
+        <h2>How we run AI agents on engineering work</h2>
+        <p>The methodology pages describe planning, focused tasks and independent review. Contact us to discuss a separately agreed scope.</p>
+        <ul><li><a href="methodology/orchestrator-worker/">Orchestrator and worker agents</a></li><li><a href="methodology/cross-review/">Independent review</a></li><li><a href="methodology/enforcement/">Enforced checks</a></li><li><a href="methodology/multi-agent-parity/">Multi-agent parity</a></li><li><a href="methodology/compound-engineering/">Compound engineering</a></li><li><a href="methodology/compliance-dashboard/">Compliance dashboard</a></li></ul>
+        <p><a href="proof.html">Work so far</a> · <a href="ai-automation/">AI automation</a> · <a href="small-business/">Small-business automation</a></p>
+    </div></section>
+    <!-- Founder Section -->
+    <section class="story-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h2 style="color: #2c3e50; margin-bottom: 25px;">Founder</h2>
+                    <p style="font-size: 1.05em; line-height: 1.8; color: #444;">
+                        <strong>Vamsee Achanta, P.E., Principal Engineer</strong> &mdash; 25+ years of offshore and deepwater engineering experience spanning riser design, mooring systems, fatigue analysis, and structural integrity assessment. Vamsee founded AceEngineer to bridge the gap between engineering expertise and computational automation, turning deep domain knowledge into scalable, repeatable workflows.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Standards Section -->
+    <section style="background: #2d3436; color: white; padding: 60px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <h2 style="color: white; margin-bottom: 15px;">Standards We Work With</h2>
+                    <p style="opacity: 0.85; margin-bottom: 25px;">The applicable standards and scope are stated for each analysis.</p>
+                    <div class="standards-list" style="justify-content: center;">
+                        <span class="standard-tag">DNV-RP-C203</span>
+                        <span class="standard-tag">API RP 2A</span>
+                        <span class="standard-tag">BS 7608</span>
+                        <span class="standard-tag">ABS</span>
+                        <span class="standard-tag">Norsok</span>
+                        <span class="standard-tag">IEC 61400-3</span>
+                        <span class="standard-tag">ASME B31.8</span>
+                        <span class="standard-tag">API RP 2RD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <include src="partials/scope-invitation.html"></include>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <include src="partials/footer.html"></include>
+
+</body>
+</html>

@@ -1,0 +1,711 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Interactive NPV calculator for oil and gas field development. Calculate net present value, IRR, and payback period with real-time cashflow visualization. Engineering tool.">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.aceengineer.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Engineering Calculators",
+      "item": "https://www.aceengineer.com/calculators/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "NPV Field Development Calculator",
+      "item": "https://www.aceengineer.com/calculators/npv-field-development.html"
+    }
+  ]
+}
+    </script>
+    <meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+    <meta name="keywords" content="NPV calculator, IRR calculator, field development economics, oil field economics, project valuation, discounted cashflow, payback period, field economics analysis">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="NPV Field Development Calculator - AceEngineer">
+    <meta property="og:description" content="Calculate NPV, IRR, and payback for oil and gas field development projects. Real-time cashflow visualization and economic metrics.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aceengineer.com/calculators/npv-field-development.html">
+    <meta property="og:site_name" content="Analytical & Computational Engineering">
+
+    <title>NPV Field Development Calculator - AceEngineer</title>
+
+    <include src="partials/head-common.html"></include>
+    <script src="{{ rootPath }}assets/js/plotly-2.32.0.min.js"></script>
+    <script src="{{ rootPath }}assets/js/npv-calculator-engine.js"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "NPV Field Development Calculator",
+        "description": "Calculate net present value, IRR, and payback period for oil and gas field development projects with real-time cashflow visualization",
+        "url": "https://www.aceengineer.com/calculators/npv-field-development.html",
+        "applicationCategory": "Engineering Tool",
+        "operatingSystem": "Web Browser",
+        "author": { "@id": "https://www.aceengineer.com/#organization" }
+    }
+    </script>
+
+    <style>
+        .calculator-section {
+            background-color: #fff;
+            padding: 40px 0 60px;
+        }
+        .calculator-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .calculator-card h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.3em;
+            border-bottom: 2px solid #e95420;
+            padding-bottom: 10px;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        .form-control {
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            padding: 10px 12px;
+        }
+        .form-control:focus {
+            border-color: #e95420;
+            box-shadow: 0 0 0 2px rgba(233, 84, 32, 0.1);
+        }
+        .btn-calculate {
+            background-color: #e95420;
+            border-color: #e95420;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-calculate:hover {
+            background-color: #c44117;
+            border-color: #c44117;
+            color: white;
+        }
+        .result-card {
+            background: linear-gradient(135deg, #2d3436 0%, #4a5568 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+        .result-card h4 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .result-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .result-value.positive {
+            color: #5cb85c;
+        }
+        .result-value.negative {
+            color: #d9534f;
+        }
+        .result-label {
+            font-size: 0.95em;
+            color: rgba(255,255,255,0.8);
+        }
+        .result-detail {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        .result-detail p {
+            margin: 5px 0;
+            font-size: 0.95em;
+            color: rgba(255,255,255,0.85);
+        }
+        .success-text {
+            color: #5cb85c;
+        }
+        .danger-text {
+            color: #d9534f;
+        }
+        .warning-text {
+            color: #f0ad4e;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #5bc0de;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        .info-box h5 {
+            margin-top: 0;
+            color: #31708f;
+        }
+        .info-box p {
+            margin-bottom: 0;
+            color: #555;
+            font-size: 0.95em;
+        }
+        .disclaimer {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+        .disclaimer strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .section-divider {
+            border-top: 1px solid #ddd;
+            margin: 20px 0;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <include src="partials/nav.html"></include>
+
+    <main id="main">
+
+    <!-- Hero Section -->
+    <section class="hero-section" style="padding: 50px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 text-center">
+                    <h1 class="hero-title">NPV Field Development Calculator</h1>
+                    <p class="hero-subtitle">
+                        Calculate net present value, IRR, and payback period for oil and gas field development.
+                        Interactive cashflow visualization with instant economic metrics.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <div class="container">
+            <div class="row">
+                <!-- Input Panel -->
+                <div class="col-md-5">
+                    <div class="calculator-card">
+                        <h2 class="h-size-h3">Input Parameters</h2>
+
+                        <div class="form-group">
+                            <label for="initial_rate">Initial Production Rate (bbl/day)</label>
+                            <input type="number" id="initial_rate" class="form-control" value="5000" min="100" max="100000" step="100">
+                            <small class="text-muted">Typical range: 1,000 - 50,000 bbl/day</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="decline_rate">Annual Decline Rate (%/year)</label>
+                            <input type="number" id="decline_rate" class="form-control" value="12.5" min="0" max="50" step="0.5">
+                            <small class="text-muted">Typical range: 10% - 25% for offshore fields</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="project_years">Project Duration (years)</label>
+                            <input type="number" id="project_years" class="form-control" value="20" min="5" max="40" step="1">
+                            <small class="text-muted">Typical range: 15 - 30 years</small>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="form-group">
+                            <label for="oil_price">Oil Price ($/bbl)</label>
+                            <input type="number" id="oil_price" class="form-control" value="70" min="20" max="150" step="1">
+                            <small class="text-muted">Current market price or long-term forecast</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price_escalation">Price Escalation (%/year)</label>
+                            <input type="number" id="price_escalation" class="form-control" value="2" min="0" max="10" step="0.5">
+                            <small class="text-muted">Annual price growth assumption</small>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="form-group">
+                            <label for="capex">Total CAPEX ($M)</label>
+                            <input type="number" id="capex" class="form-control" value="500" min="10" max="10000" step="10">
+                            <small class="text-muted">Total capital expenditure (wells, facilities, infrastructure)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="opex">Annual OPEX ($M)</label>
+                            <input type="number" id="opex" class="form-control" value="16" min="1" max="1000" step="1">
+                            <small class="text-muted">Annual operating expenditure</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="opex_escalation">OPEX Escalation (%/year)</label>
+                            <input type="number" id="opex_escalation" class="form-control" value="3" min="0" max="10" step="0.5">
+                            <small class="text-muted">Annual OPEX cost increase</small>
+                        </div>
+
+                        <div class="section-divider"></div>
+
+                        <div class="form-group">
+                            <label for="discount_rate">Discount Rate (%)</label>
+                            <input type="number" id="discount_rate" class="form-control" value="10" min="0" max="30" step="0.5">
+                            <small class="text-muted">Weighted average cost of capital (WACC)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tax_rate">Tax Rate (%)</label>
+                            <input type="number" id="tax_rate" class="form-control" value="21" min="0" max="60" step="1">
+                            <small class="text-muted">Corporate income tax rate</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="royalty_rate">Royalty Rate (%)</label>
+                            <input type="number" id="royalty_rate" class="form-control" value="18.75" min="0" max="50" step="0.25">
+                            <small class="text-muted">Government royalty (18.75% typical for GOM)</small>
+                        </div>
+
+                        <button class="btn btn-calculate" onclick="calculateNPV()">
+                            Calculate Economics
+                        </button>
+                    </div>
+
+                    <!-- Results Card -->
+                    <div id="results-card" class="result-card" style="display: none;">
+                        <h3 class="h-size-h4">Economic Results</h3>
+                        <div id="result-content"></div>
+                    </div>
+                </div>
+
+                <!-- Chart Panel -->
+                <div class="col-md-7">
+                    <div class="calculator-card">
+                        <h2 class="h-size-h3">Cashflow Visualization</h2>
+                        <div id="cashflow-chart" class="chart-container" style="height: 500px;"></div>
+                    </div>
+
+                    <div class="info-box">
+                        <h3 class="h-size-h5">About NPV Field Development Analysis</h3>
+                        <p>
+                            Net Present Value (NPV) is the cornerstone of field development economics, representing
+                            the present value of all future cashflows discounted at the project's cost of capital.
+                            This calculator uses industry-standard exponential decline curves and discounted cashflow
+                            analysis to evaluate project viability.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formula Reference -->
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-md-12">
+                    <div class="calculator-card">
+                        <h2 class="h-size-h3">Economic Formulas</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Production Decline:</strong></p>
+                                <p style="font-size: 1.2em; font-family: monospace; background: #fff; padding: 15px; border-radius: 4px;">
+                                    Q(t) = Q<sub>0</sub> × (1 - D)<sup>t</sup>
+                                </p>
+                                <p class="text-muted">
+                                    Where:<br>
+                                    Q(t) = Production rate in year t<br>
+                                    Q<sub>0</sub> = Initial production rate<br>
+                                    D = Annual decline rate (fraction)<br>
+                                    t = Time in years
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Net Present Value:</strong></p>
+                                <p style="font-size: 1.2em; font-family: monospace; background: #fff; padding: 15px; border-radius: 4px;">
+                                    NPV = Σ [CF<sub>t</sub> / (1 + r)<sup>t</sup>]
+                                </p>
+                                <p class="text-muted">
+                                    Where:<br>
+                                    CF<sub>t</sub> = Net cashflow in year t<br>
+                                    r = Discount rate (fraction)<br>
+                                    t = Year number (0 to N)<br>
+                                    NPV positive indicates viable project
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col-md-6">
+                                <p><strong>Revenue Calculation:</strong></p>
+                                <p style="font-size: 1.2em; font-family: monospace; background: #fff; padding: 15px; border-radius: 4px;">
+                                    R<sub>t</sub> = Q(t) × P<sub>t</sub> × 365 × (1 - Royalty)
+                                </p>
+                                <p class="text-muted">
+                                    Where:<br>
+                                    R<sub>t</sub> = Revenue in year t<br>
+                                    P<sub>t</sub> = Oil price in year t<br>
+                                    Royalty = Government royalty rate
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Internal Rate of Return:</strong></p>
+                                <p style="font-size: 1.2em; font-family: monospace; background: #fff; padding: 15px; border-radius: 4px;">
+                                    NPV = 0 when r = IRR
+                                </p>
+                                <p class="text-muted">
+                                    IRR is the discount rate at which NPV equals zero.<br>
+                                    Calculated numerically using bisection method.<br>
+                                    IRR > discount rate indicates viable project.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="disclaimer">
+                <strong>Engineering Disclaimer</strong>
+                This calculator is provided for educational and preliminary estimation purposes only.
+                Actual field development decisions must consider reservoir uncertainty, drilling schedules,
+                facility capacity constraints, regulatory requirements, environmental factors, and detailed
+                financial modeling. Always consult qualified petroleum engineers and financial analysts for
+                investment-grade economics and development planning.
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center" style="margin-top: 40px;">
+                <h2 class="h-size-h3">Need Comprehensive Field Development Economics?</h2>
+                <p style="color: #666; margin-bottom: 20px;">
+                    Our field development analysis includes reservoir simulation integration, probabilistic
+                    economics, multi-phase development planning, and automated BSEE data integration.
+                </p>
+                <a href="../contact.html?vertical=energy" class="btn btn-primary btn-lg" style="background-color: #e95420; border-color: #e95420;" onclick="if(typeof gtag!=='undefined'){gtag('event','cta_click',{'event_category':'conversion','cta_text':'Discuss Your Project','cta_location':'calculator_bottom','page_type':'calculator','calculator_name':'npv_field_development'})}">
+                    Discuss Your Project
+                </a>
+                <a href="../case-studies/bsee-field-economics.html" class="btn btn-default btn-lg">
+                    View BSEE Economics Case Study
+                </a>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <include src="partials/footer.html"></include>
+
+    <!-- Calculator Logic -->
+    <script>
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track calculator usage
+            gtag('event', 'calculator_view', {
+                'event_category': 'calculator',
+                'event_label': 'npv_field_development'
+            });
+        });
+
+        // Calculate NPV and economics
+        function calculateNPV() {
+            // Get input values
+            const initialRate = parseFloat(document.getElementById('initial_rate').value);
+            const declineRate = parseFloat(document.getElementById('decline_rate').value) / 100;
+            const projectYears = parseInt(document.getElementById('project_years').value);
+            const oilPrice = parseFloat(document.getElementById('oil_price').value);
+            const priceEscalation = parseFloat(document.getElementById('price_escalation').value) / 100;
+            const capex = parseFloat(document.getElementById('capex').value);
+            const opex = parseFloat(document.getElementById('opex').value);
+            const opexEscalation = parseFloat(document.getElementById('opex_escalation').value) / 100;
+            const discountRate = parseFloat(document.getElementById('discount_rate').value) / 100;
+            const taxRate = parseFloat(document.getElementById('tax_rate').value) / 100;
+            const royaltyRate = parseFloat(document.getElementById('royalty_rate').value) / 100;
+
+            const inputs = [
+                initialRate, declineRate, projectYears, oilPrice, priceEscalation,
+                capex, opex, opexEscalation, discountRate, taxRate, royaltyRate
+            ];
+            if (!inputs.every(Number.isFinite) || projectYears < 1) {
+                const resultContent = document.getElementById('result-content');
+                const errorMessage = document.createElement('p');
+                errorMessage.className = 'danger-text';
+                errorMessage.textContent = 'Please enter a valid number in every field.';
+                resultContent.replaceChildren(errorMessage);
+                document.getElementById('results-card').style.display = 'block';
+                return;
+            }
+
+            // EVERYTHING BELOW THIS LINE IS IN $M.
+            //
+            // The form is denominated in $M (CAPEX and OPEX are labelled so)
+            // and the headline appends ' M', so $M is the unit this page
+            // speaks. The engine computes revenue in DOLLARS, because that is
+            // what bbl/day x $/bbl x 365 gives you. Exactly one conversion
+            // sits between the two, at the point revenue is produced.
+            const years = [];
+            const production = [];
+            const revenue = [];
+            const costs = [];
+            const netCashflow = [];
+            const cumulativeCashflow = [];
+
+            let cumulative = -capex; // Year 0 CAPEX
+
+            for (let year = 1; year <= projectYears; year++) {
+                const prod = calcDeclineProduction(initialRate, declineRate, year);
+
+                // ---- THE SINGLE UNIT CONVERSION IN THIS PAGE ----
+                const annualRevenue = calcAnnualRevenue(
+                    prod, oilPrice, priceEscalation, royaltyRate, year
+                ) / DOLLARS_PER_MILLION;
+                // ------------------------------------------------
+
+                // OPEX is entered in $M, so it needs no conversion.
+                const annualOpex = calcAnnualOpex(opex, opexEscalation, year);
+
+                const beforeTax = annualRevenue - annualOpex;
+                const tax = beforeTax > 0 ? beforeTax * taxRate : 0;
+                const afterTax = beforeTax - tax;
+
+                cumulative += afterTax;
+
+                years.push(year);
+                production.push(prod);
+                revenue.push(annualRevenue);
+                costs.push(annualOpex);
+                netCashflow.push(afterTax);
+                cumulativeCashflow.push(cumulative);
+            }
+
+            const npv = calcNPV(capex, netCashflow, discountRate);
+
+            // Reports WHY there is no IRR when there is none, rather than
+            // collapsing every outcome into a bare null.
+            const irrResult = calcIRRResult(capex, netCashflow);
+
+            const payback = calcPayback(cumulativeCashflow, years);
+
+            const totalProfit = cumulativeCashflow[cumulativeCashflow.length - 1];
+            const profitRatio = totalProfit / capex;
+
+            displayResults(npv, irrResult, payback, profitRatio, discountRate);
+
+            plotCashflow(years, revenue, costs, netCashflow, cumulativeCashflow);
+
+            gtag('event', 'calculator_use', {
+                'event_category': 'calculator',
+                'event_label': 'npv_calculation',
+                'value': Math.round(npv)
+            });
+
+            return {
+                npv: npv,
+                irr: irrResult.irr,
+                irrStatus: irrResult.status,
+                payback: payback,
+                profitRatio: profitRatio
+            };
+        }
+
+        // Why there is no IRR. "No root in the search range" and "the search
+        // did not converge" are different facts about a project and must not
+        // reach the visitor as the same sentence.
+        function irrMessage(irrResult) {
+            if (irrResult.status === 'no-root') {
+                return 'No IRR in the -50% to 200% range';
+            }
+            if (irrResult.status === 'no-decision-rate') {
+                return 'No IRR (NPV never falls through zero)';
+            }
+            if (irrResult.status === 'invalid') {
+                return 'Not calculable (invalid input)';
+            }
+            return 'Not calculable (did not converge)';
+        }
+
+        // Display results
+        function displayResults(npv, irrResult, payback, profitRatio, discountRate) {
+            const npvClass = npv >= 0 ? 'positive' : 'negative';
+            const npvStatus = npv >= 0 ? 'VIABLE' : 'NOT VIABLE';
+            const npvStatusClass = npv >= 0 ? 'success-text' : 'danger-text';
+
+            const resultContent = document.getElementById('result-content');
+            const resultValue = document.createElement('div');
+            resultValue.className = 'result-value ' + npvClass;
+            resultValue.textContent = '$' + formatMoney(npv) + ' M';
+
+            const resultLabel = document.createElement('div');
+            resultLabel.className = 'result-label';
+            resultLabel.textContent = 'Net Present Value (NPV)';
+
+            const resultDetail = document.createElement('div');
+            resultDetail.className = 'result-detail';
+
+            function addResultLine(label, value, valueClass) {
+                const paragraph = document.createElement('p');
+                const strong = document.createElement('strong');
+                strong.textContent = label;
+                paragraph.appendChild(strong);
+                paragraph.appendChild(document.createTextNode(' '));
+
+                if (valueClass) {
+                    const span = document.createElement('span');
+                    span.className = valueClass;
+                    span.textContent = value;
+                    paragraph.appendChild(span);
+                } else {
+                    paragraph.appendChild(document.createTextNode(value));
+                }
+
+                resultDetail.appendChild(paragraph);
+            }
+
+            addResultLine('Project Status:', npvStatus, npvStatusClass);
+
+            if (irrResult.status === 'ok') {
+                const irr = irrResult.irr;
+                const irrClass = irr > discountRate * 100 ? 'success-text' : 'danger-text';
+                addResultLine('Internal Rate of Return:', irr.toFixed(2) + '%', irrClass);
+
+                const discountParagraph = document.createElement('p');
+                const discountDetail = document.createElement('small');
+                discountDetail.textContent = 'Discount rate: ' + (discountRate * 100).toFixed(1) +
+                    '% | IRR ' + (irr > discountRate * 100 ? '>' : '<') + ' discount rate';
+                discountParagraph.appendChild(discountDetail);
+                resultDetail.appendChild(discountParagraph);
+
+                if (irrResult.multipleRoots) {
+                    const ambiguityParagraph = document.createElement('p');
+                    const ambiguityDetail = document.createElement('small');
+                    ambiguityDetail.className = 'warning-text';
+                    ambiguityDetail.textContent = 'Cashflow changes sign more than once, so ' +
+                        irrResult.roots.length + ' rates solve NPV = 0. Shown: the rate above ' +
+                        'which NPV stays negative.';
+                    ambiguityParagraph.appendChild(ambiguityDetail);
+                    resultDetail.appendChild(ambiguityParagraph);
+                }
+            } else {
+                addResultLine('Internal Rate of Return:', irrMessage(irrResult), 'danger-text');
+            }
+
+            if (payback !== null) {
+                const paybackClass = payback < 10 ? 'success-text' : (payback < 15 ? 'warning-text' : 'danger-text');
+                addResultLine('Payback Period:', payback.toFixed(1) + ' years', paybackClass);
+            } else {
+                addResultLine('Payback Period:', 'No payback within project life', 'danger-text');
+            }
+
+            addResultLine('Profit-to-Investment Ratio:', profitRatio.toFixed(2) + 'x');
+
+            resultContent.replaceChildren(resultValue, resultLabel, resultDetail);
+            document.getElementById('results-card').style.display = 'block';
+        }
+
+        // Plot cashflow chart
+        function plotCashflow(years, revenue, costs, netCashflow, cumulative) {
+            const traces = [
+                {
+                    x: years,
+                    y: revenue,
+                    name: 'Revenue',
+                    type: 'bar',
+                    marker: { color: '#5cb85c' }
+                },
+                {
+                    x: years,
+                    y: costs,
+                    name: 'OPEX',
+                    type: 'bar',
+                    marker: { color: '#d9534f' }
+                },
+                {
+                    x: years,
+                    y: netCashflow,
+                    name: 'Net Cashflow',
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    line: { color: '#428bca', width: 2 },
+                    marker: { size: 6 }
+                },
+                {
+                    x: years,
+                    y: cumulative,
+                    name: 'Cumulative Cashflow',
+                    type: 'scatter',
+                    mode: 'lines',
+                    line: { color: '#f0ad4e', width: 3, dash: 'dash' },
+                    yaxis: 'y2'
+                }
+            ];
+
+            const layout = {
+                title: {
+                    text: 'Project Cashflow Analysis',
+                    font: { size: 16 }
+                },
+                xaxis: {
+                    title: 'Year',
+                    gridcolor: '#eee'
+                },
+                yaxis: {
+                    title: 'Annual Cashflow ($M)',
+                    gridcolor: '#eee'
+                },
+                yaxis2: {
+                    title: 'Cumulative Cashflow ($M)',
+                    overlaying: 'y',
+                    side: 'right',
+                    gridcolor: 'transparent'
+                },
+                barmode: 'group',
+                showlegend: true,
+                legend: { x: 0.02, y: 0.98 },
+                margin: { t: 50, r: 80, b: 50, l: 60 },
+                paper_bgcolor: 'white',
+                plot_bgcolor: 'white'
+            };
+
+            const config = {
+                responsive: true,
+                displayModeBar: true,
+                modeBarButtonsToRemove: ['lasso2d', 'select2d']
+            };
+
+            Plotly.newPlot('cashflow-chart', traces, layout, config);
+        }
+    </script>
+
+</body>
+</html>

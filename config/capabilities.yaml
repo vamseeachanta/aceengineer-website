@@ -1,0 +1,287 @@
+# capabilities.yaml — registry of algorithm/data capabilities surfaced on aceengineer.com
+#
+# Single source of truth (SSOT) for the HF-backed capability pages. build.js reads
+# this at build time, fetches each dataset from the Hugging Face datasets-server
+# /rows API, and renders one indexable page per capability. Adding a new algorithm
+# to the website = publish its HF dataset + add one entry here (CI enforces both).
+#
+# Epic: vamseeachanta/workspace-hub#3485 · C1: vamseeachanta/aceengineer-website#49
+# Schema + how-to: docs/capabilities-registry.md
+#
+# Entry fields:
+#   id             (required) stable kebab-case slug — becomes the page URL /capabilities/<id>.
+#   title          (required) human-readable capability name (unique <title> for SEO).
+#   domain         (required) one of: worldenergy | digitalmodel.
+#   summary        (required) one-sentence description shown on the card + detail page.
+#   hf_dataset     (required) Hugging Face dataset id, e.g. aceengineer/worldenergydata-explorer.
+#   provenance_url (required) link to the source repo/report that produced the data.
+#   status         (required) live | pending | withheld.
+#                    live     → rendered with real HF data.
+#                    pending  → renders a visible placeholder linking to provenance_url (no silent omission).
+#                    withheld → entry present but not surfaced (e.g. data-correctness hold).
+#   primary_config (required) the config (table) whose headline stat appears on the card.
+#   tables         (required) one or more HF configs to render, each:
+#       config           (required) HF dataset config (table) name.
+#       label            (required) tab/section label on the detail page.
+#       viz              (required) table | bar | line | map.
+#       highlight_columns(required) columns shown first / used by the chart. Must exist in the table.
+#   withheld_columns (optional) columns that must NEVER be surfaced (CI blocks them). See #971.
+#   data_limits      (required) honest disclosure of coverage + known limitations.
+
+version: 1
+
+capabilities:
+  - id: field-explorer
+    title: World Energy Field Explorer
+    domain: worldenergy
+    summary: >-
+      Global offshore field drill-down — fields, wells, and country rollups built
+      from BSEE and public regulatory filings.
+    hf_dataset: aceengineer/worldenergydata-explorer
+    provenance_url: https://github.com/vamseeachanta/worldenergydata
+    status: live
+    primary_config: fields
+    tables:
+      - config: fields
+        label: Fields
+        viz: table
+        highlight_columns: [name, operator, region, status, wells_count, api_gravity, cum_oil_mmbbl, avg_uptime_pct]
+      - config: wells
+        label: Wells
+        viz: table
+        highlight_columns: [api, field_id, cum_oil_mmbbl, uptime_pct, status]
+      - config: countries
+        label: Countries
+        viz: bar
+        highlight_columns: [country, fields, facilities]
+    data_limits: >-
+      Coverage is primarily US Gulf of Mexico deepwater (BSEE) plus selected
+      international basins; not a complete global census. Published fields emphasize
+      operational, geological, production, and provenance attributes. Economics are
+      intentionally absent from this table while the upstream economics configuration
+      is being republished and reviewed.
+
+  - id: atlas-explorer
+    title: Digital Model Parametric Atlases
+    domain: digitalmodel
+    summary: >-
+      Standard-traceable parametric result grids — mooring fatigue (S-N), synthetic-rope
+      fatigue (T-N), and riser code-check utilisation — from digitalmodel's validated
+      reduced-order atlases.
+    hf_dataset: aceengineer/digitalmodel-atlas-explorer
+    provenance_url: https://github.com/vamseeachanta/digitalmodel
+    status: live
+    primary_config: mooring_fatigue
+    tables:
+      - config: mooring_fatigue
+        label: Mooring Fatigue (DNV-RP-C203 S-N)
+        viz: table
+        highlight_columns: [sn_curve, stress_MPa, n_cycles, damage]
+      - config: synthetic_rope_mooring_fatigue
+        label: Synthetic Rope Fatigue (DNV-OS-E301 T-N)
+        viz: table
+        highlight_columns: [tension_range_kN, n_cycles, MBL_kN, damage]
+      - config: code_check
+        label: Riser Code Check (API-RP-2RD)
+        viz: table
+        highlight_columns: [outer_diameter, wall_thickness, effective_tension_kN, bending_moment_kNm, smys, utilisation]
+    data_limits: >-
+      Synthetic parametric sweeps generated from the cited standards (DNV-RP-C203,
+      DNV-OS-E301, API-RP-2RD) and validated to under 10% max relative error against
+      held-out samples. For screening and capability demonstration — not a substitute
+      for a project-specific engineering check.
+
+  - id: field-economics-sensitivity
+    title: Field Economics Sensitivity
+    domain: worldenergy
+    summary: >-
+      Field-economics sensitivity sweep — how life-to-date pretax NPV moves with WTI
+      price and discount rate, on public BSEE production.
+    hf_dataset: aceengineer/worldenergydata-explorer
+    provenance_url: https://github.com/vamseeachanta/worldenergydata
+    status: pending
+    primary_config: parametric_economics
+    tables:
+      - config: parametric_economics
+        label: Price × Discount-Rate Sweep
+        viz: table
+        highlight_columns: [field, wti_price_multiplier, discount_rate, npv_musd, breakeven_multiplier]
+    data_limits: >-
+      Life-to-date pretax NPV at various discount rates, computed on public BSEE
+      production — a sensitivity to WTI price (via wti_price_multiplier) and discount
+      rate, NOT full-cycle economics or forward projections. Because it reflects value
+      realized to date, mature fields can show a negative life-to-date NPV. The basis
+      travels with each value (economics_basis). A multi-dimensional field × price ×
+      rate grid, honestly shown as a table rather than a single headline number.
+
+  - id: dc-days-qaqc
+    title: Field D&C Days QA/QC
+    domain: worldenergy
+    summary: >-
+      Bore-by-bore drilling & completion days behind the World Oil April 2026
+      reconciliation — 253 wellbores across 11 Gulf of Mexico developments,
+      with drilling-day stability proven across data vintages. Browse the
+      interactive drill-down: /capabilities/dc-drilldown.html
+    hf_dataset: aceengineer/worldenergydata-explorer
+    provenance_url: https://vamseeachanta.github.io/worldenergydata/wo-april-2026-qaqc-hub.html
+    status: live
+    # Interactive surfaces built from these same tables — listed on the card ahead
+    # of the table view because they are the richer way into the data.
+    experiences:
+      - label: Drill-down (field ▸ block ▸ bore)
+        url: /capabilities/dc-drilldown.html
+      - label: QA/QC report hub
+        url: /capabilities/dc-qaqc-hub.html
+    primary_config: dc_development_summary
+    tables:
+      - config: dc_development_summary
+        label: Reconciliation Matrix
+        viz: table
+        highlight_columns: [development, bores_wed, drilling_days, completion_days, dc_days_wed, dc_days_article, delta_days, status]
+      - config: dc_bores
+        label: Per-Well Listing
+        viz: table
+        max_rows: 300
+        highlight_columns: [development, api12, spud, td_date, drilling_days, completion_days, dc_days, sidetrack, producer]
+      - config: dc_vintage_diff
+        label: Vintage Diff (Drilling Stability)
+        viz: table
+        max_rows: 300
+        highlight_columns: [dev, api12, category, drill_v30, drill_wed, d_drill, d_compl]
+    data_limits: >-
+      Drilling days = spud to total depth; completion days = ALL post-TD rig time
+      including later recompletion and servicing (the open worldenergydata#846
+      boundary question). Known caveat: the extractor mixes calendar days (spans
+      under ~250 d) with WAR-union rig-days (longer spans), so batch-drilled wells
+      undercount drilling days — disclosed rather than corrected pending resolution.
+      Producer markers cover the seven core Lower-Tertiary fields only.
+
+  # Release-backed: the upstream dataset is private (CFD review artifacts), so this
+  # capability is pinned to the immutable, content-addressed release this site publishes
+  # rather than to live datasets-server configs. The digest/revision chain below is the
+  # same one cited on the report pages and is checkable end to end.
+  - id: tank-sloshing-cfd
+    title: Tank Sloshing CFD
+    domain: digitalmodel
+    summary: >-
+      OpenFOAM VOF sloshing analysis for partially filled tanks — free-decay validation
+      against closed-form theory, a forced-roll period sweep, and the connected twin-tank
+      U-tube exchange mode with its inter-tank mass shift and roll moment.
+    backing: release
+    hf_dataset: aceengineer/digitalmodel-sloshing
+    provenance_url: https://www.aceengineer.com/reports/sloshing/validation.html
+    status: live
+    release:
+      hub_url: /reports/sloshing/
+      digest: 1034bb4efc5d9b390d51d4d546800c5a25bf6673af824e07ed5265da038ec30b
+      revision: 51ba5ddbca8dcfa8faeb6de5c592f342f32cfe2d
+      stats:
+        - count: 57
+          label: accepted cases
+        - count: 106
+          label: metrics
+        - count: 9933
+          label: response samples
+    data_limits: >-
+      Source-neutral reference geometry only — no vessel-specific dimensions are
+      published here. Free-decay frequency matches closed-form theory to 0.30%. The
+      exchange natural period is 14.31 s, measured by phase; the 22-24 s figure previously
+      carried is the amplitude peak, which is loss-controlled and moves with roll
+      amplitude. Damping is quadratic, so equivalent damping is a function of both period
+      and roll amplitude (0.10 to 0.71 across the measured grid) and is not a tank
+      constant. The inertia law predicts the exchange period to +/-3% across conduit areas
+      3.4-13.5 m2 and fills 25-70%; the loss law reproduces 35 cases to 8.6% rms; the tank
+      moment is closed form to 4.3% rms for periods of 20 s and above, below which the
+      legs' own sloshing modes participate. The former x1.45 magnitude residual is
+      resolved, not carried: it is the weight moment of the whole fluid mass about the
+      roll axis plus the within-leg free surface. Three of 57 cases are published
+      accepted_with_exception for exceeding the 2% cycle-change limit.
+
+  # ---- C1 wave 1 (aceengineer-website#97, digitalmodel#1646), published 2026-07-28 ----
+  # Both datasets are tidy by construction: digitalmodel/scripts/hf/build_capability_datasets.py
+  # unpivots the explorer sidecars (facet trees, square matrices) into one row per
+  # observation. The explorer pages keep their own shape; these are the queryable form.
+
+  - id: pipeline-wall-thickness
+    title: Pipeline Wall Thickness — Six Codes Compared
+    domain: digitalmodel
+    summary: >-
+      Wall-thickness screening for a reference pipe across six design codes — utilisation
+      and the governing check at each thickness, so the codes are directly comparable.
+    hf_dataset: aceengineer/digitalmodel-integrity
+    provenance_url: https://github.com/vamseeachanta/digitalmodel/blob/main/scripts/hf/build_capability_datasets.py
+    status: live
+    primary_config: wall_thickness
+    tables:
+      - config: wall_thickness
+        label: Utilisation by code
+        viz: line
+        highlight_columns: [standard, wall_thickness_mm, utilisation, governing_check, safe]
+    data_limits: >-
+      Reference pipe geometry only (323.9 mm OD) — no client or project-specific data.
+      One row per (code, wall thickness). Utilisation above 1.0 means the check is not
+      satisfied at that thickness; those rows are retained deliberately, because the
+      sweep exists to show where each code turns. The per-check columns are sparse by
+      design — codes do not share a check set, so a null means the code defines no such
+      check, not a missing value. Screening only, not a project design check.
+
+  - id: corrosion-control
+    title: Corrosion Control — Anode Sizing and Galvanic Index Screening
+    domain: digitalmodel
+    summary: >-
+      Screening-level sacrificial-anode sizing to DNV-RP-B401 (2021 edition as
+      implemented) for two reference geometries, plus anodic-index screening
+      categories for metal pairs. Screening only: not a project CP design, not a
+      material-compatibility finding, and not qualified for client delivery.
+    hf_dataset: aceengineer/digitalmodel-corrosion
+    provenance_url: https://github.com/vamseeachanta/digitalmodel/blob/main/scripts/hf/build_capability_datasets.py
+    status: live
+    primary_config: cathodic_protection
+    tables:
+      - config: cathodic_protection
+        label: Anode sizing
+        viz: table
+        highlight_columns: [structure, climate, coating, design_life_years, anode_mass_kg, anode_count]
+      - config: galvanic_compatibility
+        label: Galvanic index screening
+        viz: table
+        highlight_columns: [environment, metal_a, metal_b, verdict, delta_v, allowable_delta_v]
+    data_limits: >-
+      Reference geometries only (a 4-leg jacket and an XL monopile) — no client or
+      vessel-specific data. Anode sizing follows DNV-RP-B401 across 2 structures x 2
+      climates x 4 coating conditions x 7 design lives. Galvanic verdicts are anodic-index
+      screening categories for all 16x16 metal pairs, including a metal against itself;
+      they indicate where to look, and are not a substitute for a project-specific CP
+      design. Environment allowable dV spans 0.15 V (harsh marine) to 0.5 V (controlled
+      indoor).
+
+  # ---- #1915: tension x bending moment as axes ----------------------------------------
+  # The pressure-only sweep above left the API-STD-2RD combined check at 0.0 on every row,
+  # because it passed zero tension and zero moment. Over these three axes that check spans
+  # 0 to 3.88 and GOVERNS at 30,855 of 354,609 grid points — a controlling limit state the
+  # 2D study could not represent at all.
+  - id: wall-thickness-tension-moment
+    title: Wall Thickness under Tension and Bending — Nine Codes
+    domain: digitalmodel
+    summary: >-
+      Wall-thickness utilisation swept over three axes — thickness, effective tension and
+      bending moment — across nine design codes, showing where combined loading rather
+      than pressure becomes the governing limit state.
+    hf_dataset: aceengineer/digitalmodel-integrity
+    provenance_url: https://vamseeachanta.github.io/digitalmodel/structural/wall-thickness-3d-explorer.html
+    status: live
+    primary_config: wall_thickness_tension_moment
+    tables:
+      - config: wall_thickness_tension_moment
+        label: Utilisation over tension and moment
+        viz: table
+        highlight_columns: [code, wall_thickness_mm, effective_tension_n, bending_moment_nm, utilisation, governing_check, is_safe]
+    data_limits: >-
+      Reference pipe only — 323.9 mm OD, X65, internal 20 MPa / external 10 MPa. Tension
+      and moment are swept from zero to 60% of capacity at the 18 mm reference wall
+      (T_max 4.65 MN, M_max 355.6 kN·m), a range chosen from first-yield capacity rather
+      than for appearance. Utilisation above 1.0 is retained deliberately: the sweep
+      exists to show where each code turns, so filtering the failures would hide the
+      answer. Per-check columns are sparse by design — the nine codes do not share a check
+      set, so a null means that code defines no such check, not a missing value. Screening
+      only; not a substitute for a project-specific design check.

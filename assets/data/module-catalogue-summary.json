@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-17",
+  "outward": 35,
+  "modules": 196,
+  "criteria_revision": "2026-10-17-third-review-engineering-reference",
+  "criteria": "OUTWARD = source class CHECKED + original clean module run + passed cited-file receipt.",
+  "catalogue_revision": "ba4f4bd3fd0eec07281643d4c8accbed923945a4",
+  "merged_revision": "d3dccf99455a69c4776da1659843723c59e406cc"
+}

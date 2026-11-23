@@ -1,0 +1,96 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multi-Code Wall Thickness Comparison | AceEngineer</title>
+<meta name="description" content="Analysis method: Multi-Code Wall Thickness Comparison. Workflow, calculation steps and technical references for a separately agreed scope.">
+<meta property="og:title" content="Multi-Code Wall Thickness Comparison | AceEngineer">
+<meta property="og:description" content="Analysis method: Multi-Code Wall Thickness Comparison. Workflow, calculation steps and technical references for a separately agreed scope.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.aceengineer.com/case-studies/multi-code-wall-thickness-comparison.html">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Multi-Code Wall Thickness Comparison | AceEngineer">
+<meta name="twitter:description" content="Analysis method: Multi-Code Wall Thickness Comparison. Workflow, calculation steps and technical references for a separately agreed scope.">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"Multi-Code Wall Thickness Comparison | AceEngineer","description":"Analysis method: Multi-Code Wall Thickness Comparison. Workflow, calculation steps and technical references for a separately agreed scope.","url":"https://www.aceengineer.com/case-studies/multi-code-wall-thickness-comparison.html","inLanguage":"en","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Case Studies","item":"https://www.aceengineer.com/case-studies/"},{"@type":"ListItem","position":3,"name":"Multi-Code Wall Thickness Comparison","item":"https://www.aceengineer.com/case-studies/multi-code-wall-thickness-comparison.html"}]}]</script>
+<include src="partials/head-common.html">
+</include>
+</head>
+<body class="theme-page">
+<include src="partials/nav.html">
+</include>
+<main id="main" class="samples-page">
+<div class="container">
+<nav aria-label="Breadcrumb"><ol class="breadcrumb"><li><a href="../">Home</a></li><li><a href="./">Case Studies</a></li><li aria-current="page">Multi-Code Wall Thickness Comparison</li></ol></nav>
+<h1>Multi-Code Wall Thickness Comparison</h1>
+<p>Method notes for engineering and data workflows.</p>
+<h2>The challenge</h2>
+<p>Organise the inputs, calculations and reporting into a repeatable workflow with checks.</p>
+<h2 class="section-title">Solution Approach</h2>
+
+        <h3>Systematic Parameter Sweep</h3>
+        <p>
+            The automated analysis evaluated a comprehensive matrix of design parameters: 5 pipe outer diameters (8, 10, 12, 14, and 16 inch), 3 candidate wall thicknesses per OD, design pressures from 5,000 to 10,000 psi, and water depths from 500 to 2,500 m. Each combination was evaluated against all 3 codes simultaneously.
+        </p>
+
+        <h3>Governing Code Identification</h3>
+        <p>
+            For each pipe size and water depth combination, the automated comparison identified which code governed the minimum wall thickness. The comparison records the governing code for each pipe diameter and water depth.
+        </p>
+
+        <h3>Technical References</h3>
+        <div class="table-responsive-wrapper">
+        <table class="comparison-table">
+            <tbody>
+<tr>
+                <th>Standard</th>
+                <th>Reference</th>
+            </tr>
+            <tr>
+                <td>ASME B31.4</td>
+                <td>S403.2.1 burst, S403.2.2 collapse</td>
+            </tr>
+            <tr>
+                <td>API 1111</td>
+                <td>Sec 4 design requirements</td>
+            </tr>
+            <tr>
+                <td>DNV-ST-F101</td>
+                <td>Sec 5 wall thickness design</td>
+            </tr>
+        </tbody>
+</table>
+        </div>
+
+        <h3>Tools</h3>
+        <ul>
+            <li>
+<strong>digitalmodel wall thickness module (Python):</strong> Core calculations for ASME B31.4, API 1111, and DNV-ST-F101</li>
+            <li>
+<strong>
+<a href="../calculators/wall-thickness.html">aceengineer.com Wall Thickness Calculator</a>:</strong> Interactive demo for single-code assessments</li>
+        </ul>
+
+
+<h2>Related methods</h2>
+<ul>
+<li><a href="pipeline-on-bottom-stability-assessment.html">Pipeline On-Bottom Stability Assessment</a></li>
+<li><a href="subsea-fea-automation.html">Automated FEA Post-Processing Pipeline for Subsea Equipment Qualification</a></li>
+</ul>
+<h2>Summary</h2>
+<p>Review the inputs, assumptions and calculation results for the stated scope.</p>
+<p>
+<a href="../engineering.html">Engineering workflows</a> · <a href="../blog/">Technical articles</a>
+</p>
+<include src="partials/scope-invitation.html">
+</include>
+</div>
+</main>
+<include src="partials/footer.html">
+</include>
+</body>
+</html>

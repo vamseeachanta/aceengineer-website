@@ -1,0 +1,11 @@
+preview_id,evidence_relation,width_px,height_px,duration_s,frame_count,field_window_start_s,field_window_end_s,temporal_interpolation,review_scope
+alpha-final-t240,case_specific,1200,750,,,237.5,240,not_applicable,final_window_liquid_fraction
+alpha-last-2p5s,case_specific,1200,750,0.6,6,237.5,240,none,final_window_liquid_fraction
+forced-fine-t24-snapshot,case_specific,1920,1080,,,237.5,240,none,final_window_fields_with_full_history_graphs
+forced-fine-t24-video,case_specific,1920,1080,3,6,237.5,240,none,final_window_fields_with_full_history_graphs
+forced-medium-t16-snapshot,case_specific,1920,1080,,,157.5,160,none,final_window_fields_with_full_history_graphs
+forced-medium-t16-video,case_specific,1920,1080,3,6,157.5,160,none,final_window_fields_with_full_history_graphs
+forced-medium-t22-snapshot,case_specific,1920,1080,,,217.5,220,none,final_window_fields_with_full_history_graphs
+forced-medium-t22-video,case_specific,1920,1080,3,6,217.5,220,none,final_window_fields_with_full_history_graphs
+forced-medium-t26-snapshot,case_specific,1920,1080,,,257.5,260,none,final_window_fields_with_full_history_graphs
+forced-medium-t26-video,case_specific,1920,1080,3,6,257.5,260,none,final_window_fields_with_full_history_graphs

@@ -1,0 +1,104 @@
+---
+rootPath: "../"
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipeline On-Bottom Stability Assessment | AceEngineer</title>
+<meta name="description" content="Analysis method: Pipeline On-Bottom Stability Assessment. Workflow, calculation steps and technical references for a separately agreed scope.">
+<meta property="og:title" content="Pipeline On-Bottom Stability Assessment | AceEngineer">
+<meta property="og:description" content="Analysis method: Pipeline On-Bottom Stability Assessment. Workflow, calculation steps and technical references for a separately agreed scope.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.aceengineer.com/case-studies/pipeline-on-bottom-stability-assessment.html">
+<meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pipeline On-Bottom Stability Assessment | AceEngineer">
+<meta name="twitter:description" content="Analysis method: Pipeline On-Bottom Stability Assessment. Workflow, calculation steps and technical references for a separately agreed scope.">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebPage","name":"Pipeline On-Bottom Stability Assessment | AceEngineer","description":"Analysis method: Pipeline On-Bottom Stability Assessment. Workflow, calculation steps and technical references for a separately agreed scope.","url":"https://www.aceengineer.com/case-studies/pipeline-on-bottom-stability-assessment.html","inLanguage":"en","publisher":{"@id":"https://www.aceengineer.com/#organization"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.aceengineer.com/"},{"@type":"ListItem","position":2,"name":"Case Studies","item":"https://www.aceengineer.com/case-studies/"},{"@type":"ListItem","position":3,"name":"Pipeline On-Bottom Stability Assessment","item":"https://www.aceengineer.com/case-studies/pipeline-on-bottom-stability-assessment.html"}]}]</script>
+<include src="partials/head-common.html">
+</include>
+</head>
+<body class="theme-page">
+<include src="partials/nav.html">
+</include>
+<main id="main" class="samples-page">
+<div class="container">
+<nav aria-label="Breadcrumb"><ol class="breadcrumb"><li><a href="../">Home</a></li><li><a href="./">Case Studies</a></li><li aria-current="page">Pipeline On-Bottom Stability Assessment</li></ol></nav>
+<h1>Pipeline On-Bottom Stability Assessment</h1>
+<p>Method notes for engineering and data workflows.</p>
+<h2>The challenge</h2>
+<p>Organise the inputs, calculations and reporting into a repeatable workflow with checks.</p>
+<h2 class="section-title">Solution Approach</h2>
+
+        <h3>Methodology</h3>
+        <p>
+            DNV-RP-F109 Generalized Stability Method (absolute stability) applied systematically using digitalmodel's <code>on_bottom_stability</code> module. The method evaluates pipeline stability by comparing hydrodynamic loads from wave and current action against the soil resistance, accounting for pipe weight, buoyancy, and seabed friction.
+        </p>
+
+        <h3>Technical Implementation</h3>
+
+        <h4>Parameter Definition</h4>
+        <p>
+            Input parameters were organized into three categories: pipe properties (outer diameter, wall thickness, concrete coating thickness and density), environmental parameters (significant wave height Hs, peak period Tp, current velocity, water depth at each KP station), and soil properties (friction coefficients per DNV-RP-F109 Table 3-2 for clay, sand, and mixed soil zones).
+        </p>
+
+        <h4>Automated Sweep</h4>
+        <p>
+            Each KP station along the route was evaluated against the load cases. The automated sweep systematically combined environmental conditions with local seabed properties to produce a complete stability map of the pipeline route.
+        </p>
+
+        <h4>Result Classification</h4>
+        <p>
+            Results were classified by utilisation ratio: green (ratio &lt; 0.8, stable with margin), yellow (ratio 0.8–1.0, marginally stable), and red (ratio &gt; 1.0, unstable, remediation required). This classification enabled rapid identification of problem spans without reviewing individual calculation sheets.
+        </p>
+
+        <h3>Technical References</h3>
+        <div class="table-responsive-wrapper">
+        <table class="comparison-table">
+            <tbody>
+<tr>
+                <th>Standard</th>
+                <th>Reference</th>
+            </tr>
+            <tr>
+                <td>DNV-RP-F109</td>
+                <td>Generalized stability Eq 3.1–3.6</td>
+            </tr>
+            <tr>
+                <td>DNV-ST-F101</td>
+                <td>Pipeline design basis</td>
+            </tr>
+        </tbody>
+</table>
+        </div>
+
+        <h3>Tools</h3>
+        <ul>
+            <li>
+<strong>digitalmodel OBS module (Python):</strong> Core stability calculations per DNV-RP-F109</li>
+            <li>
+<strong>
+<a href="../calculators/on-bottom-stability.html">aceengineer.com OBS Calculator</a>:</strong> Interactive demo for single-point assessments</li>
+        </ul>
+
+
+<h2>Related methods</h2>
+<ul>
+<li><a href="multi-code-wall-thickness-comparison.html">Multi-Code Wall Thickness Comparison</a></li>
+<li><a href="orcaflex-riser-sensitivity-automation.html">OrcaFlex Riser Sensitivity Automation</a></li>
+</ul>
+<h2>Summary</h2>
+<p>Review the inputs, assumptions and calculation results for the stated scope.</p>
+<p>
+<a href="../engineering.html">Engineering workflows</a> · <a href="../blog/">Technical articles</a>
+</p>
+<include src="partials/scope-invitation.html">
+</include>
+</div>
+</main>
+<include src="partials/footer.html">
+</include>
+</body>
+</html>

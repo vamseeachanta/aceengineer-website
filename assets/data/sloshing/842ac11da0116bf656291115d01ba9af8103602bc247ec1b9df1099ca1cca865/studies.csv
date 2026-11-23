@@ -1,0 +1,4 @@
+study_id,study_type,quantity,unit,case_count,analytical_target,target_unit,qa_status
+free-decay-convergence,mesh_and_timestep,measured_frequency,Hz,7,0.758054,Hz,non_asymptotic_caution
+forced-period-refinement,period_sweep,level_difference_amplitude,m,6,,,cycle_converged
+forced-mesh-confirmation,mesh_confirmation,exchange_amplitude,percent_change,2,0.783862187169793,percent,cycle_converged

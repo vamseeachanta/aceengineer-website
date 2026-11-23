@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ copy.home.title }}</title>
+    <meta name="description" content="{{ copy.home.description }}">
+    <meta property="og:title" content="{{ copy.home.title }}">
+    <meta property="og:description" content="{{ copy.home.description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.aceengineer.com/">
+    <meta property="og:site_name" content="AceEngineer">
+    <meta property="og:image" content="https://www.aceengineer.com/assets/img/logo.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ copy.home.title }}">
+    <meta name="twitter:description" content="{{ copy.home.description }}">
+    <include src="partials/head-common.html"></include>
+    <script type="application/ld+json">
+    [
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "url": "https://www.aceengineer.com/",
+            "name": "{{ copy.home.title }}",
+            "description": "{{ copy.home.description }}",
+            "about": { "@id": "https://www.aceengineer.com/#organization" }
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.aceengineer.com/" }
+            ]
+        }
+    ]
+    </script>
+</head>
+<body class="theme-page">
+    <include src="partials/nav.html"></include>
+    <main id="main" class="home-page">
+        <section class="home-hero">
+            <div class="container">
+                <p class="kicker">{{ copy.home.kicker }}</p>
+                <h1>{{ copy.home.heading }}</h1>
+                <p class="home-lead">{{ copy.home.lead }}</p>
+                <p>Start with our public data and code: <a href="https://github.com/vamseeachanta/digitalmodel">digitalmodel</a>, <a href="https://github.com/vamseeachanta/worldenergydata">worldenergydata</a> and <a href="https://github.com/vamseeachanta/assetutilities">assetutilities</a> on GitHub, and our <a href="https://huggingface.co/aceengineer">datasets on Hugging Face</a>.</p>
+                <include src="partials/scope-invitation.html"></include>
+                <p><a href="newsletter/issue-001-energy-street/">Latest issue: The Deckhand Chronicles, issue 1</a> · <a href="newsletter/">Newsletter archive</a></p>
+                <div class="home-actions">
+                    <if condition="samplesPublished"><a href="#work" class="btn-free">{{ copy.home.work.button }}</a></if>
+                </div>
+            </div>
+        </section>
+        <section id="about" class="home-facts">
+            <div class="container">
+                <div class="home-facts-grid">
+                <each loop="fact in copy.home.facts">
+                    <p><strong>{{ fact.heading }}</strong><br>{{ fact.detail }}</p>
+                </each>
+                <if condition="samplesPublished">
+                    <p><strong>{{ copy.home.work.fact.heading }}</strong><br>{{ copy.home.work.fact.detail }}</p>
+                </if>
+                </div>
+            </div>
+        </section>
+        <section id="services" class="home-section">
+            <div class="container">
+                <h2>{{ copy.home.services_heading }}</h2>
+                <p>{{ copy.services_intro }}</p>
+                <div class="home-services-grid">
+                    <each loop="service in copy.home.services">
+                        <article class="home-service" data-engineering-service>
+                            <h3><a href="{{ service.page }}">{{ service.heading }}</a></h3>
+                            <p class="home-receives">{{ service.receives }}<if condition="service.context">. {{ service.context }}</if></p>
+                            <include src="partials/service-samples.html"></include>
+                        </article>
+                    </each>
+                    <article class="home-service"><h3><a href="ai-automation/">AI automation and agentic workflows</a></h3><p>AI automation and agentic workflows for engineering and small-business administration. Contact us to discuss a separately agreed scope.</p></article>
+                    <article class="home-service"><h3><a href="small-business/">AI and automation help for small businesses</a></h3><p>From tax to analysis to contract negotiation to improvements, construction ideas or any administrative automation work.</p></article>
+                </div>
+                <p><a href="about.html#module-checks">Module count: catalogue date, criteria and revision</a></p>
+            </div>
+        </section>
+        <if condition="samplesPublished">
+            <section id="work" class="home-section">
+                <div class="container">
+                    <h2>{{ copy.home.work.heading }}</h2>
+                    <p>{{ copy.home.work.description }}</p>
+                    <div class="samples-table-wrap">
+                        <table class="samples-table">
+                            <thead><tr><th>{{ copy.home.work.sample }}</th><th>{{ copy.home.work.demonstrates }}</th><th>{{ copy.home.work.open }}</th></tr></thead>
+                            <tbody>{{{ sampleHomeRows }}}</tbody>
+                        </table>
+                    </div>
+                    <p><a href="samples/">{{ copy.home.work.all }}</a></p>
+                </div>
+            </section>
+        </if>
+        <section id="contact" class="home-section home-contact">
+            <div class="container">
+                <h2>{{ copy.home.contact.heading }}</h2>
+                <p>{{ copy.home.contact.principal }}<br><a href="mailto:{{ copy.home.contact.email }}">{{ copy.home.contact.email }}</a><br>
+                <a href="{{ copy.home.contact.phone_href }}">{{ copy.home.contact.phone }}</a></p>
+            </div>
+        </section>
+    </main>
+    <include src="partials/footer.html"></include>
+</body>
+</html>

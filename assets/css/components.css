@@ -1,0 +1,146 @@
+/* ==========================================================================
+   A&CE Design System — shared components (W7, aceengineer-website#26)
+
+   Single source of truth for components introduced by the 2026 relaunch that
+   were previously duplicated inline across the homepage, Deckhand, Platform,
+   Proof, Solutions and Standards pages. Bundled into styles.min.css via
+   build.js (cssFiles). Page-unique one-offs may still live inline; anything
+   reused on 2+ pages belongs here.
+   ========================================================================== */
+
+:root {
+  --ace-ink: #2c3e50;          /* headings / primary ink */
+  --ace-body: #3a4654;         /* body copy */
+  --ace-muted: #6b7785;        /* eyebrows / secondary */
+  --ace-line: #e6e8eb;         /* card borders */
+  --ace-surface: #ffffff;      /* card surface */
+  --ace-surface-alt: #f8f9fa;  /* section tint */
+  --ace-chip: #eef1f4;         /* chip / pill background */
+  --ace-accent: #1f8a4c;       /* runnable / positive accent */
+  --ace-radius: 10px;
+  --ace-radius-sm: 8px;
+  --ace-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* --- skip link (a11y, #87) -----------------------------------------------
+   First focusable element on every page (emitted by partials/nav.html). Off-screen
+   until focused, then pinned top-left so keyboard users can jump past the nav.
+   Not `display:none` / `visibility:hidden` — those remove it from the tab order. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1100;
+  padding: 10px 18px;
+  background: var(--ace-surface);
+  color: var(--ace-ink);
+  border: 2px solid var(--ace-ink);
+  border-radius: 0 0 var(--ace-radius-sm) 0;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0;
+  outline: 3px solid #2BB2A6;
+  outline-offset: 2px;
+}
+
+/* --- contrast overrides on Bootstrap defaults (a11y, #87) -----------------
+   Bootswatch United ships .text-muted as #aea79f — 2.379:1 on white, well under
+   the 4.5:1 AA floor for body text, and it is used for real prose on the
+   calculator pages. Overridden to the palette's muted grey (5.53:1). Loaded after
+   bootstrap-united.css in the bundle, so this wins without !important. */
+.text-muted {
+  color: #5a6b76;
+}
+
+/* --- heading size utilities (a11y, #87) -----------------------------------
+   The heading OUTLINE (h1..h6) must not skip levels — screen readers use it to
+   navigate. Where a heading's level was corrected, these classes hold the visual
+   size it had before, so the outline fix is not also a redesign. Values are the
+   Bootstrap 3 heading scale currently in use. Prefer fixing the outline over
+   reaching for these on new markup. */
+.h-size-h2 { font-size: 30px; }
+.h-size-h3 { font-size: 24px; }
+.h-size-h4 { font-size: 18px; }
+.h-size-h5 { font-size: 14px; }
+
+/* --- eyebrow (breadcrumb-style kicker above a page H1) --------------------- */
+.section-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--ace-muted);
+  font-size: .85em;
+}
+.section-eyebrow a { color: var(--ace-muted); }
+
+/* --- chips / pills -------------------------------------------------------- */
+.domain-chip {
+  display: inline-block;
+  background: var(--ace-chip);
+  color: var(--ace-ink);
+  border-radius: 16px;
+  padding: 6px 14px;
+  margin: 5px;
+  font-size: .92em;
+  text-decoration: none;
+  transition: background .15s ease;
+}
+a.domain-chip:hover,
+a.domain-chip:focus {
+  background: #dfe5ea;
+  color: var(--ace-ink);
+  text-decoration: none;
+}
+
+/* tier flags (runnable vs advisory) */
+.tier-flag {
+  display: inline-block;
+  border-radius: 14px;
+  padding: 3px 12px;
+  font-size: .78em;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.tier-flag.flag-a { background: #e3f3ea; color: var(--ace-accent); }
+.tier-flag.flag-b { background: var(--ace-chip); color: #52606d; }
+
+/* --- "what you can ask it to do" list ------------------------------------ */
+.ask-list {
+  list-style: none;
+  padding: 0;
+  max-width: 820px;
+  margin: 0 auto;
+}
+.ask-list li {
+  background: var(--ace-surface);
+  border: 1px solid var(--ace-line);
+  border-radius: var(--ace-radius-sm);
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  color: var(--ace-body);
+}
+.ask-list li b { color: var(--ace-ink); }
+
+/* --- FAQ accordion ------------------------------------------------------- */
+.faq {
+  max-width: 820px;
+  margin: 0 auto 12px;
+  background: var(--ace-surface);
+  border: 1px solid var(--ace-line);
+  border-radius: var(--ace-radius-sm);
+  padding: 14px 18px;
+}
+.faq summary { font-weight: 600; color: var(--ace-ink); cursor: pointer; }
+.faq p { color: var(--ace-body); margin: 10px 0 0; }
+
+/* --- advisory note (escalate-only channels) ------------------------------ */
+.advisory-note {
+  background: var(--ace-chip);
+  border-left: 4px solid #52606d;
+  padding: 16px 20px;
+  border-radius: 6px;
+  max-width: 820px;
+  margin: 0 auto;
+  color: var(--ace-body);
+}

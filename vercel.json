@@ -1,0 +1,124 @@
+{
+  "version": 2,
+  "buildCommand": "NEWSLETTER_DEPLOY_CHECK=1 npm run build",
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/newsletter/issue-001/",
+      "destination": "/newsletter/issue-001-energy-street/",
+      "statusCode": 301
+    },
+    {
+      "source": "/newsletter/issue-001",
+      "destination": "/newsletter/issue-001-energy-street/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/drilling-technology-evolution-mpd-adoption.html",
+      "destination": "/blog/",
+      "permanent": false
+    },
+    {
+      "source": "/blog/installation-constraints-offshore-design.html",
+      "destination": "/blog/",
+      "permanent": false
+    },
+    {
+      "source": "/reports/diffraction/analysis.html",
+      "destination": "/reports/diffraction/",
+      "permanent": true
+    },
+    {
+      "source": "/reports/diffraction/comparison.html",
+      "destination": "/reports/diffraction/",
+      "permanent": true
+    },
+    {
+      "source": "/reports/diffraction/aqwa-analysis.html",
+      "destination": "/reports/diffraction/",
+      "permanent": true
+    },
+    {
+      "source": "/reports/diffraction/orcawave-analysis.html",
+      "destination": "/reports/diffraction/",
+      "permanent": true
+    },
+    {
+      "source": "/reports/diffraction/orcawave-aqwa-comparison.html",
+      "destination": "/reports/diffraction/",
+      "permanent": true
+    },
+    {
+      "source": "/pricing.html",
+      "destination": "/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/:path(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "aceengineer.com"
+        }
+      ],
+      "destination": "https://www.aceengineer.com/:path",
+      "permanent": true
+    },
+    {
+      "source": "/:path(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "aceengineer-website-delta.vercel.app"
+        }
+      ],
+      "destination": "https://www.aceengineer.com/:path",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/demos/(.*).html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.web3forms.com https://www.google-analytics.com https://region1.google-analytics.com https://region1.analytics.google.com https://www.google.com https://www.googletagmanager.com https://datasets-server.huggingface.co https://huggingface.co; form-action 'self' https://api.web3forms.com; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+        }
+      ]
+    }
+  ]
+}

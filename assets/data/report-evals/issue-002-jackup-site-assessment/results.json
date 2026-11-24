@@ -10,7 +10,7 @@
  },
  "code": {
   "repo": "https://github.com/vamseeachanta/aceengineer-website",
-  "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+  "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
   "paths": [
    "assets/data/newsletter/issue-002/jackup-accidents.csv"
   ],
@@ -139,7 +139,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -158,7 +158,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -177,7 +177,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -196,7 +196,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -215,7 +215,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -235,7 +235,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -255,7 +255,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -275,7 +275,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -295,7 +295,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -315,7 +315,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -334,7 +334,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -353,7 +353,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -372,7 +372,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -392,7 +392,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -411,7 +411,7 @@
    "source": "jackup-accidents.csv (35 public events from the 2010 MMS TA&R 633 report, the 2021 jack-up review and four NTSB reports)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); hazard groups are ours (article Note 1)",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -430,7 +430,7 @@
    "source": "aceengineer.com and this repository",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); SHA-256 of both copies",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -450,7 +450,7 @@
    "source": "NTSB Marine Investigation Report MIR-22/26 (SEACOR Power), section 1.1.1",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); sentence search in the PDF text",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
@@ -469,7 +469,7 @@
    "source": "Valaris Ltd, Form 10-K for 2025, filed 20 February 2026 (SEC EDGAR)",
    "method": "assets/data/report-evals/issue-002-jackup-site-assessment/eval.py compute() (on main); number search in the 10-K text",
    "repo": "https://github.com/vamseeachanta/aceengineer-website",
-   "commit": "8168e1018173be9379a02d5c1aa519056c68d09e",
+   "commit": "cf9611c6f0b4c19be3ada19518588a3e4ce3759f",
    "tolerance": {
     "abs": 0
    },
